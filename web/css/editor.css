@@ -1,0 +1,64 @@
+.sympal_edit_slot_box table {
+  background: white;
+  padding: 200px;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.sympal_edit_slot_box table tr th {
+  background: #e7eef6;
+}
+
+.sympal_edit_slot_box table tr td {
+  border: 1px solid #ccc;
+}
+
+.sympal_edit_slot_box table tfoot tr td {
+  border: none;
+  background: #e7eef6;
+}
+
+#sympal_edit_panel, #sympal_edit_panel_container {
+  width: 350px;
+}
+
+#sympal_edit_panel ul {
+  margin: 0;
+  padding: 0;
+  margin-left: 20px;
+}
+
+#sympal_edit_panel ul li {
+  list-style-type: square;
+  padding-bottom: 5px;
+}
+
+#sympal_edit_panel .sympal_icon_list ul {
+  margin-left: 5px;
+}
+
+#sympal_edit_panel .sympal_icon_list ul li {
+  list-style-type: none;
+}
+
+#sympal_admin_bar {
+  width: 100%;
+  position: relative;
+}
+
+#sympal_admin_bar_container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+div#sympal-icon {
+  width: 60px;
+  background: url(../../sf/sf_admin/images/help.png) right no-repeat;
+}
+
+.sympal_editable_entity_slot {
+  border: 1px solid transparent;
+}

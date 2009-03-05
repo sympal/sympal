@@ -1,0 +1,62 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Entity
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_entities
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        site_id:
+          label: Site
+          help: Assign this entity to a site.
+        entity_template_id:
+          label: Entity Template
+          help: Choose the template used to render the contents of this entity.
+        master_menu_item_id:
+          lable: Under Menu Item
+          help: |
+            Choose the menu item this entity is under. If you wish to directly
+            relate one menu item to one entity you can assign an entity when 
+            editing the menu itme.
+        layout:
+          help: Choose the layout template used to render this entity.
+        is_published:
+          help: |
+            Check to publish this entity. Checking this will automatically set the
+            date published value. A menu item will not be live until the published
+            date has been reached.
+        custom_path:
+          help: You can specify a completely custom path/url for this entity. It must begin with a forward slash.
+        date_published:
+          date_format: 'MM/dd/yyyy hh:mm'
+      list:
+        title: Manage Entities
+        display: [=title, Type, is_published, date_published]
+        object_actions:
+          view:
+            action: view
+          _edit:
+          _delete:
+      filter:  ~
+      form:
+        display:
+          "Configuration": [site_id, entity_template_id, master_menu_item_id, layout]
+          "Publish": [is_published, date_published]
+          "Routing": [custom_path, slug]
+          "Entity": [Entity]
+      edit:
+        title: "Editing Entity #%%id%%"
+        actions:
+          _delete:
+          _save:
+          view:
+            action: view
+      new:
+        title: Create New Entity

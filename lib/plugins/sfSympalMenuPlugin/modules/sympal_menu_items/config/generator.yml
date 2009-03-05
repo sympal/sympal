@@ -1,0 +1,68 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           MenuItem
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_menu_items
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        parent_id:
+          help: Choose the position of this menu item in the tree.
+        site_id:
+          help: Choose the site which this menu item belongs to.
+          label: Site
+        entity_type_id:
+          help: Choose what type of entity this menu item belongs to, if any.
+          label: Entity Type
+        entity_id:
+          help: Choose the entity this menu item links to.
+          label: Entity
+        is_published:
+          help: |
+            Check to publish this entity. Checking this will automatically set the
+            date published value. An entity will not be live until the published
+            date has been reached.
+<?php if (sfSympalConfig::isI18nEnabled('menus')): ?> 
+        en:
+          help: Enter the menu item label for the current language.
+<?php else: ?> 
+        label:
+          help: Enter the menu item label.
+<?php endif; ?>
+      list:
+        max_per_page: 999999
+        display: [=label]
+        batch_actions:
+          order:
+            label: Update Database Order
+          _delete: ~
+        object_actions:
+          new:
+            label: Add Child
+          _edit:    ~
+          _delete:  ~
+        actions:
+          _new:
+            label: Add New Menu
+      filter:
+        class: false
+      form:
+        display:
+          "NONE": [name]
+<?php if (sfSympalConfig::isI18nEnabled('menus')): ?> 
+          "Label": [en]
+<?php else: ?> 
+          "Label": [label]
+<?php endif; ?>
+          "Mapping": [parent_id, site_id, entity_type_id, entity_id]
+          "Security": [requires_auth, requires_no_auth, groups_list, permissions_list]
+          "Publish": [is_published, date_published]
+      edit:    ~
+      new:     ~

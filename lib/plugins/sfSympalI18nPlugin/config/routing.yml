@@ -1,0 +1,15 @@
+sympal_languages:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                Language
+    module:               sympal_languages
+    prefix_path:          admin/i18n/languages
+    with_wildcard_routes: true
+
+sympal_translations:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                Translation
+    module:               sympal_translations
+    prefix_path:          admin/i18n/translations
+    with_wildcard_routes: true

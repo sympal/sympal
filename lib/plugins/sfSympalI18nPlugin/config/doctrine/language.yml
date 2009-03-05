@@ -1,0 +1,9 @@
+Language:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    code:
+      type: string(255)
+      notnull: true

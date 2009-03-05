@@ -1,0 +1,31 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Site
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_sites
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        layout:
+          help: |
+            Choose layout to render site with. The default sets the layout 
+            based on the site slug. You can also override the template used 
+            to render in the entity and entity type records.
+        title:
+          help: Title of the site
+        description:
+          help: Description of the site
+        slug:
+          help: Unique slug string. Used for search engine friendly urls.
+      list:
+        display: [=title, description]
+      form:    ~
+      edit:    ~
+      new:     ~

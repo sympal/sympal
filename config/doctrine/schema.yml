@@ -1,0 +1,197 @@
+Site:
+  actAs:
+    Sluggable:
+      fields: [title]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    layout: string(255)
+    title:
+      type: string(255)
+    description: clob
+
+Entity:
+  actAs: [Sluggable, Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    site_id:
+      type: integer(4)
+      notnull: true
+    entity_type_id:
+      type: integer(4)
+      notnull: true
+    entity_template_id: integer(4)
+    master_menu_item_id: integer(4)
+    last_updated_by: integer(4)
+    created_by: integer(4)
+    locked_by: integer(4)
+    is_published: boolean
+    date_published: timestamp
+    custom_path: string(255)
+    layout: string(255)
+  relations:
+    MasterMenuItem:
+      class: MenuItem
+      local: master_menu_item_id
+      onDelete: CASCADE
+      foreignAlias: MasterEntity
+      foreignType: one
+    LastUpdatedBy:
+      class: sfGuardUser
+      local: last_updated_by
+      foreignAlias: LastUpdatedEntities
+      onDelete: SET NULL
+    CreatedBy:
+      class: sfGuardUser
+      local: created_by
+      foreignAlias: CreatedEntities
+      onDelete: SET NULL
+    LockedBy:
+      class: sfGuardUser
+      local: locked_by
+      foreignAlias: LockedEntities
+      onDelete: SET NULL
+    Site:
+      foreignAlias: Entities
+      onDelete: CASCADE
+    Type:
+      class: EntityType
+      foreignAlias: Entities
+      onDelete: CASCADE
+    Template:
+      class: EntityTemplate
+      foreignAlias: Entities
+      onDelete: SET NULL
+    Groups:
+      class: sfGuardGroup
+      local: entity_id
+      foreign: group_id
+      refClass: EntityGroup
+      foreignAlias: Entities
+    Permissions:
+      class: sfGuardPermission
+      local: entity_id
+      foreign: permission_id
+      refClass: EntityPermission
+      foreignAlias: Entities
+
+EntityType:
+  actAs:
+    Sluggable:
+      fields: [name]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    label:
+      type: string(255)
+      notnull: true
+    list_route_url: string(255)
+    view_route_url: string(255)
+    layout: string(255)
+
+EntityTemplate:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+    type:
+      type: enum
+      values: [View, List]
+    entity_type_id: integer(4)
+    partial_path: string(255)
+    component_path: string(255)
+    body: clob
+  relations:
+    EntityType:
+      foreignAlias: Templates
+
+EntitySlot:
+<?php if (sfSympalConfig::isI18nEnabled('slots')): ?> 
+  actAs:
+    I18n:
+      fields: [value]
+<?php endif; ?> 
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    entity_id:
+      type: integer(4)
+      notnull: true
+    entity_slot_type_id:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    value: clob
+  relations:
+    RelatedEntity:
+      class: Entity
+      foreignAlias: Slots
+      onDelete: CASCADE
+    Type:
+      class: EntitySlotType
+      foreignAlias: Slots
+      onDelete: CASCADE
+
+EntitySlotType:
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    name:
+      type: string(255)
+      notnull: true
+
+EntityGroup:
+  columns:
+    entity_id:
+      primary: true
+      type: integer(4)
+    group_id:
+      primary: true
+      type: integer(4)
+  relations:
+    Entity:
+      foreignAlias: EntityGroups
+      onDelete: CASCADE
+    Group:
+      class: sfGuardGroup
+      local: group_id
+      foreignAlias: EntityGroups
+      onDelete: CASCADE
+
+EntityPermission:
+  columns:
+    entity_id:
+      primary: true
+      type: integer(4)
+    permission_id:
+      primary: true8
+      type: integer(4)
+  relations:
+    Entity:
+      foreignAlias: EntityGroups
+      onDelete: CASCADE
+    Permission:
+      class: sfGuardPermission
+      local: permission_id
+      foreignAlias: EntityPermissions
+      onDelete: CASCADE

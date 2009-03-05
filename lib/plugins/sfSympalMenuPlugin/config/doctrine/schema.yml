@@ -1,0 +1,91 @@
+MenuItem:
+  actAs:
+    NestedSet:
+      hasManyRoots: true
+      rootColumnName: root_id
+<?php if (sfSympalConfig::isI18nEnabled('menus')): ?> 
+    I18n:
+      fields: [label]
+<?php endif; ?>
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    site_id:
+      type: integer(4)
+      notnull: true
+    entity_type_id: integer(4)
+    entity_id: integer(4)
+    name:
+      type: string(255)
+      notnull: true
+    label: string(255)
+    route: string(255)
+    has_many_entities:
+      type: boolean
+      default: false
+    requires_auth: boolean
+    requires_no_auth: boolean
+    is_primary: boolean
+    is_published: boolean
+    date_published: timestamp
+  relations:
+    RelatedEntity:
+      class: Entity
+      foreignAlias: MenuItem
+      foreignType: one
+    Site:
+      foreignAlias: MenuItems
+      onDelete: CASCADE
+    EntityType:
+      foreignAlias: MenuItems
+      onDelete: CASCADE
+    Groups:
+      class: sfGuardGroup
+      local: menu_item_id
+      foreign: group_id
+      refClass: MenuItemGroup
+      foreignAlias: MenuItems
+    Permissions:
+      class: sfGuardPermission
+      local: menu_item_id
+      foreign: permission_id
+      refClass: MenuItemPermission
+      foreignAlias: MenuItems
+
+MenuItemGroup:
+  columns:
+    menu_item_id:
+      primary: true
+      type: integer(4)
+    group_id:
+      primary: true
+      type: integer(4)
+  relations:
+    MenuItem:
+      foreignAlias: MenuItemGroups
+      onDelete: CASCADE
+    Group:
+      class: sfGuardGroup
+      local: group_id
+      foreignAlias: MenuItemGroups
+      onDelete: CASCADE
+
+MenuItemPermission:
+  columns:
+    menu_item_id:
+      primary: true
+      type: integer(4)
+    permission_id:
+      primary: type
+      type: integer(4)
+  relations:
+    MenuItem:
+      foreignAlias: MenuItemPermissions
+      onDelete: CASCADE
+    Permission:
+      class: sfGuardPermission
+      local: permission_id
+      foreignAlias: MenuItemPermissions
+      onDelete: CASCADE

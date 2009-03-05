@@ -1,0 +1,250 @@
+/* GeSHi PHP Syntax Highlighting */
+
+.php .imp {font-weight: bold; color: red}
+.php .kw1 {color: #FF8400}
+.php .kw2 {color: #FFCC66}
+.php .kw3 {color: #07DFFC}
+.php .co1 {color: #BD48B3; font-style: italic}
+.php .co2 {color: #BD48B3; font-style: italic}
+.php .coMULTI {color: #BD48B3; font-style: italic}
+.php .es0 {color: #ddd}
+.php .br0 {color: #fff}
+.php .st0 {color: #99FF00}
+.php .nu0 {color: #66CC66}
+.php .me1 {color: #FFCC66}
+.php .me2 {color: #FFCC66}
+.php .re0 {color: #fff}
+.php a {text-decoration: none}
+
+.xml .imp {font-weight: bold; color: red}
+.xml .coMULTI {color: #BD48B3; font-style: italic}
+.xml .es0 {color: #0000aa; font-weight: bold}
+.xml .br0 {color: #66cc66}
+.xml .st0 {color: #99FF00}
+.xml .nu0 {color: #cc66cc}
+.xml .sc0 {color: #00bbdd}
+.xml .sc1 {color: #ddbb00}
+.xml .sc2 {color: #339933}
+.xml .sc3 {color: #fff}
+.xml .re0 {color: #FFFF99}
+.xml .re1 {color: #FFCC66}
+.xml .re2 {color: #FFCC66}
+
+.css .imp {font-weight: bold; color: red}
+.css .kw1 {color: #fff}
+.css .kw2 {color: #993333}
+.css .co1 {color: #a1a100}
+.css .coMULTI {color: #808080; font-style: italic}
+.css .es0 {color: #000099; font-weight: bold}
+.css .br0 {color: #66cc66}
+.css .st0 {color: #ff0000}
+.css .nu0 {color: #cc66cc}
+.css .re0 {color: #cc00cc}
+.css .re1 {color: #6666ff}
+.css .re2 {color: #3333ff}
+
+.javascript .imp {font-weight: bold; color: red}
+.javascript .kw1 {color: #FF8400}
+.javascript .kw2 {color: #FFCC66}
+.javascript .kw3 {color: #07DFFC}
+.javascript .co1 {color: #BD48B3; font-style: italic}
+.javascript .coMULTI {color: #BD48B3; font-style: italic}
+.javascript .es0 {color: #000099}
+.javascript .br0 {color: #fff}
+.javascript .st0 {color: #99FF00}
+.javascript .nu0 {color: #66CC66}
+.javascript .me1 {color: #FFCC66}
+.javascript .re0 {color: #fff}
+
+/* Misc. HTML Markup Styling */
+
+.sympal_markdown tt {
+  font-weight: bold;
+  color: #429CF4;
+  font-family: "Bitstream Vera Sans Mono", "Courier New" monospace;
+  line-height: 123.1%;
+}
+
+.sympal_markdown dd {
+  margin-bottom: 0.5em;
+}
+
+.sympal_markdown blockquote {
+  padding: 0.5em 0 0.5em 30px;
+}
+
+.sympal_markdown img {
+  margin:5px;
+}
+
+.sympal_markdown hr {
+  color: #ddd;
+  border: 1px solid #ddd;
+  display: block;
+}
+
+/* Figure/Caption Text */
+
+.sympal_markdown p.figure, .sympal_markdown p.caption {
+  font-style: italic;
+  font-weight: bold;
+  color: #3370C9;
+}
+
+/* Code */
+
+.sympal_markdown pre {
+  padding: 10px;
+  background-color: #222;
+  margin-bottom: 15px;
+  line-height: 17px;
+  font-size: 13px;
+  color: #fff;
+  font-family: "Bitstream Vera Sans Mono", monospace;
+}
+
+.sympal_markdown pre.command-line {
+  background-color: #000;
+  color: #fff;
+}
+
+.sympal_markdown pre.url {
+  background-color: #fff;
+  color: #006;
+}
+
+.sympal_markdown pre.url code {
+  font-family: "Bitstream Vera Sans Mono", monospace;
+}
+
+/* Paragraph */
+
+.sympal_markdown p {
+  text-align: left;
+  margin-bottom: 0.5em;
+}
+
+/* Headers */
+
+.sympal_markdown h1 {
+  margin: 1em 0 .5em 0;
+  font-size: 18px;
+}
+
+.sympal_markdown h2 {
+  margin: 1em 0 .5em 0;
+  font-size: 16px;
+}
+
+.sympal_markdown h3 {
+  margin: 1em 0 .5em 0;
+  font-size: 14px;
+}
+
+.sympal_markdown h4 {
+  margin: 1em 0 .5em 0;
+  font-size: 12px;
+}
+
+.sympal_markdown h5 {
+  margin: 1em 0 .5em 0;
+  font-size: 10px;
+}
+
+/* Lists */
+
+.sympal_markdown ul, .sympal_markdown ol {
+  margin-top: 10px;
+  margin-left: 30px;
+  margin-bottom: 10px;
+}
+
+.sympal_markdown ul li, .sympal_markdown ol li {
+  list-style-type: square;
+}
+
+/* HTML Table Markup Styling */
+
+.sympal_markdown table {
+  margin-bottom: 10px;
+}
+
+.sympal_markdown th {
+  font-weight:bold;
+  background-color: #e7eef6;
+}
+
+.sympal_markdown td, .sympal_markdown th
+{
+  padding: 4px 6px;
+  border: 0;
+  font-weight:bold;
+  border-bottom:solid 1px #D3D3D3;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* Note/Caution/Tip Boxes */
+
+/* Shared Styles */
+.sympal_markdown blockquote.note, .sympal_markdown blockquote.caution, .sympal_markdown blockquote.tip, .sympal_markdown blockquote.sidebar {
+  font-weight: normal;
+  min-height: 40px;
+  padding: 5px 20px 5px 45px;
+  margin: 10px 0;
+}
+
+.sympal_markdown blockquote.note p, .sympal_markdown blockquote.caution p, .sympal_markdown blockquote.tip p, .sympal_markdown blockquote.sidebar p {
+  margin: 0;
+  padding: 0;
+  padding-top: 10px;
+}
+
+/* Note */
+.sympal_markdown blockquote.note {
+  background: #ffd url(../images/note.png) no-repeat 5px 10px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Caution */
+.sympal_markdown blockquote.caution {
+  background: #ffd url(../images/caution.png) no-repeat 5px 10px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Tip */
+.sympal_markdown blockquote.tip {
+  background: #ffd url(../images/tip.png) no-repeat 5px 10px;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+/* Quote */
+.sympal_markdown blockquote.quote {
+  margin: 22px 40px;
+  min-height: 50px;
+  padding: 3px;
+  color: #575757;
+  padding: 0 50px;
+  background: transparent url('../images/blockquote.gif') no-repeat 0 0;
+}
+
+/* Sidebar */
+.sympal_markdown blockquote.sidebar {
+  background: #ccc;
+  margin: 0;
+  padding: 0;
+}
+
+.sympal_markdown blockquote.sidebar p.title {
+  background: #aaa;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px;
+}
+
+.sympal_markdown blockquote.sidebar p {
+  padding: 10px;
+}

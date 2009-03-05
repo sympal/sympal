@@ -1,0 +1,191 @@
+sympal_homepage:
+  url:   /
+  param: { module: sympal_frontend, action: index }
+
+sympal_change_language:
+  url:   /change_language
+  param: { module: sympal_editor, action: change_language }
+
+sympal_logout:
+  url:   /logout
+  param: { module: sympal_auth, action: signout }
+
+sympal_toggle_edit:
+  url:   /toggle_edit
+  param: { module: sympal_editor, action: toggle_edit }
+
+sympal_edit_entity_slot:
+  url:   /edit_entity_slot/:id
+  param: { module: sympal_editor, action: edit_slot }
+  class: sfDoctrineRoute
+  options:
+    model: EntitySlot
+    type: object
+
+sympal_save_entity_slot:
+  url:   /edit_entity_slot/:id/save
+  param: { module: sympal_editor, action: save_slot }
+  class: sfDoctrineRoute
+  options:
+    model: EntitySlot
+    type: object
+  requirements:
+    id: \d+
+    sf_method: [POST]
+
+sympal_preview_entity_slot:
+  url:   /preview_entity_slot/:id
+  param: { module: sympal_editor, action: preview_slot }
+  class: sfDoctrineRoute
+  options:
+    model: EntitySlot
+    type: object
+  requirements:
+    id: \d+
+    sf_method: [POST]
+
+sympal_change_entity_slot_type:
+  url:   /change_entity_slot_type/:id/:type
+  param: { module: sympal_editor, action: change_entity_slot_type }
+  class: sfDoctrineRoute
+  options:
+    model: EntitySlot
+    type: object
+
+sympal_save_editor_panel_position:
+  url:   /save_editor_panel_position
+  param: { module: sympal_editor, action: save_panel_position }
+
+sympal_lock_entity:
+  url:   /lock_entity/:id
+  param: { module: sympal_editor, action: lock_entity }
+  class: sfDoctrineRoute
+  options: { model: Entity, type: object }
+
+sympal_unlock_entity:
+  url:   /unlock_entity/:id
+  param: { module: sympal_editor, action: unlock_entity }
+  class: sfDoctrineRoute
+  options: { model: Entity, type: object }
+
+sympal_publish_entity:
+  url:   /publish_entity/:id
+  param: { module: sympal_editor, action: publish_entity }
+  class: sfDoctrineRoute
+  options: { model: Entity, type: object }
+
+sympal_unpublish_entity:
+  url:   /unpublish_entity/:id
+  param: { module: sympal_editor, action: unpublish_entity }
+  class: sfDoctrineRoute
+  options: { model: Entity, type: object }
+
+sympal_config:
+  url:   /admin/configuration
+  param: { module: sympal_config, action: index }
+
+sympal_config_save:
+  url:   /admin/configuration/save
+  param: { module: sympal_config, action: save }
+
+sympal_entity_slot_types:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                EntitySlotType
+    module:               sympal_entity_slot_types
+    prefix_path:          admin/entities/slot_types
+    with_wildcard_routes: true
+
+sympal_entity_templates:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                EntityTemplate
+    module:               sympal_entity_templates
+    prefix_path:          admin/entities/templates
+    with_wildcard_routes: true
+
+sympal_entity_types:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                EntityType
+    module:               sympal_entity_types
+    prefix_path:          admin/entities/types
+    with_wildcard_routes: true
+
+sympal_sites:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                Site
+    module:               sympal_sites
+    prefix_path:          admin/sites
+    with_wildcard_routes: true
+
+sympal_entities:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                Entity
+    module:               sympal_entities
+    prefix_path:          admin/entities
+    with_wildcard_routes: true
+    column:               slug
+  requirements:
+    slug:
+
+sympal_entities_create_type:
+  url:    /admin/entities/create/:type
+  param:  { module: sympal_entities, action: create_type }
+
+<?php
+$q = Doctrine_Query::create()
+  ->from('Entity e')
+  ->where('e.custom_path IS NOT NULL');
+?>
+<?php $entities = $q->fetchArray() ?>
+<?php foreach ($entities as $entity): ?>
+sympal_entity_<?php echo $entity['id'] ?>:
+  url:   <?php echo $entity['custom_path'] ?><?php if ($entity['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_entity, action: view, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
+  class: sfDoctrineRoute
+  options:
+    model:  Entity
+    type:   object
+    method: getEntity
+sympal_<?php echo str_replace('-', '_', $entity['slug']) ?>:
+  url:   <?php echo $entity['custom_path'] ?><?php if ($entity['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_entity, action: view, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
+  class: sfDoctrineRoute
+  options:
+    model:  Entity
+    type:   object
+    method: getEntity
+<?php endforeach; ?>
+
+<?php
+$q = Doctrine_Query::create()
+  ->from('EntityType t')
+  ->where('t.list_route_url IS NOT NULL OR t.view_route_url IS NOT NULL');
+?>
+<?php $entityTypes = $q->fetchArray() ?>
+<?php foreach ($entityTypes as $entityType): ?>
+<?php if ($entityType['list_route_url']): ?>
+sympal_entity_type_<?php echo $entityType['id'] ?>:
+  url:   <?php echo $entityType['list_route_url'] ?><?php if ($entityType['list_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_entity, action: index, sf_format: html, type: <?php echo $entityType['slug'] ?> }
+  class: sfDoctrineRoute
+  options:
+    model:  Entity
+    type: list
+    method: getEntitiesForSite
+<?php endif; ?>
+
+<?php if ($entityType['view_route_url']): ?>
+sympal_entity_view_type_<?php echo $entityType['id'] ?>:
+  url:   <?php echo $entityType['view_route_url'] ?><?php if ($entityType['view_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_entity, action: view, sf_format: html }
+  class: sfDoctrineRoute
+  options:
+    model:  Entity
+    type: object
+    method: getEntityForSite
+<?php endif; ?>
+<?php endforeach; ?>

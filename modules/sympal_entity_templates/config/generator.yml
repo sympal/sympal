@@ -1,0 +1,41 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           EntityTemplate
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_entity_templates
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        name:
+          help: Enter the name of the entity template.
+        type:
+          help: |
+            Enter what type of template this is used to render. Either to 
+            "View" an entity or a view a "List" of entities.
+        entity_type_id:
+          label: Entity Type
+          help: Choose the entity type this template is used for.
+        partial_path:
+          help: Specify the path to a partial you wish to use to render the entity or entities.
+        component_path:
+          help: Specify the path to a component you wish to use to render the entity or entities.
+        body:
+          help: You can also optionally specify the template code used to render the entity or entities below.
+      list:
+        display: [=name]
+      filter:
+        class: false
+      form:
+        display:
+          "NONE": [name]
+          "Configuration": [type, entity_type_id]
+          "Rendering Template": [partial_path, component_path, body]
+      edit:    ~
+      new:     ~

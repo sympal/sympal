@@ -1,0 +1,11 @@
+sympal_create_comment:
+  url:   /create_comment
+  param: { module: sympal_comments, action: create }
+
+sympal_comments:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                Comment
+    module:               sympal_comments
+    prefix_path:          admin/comments
+    with_wildcard_routes: true

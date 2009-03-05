@@ -1,0 +1,26 @@
+---
+Comment:
+  actAs: [Timestampable]
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    status:
+      type: enum
+      values: [Pending, Approved, Denied]
+      default: Pending
+      notnull: true
+    user_id: integer(4)
+    name: string(255)
+    subject:
+      type: string(255)
+    body:
+      type: clob
+      notnull: true
+  relations:
+    Author:
+      class: sfGuardUser
+      local: user_id
+      foreignAlias: Comments
+      onDelete: CASCADE

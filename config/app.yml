@@ -1,0 +1,29 @@
+all:
+  sympal_settings:
+    disallow_php_in_content: false
+    default_layout: sympal
+    default_site: Sympal
+    enable_result_caching: false
+    enable_query_caching: false
+    rows_per_page: 10
+    enabled_plugins:
+      - sfSympalPlugin
+      - sfSympalCommentsPlugin
+      - sfSympalI18nPlugin
+      - sfSympalMenuPlugin
+      - sfSympalPagesPlugin
+      - sfSympalRegisterPlugin
+      - sfSympalSecurityPlugin
+    Comments:
+      enabled: true
+      enable_recaptcha: true
+      recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX
+      recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb 
+      requires_auth: true
+    I18n:
+      enabled: true
+      slots: true
+      menus: true
+      Page: true
+    Page:
+      enable_comments: true

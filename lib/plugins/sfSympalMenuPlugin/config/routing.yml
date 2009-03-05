@@ -1,0 +1,7 @@
+sympal_menu_items:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                MenuItem
+    module:               sympal_menu_items
+    prefix_path:          admin/menus
+    with_wildcard_routes: true

@@ -1,0 +1,1 @@
+<?php echo get_partial('sympal_auth/signin_form', array('form' => $form)) ?>

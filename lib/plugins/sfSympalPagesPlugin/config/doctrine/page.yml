@@ -1,0 +1,49 @@
+Page:
+<?php if (sfSympalConfig::isI18nEnabled('Page')): ?>
+  actAs:
+    I18n:
+      fields: [title]
+<?php endif; ?>
+  columns:
+    id:
+      type: integer(4)
+      primary: true
+      autoincrement: true
+    entity_id:
+      type: integer(4)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    title:
+      type: string(255)
+    disable_comments: boolean
+  relations:
+    Entity:
+      class: Entity
+      foreignType: one
+      onDelete: CASCADE
+<?php if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments')): ?>
+    Comments:
+      class: Comment
+      refClass: PageComment
+      foreignAlias: Pages
+<?php endif; ?>
+
+<?php if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments')): ?>
+PageComment:
+  columns:
+    page_id:
+      type: integer(4)
+      primary: true
+    comment_id:
+      type: integer(4)
+      primary: true
+  relations:
+    Page:
+      foreignAlias: PageComments
+      onDelete: CASCADE
+    Comment:
+      foreignAlias: PageComments
+      onDelete: CASCADE
+<?php endif; ?>

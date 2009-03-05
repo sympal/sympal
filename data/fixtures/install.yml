@@ -1,0 +1,26 @@
+---
+Site:
+  Site_default:
+    title: Sympal
+    description: Flexible content management framework built on top of symfony.
+
+EntityTemplate:
+  EntityTemplate_ViewPage:
+    name: View Page
+    type: View
+    EntityType: EntityType_Page
+    partial_path: sympal_page/view
+  EntityTemplate_ListPage:
+    name: List Page
+    type: List
+    EntityType: EntityType_Page
+
+EntitySlotType:
+  EntitySlotType_Markdown:
+    name: Markdown
+  EntitySlotType_MultiLineText:
+    name: MultiLineText
+  EntitySlotType_Text:
+    name: Text
+  EntitySlotType_TinyMCE:
+    name: RichText

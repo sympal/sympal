@@ -1,0 +1,20 @@
+all:
+  doctrine:
+    class:  sfDoctrineDatabase
+
+prod:
+  doctrine:
+    param:
+      dsn:        mysql:dbname=sympal;host=localhost
+      username:   root
+
+dev:
+  doctrine:
+    param:
+      dsn:        mysql:dbname=sympal;host=localhost
+      username:   root
+
+test:
+  doctrine:
+    param:
+      dsn:  sqlite::memory:

@@ -1,0 +1,42 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           EntityType
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_entity_types
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        layout:
+          help: Choose the layout template used to render this entity type.
+        name:
+          help: |
+            Enter the name o this entity type. This is required to be the
+            same name as the entity model name.
+        label:
+          help: Enter the label used to render this entity type.
+        slug:
+          help: Enter the unique slug used to identify this entity type.
+        list_route_url:
+          help: |
+            Enter the route pattern used for linking to a list of
+            this entity type records.
+        view_route_url:
+          help: Enter the route pattern used for linking to a single entity type.
+      list:
+        display: [=name]
+      filter:
+        class: false
+      form:
+        display:
+          "NONE": [layout]
+          "Information": [name, label, slug]
+          "Routing": [list_route_url, view_route_url]
+      edit:    ~
+      new:     ~
