@@ -14,23 +14,14 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
-    $this->setPluginPath('sfSympalPlugin', dirname(__FILE__).'/../../../..');
+    $sympalPluginPath = dirname(__FILE__).'/../../../..';
+    $this->setPluginPath('sfSympalPlugin', $sympalPluginPath);
 
-    $plugins = array(
-      'sfSympalCommentsPlugin',
-      'sfSympalI18nPlugin',
-      'sfSympalMenuPlugin',
-      'sfSympalPagesPlugin',
-      'sfSympalRegisterPlugin',
-      'sfSympalSecurityPlugin',
-      'sfDoctrineGuardPlugin',
-      'sfFormExtraPlugin',
-    );
-
-    foreach ($plugins as $plugin)
+    $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
+    $embeddedPlugins = sfFinder::type('dir')->relative()->maxdepth(0)->in($embeddedPluginPath);
+    foreach ($embeddedPlugins as $plugin)
     {
-      $path = dirname(__FILE__).'/../../../../lib/plugins/';
-      $this->setPluginPath($plugin, $path . $plugin);
+     $this->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
     }
 
     $this->enableAllPluginsExcept(array('sfPropelPlugin', 'sfCompat10Plugin'));
