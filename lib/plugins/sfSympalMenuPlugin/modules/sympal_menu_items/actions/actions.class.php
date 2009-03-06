@@ -167,7 +167,7 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
       $this->redirect($entity->getRoute());
     }
 
-    if (!(sfSympalConfig::isEditMode() && $entity->userHasLock($user)))
+    if (!(sfSympalTools::isEditMode() && $entity->userHasLock($user)))
     {
       $entity->obtainLock($user);
 

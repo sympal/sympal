@@ -121,7 +121,7 @@ class sfSympalTools
 
   public static function changeLayoutWidget($form)
   {
-    $layouts = sfSympalTools::getLayouts();
+    $layouts = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getLayouts();
     array_unshift($layouts, '');
     $form->setWidget('layout', new sfWidgetFormChoice(array(
       'choices'   => $layouts
@@ -155,8 +155,7 @@ class sfSympalTools
     } else if (file_exists($path = sfConfig::get('sf_root_dir').'/'.$name)) {
       $fullPath = $path;
     } else {
-      $pluginPaths = sfSympalTools::getPlugins();
-      $path = $pluginPaths['sfSympalPlugin'] . '/templates/' . $name;
+      $path = $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir() . '/templates/' . $name;
     }
 
     if (isset($fullPath) && file_exists($fullPath))
@@ -177,66 +176,9 @@ class sfSympalTools
     $response->addStylesheet('/sfSympalPlugin/css/' . $name);
   }
 
-  public static function getLayouts()
+  public static function isEditMode()
   {
-    $layouts = array();
-    foreach (self::getPlugins() as $plugin => $path)
-    {
-      $path = $path.'/templates';
-      $find = glob($path.'/*.php');
-      $layouts = array_merge($layouts, $find);
-    }
-
-    $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
-    $layouts = array_merge($layouts, $find);
-
-    $return = array();
-    foreach ($layouts as $path)
-    {
-      $info = pathinfo($path);
-      $name = $info['filename'];
-      $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
-      $return[$path] = ucwords($name);
-    }
-    return $return;
-  }
-
-  public static function getPlugins()
-  {
-    $configuration = ProjectConfiguration::getActive();
-    $pluginPaths = $configuration->getAllPluginPaths();
-    $plugins = array();
-    foreach ($pluginPaths as $pluginName => $path)
-    {
-      if (strpos($pluginName, 'sfSympal') !== false)
-      {
-        $plugins[$pluginName] = $path;
-      }
-    }
-
-    return $plugins;
-  }
-
-  public static function getModules()
-  {
-    $modules = array();
-    $plugins = self::getPlugins();
-
-    foreach ($plugins as $plugin => $path)
-    {
-      $path = $path . '/modules';
-      $find = glob($path . '/*');
-
-      foreach ($find as $module)
-      {
-        if (is_dir($module))
-        {
-          $info = pathinfo($module);
-          $modules[] = $info['basename'];
-        }
-      }
-    }
-
-    return $modules;
+    $user = sfContext::getInstance()->getUser();
+    return $user->isAuthenticated() && $user->getAttribute('sympal_edit', false);
   }
 }

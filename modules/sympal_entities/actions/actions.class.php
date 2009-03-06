@@ -50,7 +50,7 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
       $this->redirect($entity->getRoute());
     }
 
-    if (!(sfSympalConfig::isEditMode() && $this->entity->userHasLock($user)))
+    if (!(sfSympalTools::isEditMode() && $this->entity->userHasLock($user)))
     {
       $this->entity->obtainLock($user);
 

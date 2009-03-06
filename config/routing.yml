@@ -144,7 +144,7 @@ $q = Doctrine_Query::create()
 <?php foreach ($entities as $entity): ?>
 sympal_entity_<?php echo $entity['id'] ?>:
   url:   <?php echo $entity['custom_path'] ?><?php if ($entity['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_entity, action: view, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
+  param: { module: sympal_entity, action: index, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
   class: sfDoctrineRoute
   options:
     model:  Entity
@@ -152,7 +152,7 @@ sympal_entity_<?php echo $entity['id'] ?>:
     method: getEntity
 sympal_<?php echo str_replace('-', '_', $entity['slug']) ?>:
   url:   <?php echo $entity['custom_path'] ?><?php if ($entity['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_entity, action: view, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
+  param: { module: sympal_entity, action: index, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
   class: sfDoctrineRoute
   options:
     model:  Entity
@@ -181,7 +181,7 @@ sympal_entity_type_<?php echo $entityType['id'] ?>:
 <?php if ($entityType['view_route_url']): ?>
 sympal_entity_view_type_<?php echo $entityType['id'] ?>:
   url:   <?php echo $entityType['view_route_url'] ?><?php if ($entityType['view_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_entity, action: view, sf_format: html }
+  param: { module: sympal_entity, action: index, sf_format: html }
   class: sfDoctrineRoute
   options:
     model:  Entity

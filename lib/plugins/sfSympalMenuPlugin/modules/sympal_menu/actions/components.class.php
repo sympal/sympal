@@ -40,7 +40,7 @@ class sympal_menuComponents extends sfComponents
         ->leftJoin('m.RelatedEntity e')
         ->andWhere('m.level > 0');
 
-      if (!sfSympalConfig::isEditMode())
+      if (!sfSympalTools::isEditMode())
       {
         $q->andWhere('m.is_published = 1');
       }

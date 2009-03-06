@@ -21,7 +21,7 @@ foreach ($menuItems as $menuItem)
     isStatusCode('200')->
     with('request')->begin()->
       isParameter('module', 'sympal_entity')->
-      isParameter('action', $menuItem->getLabel() == 'Pages' ? 'index':'view')->
+      isParameter('action', 'index')->
     end()->
     with('response')->begin()->
       contains((string) $menuItem->getBreadcrumbs())->

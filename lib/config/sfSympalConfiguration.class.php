@@ -1,0 +1,197 @@
+<?php
+
+class sfSympalConfiguration
+{
+  protected
+    $_dispatcher,
+    $_projectConfiguration,
+    $_plugins,
+    $_modules,
+    $_layouts;
+
+  public function __construct(sfEventDispatcher $dispatcher, ProjectConfiguration $projectConfiguration)
+  {
+    $this->_dispatcher = $dispatcher;
+    $this->_projectConfiguration = $projectConfiguration;
+  }
+
+  public static function getSympalConfiguration(sfEventDispatcher $dispatcher, ProjectConfiguration $projectConfiguration)
+  {
+    $appDir = sfConfig::get('sf_app_dir');
+    $info = pathinfo($appDir);
+    $appName = $info['filename'];
+
+    if (is_dir($appDir) && file_exists($path = $appDir.'/config/'.$appName.'SympalConfiguration.class.php'))
+    {  
+      require_once(sfConfig::get('sf_config_dir').'/SympalProjectConfiguration.class.php');
+      require_once($path);
+      $className = $appName.'SympalConfiguration';
+    } else if (file_exists($path = sfConfig::get('sf_config_dir').'/SympalProjectConfiguration.class.php')) {
+      require_once($path);
+      $className = 'SympalProjectConfiguration';
+    } else {
+      $className = 'sfSympalConfiguration';
+    }
+
+    $sympalConfiguration = new $className($dispatcher, $projectConfiguration);
+    $sympalConfiguration->initialize();
+
+    return $sympalConfiguration;
+  }
+
+  public function initialize()
+  {
+    sfConfig::set('sf_enabled_modules', array_merge(sfConfig::get('sf_enabled_modules', array()), $this->getModules()));
+
+    sfConfig::set('sf_admin_module_web_dir', '/sfSympalPlugin');
+
+    sfConfig::set('sf_login_module', 'sympal_auth');
+    sfConfig::set('sf_login_action', 'login');
+
+    sfConfig::set('sf_secure_module', 'sympal_frontend');
+    sfConfig::set('sf_secure_action', 'secure');
+
+    sfConfig::set('sf_error_404_module', 'sympal_frontend');
+    sfConfig::set('sf_error_404_action', 'error404');
+
+    sfConfig::set('sf_module_disabled_module', 'sympal_frontend');
+    sfConfig::set('sf_module_disabled_action', 'disabled');
+
+    $options = array('baseClassName' => 'sfSympalDoctrineRecord');
+    $options = array_merge(sfConfig::get('doctrine_model_builder_options', array()), $options);
+    sfConfig::set('doctrine_model_builder_options', $options);
+
+    $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
+  }
+
+  public function bootstrap()
+  {
+    $this->_projectConfiguration->loadHelpers(array('Cmf'));
+    
+    $this->loadDoctrineCache();
+
+    if (sfConfig::get('sf_debug'))
+    {
+      $this->checkPluginDependencies();
+    }
+
+    $response = sfContext::getInstance()->getResponse();
+    $response->setTitle('Sympal');
+  }
+
+  public function loadDoctrineCache()
+  {
+    $manager = Doctrine_Manager::getInstance();
+    $manager->setAttribute('auto_accessor_override', true);
+
+    if (sfSympalConfig::get('enable_query_caching') || sfSympalConfig::get('enable_result_caching'))
+    {
+      $manager->setAttribute('use_dql_callbacks', true);
+      $driver = new sfSympalDoctrineCacheDriver();
+    }
+
+    if (sfSympalConfig::get('enable_query_caching'))
+    {
+      $manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $driver);
+    }
+
+    if (sfSympalConfig::get('enable_result_caching'))
+    {
+      $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $driver);
+    }
+  }
+
+  public function checkPluginDependencies()
+  {
+    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
+    {
+      if (strpos($pluginName, 'sfSympal') !== false)
+      {
+        $pluginConfiguration = $this->_projectConfiguration->getPluginConfiguration($pluginName);
+        if (isset($pluginConfiguration->dependencies) && !empty($pluginConfiguration->dependencies))
+        {
+          sfSympalTools::checkPluginDependencies($pluginConfiguration, $pluginConfiguration->dependencies);
+        } else {
+          throw new sfException(
+            sprintf(
+              'You must specify dependencies for %s',
+              $pluginName
+            )
+          );
+        }
+      }
+    }
+  }
+
+  public function getPlugins()
+  {
+    if (!$this->_plugins)
+    {
+      $configuration = ProjectConfiguration::getActive();
+      $pluginPaths = $configuration->getAllPluginPaths();
+      $this->_plugins = array();
+      foreach ($pluginPaths as $pluginName => $path)
+      {
+        if (strpos($pluginName, 'sfSympal') !== false)
+        {
+          $this->_plugins[$pluginName] = $path;
+        }
+      }
+    }
+
+    return $this->_plugins;
+  }
+
+  public function getModules()
+  {
+    if (!$this->_modules)
+    {
+      $this->_modules = array();
+      $plugins = $this->getPlugins();
+
+      foreach ($plugins as $plugin => $path)
+      {
+        $path = $path . '/modules';
+        $find = glob($path . '/*');
+
+        foreach ($find as $module)
+        {
+          if (is_dir($module))
+          {
+            $info = pathinfo($module);
+            $this->_modules[] = $info['basename'];
+          }
+        }
+      }
+    }
+
+    return $this->_modules;
+  }
+
+  public function getLayouts()
+  {
+    if (!$this->_layouts)
+    {
+      $layouts = array();
+      foreach ($this->getPlugins() as $plugin => $path)
+      {
+        $path = $path.'/templates';
+        $find = glob($path.'/*.php');
+        $layouts = array_merge($layouts, $find);
+      }
+
+      $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
+      $layouts = array_merge($layouts, $find);
+
+      $this->_layouts = array();
+      foreach ($layouts as $path)
+      {
+        $info = pathinfo($path);
+        $name = $info['filename'];
+        $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
+        $this->_layouts[$path] = ucwords($name);
+      }
+    }
+    return $this->_layouts;
+  }
+}

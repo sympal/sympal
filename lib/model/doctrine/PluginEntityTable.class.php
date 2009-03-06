@@ -86,7 +86,7 @@ class PluginEntityTable extends Doctrine_Table
       ->leftJoin('e.MenuItem mm')
       ->leftJoin('m.Site si');
 
-    if (!sfSympalConfig::isEditMode())
+    if (!sfSympalTools::isEditMode())
     {
       $q->andWhere('m.is_published = 1 OR mm.is_published = 1')
         ->andWhere('e.is_published = 1');

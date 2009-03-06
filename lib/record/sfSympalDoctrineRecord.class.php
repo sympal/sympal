@@ -5,10 +5,11 @@ abstract class sfSympalDoctrineRecord extends sfDoctrineRecord
   {
     $table = $this->getTable();
 
-    if ($table->hasRelation('Entity') || $table->hasRelation('Entity'))
+    if ($table->hasRelation('Entity'))
     {
       $this->unshiftFilter(new sfSympalDoctrineRecordFilter());
     }
+
     parent::construct();
   }
 

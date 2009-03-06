@@ -15,7 +15,7 @@ function get_cmf_editor($menuItem = null, $entity = null)
   $menuItem = $menuItem ? $menuItem:sfSympalTools::getCurrentMenuItem();
   $entity = $entity ? $entity:sfSympalTools::getCurrentEntity();
 
-  if (sfSympalConfig::isEditMode() && $entity && $menuItem)
+  if (sfSympalTools::isEditMode() && $entity && $menuItem)
   {
     $editor  = get_component('sympal_editor', 'tools', array('entity' => $entity, 'menuItem' => $menuItem));
     $editor .= get_slot('sympal_editors');
