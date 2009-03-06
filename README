@@ -11,7 +11,7 @@ First you need to install Sympal by installing the `sfSympalPlugin`.
 
     $ svn co http://svn.symfony-project.com/plugins/sfSympalPlugin/trunk plugins/sfSympalPlugin
 
-## Enabling sfSympalPlugin
+### Enabling sfSympalPlugin
 
 The `sfSympalPlugin` is the core plugin that makes up the Sympal core. It contains several other plugins inside that are a part of the core. Because of this enabling `sfSympalPlugin` requires a little extra work by you in your `ProjectConfiguration` class. Open `config/ProjectConfiguration.class.php` in your favorite editor and place the following code in the `setup()` method.
 
@@ -29,7 +29,7 @@ The `sfSympalPlugin` is the core plugin that makes up the Sympal core. It contai
 > **NOTE**
 > The above code assumes you placed `sfSympalPlugin` in your plugins folder. If you placed it somewhere else then you will need to adjust the paths above.
 
-## Finish Installation
+### Finish Installation
 
 In order for Sympal to work properly you must have at least one application created. So, if you do not already have an application then create one named `frontend`.
 
@@ -51,3 +51,29 @@ Now we are ready to finish up and run the install task for Sympal:
     $ ./symfony sympal:install
 
 The above task will initialize your database for Sympal and setup a basic site. Now you should be able to pull the frontend application up in your web browser and you will see the default Sympal site.
+
+## Tests
+
+Sympal comes with unit and functional tests. You can run the tests by navigating to `sfSympalPlugin/tests/bin` and executing `prove.php`.
+
+    $ php prove.php
+
+You can also execute each individual unit or functional test by navigating to the file and executing it directly.
+
+    $ cd sfSympalPlugin/tests/functional
+    $ php SanityCheckTest.php
+
+### Test Application
+
+The test suite that we talked about above uses a test symfony application that is included in `sfSympalPlugin/tests/fixtures/project`.
+
+It looks for the path to the symfony libs in a variable named `$_SERVER['SYMFONY']`. For the command line you can set this with the following command.
+
+    $ export SYMFONY=/path/to/symfony/lib
+
+If you want to run the test project from the web browser you will need to modify `sfSympalPlugin/tests/fixtures/project/config/ProjectConfiguration.class.php` and add some code to the top like the following.
+
+    [php]
+    $_SERVER['SYMFONY'] = '/path/to/symfony/lib';
+
+You need to set the correct path to the symfony lib folder.

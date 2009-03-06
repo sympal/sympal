@@ -5,9 +5,9 @@ class sfSympalConfiguration
   protected
     $_dispatcher,
     $_projectConfiguration,
-    $_plugins,
-    $_modules,
-    $_layouts;
+    $_plugins = array(),
+    $_modules = array(),
+    $_layouts = array();
 
   public function __construct(sfEventDispatcher $dispatcher, ProjectConfiguration $projectConfiguration)
   {
@@ -35,6 +35,8 @@ class sfSympalConfiguration
 
     $sympalConfiguration = new $className($dispatcher, $projectConfiguration);
     $sympalConfiguration->initialize();
+    $sympalConfiguration->setup();
+    $sympalConfiguration->configure();
 
     return $sympalConfiguration;
   }
@@ -62,6 +64,14 @@ class sfSympalConfiguration
     sfConfig::set('doctrine_model_builder_options', $options);
 
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
+  }
+
+  public function setup()
+  {
+  }
+
+  public function configure()
+  {
   }
 
   public function bootstrap()
