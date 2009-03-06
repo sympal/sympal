@@ -76,9 +76,7 @@ class sfSympalConfiguration
 
   public function bootstrap()
   {
-    $this->_projectConfiguration->loadHelpers(array('Cmf'));
-    
-    $this->loadDoctrineCache();
+    $this->_projectConfiguration->loadHelpers(array('Sympal'));
 
     if (sfConfig::get('sf_debug'))
     {
@@ -87,28 +85,6 @@ class sfSympalConfiguration
 
     $response = sfContext::getInstance()->getResponse();
     $response->setTitle('Sympal');
-  }
-
-  public function loadDoctrineCache()
-  {
-    $manager = Doctrine_Manager::getInstance();
-    $manager->setAttribute('auto_accessor_override', true);
-
-    if (sfSympalConfig::get('enable_query_caching') || sfSympalConfig::get('enable_result_caching'))
-    {
-      $manager->setAttribute('use_dql_callbacks', true);
-      $driver = new sfSympalDoctrineCacheDriver();
-    }
-
-    if (sfSympalConfig::get('enable_query_caching'))
-    {
-      $manager->setAttribute(Doctrine::ATTR_RESULT_CACHE, $driver);
-    }
-
-    if (sfSympalConfig::get('enable_result_caching'))
-    {
-      $manager->setAttribute(Doctrine::ATTR_QUERY_CACHE, $driver);
-    }
   }
 
   public function checkPluginDependencies()

@@ -49,6 +49,13 @@ MenuItem:
         Site: Site_default
         label: Markdown Examples
         RelatedEntity: Entity_Page_markdown_examples
+      MenuItem_primary_readme:
+        name: README
+        is_published: true
+        EntityType: EntityType_Page
+        Site: Site_default
+        label: README
+        RelatedEntity: Entity_Page_readme
   MenuItem_footer:
     name: footer
     is_published: true
@@ -70,6 +77,13 @@ MenuItem:
         label: Markdown Examples
         Site: Site_default
         RelatedEntity: Entity_Page_markdown_examples
+        EntityType: EntityType_Page
+      MenuItem_footer_readme:
+        name: README
+        is_published: true
+        label: README
+        Site: Site_default
+        RelatedEntity: Entity_Page_readme
         EntityType: EntityType_Page
 
 Entity:
@@ -110,8 +124,24 @@ Entity:
     is_published: true
     Slots: [Markdown_examples_slot_title, Markdown_examples_slot_body]
     CreatedBy: admin
+  Entity_Page_readme:
+    Type: EntityType_Page
+    slug: readme
+    Site: Site_default
+    is_published: true
+    Slots: [Readme_slot_title, Readme_slot_body]
+    CreatedBy: admin
 
 EntitySlot:
+  Readme_slot_title:
+    name: title
+    Type: EntitySlotType_Text
+    value: README
+  Readme_slot_body:
+    name: body
+    Type: EntitySlotType_Markdown
+    value: |
+      [?php echo file_get_contents($sf_context->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/README') ?]
   Register_slot_title:
     name: title
     Type: EntitySlotType_Text
@@ -262,6 +292,10 @@ Page:
     name: Markdown Examples
     Entity: Entity_Page_markdown_examples
     title: Markdown Examples
+  readme:
+    name: README
+    Entity: Entity_Page_readme
+    title: README
 
 EntityType:
   EntityType_Page:

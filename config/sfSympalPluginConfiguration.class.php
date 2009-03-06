@@ -33,8 +33,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form = $event->getSubject();
 
     $form->addSetting(null, 'disallow_php_in_content', 'Disable PHP in Content', 'InputCheckbox', 'Boolean');
-    $form->addSetting(null, 'enable_result_caching', 'Enable Result Caching', 'InputCheckbox', 'Boolean');
-    $form->addSetting(null, 'enable_query_caching', 'Enable Query Caching', 'InputCheckbox', 'Boolean');
+    $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
   }
 
   public function loadAdminBar(sfEvent $event)

@@ -13,38 +13,6 @@ abstract class sfSympalDoctrineRecord extends sfDoctrineRecord
     parent::construct();
   }
 
-  public function preDqlSelect($event)
-  {
-    if (!sfConfig::get('sf_cache') || (!sfSympalConfig::get('use_query_caching') && !sfSympalConfig::get('use_result_caching')))
-    {
-      return;
-    }
-    $record = $event->getInvoker();
-    $query = $event->getQuery();
-
-    if (sfSympalConfig::get('enable_query_caching'))
-    {
-      $query->useCache(true);
-    }
-
-    if (sfSympalConfig::get('enable_result_caching'))
-    {
-      $query->useResultCache(true);
-    }
-  }
-
-  public function postInsert($event)
-  {
-    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir').'/sympal/*');
-    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir').'/*/*/config/*');
-    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir').'/*/*/template/*');
-  }
-
-  public function postUpdate($event)
-  {
-    $this->postInsert($event);
-  }
-
   public function save(Doctrine_Connection $conn = null)
   {
     $table = $this->getTable();

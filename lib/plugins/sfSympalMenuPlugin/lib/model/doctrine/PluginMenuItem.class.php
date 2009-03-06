@@ -161,15 +161,7 @@ abstract class PluginMenuItem extends BaseMenuItem
             $this->_breadcrumbs->addNode($this->getLabel());
           }
         } else {
-          if ($this->entity_id)
-          {
-            $entity = $this->getMainEntity();
-
-            $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
-            $this->_breadcrumbs->addNode($entity->getHeaderTitle());
-          } else {
-            $this->_breadcrumbs->addNode($this->getLabel());
-          }
+          $this->_breadcrumbs->addNode($this->getLabel());
         }
       }
     }
