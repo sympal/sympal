@@ -7,7 +7,14 @@ $t = new lime_test(34, new lime_output_color());
 
 $page = new Page();
 $page->name = 'Testing this out';
-$page->title = 'Body of the page...';
+
+$entity = new Entity();
+$entity->entity_type_id = Doctrine::getTable('EntityType')->findOneByName('Page')->id;
+$entity->slug = 'testing-this-out';
+$entity->site_id = Doctrine::getTable('Site')->findOneByTitle('Sympal')->id;
+$entity->save();
+
+$page->Entity = $entity;
 $page->save();
 
 $menuItem = new MenuItem();
@@ -24,7 +31,6 @@ $entities = Doctrine::getTable('Entity')
   ->leftJoin('e.Site s')
   ->leftJoin('e.Type t')
   ->leftJoin('e.Page p')
-  ->leftJoin('p.Translation tr')
   ->andWhere('e.slug = ?', 'testing-this-out')
   ->fetchArray();
 

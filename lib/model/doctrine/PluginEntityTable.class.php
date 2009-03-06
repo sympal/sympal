@@ -27,7 +27,12 @@ class PluginEntityTable extends Doctrine_Table
 
     if ($type)
     {
-      $q = Doctrine::getTable($type->getName())->getEntityQuery();
+      $table = Doctrine::getTable($type->getName());
+      if (!method_exists($table, 'getEntityQuery'))
+      {
+        throw new sfException(get_class($table).' class must have a callable method named "getEntityQuery()".');
+      }
+      $q = $table->getEntityQuery();
     } else {
       $q = $this->createQuery('e');
     }

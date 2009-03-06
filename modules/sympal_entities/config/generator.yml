@@ -45,12 +45,7 @@ generator:
           _edit:
           _delete:
       filter:  ~
-      form:
-        display:
-          "Configuration": [site_id, entity_template_id, master_menu_item_id, layout]
-          "Publish": [is_published, date_published]
-          "Routing": [custom_path, slug]
-          "Entity": [Entity]
+      form:    ~
       edit:
         title: "Editing Entity #%%id%%"
         actions:

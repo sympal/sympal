@@ -4,7 +4,7 @@ class sympal_menuComponents extends sfComponents
 {
   public function executeBreadcrumbs()
   {
-    $this->breadcrumbs = $this->menuItem->getBreadcrumbs();
+    $this->breadcrumbs = $this->menuItem->getBreadcrumbs($this->entity);
   }
 
   public function executeMenu()
@@ -47,9 +47,11 @@ class sympal_menuComponents extends sfComponents
 
       $tree->setBaseQuery($q);
       $this->menuItems = $tree->fetchTree($this->menuItemNode->getRootValue());
-
-      $hierarchy = Doctrine::getTable('MenuItem')->toHierarchy($this->menuItems->toArray());
-      $this->_buildMenuHierarchy($hierarchy, $this->menu);
+      if ($this->menuItems)
+      {
+        $hierarchy = Doctrine::getTable('MenuItem')->toHierarchy($this->menuItems->toArray());
+        $this->_buildMenuHierarchy($hierarchy, $this->menu);
+      }
 
       $tree->resetBaseQuery();
     }

@@ -146,7 +146,7 @@ abstract class PluginEntity extends BaseEntity
     } else if ($layout = $this->getSite()->getLayout()) {
       return $layout;
     } else {
-      return $this->getSite()->getSlug();
+      return sfSympalConfig::get('default_layout', null, $this->getSite()->getSlug());
     }
   }
 }

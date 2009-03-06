@@ -1,9 +1,4 @@
 Page:
-<?php if (sfSympalConfig::isI18nEnabled('Page')): ?>
-  actAs:
-    I18n:
-      fields: [title]
-<?php endif; ?>
   columns:
     id:
       type: integer(4)
@@ -15,8 +10,6 @@ Page:
     name:
       type: string(255)
       notnull: true
-    title:
-      type: string(255)
     disable_comments: boolean
   relations:
     Entity:

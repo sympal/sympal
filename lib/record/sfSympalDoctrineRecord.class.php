@@ -1,52 +1,6 @@
 <?php
 abstract class sfSympalDoctrineRecord extends sfDoctrineRecord
 {
-  public function construct()
-  {
-    $table = $this->getTable();
-
-    if ($table->hasRelation('Entity'))
-    {
-      $this->unshiftFilter(new sfSympalDoctrineRecordFilter());
-    }
-
-    parent::construct();
-  }
-
-  public function save(Doctrine_Connection $conn = null)
-  {
-    $table = $this->getTable();
-
-    if ($table->hasRelation('Entity') && $this->isNew())
-    {
-      $class = get_class($this);
-      $this->Entity->slug = Doctrine_Inflector::urlize((string) $this);
-      foreach (Doctrine::getTable('EntityType')->getRepository() as $entityType)
-      {
-        if ($entityType->name == $class)
-        {
-          $this->Entity->Type = $entityType;
-          break;
-        }
-      }
-      $this->Entity->Type->setName($class);
-      $this->Entity->Type->setLabel($class);
-
-      $site = sfSympalTools::getCurrentSite();
-      foreach (Doctrine::getTable('Site')->getRepository() as $siteObj)
-      {
-        if ($siteObj->slug == $site)
-        {
-          $this->Entity->Site = $siteObj;
-          break;
-        }
-      }
-      $this->Entity->Site->setTitle($site);
-    }
-
-    return parent::save($conn);
-  }
-
   public function getI18n($name)
   {
     if ($this->getTable()->hasRelation('Translation'))

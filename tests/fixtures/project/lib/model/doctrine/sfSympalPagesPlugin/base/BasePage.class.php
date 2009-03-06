@@ -11,7 +11,6 @@ abstract class BasePage extends sfSympalDoctrineRecord
         $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('entity_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
-        $this->hasColumn('title', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('disable_comments', 'boolean', null, array('type' => 'boolean'));
     }
 
@@ -27,8 +26,5 @@ abstract class BasePage extends sfSympalDoctrineRecord
 
         $this->hasMany('PageComment as PageComments', array('local' => 'id',
                                                             'foreign' => 'page_id'));
-
-        $i18n0 = new Doctrine_Template_I18n(array('fields' => array(0 => 'title')));
-        $this->actAs($i18n0);
     }
 }

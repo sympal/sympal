@@ -84,7 +84,7 @@ class sfSympalConfiguration
     }
 
     $response = sfContext::getInstance()->getResponse();
-    $response->setTitle('Sympal');
+    $response->setTitle(sfSympalTools::getCurrentSite());
   }
 
   public function checkPluginDependencies()

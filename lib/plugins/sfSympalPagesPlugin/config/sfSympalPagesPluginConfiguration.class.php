@@ -17,6 +17,5 @@ class sfSympalPagesPluginConfiguration extends sfPluginConfiguration
     $form = $event->getSubject();
 
     $form->addSetting('Page', 'enable_comments', 'Enable Comments', 'InputCheckbox', 'Boolean');
-    $form->addSetting('I18n', 'Page', 'Page', 'InputCheckbox', 'Boolean');
   }
 }

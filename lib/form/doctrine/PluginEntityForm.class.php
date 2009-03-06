@@ -16,7 +16,6 @@ abstract class PluginEntityForm extends BaseEntityForm
     unset(
       $this['created_at'],
       $this['updated_at'],
-      $this['entity_type_id'],
       $this['locked_by'],
       $this['created_by'],
       $this['last_updated_by']
@@ -24,9 +23,13 @@ abstract class PluginEntityForm extends BaseEntityForm
 
     sfSympalTools::changeLayoutWidget($this);
 
-    if (!isset($this->object->Type))
+    $this->updateDefaultsFromObject();
+
+    if (!$this->object->entity_type_id)
     {
       $this->object->Type = Doctrine::getTable('EntityType')->findOneBySlug('page');
+    } else {
+      $this->object->Type;
     }
 
     $type = ($this->object->Type->name ? $this->object->Type->name:'Page') . 'Form';
@@ -34,20 +37,13 @@ abstract class PluginEntityForm extends BaseEntityForm
     $typeForm = new $type($this->object->getRecord());
     unset($typeForm['id'], $typeForm['entity_id']);
     sfSympalTools::embedI18n($this->object->Type->name, $typeForm);
-    $this->embedForm('Entity', $typeForm);
-    $this->widgetSchema['Entity']->setLabel($this->object->Type->name . ' Information');
+    $this->embedForm($this->object->Type->name, $typeForm);
 
     $q = Doctrine_Query::create()
       ->from('MenuItem m')
       ->orderBy('m.lft ASC');
 
     $this->widgetSchema['site_id']->setOption('add_empty', true);
-
-    foreach ($this->object->Slots as $slot)
-    {
-      $entitySlotForm = new EntitySlotForm($slot);
-      unset($entitySlotForm['id'], $entitySlotForm['entity_id'], $entitySlotForm['name']);
-      $this->embedForm($slot->getName(), $entitySlotForm);
-    }
+    $this->widgetSchema['entity_type_id'] = new sfWidgetFormInputHidden();
   }
 }

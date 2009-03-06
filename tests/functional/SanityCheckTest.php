@@ -24,7 +24,7 @@ foreach ($menuItems as $menuItem)
       isParameter('action', 'index')->
     end()->
     with('response')->begin()->
-      contains((string) $menuItem->getBreadcrumbs())->
+      contains((string) $menuItem->getBreadcrumbs($entity))->
       contains(render_entity_slot($entity->getSlots()->getFirst()))->
       contains(render_entity_slot($entity->getSlots()->getLast()))->
     end();

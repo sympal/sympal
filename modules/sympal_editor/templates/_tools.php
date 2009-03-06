@@ -44,7 +44,7 @@
               <?php if ($sf_request->getParameter('module') == 'sympal_entities'): ?>
                 <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Inline', $entity->getRoute()) ?></li>
               <?php else: ?>
-                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Backend', '@sympal_entities_edit?slug='.$entity['slug']) ?></li>
+                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Backend', '@sympal_entities_edit?id='.$entity['id']) ?></li>
               <?php endif; ?>
               <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Menu Item', '@sympal_menu_items_edit?id='.$menuItem['id']) ?></li>
             <?php else: ?>
@@ -57,7 +57,9 @@
             <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$locks[0]->getHeaderTitle(), $locks[0]->getRoute()) ?></li>
           <?php endif; ?>
 
-          <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Template', '@sympal_entity_templates_edit?id='.$entity->getTemplate()->getId()) ?></li>
+          <?php if ($entity->getTemplate()): ?>
+            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Template', '@sympal_entity_templates_edit?id='.$entity->getTemplate()->getId()) ?></li>
+          <?php endif; ?>
 
           <?php if ($entity['is_published']): ?>
             <li>

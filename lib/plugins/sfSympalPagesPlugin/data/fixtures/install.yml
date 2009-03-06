@@ -272,30 +272,24 @@ Page:
   login:
     name: Login
     Entity: Entity_Page_login
-    title: Login
     disable_comments: true
   register:
     name: Register
     Entity: Entity_Page_register
-    title: Register
     disable_comments: true
   home:
     name: Home
     Entity: Entity_Page_home
-    title: Home
     disable_comments: true
   about:
     name: About
     Entity: Entity_Page_about
-    title: About
   markdown_examples:
     name: Markdown Examples
     Entity: Entity_Page_markdown_examples
-    title: Markdown Examples
   readme:
     name: README
     Entity: Entity_Page_readme
-    title: README
 
 EntityType:
   EntityType_Page:

@@ -38,23 +38,17 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
     $this->setTemplate('new');
   }
 
-  public function executeEdit(sfWebRequest $request)
+  public function executeCreate(sfWebRequest $request)
   {
-    parent::executeEdit($request);
+    $this->entity = new Entity();
 
-    $user = $this->getUser()->getGuardUser();
+    $type = Doctrine::getTable('EntityType')->find($request->getParameter('entity[entity_type_id]'));
+    $this->entity->setType($type);
 
-    if ($this->entity->locked_by && !$this->entity->userHasLock($user))
-    {
-      $this->getUser()->setFlash('error', 'Entity is already locked and being edited by ' . $this->entity->LockedBy->username);
-      $this->redirect($entity->getRoute());
-    }
+    $this->form = new EntityForm($this->entity);
 
-    if (!(sfSympalTools::isEditMode() && $this->entity->userHasLock($user)))
-    {
-      $this->entity->obtainLock($user);
+    $this->processForm($request, $this->form);
 
-      $this->getUser()->setFlash('notice', 'Entity lock obtained successfully! Be sure to release the lock when you are done editing!');
-    }
+    $this->setTemplate('new');
   }
 }

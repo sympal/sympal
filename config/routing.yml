@@ -127,9 +127,6 @@ sympal_entities:
     module:               sympal_entities
     prefix_path:          admin/entities
     with_wildcard_routes: true
-    column:               slug
-  requirements:
-    slug:
 
 sympal_entities_create_type:
   url:    /admin/entities/create/:type

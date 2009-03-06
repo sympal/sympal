@@ -13,7 +13,6 @@ CREATE TABLE menu_item_translation (id INTEGER, label VARCHAR(255), lang CHAR(2)
 CREATE TABLE menu_item (id INTEGER PRIMARY KEY AUTOINCREMENT, site_id INTEGER NOT NULL, entity_type_id INTEGER, entity_id INTEGER, name VARCHAR(255) NOT NULL, route VARCHAR(255), has_many_entities INTEGER DEFAULT '0', requires_auth INTEGER, requires_no_auth INTEGER, is_primary INTEGER, is_published INTEGER, date_published DATETIME, root_id INTEGER, lft INTEGER, rgt INTEGER, level INTEGER);
 CREATE TABLE menu_item_group (menu_item_id INTEGER, group_id INTEGER, PRIMARY KEY(menu_item_id, group_id));
 CREATE TABLE menu_item_permission (menu_item_id INTEGER, permission_id INTEGER, PRIMARY KEY(menu_item_id, permission_id));
-CREATE TABLE page_translation (id INTEGER, title VARCHAR(255), lang CHAR(2), PRIMARY KEY(id, lang));
 CREATE TABLE page (id INTEGER PRIMARY KEY AUTOINCREMENT, entity_id INTEGER NOT NULL, name VARCHAR(255) NOT NULL, disable_comments INTEGER);
 CREATE TABLE page_comment (page_id INTEGER, comment_id INTEGER, PRIMARY KEY(page_id, comment_id));
 CREATE TABLE entity (id INTEGER PRIMARY KEY AUTOINCREMENT, site_id INTEGER NOT NULL, entity_type_id INTEGER NOT NULL, entity_template_id INTEGER, master_menu_item_id INTEGER, last_updated_by INTEGER, created_by INTEGER, locked_by INTEGER, is_published INTEGER, date_published DATETIME, custom_path VARCHAR(255), layout VARCHAR(255), slug VARCHAR(255), created_at DATETIME, updated_at DATETIME);

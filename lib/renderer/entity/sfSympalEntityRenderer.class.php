@@ -37,7 +37,7 @@ class sfSympalEntityRenderer
     $context->getConfiguration()->loadHelpers(array('Tag', 'Url'));
 
     $response = $context->getResponse();
-    $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
+    $title = $this->_menuItem->getBreadcrumbs($this->_entity)->getPathAsString();
     $title = $title ? $title:$this->_menuItem->Site->title;
     $response->setTitle($title);
 
@@ -111,16 +111,16 @@ class sfSympalEntityRenderer
     $key = $data instanceof Doctrine_Collection ? 'entities':'entity';
     $options = array($key => $data);
 
-    if ($partialPath = $template->getPartialPath())
+    if ($template && $partialPath = $template->getPartialPath())
     {
       return get_partial($partialPath, $options);
     }
-    else if ($componentPath = $template->getComponentPath())
+    else if ($template && $componentPath = $template->getComponentPath())
     {
       list($module, $action) = explode('/', $componentPath);
       return get_component($module, $action, $options);
     }
-    else if ($body = $template->getBody())
+    else if ($template && $body = $template->getBody())
     {
       return sfSympalTools::renderContent($body, $options);;
     } else {

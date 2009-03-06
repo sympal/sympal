@@ -21,13 +21,12 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   protected function addSortQuery($query)
   {
-    //don't allow sorting; always sort by tree and lft
     $query->addOrderBy('root_id, lft');
   }
   
   public function executeBatch(sfWebRequest $request)
   {
-    if ("batchOrder" == $request->getParameter('batch_action'))
+    if ($request->getParameter('batch_action') == 'batchOrder')
     {
       return $this->executeBatchOrder($request);
     }
@@ -38,20 +37,18 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executeBatchOrder(sfWebRequest $request)
   {
     $newparent = $request->getParameter('newparent');
-    
-    //manually validate newparent parameter
-    
-    //make list of all ids
+
     $ids = array();
     foreach ($newparent as $key => $val)
     {
       $ids[$key] = true;
       if (!empty($val))
+      {
         $ids[$val] = true;
+      }
     }
     $ids = array_keys($ids);
-    
-    //validate if all id's exist
+
     $validator = new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem'));
     try
     {
@@ -60,7 +57,7 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
       // the id's validate, now update the menu_item
       $count = 0;
-      $flash = "";
+      $flash = '';
 
       foreach ($newparent as $id => $parentId)
       {
@@ -151,27 +148,6 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
     else
     {
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.');
-    }
-  }
-
-  public function executeEdit(sfWebRequest $request)
-  {
-    parent::executeEdit($request);
-
-    $user = $this->getUser()->getGuardUser();
-    $entity = $this->menu_item->getMainEntity();
-
-    if ($entity->locked_by && !$entity->userHasLock($user))
-    {
-      $this->getUser()->setFlash('error', 'Related entity is already locked and being edited by ' . $tentity->LockedBy->username);
-      $this->redirect($entity->getRoute());
-    }
-
-    if (!(sfSympalTools::isEditMode() && $entity->userHasLock($user)))
-    {
-      $entity->obtainLock($user);
-
-      $this->getUser()->setFlash('notice', 'Related entity lock obtained successfully! Be sure to release the lock when you are done editing!');
     }
   }
 }

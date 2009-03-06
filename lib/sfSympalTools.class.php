@@ -149,13 +149,15 @@ class sfSympalTools
     $response = sfContext::getInstance()->getResponse();
     $configuration = $context->getConfiguration();
 
+    $bundledLayout = false;
     if (file_exists($name))
     {
       $fullPath = $name;
-    } else if (file_exists($path = sfConfig::get('sf_root_dir').'/'.$name)) {
+    } else if (file_exists($path = sfConfig::get('sf_app_dir').'/templates/'.$name.'.php')) {
       $fullPath = $path;
     } else {
       $path = $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir() . '/templates/' . $name;
+      $bundledLayout = true;
     }
 
     if (isset($fullPath) && file_exists($fullPath))
@@ -170,10 +172,14 @@ class sfSympalTools
     sfConfig::set('symfony.view.sympal_frontend_error404_layout', $path);
     sfConfig::set('symfony.view.sympal_frontend_secure_layout', $path);
 
-    $response->addStylesheet('http://yui.yahooapis.com/2.5.1/build/reset-fonts-grids/reset-fonts-grids.css', 'first');
-    $response->addStylesheet('/sfSympalPlugin/css/global');
-    $response->addStylesheet('/sfSympalPlugin/css/default');
-    $response->addStylesheet('/sfSympalPlugin/css/' . $name);
+    if ($bundledLayout)
+    {
+      $response->addStylesheet('/sfSympalPlugin/css/global');
+      $response->addStylesheet('/sfSympalPlugin/css/default');
+      $response->addStylesheet('/sfSympalPlugin/css/' . $name);
+    } else {
+      $response->addStylesheet($name, 'last');
+    }
   }
 
   public static function isEditMode()

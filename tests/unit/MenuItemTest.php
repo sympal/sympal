@@ -19,7 +19,7 @@ $t->is((string) $menuItem, '- About');
 $t->is($menuItem->getMainEntity()->getHeaderTitle(), 'About');
 $t->is($menuItem->getLabel(), 'About');
 $t->is($menuItem->getItemRoute(), '@sympal_entity_view_type_1?slug=about');
-$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Sympal > About');
+$t->is($menuItem->getBreadcrumbs($menuItem->getMainEntity())->getPathAsString(), 'Home > About');
 $t->is($menuItem->getLayout(), 'sympal');
 
 $hierarchy = $table->toHierarchy($menuItems->toArray());

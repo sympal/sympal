@@ -2,13 +2,9 @@
 
 <?php $record = $entity->getRecord() ?>
 
-<div id="header">
-  <h1><?php echo entity_slot($entity, 'title', 'Text') ?></h1>
-</div>
+<h2><?php echo entity_slot($entity, 'title', 'Text') ?></h2>
 
-<div id="body">
-  <?php echo entity_slot($entity, 'body', 'Markdown') ?>
-</div>
+<?php echo entity_slot($entity, 'body', 'Markdown') ?>
 
 <?php if (!$record->disable_comments && sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments')): ?>
   <?php echo get_component('sympal_comments', 'for_entity', array('entity' => $entity)) ?>

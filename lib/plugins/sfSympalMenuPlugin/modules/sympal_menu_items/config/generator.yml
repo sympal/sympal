@@ -61,7 +61,7 @@ generator:
 <?php else: ?> 
           "Label": [label]
 <?php endif; ?>
-          "Mapping": [parent_id, site_id, entity_type_id, entity_id]
+          "Mapping": [parent_id, site_id, entity_type_id, entity_id, route]
           "Security": [requires_auth, requires_no_auth, groups_list, permissions_list]
           "Publish": [is_published, date_published]
       edit:    ~
