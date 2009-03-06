@@ -11,7 +11,8 @@ class sympal_frontendActions extends sfActions
     sfSympalConfig::set('use_query_caching', true);
     sfSympalConfig::set('use_result_caching', true);
 
-    $this->renderer = sfSympal::quickRenderEntity('home');
+    $sympalContext = sfSympalContext::createInstance('sympal', $this->getContext());
+    $this->renderer = $sympalContext->quickRenderEntity('home');
   }
 
   public function executeSecure()

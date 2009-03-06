@@ -2,7 +2,10 @@
 
 class sfSympalContext
 {
-  protected static $_instances;
+  protected static
+    $_instances = array(),
+    $_current;
+
   protected
     $_name,
     $_sympalConfiguration,
@@ -41,7 +44,7 @@ class sfSympalContext
 
       $entities = $pager->getResults();
 
-      $renderer = sfSympal::renderEntities($menuItem, $entities, $request->getRequestFormat());
+      $renderer = $this->renderEntities($menuItem, $entities, $request->getRequestFormat());
       $renderer->setPager($pager);
     } else {
       $entity = $actions->getRoute()->getObject();
@@ -52,14 +55,48 @@ class sfSympalContext
 
       sfSympalTools::changeLayout($entity->getLayout());
 
-      $renderer = sfSympal::renderEntity($menuItem, $entity, $request->getRequestFormat());
+      $renderer = $this->renderEntity($menuItem, $entity, $request->getRequestFormat());
     }
 
     return $renderer;
   }
 
-  public static function getInstance($name = 'default')
+  public function quickRenderEntity($slug, $format = 'html')
   {
+    $entity = Doctrine::getTable('Entity')->getEntityForSite(array('slug' => $slug));
+    $menuItem = $entity->getMenuItem();
+
+    $renderer = self::renderEntity($menuItem, $entity, $format);
+    $renderer->initialize();
+
+    return $renderer;
+  }
+
+  public function renderEntity($menuItem, Entity $entity = null, $format = 'html')
+  {
+    $renderer = new sfSympalEntityRenderer($menuItem, $format);
+    $renderer->setEntity($entity);
+    $renderer->initialize();
+
+    return $renderer;
+  }
+
+  public function renderEntities(MenuItem $menuItem, Doctrine_Collection $entities, $format = 'html')
+  {
+    $renderer = new sfSympalEntityRenderer($menuItem, $format);
+    $renderer->setEntities($entities);
+    $renderer->initialize();
+
+    return $renderer;
+  }
+
+  public static function getInstance($name = null)
+  {
+    if (is_null($name))
+    {
+      return self::$_current;
+    }
+
     if (!isset(self::$_instances[$name]))
     {
       throw new sfException($name.' instance does not exist.');
