@@ -19,7 +19,7 @@ class sfSympalInstallTask extends sfBaseTask
     $this->briefDescription = 'Install the symfony content management framework.';
 
     $this->detailedDescription = <<<EOF
-The [cmf:install|INFO] task is a shortcut for five other tasks:
+The [sympal:install|INFO] task is a shortcut for five other tasks:
 
   [./sympal:install|INFO]
 

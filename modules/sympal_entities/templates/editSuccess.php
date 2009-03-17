@@ -17,4 +17,4 @@
   </div>
 </div>
 
-<?php echo get_cmf_editor($entity->getMainMenuItem(), $entity) ?>
+<?php echo get_sympal_editor($entity->getMainMenuItem(), $entity) ?>
