@@ -1,6 +1,20 @@
+homepage:
+  url:   /
+  param: { module: sympal_entity, action: index, slug: home, type: page }
+  class: sfDoctrineRoute
+  options:
+    model:  Entity
+    type:   object
+    method: getEntity
+
 sympal_homepage:
   url:   /
-  param: { module: sympal_frontend, action: index }
+  param: { module: sympal_entity, action: index, slug: home, type: page }
+  class: sfDoctrineRoute
+  options:
+    model:  Entity
+    type:   object
+    method: getEntity
 
 sympal_change_language:
   url:   /change_language

@@ -1,5 +1,5 @@
 <?php
-function entity_slot(Entity $entity, $name, $type = 'Text', $defaultValue = '[Double click to edit slot content]')
+function entity_slot($entity, $name, $type = 'Text', $defaultValue = '[Double click to edit slot content]')
 {
   $user = sfContext::getInstance()->getUser();
 
@@ -88,7 +88,7 @@ EOF
   }
 }
 
-function render_entity_slot(EntitySlot $entitySlot)
+function render_entity_slot($entitySlot)
 {
   return $entitySlot->render();
 }

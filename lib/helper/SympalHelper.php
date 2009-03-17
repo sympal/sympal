@@ -1,16 +1,16 @@
 <?php
 
-function get_menu_item_breadcrumbs(MenuItem $menuItem)
+function get_menu_item_breadcrumbs($menuItem)
 {
   return get_component('sympal_menu', 'breadcrumbs', array('menuItem' => $menuItem));
 }
 
-function get_cmf_menu($name)
+function get_sympal_menu($name)
 {
   return get_component('sympal_menu', 'menu', array('name' => $name));
 }
 
-function get_cmf_editor($menuItem = null, $entity = null)
+function get_sympal_editor($menuItem = null, $entity = null)
 {
   $menuItem = $menuItem ? $menuItem:sfSympalTools::getCurrentMenuItem();
   $entity = $entity ? $entity:sfSympalTools::getCurrentEntity();
@@ -24,7 +24,7 @@ function get_cmf_editor($menuItem = null, $entity = null)
   }
 }
 
-function get_cmf_admin_bar()
+function get_sympal_admin_bar()
 {
   if (sfContext::getInstance()->getUser()->isAuthenticated())
   {

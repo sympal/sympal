@@ -9,7 +9,7 @@
 
 <body id="sympal">
 
-  <?php echo get_cmf_admin_bar() ?>
+  <?php echo get_sympal_admin_bar() ?>
 
   <div id="doc3" class="yui-t1">
     <div id="hd">
@@ -42,7 +42,7 @@
         </div>
   	  </div>
 	    <div class="yui-b" id="sympal_primary_menu">
-	      <?php echo get_cmf_menu('primary') ?>
+	      <?php echo get_sympal_menu('primary') ?>
 	    </div>
   	</div>
     <div id="ft">
@@ -50,11 +50,11 @@
         Copyright 2008-<?php echo date('Y') ?> Sympal
       </div>
       <div id="sympal_footer_menu">
-        <?php echo get_cmf_menu('footer') ?>
+        <?php echo get_sympal_menu('footer') ?>
       </div>
     </div>
   </div>
 
-  <?php echo get_cmf_editor() ?>
+  <?php echo get_sympal_editor() ?>
 </body>
 </html>

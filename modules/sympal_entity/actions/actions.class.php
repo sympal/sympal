@@ -12,9 +12,6 @@ class sympal_entityActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    sfSympalConfig::set('use_query_caching', true);
-    sfSympalConfig::set('use_result_caching', true);
-
     $sympalContext = sfSympalContext::createInstance('sympal', $this->getContext());
     $this->renderer = $sympalContext->getRenderer($this);
 

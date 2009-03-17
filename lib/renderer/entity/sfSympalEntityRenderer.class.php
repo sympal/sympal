@@ -53,16 +53,7 @@ class sfSympalEntityRenderer
     }
   }
 
-  public function __toString()
-  {
-    try {
-      return (string) $this->_render();
-    } catch (Exception $e) {
-      die($e->getMessage());
-    }
-  }
-
-  protected function _render()
+  public function render()
   {
     $output = '';
 
