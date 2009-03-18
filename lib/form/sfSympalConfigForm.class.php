@@ -104,4 +104,62 @@ class sfSympalConfigForm extends sfForm
 
     return $array;
   }
+
+  public function getGroups()
+  {
+    $groups = array('General');
+    foreach ($this as $key => $value)
+    {
+      if ($value instanceof sfFormFieldSchema)
+      {
+        $groups[] = $key;
+      }
+    }
+    return $groups;
+  }
+
+  public function getGroupSettings($name)
+  {
+    $settings = array();
+    foreach ($this[$name] as $key => $value)
+    {
+      $settings[] = $key;
+    }
+    return $settings;
+  }
+
+  public function renderGroup($name)
+  {
+    if ($name == 'General')
+    {
+      $settings = array();
+      foreach ($this as $key => $value)
+      {
+        if (!$value instanceof sfFormFieldSchema)
+        {
+          $settings[] = $key;
+        }
+      }
+      $html = $this->renderFieldSet($name, $this, $settings);
+    } else {
+      $settings = $this->getGroupSettings($name);
+      $html = $this->renderFieldSet($name, $this[$name], $settings);
+    }
+    return $html;
+  }
+
+  public function renderFieldSet($name, $form, $fields)
+  {
+    $html = '<fieldset id="'.$name.'"><legend>'.$name.'</legend>';
+    foreach ($fields as $field)
+    {
+      $html .= '<div class="form_row">';
+      $html .= $form[$field]->renderLabel();
+      $html .= $form[$field];
+      $html .= $form[$field]->renderHelp();
+      $html .= '</div>';
+    }
+    $html .= '</fieldset>';
+    return $html;
+  }
 }

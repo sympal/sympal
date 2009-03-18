@@ -1,7 +1,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
-<div class="sf_admin_form" id="sympal_entities_form">
+<div class="sf_admin_form sympal_form">
   <?php echo form_tag_for($form, '@sympal_entities') ?>
     <?php echo $form->renderHiddenFields() ?>
 

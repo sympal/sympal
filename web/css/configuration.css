@@ -1,0 +1,16 @@
+#sympal_configuration ul {
+  height: 30px;
+  margin-left: 0;
+}
+
+#sympal_configuration ul li {
+  list-style-type: none;
+  float: left;
+  margin-right: 10px;
+}
+
+#sympal_configuration ul li a {
+  background: #c1dbff;
+  padding: 6px;
+  text-decoration: underline;
+}

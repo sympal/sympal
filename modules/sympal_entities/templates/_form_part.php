@@ -5,7 +5,7 @@
     <?php if (!$value instanceof sfFormFieldSchema && !$value->getWidget() instanceof sfWidgetFormInputHidden): ?>
       <div class="form_row">
         <?php echo $value->renderError() ?>
-        <label><?php echo $value->renderLabel() ?></label>
+        <?php echo $value->renderLabel() ?>
         <?php echo $value ?>
         <?php echo $value->renderHelp() ?>
       </div>
