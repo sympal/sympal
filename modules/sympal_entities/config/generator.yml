@@ -12,30 +12,8 @@ generator:
 
     config:
       actions: ~
-      fields:
-        site_id:
-          label: Site
-          help: Assign this entity to a site.
-        entity_template_id:
-          label: Entity Template
-          help: Choose the template used to render the contents of this entity.
-        master_menu_item_id:
-          lable: Under Menu Item
-          help: |
-            Choose the menu item this entity is under. If you wish to directly
-            relate one menu item to one entity you can assign an entity when 
-            editing the menu itme.
-        layout:
-          help: Choose the layout template used to render this entity.
-        is_published:
-          help: |
-            Check to publish this entity. Checking this will automatically set the
-            date published value. A menu item will not be live until the published
-            date has been reached.
-        custom_path:
-          help: You can specify a completely custom path/url for this entity. It must begin with a forward slash.
-        date_published:
-          date_format: 'MM/dd/yyyy hh:mm'
+      fields:  ~
+      form:    ~
       list:
         title: Manage Entities
         display: [=title, Type, is_published, date_published]
@@ -44,8 +22,8 @@ generator:
             action: view
           _edit:
           _delete:
-      filter:  ~
-      form:    ~
+      filter:
+        display: [site_id, entity_type_id]
       edit:
         title: "Editing Entity #%%id%%"
         actions:

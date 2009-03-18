@@ -10,4 +10,8 @@
  */
 class sympal_entitiesGeneratorHelper extends BaseSympal_entitiesGeneratorHelper
 {
+  public function renderForm()
+  {
+    
+  }
 }

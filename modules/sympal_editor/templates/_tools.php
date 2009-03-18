@@ -41,12 +41,16 @@
           <?php if ($entity['locked_by']): ?>
             <?php if ($entity['locked_by'] == $sf_user->getGuardUser()->getId()): ?>
               <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Un-Lock to Finish', '@sympal_unlock_entity?id='.$entity['id']) ?></li>
+
               <?php if ($sf_request->getParameter('module') == 'sympal_entities'): ?>
                 <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Inline', $entity->getRoute()) ?></li>
               <?php else: ?>
                 <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Backend', '@sympal_entities_edit?id='.$entity['id']) ?></li>
               <?php endif; ?>
-              <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Menu Item', '@sympal_menu_items_edit?id='.$menuItem['id']) ?></li>
+
+              <?php if ($menuItem && $menuItem->exists()): ?>
+                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Menu Item', '@sympal_menu_items_edit?id='.$menuItem['id']) ?></li>
+              <?php endif; ?>            
             <?php else: ?>
               <li>Entity is currently locked by "<?php echo $entity['LockedBy']['username'] ?>" and cannot be edited.</li>
             <?php endif; ?>

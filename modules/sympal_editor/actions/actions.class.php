@@ -101,9 +101,17 @@ class sympal_editorActions extends sfActions
 
   public function executeToggle_edit(sfWebRequest $request)
   {
-    $this->getUser()->setAttribute('sympal_edit', !$this->getUser()->getAttribute('sympal_edit', false));
-    $mode = $this->getUser()->getAttribute('sympal_edit', false) ? 'on':'off';
-    $this->getUser()->setFlash('notice', 'Edit mode turned '.$mode.'!');
+    $mode = $this->getUser()->toggleEditMode();
+
+    if ($mode == 'off')
+    {
+      $msg = 'Edit mode turned off successfully. Any entities you had a lock on were released!';
+    } else {
+      $msg = 'Edit mode turned on successfully. To edit an entity you must obtain an edit lock first!';
+    }
+
+    $this->getUser()->setFlash('notice', $msg);
+
     $this->redirect($request->getReferer());
   }
 

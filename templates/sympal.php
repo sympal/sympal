@@ -14,9 +14,9 @@
   <div id="doc3" class="yui-t1">
     <div id="hd">
       <div>
-        <?php if ($menuItem = sfSympalTools::getCurrentMenuItem()): ?>
-          <h1><?php echo link_to($menuItem->Site->title, '@sympal_homepage') ?></h1>
-          <h2><?php echo $menuItem->Site->description ?></h2>
+        <?php if ($entity = sfSympalTools::getCurrentEntity()): ?>
+          <h1><?php echo link_to($entity->Site->title, '@sympal_homepage') ?></h1>
+          <h2><?php echo $entity->Site->description ?></h2>
         <?php else: ?>
           <h1><?php echo link_to('Sympal', '@sympal_homepage') ?></h1>
           <h2>Flexible content management framework built on top of symfony.</h2>

@@ -18,7 +18,7 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
     $this->widgetSchema['parent_id'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'MenuItem',
       'add_empty' => '~ (object is at root level)',
-      'order_by' => array('root_id, lft',''),
+      'order_by' => array('root_id, lft', ''),
       'method' => 'getIndentedName'
       ));
     $this->validatorSchema['parent_id'] = new sfValidatorDoctrineChoice(array(

@@ -15,6 +15,12 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
 {
   public function preExecute()
   {
+    if (!sfSympalTools::isEditMode())
+    {
+      $this->getUser()->setFlash('error', 'In order to work with entities you must turn on edit mode!');
+      $this->redirect('@homepage');
+    }
+
     parent::preExecute();
     sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
   }
@@ -28,11 +34,18 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
     $this->redirect($this->getRoute()->getObject()->getRoute());
   }
 
+  public function executeNew(sfWebRequest $request)
+  {
+    $this->setTemplate('new_type');
+    $this->entityTypes = Doctrine::getTable('EntityType')->findAll();
+  }
+
   public function executeCreate_type(sfWebRequest $request)
   {
     $this->entity = new Entity();
     $type = Doctrine::getTable('EntityType')->findOneByName($request->getParameter('type'));
     $this->entity->setType($type);
+    $this->entity->LockedBy = $this->getUser()->getGuardUser();
 
     $this->form = new EntityForm($this->entity);
     $this->setTemplate('new');

@@ -62,3 +62,43 @@ div#sympal-icon {
 .sympal_editable_entity_slot {
   border: 1px solid transparent;
 }
+
+#sympal_entities_form {
+  position: relative;
+}
+
+#sympal_entities_form #left {
+  margin-right: 335px;
+}
+
+#sympal_entities_form #right {
+  width: 325px;
+  float: right;
+  top: 0;
+  right: 0;
+}
+
+#sympal_entities_form fieldset {
+  margin-bottom: 10px;
+}
+
+#sympal_entities_form fieldset legend {
+  font-weight: bold;
+  font-size: 16px;
+  padding: 4px;
+  background: #2e61a6 url(../images/topbg.gif);
+  color: white;
+  margin-left: 10px;
+}
+
+#sympal_entities_form fieldset .form_row {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+#sympal_entities_form fieldset .form_row label {
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+  width: 100%;
+}

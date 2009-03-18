@@ -16,7 +16,6 @@ abstract class PluginEntityForm extends BaseEntityForm
     unset(
       $this['created_at'],
       $this['updated_at'],
-      $this['locked_by'],
       $this['created_by'],
       $this['last_updated_by']
     );
@@ -45,5 +44,12 @@ abstract class PluginEntityForm extends BaseEntityForm
 
     $this->widgetSchema['site_id']->setOption('add_empty', true);
     $this->widgetSchema['entity_type_id'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['locked_by'] = new sfWidgetFormInputHidden();
+
+    $this->widgetSchema['site_id']->setLabel('Site');
+    $this->widgetSchema['master_menu_item_id']->setLabel('Parent Menu Item');
+    $this->widgetSchema['groups_list']->setLabel('Groups');
+    $this->widgetSchema['permissions_list']->setLabel('Permissions');
+    $this->widgetSchema['entity_template_id']->setLabel('Template');
   }
 }

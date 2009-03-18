@@ -61,13 +61,17 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $help->addNode('Report Doctrine Bug', 'http://trac.doctrine-project.org', 'target=_BLANK');
     $help->addNode('Report symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK');
 
-    $entities = $menu->addNode('Entities', '@sympal_entities');
-    $entityTypes = Doctrine::getTable('EntityType')->findAll();
-    foreach ($entityTypes as $entityType)
+    if (sfSympalTools::isEditMode())
     {
-      $node = $entities->addNode($entityType->getLabel());
-      $node->addNode('Create', '@sympal_entities_create_type?type='.$entityType->getName());
-      $node->addNode('List', '@sympal_entities');
+      $entities = $menu->addNode('Entities', '@sympal_entities');
+      $entityTypes = Doctrine::getTable('EntityType')->findAll();
+      $entities->addNode('Create New Entity', '@sympal_entities_new');
+      foreach ($entityTypes as $entityType)
+      {
+        $node = $entities->addNode($entityType->getLabel());
+        $node->addNode('Create', '@sympal_entities_create_type?type='.$entityType->getName());
+        $node->addNode('List', '@sympal_entities');
+      }
     }
 
     $administration = $menu->getNode('Administration');
