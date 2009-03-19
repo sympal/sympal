@@ -78,7 +78,7 @@ class %s extends sfPluginConfiguration
   {
     \$menu = \$event['menu'];
 
-    \$menu->->addNode('$name', '@sympal_entity_type_%s');
+    \$menu->addNode('$name', '@sympal_entity_type_%s');
   }
 
   public function loadSettings(sfEvent \$event)
