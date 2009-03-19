@@ -56,6 +56,35 @@ MenuItem:
         Site: Site_default
         label: README
         RelatedEntity: Entity_Page_readme
+  MenuItem_footer:
+    name: footer
+    is_published: true
+    label: Home
+    Site: Site_default
+    EntityType: EntityType_Page
+    RelatedEntity: Entity_Page_home
+    children:
+      MenuItem_footer_about:
+        name: About
+        is_published: true
+        label: About
+        Site: Site_default
+        RelatedEntity: Entity_Page_about
+        EntityType: EntityType_Page
+      MenuItem_footer_markdown_examples:
+        name: Markdown Examples
+        is_published: true
+        label: Markdown Examples
+        Site: Site_default
+        RelatedEntity: Entity_Page_markdown_examples
+        EntityType: EntityType_Page
+      MenuItem_footer_readme:
+        name: README
+        is_published: true
+        label: README
+        Site: Site_default
+        RelatedEntity: Entity_Page_readme
+        EntityType: EntityType_Page
 
 Entity:
   Entity_Page_register:

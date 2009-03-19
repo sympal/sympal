@@ -22,6 +22,11 @@ class sympal_menuComponents extends sfComponents
       ->andWhere('m.name = ?', $this->name)
       ->fetchOne();
 
+    if (!$this->menuItem)
+    {
+      throw new sfException('Could not find sympal menu "'.$this->name.'"');
+    }
+
     $this->menu->requiresAuth($this->menuItem->requires_auth);
     $this->menu->requiresNoAuth($this->menuItem->requires_no_auth);
     $this->menu->setCredentials($this->menuItem->getAllPermissions());

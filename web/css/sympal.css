@@ -130,7 +130,7 @@ h3 {
  background-image:             url(../images/header_logo.gif);
  background-position:          left center;
  background-repeat:            no-repeat;
- width:                        171px;
+ width:                        200px;
  height:                       33px;
  top:                          25px;
  left:                         36px;
@@ -222,7 +222,7 @@ h3 {
  padding:                      30px 0 0 0;
  background:                   url(../images/content_header.gif) no-repeat top center;  
  background-color: #fff;
- min-height: 1000px;
+ min-height: 400px;
 }
 
 #content a, #content a:link, #content a:visited
@@ -493,25 +493,67 @@ h3 {
 * Footer
 */
 
-#footer {
- height:                       15px;
- width:                        900px;
-	margin:                       0;
+#box_footer {
+  margin:                       0 auto;
+  height:                       15px;
+  width:                        900px;
 	padding:                      0;
 	background:                   url(../images/footer.gif) no-repeat top center;
 }
 
+#footer {
+  margin:                       0 auto;
+  height:                       35px;
+  width:                        880px;
+ 	padding:                      0;
+ 	margin-top:                   10px;
+ 	margin-bottom:                10px;
+ 	padding:                      10px;
+ 	background:                   #231f20;
+ 	color:                        #fff;
+ 	font-size:                    11px;
+ 	font-weight:                  bold;
+}
+
+#footer a {
+  color: white;
+}
+
+#footer p {
+  float: left;
+}
+
+#footer p img {
+  display: inline;
+  vertical-align: middle;
+}
+
+#footer ul {
+  margin: 0;
+  padding: 0;
+  margin-top: 10px;
+  float: right;
+}
+
+#footer ul li {
+  float: left;
+  list-style-type: none;
+  color: white;
+  margin-right: 10px;
+  font-size: 13px;
+}
 
 #trademark {
  margin:                       0 auto;
+ margin-top: 10px;
  width:                        900px;
  height:                       40px;
-	padding:                      0;
+ padding:                      0;
  color:                        #11A8FF;
 }
 
 #trademark p {
- font-size:                    10px;
+ font-size:                    12px;
 }
 
 
