@@ -270,25 +270,25 @@ EntitySlot:
 
 Page:
   login:
-    name: Login
+    title: Login
     Entity: Entity_Page_login
     disable_comments: true
   register:
-    name: Register
+    title: Register
     Entity: Entity_Page_register
     disable_comments: true
   home:
-    name: Home
+    title: Home
     Entity: Entity_Page_home
     disable_comments: true
   about:
-    name: About
+    title: About
     Entity: Entity_Page_about
   markdown_examples:
-    name: Markdown Examples
+    title: Markdown Examples
     Entity: Entity_Page_markdown_examples
   readme:
-    name: README
+    title: README
     Entity: Entity_Page_readme
 
 EntityType:

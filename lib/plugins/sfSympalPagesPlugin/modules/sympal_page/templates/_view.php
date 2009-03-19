@@ -1,5 +1,7 @@
 <?php use_helper('Entity') ?>
 
+<?php echo get_menu_item_breadcrumbs($menuItem) ?>
+
 <?php $record = $entity->getRecord() ?>
 
 <h2><?php echo entity_slot($entity, 'title', 'Text') ?></h2>

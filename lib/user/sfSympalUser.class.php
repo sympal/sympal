@@ -19,4 +19,21 @@ class sfSympalUser extends sfGuardSecurityUser
     }
     return $mode;
   }
+
+  public function getOpenEntityLock()
+  {
+    $q = Doctrine_Query::create()
+      ->from('Entity e')
+      ->leftJoin('e.Type t')
+      ->andWhere('e.locked_by = ?', $this->getGuardUser()->getId());
+
+    $lock = $q->fetchOne();
+    if ($lock)
+    {
+      Doctrine::initializeModels(array($lock['Type']['name']));
+      return $lock;
+    } else {
+      return false;
+    }
+  }
 }

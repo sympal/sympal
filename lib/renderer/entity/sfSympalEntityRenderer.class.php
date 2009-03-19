@@ -57,25 +57,14 @@ class sfSympalEntityRenderer
   {
     $output = '';
 
-    if ($this->_format == 'html')
-    {
-      $output .= $this->_getMenuItemBreadcrumbs($this->_menuItem);
-    }
-
     if ($this->_entities)
     {
       $output .= $this->_getEntityList($this->_entities, $this->_format);
     } else {
       $output .= $this->_getEntityView($this->_entity, $this->_format);
-      
     }
 
     return $output;
-  }
-
-  protected function _getMenuItemBreadcrumbs(MenuItem $menuItem)
-  {
-    return get_menu_item_breadcrumbs($menuItem);
   }
 
   protected function _getEntityList(Doctrine_Collection $entities, $format = 'html')
@@ -100,7 +89,7 @@ class sfSympalEntityRenderer
   protected function _renderEntityTemplate($type, $data, $template)
   {
     $key = $data instanceof Doctrine_Collection ? 'entities':'entity';
-    $options = array($key => $data);
+    $options = array($key => $data, 'menuItem' => $this->_menuItem);
 
     if ($template && $partialPath = $template->getPartialPath())
     {
@@ -115,7 +104,7 @@ class sfSympalEntityRenderer
     {
       return sfSympalTools::renderContent($body, $options);;
     } else {
-      return $this->_renderDoctrineData($data);
+      return get_menu_item_breadcrumbs($this->_menuItem).$this->_renderDoctrineData($data);
     }
   }
 
@@ -215,32 +204,45 @@ class sfSympalEntityRenderer
   {
     $pager = pager_navigation($this->_pager, url_for($this->_menuItem->getItemRoute()));
 
-    $indice = $this->_pager->getFirstIndice();
-    $output  = '<h2>Showing ' . $indice . ' to ' . ($indice + count($entities) - 1) . ' of ' . $this->_pager->getNbResults() . ' total results.</h2>';
-    $output .= '<table>';
-
-    if ($pager)
+    $output = '';
+    
+    if (count($entities))
     {
-      $output .= '<thead><tr><th colspan="3">' . $pager . '</th></thead>';
+      $indice = $this->_pager->getFirstIndice();
+      $output .= '<h2>Showing ' . $indice . ' to ' . ($indice + count($entities) - 1) . ' of ' . $this->_pager->getNbResults() . ' total results.</h2>';
+
+      $output .= '<table>';
+
+      if ($pager)
+      {
+        $output .= '<thead><tr><th colspan="3">' . $pager . '</th></thead>';
+      }
+
+      $output .= '<thead><tr><th>Title</th><th>Date Published</th><th>Created By</th></tr></thead>';
+      foreach ($entities as $record)
+      {
+        $route = $record->getRoute();
+        $output .= '<tr>';
+        $output .= '<td><strong>' . link_to($record->getHeaderTitle(), $route, 'absolute=true') . '</strong></td>';
+        $output .= '<td>' . date('m/d/Y h:i', strtotime($record['date_published'])) . '</td>';
+        $output .= '<td>' . $record['CreatedBy']['username'] . '</td>';
+        $output .= '</tr>';
+      }
+
+      if ($pager)
+      {
+        $output .= '<tfoot><tr><th colspan="3">' . $pager . '</th></tfoot>';
+      }
+
+      $output .= '</table>';
+    } else {
+      $output .= '<p><strong>No results found.</strong></p>';
     }
 
-    $output .= '<thead><tr><th>Title</th><th>Date Published</th><th>Created By</th></tr></thead>';
-    foreach ($entities as $record)
+    if (sfSympalTools::isEditMode())
     {
-      $route = $record->getRoute();
-      $output .= '<tr>';
-      $output .= '<td><strong>' . link_to($record->getHeaderTitle(), $route, 'absolute=true') . '</strong></td>';
-      $output .= '<td>' . date('m/d/Y h:i', strtotime($record['date_published'])) . '</td>';
-      $output .= '<td>' . $record['CreatedBy']['username'] . '</td>';
-      $output .= '</tr>';
+      $output .= link_to('Create New', '@sympal_entities_create_type?type='.$this->_menuItem->getEntityType()->getSlug());
     }
-
-    if ($pager)
-    {
-      $output .= '<tfoot><tr><th colspan="3">' . $pager . '</th></tfoot>';
-    }
-
-    $output .= '</table>';
 
     return $output;
   }

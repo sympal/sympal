@@ -7,7 +7,7 @@ class PluginPageTable extends Doctrine_Table
   public function getEntityQuery()
   {
     $q = Doctrine::getTable('Entity')->getBaseQuery()
-      ->leftJoin('e.Page p');
+      ->innerJoin('e.Page p');
 
     if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments'))
     {

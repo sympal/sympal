@@ -23,11 +23,7 @@ class sympal_editorComponents extends sfComponents
     $this->newEntityWidget = new sfWidgetFormSelect(array('choices' => $entityTypes));
     $this->newEntityWidget->setAttribute('onChange', "location.href = this.value");
 
-    $q = Doctrine_Query::create()
-      ->from('Entity e')
-      ->andWhere('e.locked_by = ?', $this->getUser()->getGuardUser()->getId());
-
-    $this->locks = $q->execute();
+    $this->lock = $this->getUser()->getOpenEntityLock();
   }
 
   public function executeAdmin_bar()

@@ -63,9 +63,6 @@ abstract class BaseEntity extends sfSympalDoctrineRecord
         $this->hasOne('MenuItem', array('local' => 'id',
                                         'foreign' => 'entity_id'));
 
-        $this->hasOne('Page', array('local' => 'id',
-                                    'foreign' => 'entity_id'));
-
         $this->hasMany('EntitySlot as Slots', array('local' => 'id',
                                                     'foreign' => 'entity_id'));
 

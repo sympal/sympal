@@ -8,13 +8,19 @@ class PluginEntityTable extends Doctrine_Table
   {
     $request = sfContext::getInstance()->getRequest();
 
-    if (isset($params['type']))
+    if (is_string($params))
+    {
+      $typeSlug = $params;
+    } else if (is_array($params) && isset($params['type'])) {
+      $typeSlug = $params['type'];
+    } else if ($request->hasParameter('type')) {
+      $typeSlug = $request->getParameter('type');
+    }
+
+    if (isset($typeSlug))
     {
       $q = Doctrine::getTable('EntityType')->createQuery('t')
-        ->andWhere('t.slug = ?', $params['type']);
-    } else if ($request->hasParameter('type')) {
-      $q = Doctrine::getTable('EntityType')->createQuery('t')
-        ->andWhere('t.slug = ?', $request->getParameter('type'));
+        ->andWhere('t.slug = ? OR t.name = ?', array($typeSlug, $typeSlug));
     } else if (isset($params['slug'])) {
       $q = Doctrine_Query::create()
         ->select('t.*')
@@ -25,16 +31,27 @@ class PluginEntityTable extends Doctrine_Table
 
     $type = $q->fetchOne();
 
+    $table = Doctrine::getTable($type->getName());
+
+    $defaultQuery = true;
     if ($type)
     {
-      $table = Doctrine::getTable($type->getName());
-      if (!method_exists($table, 'getEntityQuery'))
+      if (method_exists($table, 'getEntityQuery'))
       {
-        throw new sfException(get_class($table).' class must have a callable method named "getEntityQuery()".');
+        $defaultQuery = false;
+        $q = $table->getEntityQuery();
       }
-      $q = $table->getEntityQuery();
-    } else {
-      $q = $this->createQuery('e');
+    }
+
+    if ($defaultQuery)
+    {
+      $q = $this->createQuery('e')
+        ->innerJoin('e.'.$type['name']);
+
+      if (sfConfig::get('sf_logging_enabled'))
+      {
+        sfContext::getInstance()->getLogger()->notice('To improve performance '.get_class($table).' should have a callable method named "getEntityQuery()" that efficiently selects all the required data for your entity type with joins and specific selects.');
+      }
     }
 
     return $q;

@@ -1,4 +1,5 @@
 Page:
+  actAs: [sfSympalEntityType]
   columns:
     id:
       type: integer(4)
@@ -7,15 +8,11 @@ Page:
     entity_id:
       type: integer(4)
       notnull: true
-    name:
+    title:
       type: string(255)
       notnull: true
     disable_comments: boolean
   relations:
-    Entity:
-      class: Entity
-      foreignType: one
-      onDelete: CASCADE
 <?php if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments')): ?>
     Comments:
       class: Comment

@@ -15,14 +15,14 @@ class BasePageFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'entity_id'        => new sfWidgetFormDoctrineChoice(array('model' => 'Entity', 'add_empty' => true)),
-      'name'             => new sfWidgetFormFilterInput(),
+      'title'            => new sfWidgetFormFilterInput(),
       'disable_comments' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'comments_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Comment')),
     ));
 
     $this->setValidators(array(
       'entity_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Entity', 'column' => 'id')),
-      'name'             => new sfValidatorPass(array('required' => false)),
+      'title'            => new sfValidatorPass(array('required' => false)),
       'disable_comments' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'comments_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'Comment', 'required' => false)),
     ));
@@ -60,7 +60,7 @@ class BasePageFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'               => 'Number',
       'entity_id'        => 'ForeignKey',
-      'name'             => 'Text',
+      'title'            => 'Text',
       'disable_comments' => 'Boolean',
       'comments_list'    => 'ManyKey',
     );

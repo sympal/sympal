@@ -179,7 +179,7 @@ $q = Doctrine_Query::create()
 <?php $entityTypes = $q->fetchArray() ?>
 <?php foreach ($entityTypes as $entityType): ?>
 <?php if ($entityType['list_route_url']): ?>
-sympal_entity_type_<?php echo $entityType['id'] ?>:
+sympal_entity_type_<?php echo $entityType['slug'] ?>:
   url:   <?php echo $entityType['list_route_url'] ?><?php if ($entityType['list_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
   param: { module: sympal_entity, action: index, sf_format: html, type: <?php echo $entityType['slug'] ?> }
   class: sfDoctrineRoute
@@ -190,7 +190,7 @@ sympal_entity_type_<?php echo $entityType['id'] ?>:
 <?php endif; ?>
 
 <?php if ($entityType['view_route_url']): ?>
-sympal_entity_view_type_<?php echo $entityType['id'] ?>:
+sympal_entity_view_type_<?php echo $entityType['slug'] ?>:
   url:   <?php echo $entityType['view_route_url'] ?><?php if ($entityType['view_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
   param: { module: sympal_entity, action: index, sf_format: html }
   class: sfDoctrineRoute

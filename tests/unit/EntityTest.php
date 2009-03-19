@@ -12,6 +12,7 @@ $entity = new Entity();
 $entity->entity_type_id = Doctrine::getTable('EntityType')->findOneByName('Page')->id;
 $entity->slug = 'testing-this-out';
 $entity->site_id = Doctrine::getTable('Site')->findOneByTitle('Sympal')->id;
+$entity->is_published = true;
 $entity->save();
 
 $page->Entity = $entity;
@@ -21,6 +22,7 @@ $menuItem = new MenuItem();
 $menuItem->name = 'test';
 $menuItem->RelatedEntity = $page->Entity;
 $menuItem->Site->setTitle(sfSympalTools::getCurrentSite());
+$menuItem->is_published = true;
 $menuItem->save();
 
 $page->Entity->MasterMenuItem = $menuItem;
@@ -48,10 +50,11 @@ $user->username = 'test';
 $user->password = 'test';
 $user->save();
 
-$entity = Doctrine::getTable('Entity')
+$q = Doctrine::getTable('Entity')
   ->getTypeQuery('Page')
-  ->andWhere('e.slug = ?', 'testing-this-out')
-  ->fetchOne();
+  ->andWhere('e.slug = ?', 'testing-this-out');
+
+$entity = $q->fetchOne();
 
 $t->is($entity->userHasLock($user), false);
 
@@ -90,7 +93,7 @@ $t->is($entity->getTitle(), 'Testing this out');
 $t->is($entity->getHeaderTitle(), 'Testing this out');
 
 $t->is($entity->getLayout(), 'sympal');
-$t->is($entity->getRoute(), '@sympal_entity_view_type_1?slug=testing-this-out');
+$t->is($entity->getRoute(), '@sympal_entity_view_type_page?slug=testing-this-out');
 
 $configuration->loadHelpers('Entity');
 

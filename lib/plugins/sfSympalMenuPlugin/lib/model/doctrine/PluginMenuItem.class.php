@@ -106,7 +106,7 @@ abstract class PluginMenuItem extends BaseMenuItem
         $type = $this->getEntityType();
         if ($type->list_route_url)
         {
-          $route = '@sympal_entity_type_'.$type['id'];
+          $route = '@sympal_entity_type_'.$type['slug'];
         } else {
           throw new sfException('MenuItem has invalid route.');
         }

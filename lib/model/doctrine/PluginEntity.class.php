@@ -16,7 +16,17 @@ abstract class PluginEntity extends BaseEntity
     {
       return $this->MasterMenuItem;
     } else {
-      return $this->_get('MenuItem');
+      $menuItem = $this->_get('MenuItem');
+      if ($menuItem->exists())
+      {
+        return $menuItem;
+      } else {
+        $q = Doctrine::getTable('MenuItem')
+          ->createQuery('m')
+          ->where('m.has_many_entities = ?', true)
+          ->andWhere('m.entity_type_id = ?', $this->entity_type_id);
+        return $q->fetchOne();
+      }
     }
   }
 
@@ -131,7 +141,7 @@ abstract class PluginEntity extends BaseEntity
           $values[$name] = $this->$name;
         } catch (Exception $e) {}
       }
-      return '@sympal_entity_view_type_' . $this['Type']['id'] . '?' . http_build_query($values);
+      return '@sympal_entity_view_type_' . $this['Type']['slug'] . '?' . http_build_query($values);
     } else {
       throw new sfException('Entity has invalid route.');
     }

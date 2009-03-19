@@ -10,21 +10,20 @@ abstract class BasePage extends sfSympalDoctrineRecord
         $this->setTableName('page');
         $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('entity_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
-        $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
+        $this->hasColumn('title', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('disable_comments', 'boolean', null, array('type' => 'boolean'));
     }
 
     public function setUp()
     {
-        $this->hasOne('Entity', array('local' => 'entity_id',
-                                      'foreign' => 'id',
-                                      'onDelete' => 'CASCADE'));
-
         $this->hasMany('Comment as Comments', array('refClass' => 'PageComment',
                                                     'local' => 'page_id',
                                                     'foreign' => 'comment_id'));
 
         $this->hasMany('PageComment as PageComments', array('local' => 'id',
                                                             'foreign' => 'page_id'));
+
+        $sfsympalentitytype0 = new sfSympalEntityType();
+        $this->actAs($sfsympalentitytype0);
     }
 }

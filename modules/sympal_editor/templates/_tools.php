@@ -54,11 +54,11 @@
             <?php else: ?>
               <li>Entity is currently locked by "<?php echo $entity['LockedBy']['username'] ?>" and cannot be edited.</li>
             <?php endif; ?>
-          <?php elseif (!count($locks)): ?>
+          <?php elseif (!$lock): ?>
             <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Obtain Edit Lock', '@sympal_lock_entity?id='.$entity['id']) ?></li>
-          <?php elseif (isset($locks[0])): ?>
-            <li>You still have an edit lock open on "<strong><?php echo $locks[0]->getHeaderTitle() ?></strong>".</li>
-            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$locks[0]->getHeaderTitle(), $locks[0]->getRoute()) ?></li>
+          <?php elseif ($lock): ?>
+            <li>You still have an edit lock open on the <strong><?php echo $lock['Type']['label'] ?></strong> titled "<strong><?php echo $lock->getHeaderTitle() ?></strong>".</li>
+            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$lock->getHeaderTitle(), $lock->getRoute()) ?></li>
           <?php endif; ?>
 
           <?php if ($entity->getTemplate()): ?>
