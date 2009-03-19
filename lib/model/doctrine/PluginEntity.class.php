@@ -5,6 +5,11 @@
  */
 abstract class PluginEntity extends BaseEntity
 {
+  public function __toString()
+  {
+    return $this->getHeaderTitle();
+  }
+
   public function getTitle()
   {
     return $this->getHeaderTitle();
@@ -34,6 +39,7 @@ abstract class PluginEntity extends BaseEntity
   {
     if ($this['Type']['name'])
     {
+      Doctrine::initializeModels(array($this['Type']['name']));
       return $this[$this['Type']['name']];
     } else {
       return false;
