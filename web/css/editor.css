@@ -48,10 +48,14 @@
 
 #sympal_admin_bar_container {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   z-index: 100;
   width: 100%;
+}
+
+body {
+  margin-top: 25px;
 }
 
 div#sympal-icon {
