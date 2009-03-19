@@ -60,6 +60,7 @@ class sympal_menuComponents extends sfComponents
   protected function _buildMenuHierarchy($hierarchy, $menu)
   {
     $user = sfContext::getInstance()->getUser();
+    $currentMenuItem = sfSympalTools::getCurrentMenuItem();
 
     foreach ($hierarchy as $node)
     {
@@ -68,6 +69,7 @@ class sympal_menuComponents extends sfComponents
       $new->requiresAuth($menuItem->requires_auth);
       $new->requiresNoAuth($menuItem->requires_no_auth);
       $new->setCredentials($menuItem->getAllPermissions());
+      $new->isCurrent($menuItem['id'] == $currentMenuItem['id']);
 
       if (isset($node['__children']) && !empty($node['__children']))
       {

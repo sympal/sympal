@@ -4,6 +4,7 @@ class sfSympalMenuNode extends sfSympalMenu
   protected
     $_name,
     $_route,
+    $_current,
     $_options = array();
 
   public function __construct($name = null, $route = null, $options = array())
@@ -57,15 +58,29 @@ class sfSympalMenuNode extends sfSympalMenu
     $this->_options[$name] = $value;
   }
 
+  public function isCurrent($bool = null)
+  {
+    if (!is_null($bool))
+    {
+      $this->_current = $bool;
+    }
+    return $this->_current;
+  }
+
   public function _render()
   {
     if ($this->checkUserAccess())
     {
-      $html = '<li>';
+      $html = '<li'.($this->isCurrent() ? ' class="current"':null).'>';
       if ($this->_route)
       {
+        $options = $this->getOptions();
+        if  ($this->isCurrent())
+        {
+          $options['id'] = 'current';
+        }
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
-        $html .= link_to($this->getLabel(), $this->getRoute(), $this->getOptions());
+        $html .= link_to($this->getLabel(), $this->getRoute(), $options);
       } else {
         $html .= $this->getLabel();
       }

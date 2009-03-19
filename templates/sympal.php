@@ -1,6 +1,84 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
  "http://www.w3.org/TR/html4/strict.dtd">
 <html>
+<head>
+  <?php include_http_metas() ?>
+  <?php include_metas() ?>
+  <?php include_title() ?>
+</head>
+
+<body>
+
+  <?php echo get_sympal_admin_bar() ?>
+
+  <div id="container">
+   <!-- header -->
+   <div id="header">
+    <div id="logo"><?php echo link_to(image_tag('/sfSympalPlugin/images/spacer.gif'), '@homepage', 'id=logo_spacer') ?></div>
+
+    <!-- top navigation -->
+    <div id="top_navigation">
+
+     <div class="top_navigation_head"></div>
+     <div class="top_navigation_body">
+       <?php echo get_sympal_menu('primary') ?>
+     </div>
+    </div>
+    <!-- end top navigation -->
+
+   </div>
+   <!-- end header -->
+
+   <!-- content -->
+   <div id="content">
+
+    <!-- left column -->
+    <div id="column_left">
+      <?php echo $sf_content ?>
+    </div>
+    <!-- end left column -->
+
+    <?php if (has_slot('right_sidebar')): ?>
+      <?php use_stylesheet('/sfSympalPlugin/css/right.css') ?>
+      <!-- right column -->
+      <div id="column_right">
+       <br />
+       <div class="roundedbox">
+        <div class="roundedbox_head"><div></div></div>
+        <div class="roundedbox_body">
+         <?php echo get_slot('right_sidebar') ?>
+        </div>
+       </div>
+      </div>
+      <!-- end right column -->
+    <?php endif; ?>
+
+    <br style="clear: both;" />
+
+   </div>
+   <!-- end content -->
+
+   <!-- footer -->
+   <div id="footer">
+   </div>
+   <!-- end footer -->
+  </div>
+
+   <!-- trademark -->
+   <div id="trademark">
+    <p>&copy;Copyright 2008 SympalPHP</p>
+   </div>
+   <!-- end trademark -->
+
+   <?php echo get_sympal_editor() ?>
+ </body>
+</html>
+
+
+<?php /*
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+ "http://www.w3.org/TR/html4/strict.dtd">
+<html>
   <head>
     <?php include_http_metas() ?>
     <?php include_metas() ?>
@@ -58,3 +136,4 @@
   <?php echo get_sympal_editor() ?>
 </body>
 </html>
+*/ ?>
