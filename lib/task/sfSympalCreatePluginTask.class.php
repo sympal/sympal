@@ -78,14 +78,14 @@ class %s extends sfPluginConfiguration
   {
     \$menu = \$event['menu'];
 
-    \$menu->getNode('Administration')->addNode('$name', '@sympal_entity_type_%s');
+    \$menu->->addNode('$name', '@sympal_entity_type_%s');
   }
 
   public function loadSettings(sfEvent \$event)
   {
     \$form = \$event->getSubject();
 
-    \$form->addSetting('$name', 'setting_name', 'Setting Label', 'InputCheckbox', 'Boolean');
+    // \$form->addSetting('$name', 'setting_name', 'Setting Label', 'InputCheckbox', 'Boolean');
   }
 }
 EOF;
