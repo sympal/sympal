@@ -38,7 +38,7 @@ class sfSympalEntityRenderer
 
     $response = $context->getResponse();
     $title = $this->_menuItem->getBreadcrumbs($this->_entity)->getPathAsString();
-    $title = $title ? $title:$this->_menuItem->Site->title;
+    $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;
     $response->setTitle($title);
 
     sfSympalTools::setCurrentMenuItem($this->_menuItem);
