@@ -32,15 +32,15 @@ function entity_slot($entity, $name, $type = 'Text', $defaultValue = '[Double cl
     $slot = $slots[$name];
   }
 
-  if ($slot->getValue())
-  {
-    $entitySlot = render_entity_slot($slot);
-  } else {
-    $entitySlot = $defaultValue;
-  }
-
   if (sfSympalTools::isEditMode() && $entity->userHasLock(sfContext::getInstance()->getUser()->getGuardUser()))
   {
+    if ($slot->getValue())
+    {
+      $entitySlot = render_entity_slot($slot);
+    } else {
+      $entitySlot = $defaultValue;
+    }
+
     $html  = '<div class="sympal_editable_entity_slot" onMouseOver="javascript: highlight_entity_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_entity_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_entity_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_entity_slot(\''.$slot['id'].'\');">';
     $html .= $entitySlot;
     $html .= '</div>';
@@ -84,7 +84,7 @@ EOF
 
     return $html;
   } else {
-    return $entitySlot;
+    return render_entity_slot($slot);
   }
 }
 

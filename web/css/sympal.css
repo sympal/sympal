@@ -62,6 +62,8 @@
  * Three Equidistant Columns
  */
 
+body { font:13px/1.231 "Lucida Grande",verdana,arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small;}table {font-size:inherit;font:100%;}pre,code,kbd,samp,tt{font-family:monospace;*font-size:108%;line-height:100%;}
+
 body {
 	margin:                       0;
 	padding:                      0;
@@ -74,24 +76,12 @@ body {
 * Generic Rules
 */
 
-h1, h2 {
- /* font-family:               Georgia, "Times New Roman", "Times", Serif, serif; */
- font-family:                  Constantia, "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", "Times", Serif, serif;
-}
-
-p, ul li, ol li {
- /* font-family:              "Lucida Grande", Verdana, Helvetica, Arial, Helv, Sans, sans-serif; */
- font-family:                  Georgia, "Times New Roman", "Times", Serif, serif;
- font-size:                    11px;
-}
-
 p {
  padding-bottom:               8px;
  margin-bottom:                0;
 }
 
 h1 {
- text-transform:               uppercase;
  color:                        #222222;
  font-size:                    24px;
  padding:                      0;
@@ -321,7 +311,6 @@ h3 {
 
 #featured_projects span.download {
  font-size:                    14px;
- text-transform:               uppercase;
  display:                      block;
  margin-top:                   14px;
 }
@@ -375,7 +364,6 @@ h3 {
 }
 
 #recent_blog_posts h2 {
- text-transform:               uppercase;
  font-size:                    12px;
  margin-bottom:                0;
 }
@@ -475,7 +463,6 @@ h3 {
 }
 
 .roundedbox_body h2 {
- text-transform:               uppercase;
  font-size:                    12px;
  margin-bottom:                0;
 }
