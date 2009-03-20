@@ -20,6 +20,8 @@ abstract class PluginEntityForm extends BaseEntityForm
       $this['last_updated_by']
     );
 
+    $this->widgetSchema['site_id'] = new sfWidgetFormInputHidden();
+
     sfSympalTools::changeLayoutWidget($this);
 
     $this->updateDefaultsFromObject();
@@ -42,11 +44,9 @@ abstract class PluginEntityForm extends BaseEntityForm
       ->from('MenuItem m')
       ->orderBy('m.lft ASC');
 
-    $this->widgetSchema['site_id']->setOption('add_empty', true);
     $this->widgetSchema['entity_type_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['locked_by'] = new sfWidgetFormInputHidden();
 
-    $this->widgetSchema['site_id']->setLabel('Site');
     $this->widgetSchema['master_menu_item_id']->setLabel('Parent Menu Item');
     $this->widgetSchema['groups_list']->setLabel('Groups');
     $this->widgetSchema['permissions_list']->setLabel('Permissions');

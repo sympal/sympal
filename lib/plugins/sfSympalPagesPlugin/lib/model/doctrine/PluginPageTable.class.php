@@ -11,7 +11,8 @@ class PluginPageTable extends Doctrine_Table
 
     if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments'))
     {
-      $q->leftJoin('p.Comments c');
+      $q->leftJoin('p.Comments c WITH c.status = ?', 'Approved')
+        ->addOrderBy('c.created_at ASC');
     }
 
     return $q;

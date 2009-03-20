@@ -21,6 +21,12 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
     $this->dispatcher->connect('sympal.load_settings_form', array($this, 'loadSettings'));
+    $this->dispatcher->connect('context.load_factories', array($this, 'loadContext'));
+  }
+
+  public function loadContext()
+  {
+    sfSympalContext::createInstance(sfConfig::get('sf_app'), sfContext::getInstance());
   }
 
   public function getSympalConfiguration()

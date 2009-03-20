@@ -1,5 +1,5 @@
 <?php
-class sympal_frontendActions extends sfActions
+class sympal_defaultActions extends sfActions
 {
   public function executeSecure()
   {

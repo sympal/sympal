@@ -137,9 +137,10 @@ h3 {
 }
 
 #header #logo #logo_spacer {
- width:                        100%;
- height:                       100%;
+  width:                        200px;
+  height:                       33px;
  border:                       none;
+ display: block;
 }
 
 

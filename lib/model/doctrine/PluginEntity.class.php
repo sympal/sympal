@@ -22,7 +22,7 @@ abstract class PluginEntity extends BaseEntity
       return $this->MasterMenuItem;
     } else {
       $menuItem = $this->_get('MenuItem');
-      if ($menuItem->exists())
+      if ($menuItem && $menuItem->exists())
       {
         return $menuItem;
       } else {

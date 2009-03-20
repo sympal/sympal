@@ -7,20 +7,28 @@ class sfSympalContext
     $_current;
 
   protected
-    $_name,
+    $_site,
     $_sympalConfiguration,
     $_symfonyContext;
   
-  public function __construct($name, sfSympalConfiguration $sympalConfiguration, sfContext $symfonyContext)
+  public function __construct($site, sfSympalConfiguration $sympalConfiguration, sfContext $symfonyContext)
   {
-    $this->_name = $name;
+    $this->_site = $site;
     $this->_sympalConfiguration = $sympalConfiguration;
     $this->_symfonyContext = $symfonyContext;
   }
 
-  public function getName()
+  public function getSite()
   {
-    return $this->_name;
+    return $this->_site;
+  }
+
+  public function getSiteRecord()
+  {
+    return Doctrine::getTable('Site')
+      ->createQuery('s')
+      ->where('s.slug = ?', $this->_site)
+      ->fetchOne();
   }
 
   public function getSympalConfiguration()
@@ -90,25 +98,28 @@ class sfSympalContext
     return $renderer;
   }
 
-  public static function getInstance($name = null)
+  public static function getInstance($site = null)
   {
-    if (is_null($name))
+    if (is_null($site))
     {
       return self::$_current;
     }
 
-    if (!isset(self::$_instances[$name]))
+    if (!isset(self::$_instances[$site]))
     {
-      throw new sfException($name.' instance does not exist.');
+      throw new sfException($site.' instance does not exist.');
     }
-    return self::$_instances[$name];
+    return self::$_instances[$site];
   }
 
-  public static function createInstance($name, sfContext $symfonyContext)
+  public static function createInstance($site, sfContext $symfonyContext)
   {
     $sympalConfiguration = $symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();
-    self::$_instances[$name] = new self($name, $sympalConfiguration, $symfonyContext);
 
-    return self::$_instances[$name];
+    $instance = new self($site, $sympalConfiguration, $symfonyContext);
+    self::$_instances[$site] = $instance;
+    self::$_current = $instance;
+
+    return self::$_instances[$site];
   }
 }

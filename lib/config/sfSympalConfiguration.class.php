@@ -50,13 +50,13 @@ class sfSympalConfiguration
     sfConfig::set('sf_login_module', 'sympal_auth');
     sfConfig::set('sf_login_action', 'login');
 
-    sfConfig::set('sf_secure_module', 'sympal_frontend');
+    sfConfig::set('sf_secure_module', 'sympal_default');
     sfConfig::set('sf_secure_action', 'secure');
 
-    sfConfig::set('sf_error_404_module', 'sympal_frontend');
+    sfConfig::set('sf_error_404_module', 'sympal_default');
     sfConfig::set('sf_error_404_action', 'error404');
 
-    sfConfig::set('sf_module_disabled_module', 'sympal_frontend');
+    sfConfig::set('sf_module_disabled_module', 'sympal_default');
     sfConfig::set('sf_module_disabled_action', 'disabled');
 
     $options = array('baseClassName' => 'sfSympalDoctrineRecord');
@@ -82,9 +82,6 @@ class sfSympalConfiguration
     {
       $this->checkPluginDependencies();
     }
-
-    $response = sfContext::getInstance()->getResponse();
-    $response->setTitle(sfSympalTools::getCurrentSite());
   }
 
   public function checkPluginDependencies()

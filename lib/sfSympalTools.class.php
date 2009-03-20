@@ -132,16 +132,6 @@ class sfSympalTools
     )));
   }
 
-  public static function getCurrentSite()
-  {
-    return sfSympalConfig::get('current_site', null, sfSympalConfig::get('default_site'));
-  }
-
-  public static function setCurrentSite($currentSite)
-  {
-    sfSympalConfig::set('current_site', $currentSite);
-  }
-
   public static function changeLayout($name)
   {
     $context = sfContext::getInstance();
@@ -169,8 +159,8 @@ class sfSympalTools
     }
 
     sfConfig::set('symfony.view.'.$request->getParameter('module').'_'.$request->getParameter('action').'_layout', $path);
-    sfConfig::set('symfony.view.sympal_frontend_error404_layout', $path);
-    sfConfig::set('symfony.view.sympal_frontend_secure_layout', $path);
+    sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
+    sfConfig::set('symfony.view.sympal_default_secure_layout', $path);
 
     if ($bundledLayout)
     {

@@ -46,6 +46,7 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
     $type = Doctrine::getTable('EntityType')->findOneBySlug($request->getParameter('type'));
     $this->entity->setType($type);
     $this->entity->LockedBy = $this->getUser()->getGuardUser();
+    $this->entity->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
 
     Doctrine::initializeModels(array($type['name']));
 
@@ -67,6 +68,8 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
 
     $type = Doctrine::getTable('EntityType')->find($request->getParameter('entity[entity_type_id]'));
     $this->entity->setType($type);
+    $this->entity->LockedBy = $this->getUser()->getGuardUser();
+    $this->entity->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
 
     Doctrine::initializeModels(array($type['name']));
 

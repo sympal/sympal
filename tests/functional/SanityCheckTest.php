@@ -1,5 +1,5 @@
 <?php
-$app = 'frontend';
+$app = 'sympal';
 $database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 

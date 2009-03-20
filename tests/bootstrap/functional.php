@@ -7,7 +7,7 @@ if (!isset($_SERVER['SYMFONY']))
 
 if (!isset($app))
 {
-  $app = 'frontend';
+  $app = 'sympal';
 }
 
 require_once $_SERVER['SYMFONY'].'/autoload/sfCoreAutoload.class.php';

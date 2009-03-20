@@ -2,7 +2,6 @@ all:
   sympal_settings:
     disallow_php_in_content: false
     default_layout: sympal
-    default_site: Sympal
     rows_per_page: 10
     Comments:
       enabled: true

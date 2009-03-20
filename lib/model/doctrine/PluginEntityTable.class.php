@@ -17,24 +17,34 @@ class PluginEntityTable extends Doctrine_Table
       $typeSlug = $request->getParameter('type');
     }
 
-    if (isset($typeSlug))
+    // Try and get the information we need without having to query the database
+    // See if we can find the type table class
+    $typeClass = isset($typeSlug) ? Doctrine_Inflector::classify($typeSlug):false;
+    if ($typeClass && class_exists($typeClass.'Table'))
     {
-      $q = Doctrine::getTable('EntityType')->createQuery('t')
-        ->andWhere('t.slug = ? OR t.name = ?', array($typeSlug, $typeSlug));
-    } else if (isset($params['slug'])) {
-      $q = Doctrine_Query::create()
-        ->select('t.*')
-        ->from('EntityType t')
-        ->leftJoin('t.Entities e')
-        ->where('e.slug = ?', $params['slug']);
+      $table = Doctrine::getTable($typeClass);
+      $typeName = $typeClass;
+    } else {
+      if (isset($typeSlug))
+      {
+        $q = Doctrine::getTable('EntityType')->createQuery('t')
+          ->andWhere('t.slug = ? OR t.name = ?', array($typeSlug, $typeSlug));
+      } else if (isset($params['slug'])) {
+        $q = Doctrine_Query::create()
+          ->select('t.*')
+          ->from('EntityType t')
+          ->leftJoin('t.Entities e')
+          ->where('e.slug = ?', $params['slug']);
+      }
+
+      $type = $q->fetchOne();
+      $typeName = $type['name'];
+
+      $table = Doctrine::getTable($type->getName());
     }
 
-    $type = $q->fetchOne();
-
-    $table = Doctrine::getTable($type->getName());
-
     $defaultQuery = true;
-    if ($type)
+    if ($typeName)
     {
       if (method_exists($table, 'getEntityQuery'))
       {
@@ -45,8 +55,8 @@ class PluginEntityTable extends Doctrine_Table
 
     if ($defaultQuery)
     {
-      $q = $this->createQuery('e')
-        ->innerJoin('e.'.$type['name']);
+      $q = $this->getBaseQuery('e')
+        ->innerJoin('e.'.$typeName);
 
       if (sfConfig::get('sf_logging_enabled'))
       {
@@ -99,14 +109,13 @@ class PluginEntityTable extends Doctrine_Table
   {
     $q = Doctrine_Query::create()
       ->from('Entity e')
-      ->select('*')
       ->leftJoin('e.Slots sl')
       ->leftJoin('sl.Type sty')
       ->leftJoin('e.Type ty')
       ->leftJoin('ty.Templates t')
       ->leftJoin('e.MasterMenuItem m')
       ->leftJoin('e.MenuItem mm')
-      ->leftJoin('m.Site si');
+      ->leftJoin('e.Site esi');
 
     if (!sfSympalTools::isEditMode())
     {
@@ -114,17 +123,8 @@ class PluginEntityTable extends Doctrine_Table
         ->andWhere('e.is_published = 1');
     }
 
-    if (sfSympalConfig::isI18nEnabled('menus'))
-    {
-      $q->leftJoin('m.Translation mtr');
-      $q->leftJoin('mm.Translation mmtr');
-      $q->distinct('DISTINCT mmtr.lang');
-    }
-
-    if (sfSympalConfig::isI18nEnabled('slots'))
-    {
-      $q->leftJoin('sl.Translation sltr');
-    }
+    $sympalContext = sfSympalContext::getInstance();
+    $q->andWhere('esi.slug = ?', $sympalContext->getSite());
 
     return $q;
   }

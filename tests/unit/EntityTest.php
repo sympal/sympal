@@ -1,12 +1,12 @@
 <?php
-$app = 'frontend';
+$app = 'sympal';
 $database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(34, new lime_output_color());
+$t = new lime_test(31, new lime_output_color());
 
 $page = new Page();
-$page->name = 'Testing this out';
+$page->title = 'Testing this out';
 
 $entity = new Entity();
 $entity->entity_type_id = Doctrine::getTable('EntityType')->findOneByName('Page')->id;
@@ -21,7 +21,7 @@ $page->save();
 $menuItem = new MenuItem();
 $menuItem->name = 'test';
 $menuItem->RelatedEntity = $page->Entity;
-$menuItem->Site->setTitle(sfSympalTools::getCurrentSite());
+$menuItem->Site->setTitle('Sympal');
 $menuItem->is_published = true;
 $menuItem->save();
 
@@ -84,7 +84,7 @@ $t->is($menuItem->name, 'test');
 
 $page = $entity->getRecord();
 $t->is($page instanceof Page, true);
-$t->is($page->name, 'Testing this out');
+$t->is($page->title, 'Testing this out');
 
 $template = $entity->getTemplate();
 $t->is($template instanceof EntityTemplate, true);
@@ -97,9 +97,10 @@ $t->is($entity->getRoute(), '@sympal_entity_view_type_page?slug=testing-this-out
 
 $configuration->loadHelpers('Entity');
 
-$t->is(entity_slot($entity, 'title', 'Text', 'Test'), 'Test');
-$t->is(entity_slot($entity, 'body', 'Markdown'), '[Double click to edit slot content]');
-$t->is(entity_slot($entity, 'teaser', 'MultiLineText'), '[Double click to edit slot content]');
+entity_slot($entity, 'title', 'Text', 'Test');
+entity_slot($entity, 'body', 'Markdown');
+entity_slot($entity, 'teaser', 'MultiLineText');
+
 $entity->refresh(true);
 
 $slots = $entity->getSlots();

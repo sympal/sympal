@@ -1,6 +1,6 @@
 <?php
 $database = true;
-$app = 'frontend';
+$app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $configuration->loadHelpers(array('Url', 'Tag'));

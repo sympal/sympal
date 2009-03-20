@@ -12,7 +12,7 @@ class sympal_entityActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $sympalContext = sfSympalContext::createInstance('sympal', $this->getContext());
+    $sympalContext = sfSympalContext::getInstance();
     $this->renderer = $sympalContext->getRenderer($this);
 
     $this->setTemplate('index');
