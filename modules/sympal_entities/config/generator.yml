@@ -12,10 +12,14 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields:
+        site_id:
+          label: Site
+        entity_type_id:
+          label: Content Type
       form:    ~
       list:
-        title: Manage Entities
+        title: Manage Content
         display: [=title, Type, is_published, date_published]
         object_actions:
           view:
@@ -32,4 +36,4 @@ generator:
           view:
             action: view
       new:
-        title: Create New Entity
+        title: Create New Content

@@ -63,9 +63,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     if (sfSympalTools::isEditMode())
     {
-      $entities = $menu->addNode('Entities', '@sympal_entities');
+      $entities = $menu->addNode('Content', '@sympal_entities');
       $entityTypes = Doctrine::getTable('EntityType')->findAll();
-      $entities->addNode('Create New Entity', '@sympal_entities_new');
+      $entities->addNode('Create New Content', '@sympal_entities_new');
       foreach ($entityTypes as $entityType)
       {
         $node = $entities->addNode($entityType->getLabel());

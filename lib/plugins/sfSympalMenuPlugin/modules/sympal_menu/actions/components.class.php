@@ -4,7 +4,7 @@ class sympal_menuComponents extends sfComponents
 {
   public function executeBreadcrumbs()
   {
-    $this->breadcrumbs = $this->menuItem->getBreadcrumbs($this->entity);
+    $this->breadcrumbs = $this->menuItem->getBreadcrumbs($this->entity, $this->subItem);
   }
 
   public function executeMenu()

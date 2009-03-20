@@ -19,7 +19,7 @@ class sympal_editorActions extends sfActions
 
     $this->getUser()->setFlash('notice', 'Changed language successfully!');
 
-    return $this->redirect('@homepage');
+    return $this->redirect($request->getReferer());
   }
 
   public function executePublish_entity(sfWebRequest $request)

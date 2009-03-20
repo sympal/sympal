@@ -117,7 +117,7 @@ abstract class PluginMenuItem extends BaseMenuItem
     return $route;
   }
 
-  public function getBreadcrumbs($entity = null)
+  public function getBreadcrumbs($entity = null, $subItem = null)
   {
     if (!$this->_breadcrumbs)
     {
@@ -144,23 +144,21 @@ abstract class PluginMenuItem extends BaseMenuItem
           }
         }
 
-        if ($this->getHasManyEntities())
+        if ($this->getHasManyEntities() && $entity)
         {
-          if ($entity)
-          {
-            $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
-            $this->_breadcrumbs->addNode($entity->getHeaderTitle());
-          } else {
-            $this->_breadcrumbs->addNode($this->getLabel());
-          }
+          $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
+          $this->_breadcrumbs->addNode($entity->getHeaderTitle());
+        } else if ($entity) {
+          $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
+          $this->_breadcrumbs->addNode($entity->getHeaderTitle());
+        }
+
+        if ($subItem)
+        {
+          $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
+          $this->_breadcrumbs->addNode($subItem);
         } else {
-          if ($entity)
-          {
-            $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
-            $this->_breadcrumbs->addNode($entity->getHeaderTitle());
-          } else {
-            $this->_breadcrumbs->addNode($this->getLabel());
-          }
+          $this->_breadcrumbs->addNode($this->getLabel());
         }
       }
     }

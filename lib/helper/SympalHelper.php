@@ -1,8 +1,8 @@
 <?php
 
-function get_menu_item_breadcrumbs($menuItem)
+function get_menu_item_breadcrumbs($menuItem, $subItem = null)
 {
-  return get_component('sympal_menu', 'breadcrumbs', array('menuItem' => $menuItem));
+  return get_component('sympal_menu', 'breadcrumbs', array('subItem' => $subItem, 'menuItem' => $menuItem));
 }
 
 function get_sympal_menu($name)

@@ -28,41 +28,34 @@
   <div id="sympal_edit_panel">
     <div class="hd">Sympal Editor Panel</div>
     <div class="bd">
-      <?php if (sfSympalConfig::isI18nEnabled()): ?>
-        <h3>Change Language</h3>
-        <?php echo get_component('sympal_editor', 'language') ?>
-        <hr />
-      <?php endif; ?>
+      <p>You are currently viewing a <strong><?php echo $entity['Type']['name'] ?></strong> titled <strong><?php echo $entity ?>.</strong></p>
 
       <div class="sympal_icon_list">
-        <h3>Editor Navigation</h3>
+        <h3><?php echo $entity['Type']['name'] ?> Editor</h3>
 
         <ul>
           <?php if ($entity['locked_by']): ?>
             <?php if ($entity['locked_by'] == $sf_user->getGuardUser()->getId()): ?>
-              <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Un-Lock to Finish', '@sympal_unlock_entity?id='.$entity['id']) ?></li>
+              <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Un-Lock '.$entity['Type']['name'], '@sympal_unlock_entity?id='.$entity['id']) ?></li>
 
               <?php if ($sf_request->getParameter('module') == 'sympal_entities'): ?>
-                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Inline', $entity->getRoute()) ?></li>
+                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$entity['Type']['name'].' Inline', $entity->getRoute()) ?></li>
               <?php else: ?>
-                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Backend', '@sympal_entities_edit?id='.$entity['id']) ?></li>
+                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$entity['Type']['name'].' Backend', '@sympal_entities_edit?id='.$entity['id']) ?></li>
               <?php endif; ?>
 
               <?php if ($menuItem && $menuItem->exists()): ?>
                 <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Menu Item', '@sympal_menu_items_edit?id='.$menuItem['id']) ?></li>
               <?php endif; ?>            
             <?php else: ?>
-              <li>Entity is currently locked by "<?php echo $entity['LockedBy']['username'] ?>" and cannot be edited.</li>
+              <li><?php echo $entity['Type']['name'] ?> is currently locked by "<?php echo $entity['LockedBy']['username'] ?>" and cannot be edited.</li>
             <?php endif; ?>
           <?php elseif (!$lock): ?>
             <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Obtain Edit Lock', '@sympal_lock_entity?id='.$entity['id']) ?></li>
           <?php elseif ($lock): ?>
-            <li>You still have an edit lock open on the <strong><?php echo $lock['Type']['label'] ?></strong> titled "<strong><?php echo $lock->getHeaderTitle() ?></strong>".</li>
-            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$lock->getHeaderTitle(), $lock->getRoute()) ?></li>
-          <?php endif; ?>
-
-          <?php if ($entity->getTemplate()): ?>
-            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Entity Template', '@sympal_entity_templates_edit?id='.$entity->getTemplate()->getId()) ?></li>
+            <li>You still have an edit lock open on a <strong><?php echo $lock['Type']['name'] ?></strong> titled <strong><?php echo $lock->getHeaderTitle() ?></strong>.</li>
+            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Un-Lock '.$lock['Type']['name'], '@sympal_unlock_entity?id='.$entity['id']) ?></li>
+            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Go Back to '.$lock->getHeaderTitle(), $lock->getRoute()) ?></li>
           <?php endif; ?>
 
           <?php if ($entity['is_published']): ?>
@@ -74,7 +67,19 @@
             <li><?php echo image_tag('/sf/sf_admin/images/tick.png').' '.link_to('Publish', '@sympal_publish_entity?id='.$entity['id']) ?></li>
           <?php endif; ?>
         </ul>
+
+        <h3><?php echo $entity['Type']['label'] ?> Content</h3>
+
+        <ul>
+          <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to('Create', '@sympal_entities_create_type?type='.$entity['Type']['slug']) ?></li>
+          <li><?php echo image_tag('/sf/sf_admin/images/list.png').' '.link_to('List', '@sympal_entity_type_'.$entity['Type']['slug']) ?></li>
+        </ul>
       </div>
+
+      <?php if (sfSympalConfig::isI18nEnabled()): ?>
+        <h3>Change Language</h3>
+        <?php echo get_component('sympal_editor', 'language') ?>
+      <?php endif; ?>
     </div>
   </div>
 </div>

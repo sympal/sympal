@@ -1,6 +1,6 @@
-<h2>Create New Entity</h2>
+<h2>Create New Content</h2>
 
-<p>Choose the type of entity you wish to create. Clicking each entity type will bring up the form to create a new entity record of that type.</p>
+<p>Choose the type of content you wish to create. Clicking each content type will bring up the form to create a new content for that type.</p>
 
 <ul>
   <?php foreach ($entityTypes as $entityType): ?>
