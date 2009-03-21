@@ -1,3 +1,14 @@
+EntityTemplate:
+  EntityTemplate_ViewPage:
+    name: View Page
+    type: View
+    EntityType: EntityType_Page
+    partial_path: sympal_page/view
+  EntityTemplate_ListPage:
+    name: List Page
+    type: List
+    EntityType: EntityType_Page
+
 MenuItem:
   MenuItem_primary:
     name: primary

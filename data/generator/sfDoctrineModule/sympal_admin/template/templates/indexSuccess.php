@@ -2,7 +2,7 @@
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
 <div id="sf_admin_container">
-  <h1>[?php echo <?php echo $this->getI18NString('list.title') ?> ?]</h1>
+  <h2>[?php echo <?php echo $this->getI18NString('list.title') ?> ?]</h2>
 
   <div id="sf_admin_header">
     [?php include_partial('<?php echo $this->getModuleName() ?>/list_header', array('pager' => $pager)) ?]

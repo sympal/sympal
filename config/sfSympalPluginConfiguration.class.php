@@ -75,7 +75,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       foreach ($entityTypes as $entityType)
       {
         $node = $entities->addNode($entityType->getLabel());
-        $node->addNode('Create', '@sympal_entities_create_type?type='.$entityType->getName());
+        $node->addNode('Create', '@sympal_entities_create_type?type='.$entityType->getSlug());
         $node->addNode('List', '@sympal_entities');
       }
     }

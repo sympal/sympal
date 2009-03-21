@@ -2,7 +2,7 @@
 <?php include_partial('sympal_entities/assets') ?>
 
 <div id="sf_admin_container">
-  <h1><?php echo __('Create New '.$entity->getType()->getLabel(), array(), 'messages') ?></h1>
+  <h2><?php echo __('Create New '.$entity->getType()->getLabel(), array(), 'messages') ?></h2>
 
   <div id="sf_admin_header">
     <?php include_partial('sympal_entities/form_header', array('entity' => $entity, 'form' => $form, 'configuration' => $configuration)) ?>

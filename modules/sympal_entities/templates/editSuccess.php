@@ -4,7 +4,7 @@
 <?php echo get_sympal_breadcrumbs($entity->getMainMenuItem(), $entity, 'Edit', true) ?>
 
 <div id="sf_admin_container">
-  <h1><?php echo __('Editing %%type%% titled "%%entity%%"', array('%%type%%' => $entity->getType()->getLabel(),'%%entity%%' => $entity->getHeaderTitle()), 'messages') ?></h1>
+  <h2><?php echo __('Editing %%type%% titled "%%entity%%"', array('%%type%%' => $entity->getType()->getLabel(),'%%entity%%' => $entity->getHeaderTitle()), 'messages') ?></h2>
 
   <div id="sf_admin_header">
     <?php include_partial('sympal_entities/form_header', array('entity' => $entity, 'form' => $form, 'configuration' => $configuration)) ?>
