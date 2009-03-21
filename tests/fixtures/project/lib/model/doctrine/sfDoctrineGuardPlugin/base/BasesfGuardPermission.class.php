@@ -15,6 +15,20 @@ abstract class BasesfGuardPermission extends sfSympalDoctrineRecord
 
     public function setUp()
     {
+        $this->hasMany('Entity as Entities', array('refClass' => 'EntityPermission',
+                                                   'local' => 'permission_id',
+                                                   'foreign' => 'entity_id'));
+
+        $this->hasMany('EntityPermission as EntityPermissions', array('local' => 'id',
+                                                                      'foreign' => 'permission_id'));
+
+        $this->hasMany('MenuItem as MenuItems', array('refClass' => 'MenuItemPermission',
+                                                      'local' => 'permission_id',
+                                                      'foreign' => 'menu_item_id'));
+
+        $this->hasMany('MenuItemPermission as MenuItemPermissions', array('local' => 'id',
+                                                                          'foreign' => 'permission_id'));
+
         $this->hasMany('sfGuardGroup as Groups', array('refClass' => 'sfGuardGroupPermission',
                                                        'local' => 'permission_id',
                                                        'foreign' => 'group_id'));
@@ -28,20 +42,6 @@ abstract class BasesfGuardPermission extends sfSympalDoctrineRecord
 
         $this->hasMany('sfGuardUserPermission', array('local' => 'id',
                                                       'foreign' => 'permission_id'));
-
-        $this->hasMany('MenuItem as MenuItems', array('refClass' => 'MenuItemPermission',
-                                                      'local' => 'permission_id',
-                                                      'foreign' => 'menu_item_id'));
-
-        $this->hasMany('MenuItemPermission as MenuItemPermissions', array('local' => 'id',
-                                                                          'foreign' => 'permission_id'));
-
-        $this->hasMany('Entity as Entities', array('refClass' => 'EntityPermission',
-                                                   'local' => 'permission_id',
-                                                   'foreign' => 'entity_id'));
-
-        $this->hasMany('EntityPermission as EntityPermissions', array('local' => 'id',
-                                                                      'foreign' => 'permission_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

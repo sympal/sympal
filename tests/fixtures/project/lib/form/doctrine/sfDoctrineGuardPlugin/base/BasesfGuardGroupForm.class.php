@@ -19,8 +19,8 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       'updated_at'       => new sfWidgetFormDateTime(),
       'users_list'       => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardUser')),
       'permissions_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardPermission')),
-      'menu_items_list'  => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),
       'entities_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
+      'menu_items_list'  => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),
     ));
 
     $this->setValidators(array(
@@ -31,8 +31,8 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       'updated_at'       => new sfValidatorDateTime(array('required' => false)),
       'users_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardUser', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
-      'menu_items_list'  => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
       'entities_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
+      'menu_items_list'  => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
@@ -65,14 +65,14 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       $this->setDefault('permissions_list', $this->object->permissions->getPrimaryKeys());
     }
 
-    if (isset($this->widgetSchema['menu_items_list']))
-    {
-      $this->setDefault('menu_items_list', $this->object->MenuItems->getPrimaryKeys());
-    }
-
     if (isset($this->widgetSchema['entities_list']))
     {
       $this->setDefault('entities_list', $this->object->Entities->getPrimaryKeys());
+    }
+
+    if (isset($this->widgetSchema['menu_items_list']))
+    {
+      $this->setDefault('menu_items_list', $this->object->MenuItems->getPrimaryKeys());
     }
 
   }
@@ -83,8 +83,8 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
 
     $this->saveusersList($con);
     $this->savepermissionsList($con);
-    $this->saveMenuItemsList($con);
     $this->saveEntitiesList($con);
+    $this->saveMenuItemsList($con);
   }
 
   public function saveusersList($con = null)
@@ -141,33 +141,6 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
     }
   }
 
-  public function saveMenuItemsList($con = null)
-  {
-    if (!$this->isValid())
-    {
-      throw $this->getErrorSchema();
-    }
-
-    if (!isset($this->widgetSchema['menu_items_list']))
-    {
-      // somebody has unset this widget
-      return;
-    }
-
-    if (is_null($con))
-    {
-      $con = $this->getConnection();
-    }
-
-    $this->object->unlink('MenuItems', array());
-
-    $values = $this->getValue('menu_items_list');
-    if (is_array($values))
-    {
-      $this->object->link('MenuItems', $values);
-    }
-  }
-
   public function saveEntitiesList($con = null)
   {
     if (!$this->isValid())
@@ -192,6 +165,33 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
     if (is_array($values))
     {
       $this->object->link('Entities', $values);
+    }
+  }
+
+  public function saveMenuItemsList($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!isset($this->widgetSchema['menu_items_list']))
+    {
+      // somebody has unset this widget
+      return;
+    }
+
+    if (is_null($con))
+    {
+      $con = $this->getConnection();
+    }
+
+    $this->object->unlink('MenuItems', array());
+
+    $values = $this->getValue('menu_items_list');
+    if (is_array($values))
+    {
+      $this->object->link('MenuItems', $values);
     }
   }
 

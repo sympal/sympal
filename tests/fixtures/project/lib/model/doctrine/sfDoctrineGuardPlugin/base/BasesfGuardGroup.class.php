@@ -23,11 +23,12 @@ abstract class BasesfGuardGroup extends sfSympalDoctrineRecord
                                                                  'local' => 'group_id',
                                                                  'foreign' => 'permission_id'));
 
-        $this->hasMany('sfGuardGroupPermission', array('local' => 'id',
-                                                       'foreign' => 'group_id'));
+        $this->hasMany('Entity as Entities', array('refClass' => 'EntityGroup',
+                                                   'local' => 'group_id',
+                                                   'foreign' => 'entity_id'));
 
-        $this->hasMany('sfGuardUserGroup', array('local' => 'id',
-                                                 'foreign' => 'group_id'));
+        $this->hasMany('EntityGroup as EntityGroups', array('local' => 'id',
+                                                            'foreign' => 'group_id'));
 
         $this->hasMany('MenuItem as MenuItems', array('refClass' => 'MenuItemGroup',
                                                       'local' => 'group_id',
@@ -36,12 +37,11 @@ abstract class BasesfGuardGroup extends sfSympalDoctrineRecord
         $this->hasMany('MenuItemGroup as MenuItemGroups', array('local' => 'id',
                                                                 'foreign' => 'group_id'));
 
-        $this->hasMany('Entity as Entities', array('refClass' => 'EntityGroup',
-                                                   'local' => 'group_id',
-                                                   'foreign' => 'entity_id'));
+        $this->hasMany('sfGuardGroupPermission', array('local' => 'id',
+                                                       'foreign' => 'group_id'));
 
-        $this->hasMany('EntityGroup as EntityGroups', array('local' => 'id',
-                                                            'foreign' => 'group_id'));
+        $this->hasMany('sfGuardUserGroup', array('local' => 'id',
+                                                 'foreign' => 'group_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

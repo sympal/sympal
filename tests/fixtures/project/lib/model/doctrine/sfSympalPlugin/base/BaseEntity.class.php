@@ -60,14 +60,21 @@ abstract class BaseEntity extends sfSympalDoctrineRecord
                                                                  'local' => 'entity_id',
                                                                  'foreign' => 'permission_id'));
 
-        $this->hasOne('MenuItem', array('local' => 'id',
-                                        'foreign' => 'entity_id'));
+        $this->hasMany('Comment as Comments', array('refClass' => 'EntityComment',
+                                                    'local' => 'entity_id',
+                                                    'foreign' => 'comment_id'));
+
+        $this->hasMany('EntityComment as EntityComments', array('local' => 'id',
+                                                                'foreign' => 'entity_id'));
 
         $this->hasMany('EntitySlot as Slots', array('local' => 'id',
                                                     'foreign' => 'entity_id'));
 
         $this->hasMany('EntityGroup as EntityGroups', array('local' => 'id',
                                                             'foreign' => 'entity_id'));
+
+        $this->hasOne('MenuItem', array('local' => 'id',
+                                        'foreign' => 'entity_id'));
 
         $sluggable0 = new Doctrine_Template_Sluggable();
         $timestampable0 = new Doctrine_Template_Timestampable();

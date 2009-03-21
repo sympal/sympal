@@ -18,14 +18,14 @@ abstract class BaseEntityType extends sfSympalDoctrineRecord
 
     public function setUp()
     {
-        $this->hasMany('MenuItem as MenuItems', array('local' => 'id',
-                                                      'foreign' => 'entity_type_id'));
-
         $this->hasMany('Entity as Entities', array('local' => 'id',
                                                    'foreign' => 'entity_type_id'));
 
         $this->hasMany('EntityTemplate as Templates', array('local' => 'id',
                                                             'foreign' => 'entity_type_id'));
+
+        $this->hasMany('MenuItem as MenuItems', array('local' => 'id',
+                                                      'foreign' => 'entity_type_id'));
 
         $sluggable0 = new Doctrine_Template_Sluggable(array('fields' => array(0 => 'name')));
         $this->actAs($sluggable0);

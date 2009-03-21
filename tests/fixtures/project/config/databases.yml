@@ -1,18 +1,8 @@
 all:
   doctrine:
     class:  sfDoctrineDatabase
-
-prod:
-  doctrine:
     param:
-      dsn:        mysql:dbname=sympal;host=localhost
-      username:   root
-
-dev:
-  doctrine:
-    param:
-      dsn:        mysql:dbname=sympal;host=localhost
-      username:   root
+      dsn:        sqlite:%SF_DATA_DIR%/sympal.db
 
 test:
   doctrine:
