@@ -1,6 +1,6 @@
 <?php use_helper('Entity') ?>
 
-<?php echo get_menu_item_breadcrumbs($menuItem) ?>
+<?php echo get_sympal_breadcrumbs($menuItem, $entity) ?>
 
 <?php $record = $entity->getRecord() ?>
 

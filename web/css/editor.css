@@ -106,3 +106,16 @@ div#sympal-icon {
   width: 100% !important;
   display: block;
 }
+
+li a.off, li a.on {
+  font-weight: bold;
+  color: white !important;
+}
+
+li a.off {
+  background-color: green;
+}
+
+li a.on {
+  background-color: red;
+}

@@ -31,7 +31,9 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
    */
   public function executeView()
   {
-    $this->redirect($this->getRoute()->getObject()->getRoute());
+    $this->entity = $this->getRoute()->getObject();
+    $this->getUser()->checkEntitySecurity($this->entity);
+    $this->redirect($this->entity->getRoute());
   }
 
   public function executeNew(sfWebRequest $request)
@@ -57,6 +59,8 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
   public function executeEdit(sfWebRequest $request)
   {
     $this->entity = $this->getRoute()->getObject();
+    $this->getUser()->checkEntitySecurity($this->entity);
+
     $type = $this->entity->Type;
     Doctrine::initializeModels(array($type['name']));
     $this->form = $this->configuration->getForm($this->entity);

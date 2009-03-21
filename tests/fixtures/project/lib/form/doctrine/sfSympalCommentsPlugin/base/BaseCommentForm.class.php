@@ -12,27 +12,27 @@ class BaseCommentForm extends BaseFormDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'id'         => new sfWidgetFormInputHidden(),
-      'status'     => new sfWidgetFormChoice(array('choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'    => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
-      'name'       => new sfWidgetFormInput(),
-      'subject'    => new sfWidgetFormInput(),
-      'body'       => new sfWidgetFormTextarea(),
-      'created_at' => new sfWidgetFormDateTime(),
-      'updated_at' => new sfWidgetFormDateTime(),
-      'pages_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Page')),
+      'id'            => new sfWidgetFormInputHidden(),
+      'status'        => new sfWidgetFormChoice(array('choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
+      'user_id'       => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'name'          => new sfWidgetFormInput(),
+      'subject'       => new sfWidgetFormInput(),
+      'body'          => new sfWidgetFormTextarea(),
+      'created_at'    => new sfWidgetFormDateTime(),
+      'updated_at'    => new sfWidgetFormDateTime(),
+      'entities_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
     ));
 
     $this->setValidators(array(
-      'id'         => new sfValidatorDoctrineChoice(array('model' => 'Comment', 'column' => 'id', 'required' => false)),
-      'status'     => new sfValidatorChoice(array('choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'    => new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'required' => false)),
-      'name'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'subject'    => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'body'       => new sfValidatorString(),
-      'created_at' => new sfValidatorDateTime(array('required' => false)),
-      'updated_at' => new sfValidatorDateTime(array('required' => false)),
-      'pages_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'Page', 'required' => false)),
+      'id'            => new sfValidatorDoctrineChoice(array('model' => 'Comment', 'column' => 'id', 'required' => false)),
+      'status'        => new sfValidatorChoice(array('choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
+      'user_id'       => new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'required' => false)),
+      'name'          => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'subject'       => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'body'          => new sfValidatorString(),
+      'created_at'    => new sfValidatorDateTime(array('required' => false)),
+      'updated_at'    => new sfValidatorDateTime(array('required' => false)),
+      'entities_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('comment[%s]');
@@ -51,9 +51,9 @@ class BaseCommentForm extends BaseFormDoctrine
   {
     parent::updateDefaultsFromObject();
 
-    if (isset($this->widgetSchema['pages_list']))
+    if (isset($this->widgetSchema['entities_list']))
     {
-      $this->setDefault('pages_list', $this->object->Pages->getPrimaryKeys());
+      $this->setDefault('entities_list', $this->object->Entities->getPrimaryKeys());
     }
 
   }
@@ -62,17 +62,17 @@ class BaseCommentForm extends BaseFormDoctrine
   {
     parent::doSave($con);
 
-    $this->savePagesList($con);
+    $this->saveEntitiesList($con);
   }
 
-  public function savePagesList($con = null)
+  public function saveEntitiesList($con = null)
   {
     if (!$this->isValid())
     {
       throw $this->getErrorSchema();
     }
 
-    if (!isset($this->widgetSchema['pages_list']))
+    if (!isset($this->widgetSchema['entities_list']))
     {
       // somebody has unset this widget
       return;
@@ -83,12 +83,12 @@ class BaseCommentForm extends BaseFormDoctrine
       $con = $this->getConnection();
     }
 
-    $this->object->unlink('Pages', array());
+    $this->object->unlink('Entities', array());
 
-    $values = $this->getValue('pages_list');
+    $values = $this->getValue('entities_list');
     if (is_array($values))
     {
-      $this->object->link('Pages', $values);
+      $this->object->link('Entities', $values);
     }
   }
 

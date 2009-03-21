@@ -8,7 +8,8 @@ abstract class sfSympalMenu
     $_nodes  = array(),
     $_requiresAuth = null,
     $_requiresNoAuth = null,
-    $_credentials = array();
+    $_credentials = array(),
+    $_recursiveOutput = true;
 
   public function __construct($name = null)
   {
@@ -55,6 +56,16 @@ abstract class sfSympalMenu
   public function hasCredentials()
   {
     return !empty($this->_credentials);
+  }
+
+  public function isRecursiveOutput($bool = null)
+  {
+    if (!is_null($bool))
+    {
+      $this->_recursiveOutput = $bool;
+    }
+
+    return $this->_recursiveOutput;
   }
 
   public function checkUserAccess(sfGuardUser $user = null)
@@ -143,6 +154,7 @@ abstract class sfSympalMenu
     }
 
     $node->setParent($this);
+    $node->isRecursiveOutput($this->isRecursiveOutput());
 
     $this->_nodes[$node->getName()] = $node;
 
@@ -182,6 +194,41 @@ abstract class sfSympalMenu
       $html .= '</ul>';
 
       return $html;
+    }
+  }
+
+  protected $_menuItem;
+
+  public function getMenuItem()
+  {
+    return $this->_menuItem;
+  }
+
+  public function setMenuItem($menuItem)
+  {
+    $this->_menuItem = $menuItem;
+
+    $this->requiresAuth($menuItem->requires_auth);
+    $this->requiresNoAuth($menuItem->requires_no_auth);
+    $this->setCredentials($menuItem->getAllPermissions());
+    $currentMenuItem = sfSympalTools::getCurrentMenuItem();
+    if ($currentMenuItem && $currentMenuItem->exists() && $this instanceof sfSympalMenuNode)
+    {
+      $this->isCurrent($menuItem->id == $currentMenuItem->id);
+    }
+    $this->setLevel($menuItem->level);
+  }
+
+  public function getMenuItemNode($menuItem)
+  {
+    foreach ($this->_nodes as $node)
+    {
+      if ($node->getMenuItem()->id == $menuItem->id && $node->getNodes())
+      {
+        return $node;
+      } else if ($n = $node->getMenuItemNode($menuItem)) {
+        return $n;
+      }
     }
   }
 }

@@ -29,6 +29,7 @@ class BaseEntityForm extends BaseFormDoctrine
       'updated_at'          => new sfWidgetFormDateTime(),
       'groups_list'         => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardGroup')),
       'permissions_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardPermission')),
+      'comments_list'       => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Comment')),
     ));
 
     $this->setValidators(array(
@@ -49,6 +50,7 @@ class BaseEntityForm extends BaseFormDoctrine
       'updated_at'          => new sfValidatorDateTime(array('required' => false)),
       'groups_list'         => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
       'permissions_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
+      'comments_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'Comment', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('entity[%s]');
@@ -77,6 +79,11 @@ class BaseEntityForm extends BaseFormDoctrine
       $this->setDefault('permissions_list', $this->object->Permissions->getPrimaryKeys());
     }
 
+    if (isset($this->widgetSchema['comments_list']))
+    {
+      $this->setDefault('comments_list', $this->object->Comments->getPrimaryKeys());
+    }
+
   }
 
   protected function doSave($con = null)
@@ -85,6 +92,7 @@ class BaseEntityForm extends BaseFormDoctrine
 
     $this->saveGroupsList($con);
     $this->savePermissionsList($con);
+    $this->saveCommentsList($con);
   }
 
   public function saveGroupsList($con = null)
@@ -138,6 +146,33 @@ class BaseEntityForm extends BaseFormDoctrine
     if (is_array($values))
     {
       $this->object->link('Permissions', $values);
+    }
+  }
+
+  public function saveCommentsList($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!isset($this->widgetSchema['comments_list']))
+    {
+      // somebody has unset this widget
+      return;
+    }
+
+    if (is_null($con))
+    {
+      $con = $this->getConnection();
+    }
+
+    $this->object->unlink('Comments', array());
+
+    $values = $this->getValue('comments_list');
+    if (is_array($values))
+    {
+      $this->object->link('Comments', $values);
     }
   }
 

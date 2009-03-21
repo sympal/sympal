@@ -8,7 +8,7 @@ class sympal_editorComponents extends sfComponents
 
   public function executeLanguage(sfWebRequest $request)
   {
-    $this->form = new sfFormLanguage($this->getUser(), array('languages' => Doctrine::getTable('Language')->getLanguageCodes()));
+    $this->form = new sfFormLanguage($this->getUser(), array('languages' => sfSympalConfig::get('language_codes', null, array($this->getUser()->getCulture()))));
     unset($this->form[$this->form->getCSRFFieldName()]);
   }
 

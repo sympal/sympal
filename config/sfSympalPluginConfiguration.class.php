@@ -7,7 +7,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfDoctrineGuardPlugin',
       'sfFormExtraPlugin',
       'sfSympalCommentsPlugin',
-      'sfSympalI18nPlugin',
       'sfSympalMenuPlugin',
       'sfSympalPagesPlugin',
       'sfSympalRegisterPlugin',
@@ -46,11 +45,12 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event['menu'];
 
-    $icon = $menu->getNode('Icon');
-
     $user = sfContext::getInstance()->getUser();
-    $mode = $user->getAttribute('sympal_edit') ? 'Off':'On';
-    $icon->addNode('Turn Edit Mode '.$mode, '@sympal_toggle_edit');
+    $mode = $user->getAttribute('sympal_edit') ? 'off':'on';
+    $currentMode = $user->getAttribute('sympal_edit') ? 'on':'off';
+    $menu->addNode(image_tag('/sf/sf_admin/images/edit.png').' Turn '.ucfirst($mode), '@sympal_toggle_edit', array('title' => 'Click to turn '.$mode.' edit mode. Edit mode is currently '.$currentMode.'.', 'class' => $mode));
+
+    $icon = $menu->getNode('Icon');
     $icon->addNode('Go To Homepage', '@sympal_homepage');
     $icon->addNode('Logout', '@sympal_logout', 'confirm=Are you sure you wish to logout?');
 

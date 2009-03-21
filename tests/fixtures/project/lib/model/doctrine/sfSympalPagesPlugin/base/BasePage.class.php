@@ -16,13 +16,6 @@ abstract class BasePage extends sfSympalDoctrineRecord
 
     public function setUp()
     {
-        $this->hasMany('Comment as Comments', array('refClass' => 'PageComment',
-                                                    'local' => 'page_id',
-                                                    'foreign' => 'comment_id'));
-
-        $this->hasMany('PageComment as PageComments', array('local' => 'id',
-                                                            'foreign' => 'page_id'));
-
         $sfsympalentitytype0 = new sfSympalEntityType();
         $this->actAs($sfsympalentitytype0);
     }

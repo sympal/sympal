@@ -56,6 +56,7 @@ class sfSympalContext
       $renderer->setPager($pager);
     } else {
       $entity = $actions->getRoute()->getObject();
+      $actions->getUser()->checkEntitySecurity($entity);
       $actions->forward404Unless($entity);
       $menuItem = $entity->getMainMenuItem();
 

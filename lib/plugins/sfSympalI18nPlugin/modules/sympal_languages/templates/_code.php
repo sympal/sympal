@@ -1,1 +1,0 @@
-<?php echo link_to(format_language($language->getCode()), '@sympal_languages_edit?id=' . $language->getId()) ?>

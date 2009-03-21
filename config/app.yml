@@ -1,9 +1,12 @@
 all:
   sympal_settings:
+    language_codes: [en, fr, es]
+    enabled_plugins: ~
     disallow_php_in_content: false
     default_layout: sympal
     rows_per_page: 10
     Comments:
+      default_status: Approved
       enabled: true
       enable_recaptcha: true
       recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX

@@ -4,5 +4,10 @@
  */
 class PluginCommentTable extends Doctrine_Table
 {
-
+  public function getNumPending()
+  {
+    return $this->createQuery('c')
+      ->where('c.status = ?', 'Pending')
+      ->count();
+  }
 }

@@ -17,14 +17,12 @@ class BasePageFormFilter extends BaseFormFilterDoctrine
       'entity_id'        => new sfWidgetFormDoctrineChoice(array('model' => 'Entity', 'add_empty' => true)),
       'title'            => new sfWidgetFormFilterInput(),
       'disable_comments' => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
-      'comments_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Comment')),
     ));
 
     $this->setValidators(array(
       'entity_id'        => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Entity', 'column' => 'id')),
       'title'            => new sfValidatorPass(array('required' => false)),
       'disable_comments' => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
-      'comments_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'Comment', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('page_filters[%s]');
@@ -32,22 +30,6 @@ class BasePageFormFilter extends BaseFormFilterDoctrine
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
     parent::setup();
-  }
-
-  public function addCommentsListColumnQuery(Doctrine_Query $query, $field, $values)
-  {
-    if (!is_array($values))
-    {
-      $values = array($values);
-    }
-
-    if (!count($values))
-    {
-      return;
-    }
-
-    $query->leftJoin('r.PageComment PageComment')
-          ->andWhereIn('PageComment.comment_id', $values);
   }
 
   public function getModelName()
@@ -62,7 +44,6 @@ class BasePageFormFilter extends BaseFormFilterDoctrine
       'entity_id'        => 'ForeignKey',
       'title'            => 'Text',
       'disable_comments' => 'Boolean',
-      'comments_list'    => 'ManyKey',
     );
   }
 }

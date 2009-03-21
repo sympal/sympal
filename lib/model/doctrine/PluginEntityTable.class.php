@@ -64,6 +64,12 @@ class PluginEntityTable extends Doctrine_Table
       }
     }
 
+    if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get($typeName, 'enable_comments'))
+    {
+      $q->leftJoin('e.Comments c WITH c.status = ?', 'Approved')
+        ->addOrderBy('c.created_at ASC');
+    }
+
     return $q;
   }
 
@@ -119,8 +125,7 @@ class PluginEntityTable extends Doctrine_Table
 
     if (!sfSympalTools::isEditMode())
     {
-      $q->andWhere('m.is_published = 1 OR mm.is_published = 1')
-        ->andWhere('e.is_published = 1');
+      $q->andWhere('e.is_published = 1');
     }
 
     $sympalContext = sfSympalContext::getInstance();

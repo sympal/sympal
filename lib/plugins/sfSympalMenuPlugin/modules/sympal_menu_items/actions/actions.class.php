@@ -23,23 +23,23 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $query->addOrderBy('root_id, lft');
   }
-  
+
   public function executeBatch(sfWebRequest $request)
   {
     if ($request->getParameter('batch_action') == 'batchOrder')
     {
       return $this->executeBatchOrder($request);
     }
-    
+
     parent::executeBatch($request);
   }
-  
+
   public function executeBatchOrder(sfWebRequest $request)
   {
-    $newparent = $request->getParameter('newparent');
+    $newParent = $request->getParameter('new_parent');
 
     $ids = array();
-    foreach ($newparent as $key => $val)
+    foreach ($newParent as $key => $val)
     {
       $ids[$key] = true;
       if (!empty($val))
@@ -59,13 +59,14 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
       $count = 0;
       $flash = '';
 
-      foreach ($newparent as $id => $parentId)
+      $table = Doctrine::getTable('MenuItem');
+      foreach ($newParent as $id => $parentId)
       {
         if (!empty($parentId))
         {
-          $node = Doctrine::getTable('MenuItem')->find($id);
-          $parent = Doctrine::getTable('MenuItem')->find($parentId);
-          
+          $node = $table->find($id);
+          $parent = $table->find($parentId);
+
           if (!$parent->getNode()->isDescendantOfOrEqualTo($node))
           {
             $node->getNode()->moveAsFirstChildOf($parent);
@@ -81,9 +82,7 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
       if ($count > 0)
       {
         $this->getUser()->setFlash('notice', sprintf("Menu item order updated, moved %s item%s:".$flash, $count, ($count > 1 ? 's' : '')));
-      }
-      else
-      {
+      } else {
         $this->getUser()->setFlash('error', "You must at least move one item to update the menu item order");
       }
     }
@@ -137,12 +136,6 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
       if ($request->hasParameter('_save_and_add'))
       {
         $this->getUser()->setFlash('notice', $this->getUser()->getFlash('notice').' You can add another one below.');
-
-        //$this->redirect('@tree_new');
-      }
-      else
-      {
-        //$this->redirect('@tree_edit?id='.$tree['id']);
       }
     }
     else

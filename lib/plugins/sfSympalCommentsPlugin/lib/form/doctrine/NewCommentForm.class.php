@@ -5,7 +5,7 @@ class NewCommentForm extends CommentForm
   {
     parent::setup();
 
-    unset($this['id'], $this['status'], $this['created_at'], $this['updated_at'], $this['blog_posts_list'], $this['users_list'], $this['pages_list']);
+    unset($this['id'], $this['entities_list'], $this['status'], $this['created_at'], $this['updated_at'], $this['blog_posts_list'], $this['users_list'], $this['pages_list']);
 
     $this->widgetSchema['subject']->setAttribute('style', 'width: 300px');
     $this->widgetSchema['body']->setAttribute('style', 'width: 600px; height: 200px;');

@@ -84,6 +84,34 @@ class sfSympalConfiguration
     }
   }
 
+  public function getRequiredPlugins()
+  {
+    $requiredPlugins = array();
+    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
+    {
+      if (strpos($pluginName, 'sfSympal') !== false)
+      {
+        $pluginConfiguration = $this->_projectConfiguration->getPluginConfiguration($pluginName);
+        if (isset($pluginConfiguration->dependencies) && !empty($pluginConfiguration->dependencies))
+        {
+          $requiredPlugins = array_merge($requiredPlugins, $pluginConfiguration->dependencies);
+        }
+      }
+    }
+
+    return array_unique($requiredPlugins);
+  }
+
+  public function getCorePlugins()
+  {
+    
+  }
+
+  public function getOtherPlugins()
+  {
+    return array_diff($this->getPlugins(), $this->getRequiredPlugins());
+  }
+
   public function checkPluginDependencies()
   {
     foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
@@ -108,6 +136,11 @@ class sfSympalConfiguration
 
   public function getPlugins()
   {
+    return array_keys($this->getPluginPaths());
+  }
+
+  public function getPluginPaths()
+  {
     if (!$this->_plugins)
     {
       $configuration = ProjectConfiguration::getActive();
@@ -130,7 +163,7 @@ class sfSympalConfiguration
     if (!$this->_modules)
     {
       $this->_modules = array();
-      $plugins = $this->getPlugins();
+      $plugins = $this->getPluginPaths();
 
       foreach ($plugins as $plugin => $path)
       {

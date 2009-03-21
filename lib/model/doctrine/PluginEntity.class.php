@@ -5,6 +5,29 @@
  */
 abstract class PluginEntity extends BaseEntity
 {
+  protected
+    $_allPermissions;
+
+  public function getAllPermissions()
+  {
+    if (!$this->_allPermissions)
+    {
+      $this->_allPermissions = array();
+      foreach ($this->Groups as $group)
+      {
+        foreach ($group->Permissions as $permission)
+        {
+          $this->_allPermissions[] = $permission->name;
+        }
+      }
+      foreach ($this->Permissions as $permission)
+      {
+        $this->_allPermissions[] = $permission->name;
+      }
+    }
+    return $this->_allPermissions;
+  }
+
   public function __toString()
   {
     return $this->getHeaderTitle();
@@ -75,6 +98,7 @@ abstract class PluginEntity extends BaseEntity
           $invoker->created_by = $user->getGuardUser()->getId();
         }
       }
+      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
     }
   }
 

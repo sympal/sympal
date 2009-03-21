@@ -22,12 +22,12 @@ abstract class BaseComment extends sfSympalDoctrineRecord
                                                      'foreign' => 'id',
                                                      'onDelete' => 'CASCADE'));
 
-        $this->hasMany('Page as Pages', array('refClass' => 'PageComment',
-                                              'local' => 'comment_id',
-                                              'foreign' => 'page_id'));
+        $this->hasMany('Entity as Entities', array('refClass' => 'EntityComment',
+                                                   'local' => 'comment_id',
+                                                   'foreign' => 'entity_id'));
 
-        $this->hasMany('PageComment as PageComments', array('local' => 'id',
-                                                            'foreign' => 'comment_id'));
+        $this->hasMany('EntityComment as EntityComments', array('local' => 'id',
+                                                                'foreign' => 'comment_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

@@ -18,12 +18,12 @@ abstract class PluginMenuItem extends BaseMenuItem
       {
         foreach ($group->Permissions as $permission)
         {
-          $this->_allPermissions = $permission->name;
+          $this->_allPermissions[] = $permission->name;
         }
       }
       foreach ($this->Permissions as $permission)
       {
-        $this->_allPermissions = $permission->name;
+        $this->_allPermissions[] = $permission->name;
       }
     }
     return $this->_allPermissions;
@@ -64,6 +64,11 @@ abstract class PluginMenuItem extends BaseMenuItem
     if (isset($modified['is_published']) && $modified['is_published'] && !isset($modified['date_published']))
     {
       $invoker->date_published = new Doctrine_Expression('NOW()');
+    }
+
+    if (sfContext::hasInstance())
+    {
+      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
     }
   }
 
@@ -136,29 +141,43 @@ abstract class PluginMenuItem extends BaseMenuItem
         $ancestors = $this->getNode()->getAncestors();
         $tree->resetBaseQuery();
 
+        $breadcrumbs = array();
         if ($ancestors)
         {
           foreach ($ancestors as $ancestor)
           {
-            $this->_breadcrumbs->addNode($ancestor->getLabel(), $ancestor->getItemRoute());
+            $breadcrumbs[$ancestor->getLabel()] = $ancestor->getItemRoute();
           }
         }
 
-        if ($this->getHasManyEntities() && $entity)
+        if ($entity)
         {
-          $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
-          $this->_breadcrumbs->addNode($entity->getHeaderTitle());
-        } else if ($entity) {
-          $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
-          $this->_breadcrumbs->addNode($entity->getHeaderTitle());
+          if ($this->has_many_entities)
+          {
+            $breadcrumbs[$this->getLabel()] = $this->getItemRoute();
+          }
+
+          $breadcrumbs[$entity->getHeaderTitle()] = $entity->getRoute();
+        } else {
+          $breadcrumbs[$this->getLabel()] = $this->getItemRoute();
         }
 
         if ($subItem)
         {
-          $this->_breadcrumbs->addNode($this->getLabel(), $this->getItemRoute());
-          $this->_breadcrumbs->addNode($subItem);
-        } else {
-          $this->_breadcrumbs->addNode($this->getLabel());
+          $breadcrumbs[$subItem] = null;
+        }
+  
+        $count = 0;
+        $total = count($breadcrumbs);
+        foreach ($breadcrumbs as $name => $route)
+        {
+          $count++;
+          if ($count == $total)
+          {
+            $this->_breadcrumbs->addNode($name);
+          } else {
+            $this->_breadcrumbs->addNode($name, $route);
+          }
         }
       }
     }

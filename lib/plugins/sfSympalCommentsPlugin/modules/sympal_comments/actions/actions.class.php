@@ -51,13 +51,12 @@ class sympal_commentsActions extends autoSympal_commentsActions
 
     if ($this->form->isValid())
     {
+      $this->form->getObject()->status = sfSympalConfig::get('Comments', 'default_status');
       $this->form->save();
 
-      $class = $this->entity->getType()->getName() . 'Comment';
-      $field = Doctrine_Inflector::tableize($this->entity->getType()->getName()) . '_id';
-      $obj = new $class();
+      $obj = new EntityComment();
       $obj->comment_id = $this->form->getObject()->getId();
-      $obj->$field = $this->entity->getRecord()->getId();
+      $obj->entity_id = $this->entity->getId();
       $obj->save();
 
       $this->redirect($request->getParameter('from_url') . '#comment_' . $this->form->getObject()->getId());

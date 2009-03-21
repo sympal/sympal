@@ -69,6 +69,8 @@ class sfSympalConfigForm extends sfForm
       $validator = new $validatorClass();
     }
 
+    $validator->setOption('required', false);
+
     $node = array(
       'name' => $name,
       'label' => $label,
@@ -90,17 +92,15 @@ class sfSympalConfigForm extends sfForm
 
     sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.settings_form.save'), array('values' => $this->getValues()));
 
+    $this->_path = sfConfig::get('sf_config_dir').'/app.yml';
+
     file_put_contents($this->_path, sfYaml::dump($array, 4));
   }
 
   protected function _buildArrayToWrite()
   {
-    $this->_path = sfConfig::get('sf_config_dir').'/app.yml';
-
-    $array = sfYaml::load($this->_path);
-    $arr = array();
-    $arr['all']['sympal_settings'] = $this->getValues();
-    $array = sfToolkit::arrayDeepMerge($array, $arr);
+    $array = array();
+    $array['all']['sympal_settings'] = $this->getValues();
 
     return $array;
   }

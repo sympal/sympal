@@ -12,28 +12,3 @@ Page:
       type: string(255)
       notnull: true
     disable_comments: boolean
-  relations:
-<?php if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments')): ?>
-    Comments:
-      class: Comment
-      refClass: PageComment
-      foreignAlias: Pages
-<?php endif; ?>
-
-<?php if (sfSympalConfig::get('Comments', 'enabled') && sfSympalConfig::get('Page', 'enable_comments')): ?>
-PageComment:
-  columns:
-    page_id:
-      type: integer(4)
-      primary: true
-    comment_id:
-      type: integer(4)
-      primary: true
-  relations:
-    Page:
-      foreignAlias: PageComments
-      onDelete: CASCADE
-    Comment:
-      foreignAlias: PageComments
-      onDelete: CASCADE
-<?php endif; ?>

@@ -21,7 +21,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $embeddedPlugins = sfFinder::type('dir')->relative()->maxdepth(0)->in($embeddedPluginPath);
     foreach ($embeddedPlugins as $plugin)
     {
-     $this->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
+      $this->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
     }
 
     $this->enableAllPluginsExcept(array('sfPropelPlugin', 'sfCompat10Plugin'));

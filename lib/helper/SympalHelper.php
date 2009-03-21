@@ -1,13 +1,25 @@
 <?php
 
-function get_menu_item_breadcrumbs($menuItem, $subItem = null)
+function get_sympal_breadcrumbs($menuItem, $entity = null, $subItem = null, $setTitle = false)
 {
-  return get_component('sympal_menu', 'breadcrumbs', array('subItem' => $subItem, 'menuItem' => $menuItem));
+  $breadcrumbs = $menuItem->getBreadcrumbs($entity, $subItem);
+
+  if ($setTitle)
+  {
+    sfContext::getInstance()->getResponse()->setTitle($breadcrumbs->getPathAsString());
+  }
+
+  if ($html = (string) $breadcrumbs)
+  {
+    return '<div id="sympal_breadcrumbs">'.$html.'</div>';
+  } else {
+    return false;
+  }
 }
 
-function get_sympal_menu($name)
+function get_sympal_menu($name, $recursive = true)
 {
-  return get_component('sympal_menu', 'menu', array('name' => $name));
+  return sfSympalMenuSite::getMenu($name, $recursive);
 }
 
 function get_sympal_editor($menuItem = null, $entity = null)

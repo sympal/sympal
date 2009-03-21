@@ -1,12 +1,12 @@
 <?php use_stylesheet('/sfSympalCommentsPlugin/css/comments') ?>
 
 <?php $record = $entity->getRecord() ?>
-<?php if ($record->getTable()->hasRelation('Comments')): ?>
+<?php if ($entity->getTable()->hasRelation('Comments')): ?>
   <div id="sympal_comments">
-    <?php if ($num = count($record['Comments'])): ?>
+    <?php if ($num = count($entity['Comments'])): ?>
       <h2>Comments (<?php echo $num ?>)</h2>
       <ul>
-        <?php foreach ($record['Comments'] as $comment): ?>
+        <?php foreach ($entity['Comments'] as $comment): ?>
           <li>
             <a name="comment_<?php echo $comment->getId() ?>"></a>
             <h3><?php echo $comment['subject'] ?></h3>

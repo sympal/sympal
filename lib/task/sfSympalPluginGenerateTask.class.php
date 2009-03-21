@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalCreatePlugin extends sfBaseTask
+class sfSympalPluginGenerateTask extends sfBaseTask
 {
   protected function configure()
   {
@@ -10,16 +10,17 @@ class sfSympalCreatePlugin extends sfBaseTask
 
     $this->addOptions(array(
       new sfCommandOption('entity-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the entity type to create', null),
-      new sfCommandOption('re-generate', null, sfCommandOption::PARAMETER_NONE, 'Re-generate the plugin. Will remove it if it exists already and re-generate everything.')
+      new sfCommandOption('re-generate', null, sfCommandOption::PARAMETER_NONE, 'Re-generate the plugin. Will remove it if it exists already and re-generate everything.'),
+      new sfCommandOption('install', null, sfCommandOption::PARAMETER_NONE, 'Install the plugin after generating it.'),
     ));
 
     $this->aliases = array();
     $this->namespace = 'sympal';
-    $this->name = 'create-plugin';
-    $this->briefDescription = 'Create the skeleton for a sympal plugin';
+    $this->name = 'plugin-generate';
+    $this->briefDescription = 'Generate the skeleton for a sympal plugin';
 
     $this->detailedDescription = <<<EOF
-The [sympal:create-plugin|INFO] is a task to help you with creating a skeleton sympal plugin.
+The [sympal:plugin-create|INFO] is a task to help you with generating a skeleton sympal plugin.
 EOF;
   }
 
@@ -31,7 +32,7 @@ EOF;
 
     if (!$this->askConfirmation(array('This command will create a new plugin named '.$pluginName, 'Are you sure you want to proceed? (y/N)'), null, false))
     {
-      $this->logSection('doctrine', 'Plugin creation aborted');
+      $this->logSection('sympal', 'Plugin creation aborted');
 
       return 1;
     }
@@ -40,9 +41,9 @@ EOF;
     {
       if (isset($options['re-generate']))
       {
-        $this->getFilesystem()->remove(sfFinder::type('file')->in($path));
-        $this->getFilesystem()->remove(sfFinder::type('dir')->in($path));
-        $this->getFilesystem()->remove($path);
+        $uninstall = new sfSympalPluginUninstallTask($this->dispatcher, $this->formatter);
+        $uninstall->setCommandApplication($this->commandApplication);
+        $ret = $uninstall->run(array($name), array());
       } else {
         throw new sfException('A plugin with the name '.$pluginName.' already exists!');
       }
@@ -57,6 +58,7 @@ $entityType:
   actAs: [sfSympalEntityType]
   columns:
     name: string(255)
+    body: clob
 EOF;
 
     $pluginConfigurationClassCode = <<<EOF
@@ -78,7 +80,7 @@ class %s extends sfPluginConfiguration
   {
     \$menu = \$event['menu'];
 
-    \$menu->addNode('$name', '@sympal_entity_type_%s');
+    \$menu->getNode('Administration')->addNode('$name', '@sympal_entity_type_%s');
   }
 
   public function loadSettings(sfEvent \$event)
@@ -112,9 +114,18 @@ Entity:
     is_published: true
     CreatedBy: admin
 
+EntityTemplate:
+  EntityTemplate_View$entityType:
+    name: View $entityType
+    type: View
+    EntityType: EntityType_$lowerName
+    body: |
+      <h1>[?php echo \$entity->getHeaderTitle() ?]</h1><p>[?php echo \$entity->getRecord()->getBody() ?]</p>
+
 $entityType:
   {$entityType}_sample:
     name: Sample $entityType
+    body: This is some sample content for the body your new entity type.
     Entity: {$entityType}_entity_sample
 
 MenuItem:
@@ -156,6 +167,13 @@ EOF;
       } else {
         $this->getFilesystem()->mkdirs($itemPath);
       }
+    }
+
+    if (isset($options['install']) && $options['install'])
+    {
+      $install = new sfSympalPluginInstallTask($this->dispatcher, $this->formatter);
+      $install->setCommandApplication($this->commandApplication);
+      $ret = $install->run(array($name), array());
     }
   }
 }

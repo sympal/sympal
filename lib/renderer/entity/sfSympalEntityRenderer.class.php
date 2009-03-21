@@ -104,7 +104,7 @@ class sfSympalEntityRenderer
     {
       return sfSympalTools::renderContent($body, $options);;
     } else {
-      return get_menu_item_breadcrumbs($this->_menuItem).$this->_renderDoctrineData($data);
+      return get_sympal_breadcrumbs($this->_menuItem, ($key == 'entity' ? $data:null)).$this->_renderDoctrineData($data);
     }
   }
 

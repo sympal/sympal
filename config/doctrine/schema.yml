@@ -79,6 +79,28 @@ Entity:
       foreign: permission_id
       refClass: EntityPermission
       foreignAlias: Entities
+    Comments:
+      class: Comment
+      local: entity_id
+      foreign: comment_id
+      refClass: EntityComment
+      foreignAlias: Entities
+
+EntityComment:
+  columns:
+    entity_id:
+      type: integer(4)
+      primary: true
+    comment_id:
+      type: integer(4)
+      primary: true
+  relations:
+    Entity:
+      foreignAlias: EntityComments
+      onDelete: CASCADE
+    Comment:
+      foreignAlias: EntityComments
+      onDelete: CASCADE
 
 EntityType:
   actAs:

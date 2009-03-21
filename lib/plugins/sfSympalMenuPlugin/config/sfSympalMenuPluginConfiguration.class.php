@@ -4,8 +4,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 {
   public 
     $dependencies = array(
-      'sfSympalPlugin',
-      'sfSympalI18nPlugin'
+      'sfSympalPlugin'
     );
 
   public function initialize()

@@ -84,7 +84,7 @@ class sfSympalMenuNode extends sfSympalMenu
       } else {
         $html .= $this->getLabel();
       }
-      if ($this->hasNodes())
+      if ($this->hasNodes() && $this->isRecursiveOutput())
       {
         $html .= '<ul>';
         foreach ($this->_nodes as $node)
