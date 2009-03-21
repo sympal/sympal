@@ -28,8 +28,6 @@
   <div id="sympal_edit_panel">
     <div class="hd">Sympal Editor Panel</div>
     <div class="bd">
-      <p>You are currently viewing a <strong><?php echo $entity['Type']['name'] ?></strong> titled <strong><?php echo $entity ?>.</strong></p>
-
       <div class="sympal_icon_list">
         <h3><?php echo $entity['Type']['name'] ?> Editor</h3>
 
@@ -43,10 +41,6 @@
               <?php else: ?>
                 <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$entity['Type']['name'].' Backend', '@sympal_entities_edit?id='.$entity['id']) ?></li>
               <?php endif; ?>
-
-              <?php if ($menuItem && $menuItem->exists()): ?>
-                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Menu Item', '@sympal_menu_items_edit?id='.$menuItem['id']) ?></li>
-              <?php endif; ?>            
             <?php else: ?>
               <li><?php echo $entity['Type']['name'] ?> is currently locked by "<?php echo $entity['LockedBy']['username'] ?>" and cannot be edited.</li>
             <?php endif; ?>
@@ -54,7 +48,7 @@
             <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Obtain Edit Lock', '@sympal_lock_entity?id='.$entity['id']) ?></li>
           <?php elseif ($lock): ?>
             <li>You still have an edit lock open on a <strong><?php echo $lock['Type']['name'] ?></strong> titled <strong><?php echo $lock->getHeaderTitle() ?></strong>.</li>
-            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Un-Lock '.$lock['Type']['name'], '@sympal_unlock_entity?id='.$entity['id']) ?></li>
+            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Un-Lock '.$lock['Type']['name'], '@sympal_unlock_entity?id='.$lock['id']) ?></li>
             <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Go Back to '.$lock->getHeaderTitle(), $lock->getRoute()) ?></li>
           <?php endif; ?>
 
@@ -66,7 +60,17 @@
           <?php else: ?>
             <li><?php echo image_tag('/sf/sf_admin/images/tick.png').' '.link_to('Publish', '@sympal_publish_entity?id='.$entity['id']) ?></li>
           <?php endif; ?>
+          <li><?php echo image_tag('/sf/sf_admin/images/delete.png').' '.link_to('Delete', '@sympal_entities_delete?id='.$menuItem['id'], 'confirm=Are you sure you wish to delete this content?') ?></li>
         </ul>
+
+        <?php if ($menuItem && $menuItem->exists()): ?>
+          <h3>Menu Editor</h3>
+          <ul>
+            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Menu Item', '@sympal_menu_items_edit?id='.$menuItem['id']) ?></li>
+            <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to('Add Child Menu Item', 'sympal_menu_items/ListNew?id='.$menuItem['id']) ?></li>
+            <li><?php echo image_tag('/sf/sf_admin/images/delete.png').' '.link_to('Delete', '@sympal_menu_items_delete?id='.$menuItem['id'], 'confirm=Are you sure you wish to delete this menu item?') ?></li>
+          </ul>
+        <?php endif; ?>
 
         <h3><?php echo $entity['Type']['label'] ?> Content</h3>
 

@@ -35,10 +35,9 @@ function get_sympal_editor($menuItem = null, $entity = null)
   if (sfSympalTools::isEditMode() && $entity && $menuItem)
   {
     $editor  = get_component('sympal_editor', 'tools', array('entity' => $entity, 'menuItem' => $menuItem));
-    $editor .= get_slot('sympal_editors');
-
-    return $editor;
   }
+  $editor .= get_slot('sympal_editors');
+  return $editor;
 }
 
 function get_sympal_admin_bar()

@@ -57,7 +57,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
     if (isset($menuItem))
     {
-      return $menu->getMenuItemNode($menuItem);
+      return $menu->getMenuItemSubMenu($menuItem);
     } else {
       return $menu;
     }

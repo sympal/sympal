@@ -46,6 +46,8 @@ generator:
         object_actions:
           new:
             label: Add Child
+          view:
+            action: view
           _edit:    ~
           _delete:  ~
         actions:
@@ -64,5 +66,10 @@ generator:
           "Mapping": [parent_id, site_id, entity_type_id, has_many_entities, entity_id, route]
           "Security": [requires_auth, requires_no_auth, groups_list, permissions_list]
           "Publish": [is_published, date_published]
-      edit:    ~
+      edit:
+        actions:
+          _delete:
+          _save:
+          view:
+            action: view
       new:     ~

@@ -53,6 +53,27 @@ MenuItem:
         Site: Site_default
         RelatedEntity: Entity_Page_about
         EntityType: EntityType_Page
+        children:
+          MenuItem_primary_about_doctrine:
+            name: Doctrine
+            label: Doctrine
+            Site: Site_default
+            route: http://www.doctrine-project.org/about
+          MenuItem_primary_about_symfony:
+            name: symfony
+            label: symfony
+            Site: Site_default
+            route: http://www.symfony-project.org/about
+          MenuItem_primary_about_sensio_labs:
+            name: Sensio LAbs
+            label: Sensio Labs
+            Site: Site_default
+            route: http://www.sensiolabs.com
+          MenuItem_primary_about_centresource:
+            name: centresource
+            label: "centre{source}"
+            Site: Site_default
+            route: http://www.centresource.com
       MenuItem_primary_markdown_examples:
         name: Markdown Examples
         is_published: true

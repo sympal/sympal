@@ -9,7 +9,8 @@ abstract class sfSympalMenu
     $_requiresAuth = null,
     $_requiresNoAuth = null,
     $_credentials = array(),
-    $_recursiveOutput = true;
+    $_recursiveOutput = true,
+    $_useCache = true;
 
   public function __construct($name = null)
   {
@@ -153,7 +154,7 @@ abstract class sfSympalMenu
       $node = new $class($node, $route, $options);
     }
 
-    $node->setParent($this);
+    $node->setParent($this->getParent() ? $this->getParent():$this);
     $node->isRecursiveOutput($this->isRecursiveOutput());
 
     $this->_nodes[$node->getName()] = $node;
@@ -219,15 +220,22 @@ abstract class sfSympalMenu
     $this->setLevel($menuItem->level);
   }
 
-  public function getMenuItemNode($menuItem)
+  public function getMenuItemSubMenu($menuItem)
   {
     foreach ($this->_nodes as $node)
     {
       if ($node->getMenuItem()->id == $menuItem->id && $node->getNodes())
       {
-        return $node;
-      } else if ($n = $node->getMenuItemNode($menuItem)) {
-        return $n;
+        $result = $node;
+      } else if ($n = $node->getMenuItemSubMenu($menuItem)) {
+        $result = $n;
+      }
+      if (isset($result))
+      {
+        $class = get_class($result->getParent());
+        $instance = new $class();
+        $instance->setNodes($result->getNodes());
+        return $instance;
       }
     }
   }

@@ -19,6 +19,18 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
     sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
   }
 
+  public function executeView()
+  {
+    $this->menuItem = $this->getRoute()->getObject();
+    $this->redirect($this->menuItem->getItemRoute());
+  }
+
+  public function executeEdit(sfWebRequest $request)
+  {
+    parent::executeEdit($request);
+    sfSympalTools::setCurrentMenuItem($this->menu_item);
+  }
+
   protected function addSortQuery($query)
   {
     $query->addOrderBy('root_id, lft');

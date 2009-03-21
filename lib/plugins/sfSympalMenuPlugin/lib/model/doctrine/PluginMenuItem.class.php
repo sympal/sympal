@@ -36,7 +36,13 @@ abstract class PluginMenuItem extends BaseMenuItem
     {
       return $entity;
     } else {
-      return $this->getEntity();
+      $entity = $this->getEntity();
+      if ($entity && $entity instanceof Doctrine_Record && $entity->exists())
+      {
+        return $entity;
+      } else {
+        return false;
+      }
     }
   }
 

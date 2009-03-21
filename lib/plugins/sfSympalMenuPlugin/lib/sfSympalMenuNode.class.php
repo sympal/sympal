@@ -77,10 +77,48 @@ class sfSympalMenuNode extends sfSympalMenu
         $options = $this->getOptions();
         if  ($this->isCurrent())
         {
-          $options['id'] = 'current';
+          $options['class'] = 'current';
         }
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
-        $html .= link_to($this->getLabel(), $this->getRoute(), $options);
+        $menuItem = $this->getMenuItem();
+
+        if ($menuItem && sfSympalTools::isEditMode())
+        {
+          $options['id'] = 'menu_item_'.$menuItem['id'];
+          $html .= link_to($this->getLabel(), $menuItem->getItemRoute(), $options);
+          $menu = new sfSympalMenuBackend();
+          if (sfConfig::get('sf_debug'))
+          {
+            $menu->addNode('Debug')->addNode('<pre>'.sfYaml::dump($menuItem->toArray(true), 6).'</pre>');
+          }
+          $menu->addNode('Edit', '@sympal_menu_items_edit?id='.$menuItem['id']);
+          if ($menuItem->getMainEntity())
+          {
+            $menu->addNode('Edit Entity', '@sympal_entities_edit?id='.$menuItem->getMainEntity()->getId());
+          }
+          $menu->addNode('Follow', $menuItem->getItemRoute());
+          $menu->addNode('Close', null, array('id' => 'menu_item_'.$menuItem['id'].'_hide_control_menu'));
+
+          $editor  = '';
+          $editor .= '<div class="yui-skin-sam">';
+          $editor .= '<div id="menu_item_'.$menuItem['id'].'_control_menu" class="yuimenu"><div class="bd">'.$menu.'</div></div>';
+          $editor .= '<script type="text/javascript">';
+          $editor .= 'var oMenu = new YAHOO.widget.Menu("menu_item_'.$menuItem['id'].'_control_menu", { underlay:"shadow",
+        	close:true,
+        	underlay:"matte",
+        	draggable:true,
+        	context:[\'menu_item_'.$menuItem['id'].'\', \'tl\', \'bl\'] });';
+          $editor .= 'oMenu.render();';
+          $editor .= 'YAHOO.util.Event.addListener("menu_item_'.$menuItem['id'].'", "mouseover", oMenu.show, oMenu, true);';
+          $editor .= 'YAHOO.util.Event.addListener("menu_item_'.$menuItem['id'].'_hide_control_menu", "mouseover", oMenu.hide, oMenu, true);';
+          $editor .= '</script>';
+          $editor .= '</div>';
+
+          slot('sympal_editors', get_slot('sympal_editors').$editor);
+
+        } else {
+          $html .= link_to($this->getLabel(), $this->getRoute(), $options);
+        }
       } else {
         $html .= $this->getLabel();
       }

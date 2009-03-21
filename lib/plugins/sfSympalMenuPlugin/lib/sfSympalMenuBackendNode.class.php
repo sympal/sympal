@@ -1,13 +1,15 @@
 <?php
 class sfSympalMenuBackendNode extends sfSympalMenuNode
 {
-  public function _render()
+  public function _render($test = null)
   {
     $html  = '<li class="yuimenuitem">';
     if ($this->_route)
     {
       sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
-      $html .= link_to($this->getLabel(), $this->getRoute(), $this->getOptions(), 'class=yuimenuitemlabel');
+      $options = $this->getOptions();
+      $options['class'] = (isset($options['class']) ? $options['class'].' ':null).'yuimenuitemlabel';
+      $html .= link_to($this->getLabel(), $this->getRoute(), $options);
     } else {
       $html .= '<a href="#" class="yuimenuitemlabel">'.$this->getLabel().'</a>';
     }
