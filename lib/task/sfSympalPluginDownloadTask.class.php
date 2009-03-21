@@ -5,7 +5,7 @@ class sfSympalPluginDownloadTask extends sfBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The name of the functionality. i.e. sfSympal#NAME#Plugin'),
+      new sfCommandArgument('name', sfCommandArgument::OPTIONAL, 'The name of the functionality. i.e. sfSympal#NAME#Plugin'),
     ));
 
     $this->addOptions(array(
@@ -27,9 +27,6 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $name = $arguments['name'];
-    $pluginName = 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
-
     $path = 'http://svn.symfony-project.com/plugins';
 
     $html = file_get_contents($path);
@@ -43,14 +40,20 @@ EOF;
       $plugins = array_diff($matches[0], $installedPlugins);
       if (!empty($plugins))
       {
+        $this->logSection('sympal', 'Found '.count($plugins).' Sympal Plugin(s)');
+        $this->logSection('sympal', str_repeat('-', 30));
         foreach ($plugins as $plugin)
         {
-          $this->logSection('sympal', $plugin);
+          $name = str_replace(array('sfSympal', 'Plugin'), array('', ''), $plugin);
+          $this->logSection('sympal', $plugin.' [php symfony sympal:plugin-install '.$name.']');
         }
       } else {
         throw new sfException('No sympal plugins found');
       }
     } else {
+      $name = $arguments['name'];
+      $pluginName = 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
+
       if (strstr($html, $pluginName))
       {
         $this->logSection('sympal', 'Download '.$pluginName);
