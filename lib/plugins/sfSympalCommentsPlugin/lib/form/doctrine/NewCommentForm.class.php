@@ -8,7 +8,7 @@ class NewCommentForm extends CommentForm
     unset($this['id'], $this['entities_list'], $this['status'], $this['created_at'], $this['updated_at'], $this['blog_posts_list'], $this['users_list'], $this['pages_list']);
 
     $this->widgetSchema['subject']->setAttribute('style', 'width: 300px');
-    $this->widgetSchema['body']->setAttribute('style', 'width: 600px; height: 200px;');
+    $this->widgetSchema['body']->setAttribute('style', 'width: 400px; height: 200px;');
     $this->widgetSchema->setHelp('body', 'Markdown syntax is enabled.');
 
     if (sfSympalConfig::get('Comments', 'requires_auth'))

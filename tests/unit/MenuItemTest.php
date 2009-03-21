@@ -22,7 +22,8 @@ $t->is($menuItem->getItemRoute(), '@sympal_entity_view_type_page?slug=about');
 $t->is($menuItem->getBreadcrumbs($menuItem->getMainEntity())->getPathAsString(), 'Home > About');
 $t->is($menuItem->getLayout(), 'sympal');
 
-$hierarchy = $table->toHierarchy($menuItems->toArray());
+$menu = new sfSympalMenuSite();
+$hierarchy = $menu->toHierarchy($menuItems->toArray());
 
 $t->is(isset($hierarchy[0]['__children']), true);
 

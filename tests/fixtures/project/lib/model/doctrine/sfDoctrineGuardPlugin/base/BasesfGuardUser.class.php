@@ -31,6 +31,18 @@ abstract class BasesfGuardUser extends sfSympalDoctrineRecord
                                                                  'local' => 'user_id',
                                                                  'foreign' => 'permission_id'));
 
+        $this->hasMany('sfGuardUserPermission', array('local' => 'id',
+                                                      'foreign' => 'user_id'));
+
+        $this->hasMany('sfGuardUserGroup', array('local' => 'id',
+                                                 'foreign' => 'user_id'));
+
+        $this->hasOne('sfGuardRememberKey as RememberKeys', array('local' => 'id',
+                                                                  'foreign' => 'user_id'));
+
+        $this->hasMany('Comment as Comments', array('local' => 'id',
+                                                    'foreign' => 'user_id'));
+
         $this->hasMany('Entity as LastUpdatedEntities', array('local' => 'id',
                                                               'foreign' => 'last_updated_by'));
 
@@ -40,17 +52,8 @@ abstract class BasesfGuardUser extends sfSympalDoctrineRecord
         $this->hasMany('Entity as LockedEntities', array('local' => 'id',
                                                          'foreign' => 'locked_by'));
 
-        $this->hasMany('Comment as Comments', array('local' => 'id',
-                                                    'foreign' => 'user_id'));
-
-        $this->hasMany('sfGuardUserPermission', array('local' => 'id',
+        $this->hasOne('UserProfile as Profile', array('local' => 'id',
                                                       'foreign' => 'user_id'));
-
-        $this->hasMany('sfGuardUserGroup', array('local' => 'id',
-                                                 'foreign' => 'user_id'));
-
-        $this->hasOne('sfGuardRememberKey as RememberKeys', array('local' => 'id',
-                                                                  'foreign' => 'user_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

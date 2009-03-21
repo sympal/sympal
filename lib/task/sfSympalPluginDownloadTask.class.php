@@ -28,7 +28,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $name = $arguments['name'];
-    $pluginName = 'sfSympal'.Doctrine_Inflector::classify($name).'Plugin';
+    $pluginName = 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
 
     $path = 'http://svn.symfony-project.com/plugins';
 

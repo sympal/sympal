@@ -97,9 +97,9 @@ $t->is($entity->getRoute(), '@sympal_entity_view_type_page?slug=testing-this-out
 
 $configuration->loadHelpers('Entity');
 
-entity_slot($entity, 'title', 'Text', 'Test');
-entity_slot($entity, 'body', 'Markdown');
-entity_slot($entity, 'teaser', 'MultiLineText');
+sympal_entity_slot($entity, 'title', 'Text', 'Test');
+sympal_entity_slot($entity, 'body', 'Markdown');
+sympal_entity_slot($entity, 'teaser', 'MultiLineText');
 
 $entity->refresh(true);
 
@@ -113,11 +113,11 @@ $t->is($slots[0]->render(), 'Title value');
 $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>Body value</p>
 </div>');
 
-$t->is(render_entity_slot($slots[0]), 'Title value');
+$t->is(sympal_render_entity_slot($slots[0]), 'Title value');
 
 // test php
 $slots[1]['value'] = "<?php echo 'test'; ?>";
-$t->is(render_entity_slot($slots[1]), '<div class="sympal_markdown"><p>test</p>
+$t->is(sympal_render_entity_slot($slots[1]), '<div class="sympal_markdown"><p>test</p>
 </div>');
 
 $markdown = "
@@ -178,9 +178,9 @@ $html = '<div class="sympal_markdown"><blockquote class="tip"><p>
 </div>';
 
 $slots[1]['value'] = $markdown;
-$t->is(render_entity_slot($slots[1]), $html);
+$t->is(sympal_render_entity_slot($slots[1]), $html);
 
 $slots->save();
 
-$t->is(render_entity_slot($slots[2]), 'Body value<br />
+$t->is(sympal_render_entity_slot($slots[2]), 'Body value<br />
 Testing');

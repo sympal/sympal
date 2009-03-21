@@ -27,7 +27,7 @@ EOF;
   protected function execute($arguments = array(), $options = array())
   {
     $name = $arguments['name'];
-    $pluginName = 'sfSympal'.Doctrine_Inflector::classify($name).'Plugin';
+    $pluginName = 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
     $path = sfConfig::get('sf_plugins_dir').'/'.$pluginName;
 
     if (!$this->askConfirmation(array('This command will create a new plugin named '.$pluginName, 'Are you sure you want to proceed? (y/N)'), null, false))
@@ -47,6 +47,11 @@ EOF;
       } else {
         throw new sfException('A plugin with the name '.$pluginName.' already exists!');
       }
+    }
+
+    if (is_dir($path))
+    {
+      Doctrine_Lib::removeDirectories($path);
     }
 
     mkdir($path);
@@ -120,6 +125,7 @@ EntityTemplate:
     type: View
     EntityType: EntityType_$lowerName
     body: |
+      [?php echo get_sympal_breadcrumbs(\$menuItem, \$entity) ?]
       <h1>[?php echo \$entity->getHeaderTitle() ?]</h1><p>[?php echo \$entity->getRecord()->getBody() ?]</p>
 
 $entityType:

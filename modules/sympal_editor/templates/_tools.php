@@ -91,30 +91,30 @@ function edit_on_key_up(e)
   changed = true;
 }
 
-function highlight_entity_slot(id)
+function highlight_sympal_entity_slot(id)
 {
   document.getElementById('edit_entity_slot_button_' + id).style.background = '#ffc';
   document.getElementById('edit_entity_slot_button_' + id).style.border = '1px solid #ddd';
 }
 
-function unhighlight_entity_slot(id)
+function unhighlight_sympal_entity_slot(id)
 {
   document.getElementById('edit_entity_slot_button_' + id).style.background = 'none';
   document.getElementById('edit_entity_slot_button_' + id).style.border = '1px solid transparent';
 }
 
 var interval;
-function edit_entity_slot(id)
+function edit_sympal_entity_slot(id)
 {
 	var url = "<?php echo url_for('@sympal_edit_entity_slot?id=##REPLACE##', 'absolute=true') ?>";
 	url = url.replace('##REPLACE##', id);
 
-  interval = setInterval(function() { preview_entity_slot(id) }, 500);
+  interval = setInterval(function() { preview_sympal_entity_slot(id) }, 500);
 
   YAHOO.plugin.Dispatcher.fetch('edit_entity_slot_content_' + id, url);
 }
 
-function preview_entity_slot(id)
+function preview_sympal_entity_slot(id)
 {
   if (!changed)
   {
@@ -136,17 +136,17 @@ function preview_entity_slot(id)
 	YAHOO.util.Connect.asyncRequest('POST', url, callback, 'value=' + escape(document.getElementById('entity_slot_value_' + id).value));
 }
 
-function save_entity_slot(id)
+function save_sympal_entity_slot(id)
 {
 	var url = "<?php echo url_for('@sympal_save_entity_slot?id=888', 'absolute=true') ?>";
 	url = url.replace('888', id);
 
-  highlight_entity_slot(id);
+  highlight_sympal_entity_slot(id);
 
 	var callback = {
 		success: function(o) {
 			document.getElementById('edit_entity_slot_button_' + id).innerHTML = o.responseText;
-			unhighlight_entity_slot(id);
+			unhighlight_sympal_entity_slot(id);
 			}
 		} 
 

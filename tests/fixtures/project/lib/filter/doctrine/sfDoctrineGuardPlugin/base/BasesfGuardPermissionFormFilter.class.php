@@ -18,10 +18,10 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
       'description'     => new sfWidgetFormFilterInput(),
       'created_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
       'updated_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'entities_list'   => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
-      'menu_items_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),
       'groups_list'     => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardGroup')),
       'users_list'      => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardUser')),
+      'menu_items_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),
+      'entities_list'   => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
     ));
 
     $this->setValidators(array(
@@ -29,10 +29,10 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
       'description'     => new sfValidatorPass(array('required' => false)),
       'created_at'      => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'updated_at'      => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'entities_list'   => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
-      'menu_items_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
       'groups_list'     => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
       'users_list'      => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardUser', 'required' => false)),
+      'menu_items_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
+      'entities_list'   => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_permission_filters[%s]');
@@ -40,38 +40,6 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
     parent::setup();
-  }
-
-  public function addEntitiesListColumnQuery(Doctrine_Query $query, $field, $values)
-  {
-    if (!is_array($values))
-    {
-      $values = array($values);
-    }
-
-    if (!count($values))
-    {
-      return;
-    }
-
-    $query->leftJoin('r.EntityPermission EntityPermission')
-          ->andWhereIn('EntityPermission.entity_id', $values);
-  }
-
-  public function addMenuItemsListColumnQuery(Doctrine_Query $query, $field, $values)
-  {
-    if (!is_array($values))
-    {
-      $values = array($values);
-    }
-
-    if (!count($values))
-    {
-      return;
-    }
-
-    $query->leftJoin('r.MenuItemPermission MenuItemPermission')
-          ->andWhereIn('MenuItemPermission.menu_item_id', $values);
   }
 
   public function addGroupsListColumnQuery(Doctrine_Query $query, $field, $values)
@@ -106,6 +74,38 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
           ->andWhereIn('sfGuardUserPermission.user_id', $values);
   }
 
+  public function addMenuItemsListColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values))
+    {
+      return;
+    }
+
+    $query->leftJoin('r.MenuItemPermission MenuItemPermission')
+          ->andWhereIn('MenuItemPermission.menu_item_id', $values);
+  }
+
+  public function addEntitiesListColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values))
+    {
+      return;
+    }
+
+    $query->leftJoin('r.EntityPermission EntityPermission')
+          ->andWhereIn('EntityPermission.entity_id', $values);
+  }
+
   public function getModelName()
   {
     return 'sfGuardPermission';
@@ -119,10 +119,10 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
       'description'     => 'Text',
       'created_at'      => 'Date',
       'updated_at'      => 'Date',
-      'entities_list'   => 'ManyKey',
-      'menu_items_list' => 'ManyKey',
       'groups_list'     => 'ManyKey',
       'users_list'      => 'ManyKey',
+      'menu_items_list' => 'ManyKey',
+      'entities_list'   => 'ManyKey',
     );
   }
 }

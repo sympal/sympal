@@ -28,7 +28,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
 
     $name = $arguments['name'];
-    $pluginName = 'sfSympal'.Doctrine_Inflector::classify($name).'Plugin';
+    $pluginName = 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
     $path = $this->configuration->getPluginConfiguration($pluginName)->getRootDir();
     $schema = $path.'/config/doctrine/schema.yml';
     $dataFixtures = sfFinder::type('file')->in($path.'/data/fixtures/install.yml');
@@ -97,14 +97,6 @@ EOF;
     $entityType->list_route_url = "/$lowerName/list";
     $entityType->view_route_url = "/$lowerName/:slug";
     $entityType->slug = $lowerName;
-    $entityType->save();
-
-    $entityTemplate = new EntityTemplate();
-    $entityTemplate->name = 'View '.$entityTypeName;
-    $entityTemplate->type = 'View';
-    $entityTemplate->EntityType = $entityType;
-    $entityTemplate->body = '<h1><?php echo $entity->getHeaderTitle() ?></h1><p><?php echo $entity->getRecord()->getBody() ?></p>';
-    $entityTemplate->save();
 
     $entity = new Entity();
     $entity->Type = $entityType;
@@ -112,33 +104,6 @@ EOF;
     $entity->is_published = true;
     $entity->CreatedBy = Doctrine::getTable('sfGuardUser')->findOneByUsername('admin');
     $entity->Site = Doctrine::getTable('Site')->findOneBySlug($options['application']);
-    $entity->save();
-
-    $entityTypeRecord = new $entityTypeName();
-    $entityTypeRecord->Entity = $entity;
-
-    $guesses = array('name',
-                     'title',
-                     'username',
-                     'subject',
-                     'body');
-
-    try {
-      foreach ($guesses as $guess)
-      {
-        $entityTypeRecord->$guess = 'Sample '.$entityTypeName;
-      }
-    } catch (Exception $e) {}
-
-    if ($entityTypeRecord->getTable()->hasColumn('body'))
-    {
-      $entityTypeRecord->body = 'This is some sample content for the body your new entity type.';
-    }
-
-    $entityTypeRecord->save();
-
-    $roots = Doctrine::getTable('MenuItem')->getTree()->fetchRoots();
-    $root = $roots[0];
 
     $menuItem = new MenuItem();
     $menuItem->name = $name;
@@ -147,6 +112,42 @@ EOF;
     $menuItem->has_many_entities = true;
     $menuItem->EntityType = $entityType;
     $menuItem->Site = Doctrine::getTable('Site')->findOneBySlug($options['application']);
-    $menuItem->getNode()->insertAsLastChildOf($root);
+
+    $pluginConfig = $this->configuration->getPluginConfiguration($pluginName);
+    if (method_exists($pluginConfig, 'install'))
+    {
+      $records = array('menuItem' => $menuItem, 'entity' => $entity, 'entityType' => $entityType);
+      $this->configuration->getPluginConfiguration($pluginName)->install($records);
+    } else {
+      $entityTemplate = new EntityTemplate();
+      $entityTemplate->name = 'View '.$entityTypeName;
+      $entityTemplate->type = 'View';
+      $entityTemplate->EntityType = $entityType;
+      $entityTemplate->body = '<h1><?php echo $entity->getHeaderTitle() ?></h1><p><?php echo $entity->getRecord()->getBody() ?></p>';
+      $entityTemplate->save();
+
+      $entityTypeRecord = new $entityTypeName();
+      $entityTypeRecord->Entity = $entity;
+
+      $guesses = array('name',
+                       'title',
+                       'username',
+                       'subject',
+                       'body');
+
+      try {
+        foreach ($guesses as $guess)
+        {
+          $entityTypeRecord->$guess = 'Sample '.$entityTypeName;
+        }
+      } catch (Exception $e) {}
+
+      if ($entityTypeRecord->getTable()->hasColumn('body'))
+      {
+        $entityTypeRecord->body = 'This is some sample content for the body your new entity type.';
+      }
+      $entityTypeRecord->save();
+      throw new sfException('On the '.$pluginName.'Configuration class you can define a install() method to perform additional installation operaitons for your sympal plugin!');
+    }
   }
 }

@@ -40,7 +40,7 @@ class PluginEntityTable extends Doctrine_Table
       $type = $q->fetchOne();
       $typeName = $type['name'];
 
-      $table = Doctrine::getTable($type->getName());
+      $table = Doctrine::getTable($typeName);
     }
 
     $defaultQuery = true;
@@ -113,6 +113,7 @@ class PluginEntityTable extends Doctrine_Table
 
   public function getBaseQuery()
   {
+    $sympalContext = sfSympalContext::getInstance();
     $q = Doctrine_Query::create()
       ->from('Entity e')
       ->leftJoin('e.Slots sl')
@@ -121,15 +122,12 @@ class PluginEntityTable extends Doctrine_Table
       ->leftJoin('ty.Templates t')
       ->leftJoin('e.MasterMenuItem m')
       ->leftJoin('e.MenuItem mm')
-      ->leftJoin('e.Site esi');
+      ->innerJoin('e.Site esi WITH esi.slug = ?', $sympalContext->getSite());
 
     if (!sfSympalTools::isEditMode())
     {
       $q->andWhere('e.is_published = 1');
     }
-
-    $sympalContext = sfSympalContext::getInstance();
-    $q->andWhere('esi.slug = ?', $sympalContext->getSite());
 
     return $q;
   }

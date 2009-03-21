@@ -22,6 +22,11 @@ function get_sympal_menu($name, $recursive = true)
   return sfSympalMenuSite::getMenu($name, $recursive);
 }
 
+function get_sympal_comments($entity)
+{
+  return get_component('sympal_comments', 'for_entity', array('entity' => $entity));
+}
+
 function get_sympal_editor($menuItem = null, $entity = null)
 {
   $menuItem = $menuItem ? $menuItem:sfSympalTools::getCurrentMenuItem();

@@ -4,8 +4,8 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          <input type="button" id="preview_button" name="preview" value="Preview" onClick="javascript: preview_entity_slot('<?php echo $sf_request->getParameter('id') ?>');" />
-          <input type="button" id="save_button" name="save" value="Save" onClick="javascript: save_entity_slot('<?php echo $sf_request->getParameter('id') ?>');" />
+          <input type="button" id="preview_button" name="preview" value="Preview" onClick="javascript: preview_sympal_entity_slot('<?php echo $sf_request->getParameter('id') ?>');" />
+          <input type="button" id="save_button" name="save" value="Save" onClick="javascript: save_sympal_entity_slot('<?php echo $sf_request->getParameter('id') ?>');" />
         </td>
       </tr>
     </tfoot>

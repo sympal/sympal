@@ -25,8 +25,8 @@ foreach ($menuItems as $menuItem)
     end()->
     with('response')->begin()->
       contains((string) $menuItem->getBreadcrumbs($entity))->
-      contains(render_entity_slot($entity->getSlots()->getFirst()))->
-      contains(render_entity_slot($entity->getSlots()->getLast()))->
+      contains(sympal_render_entity_slot($entity->getSlots()->getFirst()))->
+      contains(sympal_render_entity_slot($entity->getSlots()->getLast()))->
     end();
 }
 

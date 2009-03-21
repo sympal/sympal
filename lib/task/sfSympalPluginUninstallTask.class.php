@@ -28,7 +28,7 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
 
     $name = $arguments['name'];
-    $pluginName = 'sfSympal'.Doctrine_Inflector::classify($name).'Plugin';
+    $pluginName = 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
 
     if (!$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.$pluginName, 'Are you sure you want to proceed? (y/N)'), null, false))
     {

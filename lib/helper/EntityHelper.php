@@ -1,5 +1,5 @@
 <?php
-function entity_slot($entity, $name, $type = 'Text', $defaultValue = '[Double click to edit slot content]')
+function sympal_entity_slot($entity, $name, $type = 'Text', $defaultValue = '[Double click to edit slot content]')
 {
   $user = sfContext::getInstance()->getUser();
 
@@ -36,12 +36,12 @@ function entity_slot($entity, $name, $type = 'Text', $defaultValue = '[Double cl
   {
     if ($slot->getValue())
     {
-      $entitySlot = render_entity_slot($slot);
+      $entitySlot = sympal_render_entity_slot($slot);
     } else {
       $entitySlot = $defaultValue;
     }
 
-    $html  = '<div class="sympal_editable_entity_slot" onMouseOver="javascript: highlight_entity_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_entity_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_entity_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_entity_slot(\''.$slot['id'].'\');">';
+    $html  = '<div class="sympal_editable_entity_slot" onMouseOver="javascript: highlight_sympal_entity_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_entity_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_entity_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_entity_slot(\''.$slot['id'].'\');">';
     $html .= $entitySlot;
     $html .= '</div>';
 
@@ -84,11 +84,11 @@ EOF
 
     return $html;
   } else {
-    return render_entity_slot($slot);
+    return sympal_render_entity_slot($slot);
   }
 }
 
-function render_entity_slot($entitySlot)
+function sympal_render_entity_slot($entitySlot)
 {
   return $entitySlot->render();
 }

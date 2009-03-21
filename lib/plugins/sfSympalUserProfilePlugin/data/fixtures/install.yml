@@ -1,0 +1,50 @@
+# sfSympalUserProfilePlugin install data fixtures
+
+EntityType:
+  EntityType_user_profile:
+    name: UserProfile
+    label: UserProfile
+    slug: user_profile
+    list_route_url: /user_profile/list
+    view_route_url: /user_profile/:slug
+
+Entity:
+  UserProfile_entity_sample:
+    Type: EntityType_user_profile
+    slug: sample-user_profile
+    Site: Site_default
+    is_published: true
+    CreatedBy: admin
+
+EntityTemplate:
+  EntityTemplate_ViewUserProfile:
+    name: View UserProfile
+    type: View
+    EntityType: EntityType_user_profile
+    partial_path: sympal_user_profile/view
+
+UserProfile:
+  UserProfile_sample:
+    first_name: Jonathan
+    last_name: Wage
+    email_address: jonwage@gmail.com
+    Entity: UserProfile_entity_sample
+    User: admin
+
+MenuItem:
+  MenuItem_footer:
+    children:
+      Menuitem_primary_user_profile:
+        name: UserProfile
+        is_published: true
+        label: Users
+        has_many_entities: true
+        Site: Site_default
+        EntityType: EntityType_user_profile
+      Menuitem_primary_my_user_profile:
+        name: My User Profile
+        is_published: true
+        label: My User Profile
+        requires_auth: true
+        Site: Site_default
+        route: @sympal_user_profile

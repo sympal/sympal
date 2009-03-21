@@ -44,14 +44,14 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
                                                                  'local' => 'menu_item_id',
                                                                  'foreign' => 'permission_id'));
 
-        $this->hasOne('Entity as MasterEntity', array('local' => 'id',
-                                                      'foreign' => 'master_menu_item_id'));
-
         $this->hasMany('MenuItemGroup as MenuItemGroups', array('local' => 'id',
                                                                 'foreign' => 'menu_item_id'));
 
         $this->hasMany('MenuItemPermission as MenuItemPermissions', array('local' => 'id',
                                                                           'foreign' => 'menu_item_id'));
+
+        $this->hasOne('Entity as MasterEntity', array('local' => 'id',
+                                                      'foreign' => 'master_menu_item_id'));
 
         $nestedset0 = new Doctrine_Template_NestedSet(array('hasManyRoots' => true, 'rootColumnName' => 'root_id'));
         $i18n0 = new Doctrine_Template_I18n(array('fields' => array(0 => 'label')));

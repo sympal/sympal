@@ -1,3 +1,3 @@
 <?php use_helper('Entity') ?>
 
-<?php echo render_entity_slot($entitySlot) ?>
+<?php echo sympal_render_entity_slot($entitySlot) ?>

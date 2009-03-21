@@ -16,7 +16,7 @@ class sfSympalInstallTask extends sfBaseTask
     $this->aliases = array();
     $this->namespace = 'sympal';
     $this->name = 'install';
-    $this->briefDescription = 'Install the symfony content management framework.';
+    $this->briefDescription = 'Install the sympal plugin content management framework.';
 
     $this->detailedDescription = <<<EOF
 The [sympal:install|INFO] task is a shortcut for five other tasks:

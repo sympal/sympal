@@ -1,0 +1,13 @@
+# sfSympalUserProfilePlugin routing
+
+sympal_user_profile:
+  url: /user/profile
+  param: { module: sympal_user_profile, action: index }
+  requirements:
+    sf_method: get
+
+sympal_user_profile_save:
+  url: /user/profile
+  param: { module: sympal_user_profile, action: index }
+  requirements:
+    sf_method: post

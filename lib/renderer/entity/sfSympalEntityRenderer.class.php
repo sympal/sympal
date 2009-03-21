@@ -91,6 +91,11 @@ class sfSympalEntityRenderer
     $key = $data instanceof Doctrine_Collection ? 'entities':'entity';
     $options = array($key => $data, 'menuItem' => $this->_menuItem);
 
+    if ($key == 'entity')
+    {
+      $typeVarName = strtolower($data['Type']['name'][0]).substr($data['Type']['name'], 1, strlen($data['Type']['name']));
+      $options[$typeVarName] = $data->getRecord();
+    }
     if ($template && $partialPath = $template->getPartialPath())
     {
       return get_partial($partialPath, $options);
@@ -164,7 +169,7 @@ class sfSympalEntityRenderer
     $html .= '<table>';
     foreach ($entity->getSlots() as $key => $slot)
     {
-      $html .= '<tr><th>'.$key.'</th><td>' . entity_slot($entity, $slot['name']) . '</td></tr>';
+      $html .= '<tr><th>'.$key.'</th><td>' . sympal_entity_slot($entity, $slot['name']) . '</td></tr>';
     }
     $html .= '</table>';
 
@@ -205,7 +210,7 @@ class sfSympalEntityRenderer
     $pager = pager_navigation($this->_pager, url_for($this->_menuItem->getItemRoute()));
 
     $output = '';
-    
+
     if (count($entities))
     {
       $indice = $this->_pager->getFirstIndice();

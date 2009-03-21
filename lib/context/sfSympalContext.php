@@ -46,7 +46,7 @@ class sfSympalContext
       $menuItem = Doctrine::getTable('MenuItem')->getForEntityType($request->getParameter('type'));
       $actions->forward404Unless($menuItem);
 
-      $pager = $actions->getRoute()->getObjects();
+      $pager = $actions->getRoute()->getObjects();      
       $pager->setPage($request->getParameter('page', 1));
       $pager->init();
 
