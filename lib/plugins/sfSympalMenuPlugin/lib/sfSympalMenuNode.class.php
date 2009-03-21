@@ -92,6 +92,7 @@ class sfSympalMenuNode extends sfSympalMenu
             $menu->addNode('Debug')->addNode('<pre>'.sfYaml::dump($menuItem->toArray(true), 6).'</pre>');
           }
           $menu->addNode('Edit', '@sympal_menu_items_edit?id='.$menuItem['id']);
+          $menu->addNode('Add Child', 'sympal_menu_items/ListNew?id='.$menuItem['id']);
           if ($menuItem->getMainEntity())
           {
             $menu->addNode('Edit Entity', '@sympal_entities_edit?id='.$menuItem->getMainEntity()->getId());
