@@ -6,15 +6,6 @@ class sfSympalUserProfilePluginConfiguration extends sfPluginConfiguration
       'sfSympalPlugin'
     );
 
-  /*
-  public function install($records)
-  {
-    $roots = Doctrine::getTable('MenuItem')->getTree()->fetchRoots();
-    $root = $roots[0];
-    $menuItem->getNode()->insertAsLastChildOf($root);
-  }
-  */
-
   public function initialize()
   {
     $this->dispatcher->connect('sympal.load_settings_form', array($this, 'loadSettings'));

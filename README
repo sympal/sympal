@@ -117,6 +117,178 @@ Uninstall a Sympal plugin from your symfony project.
 
     $ php symfony sympal:plugin-uninstall Blog
 
+## How does Sympal Work?
+
+The `sfSympalPlugin` includes a module named `sympal_entity`. This module is the module that is executed when rendering all entities in Sympal. Here is what it looks like:
+
+    [php]
+    class sympal_entityActions extends sfActions
+    {
+      public function executeIndex(sfWebRequest $request)
+      {
+        $sympalContext = sfSympalContext::getInstance();
+        $this->renderer = $sympalContext->getRenderer($this);
+
+        $this->setTemplate('index');
+      }
+    }
+
+We retrieve the sfSympalContext instance which is created in the sfSympalPluginConfiguration:
+
+    [php]
+    // sfSympalPlugin/config/sfSympalPluginConfiguration.class.php
+
+    class sfSympalPluginConfiguration extends sfPluginConfiguration
+    {
+      // ...
+
+      public function initialize()
+      {
+        // ...
+        $this->dispatcher->connect('context.load_factories', array($this, 'loadContext'));
+      }
+
+      public function loadContext()
+      {
+        sfSympalContext::createInstance(sfConfig::get('sf_app'), sfContext::getInstance());
+      }
+
+Notice how the context of Sympal is bound to the name of the symfony application it is running in. This directly correlates to the Doctrine `Site` model `slug` property and is used to filter all queries and make sure that only that sites data is displayed. So your applications and Sympal sites must be related.
+
+
+## Rendering Entities
+
+If you have an entity outside of Sympal core in some of your custom functionality, you can easily render the entity like Sympal would normally do with the following code:
+
+    [php]
+    $sympalContext = sfSympalContext::getInstance();
+    $renderer = $sympalContext->renderEntity($menuItem, $entity, $format = 'html');
+    echo $renderer->render();
+
+If you have a collection of entities you can render them easily:
+
+    [php]
+    $sympalContext = sfSympalContext::getInstance();
+    $renderer = $sympalContext->renderEntities($menuItem, $entities, $format = 'html');
+
+If you retrieved the data with a `sfDoctrinePager` then you can set the pager to the renderer so it can make user of it to generate paging:
+
+    [php]
+    $renderer->setPager($pager);
+
+Now you can render it:
+
+    [php]
+    echo $renderer->render();
+
+If you don't have an entity object, or a menu item object but all you have is the slug of the entity then you can use the `quickRenderEntity()` method:
+
+    [php]
+    $sympalContext = sfSympalContext::getInstance();
+    $renderer = $sympalContext->quickRenderEntity('home', $format = 'html');
+    echo $renderer->render();
+
+## Entity Types
+
+In order for a Doctrine model to have the functionality needed to be a Sympal entity type, you just need to enable to the `sfSympalEntityType` behavior:
+
+    [yml]
+    BlogPost:
+      actAs: [sfSympalEntityType]
+      columns:
+        title: string(255)
+        teaser: string(255)
+        body: clob
+
+Now the model has some new columns and relationships automatically. We have a `entity_id` column:
+
+    [php]
+    $blogPost = new BlogPost();
+    echo $blogPost->entity_id;
+
+We have a new `Entity` relationship:
+
+    [php]
+    $blogPost = new BlogPost();
+    $blogPost->Entity->is_published = true;
+
+## Entity Slot Types
+
+You can easily add a new `EntitySlotType` by first create a new record in the database for the new type. All it requires is the `name`. This is also going to be used in the name of the php class so it must be good to be used in a PHP class. For example the core type `Markdown` is used in the class named `sfSympalEntitySlotMarkdownRenderer`.
+
+If you create a new type named `MyNewType` then you must create a new class named `sfSympalEntitySlotMyNewTypeRenderer` somewhere that symfony autoloading can make it available.
+
+    [php]
+    class sfSympalEntitySlotMyNewTypeRenderer extends sfSympalEntitySlotRenderer
+    {
+      public function render()
+      {
+        $value = $this->getRawValue();
+        // do something
+
+        return $value;
+      }
+    }
+
+You must also create a corresponding widget:
+
+    [php]
+    class sfWidgetFormSympalMyNewType extends sfWidgetFormSympalMultiLineText
+    {
+    }
+
+## Helpers
+
+Sympal has several helpers available to assist you in your templates with rendering your entities breadcrumbs, slots, and other content.
+
+### Editable Slots
+
+To define the editable slots in your entity templates you can use the following:
+
+    [php]
+    $slotType = 'RichText';
+    echo sympal_entity_slot($entity, 'slot_name', $slotType);
+
+### Breadcrumbs
+
+When you want to include breadcrumbs in your entity templates you can use the following:
+
+    [php]
+    echo get_sympal_breadcrumbs($menuItem, $entity = null)
+
+### Menus
+
+Working with Sympal menus is incredible easy. All you need to work with is the method named `get_sympal_menu()`. You use it like the following:
+
+    [php]
+    echo get_sympal_menu('primary')
+
+The `primary` is the `name` of the root menu item for the menu I want to display. The names of the root menu items are the key to retrieving a certain menu.
+
+The function accepts a second argument for whether or not to display the menu hierarchy recursively(children). The default value is true. Below we change the default to false.
+
+    [php]
+    echo get_sympal_menu('primary', false)
+
+You can also get a submenu based on another menu item. It will return a menu with the children of the menu item you passed. In the below example we get the sub menu for the current menu item.
+
+    [php]
+    $menuItem = sfSympalTools::getCurrentMenuItem();
+    echo get_sympal_menu($menuItem);
+
+#### Performance
+
+The menus are retrieved with one query and only processed once so you can retrieve a menu multiple times without it having to query and process the data multiple times.
+
+You can also enable symfony view caching to increase performance even more!
+
+### Comments
+
+You can enable comments in your entities easily with the `get_sympal_comments()` method:
+
+    [php]
+    echo get_sympal_comments($entity)
+
 ## Tests
 
 Sympal comes with unit and functional tests. You can run the tests by navigating to `sfSympalPlugin/tests/bin` and executing `prove.php`.

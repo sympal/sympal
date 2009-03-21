@@ -112,11 +112,27 @@ class sfSympalTools
 
     $class = 'sfWidgetFormSympal'.$type->name;
 
+    if (!class_exists($class))
+    {
+      throw new sfException('You must create a Sympal form widget class named '.$class);
+    }
+
     $widget = new $class();
     $widget->setAttribute('id', 'entity_slot_value_' . $entitySlot['id']);
     $widget->setAttribute('onKeyUp', "edit_on_key_up('".$entitySlot['id']."');");
 
     $widgetSchema['value'] = $widget;
+
+    $class = 'sfValidatorFormSympal'.$type->name;
+
+    if (!class_exists($class))
+    {
+      $class = 'sfValidatorPass';
+    }
+
+    $validator = new $class;
+    $validatorSchema = $form->getValidatorSchema();
+    $validatorSchema['value'] = $validator;
   }
 
   public static function changeLayoutWidget($form)

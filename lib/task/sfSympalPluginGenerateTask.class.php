@@ -126,7 +126,10 @@ EntityTemplate:
     EntityType: EntityType_$lowerName
     body: |
       [?php echo get_sympal_breadcrumbs(\$menuItem, \$entity) ?]
-      <h1>[?php echo \$entity->getHeaderTitle() ?]</h1><p>[?php echo \$entity->getRecord()->getBody() ?]</p>
+      <h2>[?php echo \$entity->getHeaderTitle() ?]</h2>
+      <p><strong>Posted by [?php echo \$entity->CreatedBy->username ?] on [?php echo date('m/d/Y h:i:s', strtotime(\$entity->created_at)) ?]</strong></p>
+      <p>[?php echo \$entity->getRecord()->getBody() ?]</p>
+      [?php echo get_sympal_comments(\$entity) ?]
 
 $entityType:
   {$entityType}_sample:
