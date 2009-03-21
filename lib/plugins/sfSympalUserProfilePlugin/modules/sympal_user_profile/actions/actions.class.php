@@ -35,7 +35,6 @@ class sympal_user_profileActions extends sfActions
 
       $this->profile = $this->entity->UserProfile;
       $this->profile->first_name = $this->user->username;
-      $this->profile->biography = $this->profile->getName().' is a new sympal user!';
       $this->profile->user_id = $this->user->id;
       $this->entity->save();
 
