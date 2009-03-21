@@ -24,7 +24,10 @@ function get_sympal_menu($name, $recursive = true)
 
 function get_sympal_comments($entity)
 {
-  return get_component('sympal_comments', 'for_entity', array('entity' => $entity));
+  if (sfSympalConfig::get($entity['Type']['name'], 'enable_comments'))
+  {
+    return get_component('sympal_comments', 'for_entity', array('entity' => $entity));
+  }
 }
 
 function get_sympal_editor($menuItem = null, $entity = null)

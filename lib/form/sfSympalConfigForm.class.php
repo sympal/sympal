@@ -36,17 +36,21 @@ class sfSympalConfigForm extends sfForm
       $this->setValidator($setting['name'], $setting['validator']);
     }
 
-    $path = sfConfig::get('sf_config_dir').'/app.yml';
-    $array = sfYaml::load($path);
-    if (!$array)
+    $defaults = $this->getDefaults();
+    foreach ($this as $key => $value)
     {
-      $path = dirname(__FILE__) . '/../../config/app.yml';
-      $array = sfYaml::load($path);
+      if ($value instanceof sfFormFieldSchema)
+      {
+        foreach ($value as $k => $v)
+        {
+          $defaults[$key][$k] = sfSympalConfig::get($key, $k);
+        }
+      } else {
+        $defaults[$key] = sfSympalConfig::get($key);
+      }
     }
-    if (isset($array['all']['sympal_settings']) && is_array($array['all']['sympal_settings']))
-    {
-      $this->setDefaults($array['all']['sympal_settings']);
-    }
+
+    $this->setDefaults($defaults);
 
     $this->widgetSchema->setNameFormat('settings[%s]');
 

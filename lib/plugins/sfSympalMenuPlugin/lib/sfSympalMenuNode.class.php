@@ -82,7 +82,7 @@ class sfSympalMenuNode extends sfSympalMenu
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
         $menuItem = $this->getMenuItem();
 
-        if ($menuItem && sfSympalTools::isEditMode())
+        if ($menuItem && sfSympalTools::isEditMode() && sfSympalConfig::get('enable_menu_item_dropdown'))
         {
           $options['id'] = 'menu_item_'.$menuItem['id'];
           $html .= link_to($this->getLabel(), $menuItem->getItemRoute(), $options);
@@ -93,10 +93,6 @@ class sfSympalMenuNode extends sfSympalMenu
           }
           $menu->addNode('Edit', '@sympal_menu_items_edit?id='.$menuItem['id']);
           $menu->addNode('Add Child', 'sympal_menu_items/ListNew?id='.$menuItem['id']);
-          if ($menuItem->getMainEntity())
-          {
-            $menu->addNode('Edit Entity', '@sympal_entities_edit?id='.$menuItem->getMainEntity()->getId());
-          }
           $menu->addNode('Follow', $menuItem->getItemRoute());
           $menu->addNode('Close', null, array('id' => 'menu_item_'.$menuItem['id'].'_hide_control_menu'));
 
