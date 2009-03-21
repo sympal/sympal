@@ -76,7 +76,7 @@ class sfSympalConfiguration
 
   public function bootstrap()
   {
-    $this->_projectConfiguration->loadHelpers(array('Sympal'));
+    $this->_projectConfiguration->loadHelpers(array('Sympal', 'Entity'));
 
     if (sfConfig::get('sf_debug'))
     {

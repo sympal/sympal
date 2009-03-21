@@ -16,6 +16,7 @@ abstract class PluginUserProfileForm extends BaseUserProfileForm
 
     $userForm = new sfGuardUserAdminForm($this->object->User);
     unset(
+      $userForm['username'],
       $userForm['is_active'],
       $userForm['is_super_admin'],
       $userForm['updated_at'],

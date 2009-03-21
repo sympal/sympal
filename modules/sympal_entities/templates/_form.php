@@ -16,7 +16,23 @@
     </div>
 
     <div id="left">
-      <?php echo get_partial('sympal_entities/form_part', array('name' => $form->getObject()->getType()->getLabel() . ' Information', 'form' => $form[$form->getObject()->getType()->getName()])) ?>
+      <?php $typeForm = $form[$form->getObject()->getType()->getName()]; ?>
+
+      <?php echo get_partial('sympal_entities/form_part', array('name' => $form->getObject()->getType()->getLabel() . ' Information', 'form' => $typeForm)) ?>
+
+      <?php foreach ($typeForm as $key => $embeddedForm): ?>
+        <?php if ($embeddedForm instanceof sfFormFieldSchema): ?>
+          <?php echo get_partial('sympal_entities/form_part', array('name' => $key, 'form' => $embeddedForm)) ?>
+        <?php endif; ?>
+      <?php endforeach; ?>
+
+      <?php foreach ($form->getObject()->getSlots() as $slot): ?>
+        <fieldset>
+          <legend>Edit Slot: <?php echo $slot['name'] ?></legend>
+          <?php echo sympal_entity_slot($form->getObject(), $slot['name']) ?>
+        </fieldset>
+      <?php endforeach; ?>
+
       <?php echo get_partial('sympal_entities/form_part', array('name' => 'Publish', 'form' => $form, 'fields' => array('is_published', 'date_published'))) ?>
     </div>
 
