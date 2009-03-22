@@ -97,9 +97,11 @@ class sfSympalConfiguration
       if (strpos($pluginName, 'sfSympal') !== false)
       {
         $pluginConfiguration = $this->_projectConfiguration->getPluginConfiguration($pluginName);
-        if (isset($pluginConfiguration::$dependencies) && !empty($pluginConfiguration::$dependencies))
+        $refClass = new ReflectionClass($pluginConfiguration);
+        $dependencies = $refClass->getStaticPropertyValue('dependencies');
+        if (isset($dependencies) && !empty($dependencies))
         {
-          $requiredPlugins = array_merge($requiredPlugins, $pluginConfiguration::$dependencies);
+          $requiredPlugins = array_merge($requiredPlugins, $dependencies);
         }
       }
     }
@@ -124,9 +126,11 @@ class sfSympalConfiguration
       if (strpos($pluginName, 'sfSympal') !== false)
       {
         $pluginConfiguration = $this->_projectConfiguration->getPluginConfiguration($pluginName);
-        if (isset($pluginConfiguration::$dependencies) && !empty($pluginConfiguration::$dependencies))
+        $refClass = new ReflectionClass($pluginConfiguration);
+        $dependencies = $refClass->getStaticPropertyValue('dependencies');
+        if (isset($dependencies) && !empty($dependencies))
         {
-          sfSympalTools::checkPluginDependencies($pluginConfiguration, $pluginConfiguration::$dependencies);
+          sfSympalTools::checkPluginDependencies($pluginConfiguration, $dependencies);
         } else {
           throw new sfException(
             sprintf(
