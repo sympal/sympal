@@ -5,6 +5,10 @@ class sfSympalTools
     $_currentMenuItem,
     $_currentEntity;
 
+  public static
+    $mailer,
+    $emailAddress;
+
   public static function getCurrentMenuItem()
   {
     return self::$_currentMenuItem;
@@ -191,6 +195,171 @@ class sfSympalTools
   public static function isEditMode()
   {
     $user = sfContext::getInstance()->getUser();
+
     return $user->isAuthenticated() && $user->getAttribute('sympal_edit', false);
+  }
+
+  public static function isPluginInstalled($plugin)
+  {
+    try {
+      sfContext::getInstance()->getConfiguration()->getPluginConfiguration($plugin);
+      return true;
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
+  public static function sendEmail($name, $vars = array())
+  {
+    $e = explode('/', $name);
+    list($module, $action) = $e;
+
+    try {
+      $rawEmail = self::getEmailPresentationFor($module, $action, $vars);
+    } catch (Exception $e) {
+      throw new sfException('Could not send email: '.$e->getMessage());
+    }
+
+    if ($rawEmail)
+    {
+      $e = explode("\n", $rawEmail);
+      
+      $emailSubject = $e[0];
+      unset($e[0]);
+      $emailBody = implode("\n", $e);
+    } else {
+      $emailSubject = '';
+      $emailBody = '';
+    }
+
+    $mailer = new Swift(new Swift_Connection_NativeMail());
+    $message = new Swift_Message($emailSubject, $emailBody, 'text/html');
+
+    $mailer->send($message, $vars['email_address'], sfSympalConfig::get('default_from_email_address', null, 'jonwage@gmail.com'));
+    $mailer->disconnect();
+
+    sfContext::getInstance()->getLogger()->debug($emailBody);
+  }
+
+  public static function getEmailPresentationFor($module, $action, $vars = array())
+  {
+    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Partial'));
+
+    try {
+      return get_partial($module.'/'.$action, $vars);
+    } catch (Exception $e1) {
+      try {
+        return get_component($module, $action, $vars);
+      } catch (Exception $e2) {
+        throw new sfException('Could not find a partial or component for '.$module.' and '.$action.': '.$e1->getMessage().' '.$e2->getMessage());
+      }
+    }
+  }
+
+  public static function getLongPluginName($name)
+  {
+    if (strstr($name, 'sfSympal'))
+    {
+      return $name;
+    } else {
+      return 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
+    }
+  }
+
+  public static function getShortPluginName($name)
+  {
+    if (strstr($name, 'sfSympal'))
+    {
+      return substr($name, 8, strlen($name) - 14);
+    } else {
+      return Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name));
+    }
+  }
+
+  public static function getAvailablePluginPaths()
+  {
+    $cachePath = sfConfig::get('sf_cache_dir').'/sympal_available_plugins.cache';
+    if (!file_exists($cachePath))
+    {
+      $installedPlugins = ProjectConfiguration::getActive()->getPlugins();
+
+      $available = array();
+      $paths = sfSympalConfig::get('sympal_plugin_svn_sources');
+
+      foreach ($paths as $path)
+      {
+        if (is_dir($path))
+        {
+          $find = sfFinder::type('dir')->maxdepth(1)->name('sfSympal*Plugin')->in($path);
+          foreach ($find as $p)
+          {
+            $info = pathinfo($p);
+            $available[$info['basename']] = $p;
+          }
+        } else {
+          $html = file_get_contents($path);
+          preg_match_all("/sfSympal(.*)Plugin/", strip_tags($html), $matches);
+          foreach ($matches[0] as $plugin)
+          {
+            $available[$plugin] = $path;
+          }
+        }
+      }
+
+      $diff = array_diff(array_keys($available), $installedPlugins);
+      $avail = array();
+      foreach ($diff as $plugin)
+      {
+        $avail[$plugin] = $available[$plugin];
+      }
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal_available_plugins.cache';
+      file_put_contents($cachePath, serialize($avail));
+    } else {
+      $content = file_get_contents($cachePath);
+      $avail = unserialize($content);
+    }
+    return $avail;
+  }
+
+  public static function getAvailablePlugins()
+  {
+    return array_keys(self::getAvailablePluginPaths());
+  }
+
+  public static function getPluginDownloadPath($name)
+  {
+    $name = self::getShortPluginName($name);
+    $pluginName = self::getLongPluginName($name);
+
+    $e = explode('.', SYMFONY_VERSION);
+    $version = $e[0].'.'.$e[1];
+
+    $paths = self::getAvailablePluginPaths();
+    $path = '';
+    foreach ($paths as $pluginName => $path)
+    {
+      $branchSvnPath = $path.'/'.$pluginName.'/branches/'.$version;
+      $trunkSvnPath = $path.'/'.$pluginName.'/trunk';
+      if (@file_get_contents($branchSvnPath) !== false)
+      {
+        $path = $branchSvnPath;
+      } else if (@file_get_contents($trunkSvnPath) !== false) {
+        $path = $trunkSvnPath;
+      }
+    }
+
+    if ($path)
+    {
+      return $path;
+    } else {
+      throw new sfException('Could not find SVN path for '.$pluginName);
+    }
+  }
+
+  public static function isPluginAvailable($name)
+  {
+    $pluginName = self::getLongPluginName($name);
+    $availablePlugins = self::getAvailablePlugins();
+    return in_array($availablePlugins, $pluginName);
   }
 }

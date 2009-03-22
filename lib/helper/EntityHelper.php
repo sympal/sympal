@@ -1,4 +1,5 @@
 <?php
+
 function sympal_entity_slot($entity, $name, $type = 'Text', $defaultValue = '[Double click to edit slot content]')
 {
   $user = sfContext::getInstance()->getUser();

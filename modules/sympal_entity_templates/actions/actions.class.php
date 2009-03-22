@@ -13,9 +13,4 @@ require_once dirname(__FILE__).'/../lib/sympal_entity_templatesGeneratorHelper.c
  */
 class sympal_entity_templatesActions extends autoSympal_entity_templatesActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
 }

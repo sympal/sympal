@@ -10,7 +10,13 @@
           <li>
             <a name="comment_<?php echo $comment->getId() ?>"></a>
             <h3><?php echo $comment['subject'] ?></h3>
-            <small>Posted on <?php echo date('m/d/Y h:i', strtotime($comment['created_at'])) ?> by <?php echo $comment['author_name'] ?>.</small>
+            <?php if ($comment['user_id']): ?>
+              <small>Posted on <?php echo date('m/d/Y h:i', strtotime($comment['created_at'])) ?> by <?php echo link_to($comment['author_name'], $comment['Author']['Profile']['Entity']->getRoute()) ?>.</small>
+              <?php echo image_tag($entity->CreatedBy->Profile->getGravatarUrl(), 'align=right') ?>
+            <?php else: ?>
+              <small>Posted on <?php echo date('m/d/Y h:i', strtotime($comment['created_at'])) ?> by <?php echo $comment['author_name'] ?>.</small>
+            <?php endif; ?>
+
             <?php echo sfSympalMarkdownRenderer::convertToHtml($comment['body']) ?>
           </li>
         <?php endforeach; ?>

@@ -89,7 +89,7 @@ class sfSympalEntityRenderer
   protected function _renderEntityTemplate($type, $data, $template)
   {
     $key = $data instanceof Doctrine_Collection ? 'entities':'entity';
-    $options = array($key => $data, 'menuItem' => $this->_menuItem);
+    $options = array($key => $data, 'menuItem' => $this->_menuItem, 'pager' => $this->_pager);
 
     if ($key == 'entity')
     {
@@ -207,15 +207,13 @@ class sfSympalEntityRenderer
 
   protected function _renderDoctrineEntities(Doctrine_Collection $entities)
   {
-    $pager = pager_navigation($this->_pager, url_for($this->_menuItem->getItemRoute()));
+    $pager = get_sympal_pager_navigation($this->_pager, url_for($this->_menuItem->getItemRoute()));
 
     $output = '';
 
     if (count($entities))
     {
-      $indice = $this->_pager->getFirstIndice();
-      $output .= '<h2>Showing ' . $indice . ' to ' . ($indice + count($entities) - 1) . ' of ' . $this->_pager->getNbResults() . ' total results.</h2>';
-
+      $output .= get_sympal_pager_header($this->_pager, $entities);
       $output .= '<table>';
 
       if ($pager)

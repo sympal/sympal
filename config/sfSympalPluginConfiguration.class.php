@@ -10,7 +10,11 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalMenuPlugin',
       'sfSympalPagesPlugin',
       'sfSympalRegisterPlugin',
-      'sfSympalSecurityPlugin'
+      'sfSympalSecurityPlugin',
+      'sfSympalForgotPasswordPlugin',
+      'sfSympalUserProfilePlugin',
+      'sfSympalForgotPasswordPlugin',
+      'sfSympalPluginManagerPlugin',
     ),
     $sympalConfiguration;
 

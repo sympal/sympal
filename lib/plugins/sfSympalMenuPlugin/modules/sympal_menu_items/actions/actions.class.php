@@ -13,10 +13,11 @@ require_once dirname(__FILE__).'/../lib/sympal_menu_itemsGeneratorHelper.class.p
  */
 class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
 {
-  public function preExecute()
+  public function executeSitemap()
   {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
+    $table = Doctrine::getTable('MenuItem');
+    $this->menuItem = $table->getForSlug('sitemap');
+    $this->roots = $table->getTree()->fetchRoots();
   }
 
   public function executeView()

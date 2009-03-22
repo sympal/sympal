@@ -43,6 +43,9 @@ abstract class BasesfGuardUser extends sfSympalDoctrineRecord
         $this->hasMany('Comment as Comments', array('local' => 'id',
                                                     'foreign' => 'user_id'));
 
+        $this->hasOne('ForgotPassword', array('local' => 'id',
+                                              'foreign' => 'user_id'));
+
         $this->hasMany('Entity as LastUpdatedEntities', array('local' => 'id',
                                                               'foreign' => 'last_updated_by'));
 

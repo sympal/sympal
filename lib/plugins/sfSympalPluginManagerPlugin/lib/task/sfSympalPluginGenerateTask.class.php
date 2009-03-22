@@ -39,11 +39,16 @@ EOF;
 
     if (is_dir($path))
     {
-      if (isset($options['re-generate']))
+      if (isset($options['re-generate']) && $options['re-generate'])
       {
         $uninstall = new sfSympalPluginUninstallTask($this->dispatcher, $this->formatter);
         $uninstall->setCommandApplication($this->commandApplication);
-        $ret = $uninstall->run(array($name), array());
+        $uninstallOptions = array();
+        if (isset($options['entity-type']))
+        {
+          $uninstallOptions[] = '--entity-type='.$options['entity-type'];
+        }
+        $ret = $uninstall->run(array($name), $uninstallOptions);
       } else {
         throw new sfException('A plugin with the name '.$pluginName.' already exists!');
       }
@@ -56,8 +61,26 @@ EOF;
 
     mkdir($path);
 
-    $entityType = isset($options['entity-type']) ? $options['entity-type']:$name;
-    $pluginYamlSchema = <<<EOF
+    $entityType = isset($options['entity-type']) ? $options['entity-type']:null;
+    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($name));
+
+
+      $pluginConfigurationClassCode = <<<EOF
+<?php
+class %s extends sfPluginConfiguration
+{
+  public 
+    \$dependencies = array(
+      'sfSympalPlugin'
+    );
+}
+EOF;
+
+    $pluginConfigurationClassCode = sprintf($pluginConfigurationClassCode, $pluginName.'Configuration', $lowerName);
+
+    if ($entityType)
+    {
+      $pluginYamlSchema = <<<EOF
 ---
 $entityType:
   actAs: [sfSympalEntityType]
@@ -66,41 +89,7 @@ $entityType:
     body: clob
 EOF;
 
-    $pluginConfigurationClassCode = <<<EOF
-<?php
-class %s extends sfPluginConfiguration
-{
-  public 
-    \$dependencies = array(
-      'sfSympalPlugin'
-    );
-
-  public function initialize()
-  {
-    \$this->dispatcher->connect('sympal.load_settings_form', array(\$this, 'loadSettings'));
-    \$this->dispatcher->connect('sympal.load_admin_bar', array(\$this, 'loadAdminBar'));
-  }
-
-  public function loadAdminBar(sfEvent \$event)
-  {
-    \$menu = \$event['menu'];
-
-    \$menu->getNode('Administration')->addNode('$name', '@sympal_entity_type_%s');
-  }
-
-  public function loadSettings(sfEvent \$event)
-  {
-    \$form = \$event->getSubject();
-
-    // \$form->addSetting('$name', 'setting_name', 'Setting Label', 'InputCheckbox', 'Boolean');
-  }
-}
-EOF;
-
-    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($name));
-    $pluginConfigurationClassCode = sprintf($pluginConfigurationClassCode, $pluginName.'Configuration', $lowerName);
-
-    $pluginInstallDataFixtures = <<<EOF
+      $pluginInstallDataFixtures = <<<EOF
 # $pluginName install data fixtures
 
 EntityType:
@@ -149,15 +138,21 @@ MenuItem:
         EntityType: EntityType_$lowerName
 EOF;
 
+    }
+
     $itemsToCreate = array(
       'config' => null,
       'config/doctrine' => null,
       'config/routing.yml' => '# '.$pluginName.' routing',
       'config/'.$pluginName.'Configuration.class.php' => $pluginConfigurationClassCode,
-      'data' => null,
-      'data/fixtures' => null,
-      'data/fixtures/install.yml' => $pluginInstallDataFixtures,
+      'data' => null
     );
+
+    if (isset($pluginInstallDataFixtures))
+    {
+      $itemsToCreate['data/fixtures'] = null;
+      $itemsToCreate['data/fixtures/install.yml'] = $pluginInstallDataFixtures;
+    }
 
     if (isset($pluginYamlSchema))
     {
@@ -182,7 +177,12 @@ EOF;
     {
       $install = new sfSympalPluginInstallTask($this->dispatcher, $this->formatter);
       $install->setCommandApplication($this->commandApplication);
-      $ret = $install->run(array($name), array());
+      $installOptions = array();
+      if (isset($options['entity-type']))
+      {
+        $installOptions[] = '--entity-type='.$options['entity-type'];
+      }
+      $ret = $install->run(array($name), $installOptions);
     }
   }
 }

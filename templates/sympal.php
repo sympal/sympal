@@ -21,7 +21,15 @@
 
      <div class="top_navigation_head"></div>
      <div class="top_navigation_body">
-       <?php echo get_sympal_menu('primary', false) ?>
+       <?php $menus = get_sympal_truncated_menus('primary', false, 6, true) ?>
+       <?php echo $menus['primary'] ?>
+       <?php if ($secondary = (string) $menus['secondary']): ?>
+         <?php slot('sympal_right_sidebar') ?>
+           <?php echo $secondary ?>
+           <?php echo get_slot('sympal_right_sidebar') ?>
+         <?php end_slot() ?>
+       <?php endif; ?>
+     
      </div>
     </div>
     <!-- end top navigation -->
@@ -47,7 +55,7 @@
     <!-- end left column -->
 
     <?php $subMenu = get_sympal_menu(sfSympalTools::getCurrentMenuItem(), true) ?>
-    <?php if (has_slot('right_sidebar') || $subMenu): ?>
+    <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
       <?php use_stylesheet('/sfSympalPlugin/css/right.css') ?>
       <!-- right column -->
       <div id="column_right">
@@ -55,11 +63,12 @@
        <div class="roundedbox">
         <div class="roundedbox_head"><div></div></div>
         <div class="roundedbox_body">
-         <?php if ($subMenu): ?>
-           <?php echo $subMenu ?>
-         <?php else: ?>
-           <?php echo get_slot('right_sidebar') ?>
-         <?php endif; ?>
+          <?php echo get_slot('sympal_right_sidebar') ?>
+
+          <?php if ($subMenu): ?>
+            <h2><?php echo $subMenu->getMenuItem()->getLabel() ?></h2>
+            <?php echo $subMenu ?>
+          <?php endif; ?>
         </div>
        </div>
       </div>

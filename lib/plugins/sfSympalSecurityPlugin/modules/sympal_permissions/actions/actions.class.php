@@ -13,9 +13,4 @@ require_once dirname(__FILE__).'/../lib/sympal_permissionsGeneratorHelper.class.
  */
 class sympal_permissionsActions extends autosympal_permissionsActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
 }

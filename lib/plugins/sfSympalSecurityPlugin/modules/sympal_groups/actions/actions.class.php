@@ -13,9 +13,4 @@ require_once dirname(__FILE__).'/../lib/sympal_groupsGeneratorHelper.class.php';
  */
 class sympal_groupsActions extends autoSympal_groupsActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
 }

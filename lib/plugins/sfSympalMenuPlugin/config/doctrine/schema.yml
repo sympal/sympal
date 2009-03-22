@@ -1,5 +1,8 @@
 MenuItem:
   actAs:
+    Sluggable:
+      fields: [name]
+      unique: true
     NestedSet:
       hasManyRoots: true
       rootColumnName: root_id

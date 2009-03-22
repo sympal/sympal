@@ -13,9 +13,4 @@ require_once dirname(__FILE__).'/../lib/sympal_entity_slot_typesGeneratorHelper.
  */
 class sympal_entity_slot_typesActions extends autoSympal_entity_slot_typesActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
 }

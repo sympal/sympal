@@ -11,16 +11,16 @@ class sfSympalMenuSite extends sfSympalMenu
 
   protected static $_instance;
 
-  public static function getMenu($name, $recursive = true)
+  public static function getMenu($name, $recursive = true, $max = null, $split = false)
   {
     if (!self::$_instance)
     {
       self::$_instance = new self();
     }
-    return self::$_instance->_getMenu($name, $recursive);
+    return self::$_instance->_getMenu($name, $recursive, $max, $split);
   }
 
-  protected function _getMenu($name, $recursive = true)
+  protected function _getMenu($name, $recursive = true, $max = null, $split = false)
   {
     if (!$name)
     {
@@ -57,9 +57,57 @@ class sfSympalMenuSite extends sfSympalMenu
 
     if (isset($menuItem))
     {
-      return $menu->getMenuItemSubMenu($menuItem);
+      $menu = $menu->getMenuItemSubMenu($menuItem);
+    }
+    if ($max)
+    {
+      return $this->_processMaxMenu($menu, $max, $split);
     } else {
       return $menu;
+    }
+  }
+
+  protected function _processMaxMenu($menu, $max, $split)
+  {
+    $count = 0;
+    $primaryNodes = array();
+    $primary = new self();
+
+    if ($split)
+    {
+      $secondaryNodes = array();
+      $secondary = new self();
+    }
+
+    foreach ($menu->getNodes() as $node)
+    {
+      if (!$node->checkUserAccess())
+      {
+        continue;
+      }
+
+      $count++;
+      if ($count > $max)
+      {
+        if ($split)
+        {
+          $secondaryNodes[] = $node;
+          continue;
+        } else {
+          break;
+        }
+      }
+      $primaryNodes[] = $node;
+    }
+
+    $primary->setNodes($primaryNodes);
+
+    if ($split)
+    {
+      $secondary->setNodes($secondaryNodes);
+      return array('primary' => $primary, 'secondary' => $secondary);
+    } else {
+      return $primary;
     }
   }
 

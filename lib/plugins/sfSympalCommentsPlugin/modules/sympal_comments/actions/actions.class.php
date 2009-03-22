@@ -13,20 +13,12 @@ require_once dirname(__FILE__).'/../lib/sympal_commentsGeneratorHelper.class.php
  */
 class sympal_commentsActions extends autoSympal_commentsActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
-
   public function executeCreate(sfWebRequest $request)
   {
     if (sfSympalConfig::get('Comments', 'requires_auth') && !$this->getUser()->isAuthenticated())
     {
       throw new sfException('Comments require that you are authenticated!');
     }
-
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
 
     $this->entity = Doctrine::getTable('Entity')->find($request->getParameter('comment[entity_id]'));
 

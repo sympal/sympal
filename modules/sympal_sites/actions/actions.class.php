@@ -13,9 +13,4 @@ require_once dirname(__FILE__).'/../lib/sympal_sitesGeneratorHelper.class.php';
  */
 class sympal_sitesActions extends autosympal_sitesActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
 }

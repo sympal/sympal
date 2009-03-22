@@ -10,11 +10,6 @@
  */
 class sympal_configActions extends sfActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
 
   public function executeIndex(sfWebRequest $request)
   {

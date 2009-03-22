@@ -5,9 +5,4 @@ require_once(dirname(__FILE__).'/../../../../sfDoctrineGuardPlugin/modules/sfGua
 
 class sympal_authActions extends sfGuardAuthActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
-  }
 }

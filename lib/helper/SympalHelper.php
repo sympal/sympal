@@ -22,6 +22,11 @@ function get_sympal_menu($name, $recursive = true)
   return sfSympalMenuSite::getMenu($name, $recursive);
 }
 
+function get_sympal_truncated_menus($name, $recursive = true, $max = null, $split = false)
+{
+  return sfSympalMenuSite::getMenu($name, $recursive, $max, $split);
+}
+
 function get_sympal_comments($entity)
 {
   if (sfSympalConfig::get($entity['Type']['name'], 'enable_comments'))
@@ -51,7 +56,13 @@ function get_sympal_admin_bar()
   }
 }
 
-function pager_navigation($pager, $uri)
+function get_sympal_pager_header($pager, $entities)
+{
+  $indice = $pager->getFirstIndice();
+  return '<h3>Showing '.$indice.' to '.($indice + count($entities) - 1).' of '.$pager->getNbResults().' total results.</h2>';
+}
+
+function get_sympal_pager_navigation($pager, $uri)
 {
   $navigation = '';
  

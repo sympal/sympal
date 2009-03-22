@@ -117,6 +117,12 @@ MenuItem:
         Site: Site_default
         RelatedEntity: Entity_Page_readme
         EntityType: EntityType_Page
+      MenuItem_footer_sitemap:
+        name: Sitemap
+        is_published: true
+        label: Sitemap
+        Site: Site_default
+        route: @sympal_sitemap
 
 Entity:
   Entity_Page_register:

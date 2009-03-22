@@ -78,6 +78,11 @@ class sfSympalConfiguration
   {
     $this->_projectConfiguration->loadHelpers(array('Sympal', 'Entity'));
 
+    if (!sfContext::getInstance()->getRequest()->isXmlHttpRequest())
+    {
+      sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
+    }
+
     if (sfConfig::get('sf_debug'))
     {
       $this->checkPluginDependencies();

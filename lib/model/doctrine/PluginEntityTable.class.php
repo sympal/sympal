@@ -40,7 +40,10 @@ class PluginEntityTable extends Doctrine_Table
       $type = $q->fetchOne();
       $typeName = $type['name'];
 
-      $table = Doctrine::getTable($typeName);
+      if ($typeName)
+      {
+        $table = Doctrine::getTable($typeName);
+      }
     }
 
     $defaultQuery = true;
@@ -55,12 +58,17 @@ class PluginEntityTable extends Doctrine_Table
 
     if ($defaultQuery)
     {
-      $q = $this->getBaseQuery('e')
-        ->innerJoin('e.'.$typeName);
+      $q = $this->getBaseQuery('e');
+      if ($typeName)
+      {
+        $q->innerJoin('e.'.$typeName);
+      } else {
+        $q = $this->getBaseQuery();
+      }
 
       if (sfConfig::get('sf_logging_enabled'))
       {
-        sfContext::getInstance()->getLogger()->notice('To improve performance '.get_class($table).' should have a callable method named "getEntityQuery()" that efficiently selects all the required data for your entity type with joins and specific selects.');
+        sfContext::getInstance()->getLogger()->notice('To improve performance you should have a callable method named "getEntityQuery()" on your table class that efficiently selects all the required data for your entity type with joins and specific selects.');
       }
     }
 

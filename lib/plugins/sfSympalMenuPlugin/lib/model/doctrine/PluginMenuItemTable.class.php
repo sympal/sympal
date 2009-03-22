@@ -20,4 +20,13 @@ class PluginMenuItemTable extends Doctrine_Table
 
     return $q->fetchOne();
   }
+
+  public function getForSlug($slug)
+  {
+    $q = Doctrine_Query::create()
+      ->from('MenuItem m')
+      ->leftJoin('m.EntityType t')
+      ->where('m.slug = ?', $slug);
+    return $q->fetchOne();
+  }
 }

@@ -5,10 +5,11 @@ CREATE TABLE sf_guard_remember_key (id INT AUTO_INCREMENT, user_id INT, remember
 CREATE TABLE sf_guard_user (id INT AUTO_INCREMENT, username VARCHAR(128) NOT NULL UNIQUE, algorithm VARCHAR(128) DEFAULT 'sha1' NOT NULL, salt VARCHAR(128), password VARCHAR(128), is_active TINYINT(1) DEFAULT '1', is_super_admin TINYINT(1) DEFAULT '0', last_login DATETIME, created_at DATETIME, updated_at DATETIME, INDEX is_active_idx_idx (is_active), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE sf_guard_user_group (user_id INT, group_id INT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, group_id)) ENGINE = INNODB;
 CREATE TABLE sf_guard_user_permission (user_id INT, permission_id INT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, permission_id)) ENGINE = INNODB;
-CREATE TABLE blog_post (id BIGINT AUTO_INCREMENT, name VARCHAR(255), body LONGTEXT, entity_id INT, INDEX entity_id_idx (entity_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE blog_post (id BIGINT AUTO_INCREMENT, title VARCHAR(255), teaser LONGTEXT, entity_id INT, INDEX entity_id_idx (entity_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE comment (id INT AUTO_INCREMENT, status VARCHAR(255) DEFAULT 'Pending' NOT NULL, user_id INT, name VARCHAR(255), subject VARCHAR(255), body LONGTEXT NOT NULL, created_at DATETIME, updated_at DATETIME, INDEX user_id_idx (user_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE forgot_password (id BIGINT AUTO_INCREMENT, user_id INT NOT NULL, unique_key VARCHAR(255), expires_at DATETIME NOT NULL, INDEX user_id_idx (user_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_translation (id INT, label VARCHAR(255), lang CHAR(2), PRIMARY KEY(id, lang)) ENGINE = INNODB;
-CREATE TABLE menu_item (id INT AUTO_INCREMENT, site_id INT NOT NULL, entity_type_id INT, entity_id INT, name VARCHAR(255) NOT NULL, route VARCHAR(255), has_many_entities TINYINT(1) DEFAULT '0', requires_auth TINYINT(1), requires_no_auth TINYINT(1), is_primary TINYINT(1), is_published TINYINT(1), date_published DATETIME, root_id INT, lft INT, rgt INT, level SMALLINT, INDEX entity_id_idx (entity_id), INDEX site_id_idx (site_id), INDEX entity_type_id_idx (entity_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE menu_item (id INT AUTO_INCREMENT, site_id INT NOT NULL, entity_type_id INT, entity_id INT, name VARCHAR(255) NOT NULL, route VARCHAR(255), has_many_entities TINYINT(1) DEFAULT '0', requires_auth TINYINT(1), requires_no_auth TINYINT(1), is_primary TINYINT(1), is_published TINYINT(1), date_published DATETIME, slug VARCHAR(255), root_id INT, lft INT, rgt INT, level SMALLINT, UNIQUE INDEX sluggable_idx (slug), INDEX entity_id_idx (entity_id), INDEX site_id_idx (site_id), INDEX entity_type_id_idx (entity_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_group (menu_item_id INT, group_id INT, PRIMARY KEY(menu_item_id, group_id)) ENGINE = INNODB;
 CREATE TABLE menu_item_permission (menu_item_id INT, permission_id INT, PRIMARY KEY(menu_item_id, permission_id)) ENGINE = INNODB;
 CREATE TABLE page (id INT AUTO_INCREMENT, entity_id INT, title VARCHAR(255) NOT NULL, disable_comments TINYINT(1), INDEX entity_id_idx (entity_id), PRIMARY KEY(id)) ENGINE = INNODB;
@@ -32,6 +33,7 @@ ALTER TABLE sf_guard_user_permission ADD FOREIGN KEY (user_id) REFERENCES sf_gua
 ALTER TABLE sf_guard_user_permission ADD FOREIGN KEY (permission_id) REFERENCES sf_guard_permission(id) ON DELETE CASCADE;
 ALTER TABLE blog_post ADD FOREIGN KEY (entity_id) REFERENCES entity(id) ON DELETE CASCADE;
 ALTER TABLE comment ADD FOREIGN KEY (user_id) REFERENCES sf_guard_user(id) ON DELETE CASCADE;
+ALTER TABLE forgot_password ADD FOREIGN KEY (user_id) REFERENCES sf_guard_user(id) ON DELETE CASCADE;
 ALTER TABLE menu_item_translation ADD FOREIGN KEY (id) REFERENCES menu_item(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (entity_type_id) REFERENCES entity_type(id) ON DELETE CASCADE;

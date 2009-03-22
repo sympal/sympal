@@ -53,8 +53,10 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
         $this->hasOne('Entity as MasterEntity', array('local' => 'id',
                                                       'foreign' => 'master_menu_item_id'));
 
+        $sluggable0 = new Doctrine_Template_Sluggable(array('fields' => array(0 => 'name'), 'unique' => true));
         $nestedset0 = new Doctrine_Template_NestedSet(array('hasManyRoots' => true, 'rootColumnName' => 'root_id'));
         $i18n0 = new Doctrine_Template_I18n(array('fields' => array(0 => 'label')));
+        $this->actAs($sluggable0);
         $this->actAs($nestedset0);
         $this->actAs($i18n0);
     }

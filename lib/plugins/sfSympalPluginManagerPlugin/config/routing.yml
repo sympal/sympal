@@ -1,0 +1,21 @@
+# sfSympalPluginManagerPlugin routing
+
+sympal_plugin_manager:
+  url:  /admin/plugins
+  param: { module: sympal_plugin_manager, action: index }
+  
+sympal_plugin_manager_install:
+  url:  /admin/plugins/install/:plugin
+  param: { module: sympal_plugin_manager, action: install }
+
+sympal_plugin_manager_uninstall:
+  url:  /admin/plugins/uninstall/:plugin
+  param: { module: sympal_plugin_manager, action: uninstall }
+
+sympal_plugin_manager_download:
+  url:  /admin/plugins/download/:plugin
+  param: { module: sympal_plugin_manager, action: download }
+
+sympal_plugin_manager_delete:
+  url:  /admin/plugins/delete/:plugin
+  param: { module: sympal_plugin_manager, action: delete }

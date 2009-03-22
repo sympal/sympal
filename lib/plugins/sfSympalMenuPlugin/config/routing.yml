@@ -5,3 +5,7 @@ sympal_menu_items:
     module:               sympal_menu_items
     prefix_path:          admin/menus
     with_wildcard_routes: true
+
+sympal_sitemap:
+  url: /admin/sitemap
+  param: { module: sympal_menu_items, action: sitemap }

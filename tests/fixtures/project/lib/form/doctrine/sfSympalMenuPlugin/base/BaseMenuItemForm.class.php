@@ -24,6 +24,7 @@ class BaseMenuItemForm extends BaseFormDoctrine
       'is_primary'        => new sfWidgetFormInputCheckbox(),
       'is_published'      => new sfWidgetFormInputCheckbox(),
       'date_published'    => new sfWidgetFormDateTime(),
+      'slug'              => new sfWidgetFormInput(),
       'root_id'           => new sfWidgetFormInput(),
       'lft'               => new sfWidgetFormInput(),
       'rgt'               => new sfWidgetFormInput(),
@@ -45,6 +46,7 @@ class BaseMenuItemForm extends BaseFormDoctrine
       'is_primary'        => new sfValidatorBoolean(array('required' => false)),
       'is_published'      => new sfValidatorBoolean(array('required' => false)),
       'date_published'    => new sfValidatorDateTime(array('required' => false)),
+      'slug'              => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'root_id'           => new sfValidatorInteger(array('required' => false)),
       'lft'               => new sfValidatorInteger(array('required' => false)),
       'rgt'               => new sfValidatorInteger(array('required' => false)),
@@ -52,6 +54,10 @@ class BaseMenuItemForm extends BaseFormDoctrine
       'groups_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
       'permissions_list'  => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
     ));
+
+    $this->validatorSchema->setPostValidator(
+      new sfValidatorDoctrineUnique(array('model' => 'MenuItem', 'column' => array('slug')))
+    );
 
     $this->widgetSchema->setNameFormat('menu_item[%s]');
 

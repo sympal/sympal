@@ -15,14 +15,12 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
 {
   public function preExecute()
   {
+    parent::preExecute();
     if (!sfSympalTools::isEditMode())
     {
       $this->getUser()->setFlash('error', 'In order to work with entities you must turn on edit mode!');
       $this->redirect('@homepage');
     }
-
-    parent::preExecute();
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
   }
 
   /**
@@ -44,6 +42,8 @@ class sympal_entitiesActions extends autoSympal_entitiesActions
 
   public function executeCreate_type(sfWebRequest $request)
   {
+    $this->menuItem = Doctrine::getTable('MenuItem')->getForEntityType('page');
+
     $this->entity = new Entity();
     $type = Doctrine::getTable('EntityType')->findOneBySlug($request->getParameter('type'));
     $this->entity->setType($type);

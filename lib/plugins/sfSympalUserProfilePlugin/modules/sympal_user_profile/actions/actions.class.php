@@ -10,7 +10,7 @@
  */
 class sympal_user_profileActions extends sfActions
 {
-  public function preExecute()
+  public function executeIndex(sfWebRequest $request)
   {
     $this->user = $this->getUser()->getGuardUser();
 
@@ -18,11 +18,6 @@ class sympal_user_profileActions extends sfActions
       ->getTypeQuery('UserProfile')
       ->where('p.user_id = ?', $this->user->id);
     $this->entity = $q->fetchOne();
-  }
-
-  public function executeIndex(sfWebRequest $request)
-  {
-    sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
 
     if (!$this->entity)
     {

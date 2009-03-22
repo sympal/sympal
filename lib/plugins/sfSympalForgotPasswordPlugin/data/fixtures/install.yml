@@ -1,0 +1,10 @@
+MenuItem:
+  MenuItem_primary:
+    children:
+      Menuitem_primary_forgot_password:
+        name: Forgot Password
+        is_published: true
+        label: Forgot Password?
+        Site: Site_default
+        route: @sympal_forgot_password
+        requires_no_auth: true

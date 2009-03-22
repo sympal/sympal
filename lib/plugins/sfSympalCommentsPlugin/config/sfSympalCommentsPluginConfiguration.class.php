@@ -6,6 +6,7 @@ class sfSympalCommentsPluginConfiguration extends sfPluginConfiguration
       'sfSympalPlugin',
       'sfSympalRegisterPlugin',
       'sfSympalSecurityPlugin',
+      'sfSympalUserProfilePlugin',
       'sfFormExtraPlugin'
     );
 
