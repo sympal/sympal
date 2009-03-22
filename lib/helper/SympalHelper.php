@@ -59,7 +59,7 @@ function get_sympal_admin_bar()
 function get_sympal_pager_header($pager, $entities)
 {
   $indice = $pager->getFirstIndice();
-  return '<h3>Showing '.$indice.' to '.($indice + count($entities) - 1).' of '.$pager->getNbResults().' total results.</h2>';
+  return '<h3>Showing '.$indice.' to '.($indice + count($entities) - 1).' of '.$pager->getNbResults().' total results.</h3>';
 }
 
 function get_sympal_pager_navigation($pager, $uri)
