@@ -1,7 +1,7 @@
 <?php
 class sfSympalPluginManagerPluginConfiguration extends sfPluginConfiguration
 {
-  public 
+  public static
     $dependencies = array(
       'sfSympalPlugin'
     );

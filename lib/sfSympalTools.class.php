@@ -65,9 +65,9 @@ class sfSympalTools
     foreach ($plugins as $plugin)
     {
       $pluginConfiguration = $configuration->getPluginConfiguration($plugin);
-      if (isset($pluginConfiguration->dependencies) && !empty($pluginConfiguration->dependencies))
+      if (isset($pluginConfiguration::$dependencies) && !empty($pluginConfiguration::$dependencies))
       {
-        $requiredPlugins = array_merge($requiredPlugins, $pluginConfiguration->dependencies);
+        $requiredPlugins = array_merge($requiredPlugins, $pluginConfiguration::$dependencies);
       }
     }
 

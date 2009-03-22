@@ -1,11 +1,11 @@
 # sfSympalForgotPasswordPlugin routing
 
 sympal_forgot_password:
-  url: /forgot_password
+  url: /user/forgot_password
   param: { module: sympal_forgot_password, action: index }
 
 sympal_forgot_password_change:
-  url: /forgot_password/:unique_key
+  url: /user/forgot_password/:unique_key
   param: { module: sympal_forgot_password, action: change }
   class: sfDoctrineRoute
   options: { model: ForgotPassword, type: object }
@@ -13,7 +13,7 @@ sympal_forgot_password_change:
     sf_method: get
 
 sympal_forgot_password_change_save:
-  url: /forgot_password/:unique_key
+  url: /user/forgot_password/:unique_key
   param: { module: sympal_forgot_password, action: change }
   class: sfDoctrineRoute
   options: { model: ForgotPassword, type: object }

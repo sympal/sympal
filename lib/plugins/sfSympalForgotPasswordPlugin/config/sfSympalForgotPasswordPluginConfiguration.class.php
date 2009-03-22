@@ -1,7 +1,7 @@
 <?php
 class sfSympalForgotPasswordPluginConfiguration extends sfPluginConfiguration
 {
-  public 
+  public static
     $dependencies = array(
       'sfSympalPlugin'
     );

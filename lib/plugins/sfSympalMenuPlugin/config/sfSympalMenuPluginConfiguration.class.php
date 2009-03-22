@@ -2,7 +2,7 @@
 
 class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 {
-  public 
+  public static
     $dependencies = array(
       'sfSympalPlugin'
     );

@@ -2,20 +2,21 @@
 
 class sfSympalPluginConfiguration extends sfPluginConfiguration
 {
-  public 
+  public static
     $dependencies = array(
       'sfDoctrineGuardPlugin',
       'sfFormExtraPlugin',
+      'sfSympalForgotPasswordPlugin',
       'sfSympalCommentsPlugin',
       'sfSympalMenuPlugin',
-      'sfSympalPagesPlugin',
       'sfSympalRegisterPlugin',
       'sfSympalSecurityPlugin',
-      'sfSympalForgotPasswordPlugin',
       'sfSympalUserProfilePlugin',
-      'sfSympalForgotPasswordPlugin',
       'sfSympalPluginManagerPlugin',
-    ),
+      'sfSympalPagesPlugin',
+    );
+
+  public
     $sympalConfiguration;
 
   public function initialize()

@@ -1,7 +1,7 @@
 <?php
 class sfSympalCommentsPluginConfiguration extends sfPluginConfiguration
 {
-  public 
+  public static
     $dependencies = array(
       'sfSympalPlugin',
       'sfSympalRegisterPlugin',
