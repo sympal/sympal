@@ -65,9 +65,11 @@ class sfSympalTools
     foreach ($plugins as $plugin)
     {
       $pluginConfiguration = $configuration->getPluginConfiguration($plugin);
-      if (isset($pluginConfiguration::$dependencies) && !empty($pluginConfiguration::$dependencies))
+      $refClass = new ReflectionClass($pluginConfiguration);
+      $dependencies = $refClass->getStaticPropertyValue('dependencies');
+      if (isset($dependencies) && !empty($dependencies))
       {
-        $requiredPlugins = array_merge($requiredPlugins, $pluginConfiguration::$dependencies);
+        $requiredPlugins = array_merge($requiredPlugins, $dependencies);
       }
     }
 
