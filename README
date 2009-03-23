@@ -5,12 +5,104 @@ Sympal is an extension of symfony that provides a content management framework l
 > **NOTE**
 > This plugin requires `sfDoctrinePlugin` so it assumes you have setup your `databases.yml` to work for Doctrine.
 
+## Features
+
+Sympal is built to be extremely modular. Even the core functionality is made up of multiple plugins and they all communicate together by defining hooks and subscribing to events. It has a nice way to download, install and uninstall plugins to your Sympal installation from the command line or via a web interface.
+
+With this type of functionality you have the power of the raw rools symfony provides, as well as the ability to stitch plugins together and create your own base Sympal installation. When you do this it will give you give a working functional website by executing a command or clicking a button.
+
+### Core
+
+**Custom content types**
+
+Add new custom content types to Sympal. Easily add a new `Event` entity type
+that can easily be tied in to the menu system.
+
+**Menus**
+
+Easily create your site maps with the Sympal menu system. Use it to map your
+menu items to content.
+
+**Breadcrumbs**
+
+Generate breadcrumbs from the current location of a sitemap.
+
+**Routing Mapping Interface**
+
+Easily manager multiple routes for your content. Customize the urls of 
+everything through an interface without breaking your old urls.
+
+**Pages**
+
+`Page` is the only core custom content type supported.
+
+**I18n**
+
+Easily enable internationalization in your project and translate everything
+in the interface.
+
+**Security**
+
+You can secure everything in your Sympal installation using the security 
+system which consists of groups and permissions.
+
+**Inline Editing**
+
+Edit your content inline so you can see the changes as you make them.
+
+**Content Locking Mechanism**
+
+When you attempt to edit content in Sympal it is automatically locked so 
+nobody else can edit it until you are finished.
+
+**Versioning**
+
+All content is versioned so you can easily revert to an old version of a piece
+of content.
+
+**Plugin Manager**
+
+Easily browse Sympal plugin sources from a nice interface or from the symfony
+command line and one click download, install and uninstall in to your Sympal
+installation.
+
+    Available tasks for the "sympal" namespace:
+      :install           Install the sympal plugin content management framework.
+      :plugin-download   Download a sympal plugin to an existing sympal installation
+      :plugin-generate   Generate the skeleton for a sympal plugin
+      :plugin-install    Install a sympal plugin to an existing sympal installation
+      :plugin-uninstall  Uninstall a sympal plugin to an existing sympal installation
+
+### Sympal Plugins
+
+**sfSympalBlogPlugin**
+
+Add a nice web log functionality to your Sympal installation with the 
+sfSympalBlog Plugin.
+
+**sfSympalForgotPasswordPlugin**
+
+Easily add forgot password functionality to your users/security functionality
+with the sfSympalForgotPasswordPlugin.
+
+**sfSympalCommentsPlugin**
+
+Want to turn on comments on any of your content? With the sfSympalCommentsPlugin
+you can do this easily.
+
+**sfSympalUserProfilePlugin**
+
+Add additional information to your users by giving them a user profile. This 
+allows users to create a nice public profile page and store additional 
+information like name, email, address, avatar, etc. It also gives them a way to change their password from a web interface.
+
 ## Demo
 
 [Sympal Demo](http://www.jwage.com/sympal_demo)
 
 ## Screenshots
 
+These screenshots are likely outdated as you are reading this because Sympal is in heavy development things change very fast. It is recommended that you use the demo from  above. It is kept up to date with the changes.
 
 ### Editor
 
@@ -36,15 +128,16 @@ First you need to install Sympal by installing the `sfSympalPlugin`.
 
 ### Enabling sfSympalPlugin
 
-The `sfSympalPlugin` is the core plugin that makes up the Sympal core. It contains several other plugins inside that are a part of the core. Because of this enabling `sfSympalPlugin` requires a little extra work by you in your `ProjectConfiguration` class. Open `config/ProjectConfiguration.class.php` in your favorite editor and place the following code in the `setup()` method.
+The `sfSympalPlugin` is the main plugin that makes up the Sympal core. It contains several other plugins inside that are a part of the core. Because of this enabling `sfSympalPlugin` requires a little extra work by you in your `ProjectConfiguration` class. Open `config/ProjectConfiguration.class.php` in your favorite editor and place the following code in the `setup()` method.
 
     [php]
-    $sympalPluginPath = realpath(dirname(__FILE__).'/../plugins/sfSympalPlugin');
+    $sympalPluginPath = dirname(__FILE__).'/../../../..';
     $this->setPluginPath('sfSympalPlugin', $sympalPluginPath);
 
+    require_once($sympalPluginPath.'/config/sfSympalPluginConfiguration.class.php');
+    $dependencies = sfSympalPluginConfiguration::$dependencies;
     $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
-    $embeddedPlugins = sfFinder::type('dir')->relative()->maxdepth(0)->in($embeddedPluginPath);
-    foreach ($embeddedPlugins as $plugin)
+    foreach ($dependencies as $plugin)
     {
       $this->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
     }
