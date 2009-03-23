@@ -48,7 +48,7 @@ class sfSympalConfiguration
     sfConfig::set('sf_admin_module_web_dir', '/sfSympalPlugin');
 
     sfConfig::set('sf_login_module', 'sympal_auth');
-    sfConfig::set('sf_login_action', 'login');
+    sfConfig::set('sf_login_action', 'signin');
 
     sfConfig::set('sf_secure_module', 'sympal_default');
     sfConfig::set('sf_secure_action', 'secure');
