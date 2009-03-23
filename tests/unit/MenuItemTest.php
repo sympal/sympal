@@ -13,7 +13,11 @@ $menuItems = $table
   ->createQuery('m')
   ->execute();
 
-$menuItem = $menuItems->getLast();
+$menuItem = $table
+  ->createQuery('m')
+  ->where('m.slug = ?', 'about')
+  ->fetchOne();
+
 $t->is($menuItem->getIndentedName(), '- About');
 $t->is((string) $menuItem, '- About');
 $t->is($menuItem->getMainEntity()->getHeaderTitle(), 'About');

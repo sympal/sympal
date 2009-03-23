@@ -163,7 +163,7 @@ abstract class sfSympalMenu
       $node = new $class($node, $route, $options);
     }
 
-    $node->setParent($this->getParent() ? $this->getParent():$this);
+    $node->setParent($this);
     $node->isRecursiveOutput($this->isRecursiveOutput());
     $node->showMenuItemDropDown($this->showMenuItemDropDown());
 

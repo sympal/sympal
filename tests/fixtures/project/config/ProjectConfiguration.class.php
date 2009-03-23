@@ -1,6 +1,6 @@
 <?php
 
-$_SERVER['SYMFONY'] = '/Users/jwage/Sites/symfony12svn/lib';
+$_SERVER['SYMFONY'] = '/Users/jwage/Sites/symfonysvn/1.3/lib';
 
 if (!isset($_SERVER['SYMFONY']))
 {

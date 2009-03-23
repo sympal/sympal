@@ -19,8 +19,8 @@ class BaseCommentFormFilter extends BaseFormFilterDoctrine
       'name'          => new sfWidgetFormFilterInput(),
       'subject'       => new sfWidgetFormFilterInput(),
       'body'          => new sfWidgetFormFilterInput(),
-      'created_at'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'updated_at'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'created_at'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'entities_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
     ));
 

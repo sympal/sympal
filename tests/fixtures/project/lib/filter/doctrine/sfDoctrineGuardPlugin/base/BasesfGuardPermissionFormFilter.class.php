@@ -16,8 +16,8 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'name'            => new sfWidgetFormFilterInput(),
       'description'     => new sfWidgetFormFilterInput(),
-      'created_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
-      'updated_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
+      'created_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'      => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'groups_list'     => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardGroup')),
       'users_list'      => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardUser')),
       'menu_items_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),

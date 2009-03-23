@@ -16,7 +16,7 @@
         <?php if (sfSympalTools::isPluginInstalled($plugin)): ?>
           <?php echo link_to('Delete', '@sympal_plugin_manager_delete?plugin='.$plugin, 'confirm=Are you sure you wish to delete this plugin?') ?>
           <?php echo link_to('Install', '@sympal_plugin_manager_install?plugin='.$plugin, 'confirm=Are you sure you wish to install this plugin?') ?>
-          <?php echo link_to('Un-Install', '@sympal_plugin_manager_uninstall?plugin='.$plugin, 'confirm=Are you sure you wish to uninstall this plugin?') ?>
+          <?php echo link_to('Uninstall', '@sympal_plugin_manager_uninstall?plugin='.$plugin, 'confirm=Are you sure you wish to uninstall this plugin?') ?>
         <?php else: ?>
           <?php echo link_to('Download', '@sympal_plugin_manager_download?plugin='.$plugin, 'confirm=Are you sure you wish to download this plugin?') ?>
         <?php endif; ?>

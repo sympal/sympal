@@ -35,8 +35,8 @@ class BasesfGuardUserForm extends BaseFormDoctrine
       'is_active'        => new sfValidatorBoolean(array('required' => false)),
       'is_super_admin'   => new sfValidatorBoolean(array('required' => false)),
       'last_login'       => new sfValidatorDateTime(array('required' => false)),
-      'created_at'       => new sfValidatorDateTime(array('required' => false)),
-      'updated_at'       => new sfValidatorDateTime(array('required' => false)),
+      'created_at'       => new sfValidatorDateTime(),
+      'updated_at'       => new sfValidatorDateTime(),
       'groups_list'      => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
     ));
