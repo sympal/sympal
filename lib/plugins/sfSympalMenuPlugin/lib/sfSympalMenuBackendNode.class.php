@@ -1,7 +1,7 @@
 <?php
 class sfSympalMenuBackendNode extends sfSympalMenuNode
 {
-  public function _render($test = null)
+  protected function _render()
   {
     $html  = '<li class="yuimenuitem">';
     if ($this->_route)

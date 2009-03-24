@@ -194,7 +194,7 @@ abstract class sfSympalMenu
     return !empty($this->_nodes);
   }
 
-  public function _render()
+  protected function _render()
   {
     if ($this->hasNodes() && $this->checkUserAccess())
     {

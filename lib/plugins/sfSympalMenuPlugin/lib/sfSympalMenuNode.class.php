@@ -67,7 +67,7 @@ class sfSympalMenuNode extends sfSympalMenu
     return $this->_current;
   }
 
-  public function _render()
+  protected function _render()
   {
     if ($this->checkUserAccess())
     {

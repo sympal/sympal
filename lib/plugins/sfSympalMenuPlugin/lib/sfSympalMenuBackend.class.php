@@ -1,7 +1,7 @@
 <?php
 class sfSympalMenuBackend extends sfSympalMenu
 {
-  public function _render()
+  protected function _render()
   {
     $html = '';
     if ($this->hasNodes())
