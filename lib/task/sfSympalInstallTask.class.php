@@ -74,6 +74,10 @@ EOF;
     {
       $buildAllLoadOptions[] = '--skip-forms';
     }
+    if (file_exists(sfConfig::get('sf_data_dir').'/fixtures/install.yml') && !$options['dir'])
+    {
+      $buildAllLoadOptions[] = '--dir='.sfConfig::get('sf_data_dir').'/fixtures';
+    }
     $buildAllLoad->run(array(), $buildAllLoadOptions);
   }
 }
