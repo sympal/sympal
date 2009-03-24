@@ -276,14 +276,14 @@ If you have an content outside of Sympal core in some of your custom functionali
 
     [php]
     $sympalContext = sfSympalContext::getInstance();
-    $renderer = $sympalContext->processPhpCode($menuItem, $content, $format = 'html');
+    $renderer = $sympalContext->renderContent($menuItem, $content, $format = 'html');
     echo $renderer->render();
 
 If you have a collection of content you can render them easily:
 
     [php]
     $sympalContext = sfSympalContext::getInstance();
-    $renderer = $sympalContext->processPhpCode($menuItem, $content, $format = 'html');
+    $renderer = $sympalContext->renderContent($menuItem, $content, $format = 'html');
 
 If you retrieved the data with a `sfDoctrinePager` then you can set the pager to the renderer so it can make user of it to generate paging:
 
