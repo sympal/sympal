@@ -157,7 +157,10 @@ abstract class sfSympalMenu
       if (!strstr($class, 'Node'))
       {
         $class = $class.'Node';
-        $class = class_exists($class) ? $class:'sfSympalMenuNode';
+        if (!class_exists($class))
+        {
+          throw new sfException('You must create a class named "'.$class.'"');
+        }
       }
 
       $node = new $class($node, $route, $options);

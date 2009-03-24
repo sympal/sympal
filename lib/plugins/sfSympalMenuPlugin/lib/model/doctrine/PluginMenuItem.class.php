@@ -172,7 +172,7 @@ abstract class PluginMenuItem extends BaseMenuItem
         {
           $breadcrumbs[$subItem] = null;
         }
-  
+
         $count = 0;
         $total = count($breadcrumbs);
         foreach ($breadcrumbs as $name => $route)
