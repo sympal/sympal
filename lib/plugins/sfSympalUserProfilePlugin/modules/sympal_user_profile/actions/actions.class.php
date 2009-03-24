@@ -39,7 +39,7 @@ class sympal_user_profileActions extends sfActions
     $this->profile = $this->content->UserProfile;
     $this->menuItem = $this->content->getMainMenuItem();
 
-    $this->renderer = sfSympalContext::getInstance()->processPhpCode($this->menuItem, $this->content);
+    $this->renderer = sfSympalContext::getInstance()->renderContent($this->menuItem, $this->content);
     $this->form = new UserProfileForm($this->profile);
 
     if ($request->getMethod() == 'POST')
