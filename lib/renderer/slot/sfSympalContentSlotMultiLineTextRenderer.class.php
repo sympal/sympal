@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalEntitySlotMultiLineTextRenderer extends sfSympalEntitySlotRenderer
+class sfSympalContentSlotMultiLineTextRenderer extends sfSympalContentSlotRenderer
 {
   public function render()
   {

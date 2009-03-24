@@ -1,14 +1,14 @@
 <?php
 
-class sfSympalEntitySlotRenderer
+class sfSympalContentSlotRenderer
 {
   protected
-    $_entitySlot,
+    $_contentSlot,
     $_rawValue;
 
-  public function __construct(EntitySlot $entitySlot)
+  public function __construct(ContentSlot $contentSlot)
   {
-    $this->_entitySlot = $entitySlot;
+    $this->_contentSlot = $contentSlot;
   }
 
   public function render()
@@ -20,15 +20,15 @@ class sfSympalEntitySlotRenderer
   {
     if (!$this->_rawValue)
     {
-      $value = $this->_entitySlot->getValue();
+      $value = $this->_contentSlot->getValue();
 
       if (!sfSympalConfig::get('disallow_php_in_content'))
       {
         $variables = array(
-          'entity' => $this->_entitySlot->RelatedEntity,
-          'menuItem' => $this->_entitySlot->RelatedEntity->MenuItem
+          'content' => $this->_contentSlot->RelatedContent,
+          'menuItem' => $this->_contentSlot->RelatedContent->MenuItem
         );
-        $value = sfSympalTools::renderContent($value, $variables);
+        $value = sfSympalTools::processPhpCode($value, $variables);
       }
   
       $this->_rawValue = $value;

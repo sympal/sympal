@@ -194,7 +194,7 @@ $language_data = array (
             'ini_restore','ini_get_all','ini_get','ini_alter','in_array','import_request_variables',
             'implode','image_type_to_mime_type','ignore_user_abort','iconv_set_encoding','iconv_get_encoding','iconv',
             'i18n_mime_header_encode','i18n_mime_header_decode','i18n_ja_jp_hantozen','i18n_internal_encoding','i18n_http_output','i18n_http_input',
-            'i18n_discover_encoding','i18n_convert','hypot','htmlspecialchars','htmlcontent','html_content_decode',
+            'i18n_discover_encoding','i18n_convert','hypot','htmlspecialchars','htmlcontent','html_entity_decode',
             'highlight_string','highlight_file','hexdec','hebrevc','hebrev','headers_sent',
             'header','gzwrite','gzuncompress','gztell','gzseek','gzrewind',
             'gzread','gzputs','gzpassthru','gzopen','gzinflate','gzgetss',

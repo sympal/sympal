@@ -52,7 +52,7 @@ class sfSympalContext
 
       $content = $pager->getResults();
 
-      $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
+      $renderer = $this->processPhpCode($menuItem, $content, $request->getRequestFormat());
       $renderer->setPager($pager);
     } else {
       $content = $actions->getRoute()->getObject();
@@ -64,7 +64,7 @@ class sfSympalContext
 
       sfSympalTools::changeLayout($content->getLayout());
 
-      $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
+      $renderer = $this->processPhpCode($menuItem, $content, $request->getRequestFormat());
     }
 
     return $renderer;
@@ -75,13 +75,13 @@ class sfSympalContext
     $content = Doctrine::getTable('Content')->getContentForSite(array('slug' => $slug));
     $menuItem = $content->getMenuItem();
 
-    $renderer = self::renderContent($menuItem, $content, $format);
+    $renderer = self::processPhpCode($menuItem, $content, $format);
     $renderer->initialize();
 
     return $renderer;
   }
 
-  public function renderContent($menuItem, $content = null, $format = 'html')
+  public function processPhpCode($menuItem, $content = null, $format = 'html')
   {
     $renderer = new sfSympalContentRenderer($menuItem, $format);
     $renderer->setContent($content);
