@@ -20,10 +20,10 @@ class sympal_commentsActions extends autoSympal_commentsActions
       throw new sfException('Comments require that you are authenticated!');
     }
 
-    $this->entity = Doctrine::getTable('Entity')->find($request->getParameter('comment[entity_id]'));
+    $this->content = Doctrine::getTable('Content')->find($request->getParameter('comment[content_id]'));
 
     $this->form = new NewCommentForm();
-    $this->form->setDefault('entity_id', $this->entity->getId());
+    $this->form->setDefault('content_id', $this->content->getId());
 
     if (sfSympalConfig::get('Comments', 'requires_auth'))
     {
@@ -46,9 +46,9 @@ class sympal_commentsActions extends autoSympal_commentsActions
       $this->form->getObject()->status = sfSympalConfig::get('Comments', 'default_status');
       $this->form->save();
 
-      $obj = new EntityComment();
+      $obj = new ContentComment();
       $obj->comment_id = $this->form->getObject()->getId();
-      $obj->entity_id = $this->entity->getId();
+      $obj->content_id = $this->content->getId();
       $obj->save();
 
       $this->redirect($request->getParameter('from_url') . '#comment_' . $this->form->getObject()->getId());

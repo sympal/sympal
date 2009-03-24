@@ -1,13 +1,13 @@
 <?php
 
 /**
- * EntityPermission form.
+ * ContentPermission form.
  *
  * @package    form
- * @subpackage EntityPermission
+ * @subpackage ContentPermission
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-class EntityPermissionForm extends PluginEntityPermissionForm
+class ContentPermissionForm extends PluginContentPermissionForm
 {
   public function configure()
   {

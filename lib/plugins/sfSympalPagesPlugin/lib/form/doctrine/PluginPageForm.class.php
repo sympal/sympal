@@ -12,6 +12,6 @@ abstract class PluginPageForm extends BasePageForm
   public function setup()
   {
     parent::setup();
-    unset($this['updated_at'], $this['created_at'], $this['entity_id'], $this['comments_list']);
+    unset($this['updated_at'], $this['created_at'], $this['content_id'], $this['comments_list']);
   }
 }

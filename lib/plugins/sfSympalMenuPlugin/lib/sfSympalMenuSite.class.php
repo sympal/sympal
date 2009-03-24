@@ -121,7 +121,7 @@ class sfSympalMenuSite extends sfSympalMenu
         ->leftJoin('m.Groups g')
         ->leftJoin('g.permissions gp')
         ->leftJoin('m.Permissions mp')
-        ->leftJoin('m.RelatedEntity e')
+        ->leftJoin('m.RelatedContent e')
         ->orderBy('m.root_id, m.lft ASC');
 
       $this->_menuItems = $q->execute();

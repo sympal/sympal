@@ -1,12 +1,12 @@
 <?php
 
 /**
- * PluginEntitySlotType form.
+ * PluginContentSlotType form.
  *
  * @package    filters
- * @subpackage EntitySlotType *
+ * @subpackage ContentSlotType *
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z jwage $
  */
-abstract class PluginEntitySlotTypeFormFilter extends BaseEntitySlotTypeFormFilter
+abstract class PluginContentSlotTypeFormFilter extends BaseContentSlotTypeFormFilter
 {
 }

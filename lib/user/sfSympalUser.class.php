@@ -4,10 +4,10 @@ class sfSympalUser extends sfGuardSecurityUser
 {
   protected $_forwarded = false;
 
-  public function checkEntitySecurity($entity)
+  public function checkContentSecurity($content)
   {
     $access = true;
-    $allPermissions = $entity->getAllPermissions();
+    $allPermissions = $content->getAllPermissions();
 
     if ($this->isAuthenticated() && !$this->hasCredential($allPermissions))
     {
@@ -35,7 +35,7 @@ class sfSympalUser extends sfGuardSecurityUser
     if ($mode == 'off')
     {
       $user = $this->getGuardUser();
-      Doctrine::getTable('Entity')
+      Doctrine::getTable('Content')
         ->createQuery()
         ->update()
         ->set('locked_by', 'NULL')
@@ -45,10 +45,10 @@ class sfSympalUser extends sfGuardSecurityUser
     return $mode;
   }
 
-  public function getOpenEntityLock()
+  public function getOpenContentLock()
   {
     $q = Doctrine_Query::create()
-      ->from('Entity e')
+      ->from('Content e')
       ->leftJoin('e.Type t')
       ->andWhere('e.locked_by = ?', $this->getGuardUser()->getId());
 

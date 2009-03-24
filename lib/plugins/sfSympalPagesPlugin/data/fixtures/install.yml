@@ -1,13 +1,13 @@
-EntityTemplate:
-  EntityTemplate_ViewPage:
+ContentTemplate:
+  ContentTemplate_ViewPage:
     name: View Page
     type: View
-    EntityType: EntityType_Page
+    ContentType: ContentType_Page
     partial_path: sympal_page/view
-  EntityTemplate_ListPage:
+  ContentTemplate_ListPage:
     name: List Page
     type: List
-    EntityType: EntityType_Page
+    ContentType: ContentType_Page
 
 MenuItem:
   MenuItem_primary:
@@ -15,22 +15,22 @@ MenuItem:
     is_published: true
     label: Home
     Site: Site_default
-    EntityType: EntityType_Page
-    RelatedEntity: Entity_Page_home
+    ContentType: ContentType_Page
+    RelatedContent: Content_Page_home
     children:
       MenuItem_primary_register:
         name: Register
         is_published: true
         label: Register
         Site: Site_default
-        RelatedEntity: Entity_Page_register
+        RelatedContent: Content_Page_register
         requires_no_auth: true
       MenuItem_primary_login:
         name: Login
         is_published: true
         label: Login
         Site: Site_default
-        RelatedEntity: Entity_Page_login
+        RelatedContent: Content_Page_login
         requires_no_auth: true
       MenuItem_primary_logout:
         name: Logout
@@ -43,16 +43,16 @@ MenuItem:
         name: Pages
         is_published: true
         label: Pages
-        has_many_entities: true
+        has_many_content: true
         Site: Site_default
-        EntityType: EntityType_Page
+        ContentType: ContentType_Page
       MenuItem_primary_about:
         name: About
         is_published: true
         label: About
         Site: Site_default
-        RelatedEntity: Entity_Page_about
-        EntityType: EntityType_Page
+        RelatedContent: Content_Page_about
+        ContentType: ContentType_Page
         children:
           MenuItem_primary_about_doctrine:
             name: Doctrine
@@ -77,46 +77,46 @@ MenuItem:
       MenuItem_primary_markdown_examples:
         name: Markdown Examples
         is_published: true
-        EntityType: EntityType_Page
+        ContentType: ContentType_Page
         Site: Site_default
         label: Markdown Examples
-        RelatedEntity: Entity_Page_markdown_examples
+        RelatedContent: Content_Page_markdown_examples
       MenuItem_primary_readme:
         name: README
         is_published: true
-        EntityType: EntityType_Page
+        ContentType: ContentType_Page
         Site: Site_default
         label: README
-        RelatedEntity: Entity_Page_readme
+        RelatedContent: Content_Page_readme
   MenuItem_footer:
     name: footer
     is_published: true
     label: Home
     Site: Site_default
-    EntityType: EntityType_Page
-    RelatedEntity: Entity_Page_home
+    ContentType: ContentType_Page
+    RelatedContent: Content_Page_home
     children:
       MenuItem_footer_about:
         name: About
         is_published: true
         label: About
         Site: Site_default
-        RelatedEntity: Entity_Page_about
-        EntityType: EntityType_Page
+        RelatedContent: Content_Page_about
+        ContentType: ContentType_Page
       MenuItem_footer_markdown_examples:
         name: Markdown Examples
         is_published: true
         label: Markdown Examples
         Site: Site_default
-        RelatedEntity: Entity_Page_markdown_examples
-        EntityType: EntityType_Page
+        RelatedContent: Content_Page_markdown_examples
+        ContentType: ContentType_Page
       MenuItem_footer_readme:
         name: README
         is_published: true
         label: README
         Site: Site_default
-        RelatedEntity: Entity_Page_readme
-        EntityType: EntityType_Page
+        RelatedContent: Content_Page_readme
+        ContentType: ContentType_Page
       MenuItem_footer_sitemap:
         name: Sitemap
         is_published: true
@@ -124,87 +124,87 @@ MenuItem:
         Site: Site_default
         route: @sympal_sitemap
 
-Entity:
-  Entity_Page_register:
-    Type: EntityType_Page
+Content:
+  Content_Page_register:
+    Type: ContentType_Page
     slug: register
     Site: Site_default
     is_published: true
     custom_path: /register
     Slots: [Register_slot_title, Register_slot_body]
     CreatedBy: admin
-  Entity_Page_login:
-    Type: EntityType_Page
+  Content_Page_login:
+    Type: ContentType_Page
     slug: login
     Site: Site_default
     is_published: true
     Slots: [Login_slot_title, Login_slot_body]
     CreatedBy: admin
-  Entity_Page_home:
-    Type: EntityType_Page
+  Content_Page_home:
+    Type: ContentType_Page
     slug: home
     Site: Site_default
     is_published: true
     custom_path: "/"
     Slots: [Home_slot_title, Home_slot_body]
     CreatedBy: admin
-  Entity_Page_about:
-    Type: EntityType_Page
+  Content_Page_about:
+    Type: ContentType_Page
     slug: about
     Site: Site_default
     is_published: true
     Slots: [About_slot_title, About_slot_body]
     CreatedBy: admin
-  Entity_Page_markdown_examples:
-    Type: EntityType_Page
+  Content_Page_markdown_examples:
+    Type: ContentType_Page
     slug: markdown-examples
     Site: Site_default
     is_published: true
     Slots: [Markdown_examples_slot_title, Markdown_examples_slot_body]
     CreatedBy: admin
-  Entity_Page_readme:
-    Type: EntityType_Page
+  Content_Page_readme:
+    Type: ContentType_Page
     slug: readme
     Site: Site_default
     is_published: true
     Slots: [Readme_slot_title, Readme_slot_body]
     CreatedBy: admin
 
-EntitySlot:
+ContentSlot:
   Readme_slot_title:
     name: title
-    Type: EntitySlotType_Text
+    Type: ContentSlotType_Text
     value: README
   Readme_slot_body:
     name: body
-    Type: EntitySlotType_Markdown
+    Type: ContentSlotType_Markdown
     value: |
       [?php echo file_get_contents($sf_context->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/README') ?]
   Register_slot_title:
     name: title
-    Type: EntitySlotType_Text
+    Type: ContentSlotType_Text
     value: Sympal Register
   Register_slot_body:
     name: body
-    Type: EntitySlotType_Markdown
+    Type: ContentSlotType_Markdown
     value: |
       [?php echo get_component('sympal_register', 'form') ?]
   Login_slot_title:
     name: title
-    Type: EntitySlotType_Text
+    Type: ContentSlotType_Text
     value: Sympal Login
   Login_slot_body:
     name: body
-    Type: EntitySlotType_Markdown
+    Type: ContentSlotType_Markdown
     value: |
       [?php echo get_component('sympal_auth', 'signin_form') ?]
   Home_slot_title:
     name: title
-    Type: EntitySlotType_Text
+    Type: ContentSlotType_Text
     value: Welcome to the default homepage
   Home_slot_body:
     name: body
-    Type: EntitySlotType_Markdown
+    Type: ContentSlotType_Markdown
     value: |
       You can check out some markdown examples by clicking the "Examples" 
       link in the menu to the left, or you can read about sympal by clicking "About".
@@ -217,11 +217,11 @@ EntitySlot:
       [?php endif; ?]
   About_slot_title:
     name: title
-    Type: EntitySlotType_Text
+    Type: ContentSlotType_Text
     value: About Sympal
   About_slot_body:
     name: body
-    Type: EntitySlotType_Markdown
+    Type: ContentSlotType_Markdown
     value: |
       The sympal content management framework is the result of years of 
       experience and trial and error across dozens of developers. It has 
@@ -233,17 +233,17 @@ EntitySlot:
       * Plug n' Play Architecture
       * Internationalization
       * Multiple Sites
-      * Custom Entity Types
-      * Custom Entity Slot Types
+      * Custom Content Types
+      * Custom Content Slot Types
       * Multiple Site Menus
       * Use PHP in your Content
   Markdown_examples_slot_title:
     name: title
-    Type: EntitySlotType_Text
+    Type: ContentSlotType_Text
     value: Markdown Slot Type Examples
   Markdown_examples_slot_body:
     name: body
-    Type: EntitySlotType_Markdown
+    Type: ContentSlotType_Markdown
     value: |
       Example Table
       -------------
@@ -309,31 +309,31 @@ EntitySlot:
 Page:
   login:
     title: Login
-    Entity: Entity_Page_login
+    Content: Content_Page_login
     disable_comments: true
   register:
     title: Register
-    Entity: Entity_Page_register
+    Content: Content_Page_register
     disable_comments: true
   home:
     title: Home
-    Entity: Entity_Page_home
+    Content: Content_Page_home
     disable_comments: true
   about:
     title: About
-    Entity: Entity_Page_about
+    Content: Content_Page_about
   markdown_examples:
     title: Markdown Examples
-    Entity: Entity_Page_markdown_examples
+    Content: Content_Page_markdown_examples
   readme:
     title: README
-    Entity: Entity_Page_readme
+    Content: Content_Page_readme
 
-EntityType:
-  EntityType_Page:
+ContentType:
+  ContentType_Page:
     name: Page
     label: Page
-<?php if (sfSympalConfig::isI18nEnabled('entity_types')): ?> 
+<?php if (sfSympalConfig::isI18nEnabled('content_types')): ?> 
     view_route_url: /:sf_culture/:slug
     list_route_url: /:sf_culture/pages
 <?php else: ?>

@@ -12,7 +12,7 @@ Site:
       type: string(255)
     description: clob
 
-Entity:
+Content:
   actAs: [Sluggable, Timestampable]
   columns:
     id:
@@ -22,10 +22,10 @@ Entity:
     site_id:
       type: integer(4)
       notnull: true
-    entity_type_id:
+    content_type_id:
       type: integer(4)
       notnull: true
-    entity_template_id: integer(4)
+    content_template_id: integer(4)
     master_menu_item_id: integer(4)
     last_updated_by: integer(4)
     created_by: integer(4)
@@ -39,70 +39,64 @@ Entity:
       class: MenuItem
       local: master_menu_item_id
       onDelete: CASCADE
-      foreignAlias: MasterEntity
+      foreignAlias: MasterContent
       foreignType: one
     LastUpdatedBy:
       class: sfGuardUser
       local: last_updated_by
-      foreignAlias: LastUpdatedEntities
+      foreignAlias: LastUpdatedContent
       onDelete: SET NULL
     CreatedBy:
       class: sfGuardUser
       local: created_by
-      foreignAlias: CreatedEntities
+      foreignAlias: CreatedContent
       onDelete: SET NULL
     LockedBy:
       class: sfGuardUser
       local: locked_by
-      foreignAlias: LockedEntities
+      foreignAlias: LockedContent
       onDelete: SET NULL
     Site:
-      foreignAlias: Entities
       onDelete: CASCADE
     Type:
-      class: EntityType
-      foreignAlias: Entities
+      class: ContentType
       onDelete: CASCADE
     Template:
-      class: EntityTemplate
-      foreignAlias: Entities
+      class: ContentTemplate
       onDelete: SET NULL
     Groups:
       class: sfGuardGroup
-      local: entity_id
+      local: content_id
       foreign: group_id
-      refClass: EntityGroup
-      foreignAlias: Entities
+      refClass: ContentGroup
     Permissions:
       class: sfGuardPermission
-      local: entity_id
+      local: content_id
       foreign: permission_id
-      refClass: EntityPermission
-      foreignAlias: Entities
+      refClass: ContentPermission
     Comments:
       class: Comment
-      local: entity_id
+      local: content_id
       foreign: comment_id
-      refClass: EntityComment
-      foreignAlias: Entities
+      refClass: ContentComment
 
-EntityComment:
+ContentComment:
   columns:
-    entity_id:
+    content_id:
       type: integer(4)
       primary: true
     comment_id:
       type: integer(4)
       primary: true
   relations:
-    Entity:
-      foreignAlias: EntityComments
+    Content:
+      foreignAlias: ContentComments
       onDelete: CASCADE
     Comment:
-      foreignAlias: EntityComments
+      foreignAlias: ContentComments
       onDelete: CASCADE
 
-EntityType:
+ContentType:
   actAs:
     Sluggable:
       fields: [name]
@@ -121,7 +115,7 @@ EntityType:
     view_route_url: string(255)
     layout: string(255)
 
-EntityTemplate:
+ContentTemplate:
   columns:
     id:
       type: integer(4)
@@ -133,15 +127,15 @@ EntityTemplate:
     type:
       type: enum
       values: [View, List]
-    entity_type_id: integer(4)
+    content_type_id: integer(4)
     partial_path: string(255)
     component_path: string(255)
     body: clob
   relations:
-    EntityType:
+    ContentType:
       foreignAlias: Templates
 
-EntitySlot:
+ContentSlot:
 <?php if (sfSympalConfig::isI18nEnabled('slots')): ?> 
   actAs:
     I18n:
@@ -152,10 +146,10 @@ EntitySlot:
       type: integer(4)
       primary: true
       autoincrement: true
-    entity_id:
+    content_id:
       type: integer(4)
       notnull: true
-    entity_slot_type_id:
+    content_slot_type_id:
       type: integer(4)
       notnull: true
     name:
@@ -163,16 +157,16 @@ EntitySlot:
       notnull: true
     value: clob
   relations:
-    RelatedEntity:
-      class: Entity
+    RelatedContent:
+      class: Content
       foreignAlias: Slots
       onDelete: CASCADE
     Type:
-      class: EntitySlotType
+      class: ContentSlotType
       foreignAlias: Slots
       onDelete: CASCADE
 
-EntitySlotType:
+ContentSlotType:
   columns:
     id:
       type: integer(4)
@@ -182,38 +176,38 @@ EntitySlotType:
       type: string(255)
       notnull: true
 
-EntityGroup:
+ContentGroup:
   columns:
-    entity_id:
+    content_id:
       primary: true
       type: integer(4)
     group_id:
       primary: true
       type: integer(4)
   relations:
-    Entity:
-      foreignAlias: EntityGroups
+    Content:
+      foreignAlias: ContentGroups
       onDelete: CASCADE
     Group:
       class: sfGuardGroup
       local: group_id
-      foreignAlias: EntityGroups
+      foreignAlias: ContentGroups
       onDelete: CASCADE
 
-EntityPermission:
+ContentPermission:
   columns:
-    entity_id:
+    content_id:
       primary: true
       type: integer(4)
     permission_id:
       primary: true8
       type: integer(4)
   relations:
-    Entity:
-      foreignAlias: EntityGroups
+    Content:
+      foreignAlias: ContentGroups
       onDelete: CASCADE
     Permission:
       class: sfGuardPermission
       local: permission_id
-      foreignAlias: EntityPermissions
+      foreignAlias: ContentPermissions
       onDelete: CASCADE

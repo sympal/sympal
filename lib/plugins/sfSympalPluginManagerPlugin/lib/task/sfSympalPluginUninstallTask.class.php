@@ -9,7 +9,7 @@ class sfSympalPluginUninstallTask extends sfBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('entity-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the entity type to remove', null),
+      new sfCommandOption('content-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the content type to remove', null),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'sympal'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('delete', null, sfCommandOption::PARAMETER_NONE, 'Delete the plugin files.'),
@@ -37,6 +37,6 @@ EOF;
     }
 
     $pluginManager = new sfSympalPluginManagerUninstall();
-    $pluginManager->uninstall($arguments['name'], $options['entity-type'], $options['delete']);
+    $pluginManager->uninstall($arguments['name'], $options['content-type'], $options['delete']);
   }
 }

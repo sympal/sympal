@@ -18,7 +18,7 @@ class BaseUserProfileFormFilter extends BaseFormFilterDoctrine
       'last_name'     => new sfWidgetFormFilterInput(),
       'email_address' => new sfWidgetFormFilterInput(),
       'body'          => new sfWidgetFormFilterInput(),
-      'entity_id'     => new sfWidgetFormDoctrineChoice(array('model' => 'Entity', 'add_empty' => true)),
+      'content_id'     => new sfWidgetFormDoctrineChoice(array('model' => 'Content', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
@@ -26,7 +26,7 @@ class BaseUserProfileFormFilter extends BaseFormFilterDoctrine
       'last_name'     => new sfValidatorPass(array('required' => false)),
       'email_address' => new sfValidatorPass(array('required' => false)),
       'body'          => new sfValidatorPass(array('required' => false)),
-      'entity_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Entity', 'column' => 'id')),
+      'content_id'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Content', 'column' => 'id')),
     ));
 
     $this->widgetSchema->setNameFormat('user_profile_filters[%s]');
@@ -49,7 +49,7 @@ class BaseUserProfileFormFilter extends BaseFormFilterDoctrine
       'last_name'     => 'Text',
       'email_address' => 'Text',
       'body'          => 'Text',
-      'entity_id'     => 'ForeignKey',
+      'content_id'     => 'ForeignKey',
     );
   }
 }

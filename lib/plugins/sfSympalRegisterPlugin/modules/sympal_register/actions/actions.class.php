@@ -23,6 +23,6 @@ class sympal_registerActions extends sfActions
     }
 
     $sympalContext = sfSympalContext::createInstance('sympal', $this->getContext());
-    $this->renderer = $sympalContext->quickRenderEntity('register');
+    $this->renderer = $sympalContext->quickRenderContent('register');
   }
 }

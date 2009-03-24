@@ -4,11 +4,11 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 {
   public $configuration;
 
-  public function install($name, $entityTypeName = null)
+  public function install($name, $contentTypeName = null)
   {
-    if (is_null($entityTypeName))
+    if (is_null($contentTypeName))
     {
-      $entityTypeName = $this->getEntityTypeForPlugin($name);
+      $contentTypeName = $this->getContentTypeForPlugin($name);
     }
 
     $pluginName = sfSympalTools::getLongPluginName($name);
@@ -28,7 +28,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       $dataFixtures = sfFinder::type('file')->in($path.'/data/fixtures/install.yml');
       $models = array_keys(sfYaml::load($schema));
 
-      if ($ret = $this->_generateFilesFromSchema($name, $entityTypeName))
+      if ($ret = $this->_generateFilesFromSchema($name, $contentTypeName))
       {
         return $ret;
       }
@@ -37,9 +37,9 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
       Doctrine::createTablesFromArray($models);
 
-      if ($entityTypeName)
+      if ($contentTypeName)
       {
-        $installVars = $this->_createDefaultEntityTypeRecords($name, $entityTypeName, $installVars);
+        $installVars = $this->_createDefaultContentTypeRecords($name, $contentTypeName, $installVars);
       }
     }
 
@@ -49,9 +49,9 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
       $this->configuration->getPluginConfiguration($pluginName)->install($installVars, $this);
     } else {
-      if (isset($entityTypeName) && $entityTypeName)
+      if (isset($contentTypeName) && $contentTypeName)
       {
-        $this->_defaultInstallation($installVars, $entityTypeName);
+        $this->_defaultInstallation($installVars, $contentTypeName);
       }
       $createInstall = true;
     }
@@ -66,44 +66,44 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $ret = @$assets->run(array(), array());
   }
 
-  protected function _createDefaultEntityTypeRecords($name, $entityTypeName, $installVars)
+  protected function _createDefaultContentTypeRecords($name, $contentTypeName, $installVars)
   {
-    $this->logSection('sympal', 'Create default entity type records');
+    $this->logSection('sympal', 'Create default content type records');
 
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($name));
     $slug = 'sample-'.$lowerName;
 
-    $entityType = new EntityType();
-    $entityType->name = $entityTypeName;
-    $entityType->label = $entityTypeName;
-    $entityType->list_route_url = "/$lowerName/list";
-    $entityType->view_route_url = "/$lowerName/:slug";
-    $entityType->slug = $lowerName;
-    $installVars['entityType'] = $entityType;
+    $contentType = new ContentType();
+    $contentType->name = $contentTypeName;
+    $contentType->label = $contentTypeName;
+    $contentType->list_route_url = "/$lowerName/list";
+    $contentType->view_route_url = "/$lowerName/:slug";
+    $contentType->slug = $lowerName;
+    $installVars['contentType'] = $contentType;
 
-    $entity = new Entity();
-    $entity->Type = $entityType;
-    $entity->slug = $slug;
-    $entity->is_published = true;
-    $entity->CreatedBy = Doctrine::getTable('sfGuardUser')->findOneByUsername('admin');
-    $entity->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
-    $installVars['entity'] = $entity;
+    $content = new Content();
+    $content->Type = $contentType;
+    $content->slug = $slug;
+    $content->is_published = true;
+    $content->CreatedBy = Doctrine::getTable('sfGuardUser')->findOneByUsername('admin');
+    $content->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
+    $installVars['content'] = $content;
 
     $menuItem = new MenuItem();
     $menuItem->name = $name;
     $menuItem->is_published = true;
     $menuItem->label = $name;
-    $menuItem->has_many_entities = true;
-    $menuItem->EntityType = $entityType;
+    $menuItem->has_many_content = true;
+    $menuItem->ContentType = $contentType;
     $menuItem->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
     $installVars['menuItem'] = $menuItem;
 
-    $entityTemplate = new EntityTemplate();
-    $entityTemplate->name = 'View '.$entityTypeName;
-    $entityTemplate->type = 'View';
-    $entityTemplate->EntityType = $installVars['entityType'];
-    $entityTemplate->body = '<?php echo get_sympal_breadcrumbs($menuItem, $entity) ?><h2><?php echo $entity->getHeaderTitle() ?></h2><p><strong>Posted by <?php echo $entity->CreatedBy->username ?> on <?php echo date(\'m/d/Y h:i:s\', strtotime($entity->created_at)) ?></strong></p><p><?php echo $entity->getRecord()->getBody() ?></p><?php echo get_sympal_comments($entity) ?>';
-    $installVars['entityTemplate'] = $entityTemplate;
+    $contentTemplate = new ContentTemplate();
+    $contentTemplate->name = 'View '.$contentTypeName;
+    $contentTemplate->type = 'View';
+    $contentTemplate->ContentType = $installVars['contentType'];
+    $contentTemplate->body = '<?php echo get_sympal_breadcrumbs($menuItem, $content) ?><h2><?php echo $content->getHeaderTitle() ?></h2><p><strong>Posted by <?php echo $content->CreatedBy->username ?> on <?php echo date(\'m/d/Y h:i:s\', strtotime($content->created_at)) ?></strong></p><p><?php echo $content->getRecord()->getBody() ?></p><?php echo get_sympal_comments($content) ?>';
+    $installVars['contentTemplate'] = $contentTemplate;
 
     return $installVars;
   }
@@ -118,18 +118,18 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $menuItem->getNode()->insertAsLastChildOf($root);
   }
 
-  protected function _defaultInstallation($installVars, $entityTypeName)
+  protected function _defaultInstallation($installVars, $contentTypeName)
   {
     $this->logSection('sympal', 'No install() method found so running default installation');
 
     $this->addToMenu($installVars['menuItem']);
 
-    $installVars['entity']->save();
-    $installVars['entityType']->save();
-    $installVars['entityTemplate']->save();
+    $installVars['content']->save();
+    $installVars['contentType']->save();
+    $installVars['contentTemplate']->save();
 
-    $entityTypeRecord = new $entityTypeName();
-    $entityTypeRecord->Entity = $installVars['entity'];
+    $contentTypeRecord = new $contentTypeName();
+    $contentTypeRecord->Content = $installVars['content'];
 
     $guesses = array('name',
                      'title',
@@ -140,15 +140,15 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     try {
       foreach ($guesses as $guess)
       {
-        $entityTypeRecord->$guess = 'Sample '.$entityTypeName;
+        $contentTypeRecord->$guess = 'Sample '.$contentTypeName;
       }
     } catch (Exception $e) {}
 
-    if ($entityTypeRecord->getTable()->hasColumn('body'))
+    if ($contentTypeRecord->getTable()->hasColumn('body'))
     {
-      $entityTypeRecord->body = 'This is some sample content for the body your new entity type.';
+      $contentTypeRecord->body = 'This is some sample content for the body your new content type.';
     }
-    $entityTypeRecord->save();
+    $contentTypeRecord->save();
   }
 
   protected function _generateFilesFromSchema()

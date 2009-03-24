@@ -22,28 +22,28 @@ class sympal_editorActions extends sfActions
     return $this->redirect($request->getReferer());
   }
 
-  public function executePublish_entity(sfWebRequest $request)
+  public function executePublish_content(sfWebRequest $request)
   {
-    $entity = $this->getRoute()->getObject()->publish();
+    $content = $this->getRoute()->getObject()->publish();
     
-    $this->getUser()->setFlash('notice', 'Entity published successfully!');
+    $this->getUser()->setFlash('notice', 'Content published successfully!');
     $this->redirect($request->getReferer());
   }
 
-  public function executeUnpublish_entity(sfWebRequest $request)
+  public function executeUnpublish_content(sfWebRequest $request)
   {
-    $entity = $this->getRoute()->getObject()->unpublish();
+    $content = $this->getRoute()->getObject()->unpublish();
     
-    $this->getUser()->setFlash('notice', 'Entity un-published successfully!');
+    $this->getUser()->setFlash('notice', 'Content un-published successfully!');
     $this->redirect($request->getReferer());
   }
 
-  public function executeLock_entity(sfWebRequest $request)
+  public function executeLock_content(sfWebRequest $request)
   {
-    $entity = $this->getRoute()->getObject();
-    if (!$entity->locked_by)
+    $content = $this->getRoute()->getObject();
+    if (!$content->locked_by)
     {
-      $entity->obtainLock($this->getUser()->getGuardUser());
+      $content->obtainLock($this->getUser()->getGuardUser());
       
       $this->getUser()->setFlash('notice', 'Lock obtained successfully!');
     } else {
@@ -52,41 +52,41 @@ class sympal_editorActions extends sfActions
     $this->redirect($request->getReferer());
   }
 
-  public function executeUnlock_entity(sfWebRequest $request)
+  public function executeUnlock_content(sfWebRequest $request)
   {
-    $entity = $this->getRoute()->getObject();
-    $entity->locked_by = null;
-    $entity->save();
+    $content = $this->getRoute()->getObject();
+    $content->locked_by = null;
+    $content->save();
 
     $this->getUser()->setFlash('notice', 'Lock released successfully!');
 
-    $this->redirect($entity->getRoute());
+    $this->redirect($content->getRoute());
   }
 
-  public function executeChange_entity_slot_type(sfWebRequest $request)
+  public function executeChange_content_slot_type(sfWebRequest $request)
   {
-    $this->entitySlot = $this->getRoute()->getObject();
-    $this->entitySlot->entity_slot_type_id = $request->getParameter('type');
-    $this->entitySlot->save();
+    $this->contentSlot = $this->getRoute()->getObject();
+    $this->contentSlot->content_slot_type_id = $request->getParameter('type');
+    $this->contentSlot->save();
 
-    $this->form = new EntitySlotForm($this->entitySlot);
+    $this->form = new ContentSlotForm($this->contentSlot);
     $this->setLayout(false);
     $this->setTemplate('edit_slot');
   }
 
   public function executeEdit_slot()
   {
-    $this->entitySlot = $this->getRoute()->getObject();
-    $this->form = new EntitySlotForm($this->entitySlot);
+    $this->contentSlot = $this->getRoute()->getObject();
+    $this->form = new ContentSlotForm($this->contentSlot);
   }
 
   public function executeSave_slot(sfWebrequest $request)
   {
     $this->setLayout(false);
 
-    $this->entitySlot = $this->getRoute()->getObject();
-    $this->entitySlot->value = $request->getParameter('value');
-    $this->entitySlot->save();
+    $this->contentSlot = $this->getRoute()->getObject();
+    $this->contentSlot->value = $request->getParameter('value');
+    $this->contentSlot->save();
 
     $this->setTemplate('preview_slot');
   }
@@ -95,8 +95,8 @@ class sympal_editorActions extends sfActions
   {
     $this->setLayout(false);
 
-    $this->entitySlot = $this->getRoute()->getObject();
-    $this->entitySlot->value = $request->getParameter('value');
+    $this->contentSlot = $this->getRoute()->getObject();
+    $this->contentSlot->value = $request->getParameter('value');
   }
 
   public function executeToggle_edit(sfWebRequest $request)
@@ -105,9 +105,9 @@ class sympal_editorActions extends sfActions
 
     if ($mode == 'off')
     {
-      $msg = 'Edit mode turned off successfully. Any entities you had a lock on were released!';
+      $msg = 'Edit mode turned off successfully. Any content you had a lock on were released!';
     } else {
-      $msg = 'Edit mode turned on successfully. To edit an entity you must obtain an edit lock first!';
+      $msg = 'Edit mode turned on successfully. To edit an content you must obtain an edit lock first!';
     }
 
     $this->getUser()->setFlash('notice', $msg);

@@ -9,7 +9,7 @@ class sfSympalPluginInstallTask extends sfBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('entity-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the entity type to create', null),
+      new sfCommandOption('content-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the content type to create', null),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'sympal'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
@@ -29,6 +29,6 @@ EOF;
     $databaseManager = new sfDatabaseManager($this->configuration);
 
     $pluginManager = new sfSympalPluginManagerInstall();
-    $pluginManager->install($arguments['name'], $options['entity-type']);
+    $pluginManager->install($arguments['name'], $options['content-type']);
   }
 }

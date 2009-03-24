@@ -17,7 +17,7 @@ class sfSympalPluginManager
     ProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array($this->formatter->formatSection($section, $message, $size, $style))));
   }
 
-  public function getEntityTypeForPlugin($name)
+  public function getContentTypeForPlugin($name)
   {
     $pluginName = sfSympalTools::getLongPluginName($name);
     $path = ProjectConfiguration::getActive()->getPluginConfiguration($pluginName)->getRootDir();
@@ -38,7 +38,7 @@ class sfSympalPluginManager
             } else {
               $name = $key;
             }
-            if ($name == 'sfSympalEntityType')
+            if ($name == 'sfSympalContentType')
             {
               return $modelName;
             }

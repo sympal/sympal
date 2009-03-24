@@ -29,17 +29,17 @@ abstract class PluginMenuItem extends BaseMenuItem
     return $this->_allPermissions;
   }
 
-  public function getMainEntity()
+  public function getMainContent()
   {
-    $entity = $this->getMasterEntity();
-    if ($entity && $entity instanceof Doctrine_Record && $entity->exists())
+    $content = $this->getMasterContent();
+    if ($content && $content instanceof Doctrine_Record && $content->exists())
     {
-      return $entity;
+      return $content;
     } else {
-      $entity = $this->getEntity();
-      if ($entity && $entity instanceof Doctrine_Record && $entity->exists())
+      $content = $this->getContent();
+      if ($content && $content instanceof Doctrine_Record && $content->exists())
       {
-        return $entity;
+        return $content;
       } else {
         return false;
       }
@@ -98,37 +98,37 @@ abstract class PluginMenuItem extends BaseMenuItem
     return (string) $this;
   }
 
-  public function getEntity()
+  public function getContent()
   {
-    return $this->getRelatedEntity();
+    return $this->getRelatedContent();
   }
 
-  public function setEntity(Entity $entity)
+  public function setContent(Content $content)
   {
-    $this->RelatedEntity = $entity;
+    $this->RelatedContent = $content;
   }
 
   public function getItemRoute()
   {
     if (!$route = $this->getRoute())
     {
-      if ($this->getHasManyEntities())
+      if ($this->getHasManyContent())
       {
-        $type = $this->getEntityType();
+        $type = $this->getContentType();
         if ($type->list_route_url)
         {
-          $route = '@sympal_entity_type_'.$type['slug'];
+          $route = '@sympal_content_type_'.$type['slug'];
         } else {
           throw new sfException('MenuItem has invalid route.');
         }
-      } else if (!$this->getEntity() instanceof Doctrine_Null && $this->getEntity()) {
-        $route = $this->getEntity()->getRoute();
+      } else if (!$this->getContent() instanceof Doctrine_Null && $this->getContent()) {
+        $route = $this->getContent()->getRoute();
       }
     }
     return $route;
   }
 
-  public function getBreadcrumbs($entity = null, $subItem = null)
+  public function getBreadcrumbs($content = null, $subItem = null)
   {
     if (!$this->_breadcrumbs)
     {
@@ -141,7 +141,7 @@ abstract class PluginMenuItem extends BaseMenuItem
         $q = Doctrine_Query::create()
           ->addSelect('m.*, e.*')
           ->from('MenuItem m')
-          ->leftJoin('m.RelatedEntity e');
+          ->leftJoin('m.RelatedContent e');
 
         $tree->setBaseQuery($q);
         $ancestors = $this->getNode()->getAncestors();
@@ -156,14 +156,14 @@ abstract class PluginMenuItem extends BaseMenuItem
           }
         }
 
-        if ($entity)
+        if ($content)
         {
-          if ($this->has_many_entities)
+          if ($this->has_many_content)
           {
             $breadcrumbs[$this->getLabel()] = $this->getItemRoute();
           }
 
-          $breadcrumbs[$entity->getHeaderTitle()] = $entity->getRoute();
+          $breadcrumbs[$content->getHeaderTitle()] = $content->getRoute();
         } else {
           $breadcrumbs[$this->getLabel()] = $this->getItemRoute();
         }
@@ -192,7 +192,7 @@ abstract class PluginMenuItem extends BaseMenuItem
 
   public function getLayout()
   {
-    if ($layout = $this->getEntityType()->getLayout())
+    if ($layout = $this->getContentType()->getLayout())
     {
       return $layout;
     } else if ($layout = $this->getSite()->getLayout()) {

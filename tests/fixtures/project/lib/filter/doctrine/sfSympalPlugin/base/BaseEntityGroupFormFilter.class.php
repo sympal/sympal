@@ -3,13 +3,13 @@
 require_once(sfConfig::get('sf_lib_dir').'/filter/doctrine/BaseFormFilterDoctrine.class.php');
 
 /**
- * EntityGroup filter form base class.
+ * ContentGroup filter form base class.
  *
  * @package    filters
- * @subpackage EntityGroup *
+ * @subpackage ContentGroup *
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 11675 2008-09-19 15:21:38Z fabien $
  */
-class BaseEntityGroupFormFilter extends BaseFormFilterDoctrine
+class BaseContentGroupFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
@@ -19,7 +19,7 @@ class BaseEntityGroupFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
     ));
 
-    $this->widgetSchema->setNameFormat('entity_group_filters[%s]');
+    $this->widgetSchema->setNameFormat('content_group_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -28,13 +28,13 @@ class BaseEntityGroupFormFilter extends BaseFormFilterDoctrine
 
   public function getModelName()
   {
-    return 'EntityGroup';
+    return 'ContentGroup';
   }
 
   public function getFields()
   {
     return array(
-      'entity_id' => 'Number',
+      'content_id' => 'Number',
       'group_id'  => 'Number',
     );
   }

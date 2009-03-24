@@ -12,7 +12,7 @@ abstract class PluginUserProfileForm extends BaseUserProfileForm
   public function setup()
   {
     parent::setup();
-    unset($this['user_id'], $this['entity_id']);
+    unset($this['user_id'], $this['content_id']);
 
     $userForm = new sfGuardUserAdminForm($this->object->User);
     unset(

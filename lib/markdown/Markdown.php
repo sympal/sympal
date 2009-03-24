@@ -214,9 +214,9 @@ class Markdown_Parser {
 	var $empty_element_suffix = MARKDOWN_EMPTY_ELEMENT_SUFFIX;
 	var $tab_width = MARKDOWN_TAB_WIDTH;
 	
-	# Change to `true` to disallow markup or entities.
+	# Change to `true` to disallow markup or content.
 	var $no_markup = false;
-	var $no_entities = false;
+	var $no_content = false;
 
 
 	function Markdown_Parser() {
@@ -1224,7 +1224,7 @@ class Markdown_Parser {
 
 	function encodeAmpsAndAngles($text) {
 	# Smart processing for ampersands and angle brackets that need to be encoded.
-		if ($this->no_entities) {
+		if ($this->no_content) {
 			$text = str_replace('&', '&amp;', $text);
 			$text = str_replace('<', '&lt;', $text);
 			return $text;
@@ -1278,7 +1278,7 @@ class Markdown_Parser {
 	#	Input: an email address, e.g. "foo@example.com"
 	#
 	#	Output: the email address as a mailto link, with each character
-	#		of the address encoded as either a decimal or hex entity, in
+	#		of the address encoded as either a decimal or hex content, in
 	#		the hopes of foiling most address harvesting spam bots. E.g.:
 	#
 	#	  <p><a href="&#109;&#x61;&#105;&#x6c;&#116;&#x6f;&#58;&#x66;o&#111;

@@ -1,6 +1,6 @@
 ---
 UserProfile:
-  actAs: [sfSympalEntityType]
+  actAs: [sfSympalContentType]
   columns:
     user_id: integer(4)
     first_name: string(255)

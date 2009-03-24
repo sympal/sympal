@@ -1,1 +1,1 @@
-<?php echo get_partial('sympal_comments/for_entity', array('entity' => $entity, 'form' => $form)) ?>
+<?php echo get_partial('sympal_comments/for_content', array('content' => $content, 'form' => $form)) ?>

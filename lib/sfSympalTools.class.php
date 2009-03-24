@@ -3,7 +3,7 @@ class sfSympalTools
 {
   protected static
     $_currentMenuItem,
-    $_currentEntity;
+    $_currentContent;
 
   public static
     $mailer,
@@ -19,14 +19,14 @@ class sfSympalTools
     self::$_currentMenuItem = $menuItem;
   }
 
-  public static function getCurrentEntity()
+  public static function getCurrentContent()
   {
-    return self::$_currentEntity;
+    return self::$_currentContent;
   }
 
-  public static function setCurrentEntity(Entity $entity)
+  public static function setCurrentContent(Content $content)
   {
-    self::$_currentEntity = $entity;
+    self::$_currentContent = $content;
   }
 
   public static function checkPluginDependencies($pluginConfiguration, $dependencies)
@@ -78,7 +78,7 @@ class sfSympalTools
     return $requiredPlugins;
   }
 
-  public static function renderContent($content, $variables = array())
+  public static function processPhpCode($code, $variables = array())
   {
     $sf_context = sfContext::getInstance();
     $vars = array(
@@ -93,9 +93,9 @@ class sfSympalTools
     }
 
     ob_start();
-    $content = str_replace('[?php', '<?php', $content);
-    $content = str_replace('?]', '?>', $content);
-    eval("?>" . $content);
+    $code = str_replace('[?php', '<?php', $code);
+    $code = str_replace('?]', '?>', $code);
+    eval("?>" . $code);
     $rendered = ob_get_contents();
     ob_end_clean();
 
@@ -111,10 +111,10 @@ class sfSympalTools
     }
   }
 
-  public static function changeEntitySlotValueWidget($entitySlot, $form)
+  public static function changeContentSlotValueWidget($contentSlot, $form)
   {
     $widgetSchema = $form->getWidgetSchema();
-    $type = $entitySlot->Type;
+    $type = $contentSlot->Type;
 
     $class = 'sfWidgetFormSympal'.$type->name;
 
@@ -124,8 +124,8 @@ class sfSympalTools
     }
 
     $widget = new $class();
-    $widget->setAttribute('id', 'entity_slot_value_' . $entitySlot['id']);
-    $widget->setAttribute('onKeyUp', "edit_on_key_up('".$entitySlot['id']."');");
+    $widget->setAttribute('id', 'content_slot_value_' . $contentSlot['id']);
+    $widget->setAttribute('onKeyUp', "edit_on_key_up('".$contentSlot['id']."');");
 
     $widgetSchema['value'] = $widget;
 

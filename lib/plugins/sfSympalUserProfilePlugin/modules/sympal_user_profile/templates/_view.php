@@ -1,16 +1,16 @@
-<?php use_helper('Entity') ?>
+<?php use_helper('Content') ?>
 
-<?php echo get_sympal_breadcrumbs($menuItem, $entity) ?>
+<?php echo get_sympal_breadcrumbs($menuItem, $content) ?>
 
 <h2>
   <?php echo image_tag($userProfile->getGravatarUrl()) ?> 
-  <?php echo $entity->getHeaderTitle() ?>
+  <?php echo $content->getHeaderTitle() ?>
 </h2>
 
-<?php echo sympal_entity_slot($entity, 'biography') ?>
+<?php echo sympal_content_slot($content, 'biography') ?>
 
 <?php if ($sf_user->isAuthenticated() && $sf_user->getGuardUser()->id == $userProfile->user_id): ?>
   <?php echo link_to('Edit your User Profile', '@sympal_user_profile') ?>
 <?php endif; ?>
 
-<?php echo get_sympal_comments($entity) ?>
+<?php echo get_sympal_comments($content) ?>

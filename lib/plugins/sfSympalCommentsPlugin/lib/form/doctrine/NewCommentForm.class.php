@@ -5,7 +5,7 @@ class NewCommentForm extends CommentForm
   {
     parent::setup();
 
-    unset($this['id'], $this['entities_list'], $this['status'], $this['created_at'], $this['updated_at'], $this['blog_posts_list'], $this['users_list'], $this['pages_list']);
+    unset($this['id'], $this['content_list'], $this['status'], $this['created_at'], $this['updated_at'], $this['blog_posts_list'], $this['users_list'], $this['pages_list']);
 
     $this->widgetSchema['subject']->setAttribute('style', 'width: 300px');
     $this->widgetSchema['body']->setAttribute('style', 'width: 400px; height: 200px;');
@@ -19,8 +19,8 @@ class NewCommentForm extends CommentForm
       unset($this['user_id']);
     }
 
-    $this->widgetSchema['entity_id'] = new sfWidgetFormInputHidden();
-    $this->validatorSchema['entity_id'] = new sfValidatorDoctrineChoice(array('model' => 'Entity'));
+    $this->widgetSchema['content_id'] = new sfWidgetFormInputHidden();
+    $this->validatorSchema['content_id'] = new sfValidatorDoctrineChoice(array('model' => 'Content'));
 
     if (sfSympalConfig::get('Comments', 'enable_recaptcha'))
     {

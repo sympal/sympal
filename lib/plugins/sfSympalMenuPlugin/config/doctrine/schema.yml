@@ -18,14 +18,14 @@ MenuItem:
     site_id:
       type: integer(4)
       notnull: true
-    entity_type_id: integer(4)
-    entity_id: integer(4)
+    content_type_id: integer(4)
+    content_id: integer(4)
     name:
       type: string(255)
       notnull: true
     label: string(255)
     route: string(255)
-    has_many_entities:
+    has_many_content:
       type: boolean
       default: false
     requires_auth: boolean
@@ -34,14 +34,14 @@ MenuItem:
     is_published: boolean
     date_published: timestamp
   relations:
-    RelatedEntity:
-      class: Entity
+    RelatedContent:
+      class: Content
       foreignAlias: MenuItem
       foreignType: one
     Site:
       foreignAlias: MenuItems
       onDelete: CASCADE
-    EntityType:
+    ContentType:
       foreignAlias: MenuItems
       onDelete: CASCADE
     Groups:

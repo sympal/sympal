@@ -89,7 +89,7 @@ define('GESHI_VISITED', 3);
 
 // Important string starter/finisher
 // Note that if you change these, they should be as-is: i.e., don't
-// write them as if they had been run through htmlentities()
+// write them as if they had been run through htmlcontent()
 /** The starter for important parts of the source */
 define('GESHI_START_IMPORTANT', '<BEGIN GeSHi>');
 /** The ender for important parts of the source */
@@ -401,7 +401,7 @@ class GeSHi {
     var $link_target = '';
 
     /**
-     * The encoding to use for entity encoding
+     * The encoding to use for content encoding
      * NOTE: no longer used
      * @var string
      */
@@ -2196,13 +2196,13 @@ class GeSHi {
         //
         // Highlight brackets. Yes, I've tried adding a semi-colon to this list.
         // You try it, and see what happens ;)
-        // TODO: Fix lexic permissions not converting entities if shouldn't
+        // TODO: Fix lexic permissions not converting content if shouldn't
         // be highlighting regardless
         //
         if ($this->lexic_permissions['BRACKETS']) {
-            $code_entities_match = array('[', ']', '(', ')', '{', '}');
+            $code_content_match = array('[', ']', '(', ')', '{', '}');
             if (!$this->use_classes) {
-                $code_entities_replace = array(
+                $code_content_replace = array(
                     '<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#91;|>',
                     '<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#93;|>',
                     '<| style="' . $this->language_data['STYLES']['BRACKETS'][0] . '">&#40;|>',
@@ -2212,7 +2212,7 @@ class GeSHi {
                 );
             }
             else {
-                $code_entities_replace = array(
+                $code_content_replace = array(
                     '<| class="br0">&#91;|>',
                     '<| class="br0">&#93;|>',
                     '<| class="br0">&#40;|>',
@@ -2221,7 +2221,7 @@ class GeSHi {
                     '<| class="br0">&#125;|>',
                 );
             }
-            $stuff_to_parse = str_replace( $code_entities_match,  $code_entities_replace, $stuff_to_parse );
+            $stuff_to_parse = str_replace( $code_content_match,  $code_content_replace, $stuff_to_parse );
         }
 
         //
@@ -2674,7 +2674,7 @@ class GeSHi {
      * different character sets. (If indeed htmlspecialchars() works at
      * byte-value level that goes some  way towards explaining why the
      * vulnerability would exist in this function, too, and not only in
-     * htmlentities() which certainly is working at byte-value level.)
+     * htmlcontent() which certainly is working at byte-value level.)
      *
      * This replacement function however works at character level and should
      * therefore be "immune" to character set differences - so no charset
@@ -2685,11 +2685,11 @@ class GeSHi {
      * of PHP's '&#039;' for a single quote: this provides compatibility with
      *      get_html_translation_table(HTML_SPECIALCHARS, ENT_QUOTES)
      * (see comment by mikiwoz at yahoo dot co dot uk on
-     * http://php.net/htmlspecialchars); it also matches the entity definition
+     * http://php.net/htmlspecialchars); it also matches the content definition
      * for XML 1.0
      * (http://www.w3.org/TR/xhtml1/dtds.html#a_dtd_Special_characters).
      * Like PHP we use a numeric character reference instead of '&apos;' for the
-     * single quote. For the other special characters we use the named entity
+     * single quote. For the other special characters we use the named content
      * references, as PHP is doing.
      *
      * @author      {@link http://wikkawiki.org/JavaWoman Marjolein Katsma}

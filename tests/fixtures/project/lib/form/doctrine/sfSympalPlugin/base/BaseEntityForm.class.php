@@ -1,21 +1,21 @@
 <?php
 
 /**
- * Entity form base class.
+ * Content form base class.
  *
  * @package    form
- * @subpackage entity
+ * @subpackage content
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
  */
-class BaseEntityForm extends BaseFormDoctrine
+class BaseContentForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'id'                  => new sfWidgetFormInputHidden(),
       'site_id'             => new sfWidgetFormDoctrineChoice(array('model' => 'Site', 'add_empty' => false)),
-      'entity_type_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'EntityType', 'add_empty' => false)),
-      'entity_template_id'  => new sfWidgetFormDoctrineChoice(array('model' => 'EntityTemplate', 'add_empty' => true)),
+      'content_type_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'ContentType', 'add_empty' => false)),
+      'content_template_id'  => new sfWidgetFormDoctrineChoice(array('model' => 'ContentTemplate', 'add_empty' => true)),
       'master_menu_item_id' => new sfWidgetFormDoctrineChoice(array('model' => 'MenuItem', 'add_empty' => true)),
       'last_updated_by'     => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'created_by'          => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
@@ -33,10 +33,10 @@ class BaseEntityForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'Entity', 'column' => 'id', 'required' => false)),
+      'id'                  => new sfValidatorDoctrineChoice(array('model' => 'Content', 'column' => 'id', 'required' => false)),
       'site_id'             => new sfValidatorDoctrineChoice(array('model' => 'Site')),
-      'entity_type_id'      => new sfValidatorDoctrineChoice(array('model' => 'EntityType')),
-      'entity_template_id'  => new sfValidatorDoctrineChoice(array('model' => 'EntityTemplate', 'required' => false)),
+      'content_type_id'      => new sfValidatorDoctrineChoice(array('model' => 'ContentType')),
+      'content_template_id'  => new sfValidatorDoctrineChoice(array('model' => 'ContentTemplate', 'required' => false)),
       'master_menu_item_id' => new sfValidatorDoctrineChoice(array('model' => 'MenuItem', 'required' => false)),
       'last_updated_by'     => new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'required' => false)),
       'created_by'          => new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'required' => false)),
@@ -53,7 +53,7 @@ class BaseEntityForm extends BaseFormDoctrine
       'comments_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'Comment', 'required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('entity[%s]');
+    $this->widgetSchema->setNameFormat('content[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -62,7 +62,7 @@ class BaseEntityForm extends BaseFormDoctrine
 
   public function getModelName()
   {
-    return 'Entity';
+    return 'Content';
   }
 
   public function updateDefaultsFromObject()

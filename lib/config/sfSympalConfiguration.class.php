@@ -76,7 +76,7 @@ class sfSympalConfiguration
 
   public function bootstrap()
   {
-    $this->_projectConfiguration->loadHelpers(array('Sympal', 'Entity'));
+    $this->_projectConfiguration->loadHelpers(array('Sympal', 'Content'));
 
     if (!sfContext::getInstance()->getRequest()->isXmlHttpRequest())
     {

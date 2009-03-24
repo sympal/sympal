@@ -19,4 +19,4 @@
   </div>
 </div>
 
-<?php echo get_sympal_editor($menu_item, ($menu_item->getMainEntity() && $menu_item->getMainEntity()->exists() ? $menu_item->getMainEntity():null)) ?>
+<?php echo get_sympal_editor($menu_item, ($menu_item->getMainContent() && $menu_item->getMainContent()->exists() ? $menu_item->getMainContent():null)) ?>

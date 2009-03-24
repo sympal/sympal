@@ -12,8 +12,8 @@
  * @property string $subject
  * @property clob $body
  * @property sfGuardUser $Author
- * @property Doctrine_Collection $Entities
- * @property Doctrine_Collection $EntityComments
+ * @property Doctrine_Collection $Content
+ * @property Doctrine_Collection $ContentComments
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -39,12 +39,12 @@ abstract class BaseComment extends sfSympalDoctrineRecord
                                                      'foreign' => 'id',
                                                      'onDelete' => 'CASCADE'));
 
-        $this->hasMany('Entity as Entities', array('refClass' => 'EntityComment',
-                                                   'local' => 'comment_id',
-                                                   'foreign' => 'entity_id'));
+        $this->hasMany('Content', array('refClass' => 'ContentComment',
+                                        'local' => 'comment_id',
+                                        'foreign' => 'content_id'));
 
-        $this->hasMany('EntityComment as EntityComments', array('local' => 'id',
-                                                                'foreign' => 'comment_id'));
+        $this->hasMany('ContentComment as ContentComments', array('local' => 'id',
+                                                                  'foreign' => 'comment_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

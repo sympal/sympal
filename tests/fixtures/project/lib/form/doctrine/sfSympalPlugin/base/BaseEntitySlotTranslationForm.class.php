@@ -1,13 +1,13 @@
 <?php
 
 /**
- * EntitySlotTranslation form base class.
+ * ContentSlotTranslation form base class.
  *
  * @package    form
- * @subpackage entity_slot_translation
+ * @subpackage content_slot_translation
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
  */
-class BaseEntitySlotTranslationForm extends BaseFormDoctrine
+class BaseContentSlotTranslationForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -18,12 +18,12 @@ class BaseEntitySlotTranslationForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'    => new sfValidatorDoctrineChoice(array('model' => 'EntitySlotTranslation', 'column' => 'id', 'required' => false)),
+      'id'    => new sfValidatorDoctrineChoice(array('model' => 'ContentSlotTranslation', 'column' => 'id', 'required' => false)),
       'value' => new sfValidatorString(array('required' => false)),
-      'lang'  => new sfValidatorDoctrineChoice(array('model' => 'EntitySlotTranslation', 'column' => 'lang', 'required' => false)),
+      'lang'  => new sfValidatorDoctrineChoice(array('model' => 'ContentSlotTranslation', 'column' => 'lang', 'required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('entity_slot_translation[%s]');
+    $this->widgetSchema->setNameFormat('content_slot_translation[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -32,7 +32,7 @@ class BaseEntitySlotTranslationForm extends BaseFormDoctrine
 
   public function getModelName()
   {
-    return 'EntitySlotTranslation';
+    return 'ContentSlotTranslation';
   }
 
 }

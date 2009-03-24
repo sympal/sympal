@@ -21,7 +21,7 @@ class BasesfGuardGroupFormFilter extends BaseFormFilterDoctrine
       'users_list'       => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardUser')),
       'permissions_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardPermission')),
       'menu_items_list'  => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),
-      'entities_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
+      'content_list'     => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Content')),
     ));
 
     $this->setValidators(array(
@@ -32,7 +32,7 @@ class BasesfGuardGroupFormFilter extends BaseFormFilterDoctrine
       'users_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardUser', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
       'menu_items_list'  => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
-      'entities_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
+      'content_list'     => new sfValidatorDoctrineChoiceMany(array('model' => 'Content', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_group_filters[%s]');
@@ -90,7 +90,7 @@ class BasesfGuardGroupFormFilter extends BaseFormFilterDoctrine
           ->andWhereIn('MenuItemGroup.menu_item_id', $values);
   }
 
-  public function addEntitiesListColumnQuery(Doctrine_Query $query, $field, $values)
+  public function addContentListColumnQuery(Doctrine_Query $query, $field, $values)
   {
     if (!is_array($values))
     {
@@ -102,8 +102,8 @@ class BasesfGuardGroupFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.EntityGroup EntityGroup')
-          ->andWhereIn('EntityGroup.entity_id', $values);
+    $query->leftJoin('r.ContentGroup ContentGroup')
+          ->andWhereIn('ContentGroup.content_id', $values);
   }
 
   public function getModelName()
@@ -122,7 +122,7 @@ class BasesfGuardGroupFormFilter extends BaseFormFilterDoctrine
       'users_list'       => 'ManyKey',
       'permissions_list' => 'ManyKey',
       'menu_items_list'  => 'ManyKey',
-      'entities_list'    => 'ManyKey',
+      'content_list'     => 'ManyKey',
     );
   }
 }

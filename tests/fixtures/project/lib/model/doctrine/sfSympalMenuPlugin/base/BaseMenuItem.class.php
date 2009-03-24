@@ -7,25 +7,25 @@
  * 
  * @property integer $id
  * @property integer $site_id
- * @property integer $entity_type_id
- * @property integer $entity_id
+ * @property integer $content_type_id
+ * @property integer $content_id
  * @property string $name
  * @property string $label
  * @property string $route
- * @property boolean $has_many_entities
+ * @property boolean $has_many_content
  * @property boolean $requires_auth
  * @property boolean $requires_no_auth
  * @property boolean $is_primary
  * @property boolean $is_published
  * @property timestamp $date_published
- * @property Entity $RelatedEntity
+ * @property Content $RelatedContent
  * @property Site $Site
- * @property EntityType $EntityType
+ * @property ContentType $ContentType
  * @property Doctrine_Collection $Groups
  * @property Doctrine_Collection $Permissions
  * @property Doctrine_Collection $MenuItemGroups
  * @property Doctrine_Collection $MenuItemPermissions
- * @property Entity $MasterEntity
+ * @property Content $MasterContent
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -39,12 +39,12 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
         $this->setTableName('menu_item');
         $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('site_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
-        $this->hasColumn('entity_type_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
-        $this->hasColumn('entity_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
+        $this->hasColumn('content_type_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
+        $this->hasColumn('content_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('label', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('route', 'string', 255, array('type' => 'string', 'length' => '255'));
-        $this->hasColumn('has_many_entities', 'boolean', null, array('type' => 'boolean', 'default' => false));
+        $this->hasColumn('has_many_content', 'boolean', null, array('type' => 'boolean', 'default' => false));
         $this->hasColumn('requires_auth', 'boolean', null, array('type' => 'boolean'));
         $this->hasColumn('requires_no_auth', 'boolean', null, array('type' => 'boolean'));
         $this->hasColumn('is_primary', 'boolean', null, array('type' => 'boolean'));
@@ -54,16 +54,16 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
 
     public function setUp()
     {
-        $this->hasOne('Entity as RelatedEntity', array('local' => 'entity_id',
-                                                       'foreign' => 'id'));
+        $this->hasOne('Content as RelatedContent', array('local' => 'content_id',
+                                                         'foreign' => 'id'));
 
         $this->hasOne('Site', array('local' => 'site_id',
                                     'foreign' => 'id',
                                     'onDelete' => 'CASCADE'));
 
-        $this->hasOne('EntityType', array('local' => 'entity_type_id',
-                                          'foreign' => 'id',
-                                          'onDelete' => 'CASCADE'));
+        $this->hasOne('ContentType', array('local' => 'content_type_id',
+                                           'foreign' => 'id',
+                                           'onDelete' => 'CASCADE'));
 
         $this->hasMany('sfGuardGroup as Groups', array('refClass' => 'MenuItemGroup',
                                                        'local' => 'menu_item_id',
@@ -79,8 +79,8 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
         $this->hasMany('MenuItemPermission as MenuItemPermissions', array('local' => 'id',
                                                                           'foreign' => 'menu_item_id'));
 
-        $this->hasOne('Entity as MasterEntity', array('local' => 'id',
-                                                      'foreign' => 'master_menu_item_id'));
+        $this->hasOne('Content as MasterContent', array('local' => 'id',
+                                                        'foreign' => 'master_menu_item_id'));
 
         $sluggable0 = new Doctrine_Template_Sluggable(array('fields' => array(0 => 'name'), 'unique' => true));
         $nestedset0 = new Doctrine_Template_NestedSet(array('hasManyRoots' => true, 'rootColumnName' => 'root_id'));

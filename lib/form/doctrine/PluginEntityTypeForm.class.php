@@ -1,19 +1,19 @@
 <?php
 
 /**
- * PluginEntityType form.
+ * PluginContentType form.
  *
  * @package    form
- * @subpackage EntityType
+ * @subpackage ContentType
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z jwage $
  */
-abstract class PluginEntityTypeForm extends BaseEntityTypeForm
+abstract class PluginContentTypeForm extends BaseContentTypeForm
 {
   public function setup()
   {
     parent::setup();
 
     sfSympalTools::changeLayoutWidget($this);
-    sfSympalTools::embedI18n('entity_types', $this);
+    sfSympalTools::embedI18n('content_types', $this);
   }
 }

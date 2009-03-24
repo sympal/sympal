@@ -3,13 +3,13 @@
 require_once(sfConfig::get('sf_lib_dir').'/filter/doctrine/BaseFormFilterDoctrine.class.php');
 
 /**
- * EntityPermission filter form base class.
+ * ContentPermission filter form base class.
  *
  * @package    filters
- * @subpackage EntityPermission *
+ * @subpackage ContentPermission *
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 11675 2008-09-19 15:21:38Z fabien $
  */
-class BaseEntityPermissionFormFilter extends BaseFormFilterDoctrine
+class BaseContentPermissionFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
@@ -19,7 +19,7 @@ class BaseEntityPermissionFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
     ));
 
-    $this->widgetSchema->setNameFormat('entity_permission_filters[%s]');
+    $this->widgetSchema->setNameFormat('content_permission_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -28,13 +28,13 @@ class BaseEntityPermissionFormFilter extends BaseFormFilterDoctrine
 
   public function getModelName()
   {
-    return 'EntityPermission';
+    return 'ContentPermission';
   }
 
   public function getFields()
   {
     return array(
-      'entity_id'     => 'Number',
+      'content_id'     => 'Number',
       'permission_id' => 'Number',
     );
   }

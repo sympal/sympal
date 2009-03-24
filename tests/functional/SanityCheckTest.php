@@ -3,7 +3,7 @@ $app = 'sympal';
 $database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$configuration->loadHelpers(array('Url', 'Entity'));
+$configuration->loadHelpers(array('Url', 'Content'));
 
 $browser = new sfTestFunctional(new sfBrowser());
 $browser->get('/');
@@ -11,7 +11,7 @@ $browser->get('/');
 $menuItems = Doctrine::getTable('MenuItem')->findAll();
 foreach ($menuItems as $menuItem)
 {
-  if ($menuItem->level <= 0 || $menuItem->requires_auth || $menuItem->requires_no_auth || !($entity = $menuItem->getMainEntity()))
+  if ($menuItem->level <= 0 || $menuItem->requires_auth || $menuItem->requires_no_auth || !($content = $menuItem->getMainContent()))
   {
     continue;
   }
@@ -20,13 +20,13 @@ foreach ($menuItems as $menuItem)
     click($menuItem->getLabel())->
     isStatusCode('200')->
     with('request')->begin()->
-      isParameter('module', 'sympal_entity')->
+      isParameter('module', 'sympal_content_renderer')->
       isParameter('action', 'index')->
     end()->
     with('response')->begin()->
-      contains((string) $menuItem->getBreadcrumbs($entity))->
-      contains(sympal_render_entity_slot($entity->getSlots()->getFirst()))->
-      contains(sympal_render_entity_slot($entity->getSlots()->getLast()))->
+      contains((string) $menuItem->getBreadcrumbs($content))->
+      contains(sympal_render_content_slot($content->getSlots()->getFirst()))->
+      contains(sympal_render_content_slot($content->getSlots()->getLast()))->
     end();
 }
 

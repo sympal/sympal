@@ -74,23 +74,23 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     if (sfSympalTools::isEditMode())
     {
-      $entities = $menu->addNode('Content', '@sympal_entities');
-      $entityTypes = Doctrine::getTable('EntityType')->findAll();
-      $entities->addNode('Create New Content', '@sympal_entities_new');
-      foreach ($entityTypes as $entityType)
+      $content = $menu->addNode('Content', '@sympal_content');
+      $contentTypes = Doctrine::getTable('ContentType')->findAll();
+      $content->addNode('Create New Content', '@sympal_content_new');
+      foreach ($contentTypes as $contentType)
       {
-        $node = $entities->addNode($entityType->getLabel());
-        $node->addNode('Create', '@sympal_entities_create_type?type='.$entityType->getSlug());
-        $node->addNode('List', '@sympal_entities');
+        $node = $content->addNode($contentType->getLabel());
+        $node->addNode('Create', '@sympal_content_create_type?type='.$contentType->getSlug());
+        $node->addNode('List', '@sympal_content');
       }
     }
 
     $administration = $menu->getNode('Administration');
     $administration->addNode('Sites', '@sympal_sites');
     $administration->addNode('Menus', '@sympal_menu_items');
-    $administration->addNode('Entity Types', '@sympal_entity_types');
-    $administration->addNode('Entity Templates', '@sympal_entity_templates');
-    $administration->addNode('Entity Slot Types', '@sympal_entity_slot_types');
+    $administration->addNode('Content Types', '@sympal_content_types');
+    $administration->addNode('Content Templates', '@sympal_content_templates');
+    $administration->addNode('Content Slot Types', '@sympal_content_slot_types');
     $administration->addNode('Configuration', '@sympal_config');
   }
 }

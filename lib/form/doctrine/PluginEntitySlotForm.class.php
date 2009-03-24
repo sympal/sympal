@@ -1,26 +1,26 @@
 <?php
 
 /**
- * PluginEntitySlot form.
+ * PluginContentSlot form.
  *
  * @package    form
- * @subpackage EntitySlot
+ * @subpackage ContentSlot
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z jwage $
  */
-abstract class PluginEntitySlotForm extends BaseEntitySlotForm
+abstract class PluginContentSlotForm extends BaseContentSlotForm
 {
   public function setup()
   {
     parent::setup();
 
-    unset($this['entity_id'], $this['name']);
+    unset($this['content_id'], $this['name']);
 
-    $this->widgetSchema['entity_slot_type_id']->setLabel('Slot Type');
-    $this->widgetSchema['entity_slot_type_id']->setAttribute('onChange', "change_entity_slot_type('".$this->object['id']."', this.value)");
+    $this->widgetSchema['content_slot_type_id']->setLabel('Slot Type');
+    $this->widgetSchema['content_slot_type_id']->setAttribute('onChange', "change_content_slot_type('".$this->object['id']."', this.value)");
 
     if (isset($this['value']))
     {
-      sfSympalTools::changeEntitySlotValueWidget($this->object, $this);
+      sfSympalTools::changeContentSlotValueWidget($this->object, $this);
     }
 
     sfSympalTools::embedI18n('menus', $this);

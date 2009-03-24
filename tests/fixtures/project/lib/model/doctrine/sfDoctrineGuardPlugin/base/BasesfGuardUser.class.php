@@ -20,9 +20,9 @@
  * @property sfGuardRememberKey $RememberKeys
  * @property Doctrine_Collection $Comments
  * @property ForgotPassword $ForgotPassword
- * @property Doctrine_Collection $LastUpdatedEntities
- * @property Doctrine_Collection $CreatedEntities
- * @property Doctrine_Collection $LockedEntities
+ * @property Doctrine_Collection $LastUpdatedContent
+ * @property Doctrine_Collection $CreatedContent
+ * @property Doctrine_Collection $LockedContent
  * @property UserProfile $Profile
  * 
  * @package    ##PACKAGE##
@@ -73,13 +73,13 @@ abstract class BasesfGuardUser extends sfSympalDoctrineRecord
         $this->hasOne('ForgotPassword', array('local' => 'id',
                                               'foreign' => 'user_id'));
 
-        $this->hasMany('Entity as LastUpdatedEntities', array('local' => 'id',
+        $this->hasMany('Content as LastUpdatedContent', array('local' => 'id',
                                                               'foreign' => 'last_updated_by'));
 
-        $this->hasMany('Entity as CreatedEntities', array('local' => 'id',
+        $this->hasMany('Content as CreatedContent', array('local' => 'id',
                                                           'foreign' => 'created_by'));
 
-        $this->hasMany('Entity as LockedEntities', array('local' => 'id',
+        $this->hasMany('Content as LockedContent', array('local' => 'id',
                                                          'foreign' => 'locked_by'));
 
         $this->hasOne('UserProfile as Profile', array('local' => 'id',

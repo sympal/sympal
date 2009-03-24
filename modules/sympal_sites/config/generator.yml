@@ -17,7 +17,7 @@ generator:
           help: |
             Choose layout to render site with. The default sets the layout 
             based on the site slug. You can also override the template used 
-            to render in the entity and entity type records.
+            to render in the content and content type records.
         title:
           help: Title of the site
         description:

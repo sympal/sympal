@@ -33,7 +33,7 @@ abstract class BaseUserProfile extends sfSympalDoctrineRecord
                                                    'foreign' => 'id',
                                                    'onDelete' => 'CASCADE'));
 
-        $sfsympalentitytype0 = new sfSympalEntityType();
-        $this->actAs($sfsympalentitytype0);
+        $sfsympalcontenttype0 = new sfSympalContentType();
+        $this->actAs($sfsympalcontenttype0);
     }
 }

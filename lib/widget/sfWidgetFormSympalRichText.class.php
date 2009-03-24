@@ -14,7 +14,7 @@ class sfWidgetFormSympalRichText extends sfWidgetFormSympalMultiLineText
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
     $e = explode('_', $attributes['id']);
-    $entitySlotId = end($e);
+    $contentSlotId = end($e);
 
     $js = sprintf(<<<EOF
 <script type="text/javascript">
@@ -29,14 +29,14 @@ myEditor.render();
 YAHOO.util.Event.on('preview_button', 'click', function() {
     myEditor.saveHTML();
     var html = myEditor.get('element').value;
-    document.getElementById('edit_entity_slot_button_%s').innerHTML = html;
+    document.getElementById('edit_content_slot_button_%s').innerHTML = html;
 });
 
 </script>
 EOF
     ,
       $attributes['id'],
-      $entitySlotId
+      $contentSlotId
     );
 
     $textarea = parent::render($name, $value, $attributes, $errors);

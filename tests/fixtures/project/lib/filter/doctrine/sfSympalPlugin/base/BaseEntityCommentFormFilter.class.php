@@ -3,13 +3,13 @@
 require_once(sfConfig::get('sf_lib_dir').'/filter/doctrine/BaseFormFilterDoctrine.class.php');
 
 /**
- * EntityComment filter form base class.
+ * ContentComment filter form base class.
  *
  * @package    filters
- * @subpackage EntityComment *
+ * @subpackage ContentComment *
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 11675 2008-09-19 15:21:38Z fabien $
  */
-class BaseEntityCommentFormFilter extends BaseFormFilterDoctrine
+class BaseContentCommentFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
@@ -19,7 +19,7 @@ class BaseEntityCommentFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
     ));
 
-    $this->widgetSchema->setNameFormat('entity_comment_filters[%s]');
+    $this->widgetSchema->setNameFormat('content_comment_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -28,13 +28,13 @@ class BaseEntityCommentFormFilter extends BaseFormFilterDoctrine
 
   public function getModelName()
   {
-    return 'EntityComment';
+    return 'ContentComment';
   }
 
   public function getFields()
   {
     return array(
-      'entity_id'  => 'Number',
+      'content_id'  => 'Number',
       'comment_id' => 'Number',
     );
   }

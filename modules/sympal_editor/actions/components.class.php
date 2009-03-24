@@ -3,7 +3,7 @@ class sympal_editorComponents extends sfComponents
 {
   public function executeEdit_panel()
   {
-    $this->entity = $this->menuItem->getEntity();
+    $this->content = $this->menuItem->getContent();
   }
 
   public function executeLanguage(sfWebRequest $request)
@@ -14,16 +14,16 @@ class sympal_editorComponents extends sfComponents
 
   public function executeTools()
   {
-    $entityTypes = array(null => null);
-    foreach (Doctrine::getTable('EntityType')->findAll() as $entityType)
+    $contentTypes = array(null => null);
+    foreach (Doctrine::getTable('ContentType')->findAll() as $contentType)
     {
-      $entityTypes[$this->generateUrl('sympal_entities_create_type', array('type' => $entityType->getName()))] = $entityType->getName();
+      $contentTypes[$this->generateUrl('sympal_content_create_type', array('type' => $contentType->getName()))] = $contentType->getName();
     }
 
-    $this->newEntityWidget = new sfWidgetFormSelect(array('choices' => $entityTypes));
-    $this->newEntityWidget->setAttribute('onChange', "location.href = this.value");
+    $this->newContentWidget = new sfWidgetFormSelect(array('choices' => $contentTypes));
+    $this->newContentWidget->setAttribute('onChange', "location.href = this.value");
 
-    $this->lock = $this->getUser()->getOpenEntityLock();
+    $this->lock = $this->getUser()->getOpenContentLock();
   }
 
   public function executeAdmin_bar()

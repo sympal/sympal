@@ -14,8 +14,8 @@
  * @property Doctrine_Collection $sfGuardUserGroup
  * @property Doctrine_Collection $MenuItems
  * @property Doctrine_Collection $MenuItemGroups
- * @property Doctrine_Collection $Entities
- * @property Doctrine_Collection $EntityGroups
+ * @property Doctrine_Collection $Content
+ * @property Doctrine_Collection $ContentGroups
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -55,12 +55,12 @@ abstract class BasesfGuardGroup extends sfSympalDoctrineRecord
         $this->hasMany('MenuItemGroup as MenuItemGroups', array('local' => 'id',
                                                                 'foreign' => 'group_id'));
 
-        $this->hasMany('Entity as Entities', array('refClass' => 'EntityGroup',
-                                                   'local' => 'group_id',
-                                                   'foreign' => 'entity_id'));
+        $this->hasMany('Content', array('refClass' => 'ContentGroup',
+                                        'local' => 'group_id',
+                                        'foreign' => 'content_id'));
 
-        $this->hasMany('EntityGroup as EntityGroups', array('local' => 'id',
-                                                            'foreign' => 'group_id'));
+        $this->hasMany('ContentGroup as ContentGroups', array('local' => 'id',
+                                                              'foreign' => 'group_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

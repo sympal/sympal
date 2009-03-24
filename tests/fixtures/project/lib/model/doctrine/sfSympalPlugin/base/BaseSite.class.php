@@ -10,7 +10,7 @@
  * @property string $title
  * @property clob $description
  * @property Doctrine_Collection $MenuItems
- * @property Doctrine_Collection $Entities
+ * @property Doctrine_Collection $Content
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -33,8 +33,8 @@ abstract class BaseSite extends sfSympalDoctrineRecord
         $this->hasMany('MenuItem as MenuItems', array('local' => 'id',
                                                       'foreign' => 'site_id'));
 
-        $this->hasMany('Entity as Entities', array('local' => 'id',
-                                                   'foreign' => 'site_id'));
+        $this->hasMany('Content', array('local' => 'id',
+                                        'foreign' => 'site_id'));
 
         $sluggable0 = new Doctrine_Template_Sluggable(array('fields' => array(0 => 'title')));
         $this->actAs($sluggable0);

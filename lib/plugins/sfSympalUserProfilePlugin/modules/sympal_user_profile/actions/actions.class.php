@@ -16,30 +16,30 @@ class sympal_user_profileActions extends sfActions
 
     Doctrine::getTable('UserProfile');
 
-    $q = Doctrine::getTable('Entity')
+    $q = Doctrine::getTable('Content')
       ->getTypeQuery('UserProfile')
       ->where('p.user_id = ?', $this->user->id);
-    $this->entity = $q->fetchOne();
+    $this->content = $q->fetchOne();
 
-    if (!$this->entity)
+    if (!$this->content)
     {
       $this->getUser()->setFlash('notice', 'You have not created a user profile yet. A blank one has been created for you to customize!');
 
-      $this->entity = new Entity();
-      $this->entity->Type = Doctrine::getTable('EntityType')->findOneByName('UserProfile');
-      $this->entity->is_published = true;
-      $this->entity->slug = $this->user->username;
+      $this->content = new Content();
+      $this->content->Type = Doctrine::getTable('ContentType')->findOneByName('UserProfile');
+      $this->content->is_published = true;
+      $this->content->slug = $this->user->username;
 
-      $this->profile = $this->entity->UserProfile;
+      $this->profile = $this->content->UserProfile;
       $this->profile->first_name = $this->user->username;
       $this->profile->user_id = $this->user->id;
-      $this->entity->save();
+      $this->content->save();
 
     }
-    $this->profile = $this->entity->UserProfile;
-    $this->menuItem = $this->entity->getMainMenuItem();
+    $this->profile = $this->content->UserProfile;
+    $this->menuItem = $this->content->getMainMenuItem();
 
-    $this->renderer = sfSympalContext::getInstance()->renderEntity($this->menuItem, $this->entity);
+    $this->renderer = sfSympalContext::getInstance()->renderContent($this->menuItem, $this->content);
     $this->form = new UserProfileForm($this->profile);
 
     if ($request->getMethod() == 'POST')

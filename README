@@ -15,7 +15,7 @@ With this type of functionality you have the power of the raw rools symfony prov
 
 **Custom content types**
 
-Add new custom content types to Sympal. Easily add a new `Event` entity type
+Add new custom content types to Sympal. Easily add a new `Event` content type
 that can easily be tied in to the menu system.
 
 **Menus**
@@ -203,20 +203,20 @@ Download a Sympal plugin from the official symfony plugin repositories. This tas
 
 **sympal:plugin-generate**
 
-Generate a Sympal plugin skeleton. This will generate everything you need for the base of a new Sympal plugin that implements a new entity type.
+Generate a Sympal plugin skeleton. This will generate everything you need for the base of a new Sympal plugin that implements a new content type.
 
     $ php symfony sympal:plugin-generate Blog
 
-If you want to customize the name of the entity type you can specify it as an option:
+If you want to customize the name of the content type you can specify it as an option:
 
-    $ php symfony sympal:plugin-generate Blog --entity-type=BlogPost
+    $ php symfony sympal:plugin-generate Blog --content-type=BlogPost
 
 Also if you want to go ahead and install it after generating then you can specify the --install option:
 
-    $ php symfony sympal:plugin-generate Blog --entity-type=BlogPost --install
+    $ php symfony sympal:plugin-generate Blog --content-type=BlogPost --install
 
 > **TIP**
-> After generating the new Sympal plugin go look in your browser and you will see a new Blog entity type that is functional and ready for you to customize.
+> After generating the new Sympal plugin go look in your browser and you will see a new Blog content type that is functional and ready for you to customize.
 
 **sympal:plugin-install**
 
@@ -235,10 +235,10 @@ Uninstall a Sympal plugin from your symfony project.
 
 ## How does Sympal Work?
 
-The `sfSympalPlugin` includes a module named `sympal_entity`. This module is the module that is executed when rendering all entities in Sympal. Here is what it looks like:
+The `sfSympalPlugin` includes a module named `sympal_content`. This module is the module that is executed when rendering all content in Sympal. Here is what it looks like:
 
     [php]
-    class sympal_entityActions extends sfActions
+    class sympal_contentActions extends sfActions
     {
       public function executeIndex(sfWebRequest $request)
       {
@@ -270,20 +270,20 @@ We retrieve the sfSympalContext instance which is created in the sfSympalPluginC
 Notice how the context of Sympal is bound to the name of the symfony application it is running in. This directly correlates to the Doctrine `Site` model `slug` property and is used to filter all queries and make sure that only that sites data is displayed. So your applications and Sympal sites must be related.
 
 
-## Rendering Entities
+## Rendering Content
 
-If you have an entity outside of Sympal core in some of your custom functionality, you can easily render the entity like Sympal would normally do with the following code:
+If you have an content outside of Sympal core in some of your custom functionality, you can easily render the content like Sympal would normally do with the following code:
 
     [php]
     $sympalContext = sfSympalContext::getInstance();
-    $renderer = $sympalContext->renderEntity($menuItem, $entity, $format = 'html');
+    $renderer = $sympalContext->renderContent($menuItem, $content, $format = 'html');
     echo $renderer->render();
 
-If you have a collection of entities you can render them easily:
+If you have a collection of content you can render them easily:
 
     [php]
     $sympalContext = sfSympalContext::getInstance();
-    $renderer = $sympalContext->renderEntities($menuItem, $entities, $format = 'html');
+    $renderer = $sympalContext->renderContent($menuItem, $content, $format = 'html');
 
 If you retrieved the data with a `sfDoctrinePager` then you can set the pager to the renderer so it can make user of it to generate paging:
 
@@ -295,45 +295,45 @@ Now you can render it:
     [php]
     echo $renderer->render();
 
-If you don't have an entity object, or a menu item object but all you have is the slug of the entity then you can use the `quickRenderEntity()` method:
+If you don't have an content object, or a menu item object but all you have is the slug of the content then you can use the `quickRenderContent()` method:
 
     [php]
     $sympalContext = sfSympalContext::getInstance();
-    $renderer = $sympalContext->quickRenderEntity('home', $format = 'html');
+    $renderer = $sympalContext->quickRenderContent('home', $format = 'html');
     echo $renderer->render();
 
-## Entity Types
+## Content Types
 
-In order for a Doctrine model to have the functionality needed to be a Sympal entity type, you just need to enable to the `sfSympalEntityType` behavior:
+In order for a Doctrine model to have the functionality needed to be a Sympal content type, you just need to enable to the `sfSympalContentType` behavior:
 
     [yml]
     BlogPost:
-      actAs: [sfSympalEntityType]
+      actAs: [sfSympalContentType]
       columns:
         title: string(255)
         teaser: string(255)
         body: clob
 
-Now the model has some new columns and relationships automatically. We have a `entity_id` column:
+Now the model has some new columns and relationships automatically. We have a `content_id` column:
 
     [php]
     $blogPost = new BlogPost();
-    echo $blogPost->entity_id;
+    echo $blogPost->content_id;
 
-We have a new `Entity` relationship:
+We have a new `Content` relationship:
 
     [php]
     $blogPost = new BlogPost();
-    $blogPost->Entity->is_published = true;
+    $blogPost->Content->is_published = true;
 
-## Entity Slot Types
+## Content Slot Types
 
-You can easily add a new `EntitySlotType` by first create a new record in the database for the new type. All it requires is the `name`. This is also going to be used in the name of the php class so it must be good to be used in a PHP class. For example the core type `Markdown` is used in the class named `sfSympalEntitySlotMarkdownRenderer`.
+You can easily add a new `ContentSlotType` by first create a new record in the database for the new type. All it requires is the `name`. This is also going to be used in the name of the php class so it must be good to be used in a PHP class. For example the core type `Markdown` is used in the class named `sfSympalContentSlotMarkdownRenderer`.
 
-If you create a new type named `MyNewType` then you must create a new class named `sfSympalEntitySlotMyNewTypeRenderer` somewhere that symfony autoloading can make it available.
+If you create a new type named `MyNewType` then you must create a new class named `sfSympalContentSlotMyNewTypeRenderer` somewhere that symfony autoloading can make it available.
 
     [php]
-    class sfSympalEntitySlotMyNewTypeRenderer extends sfSympalEntitySlotRenderer
+    class sfSympalContentSlotMyNewTypeRenderer extends sfSympalContentSlotRenderer
     {
       public function render()
       {
@@ -353,22 +353,22 @@ You must also create a corresponding widget:
 
 ## Helpers
 
-Sympal has several helpers available to assist you in your templates with rendering your entities breadcrumbs, slots, and other content.
+Sympal has several helpers available to assist you in your templates with rendering your content breadcrumbs, slots, and other content.
 
 ### Editable Slots
 
-To define the editable slots in your entity templates you can use the following:
+To define the editable slots in your content templates you can use the following:
 
     [php]
     $slotType = 'RichText';
-    echo sympal_entity_slot($entity, 'slot_name', $slotType);
+    echo sympal_content_slot($content, 'slot_name', $slotType);
 
 ### Breadcrumbs
 
-When you want to include breadcrumbs in your entity templates you can use the following:
+When you want to include breadcrumbs in your content templates you can use the following:
 
     [php]
-    echo get_sympal_breadcrumbs($menuItem, $entity = null)
+    echo get_sympal_breadcrumbs($menuItem, $content = null)
 
 ### Menus
 
@@ -398,10 +398,10 @@ You can also enable symfony view caching to increase performance even more!
 
 ### Comments
 
-You can enable comments in your entities easily with the `get_sympal_comments()` method:
+You can enable comments in your content easily with the `get_sympal_comments()` method:
 
     [php]
-    echo get_sympal_comments($entity)
+    echo get_sympal_comments($content)
 
 ## Tests
 

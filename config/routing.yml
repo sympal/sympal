@@ -1,20 +1,20 @@
 homepage:
   url:   /
-  param: { module: sympal_entity, action: index, slug: home, type: page }
+  param: { module: sympal_content_renderer, action: index, slug: home, type: page }
   class: sfDoctrineRoute
   options:
-    model:  Entity
+    model:  Content
     type:   object
-    method: getEntity
+    method: getContent
 
 sympal_homepage:
   url:   /
-  param: { module: sympal_entity, action: index, slug: home, type: page }
+  param: { module: sympal_content_renderer, action: index, slug: home, type: page }
   class: sfDoctrineRoute
   options:
-    model:  Entity
+    model:  Content
     type:   object
-    method: getEntity
+    method: getContent
 
 sympal_change_language:
   url:   /change_language
@@ -28,71 +28,71 @@ sympal_toggle_edit:
   url:   /toggle_edit
   param: { module: sympal_editor, action: toggle_edit }
 
-sympal_edit_entity_slot:
-  url:   /edit_entity_slot/:id
+sympal_edit_content_slot:
+  url:   /edit_content_slot/:id
   param: { module: sympal_editor, action: edit_slot }
   class: sfDoctrineRoute
   options:
-    model: EntitySlot
+    model: ContentSlot
     type: object
 
-sympal_save_entity_slot:
-  url:   /edit_entity_slot/:id/save
+sympal_save_content_slot:
+  url:   /edit_content_slot/:id/save
   param: { module: sympal_editor, action: save_slot }
   class: sfDoctrineRoute
   options:
-    model: EntitySlot
+    model: ContentSlot
     type: object
   requirements:
     id: \d+
     sf_method: [POST]
 
-sympal_preview_entity_slot:
-  url:   /preview_entity_slot/:id
+sympal_preview_content_slot:
+  url:   /preview_content_slot/:id
   param: { module: sympal_editor, action: preview_slot }
   class: sfDoctrineRoute
   options:
-    model: EntitySlot
+    model: ContentSlot
     type: object
   requirements:
     id: \d+
     sf_method: [POST]
 
-sympal_change_entity_slot_type:
-  url:   /change_entity_slot_type/:id/:type
-  param: { module: sympal_editor, action: change_entity_slot_type }
+sympal_change_content_slot_type:
+  url:   /change_content_slot_type/:id/:type
+  param: { module: sympal_editor, action: change_content_slot_type }
   class: sfDoctrineRoute
   options:
-    model: EntitySlot
+    model: ContentSlot
     type: object
 
 sympal_save_editor_panel_position:
   url:   /save_editor_panel_position
   param: { module: sympal_editor, action: save_panel_position }
 
-sympal_lock_entity:
-  url:   /lock_entity/:id
-  param: { module: sympal_editor, action: lock_entity }
+sympal_lock_content:
+  url:   /lock_content/:id
+  param: { module: sympal_editor, action: lock_content }
   class: sfDoctrineRoute
-  options: { model: Entity, type: object }
+  options: { model: Content, type: object }
 
-sympal_unlock_entity:
-  url:   /unlock_entity/:id
-  param: { module: sympal_editor, action: unlock_entity }
+sympal_unlock_content:
+  url:   /unlock_content/:id
+  param: { module: sympal_editor, action: unlock_content }
   class: sfDoctrineRoute
-  options: { model: Entity, type: object }
+  options: { model: Content, type: object }
 
-sympal_publish_entity:
-  url:   /publish_entity/:id
-  param: { module: sympal_editor, action: publish_entity }
+sympal_publish_content:
+  url:   /publish_content/:id
+  param: { module: sympal_editor, action: publish_content }
   class: sfDoctrineRoute
-  options: { model: Entity, type: object }
+  options: { model: Content, type: object }
 
-sympal_unpublish_entity:
-  url:   /unpublish_entity/:id
-  param: { module: sympal_editor, action: unpublish_entity }
+sympal_unpublish_content:
+  url:   /unpublish_content/:id
+  param: { module: sympal_editor, action: unpublish_content }
   class: sfDoctrineRoute
-  options: { model: Entity, type: object }
+  options: { model: Content, type: object }
 
 sympal_config:
   url:   /admin/configuration
@@ -102,28 +102,28 @@ sympal_config_save:
   url:   /admin/configuration/save
   param: { module: sympal_config, action: save }
 
-sympal_entity_slot_types:
+sympal_content_slot_types:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                EntitySlotType
-    module:               sympal_entity_slot_types
-    prefix_path:          admin/entities/slot_types
+    model:                ContentSlotType
+    module:               sympal_content_slot_types
+    prefix_path:          admin/content/slot_types
     with_wildcard_routes: true
 
-sympal_entity_templates:
+sympal_content_templates:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                EntityTemplate
-    module:               sympal_entity_templates
-    prefix_path:          admin/entities/templates
+    model:                ContentTemplate
+    module:               sympal_content_templates
+    prefix_path:          admin/content/templates
     with_wildcard_routes: true
 
-sympal_entity_types:
+sympal_content_types:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                EntityType
-    module:               sympal_entity_types
-    prefix_path:          admin/entities/types
+    model:                ContentType
+    module:               sympal_content_types
+    prefix_path:          admin/content/types
     with_wildcard_routes: true
 
 sympal_sites:
@@ -134,69 +134,69 @@ sympal_sites:
     prefix_path:          admin/sites
     with_wildcard_routes: true
 
-sympal_entities:
+sympal_content:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                Entity
-    module:               sympal_entities
-    prefix_path:          admin/entities
+    model:                Content
+    module:               sympal_content
+    prefix_path:          admin/content
     with_wildcard_routes: true
 
-sympal_entities_create_type:
-  url:    /admin/entities/create/:type
-  param:  { module: sympal_entities, action: create_type }
+sympal_content_create_type:
+  url:    /admin/content/create/:type
+  param:  { module: sympal_content, action: create_type }
 
 <?php
 $q = Doctrine_Query::create()
-  ->from('Entity e')
+  ->from('Content e')
   ->where('e.custom_path IS NOT NULL');
 ?>
-<?php $entities = $q->fetchArray() ?>
-<?php foreach ($entities as $entity): ?>
-sympal_entity_<?php echo $entity['id'] ?>:
-  url:   <?php echo $entity['custom_path'] ?><?php if ($entity['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_entity, action: index, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
+<?php $content = $q->fetchArray() ?>
+<?php foreach ($content as $content): ?>
+sympal_content_<?php echo $content['id'] ?>:
+  url:   <?php echo $content['custom_path'] ?><?php if ($content['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_content_renderer, action: index, sf_format: html, content_route: true, id: <?php echo $content['id'] ?>, slug: <?php echo $content['slug'] ?> }
   class: sfDoctrineRoute
   options:
-    model:  Entity
+    model:  Content
     type:   object
-    method: getEntity
-sympal_<?php echo str_replace('-', '_', $entity['slug']) ?>:
-  url:   <?php echo $entity['custom_path'] ?><?php if ($entity['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_entity, action: index, sf_format: html, entity_route: true, id: <?php echo $entity['id'] ?>, slug: <?php echo $entity['slug'] ?> }
+    method: getContent
+sympal_<?php echo str_replace('-', '_', $content['slug']) ?>:
+  url:   <?php echo $content['custom_path'] ?><?php if ($content['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_content_renderer, action: index, sf_format: html, content_route: true, id: <?php echo $content['id'] ?>, slug: <?php echo $content['slug'] ?> }
   class: sfDoctrineRoute
   options:
-    model:  Entity
+    model:  Content
     type:   object
-    method: getEntity
+    method: getContent
 <?php endforeach; ?>
 
 <?php
 $q = Doctrine_Query::create()
-  ->from('EntityType t')
+  ->from('ContentType t')
   ->where('t.list_route_url IS NOT NULL OR t.view_route_url IS NOT NULL');
 ?>
-<?php $entityTypes = $q->fetchArray() ?>
-<?php foreach ($entityTypes as $entityType): ?>
-<?php if ($entityType['list_route_url']): ?>
-sympal_entity_type_<?php echo $entityType['slug'] ?>:
-  url:   <?php echo $entityType['list_route_url'] ?><?php if ($entityType['list_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_entity, action: index, sf_format: html, type: <?php echo $entityType['slug'] ?> }
+<?php $contentTypes = $q->fetchArray() ?>
+<?php foreach ($contentTypes as $contentType): ?>
+<?php if ($contentType['list_route_url']): ?>
+sympal_content_type_<?php echo $contentType['slug'] ?>:
+  url:   <?php echo $contentType['list_route_url'] ?><?php if ($contentType['list_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_content_renderer, action: index, sf_format: html, type: <?php echo $contentType['slug'] ?> }
   class: sfDoctrineRoute
   options:
-    model:  Entity
+    model:  Content
     type: list
-    method: getEntitiesForSite
+    method: getContentListForSite
 <?php endif; ?>
 
-<?php if ($entityType['view_route_url']): ?>
-sympal_entity_view_type_<?php echo $entityType['slug'] ?>:
-  url:   <?php echo $entityType['view_route_url'] ?><?php if ($entityType['view_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_entity, action: index, sf_format: html }
+<?php if ($contentType['view_route_url']): ?>
+sympal_content_view_type_<?php echo $contentType['slug'] ?>:
+  url:   <?php echo $contentType['view_route_url'] ?><?php if ($contentType['view_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
+  param: { module: sympal_content_renderer, action: index, sf_format: html }
   class: sfDoctrineRoute
   options:
-    model:  Entity
+    model:  Content
     type: object
-    method: getEntityForSite
+    method: getContentObjectForSite
 <?php endif; ?>
 <?php endforeach; ?>

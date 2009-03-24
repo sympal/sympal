@@ -43,57 +43,48 @@ class sfSympalContext
 
     if ($routeOptions['type'] == 'list')
     {
-      $menuItem = Doctrine::getTable('MenuItem')->getForEntityType($request->getParameter('type'));
+      $menuItem = Doctrine::getTable('MenuItem')->getForContentType($request->getParameter('type'));
       $actions->forward404Unless($menuItem);
 
       $pager = $actions->getRoute()->getObjects();      
       $pager->setPage($request->getParameter('page', 1));
       $pager->init();
 
-      $entities = $pager->getResults();
+      $content = $pager->getResults();
 
-      $renderer = $this->renderEntities($menuItem, $entities, $request->getRequestFormat());
+      $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
       $renderer->setPager($pager);
     } else {
-      $entity = $actions->getRoute()->getObject();
-      $actions->getUser()->checkEntitySecurity($entity);
-      $actions->forward404Unless($entity);
-      $menuItem = $entity->getMainMenuItem();
+      $content = $actions->getRoute()->getObject();
+      $actions->getUser()->checkContentSecurity($content);
+      $actions->forward404Unless($content);
+      $menuItem = $content->getMainMenuItem();
 
       $actions->forward404Unless($menuItem);
 
-      sfSympalTools::changeLayout($entity->getLayout());
+      sfSympalTools::changeLayout($content->getLayout());
 
-      $renderer = $this->renderEntity($menuItem, $entity, $request->getRequestFormat());
+      $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
     }
 
     return $renderer;
   }
 
-  public function quickRenderEntity($slug, $format = 'html')
+  public function quickRenderContentRecord($slug, $format = 'html')
   {
-    $entity = Doctrine::getTable('Entity')->getEntityForSite(array('slug' => $slug));
-    $menuItem = $entity->getMenuItem();
+    $content = Doctrine::getTable('Content')->getContentForSite(array('slug' => $slug));
+    $menuItem = $content->getMenuItem();
 
-    $renderer = self::renderEntity($menuItem, $entity, $format);
+    $renderer = self::renderContent($menuItem, $content, $format);
     $renderer->initialize();
 
     return $renderer;
   }
 
-  public function renderEntity($menuItem, Entity $entity = null, $format = 'html')
+  public function renderContent($menuItem, $content = null, $format = 'html')
   {
-    $renderer = new sfSympalEntityRenderer($menuItem, $format);
-    $renderer->setEntity($entity);
-    $renderer->initialize();
-
-    return $renderer;
-  }
-
-  public function renderEntities(MenuItem $menuItem, Doctrine_Collection $entities, $format = 'html')
-  {
-    $renderer = new sfSympalEntityRenderer($menuItem, $format);
-    $renderer->setEntities($entities);
+    $renderer = new sfSympalContentRenderer($menuItem, $format);
+    $renderer->setContent($content);
     $renderer->initialize();
 
     return $renderer;

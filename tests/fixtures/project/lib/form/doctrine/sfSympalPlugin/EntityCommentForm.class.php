@@ -1,13 +1,13 @@
 <?php
 
 /**
- * EntityComment form.
+ * ContentComment form.
  *
  * @package    form
- * @subpackage EntityComment
+ * @subpackage ContentComment
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-class EntityCommentForm extends PluginEntityCommentForm
+class ContentCommentForm extends PluginContentCommentForm
 {
   public function configure()
   {

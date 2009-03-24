@@ -2,13 +2,13 @@
 
 class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 {
-  public function uninstall($name, $entityTypeName = null, $delete = false)
+  public function uninstall($name, $contentTypeName = null, $delete = false)
   {
-    if (!$entityTypeName)
+    if (!$contentTypeName)
     {
-      $entityTypeName = $this->getEntityTypeForPlugin($name);
+      $contentTypeName = $this->getContentTypeForPlugin($name);
     } else {
-      $entityTypeName = $this->getEntityTypeForPlugin($name);
+      $contentTypeName = $this->getContentTypeForPlugin($name);
     }
 
     $pluginName = sfSympalTools::getLongPluginName($name);
@@ -28,25 +28,25 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
       sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
-      if ($entityTypeName)
+      if ($contentTypeName)
       {
-        $this->logSection('sympal', 'Delete entity from database');
+        $this->logSection('sympal', 'Delete content from database');
 
         $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($name));
         $slug = 'sample-'.$lowerName;
 
-        $entityType = Doctrine::getTable('EntityType')->findOneByName($entityTypeName);
-        Doctrine::getTable('EntityTemplate')
+        $contentType = Doctrine::getTable('ContentType')->findOneByName($contentTypeName);
+        Doctrine::getTable('ContentTemplate')
           ->createQuery('t')
           ->delete()
-          ->where('t.entity_type_id = ?', $entityType['id'])
+          ->where('t.content_type_id = ?', $contentType['id'])
           ->execute();
-        Doctrine::getTable('EntityType')
+        Doctrine::getTable('ContentType')
           ->createQuery('t')
           ->delete()
-          ->where('t.name = ?', $entityTypeName)
+          ->where('t.name = ?', $contentTypeName)
           ->execute();
-        Doctrine::getTable('Entity')
+        Doctrine::getTable('Content')
           ->createQuery('e')
           ->delete()
           ->where('e.slug = ?', $slug)

@@ -1,13 +1,13 @@
 <?php
 
 /**
- * PluginEntity form.
+ * PluginContent form.
  *
  * @package    filters
- * @subpackage Entity *
+ * @subpackage Content *
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z jwage $
  */
-abstract class PluginEntityFormFilter extends BaseEntityFormFilter
+abstract class PluginContentFormFilter extends BaseContentFormFilter
 {
   public function setup()
   {

@@ -9,7 +9,7 @@ class sfSympalPluginGenerateTask extends sfBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('entity-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the entity type to create', null),
+      new sfCommandOption('content-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the content type to create', null),
       new sfCommandOption('re-generate', null, sfCommandOption::PARAMETER_NONE, 'Re-generate the plugin. Will remove it if it exists already and re-generate everything.'),
       new sfCommandOption('install', null, sfCommandOption::PARAMETER_NONE, 'Install the plugin after generating it.'),
     ));
@@ -44,9 +44,9 @@ EOF;
         $uninstall = new sfSympalPluginUninstallTask($this->dispatcher, $this->formatter);
         $uninstall->setCommandApplication($this->commandApplication);
         $uninstallOptions = array();
-        if (isset($options['entity-type']))
+        if (isset($options['content-type']))
         {
-          $uninstallOptions[] = '--entity-type='.$options['entity-type'];
+          $uninstallOptions[] = '--content-type='.$options['content-type'];
         }
         $ret = $uninstall->run(array($name), $uninstallOptions);
       } else {
@@ -61,7 +61,7 @@ EOF;
 
     mkdir($path);
 
-    $entityType = isset($options['entity-type']) ? $options['entity-type']:null;
+    $contentType = isset($options['content-type']) ? $options['content-type']:null;
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($name));
 
 
@@ -78,12 +78,12 @@ EOF;
 
     $pluginConfigurationClassCode = sprintf($pluginConfigurationClassCode, $pluginName.'Configuration', $lowerName);
 
-    if ($entityType)
+    if ($contentType)
     {
       $pluginYamlSchema = <<<EOF
 ---
-$entityType:
-  actAs: [sfSympalEntityType]
+$contentType:
+  actAs: [sfSympalContentType]
   columns:
     name: string(255)
     body: clob
@@ -92,39 +92,39 @@ EOF;
       $pluginInstallDataFixtures = <<<EOF
 # $pluginName install data fixtures
 
-EntityType:
-  EntityType_$lowerName:
-    name: $entityType
-    label: $entityType
+ContentType:
+  ContentType_$lowerName:
+    name: $contentType
+    label: $contentType
     slug: $lowerName
     list_route_url: /$lowerName/list
     view_route_url: /$lowerName/:slug
 
-Entity:
-  {$entityType}_entity_sample:
-    Type: EntityType_$lowerName
+Content:
+  {$contentType}_content_sample:
+    Type: ContentType_$lowerName
     slug: sample-$lowerName
     Site: Site_default
     is_published: true
     CreatedBy: admin
 
-EntityTemplate:
-  EntityTemplate_View$entityType:
-    name: View $entityType
+ContentTemplate:
+  ContentTemplate_View$contentType:
+    name: View $contentType
     type: View
-    EntityType: EntityType_$lowerName
+    ContentType: ContentType_$lowerName
     body: |
-      [?php echo get_sympal_breadcrumbs(\$menuItem, \$entity) ?]
-      <h2>[?php echo \$entity->getHeaderTitle() ?]</h2>
-      <p><strong>Posted by [?php echo \$entity->CreatedBy->username ?] on [?php echo date('m/d/Y h:i:s', strtotime(\$entity->created_at)) ?]</strong></p>
-      <p>[?php echo \$entity->getRecord()->getBody() ?]</p>
-      [?php echo get_sympal_comments(\$entity) ?]
+      [?php echo get_sympal_breadcrumbs(\$menuItem, \$content) ?]
+      <h2>[?php echo \$content->getHeaderTitle() ?]</h2>
+      <p><strong>Posted by [?php echo \$content->CreatedBy->username ?] on [?php echo date('m/d/Y h:i:s', strtotime(\$content->created_at)) ?]</strong></p>
+      <p>[?php echo \$content->getRecord()->getBody() ?]</p>
+      [?php echo get_sympal_comments(\$content) ?]
 
-$entityType:
-  {$entityType}_sample:
-    name: Sample $entityType
-    body: This is some sample content for the body your new entity type.
-    Entity: {$entityType}_entity_sample
+$contentType:
+  {$contentType}_sample:
+    name: Sample $contentType
+    body: This is some sample content for the body your new content type.
+    Content: {$contentType}_content_sample
 
 MenuItem:
   MenuItem_primary:
@@ -133,9 +133,9 @@ MenuItem:
         name: $name
         is_published: true
         label: $name
-        has_many_entities: true
+        has_many_content: true
         Site: Site_default
-        EntityType: EntityType_$lowerName
+        ContentType: ContentType_$lowerName
 EOF;
 
     }
@@ -178,9 +178,9 @@ EOF;
       $install = new sfSympalPluginInstallTask($this->dispatcher, $this->formatter);
       $install->setCommandApplication($this->commandApplication);
       $installOptions = array();
-      if (isset($options['entity-type']))
+      if (isset($options['content-type']))
       {
-        $installOptions[] = '--entity-type='.$options['entity-type'];
+        $installOptions[] = '--content-type='.$options['content-type'];
       }
       $ret = $install->run(array($name), $installOptions);
     }

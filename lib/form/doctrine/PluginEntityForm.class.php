@@ -1,13 +1,13 @@
 <?php
 
 /**
- * PluginEntity form.
+ * PluginContent form.
  *
  * @package    form
- * @subpackage Entity
+ * @subpackage Content
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z jwage $
  */
-abstract class PluginEntityForm extends BaseEntityForm
+abstract class PluginContentForm extends BaseContentForm
 {
   public function setup()
   {
@@ -26,9 +26,9 @@ abstract class PluginEntityForm extends BaseEntityForm
 
     $this->updateDefaultsFromObject();
 
-    if (!$this->object->entity_type_id)
+    if (!$this->object->content_type_id)
     {
-      $this->object->Type = Doctrine::getTable('EntityType')->findOneBySlug('page');
+      $this->object->Type = Doctrine::getTable('ContentType')->findOneBySlug('page');
     } else {
       $this->object->Type;
     }
@@ -36,7 +36,7 @@ abstract class PluginEntityForm extends BaseEntityForm
     $type = ($this->object->Type->name ? $this->object->Type->name:'Page') . 'Form';
 
     $typeForm = new $type($this->object->getRecord());
-    unset($typeForm['id'], $typeForm['entity_id']);
+    unset($typeForm['id'], $typeForm['content_id']);
     sfSympalTools::embedI18n($this->object->Type->name, $typeForm);
     $this->embedForm($this->object->Type->name, $typeForm);
 
@@ -44,12 +44,12 @@ abstract class PluginEntityForm extends BaseEntityForm
       ->from('MenuItem m')
       ->orderBy('m.lft ASC');
 
-    $this->widgetSchema['entity_type_id'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['content_type_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['locked_by'] = new sfWidgetFormInputHidden();
 
     $this->widgetSchema['master_menu_item_id']->setLabel('Parent Menu Item');
     $this->widgetSchema['groups_list']->setLabel('Groups');
     $this->widgetSchema['permissions_list']->setLabel('Permissions');
-    $this->widgetSchema['entity_template_id']->setLabel('Template');
+    $this->widgetSchema['content_template_id']->setLabel('Template');
   }
 }

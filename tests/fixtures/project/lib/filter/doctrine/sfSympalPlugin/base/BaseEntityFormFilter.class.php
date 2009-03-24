@@ -3,20 +3,20 @@
 require_once(sfConfig::get('sf_lib_dir').'/filter/doctrine/BaseFormFilterDoctrine.class.php');
 
 /**
- * Entity filter form base class.
+ * Content filter form base class.
  *
  * @package    filters
- * @subpackage Entity *
+ * @subpackage Content *
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 11675 2008-09-19 15:21:38Z fabien $
  */
-class BaseEntityFormFilter extends BaseFormFilterDoctrine
+class BaseContentFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
       'site_id'             => new sfWidgetFormDoctrineChoice(array('model' => 'Site', 'add_empty' => true)),
-      'entity_type_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'EntityType', 'add_empty' => true)),
-      'entity_template_id'  => new sfWidgetFormDoctrineChoice(array('model' => 'EntityTemplate', 'add_empty' => true)),
+      'content_type_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'ContentType', 'add_empty' => true)),
+      'content_template_id'  => new sfWidgetFormDoctrineChoice(array('model' => 'ContentTemplate', 'add_empty' => true)),
       'master_menu_item_id' => new sfWidgetFormDoctrineChoice(array('model' => 'MenuItem', 'add_empty' => true)),
       'last_updated_by'     => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
       'created_by'          => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
@@ -35,8 +35,8 @@ class BaseEntityFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'site_id'             => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Site', 'column' => 'id')),
-      'entity_type_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'EntityType', 'column' => 'id')),
-      'entity_template_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'EntityTemplate', 'column' => 'id')),
+      'content_type_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'ContentType', 'column' => 'id')),
+      'content_template_id'  => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'ContentTemplate', 'column' => 'id')),
       'master_menu_item_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'MenuItem', 'column' => 'id')),
       'last_updated_by'     => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
       'created_by'          => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
@@ -53,7 +53,7 @@ class BaseEntityFormFilter extends BaseFormFilterDoctrine
       'comments_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'Comment', 'required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('entity_filters[%s]');
+    $this->widgetSchema->setNameFormat('content_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -72,8 +72,8 @@ class BaseEntityFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.EntityGroup EntityGroup')
-          ->andWhereIn('EntityGroup.group_id', $values);
+    $query->leftJoin('r.ContentGroup ContentGroup')
+          ->andWhereIn('ContentGroup.group_id', $values);
   }
 
   public function addPermissionsListColumnQuery(Doctrine_Query $query, $field, $values)
@@ -88,8 +88,8 @@ class BaseEntityFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.EntityPermission EntityPermission')
-          ->andWhereIn('EntityPermission.permission_id', $values);
+    $query->leftJoin('r.ContentPermission ContentPermission')
+          ->andWhereIn('ContentPermission.permission_id', $values);
   }
 
   public function addCommentsListColumnQuery(Doctrine_Query $query, $field, $values)
@@ -104,13 +104,13 @@ class BaseEntityFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.EntityComment EntityComment')
-          ->andWhereIn('EntityComment.comment_id', $values);
+    $query->leftJoin('r.ContentComment ContentComment')
+          ->andWhereIn('ContentComment.comment_id', $values);
   }
 
   public function getModelName()
   {
-    return 'Entity';
+    return 'Content';
   }
 
   public function getFields()
@@ -118,8 +118,8 @@ class BaseEntityFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'                  => 'Number',
       'site_id'             => 'ForeignKey',
-      'entity_type_id'      => 'ForeignKey',
-      'entity_template_id'  => 'ForeignKey',
+      'content_type_id'      => 'ForeignKey',
+      'content_template_id'  => 'ForeignKey',
       'master_menu_item_id' => 'ForeignKey',
       'last_updated_by'     => 'ForeignKey',
       'created_by'          => 'ForeignKey',

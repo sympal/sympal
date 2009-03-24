@@ -20,7 +20,7 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       'users_list'       => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardUser')),
       'permissions_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardPermission')),
       'menu_items_list'  => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),
-      'entities_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
+      'content_list'     => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Content')),
     ));
 
     $this->setValidators(array(
@@ -32,7 +32,7 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       'users_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardUser', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
       'menu_items_list'  => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
-      'entities_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
+      'content_list'     => new sfValidatorDoctrineChoiceMany(array('model' => 'Content', 'required' => false)),
     ));
 
     $this->validatorSchema->setPostValidator(
@@ -70,9 +70,9 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       $this->setDefault('menu_items_list', $this->object->MenuItems->getPrimaryKeys());
     }
 
-    if (isset($this->widgetSchema['entities_list']))
+    if (isset($this->widgetSchema['content_list']))
     {
-      $this->setDefault('entities_list', $this->object->Entities->getPrimaryKeys());
+      $this->setDefault('content_list', $this->object->Content->getPrimaryKeys());
     }
 
   }
@@ -82,7 +82,7 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
             $this->saveusersList($con);
             $this->savepermissionsList($con);
             $this->saveMenuItemsList($con);
-            $this->saveEntitiesList($con);
+            $this->saveContentList($con);
     
     parent::doSave($con);
   }
@@ -168,14 +168,14 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
     }
   }
 
-  public function saveEntitiesList($con = null)
+  public function saveContentList($con = null)
   {
     if (!$this->isValid())
     {
       throw $this->getErrorSchema();
     }
 
-    if (!isset($this->widgetSchema['entities_list']))
+    if (!isset($this->widgetSchema['content_list']))
     {
       // somebody has unset this widget
       return;
@@ -186,12 +186,12 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       $con = $this->getConnection();
     }
 
-    $this->object->unlink('Entities', array());
+    $this->object->unlink('Content', array());
 
-    $values = $this->getValue('entities_list');
+    $values = $this->getValue('content_list');
     if (is_array($values))
     {
-      $this->object->link('Entities', $values);
+      $this->object->link('Content', $values);
     }
   }
 

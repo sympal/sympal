@@ -1,11 +1,11 @@
 Page:
-  actAs: [sfSympalEntityType]
+  actAs: [sfSympalContentType]
   columns:
     id:
       type: integer(4)
       primary: true
       autoincrement: true
-    entity_id:
+    content_id:
       type: integer(4)
       notnull: true
     title:

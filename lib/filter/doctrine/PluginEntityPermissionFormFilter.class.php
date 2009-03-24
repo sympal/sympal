@@ -1,12 +1,12 @@
 <?php
 
 /**
- * PluginEntityPermission form.
+ * PluginContentPermission form.
  *
  * @package    filters
- * @subpackage EntityPermission *
+ * @subpackage ContentPermission *
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-abstract class PluginEntityPermissionFormFilter extends BaseEntityPermissionFormFilter
+abstract class PluginContentPermissionFormFilter extends BaseContentPermissionFormFilter
 {
 }

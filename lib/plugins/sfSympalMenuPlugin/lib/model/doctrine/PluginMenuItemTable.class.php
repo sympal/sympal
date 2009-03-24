@@ -4,13 +4,13 @@
  */
 class PluginMenuItemTable extends Doctrine_Table
 {
-  public function getForEntityType($type)
+  public function getForContentType($type)
   {
     $q = Doctrine_Query::create()
       ->from('MenuItem m')
-      ->leftJoin('m.EntityType t')
+      ->leftJoin('m.ContentType t')
       ->andWhere('t.slug = ?', $type)
-      ->andWhere('m.has_many_entities = 1')
+      ->andWhere('m.has_many_content = 1')
       ->limit(1);
 
     if (!sfSympalTools::isEditMode())
@@ -25,7 +25,7 @@ class PluginMenuItemTable extends Doctrine_Table
   {
     $q = Doctrine_Query::create()
       ->from('MenuItem m')
-      ->leftJoin('m.EntityType t')
+      ->leftJoin('m.ContentType t')
       ->where('m.slug = ?', $slug);
     return $q->fetchOne();
   }

@@ -14,25 +14,25 @@ class BaseCommentFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'status'        => new sfWidgetFormChoice(array('choices' => array('' => '', 'Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'       => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
-      'name'          => new sfWidgetFormFilterInput(),
-      'subject'       => new sfWidgetFormFilterInput(),
-      'body'          => new sfWidgetFormFilterInput(),
-      'created_at'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'updated_at'    => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
-      'entities_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
+      'status'       => new sfWidgetFormChoice(array('choices' => array('' => '', 'Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
+      'user_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'name'         => new sfWidgetFormFilterInput(),
+      'subject'      => new sfWidgetFormFilterInput(),
+      'body'         => new sfWidgetFormFilterInput(),
+      'created_at'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'updated_at'   => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
+      'content_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Content')),
     ));
 
     $this->setValidators(array(
-      'status'        => new sfValidatorChoice(array('required' => false, 'choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'       => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
-      'name'          => new sfValidatorPass(array('required' => false)),
-      'subject'       => new sfValidatorPass(array('required' => false)),
-      'body'          => new sfValidatorPass(array('required' => false)),
-      'created_at'    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'updated_at'    => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
-      'entities_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
+      'status'       => new sfValidatorChoice(array('required' => false, 'choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
+      'user_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'name'         => new sfValidatorPass(array('required' => false)),
+      'subject'      => new sfValidatorPass(array('required' => false)),
+      'body'         => new sfValidatorPass(array('required' => false)),
+      'created_at'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'updated_at'   => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
+      'content_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'Content', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('comment_filters[%s]');
@@ -42,7 +42,7 @@ class BaseCommentFormFilter extends BaseFormFilterDoctrine
     parent::setup();
   }
 
-  public function addEntitiesListColumnQuery(Doctrine_Query $query, $field, $values)
+  public function addContentListColumnQuery(Doctrine_Query $query, $field, $values)
   {
     if (!is_array($values))
     {
@@ -54,8 +54,8 @@ class BaseCommentFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.EntityComment EntityComment')
-          ->andWhereIn('EntityComment.entity_id', $values);
+    $query->leftJoin('r.ContentComment ContentComment')
+          ->andWhereIn('ContentComment.content_id', $values);
   }
 
   public function getModelName()
@@ -66,15 +66,15 @@ class BaseCommentFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'            => 'Number',
-      'status'        => 'Enum',
-      'user_id'       => 'ForeignKey',
-      'name'          => 'Text',
-      'subject'       => 'Text',
-      'body'          => 'Text',
-      'created_at'    => 'Date',
-      'updated_at'    => 'Date',
-      'entities_list' => 'ManyKey',
+      'id'           => 'Number',
+      'status'       => 'Enum',
+      'user_id'      => 'ForeignKey',
+      'name'         => 'Text',
+      'subject'      => 'Text',
+      'body'         => 'Text',
+      'created_at'   => 'Date',
+      'updated_at'   => 'Date',
+      'content_list' => 'ManyKey',
     );
   }
 }

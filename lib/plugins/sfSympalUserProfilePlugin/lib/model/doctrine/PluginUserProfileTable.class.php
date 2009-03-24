@@ -4,9 +4,9 @@
  */
 class PluginUserProfileTable extends Doctrine_Table
 {
-  public function getEntityQuery()
+  public function getContentQuery()
   {
-    $q = Doctrine::getTable('Entity')->getBaseQuery()
+    $q = Doctrine::getTable('Content')->getBaseQuery()
       ->innerJoin('e.UserProfile p')
       ->innerJoin('p.User u');
 

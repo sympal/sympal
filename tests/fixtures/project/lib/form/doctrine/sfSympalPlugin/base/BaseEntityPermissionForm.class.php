@@ -1,27 +1,27 @@
 <?php
 
 /**
- * EntityPermission form base class.
+ * ContentPermission form base class.
  *
  * @package    form
- * @subpackage entity_permission
+ * @subpackage content_permission
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
  */
-class BaseEntityPermissionForm extends BaseFormDoctrine
+class BaseContentPermissionForm extends BaseFormDoctrine
 {
   public function setup()
   {
     $this->setWidgets(array(
-      'entity_id'     => new sfWidgetFormInputHidden(),
+      'content_id'     => new sfWidgetFormInputHidden(),
       'permission_id' => new sfWidgetFormInputHidden(),
     ));
 
     $this->setValidators(array(
-      'entity_id'     => new sfValidatorDoctrineChoice(array('model' => 'EntityPermission', 'column' => 'entity_id', 'required' => false)),
-      'permission_id' => new sfValidatorDoctrineChoice(array('model' => 'EntityPermission', 'column' => 'permission_id', 'required' => false)),
+      'content_id'     => new sfValidatorDoctrineChoice(array('model' => 'ContentPermission', 'column' => 'content_id', 'required' => false)),
+      'permission_id' => new sfValidatorDoctrineChoice(array('model' => 'ContentPermission', 'column' => 'permission_id', 'required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('entity_permission[%s]');
+    $this->widgetSchema->setNameFormat('content_permission[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -30,7 +30,7 @@ class BaseEntityPermissionForm extends BaseFormDoctrine
 
   public function getModelName()
   {
-    return 'EntityPermission';
+    return 'ContentPermission';
   }
 
 }

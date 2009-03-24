@@ -1,13 +1,13 @@
 <?php
 
 /**
- * EntityType form base class.
+ * ContentType form base class.
  *
  * @package    form
- * @subpackage entity_type
+ * @subpackage content_type
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 8508 2008-04-17 17:39:15Z fabien $
  */
-class BaseEntityTypeForm extends BaseFormDoctrine
+class BaseContentTypeForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -22,7 +22,7 @@ class BaseEntityTypeForm extends BaseFormDoctrine
     ));
 
     $this->setValidators(array(
-      'id'             => new sfValidatorDoctrineChoice(array('model' => 'EntityType', 'column' => 'id', 'required' => false)),
+      'id'             => new sfValidatorDoctrineChoice(array('model' => 'ContentType', 'column' => 'id', 'required' => false)),
       'name'           => new sfValidatorString(array('max_length' => 255)),
       'label'          => new sfValidatorString(array('max_length' => 255)),
       'list_route_url' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
@@ -32,10 +32,10 @@ class BaseEntityTypeForm extends BaseFormDoctrine
     ));
 
     $this->validatorSchema->setPostValidator(
-      new sfValidatorDoctrineUnique(array('model' => 'EntityType', 'column' => array('slug')))
+      new sfValidatorDoctrineUnique(array('model' => 'ContentType', 'column' => array('slug')))
     );
 
-    $this->widgetSchema->setNameFormat('entity_type[%s]');
+    $this->widgetSchema->setNameFormat('content_type[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -44,7 +44,7 @@ class BaseEntityTypeForm extends BaseFormDoctrine
 
   public function getModelName()
   {
-    return 'EntityType';
+    return 'ContentType';
   }
 
 }

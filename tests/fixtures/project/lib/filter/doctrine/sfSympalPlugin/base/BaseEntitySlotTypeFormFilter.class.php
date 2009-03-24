@@ -3,13 +3,13 @@
 require_once(sfConfig::get('sf_lib_dir').'/filter/doctrine/BaseFormFilterDoctrine.class.php');
 
 /**
- * EntitySlotType filter form base class.
+ * ContentSlotType filter form base class.
  *
  * @package    filters
- * @subpackage EntitySlotType *
+ * @subpackage ContentSlotType *
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 11675 2008-09-19 15:21:38Z fabien $
  */
-class BaseEntitySlotTypeFormFilter extends BaseFormFilterDoctrine
+class BaseContentSlotTypeFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
@@ -21,7 +21,7 @@ class BaseEntitySlotTypeFormFilter extends BaseFormFilterDoctrine
       'name' => new sfValidatorPass(array('required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('entity_slot_type_filters[%s]');
+    $this->widgetSchema->setNameFormat('content_slot_type_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -30,7 +30,7 @@ class BaseEntitySlotTypeFormFilter extends BaseFormFilterDoctrine
 
   public function getModelName()
   {
-    return 'EntitySlotType';
+    return 'ContentSlotType';
   }
 
   public function getFields()

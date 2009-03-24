@@ -18,16 +18,16 @@ generator:
         site_id:
           help: Choose the site which this menu item belongs to.
           label: Site
-        entity_type_id:
-          help: Choose what type of entity this menu item belongs to, if any.
-          label: Entity Type
-        entity_id:
-          help: Choose the entity this menu item links to.
-          label: Entity
+        content_type_id:
+          help: Choose what type of content this menu item belongs to, if any.
+          label: Content Type
+        content_id:
+          help: Choose the content this menu item links to.
+          label: Content
         is_published:
           help: |
-            Check to publish this entity. Checking this will automatically set the
-            date published value. An entity will not be live until the published
+            Check to publish this content. Checking this will automatically set the
+            date published value. An content will not be live until the published
             date has been reached.
 <?php if (sfSympalConfig::isI18nEnabled('menus')): ?> 
         en:
@@ -63,7 +63,7 @@ generator:
 <?php else: ?> 
           "Label": [label]
 <?php endif; ?>
-          "Mapping": [parent_id, site_id, entity_type_id, has_many_entities, entity_id, route]
+          "Mapping": [parent_id, site_id, content_type_id, has_many_content, content_id, route]
           "Security": [requires_auth, requires_no_auth, groups_list, permissions_list]
           "Publish": [is_published, date_published]
       edit:

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * PluginEntityGroup form.
+ * PluginContentGroup form.
  *
  * @package    form
- * @subpackage EntityGroup
+ * @subpackage ContentGroup
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-abstract class PluginEntityGroupForm extends BaseEntityGroupForm
+abstract class PluginContentGroupForm extends BaseContentGroupForm
 {
 }

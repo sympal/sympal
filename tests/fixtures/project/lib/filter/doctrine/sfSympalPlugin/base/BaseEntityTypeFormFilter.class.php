@@ -3,13 +3,13 @@
 require_once(sfConfig::get('sf_lib_dir').'/filter/doctrine/BaseFormFilterDoctrine.class.php');
 
 /**
- * EntityType filter form base class.
+ * ContentType filter form base class.
  *
  * @package    filters
- * @subpackage EntityType *
+ * @subpackage ContentType *
  * @version    SVN: $Id: sfDoctrineFormFilterGeneratedTemplate.php 11675 2008-09-19 15:21:38Z fabien $
  */
-class BaseEntityTypeFormFilter extends BaseFormFilterDoctrine
+class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
 {
   public function setup()
   {
@@ -31,7 +31,7 @@ class BaseEntityTypeFormFilter extends BaseFormFilterDoctrine
       'slug'           => new sfValidatorPass(array('required' => false)),
     ));
 
-    $this->widgetSchema->setNameFormat('entity_type_filters[%s]');
+    $this->widgetSchema->setNameFormat('content_type_filters[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -40,7 +40,7 @@ class BaseEntityTypeFormFilter extends BaseFormFilterDoctrine
 
   public function getModelName()
   {
-    return 'EntityType';
+    return 'ContentType';
   }
 
   public function getFields()

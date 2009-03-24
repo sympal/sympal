@@ -1,12 +1,12 @@
 <?php
 
 /**
- * PluginEntityComment form.
+ * PluginContentComment form.
  *
  * @package    filters
- * @subpackage EntityComment *
+ * @subpackage ContentComment *
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z fabien $
  */
-abstract class PluginEntityCommentFormFilter extends BaseEntityCommentFormFilter
+abstract class PluginContentCommentFormFilter extends BaseContentCommentFormFilter
 {
 }

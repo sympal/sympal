@@ -14,8 +14,8 @@
  * @property Doctrine_Collection $sfGuardUserPermission
  * @property Doctrine_Collection $MenuItems
  * @property Doctrine_Collection $MenuItemPermissions
- * @property Doctrine_Collection $Entities
- * @property Doctrine_Collection $EntityPermissions
+ * @property Doctrine_Collection $Content
+ * @property Doctrine_Collection $ContentPermissions
  * 
  * @package    ##PACKAGE##
  * @subpackage ##SUBPACKAGE##
@@ -55,12 +55,12 @@ abstract class BasesfGuardPermission extends sfSympalDoctrineRecord
         $this->hasMany('MenuItemPermission as MenuItemPermissions', array('local' => 'id',
                                                                           'foreign' => 'permission_id'));
 
-        $this->hasMany('Entity as Entities', array('refClass' => 'EntityPermission',
-                                                   'local' => 'permission_id',
-                                                   'foreign' => 'entity_id'));
+        $this->hasMany('Content', array('refClass' => 'ContentPermission',
+                                        'local' => 'permission_id',
+                                        'foreign' => 'content_id'));
 
-        $this->hasMany('EntityPermission as EntityPermissions', array('local' => 'id',
-                                                                      'foreign' => 'permission_id'));
+        $this->hasMany('ContentPermission as ContentPermissions', array('local' => 'id',
+                                                                        'foreign' => 'permission_id'));
 
         $timestampable0 = new Doctrine_Template_Timestampable();
         $this->actAs($timestampable0);

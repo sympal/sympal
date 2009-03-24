@@ -31,10 +31,10 @@ class sfSympalCommentsPluginConfiguration extends sfPluginConfiguration
   {
     $form = $event->getSubject();
 
-    $entityTypes = Doctrine::getTable('EntityType')->findAll();
-    foreach ($entityTypes as $entityType)
+    $contentTypes = Doctrine::getTable('ContentType')->findAll();
+    foreach ($contentTypes as $contentType)
     {
-      $form->addSetting($entityType['name'], 'enable_comments', 'Enable Comments', 'InputCheckbox', 'Boolean');
+      $form->addSetting($contentType['name'], 'enable_comments', 'Enable Comments', 'InputCheckbox', 'Boolean');
     }
 
     $form->addSetting('Comments', 'default_status', 'Default Status');

@@ -21,7 +21,7 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
       'groups_list'     => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardGroup')),
       'users_list'      => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardUser')),
       'menu_items_list' => new sfWidgetFormDoctrineChoiceMany(array('model' => 'MenuItem')),
-      'entities_list'   => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Entity')),
+      'content_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Content')),
     ));
 
     $this->setValidators(array(
@@ -32,7 +32,7 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
       'groups_list'     => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
       'users_list'      => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardUser', 'required' => false)),
       'menu_items_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
-      'entities_list'   => new sfValidatorDoctrineChoiceMany(array('model' => 'Entity', 'required' => false)),
+      'content_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'Content', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_permission_filters[%s]');
@@ -90,7 +90,7 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
           ->andWhereIn('MenuItemPermission.menu_item_id', $values);
   }
 
-  public function addEntitiesListColumnQuery(Doctrine_Query $query, $field, $values)
+  public function addContentListColumnQuery(Doctrine_Query $query, $field, $values)
   {
     if (!is_array($values))
     {
@@ -102,8 +102,8 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
       return;
     }
 
-    $query->leftJoin('r.EntityPermission EntityPermission')
-          ->andWhereIn('EntityPermission.entity_id', $values);
+    $query->leftJoin('r.ContentPermission ContentPermission')
+          ->andWhereIn('ContentPermission.content_id', $values);
   }
 
   public function getModelName()
@@ -122,7 +122,7 @@ class BasesfGuardPermissionFormFilter extends BaseFormFilterDoctrine
       'groups_list'     => 'ManyKey',
       'users_list'      => 'ManyKey',
       'menu_items_list' => 'ManyKey',
-      'entities_list'   => 'ManyKey',
+      'content_list'    => 'ManyKey',
     );
   }
 }

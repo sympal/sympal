@@ -1,8 +1,8 @@
 <?php
 
-function get_sympal_breadcrumbs($menuItem, $entity = null, $subItem = null, $setTitle = false)
+function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null, $setTitle = false)
 {
-  $breadcrumbs = $menuItem->getBreadcrumbs($entity, $subItem);
+  $breadcrumbs = $menuItem->getBreadcrumbs($content, $subItem);
 
   if ($setTitle)
   {
@@ -27,22 +27,22 @@ function get_sympal_truncated_menus($name, $recursive = true, $max = null, $spli
   return sfSympalMenuSite::getMenu($name, $recursive, $max, $split);
 }
 
-function get_sympal_comments($entity)
+function get_sympal_comments($content)
 {
-  if (sfSympalConfig::get($entity['Type']['name'], 'enable_comments'))
+  if (sfSympalConfig::get($content['Type']['name'], 'enable_comments'))
   {
-    return get_component('sympal_comments', 'for_entity', array('entity' => $entity));
+    return get_component('sympal_comments', 'for_content', array('content' => $content));
   }
 }
 
-function get_sympal_editor($menuItem = null, $entity = null)
+function get_sympal_editor($menuItem = null, $content = null)
 {
   $menuItem = $menuItem ? $menuItem:sfSympalTools::getCurrentMenuItem();
-  $entity = $entity ? $entity:sfSympalTools::getCurrentEntity();
+  $content = $content ? $content:sfSympalTools::getCurrentContent();
 
-  if (sfSympalTools::isEditMode() && $entity && $menuItem)
+  if (sfSympalTools::isEditMode() && $content && $menuItem)
   {
-    $editor  = get_component('sympal_editor', 'tools', array('entity' => $entity, 'menuItem' => $menuItem));
+    $editor  = get_component('sympal_editor', 'tools', array('content' => $content, 'menuItem' => $menuItem));
   }
   $editor .= get_slot('sympal_editors');
   return $editor;
@@ -56,10 +56,10 @@ function get_sympal_admin_bar()
   }
 }
 
-function get_sympal_pager_header($pager, $entities)
+function get_sympal_pager_header($pager, $content)
 {
   $indice = $pager->getFirstIndice();
-  return '<h3>Showing '.$indice.' to '.($indice + count($entities) - 1).' of '.$pager->getNbResults().' total results.</h3>';
+  return '<h3>Showing '.$indice.' to '.($indice + count($content) - 1).' of '.$pager->getNbResults().' total results.</h3>';
 }
 
 function get_sympal_pager_navigation($pager, $uri)
