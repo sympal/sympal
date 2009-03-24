@@ -1,0 +1,27 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ContentSlotType
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_content_slot_types
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        name:
+          help: |
+            Enter the name of the content slot type. The name is used 
+            to build the slot type widget/validator classes as well as the classes 
+            used to render the slot values.
+      list:
+        display: [=name]
+      filter:
+        class: false
+      form:    ~
+      edit:    ~
+      new:     ~

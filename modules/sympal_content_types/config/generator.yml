@@ -1,0 +1,42 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ContentType
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_content_types
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        layout:
+          help: Choose the layout template used to render this content type.
+        name:
+          help: |
+            Enter the name o this content type. This is required to be the
+            same name as the content model name.
+        label:
+          help: Enter the label used to render this content type.
+        slug:
+          help: Enter the unique slug used to identify this content type.
+        list_route_url:
+          help: |
+            Enter the route pattern used for linking to a list of
+            this content type records.
+        view_route_url:
+          help: Enter the route pattern used for linking to a single content type.
+      list:
+        display: [=name]
+      filter:
+        class: false
+      form:
+        display:
+          "NONE": [layout]
+          "Information": [name, label, slug]
+          "Routing": [list_route_url, view_route_url]
+      edit:    ~
+      new:     ~

@@ -1,0 +1,41 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           ContentTemplate
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_content_templates
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        name:
+          help: Enter the name of the content template.
+        type:
+          help: |
+            Enter what type of template this is used to render. Either to 
+            "View" an content or a view a "List" of content.
+        content_type_id:
+          label: Content Type
+          help: Choose the content type this template is used for.
+        partial_path:
+          help: Specify the path to a partial you wish to use to render the content or content.
+        component_path:
+          help: Specify the path to a component you wish to use to render the content or content.
+        body:
+          help: You can also optionally specify the template code used to render the content or content below.
+      list:
+        display: [=name]
+      filter:
+        class: false
+      form:
+        display:
+          "NONE": [name]
+          "Configuration": [type, content_type_id]
+          "Rendering Template": [partial_path, component_path, body]
+      edit:    ~
+      new:     ~

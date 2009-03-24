@@ -1,0 +1,39 @@
+generator:
+  class: sfDoctrineGenerator
+  param:
+    model_class:           Content
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_content
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:
+        site_id:
+          label: Site
+        content_type_id:
+          label: Content Type
+      form:    ~
+      list:
+        title: Manage Content
+        display: [=title, Type, is_published, date_published]
+        object_actions:
+          view:
+            action: view
+          _edit:
+          _delete:
+      filter:
+        display: [site_id, content_type_id]
+      edit:
+        title: "Editing Content #%%id%%"
+        actions:
+          _delete:
+          _save:
+          view:
+            action: view
+      new:
+        title: Create New Content
