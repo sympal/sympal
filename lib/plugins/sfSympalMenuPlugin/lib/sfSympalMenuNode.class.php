@@ -82,7 +82,7 @@ class sfSympalMenuNode extends sfSympalMenu
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
         $menuItem = $this->getMenuItem();
 
-        if ($menuItem && sfSympalTools::isEditMode() && sfSympalConfig::get('enable_menu_item_dropdown') && $this->showMenuItemDropDown())
+        if ($menuItem && sfSympalTools::isEditMode() && sfSympalConfig::get('enable_menu_item_dropdown') && $this->debug())
         {
           $options['id'] = 'menu_item_'.$menuItem['id'];
           $html .= link_to($this->getLabel(), $menuItem->getItemRoute(), $options);
@@ -117,7 +117,7 @@ class sfSympalMenuNode extends sfSympalMenu
       } else {
         $html .= $this->getLabel();
       }
-      if ($this->hasNodes() && $this->isRecursiveOutput())
+      if ($this->hasNodes() && $this->showChildren())
       {
         $html .= '<ul>';
         foreach ($this->_nodes as $node)

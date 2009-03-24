@@ -11,16 +11,16 @@ class sfSympalMenuSite extends sfSympalMenu
 
   protected static $_instance;
 
-  public static function getMenu($name, $recursive = true, $max = null, $split = false)
+  public static function getMenu($name, $showChildren = true, $max = null, $split = false)
   {
     if (!self::$_instance)
     {
       self::$_instance = new self();
     }
-    return self::$_instance->_getMenu($name, $recursive, $max, $split);
+    return self::$_instance->_getMenu($name, $showChildren, $max, $split);
   }
 
-  protected function _getMenu($name, $recursive = true, $max = null, $split = false)
+  protected function _getMenu($name, $showChildren = true, $max = null, $split = false)
   {
     if (!$name)
     {
@@ -42,7 +42,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
       $menu = new sfSympalMenuSite();
       $menu->setMenuItem($rootMenuItem);
-      $menu->isRecursiveOutput($recursive);
+      $menu->showChildren($showChildren);
 
       if (!$rootId)
       {
@@ -52,7 +52,7 @@ class sfSympalMenuSite extends sfSympalMenu
       $this->_buildMenuHierarchy($hierarchy, $menu);
     } else {
       $menu = $this->_menus[$name];
-      $menu->isRecursiveOutput($recursive);
+      $menu->showChildren($showChildren);
     }
 
     if (isset($menuItem))

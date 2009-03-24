@@ -2,28 +2,29 @@
 abstract class sfSympalMenu
 {
   protected 
-    $_level  = null,
-    $_parent = null,
-    $_name   = array(),
-    $_nodes  = array(),
-    $_requiresAuth = null,
-    $_requiresNoAuth = null,
-    $_credentials = array(),
-    $_recursiveOutput = true,
-    $_menuItemDropDown = true;
+    $_level            = null,
+    $_parent           = null,
+    $_name             = array(),
+    $_options          = array(),
+    $_nodes            = array(),
+    $_requiresAuth     = null,
+    $_requiresNoAuth   = null,
+    $_credentials      = array(),
+    $_showChildren     = true,
+    $_debug = true;
 
   public function __construct($name = null)
   {
     $this->_name = $name;
   }
 
-  public function showMenuItemDropDown($bool = null)
+  public function debug($bool = null)
   {
     if (!is_null($bool))
     {
-      $this->_menuItemDropDown = $bool;
+      $this->_debug = $bool;
     }
-    return $this->_menuItemDropDown;
+    return $this->_debug;
   }
 
   public function __toString()
@@ -68,14 +69,14 @@ abstract class sfSympalMenu
     return !empty($this->_credentials);
   }
 
-  public function isRecursiveOutput($bool = null)
+  public function showChildren($bool = null)
   {
     if (!is_null($bool))
     {
-      $this->_recursiveOutput = $bool;
+      $this->_showChildren = $bool;
     }
 
-    return $this->_recursiveOutput;
+    return $this->_showChildren;
   }
 
   public function checkUserAccess(sfGuardUser $user = null)
@@ -167,8 +168,8 @@ abstract class sfSympalMenu
     }
 
     $node->setParent($this);
-    $node->isRecursiveOutput($this->isRecursiveOutput());
-    $node->showMenuItemDropDown($this->showMenuItemDropDown());
+    $node->showChildren($this->showChildren());
+    $node->debug($this->debug());
 
     $this->_nodes[$node->getName()] = $node;
 
