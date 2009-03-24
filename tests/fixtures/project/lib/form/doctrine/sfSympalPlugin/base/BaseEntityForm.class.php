@@ -88,11 +88,11 @@ class BaseEntityForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
+            $this->saveGroupsList($con);
+            $this->savePermissionsList($con);
+            $this->saveCommentsList($con);
+    
     parent::doSave($con);
-
-    $this->saveGroupsList($con);
-    $this->savePermissionsList($con);
-    $this->saveCommentsList($con);
   }
 
   public function saveGroupsList($con = null)

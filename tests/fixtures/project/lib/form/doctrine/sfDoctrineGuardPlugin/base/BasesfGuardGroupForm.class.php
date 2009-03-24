@@ -79,12 +79,12 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
+            $this->saveusersList($con);
+            $this->savepermissionsList($con);
+            $this->saveMenuItemsList($con);
+            $this->saveEntitiesList($con);
+    
     parent::doSave($con);
-
-    $this->saveusersList($con);
-    $this->savepermissionsList($con);
-    $this->saveMenuItemsList($con);
-    $this->saveEntitiesList($con);
   }
 
   public function saveusersList($con = null)

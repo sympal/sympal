@@ -60,9 +60,9 @@ class BaseCommentForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
+            $this->saveEntitiesList($con);
+    
     parent::doSave($con);
-
-    $this->saveEntitiesList($con);
   }
 
   public function saveEntitiesList($con = null)

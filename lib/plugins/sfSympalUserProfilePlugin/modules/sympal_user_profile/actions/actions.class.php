@@ -14,6 +14,8 @@ class sympal_user_profileActions extends sfActions
   {
     $this->user = $this->getUser()->getGuardUser();
 
+    Doctrine::getTable('UserProfile');
+
     $q = Doctrine::getTable('Entity')
       ->getTypeQuery('UserProfile')
       ->where('p.user_id = ?', $this->user->id);

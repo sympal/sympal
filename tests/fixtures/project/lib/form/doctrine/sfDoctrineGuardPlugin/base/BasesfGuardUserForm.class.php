@@ -75,10 +75,10 @@ class BasesfGuardUserForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
+            $this->savegroupsList($con);
+            $this->savepermissionsList($con);
+    
     parent::doSave($con);
-
-    $this->savegroupsList($con);
-    $this->savepermissionsList($con);
   }
 
   public function savegroupsList($con = null)

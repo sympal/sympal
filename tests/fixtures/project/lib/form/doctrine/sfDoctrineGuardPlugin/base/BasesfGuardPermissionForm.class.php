@@ -79,12 +79,12 @@ class BasesfGuardPermissionForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
+            $this->saveGroupsList($con);
+            $this->saveUsersList($con);
+            $this->saveMenuItemsList($con);
+            $this->saveEntitiesList($con);
+    
     parent::doSave($con);
-
-    $this->saveGroupsList($con);
-    $this->saveUsersList($con);
-    $this->saveMenuItemsList($con);
-    $this->saveEntitiesList($con);
   }
 
   public function saveGroupsList($con = null)

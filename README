@@ -244,8 +244,6 @@ The `sfSympalPlugin` includes a module named `sympal_entity`. This module is the
       {
         $sympalContext = sfSympalContext::getInstance();
         $this->renderer = $sympalContext->getRenderer($this);
-
-        $this->setTemplate('index');
       }
     }
 

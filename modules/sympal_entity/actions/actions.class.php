@@ -14,7 +14,5 @@ class sympal_entityActions extends sfActions
   {
     $sympalContext = sfSympalContext::getInstance();
     $this->renderer = $sympalContext->getRenderer($this);
-
-    $this->setTemplate('index');
   }
 }
