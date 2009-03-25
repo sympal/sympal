@@ -121,7 +121,7 @@ class sfSympalConfiguration
 
   public function getAddonPlugins()
   {
-    return array_merge($this->getOtherPlugins(), sfSympalTools::getAvailablePlugins());
+    return sfSympalTools::getAvailablePlugins();
   }
 
   public function getOtherPlugins()

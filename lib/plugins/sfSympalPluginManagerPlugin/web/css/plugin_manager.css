@@ -1,0 +1,18 @@
+#sympal_plugin_manager ul.actions
+{
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+#sympal_plugin_manager ul.actions li
+{
+  float: left;
+  list-style-type: none;
+  margin-right: 10px;
+}
+
+#sympal_plugin_manager #view p
+{
+  margin-top: 20px;
+}

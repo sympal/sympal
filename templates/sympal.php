@@ -41,11 +41,15 @@
    <div id="content">
 
    <?php if ($sf_user->hasFlash('notice')): ?>
-     <div class="notice"><?php echo $sf_user->getFlash('notice') ?></div>
+     <?php foreach ($sf_user->getFlashArray('notice') as $notice): ?>
+       <div class="notice"><?php echo $notice ?></div>
+     <?php endforeach; ?>
    <?php endif; ?>
 
    <?php if ($sf_user->hasFlash('error')): ?>
-     <div class="error"><?php echo $sf_user->getFlash('error') ?></div>
+     <?php foreach ($sf_user->getFlashArray('error') as $error): ?>
+       <div class="error"><?php echo $error ?></div>
+     <?php endforeach; ?>
    <?php endif; ?>
 
     <!-- left column -->

@@ -2,7 +2,9 @@
 
 class sfSympalUser extends sfGuardSecurityUser
 {
-  protected $_forwarded = false;
+  protected
+    $_forwarded = false,
+    $_flash     = false;
 
   public function checkContentSecurity($content)
   {
@@ -60,5 +62,34 @@ class sfSympalUser extends sfGuardSecurityUser
     } else {
       return false;
     }
+  }
+
+  public function addFlash($type, $msg)
+  {
+    $flash = parent::getFlash($type);
+    $flash = $flash ? $flash:array();
+    $flash[] = $msg;
+
+    parent::setFlash($type, $flash);
+  }
+
+  public function setFlash($type, $msg)
+  {
+    $this->addFlash($type, $msg);
+  }
+
+  public function getFlash($type)
+  {
+    return end($this->getFlashArray($type));
+  }
+
+  public function getFlashArray($type)
+  {
+    $flash = parent::getFlash($type);
+    $flash = array_unique($flash);
+
+    $this->getAttributeHolder()->remove($type, null, 'symfony/user/sfUser/flash');
+
+    return $flash;
   }
 }

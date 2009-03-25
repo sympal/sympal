@@ -115,7 +115,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     $roots = Doctrine::getTable('MenuItem')->getTree()->fetchRoots();
     $root = $roots[0];
-    $menuItem->getChild()->insertAsLastChildOf($root);
+    $menuItem->getNode()->insertAsLastChildOf($root);
   }
 
   protected function _defaultInstallation($installVars, $contentTypeName)

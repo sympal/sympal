@@ -23,3 +23,7 @@ sympal_plugin_manager_download:
 sympal_plugin_manager_delete:
   url:  /admin/plugins/:plugin/delete
   param: { module: sympal_plugin_manager, action: delete }
+
+sympal_plugin_manager_batch_action:
+  url:  /admin/plugins/batch_action
+  param: { module: sympal_plugin_manager, action: batch_action }

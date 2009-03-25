@@ -273,7 +273,7 @@ class sfSympalTools
     // Special shortening for non sympal plugins
     if (substr($name, 0, 2) == 'sf' && !strstr($name, 'sfSympal'))
     {
-      return substr($name, 2, strlen($name));
+      return $name;
     }
 
     if (strstr($name, 'sfSympal'))
@@ -314,19 +314,15 @@ class sfSympalTools
         }
       }
 
-      $diff = array_diff(array_keys($available), $installedPlugins);
-      $avail = array();
-      foreach ($diff as $plugin)
-      {
-        $avail[$plugin] = $available[$plugin];
-      }
+      $available = array_unique($available);
+
       $cachePath = sfConfig::get('sf_cache_dir').'/sympal_available_plugins.cache';
-      file_put_contents($cachePath, serialize($avail));
+      file_put_contents($cachePath, serialize($available));
     } else {
       $content = file_get_contents($cachePath);
-      $avail = unserialize($content);
+      $available = unserialize($content);
     }
-    return $avail;
+    return $available;
   }
 
   public static function getAvailablePlugins()
@@ -344,15 +340,18 @@ class sfSympalTools
 
     $paths = self::getAvailablePluginPaths();
     $path = '';
-    foreach ($paths as $pluginName => $path)
+    foreach ($paths as $pathPluginName => $path)
     {
-      $branchSvnPath = $path.'/'.$pluginName.'/branches/'.$version;
-      $trunkSvnPath = $path.'/'.$pluginName.'/trunk';
-      if (@file_get_contents($branchSvnPath) !== false)
+      if ($pluginName == $pathPluginName)
       {
-        $path = $branchSvnPath;
-      } else if (@file_get_contents($trunkSvnPath) !== false) {
-        $path = $trunkSvnPath;
+        $branchSvnPath = $path.'/'.$pluginName.'/branches/'.$version;
+        $trunkSvnPath = $path.'/'.$pluginName.'/trunk';
+        if (@file_get_contents($branchSvnPath) !== false)
+        {
+          $path = $branchSvnPath;
+        } else if (@file_get_contents($trunkSvnPath) !== false) {
+          $path = $trunkSvnPath;
+        }
       }
     }
 
@@ -360,7 +359,7 @@ class sfSympalTools
     {
       return $path;
     } else {
-      throw new sfException('Could not find SVN path for '.$pluginName);
+      throw new sfException('Could not find download path for '.$pluginName);
     }
   }
 
