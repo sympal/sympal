@@ -23,7 +23,7 @@ class sfSympalCommentsPluginConfiguration extends sfPluginConfiguration
     if (sfSympalConfig::get('Comments', 'enabled'))
     {
       $commentTable = Doctrine::getTable('Comment')->getNumPending();
-      $menu->getNode('Administration')->addNode('Comments ('.$commentTable.')', '@sympal_comments');
+      $menu->getChild('Administration')->addChild('Comments ('.$commentTable.')', '@sympal_comments');
     }
   }
 

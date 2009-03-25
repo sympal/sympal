@@ -53,44 +53,44 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $user = sfContext::getInstance()->getUser();
     $mode = $user->getAttribute('sympal_edit') ? 'off':'on';
     $currentMode = $user->getAttribute('sympal_edit') ? 'on':'off';
-    $menu->addNode(image_tag('/sf/sf_admin/images/edit.png').' Turn '.ucfirst($mode), '@sympal_toggle_edit', array('title' => 'Click to turn '.$mode.' edit mode. Edit mode is currently '.$currentMode.'.', 'class' => $mode));
+    $menu->addChild(image_tag('/sf/sf_admin/images/edit.png').' Turn '.ucfirst($mode), '@sympal_toggle_edit', array('title' => 'Click to turn '.$mode.' edit mode. Edit mode is currently '.$currentMode.'.', 'class' => $mode));
 
-    $icon = $menu->getNode('Icon');
-    $icon->addNode('Go To Homepage', '@sympal_homepage');
-    $icon->addNode('Logout', '@sympal_logout', 'confirm=Are you sure you wish to logout?');
+    $icon = $menu->getChild('Icon');
+    $icon->addChild('Go To Homepage', '@sympal_homepage');
+    $icon->addChild('Logout', '@sympal_logout', 'confirm=Are you sure you wish to logout?');
 
-    $help = $icon->addNode('Help');
-    $help->addNode('Logged in as '.$user->getGuardUser()->getUsername());
-    $help->addNode('Sympal '.sfSympal::VERSION);
-    $help->addNode('symfony '.SYMFONY_VERSION);
-    $help->addNode('Doctrine '.Doctrine::VERSION);
-    $help->addNode('About Sympal', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK');
-    $help->addNode('About Symfony', 'http://www.symfony-project.com/about', 'target=_BLANK');
-    $help->addNode('Documentation', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK');
-    $help->addNode('Doctrine Documentation', 'http://www.doctrine-project.org/documentation', 'target=_BLANK');
-    $help->addNode('symfony Documentation', 'http://www.symfony-project.org/doc', 'target=_BLANK');
-    $help->addNode('Report Doctrine Bug', 'http://trac.doctrine-project.org', 'target=_BLANK');
-    $help->addNode('Report symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK');
+    $help = $icon->addChild('Help');
+    $help->addChild('Logged in as '.$user->getGuardUser()->getUsername());
+    $help->addChild('Sympal '.sfSympal::VERSION);
+    $help->addChild('symfony '.SYMFONY_VERSION);
+    $help->addChild('Doctrine '.Doctrine::VERSION);
+    $help->addChild('About Sympal', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK');
+    $help->addChild('About Symfony', 'http://www.symfony-project.com/about', 'target=_BLANK');
+    $help->addChild('Documentation', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK');
+    $help->addChild('Doctrine Documentation', 'http://www.doctrine-project.org/documentation', 'target=_BLANK');
+    $help->addChild('symfony Documentation', 'http://www.symfony-project.org/doc', 'target=_BLANK');
+    $help->addChild('Report Doctrine Bug', 'http://trac.doctrine-project.org', 'target=_BLANK');
+    $help->addChild('Report symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK');
 
     if (sfSympalTools::isEditMode())
     {
-      $content = $menu->addNode('Content', '@sympal_content');
+      $content = $menu->addChild('Content', '@sympal_content');
       $contentTypes = Doctrine::getTable('ContentType')->findAll();
-      $content->addNode('Create New Content', '@sympal_content_new');
+      $content->addChild('Create New Content', '@sympal_content_new');
       foreach ($contentTypes as $contentType)
       {
-        $node = $content->addNode($contentType->getLabel());
-        $node->addNode('Create', '@sympal_content_create_type?type='.$contentType->getSlug());
-        $node->addNode('List', '@sympal_content');
+        $node = $content->addChild($contentType->getLabel());
+        $node->addChild('Create', '@sympal_content_create_type?type='.$contentType->getSlug());
+        $node->addChild('List', '@sympal_content');
       }
     }
 
-    $administration = $menu->getNode('Administration');
-    $administration->addNode('Sites', '@sympal_sites');
-    $administration->addNode('Menus', '@sympal_menu_items');
-    $administration->addNode('Content Types', '@sympal_content_types');
-    $administration->addNode('Content Templates', '@sympal_content_templates');
-    $administration->addNode('Content Slot Types', '@sympal_content_slot_types');
-    $administration->addNode('Configuration', '@sympal_config');
+    $administration = $menu->getChild('Administration');
+    $administration->addChild('Sites', '@sympal_sites');
+    $administration->addChild('Menus', '@sympal_menu_items');
+    $administration->addChild('Content Types', '@sympal_content_types');
+    $administration->addChild('Content Templates', '@sympal_content_templates');
+    $administration->addChild('Content Slot Types', '@sympal_content_slot_types');
+    $administration->addChild('Configuration', '@sympal_config');
   }
 }

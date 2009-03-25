@@ -1,5 +1,6 @@
 <?php
-class sfSympalMenuSite extends sfSympalMenu
+
+class sfSympalMenuSiteManager
 {
   protected
     $_menuItems = array(),
@@ -11,16 +12,21 @@ class sfSympalMenuSite extends sfSympalMenu
 
   protected static $_instance;
 
-  public static function getMenu($name, $showChildren = true, $max = null, $split = false)
+  public static function getInstance()
   {
     if (!self::$_instance)
     {
-      self::$_instance = new self();
+      self::$_instance = new sfSympalMenuSiteManager();
     }
-    return self::$_instance->_getMenu($name, $showChildren, $max, $split);
+    return self::$_instance;
   }
 
-  protected function _getMenu($name, $showChildren = true, $max = null, $split = false)
+  public static function getMenu($name, $showChildren = true)
+  {
+    return self::getInstance()->_getMenu($name, $showChildren);
+  }
+
+  protected function _getMenu($name, $showChildren = true)
   {
     if (!$name)
     {
@@ -57,31 +63,27 @@ class sfSympalMenuSite extends sfSympalMenu
 
     if (isset($menuItem))
     {
-      $menu = $menu->getMenuItemSubMenu($menuItem);
-    }
-    if ($max)
-    {
-      return $this->_processMaxMenu($menu, $max, $split);
+      return $menu->getMenuItemSubMenu($menuItem);
     } else {
       return $menu;
     }
   }
 
-  protected function _processMaxMenu($menu, $max, $split)
+  public static function split($menu, $max, $split = false)
   {
     $count = 0;
-    $primaryNodes = array();
-    $primary = new self();
+    $primaryChildren = array();
+    $primary = clone $menu;
 
     if ($split)
     {
-      $secondaryNodes = array();
-      $secondary = new self();
+      $secondaryChildren = array();
+      $secondary = clone $menu;
     }
 
-    foreach ($menu->getNodes() as $node)
+    foreach ($menu->getChildren() as $child)
     {
-      if (!$node->checkUserAccess())
+      if (!$child->checkUserAccess())
       {
         continue;
       }
@@ -91,20 +93,21 @@ class sfSympalMenuSite extends sfSympalMenu
       {
         if ($split)
         {
-          $secondaryNodes[] = $node;
+          $secondaryChildren[] = $child;
           continue;
         } else {
           break;
         }
       }
-      $primaryNodes[] = $node;
+      $primaryChildren[] = $child;
     }
 
-    $primary->setNodes($primaryNodes);
+    $primary->setChildren($primaryChildren);
 
     if ($split)
     {
-      $secondary->setNodes($secondaryNodes);
+      $secondary->setChildren($secondaryChildren);
+
       return array('primary' => $primary, 'secondary' => $secondary);
     } else {
       return $primary;
@@ -152,7 +155,7 @@ class sfSympalMenuSite extends sfSympalMenu
       $this->_hierarchies = array();
       foreach ($trees as $rootId => $tree)
       {
-        $this->_hierarchies[$rootId] = $this->toHierarchy($tree->toArray());
+        $this->_hierarchies[$rootId] = self::toHierarchy($tree->toArray());
       }
 
       // Mark the process as done so it is cached
@@ -164,20 +167,20 @@ class sfSympalMenuSite extends sfSympalMenu
   {
     $user = sfContext::getInstance()->getUser();
 
-    foreach ($hierarchy as $node)
+    foreach ($hierarchy as $child)
     {
-      $menuItem = $this->_menuItems[$node['id']];
-      $new = $menu->addNode($menuItem->getLabel(), $menuItem->getItemRoute());
+      $menuItem = $this->_menuItems[$child['id']];
+      $new = $menu->addChild($menuItem->getLabel(), $menuItem->getItemRoute());
       $new->setMenuItem($menuItem);
 
-      if (isset($node['__children']) && !empty($node['__children']))
+      if (isset($child['__children']) && !empty($child['__children']))
       {
-        $this->_buildMenuHierarchy($node['__children'], $new);
+        $this->_buildMenuHierarchy($child['__children'], $new);
       }
     }
   }
 
-  public function toHierarchy($collection)
+  public static function toHierarchy($collection)
   {
   	// Trees mapped
   	$trees = array();
@@ -187,8 +190,8 @@ class sfSympalMenuSite extends sfSympalMenu
   		// Node Stack. Used to help building the hierarchy
   		$stack = array();
 
-  		foreach ($collection as $node) {
-  			$item = $node;
+  		foreach ($collection as $child) {
+  			$item = $child;
   			$item['__children'] = array();
 
   			// Number of stack items
@@ -202,12 +205,12 @@ class sfSympalMenuSite extends sfSympalMenu
 
   			// Stack is empty (we are inspecting the root)
   			if ($l == 0) {
-  				// Assigning the root node
+  				// Assigning the root child
   				$i = count($trees);
   				$trees[$i] = $item;
   				$stack[] = & $trees[$i];
   			} else {
-  				// Add node to parent
+  				// Add child to parent
   				$i = count($stack[$l - 1]['__children']);
   				$stack[$l - 1]['__children'][$i] = $item;
   				$stack[] = & $stack[$l - 1]['__children'][$i];

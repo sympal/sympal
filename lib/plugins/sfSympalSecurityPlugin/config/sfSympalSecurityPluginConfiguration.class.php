@@ -17,9 +17,9 @@ class sfSympalSecurityPluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event['menu'];
 
-    $security = $menu->getNode('Security');
-    $security->addNode('Users', '@sf_guard_users');
-    $security->addNode('Groups', '@sf_guard_groups');
-    $security->addNode('Permissions', '@sf_guard_permissions');
+    $security = $menu->getChild('Security');
+    $security->addChild('Users', '@sf_guard_users');
+    $security->addChild('Groups', '@sf_guard_groups');
+    $security->addChild('Permissions', '@sf_guard_permissions');
   }
 }

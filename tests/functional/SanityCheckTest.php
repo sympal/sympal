@@ -3,7 +3,7 @@ $app = 'sympal';
 $database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$configuration->loadHelpers(array('Url', 'Content'));
+$configuration->loadHelpers(array('Url'));
 
 $browser = new sfTestFunctional(new sfBrowser());
 $browser->get('/');
@@ -25,8 +25,8 @@ foreach ($menuItems as $menuItem)
     end()->
     with('response')->begin()->
       contains((string) $menuItem->getBreadcrumbs($content))->
-      contains(sympal_render_content_slot($content->getSlots()->getFirst()))->
-      contains(sympal_render_content_slot($content->getSlots()->getLast()))->
+      contains($content->getSlots()->getFirst()->render())->
+      contains($content->getSlots()->getLast()->render())->
     end();
 }
 

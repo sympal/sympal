@@ -270,6 +270,12 @@ class sfSympalTools
 
   public static function getShortPluginName($name)
   {
+    // Special shortening for non sympal plugins
+    if (substr($name, 0, 2) == 'sf' && !strstr($name, 'sfSympal'))
+    {
+      return substr($name, 2, strlen($name));
+    }
+
     if (strstr($name, 'sfSympal'))
     {
       return substr($name, 8, strlen($name) - 14);

@@ -25,7 +25,7 @@ class sfSympalForgotPasswordPluginConfiguration extends sfPluginConfiguration
     $menuItem = $q->fetchOne();
     if ($menuItem)
     {
-      $menuItem->getNode()->delete();
+      $menuItem->getChild()->delete();
     }
   }
 }

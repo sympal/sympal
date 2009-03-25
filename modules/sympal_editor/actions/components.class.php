@@ -28,8 +28,8 @@ class sympal_editorComponents extends sfComponents
 
   public function executeAdmin_bar()
   {
-    $this->menu = new sfSympalMenuBackend('Backend');
-    $this->menu->addNode('Icon', null, array('label' => '<div id="sympal-icon">Sympal</div>'));
+    $this->menu = new sfSympalMenuAdminBar('AdminBar');
+    $this->menu->addChild('Icon', null, array('label' => '<div id="sympal-icon">Sympal</div>'));
 
     $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_admin_bar', array('menu' => $this->menu)));
   }

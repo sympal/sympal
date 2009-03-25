@@ -20,4 +20,6 @@ all:
       menus: true
     Page:
       enable_comments: true
+    Event:
+      enable_comments: true
     sympal_plugin_svn_sources: ["http://svn.symfony-project.com/plugins"]

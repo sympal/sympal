@@ -1,27 +1,16 @@
 <?php
-class sfSympalMenuNode extends sfSympalMenu
+class sfSympalMenuSite extends sfSympalMenu
 {
-  protected
-    $_name,
-    $_route,
-    $_current,
-    $_options = array();
+  protected 
+    $_name = null,
+    $_menuItem = null,
+    $_route = null;
 
   public function __construct($name = null, $route = null, $options = array())
   {
     $this->_name = $name;
     $this->_route = $route;
     $this->_options = $options;
-  }
-
-  public function getLabel()
-  {
-    return (is_array($this->_options) && isset($this->_options['label'])) ? $this->_options['label']:$this->_name;
-  }
-
-  public function setLabel($label)
-  {
-    $this->_options['label'] = $label;
   }
 
   public function getRoute()
@@ -50,6 +39,7 @@ class sfSympalMenuNode extends sfSympalMenu
     {
       return $this->_options[$name];
     }
+
     return $default;
   }
 
@@ -58,13 +48,50 @@ class sfSympalMenuNode extends sfSympalMenu
     $this->_options[$name] = $value;
   }
 
-  public function isCurrent($bool = null)
+  public function getMenuItem()
   {
-    if (!is_null($bool))
+    return $this->_menuItem;
+  }
+
+  public function setMenuItem($menuItem)
+  {
+    $this->_menuItem = $menuItem;
+
+    $this->requiresAuth($menuItem->requires_auth);
+    $this->requiresNoAuth($menuItem->requires_no_auth);
+    $this->setCredentials($menuItem->getAllPermissions());
+
+    $currentMenuItem = sfSympalTools::getCurrentMenuItem();
+
+    if ($currentMenuItem && $currentMenuItem->exists())
     {
-      $this->_current = $bool;
+      $this->isCurrent($menuItem->id == $currentMenuItem->id);
     }
-    return $this->_current;
+
+    $this->setLevel($menuItem->level);
+  }
+
+  public function getMenuItemSubMenu($menuItem)
+  {
+    foreach ($this->_children as $child)
+    {
+      if ($child->getMenuItem()->id == $menuItem->id && $child->getChildren())
+      {
+        $result = $child;
+      } else if ($n = $child->getMenuItemSubMenu($menuItem)) {
+        $result = $n;
+      }
+
+      if (isset($result))
+      {
+        $class = get_class($result->getParent());
+        $instance = new $class();
+        $instance->setMenuItem($menuItem);
+        $instance->setChildren($result->getChildren());
+
+        return $instance;
+      }
+    }
   }
 
   protected function _render()
@@ -86,15 +113,15 @@ class sfSympalMenuNode extends sfSympalMenu
         {
           $options['id'] = 'menu_item_'.$menuItem['id'];
           $html .= link_to($this->getLabel(), $menuItem->getItemRoute(), $options);
-          $menu = new sfSympalMenuBackend();
+          $menu = new sfSympalMenuAdminBar();
           if (sfConfig::get('sf_debug'))
           {
-            $menu->addNode('Debug')->addNode('<pre>'.sfYaml::dump($menuItem->toArray(true), 6).'</pre>');
+            $menu->addChild('Debug')->addChild('<pre>'.sfYaml::dump($menuItem->toArray(true), 6).'</pre>');
           }
-          $menu->addNode('Edit', '@sympal_menu_items_edit?id='.$menuItem['id']);
-          $menu->addNode('Add Child', 'sympal_menu_items/ListNew?id='.$menuItem['id']);
-          $menu->addNode('Follow', $menuItem->getItemRoute());
-          $menu->addNode('Close', null, array('id' => 'menu_item_'.$menuItem['id'].'_hide_control_menu'));
+          $menu->addChild('Edit', '@sympal_menu_items_edit?id='.$menuItem['id']);
+          $menu->addChild('Add Child', 'sympal_menu_items/ListNew?id='.$menuItem['id']);
+          $menu->addChild('Follow', $menuItem->getItemRoute());
+          $menu->addChild('Close', null, array('id' => 'menu_item_'.$menuItem['id'].'_hide_control_menu'));
 
           $editor  = '';
           $editor .= '<div class="yui-skin-sam">';
@@ -117,29 +144,17 @@ class sfSympalMenuNode extends sfSympalMenu
       } else {
         $html .= $this->getLabel();
       }
-      if ($this->hasNodes() && $this->showChildren())
+      if ($this->hasChildren() && $this->showChildren())
       {
         $html .= '<ul>';
-        foreach ($this->_nodes as $node)
+        foreach ($this->_children as $child)
         {
-          $html .= $node;
+          $html .= $child->_render();
         }
         $html .= '</ul>';
       }
       $html .= '</li>';
       return $html;
     }
-  }
-
-  public function getPathAsString()
-  {
-    $nodes = array();
-    $obj = $this;
-
-    do {
-    	$nodes[] = $obj->getName();
-    } while ($obj = $obj->getParent());
-
-    return implode(' > ', array_reverse($nodes));
   }
 }

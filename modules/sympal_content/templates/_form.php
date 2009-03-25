@@ -29,7 +29,7 @@
       <?php foreach ($form->getObject()->getSlots() as $slot): ?>
         <fieldset>
           <legend>Edit Slot: <?php echo $slot['name'] ?></legend>
-          <?php echo sympal_content_slot($form->getObject(), $slot['name']) ?>
+          <?php echo get_sympal_content_slot($form->getObject(), $slot['name']) ?>
         </fieldset>
       <?php endforeach; ?>
 

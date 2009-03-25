@@ -48,13 +48,15 @@ abstract class PluginMenuItem extends BaseMenuItem
 
   public function getParentId()
   {
-    if (!$this->getNode()->isValidNode() || $this->getNode()->isRoot())
+    $node = $this->getNode();
+
+    if (!$node->isValidNode() || $node->isRoot())
     {      
       return null;
     }
-    
-    $parent = $this->getNode()->getParent();
-    
+
+    $parent = $node->getParent();
+
     return $parent['id'];
   }
   
@@ -180,9 +182,9 @@ abstract class PluginMenuItem extends BaseMenuItem
           $count++;
           if ($count == $total)
           {
-            $this->_breadcrumbs->addNode($name);
+            $this->_breadcrumbs->addChild($name);
           } else {
-            $this->_breadcrumbs->addNode($name, $route);
+            $this->_breadcrumbs->addChild($name, $route);
           }
         }
       }

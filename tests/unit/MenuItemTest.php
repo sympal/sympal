@@ -26,8 +26,7 @@ $t->is($menuItem->getItemRoute(), '@sympal_content_view_type_page?slug=about');
 $t->is($menuItem->getBreadcrumbs($menuItem->getMainContent())->getPathAsString(), 'Home > About');
 $t->is($menuItem->getLayout(), 'sympal');
 
-$menu = new sfSympalMenuSite();
-$hierarchy = $menu->toHierarchy($menuItems->toArray());
+$hierarchy = sfSympalMenuSiteManager::toHierarchy($menuItems->toArray());
 
 $t->is(isset($hierarchy[0]['__children']), true);
 

@@ -95,11 +95,9 @@ $t->is($content->getHeaderTitle(), 'Testing this out');
 $t->is($content->getLayout(), 'sympal');
 $t->is($content->getRoute(), '@sympal_content_view_type_page?slug=testing-this-out');
 
-$configuration->loadHelpers('Content');
-
-sympal_content_slot($content, 'title', 'Text', 'Test');
-sympal_content_slot($content, 'body', 'Markdown');
-sympal_content_slot($content, 'teaser', 'MultiLineText');
+get_sympal_content_slot($content, 'title', 'Text', 'Test');
+get_sympal_content_slot($content, 'body', 'Markdown');
+get_sympal_content_slot($content, 'teaser', 'MultiLineText');
 
 $content->refresh(true);
 
@@ -113,11 +111,11 @@ $t->is($slots[0]->render(), 'Title value');
 $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>Body value</p>
 </div>');
 
-$t->is(sympal_render_content_slot($slots[0]), 'Title value');
+$t->is($slots[0]->render(), 'Title value');
 
 // test php
 $slots[1]['value'] = "<?php echo 'test'; ?>";
-$t->is(sympal_render_content_slot($slots[1]), '<div class="sympal_markdown"><p>test</p>
+$t->is($slots[1]->render(), '<div class="sympal_markdown"><p>test</p>
 </div>');
 
 $markdown = "
@@ -178,9 +176,9 @@ $html = '<div class="sympal_markdown"><blockquote class="tip"><p>
 </div>';
 
 $slots[1]['value'] = $markdown;
-$t->is(sympal_render_content_slot($slots[1]), $html);
+$t->is($slots[1]->render(), $html);
 
 $slots->save();
 
-$t->is(sympal_render_content_slot($slots[2]), 'Body value<br />
+$t->is($slots[2]->render(), 'Body value<br />
 Testing');

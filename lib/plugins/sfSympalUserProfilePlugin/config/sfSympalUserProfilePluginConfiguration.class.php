@@ -16,7 +16,7 @@ class sfSympalUserProfilePluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event['menu'];
 
-    $menu->getNode('Administration')->addNode('UserProfile', '@sympal_content_type_user_profile');
+    $menu->getChild('Administration')->addChild('UserProfile', '@sympal_content_type_user_profile');
   }
 
   public function loadSettings(sfEvent $event)

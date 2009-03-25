@@ -80,9 +80,9 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
           $node = $table->find($id);
           $parent = $table->find($parentId);
 
-          if (!$parent->getNode()->isDescendantOfOrEqualTo($node))
+          if (!$parent->getChild()->isDescendantOfOrEqualTo($node))
           {
-            $node->getNode()->moveAsFirstChildOf($parent);
+            $node->getChild()->moveAsFirstChildOf($parent);
             $node->save();
 
             $count++;
@@ -114,9 +114,9 @@ class sympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->dispatcher->notify(new sfEvent($this, 'admin.delete_object', array('object' => $this->getRoute()->getObject())));
 
     $object = $this->getRoute()->getObject();
-    if ($object->getNode()->isValidNode())
+    if ($object->getChild()->isValidNode())
     {
-      $object->getNode()->delete();
+      $object->getChild()->delete();
     }
     else
     {

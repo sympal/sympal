@@ -43,7 +43,7 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
   {
     parent::doSave($con);
 
-    $node = $this->object->getNode();
+    $node = $this->object->getChild();
 
     if ($this->parentId != $this->object->getParentId() || !$node->isValidNode())
     {

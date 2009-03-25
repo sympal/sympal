@@ -15,7 +15,7 @@ class sfSympalPluginManagerPluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event['menu'];
 
-    $administration = $menu->getNode('Administration');
-    $administration->addNode('Plugin Manager', '@sympal_plugin_manager');
+    $administration = $menu->getChild('Administration');
+    $administration->addChild('Plugin Manager', '@sympal_plugin_manager');
   }
 }

@@ -21,7 +21,7 @@
 
      <div class="top_navigation_head"></div>
      <div class="top_navigation_body">
-       <?php $menus = get_sympal_truncated_menus('primary', false, 6, true) ?>
+       <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
        <?php echo $menus['primary'] ?>
        <?php if ($secondary = (string) $menus['secondary']): ?>
          <?php slot('sympal_right_sidebar') ?>

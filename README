@@ -361,7 +361,7 @@ To define the editable slots in your content templates you can use the following
 
     [php]
     $slotType = 'RichText';
-    echo sympal_content_slot($content, 'slot_name', $slotType);
+    echo get_sympal_content_slot($content, 'slot_name', $slotType);
 
 ### Breadcrumbs
 

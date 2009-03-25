@@ -12,14 +12,40 @@ abstract class Basesympal_plugin_managerActions extends sfActions
 {
   public function preExecute()
   {
-    $this->setTemplate('index');
+    $sympalConfiguration = sfSympalContext::getInstance()->getSympalConfiguration();
 
-    $this->availablePlugins = sfSympalContext::getInstance()->getSympalConfiguration()->getOtherPlugins();
-    $this->availablePlugins = array_merge($this->availablePlugins, sfSympalTools::getAvailablePlugins());
+    $this->addonPlugins = $sympalConfiguration->getAddonPlugins();
+    $this->corePlugins = $sympalConfiguration->getCorePlugins();
+    $this->installedPlugins = $sympalConfiguration->getInstalledPlugins();
+
+    $this->_checkFilePermissions();
+  }
+
+  protected function _checkFilePermissions()
+  {
+    $check = array(
+      sfConfig::get('sf_lib_dir').'/*/doctrine',
+      sfConfig::get('sf_root_dir').'/plugins'
+    );
+
+    $dirs = sfFinder::type('dir')->in($check);
+    foreach ($dirs as $dir)
+    {
+      if (is_writable($dir))
+      {
+        $this->getUser()->setFlash('error', $dir.' is not writable.');
+      }
+    }
   }
 
   public function executeIndex()
   {
+  }
+
+  public function executeView($request)
+  {
+    $key = array_search($request->getParameter('plugin'), $this->installedPlugins);
+    $this->plugin = $this->addonPlugins[$key];
   }
 
   public function executeUninstall($request)

@@ -155,8 +155,6 @@ class sfSympalContentRenderer
 
   protected function _renderDoctrineObject(Doctrine_Record $content)
   {
-    use_helper('Content');
-
     $html  = '<h1>Content Data</h1>';
     $html .= $this->_renderData($content->toArray(), false);
 
@@ -167,7 +165,7 @@ class sfSympalContentRenderer
     $html .= '<table>';
     foreach ($content->getSlots() as $key => $slot)
     {
-      $html .= '<tr><th>'.$key.'</th><td>' . sympal_content_slot($content, $slot['name']) . '</td></tr>';
+      $html .= '<tr><th>'.$key.'</th><td>'.get_sympal_content_slot($content, $slot['name']).'</td></tr>';
     }
     $html .= '</table>';
 

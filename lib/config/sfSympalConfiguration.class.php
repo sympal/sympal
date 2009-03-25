@@ -76,7 +76,7 @@ class sfSympalConfiguration
 
   public function bootstrap()
   {
-    $this->_projectConfiguration->loadHelpers(array('Sympal', 'Content'));
+    $this->_projectConfiguration->loadHelpers(array('Sympal'));
 
     if (!sfContext::getInstance()->getRequest()->isXmlHttpRequest())
     {
@@ -111,7 +111,17 @@ class sfSympalConfiguration
 
   public function getCorePlugins()
   {
-    
+    return sfSympalPluginConfiguration::$dependencies;
+  }
+
+  public function getInstalledPlugins()
+  {
+    return $this->getOtherPlugins();
+  }
+
+  public function getAddonPlugins()
+  {
+    return array_merge($this->getOtherPlugins(), sfSympalTools::getAvailablePlugins());
   }
 
   public function getOtherPlugins()
