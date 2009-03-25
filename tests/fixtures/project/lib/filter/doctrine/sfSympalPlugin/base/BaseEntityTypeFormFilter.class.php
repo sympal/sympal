@@ -16,8 +16,8 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'name'           => new sfWidgetFormFilterInput(),
       'label'          => new sfWidgetFormFilterInput(),
-      'list_route_url' => new sfWidgetFormFilterInput(),
-      'view_route_url' => new sfWidgetFormFilterInput(),
+      'list_path' => new sfWidgetFormFilterInput(),
+      'view_path' => new sfWidgetFormFilterInput(),
       'layout'         => new sfWidgetFormFilterInput(),
       'slug'           => new sfWidgetFormFilterInput(),
     ));
@@ -25,8 +25,8 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
     $this->setValidators(array(
       'name'           => new sfValidatorPass(array('required' => false)),
       'label'          => new sfValidatorPass(array('required' => false)),
-      'list_route_url' => new sfValidatorPass(array('required' => false)),
-      'view_route_url' => new sfValidatorPass(array('required' => false)),
+      'list_path' => new sfValidatorPass(array('required' => false)),
+      'view_path' => new sfValidatorPass(array('required' => false)),
       'layout'         => new sfValidatorPass(array('required' => false)),
       'slug'           => new sfValidatorPass(array('required' => false)),
     ));
@@ -49,8 +49,8 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
       'id'             => 'Number',
       'name'           => 'Text',
       'label'          => 'Text',
-      'list_route_url' => 'Text',
-      'view_route_url' => 'Text',
+      'list_path' => 'Text',
+      'view_path' => 'Text',
       'layout'         => 'Text',
       'slug'           => 'Text',
     );

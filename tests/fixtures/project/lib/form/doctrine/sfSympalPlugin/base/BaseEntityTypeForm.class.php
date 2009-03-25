@@ -15,8 +15,8 @@ class BaseContentTypeForm extends BaseFormDoctrine
       'id'             => new sfWidgetFormInputHidden(),
       'name'           => new sfWidgetFormInput(),
       'label'          => new sfWidgetFormInput(),
-      'list_route_url' => new sfWidgetFormInput(),
-      'view_route_url' => new sfWidgetFormInput(),
+      'list_path' => new sfWidgetFormInput(),
+      'view_path' => new sfWidgetFormInput(),
       'layout'         => new sfWidgetFormInput(),
       'slug'           => new sfWidgetFormInput(),
     ));
@@ -25,8 +25,8 @@ class BaseContentTypeForm extends BaseFormDoctrine
       'id'             => new sfValidatorDoctrineChoice(array('model' => 'ContentType', 'column' => 'id', 'required' => false)),
       'name'           => new sfValidatorString(array('max_length' => 255)),
       'label'          => new sfValidatorString(array('max_length' => 255)),
-      'list_route_url' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'view_route_url' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'list_path' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'view_path' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'layout'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'slug'           => new sfValidatorString(array('max_length' => 255, 'required' => false)),
     ));

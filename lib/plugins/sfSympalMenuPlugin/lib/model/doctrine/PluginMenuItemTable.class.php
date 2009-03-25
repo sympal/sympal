@@ -10,7 +10,7 @@ class PluginMenuItemTable extends Doctrine_Table
       ->from('MenuItem m')
       ->leftJoin('m.ContentType t')
       ->andWhere('t.slug = ?', $type)
-      ->andWhere('m.has_many_content = 1')
+      ->andWhere('m.is_content_type_list = 1')
       ->limit(1);
 
     if (!sfSympalTools::isEditMode())

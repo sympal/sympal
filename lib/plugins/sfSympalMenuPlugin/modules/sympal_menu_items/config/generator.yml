@@ -63,7 +63,7 @@ generator:
 <?php else: ?> 
           "Label": [label]
 <?php endif; ?>
-          "Mapping": [parent_id, site_id, content_type_id, has_many_content, content_id, route]
+          "Mapping": [parent_id, site_id, content_type_id, is_content_type_list, content_id, custom_path]
           "Security": [requires_auth, requires_no_auth, groups_list, permissions_list]
           "Publish": [is_published, date_published]
       edit:

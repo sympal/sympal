@@ -78,8 +78,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $contentType = new ContentType();
     $contentType->name = $contentTypeName;
     $contentType->label = $contentTypeName;
-    $contentType->list_route_url = "/$lowerName/list";
-    $contentType->view_route_url = "/$lowerName/:slug";
+    $contentType->list_path = "/$lowerName/list";
+    $contentType->view_path = "/$lowerName/:slug";
     $contentType->slug = $lowerName;
     $installVars['contentType'] = $contentType;
 
@@ -95,7 +95,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $menuItem->name = $name;
     $menuItem->is_published = true;
     $menuItem->label = $name;
-    $menuItem->has_many_content = true;
+    $menuItem->is_content_type_list = true;
     $menuItem->ContentType = $contentType;
     $menuItem->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
     $installVars['menuItem'] = $menuItem;

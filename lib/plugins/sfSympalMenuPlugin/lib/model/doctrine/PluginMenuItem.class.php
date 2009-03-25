@@ -110,14 +110,24 @@ abstract class PluginMenuItem extends BaseMenuItem
     $this->RelatedContent = $content;
   }
 
+  public function getRoute()
+  {
+    return $this->getCustomPath();
+  }
+
+  public function setRoute($route)
+  {
+    $this->setCustomPath($route);
+  }
+
   public function getItemRoute()
   {
     if (!$route = $this->getRoute())
     {
-      if ($this->getHasManyContent())
+      if ($this->getIsContentTypeList())
       {
         $type = $this->getContentType();
-        if ($type->list_route_url)
+        if ($type->list_path)
         {
           $route = '@sympal_content_type_'.$type['slug'];
         } else {
@@ -160,7 +170,7 @@ abstract class PluginMenuItem extends BaseMenuItem
 
         if ($content)
         {
-          if ($this->has_many_content)
+          if ($this->is_content_type_list)
           {
             $breadcrumbs[$this->getLabel()] = $this->getItemRoute();
           }

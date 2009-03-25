@@ -51,7 +51,7 @@ abstract class PluginContent extends BaseContent
       } else {
         $q = Doctrine::getTable('MenuItem')
           ->createQuery('m')
-          ->where('m.has_many_content = ?', true)
+          ->where('m.is_content_type_list = ?', true)
           ->andWhere('m.content_type_id = ?', $this->content_type_id);
         return $q->fetchOne();
       }
@@ -161,8 +161,8 @@ abstract class PluginContent extends BaseContent
     if ($this['custom_path'])
     {
       return '@sympal_content_' . $this['id'];
-    } else if ($this['Type']['view_route_url']) {
-      $route = new sfRoute($this['Type']['view_route_url']);
+    } else if ($this['Type']['view_path']) {
+      $route = new sfRoute($this['Type']['view_path']);
       $variables = $route->getVariables();
       $values = array();
       foreach (array_keys($variables) as $name)

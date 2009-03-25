@@ -97,8 +97,8 @@ ContentType:
     name: $contentType
     label: $contentType
     slug: $lowerName
-    list_route_url: /$lowerName/list
-    view_route_url: /$lowerName/:slug
+    list_path: /$lowerName/list
+    view_path: /$lowerName/:slug
 
 Content:
   {$contentType}_content_sample:
@@ -133,7 +133,7 @@ MenuItem:
         name: $name
         is_published: true
         label: $name
-        has_many_content: true
+        is_content_type_list: true
         Site: Site_default
         ContentType: ContentType_$lowerName
 EOF;

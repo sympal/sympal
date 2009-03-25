@@ -2,7 +2,7 @@
 <?php use_javascript('/sfSympalPlugin/js/configuration') ?>
 
 <div id="sympal_configuration">
-  <h1>Sympal Configuration</h1>
+  <h2>Sympal Configuration</h2>
 
   <?php $groups = $form->getGroups() ?>
 

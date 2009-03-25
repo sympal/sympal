@@ -111,8 +111,8 @@ ContentType:
     label:
       type: string(255)
       notnull: true
-    list_route_url: string(255)
-    view_route_url: string(255)
+    list_path: string(255)
+    view_path: string(255)
     layout: string(255)
 
 ContentTemplate:

@@ -11,8 +11,8 @@
  * @property integer $content_id
  * @property string $name
  * @property string $label
- * @property string $route
- * @property boolean $has_many_content
+ * @property string $custom_path
+ * @property boolean $is_content_type_list
  * @property boolean $requires_auth
  * @property boolean $requires_no_auth
  * @property boolean $is_primary
@@ -43,8 +43,8 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
         $this->hasColumn('content_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('label', 'string', 255, array('type' => 'string', 'length' => '255'));
-        $this->hasColumn('route', 'string', 255, array('type' => 'string', 'length' => '255'));
-        $this->hasColumn('has_many_content', 'boolean', null, array('type' => 'boolean', 'default' => false));
+        $this->hasColumn('custom_path', 'string', 255, array('type' => 'string', 'length' => '255'));
+        $this->hasColumn('is_content_type_list', 'boolean', null, array('type' => 'boolean', 'default' => false));
         $this->hasColumn('requires_auth', 'boolean', null, array('type' => 'boolean'));
         $this->hasColumn('requires_no_auth', 'boolean', null, array('type' => 'boolean'));
         $this->hasColumn('is_primary', 'boolean', null, array('type' => 'boolean'));

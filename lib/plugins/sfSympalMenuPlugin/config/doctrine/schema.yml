@@ -24,8 +24,8 @@ MenuItem:
       type: string(255)
       notnull: true
     label: string(255)
-    route: string(255)
-    has_many_content:
+    custom_path: string(255)
+    is_content_type_list:
       type: boolean
       default: false
     requires_auth: boolean

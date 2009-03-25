@@ -43,7 +43,7 @@ MenuItem:
         name: Pages
         is_published: true
         label: Pages
-        has_many_content: true
+        is_content_type_list: true
         Site: Site_default
         ContentType: ContentType_Page
       MenuItem_primary_about:
@@ -334,9 +334,9 @@ ContentType:
     name: Page
     label: Page
 <?php if (sfSympalConfig::isI18nEnabled('content_types')): ?> 
-    view_route_url: /:sf_culture/:slug
-    list_route_url: /:sf_culture/pages
+    view_path: /:sf_culture/:slug
+    list_path: /:sf_culture/pages
 <?php else: ?>
-    view_route_url: /:slug
-    list_route_url: /pages
+    view_path: /:slug
+    list_path: /pages
 <?php endif; ?>

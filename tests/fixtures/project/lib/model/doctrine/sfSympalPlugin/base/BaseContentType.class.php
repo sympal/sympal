@@ -8,8 +8,8 @@
  * @property integer $id
  * @property string $name
  * @property string $label
- * @property string $list_route_url
- * @property string $view_route_url
+ * @property string $list_path
+ * @property string $view_path
  * @property string $layout
  * @property Doctrine_Collection $MenuItems
  * @property Doctrine_Collection $Content
@@ -28,8 +28,8 @@ abstract class BaseContentType extends sfSympalDoctrineRecord
         $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('label', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
-        $this->hasColumn('list_route_url', 'string', 255, array('type' => 'string', 'length' => '255'));
-        $this->hasColumn('view_route_url', 'string', 255, array('type' => 'string', 'length' => '255'));
+        $this->hasColumn('list_path', 'string', 255, array('type' => 'string', 'length' => '255'));
+        $this->hasColumn('view_path', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('layout', 'string', 255, array('type' => 'string', 'length' => '255'));
     }
 

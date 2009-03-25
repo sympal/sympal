@@ -23,11 +23,11 @@ generator:
           help: Enter the label used to render this content type.
         slug:
           help: Enter the unique slug used to identify this content type.
-        list_route_url:
+        list_path:
           help: |
             Enter the route pattern used for linking to a list of
             this content type records.
-        view_route_url:
+        view_path:
           help: Enter the route pattern used for linking to a single content type.
       list:
         display: [=name]
@@ -37,6 +37,6 @@ generator:
         display:
           "NONE": [layout]
           "Information": [name, label, slug]
-          "Routing": [list_route_url, view_route_url]
+          "Routing": [list_path, view_path]
       edit:    ~
       new:     ~

@@ -174,13 +174,13 @@ sympal_<?php echo str_replace('-', '_', $content['slug']) ?>:
 <?php
 $q = Doctrine_Query::create()
   ->from('ContentType t')
-  ->where('t.list_route_url IS NOT NULL OR t.view_route_url IS NOT NULL');
+  ->where('t.list_path IS NOT NULL OR t.view_path IS NOT NULL');
 ?>
 <?php $contentTypes = $q->fetchArray() ?>
 <?php foreach ($contentTypes as $contentType): ?>
-<?php if ($contentType['list_route_url']): ?>
+<?php if ($contentType['list_path']): ?>
 sympal_content_type_<?php echo $contentType['slug'] ?>:
-  url:   <?php echo $contentType['list_route_url'] ?><?php if ($contentType['list_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
+  url:   <?php echo $contentType['list_path'] ?><?php if ($contentType['list_path'] != '/'): ?>.:sf_format<?php endif; ?> 
   param: { module: sympal_content_renderer, action: index, sf_format: html, type: <?php echo $contentType['slug'] ?> }
   class: sfDoctrineRoute
   options:
@@ -189,9 +189,9 @@ sympal_content_type_<?php echo $contentType['slug'] ?>:
     method: getContentListForSite
 <?php endif; ?>
 
-<?php if ($contentType['view_route_url']): ?>
+<?php if ($contentType['view_path']): ?>
 sympal_content_view_type_<?php echo $contentType['slug'] ?>:
-  url:   <?php echo $contentType['view_route_url'] ?><?php if ($contentType['view_route_url'] != '/'): ?>.:sf_format<?php endif; ?> 
+  url:   <?php echo $contentType['view_path'] ?><?php if ($contentType['view_path'] != '/'): ?>.:sf_format<?php endif; ?> 
   param: { module: sympal_content_renderer, action: index, sf_format: html }
   class: sfDoctrineRoute
   options:

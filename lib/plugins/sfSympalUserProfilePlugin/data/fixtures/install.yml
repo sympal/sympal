@@ -5,8 +5,8 @@ ContentType:
     name: UserProfile
     label: UserProfile
     slug: user_profile
-    list_route_url: /user_profile/list
-    view_route_url: /user_profile/:slug
+    list_path: /user_profile/list
+    view_path: /user_profile/:slug
 
 Content:
   UserProfile_content_sample:
@@ -38,7 +38,7 @@ MenuItem:
         name: UserProfile
         is_published: true
         label: Users
-        has_many_content: true
+        is_content_type_list: true
         Site: Site_default
         ContentType: ContentType_user_profile
       Menuitem_primary_my_user_profile:
