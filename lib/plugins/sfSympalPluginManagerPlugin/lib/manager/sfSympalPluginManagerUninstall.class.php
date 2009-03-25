@@ -14,6 +14,8 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     $pluginName = sfSympalTools::getLongPluginName($name);
     $name = sfSympalTools::getShortPluginName($name);
 
+    sfSympalConfig::writeSetting($pluginName, 'installed', false);
+
     $uninstallVars = array();
 
     $this->logSection('sympal', 'Uninstall sympal plugin named '.$pluginName);

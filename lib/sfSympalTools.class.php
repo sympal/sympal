@@ -203,8 +203,17 @@ class sfSympalTools
 
   public static function isPluginInstalled($plugin)
   {
+    $pluginName = sfSympalTools::getLongPluginName($plugin);
+
+    return (self::isPluginDownloaded() && sfSympalConfig::get($pluginName, 'installed', false));
+  }
+
+  public static function isPluginDownloaded($plugin)
+  {
+    $pluginName = sfSympalTools::getLongPluginName($plugin);
+
     try {
-      sfContext::getInstance()->getConfiguration()->getPluginConfiguration($plugin);
+      sfContext::getInstance()->getConfiguration()->getPluginConfiguration($pluginName);
       return true;
     } catch (Exception $e) {
       return false;
@@ -367,6 +376,7 @@ class sfSympalTools
   {
     $pluginName = self::getLongPluginName($name);
     $availablePlugins = self::getAvailablePlugins();
+
     return in_array($availablePlugins, $pluginName);
   }
 }

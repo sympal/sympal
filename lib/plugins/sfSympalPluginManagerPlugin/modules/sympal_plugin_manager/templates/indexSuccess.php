@@ -4,12 +4,6 @@
   <div id="list">
     <h2>Sympal Plugin Manager</h2>
 
-    <p id="intro">
-      From this interface you can browse the available Sympal 
-      plugins and click to install. You can also view all installed 
-      Sympal plugins and one click install them.
-    </p>
-
     <?php if ($count = count($addonPlugins)): ?>
       <h3><?php echo $count ?> Sympal addon plugin(s) found.</h3>
 
@@ -33,10 +27,10 @@
           <?php endforeach; ?>
         </table>
 
-        <input type="submit" name="download" value="Download" />
-        <input type="submit" name="delete" value="Delete" />
-        <input type="submit" name="install" value="Install" />
-        <input type="submit" name="uninstall" value="Uninstall" />
+        <input type="submit" name="download" value="Download" onClick="return confirm('Are you sure you wish to download the selected plugins?');" />
+        <input type="submit" name="delete" value="Delete" onClick="return confirm('Are you sure you wish to delete the selected plugins?');" />
+        <input type="submit" name="install" value="Install" onClick="return confirm('Are you sure you wish to install the selected plugins?');" />
+        <input type="submit" name="uninstall" value="Uninstall" onClick="return confirm('Are you sure you wish to uninstall the selected plugins?');" />
       </form>
     <?php else: ?>
       <p><strong>No Sympal plugins found</strong></p>

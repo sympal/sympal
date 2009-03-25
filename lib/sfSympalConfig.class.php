@@ -36,4 +36,19 @@ class sfSympalConfig
       return self::get('I18n', 'enabled');
     }
   }
+
+  public static function writeSetting($group, $name, $value)
+  {
+    $path = sfConfig::get('sf_config_dir').'/app.yml';
+    $array = (array) sfYaml::load(file_get_contents($path));
+
+    if (is_null($group))
+    {
+      $array['all']['sympal_settings'][$name] = $value;
+    } else {
+      $array['all']['sympal_settings'][$group][$name] = $value;
+    }
+
+    file_put_contents($path, sfYaml::dump($array, 4));
+  }
 }

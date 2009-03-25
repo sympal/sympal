@@ -129,6 +129,14 @@ class sfSympalConfiguration
     return array_diff($this->getPlugins(), $this->getRequiredPlugins());
   }
 
+  public function getAllManageablePlugins()
+  {
+    $plugins = array_merge($this->getAddonPlugins(), $this->getInstalledPlugins());
+    $plugins = array_unique($plugins);
+
+    return $plugins;
+  }
+
   public function checkPluginDependencies()
   {
     foreach ($this->_projectConfiguration->getPlugins() as $pluginName)

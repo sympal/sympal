@@ -14,7 +14,7 @@ abstract class Basesympal_plugin_managerActions extends sfActions
   {
     $sympalConfiguration = sfSympalContext::getInstance()->getSympalConfiguration();
 
-    $this->addonPlugins = $sympalConfiguration->getAddonPlugins();
+    $this->addonPlugins = $sympalConfiguration->getAllManageablePlugins();
     $this->corePlugins = $sympalConfiguration->getCorePlugins();
     $this->installedPlugins = $sympalConfiguration->getInstalledPlugins();
 

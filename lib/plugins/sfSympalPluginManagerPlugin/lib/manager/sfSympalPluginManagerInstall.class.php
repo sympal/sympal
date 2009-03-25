@@ -17,6 +17,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $uninstall = new sfSympalPluginManagerUninstall();
     $uninstall->uninstall($pluginName);
 
+    sfSympalConfig::writeSetting($pluginName, 'installed', true);
+
     $path = $this->configuration->getPluginConfiguration($pluginName)->getRootDir();
     $schema = $path.'/config/doctrine/schema.yml';
     $pluginConfig = $this->configuration->getPluginConfiguration($pluginName);
