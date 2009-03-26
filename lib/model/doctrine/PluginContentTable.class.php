@@ -93,10 +93,10 @@ class PluginContentTable extends Doctrine_Table
   public function getContent($params)
   {
     $request = sfContext::getInstance()->getRequest();
-    $id = $request->getParameter('id');
+    $slug = $request->getParameter('slug');
 
-    $q = $this->getTypeQuery(array('id' => $id))
-      ->andWhere('e.id = ?', $id);
+    $q = $this->getTypeQuery(array('slug' => $slug))
+      ->andWhere('e.slug = ?', $slug);
 
     return $this->fetchContent($q);
   }
