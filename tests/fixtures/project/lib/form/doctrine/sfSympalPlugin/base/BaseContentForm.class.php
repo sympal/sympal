@@ -46,8 +46,8 @@ class BaseContentForm extends BaseFormDoctrine
       'custom_path'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'layout'              => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'slug'                => new sfValidatorString(array('max_length' => 255, 'required' => false)),
-      'created_at'          => new sfValidatorDateTime(),
-      'updated_at'          => new sfValidatorDateTime(),
+      'created_at'          => new sfValidatorDateTime(array('required' => false)),
+      'updated_at'          => new sfValidatorDateTime(array('required' => false)),
       'groups_list'         => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
       'permissions_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
       'comments_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'Comment', 'required' => false)),
@@ -88,11 +88,11 @@ class BaseContentForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
-            $this->saveGroupsList($con);
-            $this->savePermissionsList($con);
-            $this->saveCommentsList($con);
-    
     parent::doSave($con);
+
+    $this->saveGroupsList($con);
+    $this->savePermissionsList($con);
+    $this->saveCommentsList($con);
   }
 
   public function saveGroupsList($con = null)

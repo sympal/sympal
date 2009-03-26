@@ -35,8 +35,8 @@ class BasesfGuardUserForm extends BaseFormDoctrine
       'is_active'        => new sfValidatorBoolean(array('required' => false)),
       'is_super_admin'   => new sfValidatorBoolean(array('required' => false)),
       'last_login'       => new sfValidatorDateTime(array('required' => false)),
-      'created_at'       => new sfValidatorDateTime(),
-      'updated_at'       => new sfValidatorDateTime(),
+      'created_at'       => new sfValidatorDateTime(array('required' => false)),
+      'updated_at'       => new sfValidatorDateTime(array('required' => false)),
       'groups_list'      => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
     ));
@@ -75,10 +75,10 @@ class BasesfGuardUserForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
-            $this->savegroupsList($con);
-            $this->savepermissionsList($con);
-    
     parent::doSave($con);
+
+    $this->savegroupsList($con);
+    $this->savepermissionsList($con);
   }
 
   public function savegroupsList($con = null)

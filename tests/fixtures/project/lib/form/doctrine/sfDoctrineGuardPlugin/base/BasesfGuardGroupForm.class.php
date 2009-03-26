@@ -27,8 +27,8 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
       'id'               => new sfValidatorDoctrineChoice(array('model' => 'sfGuardGroup', 'column' => 'id', 'required' => false)),
       'name'             => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'description'      => new sfValidatorString(array('max_length' => 1000, 'required' => false)),
-      'created_at'       => new sfValidatorDateTime(),
-      'updated_at'       => new sfValidatorDateTime(),
+      'created_at'       => new sfValidatorDateTime(array('required' => false)),
+      'updated_at'       => new sfValidatorDateTime(array('required' => false)),
       'users_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardUser', 'required' => false)),
       'permissions_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
       'menu_items_list'  => new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem', 'required' => false)),
@@ -79,12 +79,12 @@ class BasesfGuardGroupForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
-            $this->saveusersList($con);
-            $this->savepermissionsList($con);
-            $this->saveMenuItemsList($con);
-            $this->saveContentList($con);
-    
     parent::doSave($con);
+
+    $this->saveusersList($con);
+    $this->savepermissionsList($con);
+    $this->saveMenuItemsList($con);
+    $this->saveContentList($con);
   }
 
   public function saveusersList($con = null)

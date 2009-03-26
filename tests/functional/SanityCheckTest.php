@@ -41,7 +41,7 @@ $browser->
 ;
 
 $browser->
-  get('/logout')->
+  get('/security/logout')->
   isRedirected()->
   followRedirect()
 ;

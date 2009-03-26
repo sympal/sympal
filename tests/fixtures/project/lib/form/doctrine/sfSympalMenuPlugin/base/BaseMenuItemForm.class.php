@@ -89,10 +89,10 @@ class BaseMenuItemForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
-            $this->saveGroupsList($con);
-            $this->savePermissionsList($con);
-    
     parent::doSave($con);
+
+    $this->saveGroupsList($con);
+    $this->savePermissionsList($con);
   }
 
   public function saveGroupsList($con = null)

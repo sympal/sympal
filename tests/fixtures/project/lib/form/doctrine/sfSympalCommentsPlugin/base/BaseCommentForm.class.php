@@ -30,8 +30,8 @@ class BaseCommentForm extends BaseFormDoctrine
       'name'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'subject'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'body'         => new sfValidatorString(),
-      'created_at'   => new sfValidatorDateTime(),
-      'updated_at'   => new sfValidatorDateTime(),
+      'created_at'   => new sfValidatorDateTime(array('required' => false)),
+      'updated_at'   => new sfValidatorDateTime(array('required' => false)),
       'content_list' => new sfValidatorDoctrineChoiceMany(array('model' => 'Content', 'required' => false)),
     ));
 
@@ -60,9 +60,9 @@ class BaseCommentForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
-            $this->saveContentList($con);
-    
     parent::doSave($con);
+
+    $this->saveContentList($con);
   }
 
   public function saveContentList($con = null)

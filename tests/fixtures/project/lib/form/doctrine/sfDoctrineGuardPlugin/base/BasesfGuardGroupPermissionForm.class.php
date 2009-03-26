@@ -21,8 +21,8 @@ class BasesfGuardGroupPermissionForm extends BaseFormDoctrine
     $this->setValidators(array(
       'group_id'      => new sfValidatorDoctrineChoice(array('model' => 'sfGuardGroupPermission', 'column' => 'group_id', 'required' => false)),
       'permission_id' => new sfValidatorDoctrineChoice(array('model' => 'sfGuardGroupPermission', 'column' => 'permission_id', 'required' => false)),
-      'created_at'    => new sfValidatorDateTime(),
-      'updated_at'    => new sfValidatorDateTime(),
+      'created_at'    => new sfValidatorDateTime(array('required' => false)),
+      'updated_at'    => new sfValidatorDateTime(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_guard_group_permission[%s]');
