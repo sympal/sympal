@@ -11,5 +11,5 @@ ContentSlotType:
     name: MultiLineText
   ContentSlotType_Text:
     name: Text
-  ContentSlotType_TinyMCE:
+  ContentSlotType_RichText:
     name: RichText
