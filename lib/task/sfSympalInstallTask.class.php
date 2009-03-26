@@ -79,5 +79,50 @@ EOF;
       $buildAllLoadOptions[] = '--dir='.sfConfig::get('sf_data_dir').'/fixtures';
     }
     $buildAllLoad->run(array(), $buildAllLoadOptions);
+
+    $this->_executePostInstallSql();
+  }
+
+  protected function _executePostInstallSql()
+  {
+    $dir = sfConfig::get('sf_data_dir').'/sql/sympal_install';
+    if (is_dir($dir))
+    {
+      $this->_executeSqlFiles($dir);
+    }
+
+    $manager = Doctrine_Manager::getInstance();
+    foreach ($manager as $conn)
+    {
+      $dir = sfConfig::get('sf_data_dir').'/sql/sympal_install/'.$conn->getName();
+      if (is_dir($dir))
+      {
+        $this->_executeSqlFiles($dir, null);
+      }
+    }
+  }
+
+  protected function _executeSqlFiles($dir, $maxDepth = 0, $conn = null)
+  {
+    if (is_null($conn))
+    {
+      $conn = Doctrine_Manager::connection();
+    }
+
+    $files = sfFinder::type('file')
+      ->name('*.sql')
+      ->maxdepth($maxDepth)
+      ->in($dir);
+
+    foreach ($files as $file)
+    {
+      $sqls = file($file);
+      foreach ($sqls as $sql)
+      {
+        $sql = trim($sql);
+        $this->logSection('sympal', $sql);
+        $conn->exec($sql);
+      }
+    }
   }
 }
