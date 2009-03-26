@@ -66,7 +66,7 @@ class sfSympalUser extends sfGuardSecurityUser
 
   public function addFlash($name, $value, $persist = true)
   {
-    $flash = parent::getFlash($name, $value, $persist);
+    $flash = (array) parent::getFlash($name, $value, $persist);
     $flash = $flash ? $flash:array();
     $flash[] = $value;
 
