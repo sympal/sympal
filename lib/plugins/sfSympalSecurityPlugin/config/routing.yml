@@ -1,9 +1,9 @@
 sympal_login:
-  url:   /login
+  url:   /security/login
   param: { module: sympal_auth, action: signin }
 
 sympal_logout:
-  url:   /logout
+  url:   /security/logout
   param: { module: sympal_auth, action: signout }
 
 <?php foreach (array('User', 'Group', 'Permission') as $model): ?>

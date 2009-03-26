@@ -155,7 +155,7 @@ $q = Doctrine_Query::create()
 <?php foreach ($content as $content): ?>
 sympal_content_<?php echo $content['id'] ?>:
   url:   <?php echo $content['custom_path'] ?><?php if ($content['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_content_renderer, action: index, sf_format: html, content_route: true, id: <?php echo $content['id'] ?>, slug: <?php echo $content['slug'] ?> }
+  param: { module: sympal_content_renderer, action: index, sf_format: html, id: <?php echo $content['id'] ?>, slug: <?php echo $content['slug'] ?> }
   class: sfDoctrineRoute
   options:
     model:  Content
@@ -163,7 +163,7 @@ sympal_content_<?php echo $content['id'] ?>:
     method: getContent
 sympal_<?php echo str_replace('-', '_', $content['slug']) ?>:
   url:   <?php echo $content['custom_path'] ?><?php if ($content['custom_path'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_content_renderer, action: index, sf_format: html, content_route: true, id: <?php echo $content['id'] ?>, slug: <?php echo $content['slug'] ?> }
+  param: { module: sympal_content_renderer, action: index, sf_format: html, id: <?php echo $content['id'] ?>, slug: <?php echo $content['slug'] ?> }
   class: sfDoctrineRoute
   options:
     model:  Content
