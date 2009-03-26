@@ -98,7 +98,7 @@ class sfSympalMenuSite extends sfSympalMenu
   {
     if ($this->checkUserAccess())
     {
-      $html = '<li'.($this->isCurrent() ? ' class="current"':null).'>';
+      $html = '<li class="'.Doctrine_Inflector::urlize($this->getName()).'" '.($this->isCurrent() ? ' id="current"':null).'>';
       if ($this->_route)
       {
         $options = $this->getOptions();

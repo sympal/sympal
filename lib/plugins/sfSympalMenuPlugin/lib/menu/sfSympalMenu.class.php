@@ -226,7 +226,7 @@ abstract class sfSympalMenu
   {
     if ($this->checkUserAccess())
     {
-      $html = '<li>';
+      $html = '<li class="'.Doctrine_Inflector::urlize($this->getName()).'">';
 
       if ($this->_route)
       {
@@ -238,15 +238,7 @@ abstract class sfSympalMenu
         $html .= $this->getLabel();
       }
 
-      if ($this->hasChildren() && $this->showChildren())
-      {
-        $html .= '<ul>';
-        foreach ($this->_children as $child)
-        {
-          $html .= $child->_render();
-        }
-        $html .= '</ul>';
-      }
+      $html .= $this->_renderChildren();
 
       $html .= '</li>';
 
