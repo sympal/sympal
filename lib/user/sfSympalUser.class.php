@@ -68,14 +68,14 @@ class sfSympalUser extends sfGuardSecurityUser
   {
     $flash = parent::getFlash($name, $value, $persist);
     $flash = $flash ? $flash:array();
-    $flash[] = $msg;
+    $flash[] = $value;
 
     parent::setFlash($name, $flash);
   }
 
   public function setFlash($name, $value, $persist = true)
   {
-    $this->addFlash($name, $msg, $persist);
+    $this->addFlash($name, $value, $persist);
   }
 
   public function getFlash($name, $default = null)

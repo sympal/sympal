@@ -76,6 +76,8 @@ class sympal_editorActions extends sfActions
 
   public function executeEdit_slot()
   {
+    $this->setLayout(false);
+
     $this->contentSlot = $this->getRoute()->getObject();
     $this->form = new ContentSlotForm($this->contentSlot);
   }
