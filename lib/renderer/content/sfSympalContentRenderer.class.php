@@ -45,7 +45,6 @@ class sfSympalContentRenderer
       sfSympalTools::changeLayout($this->_menuItem->getLayout());
 
       $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
-      
     }
 
     $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;

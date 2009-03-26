@@ -64,28 +64,28 @@ class sfSympalUser extends sfGuardSecurityUser
     }
   }
 
-  public function addFlash($type, $msg)
+  public function addFlash($name, $value, $persist = true)
   {
-    $flash = parent::getFlash($type);
+    $flash = parent::getFlash($name, $value, $persist);
     $flash = $flash ? $flash:array();
     $flash[] = $msg;
 
-    parent::setFlash($type, $flash);
+    parent::setFlash($name, $flash);
   }
 
-  public function setFlash($type, $msg)
+  public function setFlash($name, $value, $persist = true)
   {
-    $this->addFlash($type, $msg);
+    $this->addFlash($name, $msg, $persist);
   }
 
-  public function getFlash($type)
+  public function getFlash($name, $default = null)
   {
-    return end($this->getFlashArray($type));
+    return end($this->getFlashArray($name, $default));
   }
 
-  public function getFlashArray($type)
+  public function getFlashArray($type, $default = null)
   {
-    $flash = parent::getFlash($type);
+    $flash = parent::getFlash($type, $default);
     $flash = array_unique($flash);
 
     $this->getAttributeHolder()->remove($type, null, 'symfony/user/sfUser/flash');
