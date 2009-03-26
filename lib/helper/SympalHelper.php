@@ -2,9 +2,17 @@
 
 function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null, $setTitle = false)
 {
+  if (!$menuItem)
+  {
+    return false;
+  }
+
   if ($setTitle)
   {
-    set_sympal_title();
+    $breadcrumbs = $menuItem->getBreadcrumbs($content, $subItem);
+    $title = $breadcrumbs->getPathAsString();
+
+    sfContext::getInstance()->getResponse()->setTitle($title);
   }
 
   $breadcrumbs = $menuItem->getBreadcrumbs();
@@ -19,15 +27,6 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null, $se
 
 function set_sympal_title($title = null)
 {
-  if (is_null($title))
-  {
-    if ($menuItem = sfSympalTools::getCurrentMenuItem())
-    {
-      $breadcrumbs = $menuItem->getBreadcrumbs($content, $subItem);
-      $title = $breadcrumbs->getPathAsString();
-    }
-  }
-
   sfContext::getInstance()->getResponse()->setTitle($title);
 }
 
