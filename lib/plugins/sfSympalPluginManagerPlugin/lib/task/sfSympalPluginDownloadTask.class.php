@@ -38,17 +38,17 @@ EOF;
         $this->logSection('sympal', str_repeat('-', 30));
         foreach ($plugins as $plugin)
         {
-          $name = str_replace(array('sfSympal', 'Plugin'), array('', ''), $plugin);
+          $name = sfSympalTools::getShortPluginName($plugin);
           $this->logSection('sympal', $plugin.' [php symfony sympal:plugin-download '.$name.' --install]');
         }
       } else {
         throw new sfException('No sympal plugins found');
       }
     } else {
-      $pluginManager = new sfSympalPluginManagerDownload();
+      $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'download');
       $pluginManager->download($arguments['name']);
 
-      $pluginManager = new sfSympalPluginManagerInstall();
+      $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install');
       $pluginManager->install($arguments['name']);
     }
   }

@@ -29,10 +29,11 @@ class sfSympalTools
     self::$_currentContent = $content;
   }
 
-  public static function checkPluginDependencies($pluginConfiguration, $dependencies)
+  public static function checkPluginDependencies($pluginName, $dependencies)
   {
     $context = sfContext::getInstance();
     $configuration = $context->getConfiguration();
+    $pluginConfiguration = $configuration->getPluginConfiguration($pluginName);
 
     $plugins = $configuration->getPlugins();
 
@@ -64,18 +65,26 @@ class sfSympalTools
     $plugins = $configuration->getPlugins();
     foreach ($plugins as $plugin)
     {
-      $pluginConfiguration = $configuration->getPluginConfiguration($plugin);
-      $refClass = new ReflectionClass($pluginConfiguration);
-      $dependencies = $refClass->getStaticPropertyValue('dependencies');
-      if (isset($dependencies) && !empty($dependencies))
-      {
-        $requiredPlugins = array_merge($requiredPlugins, $dependencies);
-      }
+      $dependencies = self::getPluginDependencies($plugin);
+      $requiredPlugins = array_merge($requiredPlugins, $dependencies);
     }
 
     $requiredPlugins = array_unique($requiredPlugins);
 
     return $requiredPlugins;
+  }
+
+  public static function getPluginDependencies($pluginName)
+  {
+    $configuration = sfContext::getInstance()->getConfiguration();
+    $pluginConfiguration = $configuration->getPluginConfiguration($pluginName);
+
+    try {
+      $refClass = new ReflectionClass($pluginConfiguration);
+      return $refClass->getStaticPropertyValue('dependencies');
+    } catch (Exception $e) {
+      return array();
+    }
   }
 
   public static function processPhpCode($code, $variables = array())
@@ -108,6 +117,43 @@ class sfSympalTools
     {
       $culture = sfContext::getInstance()->getUser()->getCulture();
       $form->embedI18n(array(strtolower($culture)));
+    }
+  }
+
+  public static function embedRecaptcha(sfFormDoctrine $form)
+  {
+    $publicKey = sfSympalConfig::get('recaptcha_public_key');
+    $privateKey = sfSympalConfig::get('recaptcha_private_key');
+
+    if (!$publicKey || !$privateKey) {
+      throw new sfException('You must specify the recaptcha public and private key in your sympal configuration');
+    }
+
+    $widgetSchema = $form->getWidgetSchema();
+    $validatorSchema = $form->getValidatorSchema();
+
+    $widgetSchema['captcha'] = new sfWidgetFormReCaptcha(array(
+      'public_key' => $publicKey
+    ));
+
+    $validatorSchema['captcha'] = new sfValidatorReCaptcha(array(
+      'private_key' => $privateKey
+    ));
+  }
+
+  public static function bindFormRecaptcha($form, $recaptcha = false)
+  {
+    $request = sfContext::getInstance()->getRequest();
+
+    if ($recaptcha)
+    {
+      $captcha = array(
+        'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
+        'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
+      );
+      $form->bind(array_merge($request->getParameter($form->getName()), array('captcha' => $captcha)));
+    } else {
+      $form->bind($request->getParameter($form->getName())); 
     }
   }
 
@@ -154,12 +200,21 @@ class sfSympalTools
     )));
   }
 
+  public static function loadDefaultLayout()
+  {
+    return self::changeLayout(sfSympalConfig::get('default_layout'));
+  }
+
   public static function changeLayout($name)
   {
     $context = sfContext::getInstance();
     $request = $context->getRequest();
     $response = sfContext::getInstance()->getResponse();
     $configuration = $context->getConfiguration();
+
+    $actionEntry = $context->getController()->getActionStack()->getLastEntry();
+    $module = $actionEntry ? $actionEntry->getModuleName():$request->getParameter('module');
+    $action = $actionEntry ? $actionEntry->getActionName():$request->getParameter('action');
 
     $bundledLayout = false;
     if (file_exists($name))
@@ -180,7 +235,7 @@ class sfSympalTools
       $name = $info['filename'];
     }
 
-    sfConfig::set('symfony.view.'.$request->getParameter('module').'_'.$request->getParameter('action').'_layout', $path);
+    sfConfig::set('symfony.view.'.$module.'_'.$action.'_layout', $path);
     sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
     sfConfig::set('symfony.view.sympal_default_secure_layout', $path);
 
@@ -205,7 +260,7 @@ class sfSympalTools
   {
     $pluginName = sfSympalTools::getLongPluginName($plugin);
 
-    return (self::isPluginDownloaded() && sfSympalConfig::get($pluginName, 'installed', false));
+    return (self::isPluginDownloaded($plugin) && sfSympalConfig::get($pluginName, 'installed', false));
   }
 
   public static function isPluginDownloaded($plugin)
@@ -378,5 +433,47 @@ class sfSympalTools
     $availablePlugins = self::getAvailablePlugins();
 
     return in_array($availablePlugins, $pluginName);
+  }
+
+  public static function generateBreadcrumbs($breadcrumbsArray)
+  {
+    $breadcrumbs = new sfSympalMenuBreadcrumbs('Breadcrumbs');
+
+    $count = 0;
+    $total = count($breadcrumbsArray);
+    foreach ($breadcrumbsArray as $name => $route)
+    {
+      $count++;
+      if ($count == $total)
+      {
+        $breadcrumbs->addChild($name);
+      } else {
+        $breadcrumbs->addChild($name, $route);
+      }
+    }
+
+    return $breadcrumbs;
+  }
+
+  public static function askConfirmation($title, $message)
+  {
+    $context = sfContext::getInstance();
+    $request = $context->getRequest();
+    $action = $context->getController()->getActionStack()->getLastEntry()->getActionInstance();
+
+    if ($request->hasParameter('confirmation'))
+    {
+      if ($request->getParameter('yes'))
+      {
+        return true;
+      } else {
+        $action->redirect($request->getParameter('redirect_url'));
+      }
+    } else {
+      $request->setAttribute('title', $title);
+      $request->setAttribute('message', $message);
+
+      $action->forward('sympal_default', 'ask_confirmation');
+    }
   }
 }

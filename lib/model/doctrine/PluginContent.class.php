@@ -104,18 +104,59 @@ abstract class PluginContent extends BaseContent
 
   public function releaseLock()
   {
-    $this->locked_by = null;
-    $this->save();
+    if ($this->isLocked())
+    {
+      $this->locked_by = null;
+      $this->save();
+    }
   }
 
-  public function obtainLock(sfGuardUser $user)
+  public function obtainLock(sfUser $sfUser)
   {
-    $this->LockedBy = $user;
-    $this->save();
+    $lock = $sfUser->getOpenContentLock();
+    if ($lock['id'] != $this['id'])
+    {
+      $sfUser->releaseOpenLock();
+    }
+
+    if ($this->userHasLock($sfUser))
+    {
+      return null;
+    }
+
+    if ($this->canLock($sfUser))
+    {
+      $user = $sfUser->getGuardUser();
+      $this->LockedBy = $user;
+      $this->save();
+
+      return true;
+    } else {
+      return false;
+    }
   }
 
-  public function userHasLock($user = null)
+  public function canLock(sfUser $sfUser)
   {
+    return $sfUser->isAuthenticated() && !$this->isLocked();
+  }
+
+  public function isLocked()
+  {
+    return $this->locked_by ? true:false;
+  }
+
+  public function userHasLock(sfUser $sfUser = null)
+  {
+    $sfUser = sfContext::getInstance()->getUser();
+
+    if (!$sfUser->isAuthenticated())
+    {
+      return null;
+    }
+
+    $user = $sfUser->getGuardUser();
+
     return $user && $this['locked_by'] == $user['id'];
   }
 

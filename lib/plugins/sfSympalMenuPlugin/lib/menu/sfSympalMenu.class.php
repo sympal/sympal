@@ -226,22 +226,31 @@ abstract class sfSympalMenu
   {
     if ($this->checkUserAccess())
     {
-      $html = '<li class="'.Doctrine_Inflector::urlize($this->getName()).'">';
-
+      $html = '<li class="'.Doctrine_Inflector::urlize($this->getName()).'" '.($this->isCurrent() ? ' id="current"':null).'>';
       if ($this->_route)
       {
         $options = $this->getOptions();
-
+        if  ($this->isCurrent())
+        {
+          $options['class'] = 'current';
+        }
         sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+        $menuItem = $this->getMenuItem();
+
         $html .= link_to($this->getLabel(), $this->getRoute(), $options);
       } else {
         $html .= $this->getLabel();
       }
-
-      $html .= $this->_renderChildren();
-
+      if ($this->hasChildren() && $this->showChildren())
+      {
+        $html .= '<ul>';
+        foreach ($this->_children as $child)
+        {
+          $html .= $child->_render();
+        }
+        $html .= '</ul>';
+      }
       $html .= '</li>';
-
       return $html;
     }
   }

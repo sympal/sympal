@@ -14,7 +14,6 @@ class BaseContentTypeForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'        => new sfWidgetFormInputHidden(),
       'name'      => new sfWidgetFormInput(),
-      'label'     => new sfWidgetFormInput(),
       'list_path' => new sfWidgetFormInput(),
       'view_path' => new sfWidgetFormInput(),
       'layout'    => new sfWidgetFormInput(),
@@ -24,7 +23,6 @@ class BaseContentTypeForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'        => new sfValidatorDoctrineChoice(array('model' => 'ContentType', 'column' => 'id', 'required' => false)),
       'name'      => new sfValidatorString(array('max_length' => 255)),
-      'label'     => new sfValidatorString(array('max_length' => 255)),
       'list_path' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'view_path' => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'layout'    => new sfValidatorString(array('max_length' => 255, 'required' => false)),

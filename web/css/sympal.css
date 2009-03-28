@@ -629,19 +629,22 @@ table tr th {
   margin: 4px 0;
   padding: 4px 4px 4px 30px;
   background: url(../images/tick.png) no-repeat 10px 4px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
-  background-color: #ffc;
 }
 
 .error {
   margin: 4px 0;
   padding: 4px 4px 4px 30px;
   background: url(../images/error.png) no-repeat 10px 4px;
-  border-top: 1px solid #ddd;
-  border-bottom: 1px solid #ddd;
   background-color: #f33;
   color: #fff;
+}
+
+.notice, .error {
+  background-color: #ffc;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
 }
 
 ul.error_list
@@ -660,4 +663,20 @@ ul.error_list li
   list-style: none;
   color: #fff;
   background: url(../images/error.png) no-repeat 4px 4px;
+}
+
+#ask_confirmation {
+  padding: 12px;
+  background: #ffc;
+  border: 1px solid #ddd;
+}
+
+#ask_confirmation h2 {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+#ask_confirmation p {
+  margin-bottom: 10px;
 }

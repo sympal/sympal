@@ -1,9 +1,7 @@
 <?php
 
-class sympal_registerComponents extends sfComponents
+require_once dirname(__FILE__).'/../lib/Basesympal_registerComponents.class.php';
+
+class sympal_registerComponents extends Basesympal_registerComponents
 {
-  public function executeForm()
-  {
-    $this->form = sfSympalRegisterForm::getInstance();
-  }
 }

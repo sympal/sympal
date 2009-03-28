@@ -29,7 +29,7 @@ generator:
             Check to publish this content. Checking this will automatically set the
             date published value. An content will not be live until the published
             date has been reached.
-<?php if (sfSympalConfig::isI18nEnabled('menus')): ?> 
+<?php if (sfSympalConfig::isI18nEnabled('MenuItem')): ?> 
         en:
           help: Enter the menu item label for the current language.
 <?php else: ?> 
@@ -55,17 +55,7 @@ generator:
             label: Add New Menu
       filter:
         class: false
-      form:
-        display:
-          "NONE": [name]
-<?php if (sfSympalConfig::isI18nEnabled('menus')): ?> 
-          "Label": [en]
-<?php else: ?> 
-          "Label": [label]
-<?php endif; ?>
-          "Mapping": [parent_id, site_id, content_type_id, is_content_type_list, content_id, custom_path]
-          "Security": [requires_auth, requires_no_auth, groups_list, permissions_list]
-          "Publish": [is_published, date_published]
+      form: ~
       edit:
         actions:
           _delete:

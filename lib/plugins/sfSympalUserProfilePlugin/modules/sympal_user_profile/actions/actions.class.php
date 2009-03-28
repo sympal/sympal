@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__).'/../lib/Basesympal_user_profileActions.class.php';
+
 /**
  * sympal_user_profile actions.
  *
@@ -8,7 +10,7 @@
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z fabien $
  */
-class sympal_user_profileActions extends sfActions
+class sympal_user_profileActions extends Basesympal_user_profileActions
 {
   public function executeIndex(sfWebRequest $request)
   {

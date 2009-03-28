@@ -2,8 +2,8 @@
 
 class sfSympalPluginManagerDelete extends sfSympalPluginManagerUninstall
 {
-  public function delete($name, $contentTypeName = null)
+  public function delete()
   {
-    return self::uninstall($name, $contentTypeName, true);
+    return self::uninstall(true);
   }
 }

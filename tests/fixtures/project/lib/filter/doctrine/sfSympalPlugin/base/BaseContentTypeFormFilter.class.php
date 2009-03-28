@@ -15,7 +15,6 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'name'      => new sfWidgetFormFilterInput(),
-      'label'     => new sfWidgetFormFilterInput(),
       'list_path' => new sfWidgetFormFilterInput(),
       'view_path' => new sfWidgetFormFilterInput(),
       'layout'    => new sfWidgetFormFilterInput(),
@@ -24,7 +23,6 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'name'      => new sfValidatorPass(array('required' => false)),
-      'label'     => new sfValidatorPass(array('required' => false)),
       'list_path' => new sfValidatorPass(array('required' => false)),
       'view_path' => new sfValidatorPass(array('required' => false)),
       'layout'    => new sfValidatorPass(array('required' => false)),
@@ -48,7 +46,6 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
     return array(
       'id'        => 'Number',
       'name'      => 'Text',
-      'label'     => 'Text',
       'list_path' => 'Text',
       'view_path' => 'Text',
       'layout'    => 'Text',

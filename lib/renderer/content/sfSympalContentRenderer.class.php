@@ -133,7 +133,7 @@ class sfSympalContentRenderer
       $template = $content->getType()->getTemplate('View');
     }
 
-    return $this->_renderContentTemplate('View', $content, $template);
+    return $this->_renderContentTemplate('object', $content, $template);
   }
 
   protected function _getContentView(Content $content, $format = 'html')

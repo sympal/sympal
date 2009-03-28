@@ -38,6 +38,13 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
+    $this->_buildSympalInstallation($arguments, $options);
+    $this->_installSympalPlugins($arguments, $options);
+    $this->_executePostInstallSql($arguments, $options);
+  }
+
+  protected function _buildSympalInstallation($arguments = array(), $options = array())
+  {
     $dropDb = new sfDoctrineDropDbTask($this->dispatcher, $this->formatter);
     $dropDb->setCommandApplication($this->commandApplication);
 
@@ -79,11 +86,19 @@ EOF;
       $buildAllLoadOptions[] = '--dir='.sfConfig::get('sf_data_dir').'/fixtures';
     }
     $buildAllLoad->run(array(), $buildAllLoadOptions);
-
-    $this->_executePostInstallSql();
   }
 
-  protected function _executePostInstallSql()
+  protected function _installSympalPlugins($arguments = array(), $options = array())
+  {
+    $plugins = sfSympalTools::getAvailablePlugins();
+    foreach ($plugins as $plugin)
+    {
+      $manager = sfSympalPluginManager::getActionInstance($plugin, 'install');
+      $manager->install();
+    }
+  }
+
+  protected function _executePostInstallSql($arguments = array(), $options = array())
   {
     $dir = sfConfig::get('sf_data_dir').'/sql/sympal_install';
     if (is_dir($dir))

@@ -20,7 +20,7 @@ class sfSympalCommentsPluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event['menu'];
 
-    if (sfSympalConfig::get('Comments', 'enabled'))
+    if (sfSympalConfig::get('sfSympalCommentsPlugin', 'enabled'))
     {
       $commentTable = Doctrine::getTable('Comment')->getNumPending();
       $menu->getChild('Administration')->addChild('Comments ('.$commentTable.')', '@sympal_comments');
@@ -40,8 +40,6 @@ class sfSympalCommentsPluginConfiguration extends sfPluginConfiguration
     $form->addSetting('Comments', 'default_status', 'Default Status');
     $form->addSetting('Comments', 'enabled', 'Enabled', 'InputCheckbox', 'Boolean');
     $form->addSetting('Comments', 'enable_recaptcha', 'Enable Recaptcha', 'InputCheckbox', 'Boolean');
-    $form->addSetting('Comments', 'recaptcha_public_key', 'Recaptcha Public Key');
-    $form->addSetting('Comments', 'recaptcha_private_key', 'Recaptcha Private Key');
     $form->addSetting('Comments', 'requires_auth', 'Commenting Requires Authentication', 'InputCheckbox', 'Boolean');
   }
 }

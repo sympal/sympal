@@ -2,25 +2,15 @@
 
 class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 {
-  public function uninstall($name, $contentTypeName = null, $delete = false)
+  public function uninstall($delete = false)
   {
-    if (!$contentTypeName)
-    {
-      $contentTypeName = $this->getContentTypeForPlugin($name);
-    } else {
-      $contentTypeName = $this->getContentTypeForPlugin($name);
-    }
-
-    $pluginName = sfSympalTools::getLongPluginName($name);
-    $name = sfSympalTools::getShortPluginName($name);
-
-    sfSympalConfig::writeSetting($pluginName, 'installed', false);
+    $this->_disableProdApplication();
 
     $uninstallVars = array();
 
-    $this->logSection('sympal', 'Uninstall sympal plugin named '.$pluginName);
+    $this->logSection('sympal', 'Uninstall sympal plugin named '.$this->_pluginName);
 
-    $path = $this->configuration->getPluginConfiguration($pluginName)->getRootDir();
+    $path = $this->_configuration->getPluginConfiguration($this->_pluginName)->getRootDir();
     $schema = $path.'/config/doctrine/schema.yml';
 
     if (file_exists($schema))
@@ -30,14 +20,14 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
       sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
-      if ($contentTypeName)
+      if ($this->_contentTypeName)
       {
         $this->logSection('sympal', 'Delete content from database');
 
-        $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($name));
+        $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_name));
         $slug = 'sample-'.$lowerName;
 
-        $contentType = Doctrine::getTable('ContentType')->findOneByName($contentTypeName);
+        $contentType = Doctrine::getTable('ContentType')->findOneByName($this->_contentTypeName);
         Doctrine::getTable('ContentTemplate')
           ->createQuery('t')
           ->delete()
@@ -46,7 +36,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
         Doctrine::getTable('ContentType')
           ->createQuery('t')
           ->delete()
-          ->where('t.name = ?', $contentTypeName)
+          ->where('t.name = ?', $this->_contentTypeName)
           ->execute();
         Doctrine::getTable('Content')
           ->createQuery('e')
@@ -56,7 +46,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
         Doctrine::getTable('MenuItem')
           ->createQuery('m')
           ->delete()
-          ->where('m.name = ?', $name)
+          ->where('m.name = ?', $this->_name)
           ->execute();
 
         $this->logSection('sympal', 'Clear database tables of data');
@@ -95,14 +85,14 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       }
     }
 
-    $pluginConfig = $this->configuration->getPluginConfiguration($pluginName);
+    $pluginConfig = $this->_configuration->getPluginConfiguration($this->_pluginName);
 
     $createUninstall = false;
-    if (method_exists($pluginConfig, 'uninstall'))
+    if (method_exists($this, 'customUninstall'))
     {
-      $this->logSection('sympal', 'Calling '.$pluginName.'Configuration::uninstall()');
+      $this->logSection('sympal', 'Calling '.get_class($this).'::customUninstall()');
 
-      $pluginConfig->uninstall($uninstallVars, $this);
+      $this->customUninstall($uninstallVars);
     } else {
       $createUninstall = true;
     }
@@ -113,7 +103,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
       Doctrine_Lib::removeDirectories($path);
 
-      $path = sfConfig::get('sf_lib_dir').'/*/doctrine/'.$pluginName;
+      $path = sfConfig::get('sf_lib_dir').'/*/doctrine/'.$this->_pluginName;
       $dirs = glob($path);
       sfToolkit::clearGlob($path);
       foreach ($dirs as $dir)
@@ -128,11 +118,15 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
     if (isset($createUninstall) && $createUninstall)
     {
-      $this->logSection('sympal', 'On the '.$pluginName.'Configuration class you can define a uninstall() method to perform additional uninstall operaitons for your sympal plugin!');
+      $this->logSection('sympal', 'On the '.$this->_pluginName.'Configuration class you can define a uninstall() method to perform additional uninstall operaitons for your sympal plugin!');
     }
 
     chdir(sfConfig::get('sf_root_dir'));
-    $assets = new sfPluginPublishAssetsTask($this->dispatcher, $this->formatter);
+    $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
     $ret = @$assets->run(array(), array());
+
+    $this->_enableProdApplication();
+
+    sfSympalConfig::writeSetting($this->_pluginName, 'installed', false);
   }
 }

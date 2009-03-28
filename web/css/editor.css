@@ -23,22 +23,24 @@
 }
 
 #sympal_edit_panel ul {
-  margin: 0;
-  padding: 0;
-  margin-left: 20px;
-}
-
-#sympal_edit_panel ul li {
-  list-style-type: square;
-  padding-bottom: 5px;
-}
-
-#sympal_edit_panel .sympal_icon_list ul {
   margin-left: 5px;
 }
 
-#sympal_edit_panel .sympal_icon_list ul li {
+#sympal_edit_panel ul li {
   list-style-type: none;
+  font-weight: bold;
+  color: #3278B6;
+  font-size: 13px;
+}
+
+#sympal_edit_panel ul li ul li {
+  font-weight: normal;
+  color: #000;
+  line-height: 25px;
+}
+
+#sympal_edit_panel ul li ul li a {
+  text-decoration: none;
 }
 
 #sympal_admin_bar {

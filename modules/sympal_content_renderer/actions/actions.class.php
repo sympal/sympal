@@ -1,5 +1,7 @@
 <?php
 
+require_once dirname(__FILE__).'/../lib/Basesympal_content_rendererActions.class.php';
+
 /**
  * sympal_content actions.
  *
@@ -8,11 +10,6 @@
  * @author     Your name here
  * @version    SVN: $Id: actions.class.php 12479 2008-10-31 10:54:40Z jwage $
  */
-class sympal_content_rendererActions extends sfActions
+class sympal_content_rendererActions extends Basesympal_content_rendererActions
 {
-  public function executeIndex(sfWebRequest $request)
-  {
-    $sympalContext = sfSympalContext::getInstance();
-    $this->renderer = $sympalContext->getRenderer($this);
-  }
 }

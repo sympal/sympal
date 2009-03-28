@@ -111,7 +111,7 @@ class PluginContentTable extends Doctrine_Table
     return $this->getContentForSite($params, 'list');
   }
 
-  public function getContentForSite($params, $type)
+  public function getContentForSite($params, $type = 'object')
   {
     if ($type == 'object')
     {

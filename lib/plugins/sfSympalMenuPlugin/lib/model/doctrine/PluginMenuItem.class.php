@@ -87,12 +87,7 @@ abstract class PluginMenuItem extends BaseMenuItem
 
   public function getLabel()
   {
-    if ($this->getTable()->hasRelation('Translation'))
-    {
-      return $this->Translation['en']['label'];
-    } else {
-      return $this->_get('label') ? $this->_get('label'):$this->name;
-    }
+    return $this->_get('label') ? $this->_get('label'):$this->name;
   }
 
   public function getIndented()
@@ -131,7 +126,7 @@ abstract class PluginMenuItem extends BaseMenuItem
         {
           $route = '@sympal_content_type_'.$type['slug'];
         } else {
-          throw new sfException('MenuItem has invalid route.');
+          throw new sfException($this['name'].' menu item is not mapped to any route/url');
         }
       } else if (!$this->getContent() instanceof Doctrine_Null && $this->getContent()) {
         $route = $this->getContent()->getRoute();
@@ -144,7 +139,7 @@ abstract class PluginMenuItem extends BaseMenuItem
   {
     if (!$this->_breadcrumbs)
     {
-      $this->_breadcrumbs = new sfSympalMenuBreadcrumbs('Breadcrumbs');
+      $breadcrumbs = array();
 
       if ($this->getLevel() > 0)
       {
@@ -184,20 +179,8 @@ abstract class PluginMenuItem extends BaseMenuItem
         {
           $breadcrumbs[$subItem] = null;
         }
-
-        $count = 0;
-        $total = count($breadcrumbs);
-        foreach ($breadcrumbs as $name => $route)
-        {
-          $count++;
-          if ($count == $total)
-          {
-            $this->_breadcrumbs->addChild($name);
-          } else {
-            $this->_breadcrumbs->addChild($name, $route);
-          }
-        }
       }
+      $this->_breadcrumbs = sfSympalTools::generateBreadcrumbs($breadcrumbs);
     }
     return $this->_breadcrumbs;
   }

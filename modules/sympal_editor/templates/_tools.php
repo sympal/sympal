@@ -1,89 +1,35 @@
 <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>
 
-<?php use_stylesheet('http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css') ?>
+<?php use_stylesheet('/sfSympalPlugin/yui/container/assets/skins/sam/container.css') ?>
+<?php use_stylesheet('/sfSympalPlugin/yui/assets/skins/sam/skin.css') ?>
+<?php use_stylesheet('/sfSympalPlugin/yui/resize/assets/skins/sam/resize.css') ?>
 
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/yahoo-dom-event/yahoo-dom-event.js') ?>
 
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/container/container-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.2.2/build/connection/connection-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/dragdrop/dragdrop-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/container/container-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/connection/connection-min.js') ?>
 
-<?php use_stylesheet('http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/skin.css') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/element/element-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/container/container_core-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/menu/menu-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/button/button-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/editor/editor-min.js') ?>
 
-<?php use_stylesheet('http://yui.yahooapis.com/2.7.0/build/resize/assets/skins/sam/resize.css') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/utilities/utilities.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/resize/resize.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/yahoo-dom-event/yahoo-dom-event.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/element/element-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/container/container_core-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/menu/menu-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/button/button-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/editor/editor-min.js') ?>
+
+<?php use_javascript('/sfSympalPlugin/yui/utilities/utilities.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/resize/resize.js') ?>
 
 <?php use_javascript('/sfSympalPlugin/js/bubbling/dispatcher/dispatcher-min') ?>
 
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/animation/animation-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/animation/animation-min.js') ?>
 
 <div class="yui-skin-sam" id="sympal_edit_panel_container">
   <div id="sympal_edit_panel">
     <div class="hd">Sympal Editor Panel</div>
     <div class="bd">
-      <div class="sympal_icon_list">
-        <h3><?php echo $content['Type']['name'] ?> Editor</h3>
-
-        <ul>
-          <?php if ($content['locked_by']): ?>
-            <?php if ($content['locked_by'] == $sf_user->getGuardUser()->getId()): ?>
-              <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Un-Lock '.$content['Type']['name'], '@sympal_unlock_content?id='.$content['id']) ?></li>
-
-              <?php if ($sf_request->getParameter('module') == 'sympal_content'): ?>
-                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$content['Type']['name'].' Inline', $content->getRoute()) ?></li>
-              <?php else: ?>
-                <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit '.$content['Type']['name'].' Backend', '@sympal_content_edit?id='.$content['id']) ?></li>
-              <?php endif; ?>
-            <?php else: ?>
-              <li><?php echo $content['Type']['name'] ?> is currently locked by "<?php echo $content['LockedBy']['username'] ?>" and cannot be edited.</li>
-            <?php endif; ?>
-          <?php elseif (!$lock): ?>
-            <li><?php echo image_tag('/sfSympalPlugin/images/lock.gif').' '.link_to('Obtain Edit Lock', '@sympal_lock_content?id='.$content['id']) ?></li>
-          <?php elseif ($lock): ?>
-            <li>You still have an edit lock open on a <strong><?php echo $lock['Type']['name'] ?></strong> titled <strong><?php echo $lock->getHeaderTitle() ?></strong>.</li>
-            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Un-Lock '.$lock['Type']['name'], '@sympal_unlock_content?id='.$lock['id']) ?></li>
-            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Go Back to '.$lock->getHeaderTitle(), $lock->getRoute()) ?></li>
-          <?php endif; ?>
-
-          <?php if ($content['is_published']): ?>
-            <li>
-              <?php echo image_tag('/sf/sf_admin/images/cancel.png').' '.link_to('Un-Publish', '@sympal_unpublish_content?id='.$content['id']) ?>
-              <small>(Published on <strong><?php echo date('m/d/Y h:i:s', strtotime($content['date_published'])) ?></strong>)</small>
-            </li>
-          <?php else: ?>
-            <li><?php echo image_tag('/sf/sf_admin/images/tick.png').' '.link_to('Publish', '@sympal_publish_content?id='.$content['id']) ?></li>
-          <?php endif; ?>
-          <li><?php echo image_tag('/sf/sf_admin/images/delete.png').' '.link_to('Delete', '@sympal_content_delete?id='.$menuItem['id'], 'confirm=Are you sure you wish to delete this content?') ?></li>
-        </ul>
-
-        <?php if ($menuItem && $menuItem->exists()): ?>
-          <h3>Menu Editor</h3>
-          <ul>
-            <li><?php echo image_tag('/sf/sf_admin/images/edit.png').' '.link_to('Edit Menu Item', '@sympal_menu_items_edit?id='.$menuItem['id']) ?></li>
-            <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to('Add Child Menu Item', 'sympal_menu_items/ListNew?id='.$menuItem['id']) ?></li>
-            <li><?php echo image_tag('/sf/sf_admin/images/delete.png').' '.link_to('Delete', '@sympal_menu_items_delete?id='.$menuItem['id'], 'confirm=Are you sure you wish to delete this menu item?') ?></li>
-          </ul>
-        <?php endif; ?>
-
-        <h3><?php echo $content['Type']['label'] ?> Content</h3>
-
-        <ul>
-          <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to('Create', '@sympal_content_create_type?type='.$content['Type']['slug']) ?></li>
-          <li><?php echo image_tag('/sf/sf_admin/images/list.png').' '.link_to('List', '@sympal_content_type_'.$content['Type']['slug']) ?></li>
-        </ul>
-      </div>
-
-      <?php if (sfSympalConfig::isI18nEnabled()): ?>
-        <h3>Change Language</h3>
-        <?php echo get_component('sympal_editor', 'language') ?>
-      <?php endif; ?>
+      <?php echo $menu ?>
     </div>
   </div>
 </div>

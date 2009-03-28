@@ -22,23 +22,9 @@ class NewCommentForm extends CommentForm
     $this->widgetSchema['content_id'] = new sfWidgetFormInputHidden();
     $this->validatorSchema['content_id'] = new sfValidatorDoctrineChoice(array('model' => 'Content'));
 
-    if (sfSympalConfig::get('Comments', 'enable_recaptcha'))
+    if (sfSympalConfig::get('sfSympalCommentsPlugin', 'enable_recaptcha'))
     {
-      $settings = sfConfig::get('app_sympal_settings_Comments');
-      $publicKey = sfSympalConfig::get('Comments', 'recaptcha_public_key');
-      $privateKey = sfSympalConfig::get('Comments', 'recaptcha_private_key');
-  
-      if (!$publicKey || !$privateKey) {
-        throw new sfException('You must specify the recaptcha public and private key in your app.yml');
-      }
-
-      $this->widgetSchema['captcha'] = new sfWidgetFormReCaptcha(array(
-        'public_key' => $publicKey
-      ));
-
-      $this->validatorSchema['captcha'] = new sfValidatorReCaptcha(array(
-        'private_key' => $privateKey
-      ));
+      sfSympalTools::embedRecaptcha($this);
     }
   }
 }

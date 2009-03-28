@@ -1,13 +1,13 @@
 <?php
 sfContext::getInstance()->getConfiguration()->loadHelpers(array('Asset'));
 
-use_stylesheet('http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/skin.css');
-use_javascript('http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js');
-use_javascript('http://yui.yahooapis.com/2.7.0/build/element/element-min.js');
-use_javascript('http://yui.yahooapis.com/2.7.0/build/container/container_core-min.js');
-use_javascript('http://yui.yahooapis.com/2.7.0/build/menu/menu-min.js');
-use_javascript('http://yui.yahooapis.com/2.7.0/build/button/button-min.js');
-use_javascript('http://yui.yahooapis.com/2.7.0/build/editor/editor-min.js');
+use_stylesheet('/sfSympalPlugin/yui/assets/skins/sam/skin.css');
+use_javascript('/sfSympalPlugin/yui/yahoo-dom-event/yahoo-dom-event.js');
+use_javascript('/sfSympalPlugin/yui/element/element-min.js');
+use_javascript('/sfSympalPlugin/yui/container/container_core-min.js');
+use_javascript('/sfSympalPlugin/yui/menu/menu-min.js');
+use_javascript('/sfSympalPlugin/yui/button/button-min.js');
+use_javascript('/sfSympalPlugin/yui/editor/editor-min.js');
 
 class sfWidgetFormSympalRichText extends sfWidgetFormSympalMultiLineText
 {

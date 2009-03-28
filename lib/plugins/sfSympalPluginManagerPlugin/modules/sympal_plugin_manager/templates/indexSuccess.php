@@ -39,6 +39,6 @@
 </div>
 
 <?php slot('sympal_right_sidebar') ?>
-  <?php echo get_partial('sympal_plugin_manager/sidebar_plugin_list', array('link' => true, 'title' => 'Installed Sympal Plugins', 'plugins' => $installedPlugins)) ?>
+  <?php echo get_partial('sympal_plugin_manager/sidebar_plugin_list', array('link' => true, 'title' => 'Downloaded Sympal Plugins', 'plugins' => $installedPlugins)) ?>
   <?php echo get_partial('sympal_plugin_manager/sidebar_plugin_list', array('title' => 'Core Sympal Plugins', 'plugins' => $corePlugins)) ?>
 <?php end_slot() ?>

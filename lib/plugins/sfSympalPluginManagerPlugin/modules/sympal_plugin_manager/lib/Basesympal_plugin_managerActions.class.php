@@ -124,9 +124,8 @@ abstract class Basesympal_plugin_managerActions extends sfActions
     try {
       sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
-      $class = 'sfSympalPluginManager'.ucfirst($action);
-      $manager = new $class();
-      $manager->$action($pluginName);
+      $manager = sfSympalPluginManager::getActionInstance($pluginName, $action);
+      $manager->$action();
 
       sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
@@ -147,8 +146,10 @@ abstract class Basesympal_plugin_managerActions extends sfActions
     $request = $this->getRequest();
     $pluginName = $request->getParameter('plugin');
 
+    sfSympalTools::askConfirmation(ucfirst($action).' '.$pluginName, 'Are you sure you wish to run the action "'.$action.'" on the plugin named '.$pluginName.'?');
+
     $this->_executeAction($action, $pluginName);
 
-    $this->redirect($request->getReferer());
+    $this->redirect($request->getParameter('redirect_url'));
   }
 }

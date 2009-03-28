@@ -36,7 +36,7 @@ EOF;
       return 1;
     }
 
-    $pluginManager = new sfSympalPluginManagerUninstall();
+    $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'uninstall');
     $pluginManager->uninstall($arguments['name'], $options['content-type'], $options['delete']);
   }
 }

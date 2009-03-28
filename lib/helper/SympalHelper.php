@@ -7,6 +7,12 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null, $se
     return false;
   }
 
+  // If we were passed an array then generate manual breacrumbs from it
+  if (is_array($menuItem))
+  {
+    return sfSympalTools::generateBreadcrumbs($menuItem);
+  }
+
   if ($setTitle)
   {
     $breadcrumbs = $menuItem->getBreadcrumbs($content, $subItem);
@@ -44,7 +50,7 @@ function get_sympal_split_menus($name, $showChildren = true, $max = null, $split
 
 function get_sympal_comments($content)
 {
-  if (sfSympalConfig::get($content['Type']['name'], 'enable_comments'))
+  if (sfSympalConfig::get('sfSympalCommentsPlugin', 'enabled') && sfSympalConfig::get($content['Type']['name'], 'enable_comments'))
   {
     return get_component('sympal_comments', 'for_content', array('content' => $content));
   }
@@ -149,7 +155,7 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $defaultValue 
     $slot = $slots[$name];
   }
 
-  if (sfSympalTools::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()->getGuardUser()))
+  if (sfSympalTools::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()))
   {
     if ($slot->getValue())
     {

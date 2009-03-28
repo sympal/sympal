@@ -42,29 +42,29 @@
 
 [?php use_stylesheet('/sfSympalPlugin/css/editor') ?]
 
-[?php use_stylesheet('http://yui.yahooapis.com/2.7.0/build/container/assets/skins/sam/container.css') ?]
+[?php use_stylesheet('/sfSympalPlugin/yui/container/assets/skins/sam/container.css') ?]
 
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/yahoo-dom-event/yahoo-dom-event.js') ?]
 
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/dragdrop/dragdrop-min.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/container/container-min.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.2.2/build/connection/connection-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/dragdrop/dragdrop-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/container/container-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/connection/connection-min.js') ?]
 
-[?php use_stylesheet('http://yui.yahooapis.com/2.7.0/build/assets/skins/sam/skin.css') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/element/element-min.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/container/container_core-min.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/menu/menu-min.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/button/button-min.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/editor/editor-min.js') ?]
+[?php use_stylesheet('/sfSympalPlugin/yui/assets/skins/sam/skin.css') ?]
+[?php use_javascript('/sfSympalPlugin/yui/yahoo-dom-event/yahoo-dom-event.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/element/element-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/container/container_core-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/menu/menu-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/button/button-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/editor/editor-min.js') ?]
 
-[?php use_stylesheet('http://yui.yahooapis.com/2.7.0/build/resize/assets/skins/sam/resize.css') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/utilities/utilities.js') ?]
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/resize/resize.js') ?]
+[?php use_stylesheet('/sfSympalPlugin/yui/resize/assets/skins/sam/resize.css') ?]
+[?php use_javascript('/sfSympalPlugin/yui/utilities/utilities.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/resize/resize.js') ?]
 
 [?php use_javascript('/sfSympalPlugin/js/bubbling/dispatcher/dispatcher-min') ?]
 
-[?php use_javascript('http://yui.yahooapis.com/2.7.0/build/animation/animation-min.js') ?]
+[?php use_javascript('/sfSympalPlugin/yui/animation/animation-min.js') ?]
 
 <script>
 myPanel = new YAHOO.widget.Panel('test', {

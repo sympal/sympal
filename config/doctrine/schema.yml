@@ -100,6 +100,10 @@ ContentType:
   actAs:
     Sluggable:
       fields: [name]
+<?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
+    I18n:
+      fields: [label]
+<?php endif; ?>
   columns:
     id:
       type: integer(4)
@@ -136,7 +140,7 @@ ContentTemplate:
       foreignAlias: Templates
 
 ContentSlot:
-<?php if (sfSympalConfig::isI18nEnabled('slots')): ?> 
+<?php if (sfSympalConfig::isI18nEnabled('ContentSlot')): ?> 
   actAs:
     I18n:
       fields: [value]

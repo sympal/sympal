@@ -333,10 +333,10 @@ ContentType:
   ContentType_Page:
     name: Page
     label: Page
-<?php if (sfSympalConfig::isI18nEnabled('content_types')): ?> 
-    view_path: /:sf_culture/:slug
-    list_path: /:sf_culture/pages
+<?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
+    view_path: /pages/:sf_culture/:slug
+    list_path: /pages/:sf_culture
 <?php else: ?>
-    view_path: /:slug
+    view_path: /pages/:slug
     list_path: /pages
 <?php endif; ?>

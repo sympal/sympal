@@ -13,8 +13,9 @@ class sfSympalMarkdownRenderer
 
   public static function enhanceHtml($html)
   {
-    // Quote, tip, caution, note
-    $html = preg_replace('#<blockquote>\s*<p><strong>(quote|tip|caution|note)</strong>\:?#sie', '\'<blockquote class="\'.strtolower("$1").\'"><p>\'', $html);
+    $boxes = sfSympalConfig::get('markdown_styled_boxes', null, array('quote', 'tip', 'caution', 'note'));
+    $boxes = implode('|', $boxes);
+    $html = preg_replace('#<blockquote>\s*<p><strong>('.$boxes.')</strong>\:?#sie', '\'<blockquote class="\'.strtolower("$1").\'"><p>\'', $html);
 
     // Sidebar
     $html = preg_replace('#<blockquote>\s*<p><strong>sidebar</strong>\s*(.+?)\s*</p>#si', '<blockquote class="sidebar"><p class="title">$1</p>', $html);

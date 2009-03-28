@@ -3,8 +3,9 @@
 class sfSympalUser extends sfGuardSecurityUser
 {
   protected
-    $_forwarded = false,
-    $_flash     = false;
+    $_forwarded       = false,
+    $_flash           = false,
+    $_openContentLock = null;
 
   public function checkContentSecurity($content)
   {
@@ -36,32 +37,10 @@ class sfSympalUser extends sfGuardSecurityUser
 
     if ($mode == 'off')
     {
-      $user = $this->getGuardUser();
-      Doctrine::getTable('Content')
-        ->createQuery()
-        ->update()
-        ->set('locked_by', 'NULL')
-        ->where('locked_by = ?', $user->id)
-        ->execute();
+      $this->releaseOpenLock();
     }
+
     return $mode;
-  }
-
-  public function getOpenContentLock()
-  {
-    $q = Doctrine_Query::create()
-      ->from('Content e')
-      ->leftJoin('e.Type t')
-      ->andWhere('e.locked_by = ?', $this->getGuardUser()->getId());
-
-    $lock = $q->fetchOne();
-    if ($lock)
-    {
-      Doctrine::initializeModels(array($lock['Type']['name']));
-      return $lock;
-    } else {
-      return false;
-    }
   }
 
   public function addFlash($name, $value, $persist = true)
@@ -91,5 +70,73 @@ class sfSympalUser extends sfGuardSecurityUser
     $this->getAttributeHolder()->remove($type, null, 'symfony/user/sfUser/flash');
 
     return $flash;
+  }
+
+  public function obtainContentLock(Content $content)
+  {
+    if (!sfSympalTools::isEditMode())
+    {
+      return false;
+    }
+
+    $lock = $content->obtainLock($this);
+
+    if (is_bool($lock))
+    {
+      $title = $content->getHeaderTitle();
+      if ($lock)
+      {
+        $this->_openContentLock = $content;
+
+        $this->setFlash('notice', 'Lock obtained successfully on "'.$title.'"');
+      } else {
+        if ($content->locked_by)
+        {
+          $lockedBy = $content['LockedBy']['username'];
+          $this->setFlash('error', 'Lock could not be obtained on "'.$title.'" because the user "'.$lockedBy.'" is editing it');
+        } else {
+          $this->setFlash('error', 'Lock could not be obtained on "'.$title.'"');
+        }
+      }
+    }
+  }
+
+  public function getOpenContentLock()
+  {
+    if (!$this->_openContentLock)
+    {
+      $q = Doctrine_Query::create()
+        ->from('Content e')
+        ->leftJoin('e.Type t')
+        ->andWhere('e.locked_by = ?', $this->getGuardUser()->getId());
+
+      $lock = $q->fetchOne();
+      if ($lock)
+      {
+        Doctrine::initializeModels(array($lock['Type']['name']));
+        $this->_openContentLock = $lock;
+      } else {
+        $this->_openContentLock = false;
+      }
+    }
+
+    return $this->_openContentLock;
+  }
+
+  public function releaseOpenLock()
+  {
+    $user = $this->getGuardUser();
+
+    $count = Doctrine::getTable('Content')
+      ->createQuery()
+      ->update()
+      ->set('locked_by', 'NULL')
+      ->where('locked_by = ?', $user->id)
+      ->execute();
+
+    if ($count)
+    {
+      $this->setFlash('notice', 'Lock released on previous content');
+    }
   }
 }

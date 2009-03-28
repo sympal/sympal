@@ -64,13 +64,15 @@ class sfSympalContext
 
       sfSympalTools::changeLayout($content->getLayout());
 
+      $actions->getUser()->obtainContentLock($content);
+
       $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
     }
 
     return $renderer;
   }
 
-  public function quickRenderContentRecord($slug, $format = 'html')
+  public function quickRenderContent($slug, $format = 'html')
   {
     $content = Doctrine::getTable('Content')->getContentForSite(array('slug' => $slug));
     $menuItem = $content->getMenuItem();

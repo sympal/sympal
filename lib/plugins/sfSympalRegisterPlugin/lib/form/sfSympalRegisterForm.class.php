@@ -17,6 +17,11 @@ class sfSympalRegisterForm extends sfGuardUserAdminForm
     );
 
     $this->validatorSchema['password']->setOption('required', true);
+
+    if (sfSympalConfig::get('sfSympalRegisterPlugin', 'enable_recaptcha'))
+    {
+      sfSympalTools::embedRecaptcha($this);
+    }
   }
 
   public static function getInstance($record = null)

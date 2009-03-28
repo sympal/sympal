@@ -1,0 +1,4 @@
+all:
+  sympal_settings:
+    Page:
+      enable_comments: true

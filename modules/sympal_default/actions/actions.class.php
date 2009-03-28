@@ -1,11 +1,7 @@
 <?php
-class sympal_defaultActions extends sfActions
-{
-  public function executeSecure()
-  {
-  }
 
-  public function executeError404()
-  {
-  }
+require_once dirname(__FILE__).'/../lib/Basesympal_defaultActions.class.php';
+
+class sympal_defaultActions extends Basesympal_defaultActions
+{
 }

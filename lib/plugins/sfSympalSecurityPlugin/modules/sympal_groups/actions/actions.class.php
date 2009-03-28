@@ -1,7 +1,6 @@
 <?php
 
-require_once dirname(__FILE__).'/../lib/sympal_groupsGeneratorConfiguration.class.php';
-require_once dirname(__FILE__).'/../lib/sympal_groupsGeneratorHelper.class.php';
+require_once dirname(__FILE__).'/../lib/Basesympal_groupsActions.class.php';
 
 /**
  * sympal_groups actions.

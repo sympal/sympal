@@ -14,6 +14,6 @@ abstract class PluginContentTypeForm extends BaseContentTypeForm
     parent::setup();
 
     sfSympalTools::changeLayoutWidget($this);
-    sfSympalTools::embedI18n('content_types', $this);
+    sfSympalTools::embedI18n('ContentType', $this);
   }
 }

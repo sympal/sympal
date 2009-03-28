@@ -30,7 +30,7 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
 
     unset($this['Content'], $this['root_id'], $this['lft'], $this['rgt'], $this['level']);
 
-    sfSympalTools::embedI18n('menus', $this);
+    sfSympalTools::embedI18n('MenuItem', $this);
   }
   
   public function updateParentIdColumn($parentId)

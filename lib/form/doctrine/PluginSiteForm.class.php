@@ -14,6 +14,5 @@ abstract class PluginSiteForm extends BaseSiteForm
     parent::setup();
 
     sfSympalTools::changeLayoutWidget($this);
-    sfSympalTools::embedI18n('sites', $this);
   }
 }

@@ -1,11 +1,11 @@
 <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>
 
-<?php use_stylesheet('http://yui.yahooapis.com/2.7.0/build/menu/assets/skins/sam/menu.css') ?>
+<?php use_stylesheet('/sfSympalPlugin/yui/menu/assets/skins/sam/menu.css') ?>
 
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/yahoo-dom-event/yahoo-dom-event.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/animation/animation-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/container/container_core-min.js') ?>
-<?php use_javascript('http://yui.yahooapis.com/2.7.0/build/menu/menu-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/yahoo-dom-event/yahoo-dom-event.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/animation/animation-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/container/container_core-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/yui/menu/menu-min.js') ?>
 
 <div id="sympal_admin_bar_container" class="yui-skin-sam">
   <div id="sympal_admin_bar" class="yuimenubar yuimenubarnav">

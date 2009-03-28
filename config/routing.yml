@@ -70,18 +70,6 @@ sympal_save_editor_panel_position:
   url:   /save_editor_panel_position
   param: { module: sympal_editor, action: save_panel_position }
 
-sympal_lock_content:
-  url:   /lock_content/:id
-  param: { module: sympal_editor, action: lock_content }
-  class: sfDoctrineRoute
-  options: { model: Content, type: object }
-
-sympal_unlock_content:
-  url:   /unlock_content/:id
-  param: { module: sympal_editor, action: unlock_content }
-  class: sfDoctrineRoute
-  options: { model: Content, type: object }
-
 sympal_publish_content:
   url:   /publish_content/:id
   param: { module: sympal_editor, action: publish_content }
