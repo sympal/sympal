@@ -5,5 +5,9 @@ require_once(dirname(__FILE__).'/../../../../sfDoctrineGuardPlugin/modules/sfGua
 
 class Basesympal_authActions extends sfGuardAuthActions
 {
-  
+  public function executeSignin($request)
+  {
+    sfSympalToolkit::loadDefaultLayout();
+    parent::executeSignin($request);
+  }
 }

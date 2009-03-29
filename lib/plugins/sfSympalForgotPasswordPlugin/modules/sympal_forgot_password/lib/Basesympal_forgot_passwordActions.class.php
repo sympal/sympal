@@ -72,7 +72,7 @@ abstract class Basesympal_forgot_passwordActions extends sfActions
 
         $this->getUser()->setFlash('notice', 'Password updated successfully!');
 
-        $this->redirect('@sympal_login');
+        $this->redirect('@sympal_signin');
       }
     }
   }

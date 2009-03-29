@@ -31,8 +31,8 @@ foreach ($menuItems as $menuItem)
 }
 
 $browser->
-  get('/login')->
-  click('sign in', array('signin' => array('username' => 'admin', 'password' => 'admin')))->
+  get('/signin')->
+  post('/signin', array('signin' => array('username' => 'admin', 'password' => 'admin')))->
   isRedirected()->
   followRedirect()->
   with('user')->begin()->
@@ -46,6 +46,9 @@ $browser->
   followRedirect()
 ;
 
+$current = sfSympalConfig::get('sfSympalRegisterPlugin', 'enable_recaptcha');
+sfSympalConfig::set('sfSympalRegisterPlugin', 'enable_recaptcha', false);
+
 $browser->
   get('/register')->
   post('/register/save', array('sf_guard_user' => array('username' => 'test', 'password' => 'test', 'password_again' => 'test')))->
@@ -53,12 +56,14 @@ $browser->
   followRedirect()
 ;
 
+sfSympalConfig::set('sfSympalRegisterPlugin', 'enable_recaptcha', $current);
+
 $browser->
-  click('Logout')->
+  click('Signout')->
   isRedirected()->
   followRedirect()->
-  click('Login')->
-  click('sign in', array('signin' => array('username' => 'test', 'password' => 'test')))->
+  click('Signin')->
+  post('/signin', array('signin' => array('username' => 'test', 'password' => 'test')))->
   with('user')->begin()->
     isAuthenticated()->
   end()

@@ -573,6 +573,11 @@ table tr th {
   white-space: nowrap;
 }
 
+#sympal_breadcrumbs
+{
+  margin-bottom: 20px;
+}
+
 #sympal_breadcrumbs ul
 {
   font: 11px Arial, Helvetica, sans-serif;
@@ -680,4 +685,17 @@ ul.error_list li
 
 #ask_confirmation p {
   margin-bottom: 10px;
+}
+
+#sympal_signin_form {
+  padding: 20px;
+  padding-left: 80px;
+  padding-right: 80px;
+  background: #ffc;
+  border: 1px solid #ddd;
+  margin: 0 auto;
+  width: 250px;
+}
+
+#sympal_signin_form table {
 }

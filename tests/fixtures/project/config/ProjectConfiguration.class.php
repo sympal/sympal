@@ -14,16 +14,8 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
-    $sympalPluginPath = dirname(__FILE__).'/../../../..';
-    $this->setPluginPath('sfSympalPlugin', $sympalPluginPath);
-
-    require_once($sympalPluginPath.'/config/sfSympalPluginConfiguration.class.php');
-    $dependencies = sfSympalPluginConfiguration::$dependencies;
-    $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
-    foreach ($dependencies as $plugin)
-    {
-      $this->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
-    }
+    require_once(dirname(__FILE__).'/../../../../config/sfSympalPluginConfiguration.class.php');
+    sfSympalPluginConfiguration::enableSympalPlugins($this);
 
     $this->enableAllPluginsExcept(array('sfPropelPlugin', 'sfCompat10Plugin'));
   }

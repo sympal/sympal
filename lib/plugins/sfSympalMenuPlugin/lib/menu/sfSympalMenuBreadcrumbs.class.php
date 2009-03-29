@@ -11,4 +11,9 @@ class sfSympalMenuBreadcrumbs extends sfSympalMenuSite
 
     return implode(' > ', $children);
   }
+
+  public function __toString()
+  {
+    return '<div id="sympal_breadcrumbs">'.parent::__toString().'</div>';
+  }
 }

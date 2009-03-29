@@ -50,19 +50,31 @@ $user->username = 'test';
 $user->password = 'test';
 $user->save();
 
+class testMyUser extends myUser
+{
+  public function getGuardUser()
+  {
+    global $user;
+    return $user;
+  }
+}
+
+$sfUser = sfContext::getInstance()->getUser();
+$sfUser->signIn($user);
+
 $q = Doctrine::getTable('Content')
   ->getTypeQuery('Page')
   ->andWhere('e.slug = ?', 'testing-this-out');
 
 $content = $q->fetchOne();
 
-$t->is($content->userHasLock($user), false);
+$t->is($content->userHasLock($sfUser), false);
 
-$content->obtainLock($user);
-$t->is($content->userHasLock($user), true);
+$content->obtainLock($sfUser);
+$t->is($content->userHasLock($sfUser), true);
 
 $content->releaseLock();
-$t->is($content->userHasLock($user), false);
+$t->is($content->userHasLock($sfUser), false);
 
 $content->publish();
 $t->is($content->is_published, true);
@@ -95,7 +107,7 @@ $t->is($content->getHeaderTitle(), 'Testing this out');
 $t->is($content->getLayout(), 'sympal');
 $t->is($content->getRoute(), '@sympal_content_view_type_page?slug=testing-this-out');
 
-get_sympal_content_slot($content, 'title', 'Text', 'Test');
+get_sympal_content_slot($content, 'title', 'Text');
 get_sympal_content_slot($content, 'body', 'Markdown');
 get_sympal_content_slot($content, 'teaser', 'MultiLineText');
 

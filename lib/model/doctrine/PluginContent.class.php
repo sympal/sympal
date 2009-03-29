@@ -159,7 +159,10 @@ abstract class PluginContent extends BaseContent
 
   public function userHasLock(sfUser $sfUser = null)
   {
-    $sfUser = sfContext::getInstance()->getUser();
+    if (is_null($sfUser))
+    {
+      $sfUser = sfContext::getInstance()->getUser();
+    }
 
     if (!$sfUser->isAuthenticated())
     {

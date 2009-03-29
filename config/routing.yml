@@ -20,9 +20,13 @@ sympal_change_language:
   url:   /change_language
   param: { module: sympal_editor, action: change_language }
 
-sympal_logout:
-  url:   /logout
+sympal_signout:
+  url:   /signout
   param: { module: sympal_auth, action: signout }
+
+sympal_signin:
+  url:   /signin
+  param: { module: sympal_auth, action: signin }
 
 sympal_toggle_edit:
   url:   /toggle_edit

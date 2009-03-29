@@ -36,7 +36,7 @@
     </form>
   <?php else: ?>
     <div class="notice">
-    You must <?php echo link_to('login', '@sympal_login') ?> to post comments.
+    You must <?php echo link_to('signin', '@sympal_signin') ?> to post comments.
     If you don't already have an account then you can <?php echo link_to('register', '@sympal_register') ?>.
     </div>
   <?php endif; ?>

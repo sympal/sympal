@@ -20,6 +20,18 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   public
     $sympalConfiguration;
 
+  public static function enableSympalPlugins(ProjectConfiguration $configuration)
+  {
+    $sympalPluginPath = dirname(dirname(__FILE__));
+    $configuration->setPluginPath('sfSympalPlugin', $sympalPluginPath);
+    $dependencies = self::$dependencies;
+    $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
+    foreach ($dependencies as $plugin)
+    {
+      $configuration->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
+    }
+  }
+
   public function initialize()
   {
     $this->sympalConfiguration = sfSympalConfiguration::getSympalConfiguration($this->dispatcher, $this->configuration);
@@ -102,7 +114,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     $icon = $menu->getChild('Icon');
     $icon->addChild('Go To Homepage', '@sympal_homepage');
-    $icon->addChild('Logout', '@sympal_logout', 'confirm=Are you sure you wish to logout?');
+    $icon->addChild('Signout', '@sympal_signout', 'confirm=Are you sure you wish to signout?');
 
     $help = $icon->addChild('Help');
     $help->addChild('Logged in as '.$user->getGuardUser()->getUsername());

@@ -1,6 +1,6 @@
 <?php
 
-function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null, $setTitle = false)
+function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
 {
   if (!$menuItem)
   {
@@ -10,22 +10,17 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null, $se
   // If we were passed an array then generate manual breacrumbs from it
   if (is_array($menuItem))
   {
-    return sfSympalToolkit::generateBreadcrumbs($menuItem);
-  }
-
-  if ($setTitle)
-  {
+    $breadcrumbs = sfSympalToolkit::generateBreadcrumbs($menuItem);
+  } else {
     $breadcrumbs = $menuItem->getBreadcrumbs($content, $subItem);
-    $title = $breadcrumbs->getPathAsString();
-
-    sfContext::getInstance()->getResponse()->setTitle($title);
   }
 
-  $breadcrumbs = $menuItem->getBreadcrumbs();
+  $title = $breadcrumbs->getPathAsString();
+  sfContext::getInstance()->getResponse()->setTitle($title);
 
   if ($html = (string) $breadcrumbs)
   {
-    return '<div id="sympal_breadcrumbs">'.$html.'</div>';
+    return $html;
   } else {
     return false;
   }

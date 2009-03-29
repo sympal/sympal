@@ -1,3 +1,4 @@
+<?php set_sympal_title('Sympal Plugin Manager') ?>
 <?php use_stylesheet('/sfSympalPluginManagerPlugin/css/plugin_manager') ?>
 
 <div id="sympal_plugin_manager">

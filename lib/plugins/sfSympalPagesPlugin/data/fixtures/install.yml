@@ -25,18 +25,18 @@ MenuItem:
         Site: Site_default
         RelatedContent: Content_Page_register
         requires_no_auth: true
-      MenuItem_primary_login:
-        name: Login
+      MenuItem_primary_signin:
+        name: Signin
         is_published: true
-        label: Login
+        label: Signin
         Site: Site_default
-        RelatedContent: Content_Page_login
+        route: @sympal_signin
         requires_no_auth: true
-      MenuItem_primary_logout:
-        name: Logout
+      MenuItem_primary_signout:
+        name: Signout
         is_published: true
-        label: Logout
-        route: @sympal_logout
+        label: Signout
+        route: @sympal_signout
         Site: Site_default
         requires_auth: true
       Menuitem_primary_pages:
@@ -133,13 +133,6 @@ Content:
     custom_path: /register
     Slots: [Register_slot_title, Register_slot_body]
     CreatedBy: admin
-  Content_Page_login:
-    Type: ContentType_Page
-    slug: login
-    Site: Site_default
-    is_published: true
-    Slots: [Login_slot_title, Login_slot_body]
-    CreatedBy: admin
   Content_Page_home:
     Type: ContentType_Page
     slug: home
@@ -189,15 +182,6 @@ ContentSlot:
     Type: ContentSlotType_Markdown
     value: |
       [?php echo get_component('sympal_register', 'form') ?]
-  Login_slot_title:
-    name: title
-    Type: ContentSlotType_Text
-    value: Sympal Login
-  Login_slot_body:
-    name: body
-    Type: ContentSlotType_Markdown
-    value: |
-      [?php echo get_component('sympal_auth', 'signin_form') ?]
   Home_slot_title:
     name: title
     Type: ContentSlotType_Text
@@ -209,7 +193,7 @@ ContentSlot:
       You can check out some markdown examples by clicking the "Examples" 
       link in the menu to the left, or you can read about sympal by clicking "About".
       
-      If you wish to preview the admin functionality of sympal you can login 
+      If you wish to preview the admin functionality of sympal you can signin 
       below using "admin" as both the username and password.
 
       [?php if (!$sf_user->isAuthenticated()): ?]
@@ -307,10 +291,6 @@ ContentSlot:
       >Testing
 
 Page:
-  login:
-    title: Login
-    Content: Content_Page_login
-    disable_comments: true
   register:
     title: Register
     Content: Content_Page_register
