@@ -55,7 +55,7 @@
     </div>
     <!-- end left column -->
 
-    <?php $subMenu = get_sympal_menu(sfSympalTools::getCurrentMenuItem(), true) ?>
+    <?php $subMenu = get_sympal_menu(sfSympalToolkit::getCurrentMenuItem(), true) ?>
     <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
       <?php use_stylesheet('/sfSympalPlugin/css/right.css') ?>
       <!-- right column -->

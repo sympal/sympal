@@ -14,25 +14,26 @@ abstract class sfSympalPluginManager
   protected static
     $_lockFile = null;
 
-  public function __construct($name)
+  public function __construct($name, ProjectConfiguration $configuration = null, sfFormatter $formatter = null)
   {
-    $this->_name = sfSympalTools::getShortPluginName($name);
-    $this->_pluginName = sfSympalTools::getLongPluginName($this->_name);
+    $this->_name = sfSympalPluginToolkit::getShortPluginName($name);
+    $this->_pluginName = sfSympalPluginToolkit::getLongPluginName($this->_name);
     $this->_contentTypeName = $this->getContentTypeForPlugin($this->_pluginName);
-    $this->_configuration = ProjectConfiguration::getActive();
+
+    $this->_configuration = is_null($configuration) ? ProjectConfiguration::getActive():$configuration;
     $this->_dispatcher = $this->_configuration->getEventDispatcher();
-    $this->_formatter = new sfFormatter();
+    $this->_formatter = is_null($formatter) ? new sfFormatter():$formatter;
     $this->_filesystem = new sfFilesystem($this->_dispatcher, $this->_formatter);
   }
 
-  public static function getActionInstance($pluginName, $action)
+  public static function getActionInstance($pluginName, $action, ProjectConfiguration $configuration = null, sfFormatter $formatter = null)
   {
     $class = $pluginName.ucfirst($action);
     if (!class_exists($class))
     {
       $class = 'sfSympalPluginManager'.ucfirst($action);
     }
-    return new $class($pluginName);
+    return new $class($pluginName, $configuration, $formatter);
   }
 
   public function logSection($section, $message, $size = null, $style = 'INFO')
@@ -120,33 +121,35 @@ abstract class sfSympalPluginManager
 
   public function getContentTypeForPlugin($name)
   {
-    $pluginName = sfSympalTools::getLongPluginName($name);
-    $path = ProjectConfiguration::getActive()->getPluginConfiguration($pluginName)->getRootDir();
-    $schema = $path.'/config/doctrine/schema.yml';
+    try {
+      $pluginName = sfSympalPluginToolkit::getLongPluginName($name);
+      $path = ProjectConfiguration::getActive()->getPluginConfiguration($pluginName)->getRootDir();
+      $schema = $path.'/config/doctrine/schema.yml';
 
-    if (file_exists($schema))
-    {
-      $array = (array) sfYaml::load($schema);
-      foreach ($array as $modelName => $model)
+      if (file_exists($schema))
       {
-        if (isset($model['actAs']) && !empty($model['actAs']))
+        $array = (array) sfYaml::load($schema);
+        foreach ($array as $modelName => $model)
         {
-          foreach ($model['actAs'] as $key => $value)
+          if (isset($model['actAs']) && !empty($model['actAs']))
           {
-            if (is_numeric($key))
+            foreach ($model['actAs'] as $key => $value)
             {
-              $name = $value;
-            } else {
-              $name = $key;
-            }
-            if ($name == 'sfSympalContentType')
-            {
-              return $modelName;
+              if (is_numeric($key))
+              {
+                $name = $value;
+              } else {
+                $name = $key;
+              }
+              if ($name == 'sfSympalContentType')
+              {
+                return $modelName;
+              }
             }
           }
         }
       }
-    }
+    } catch (Exception $e) {}
 
     return false;
   }

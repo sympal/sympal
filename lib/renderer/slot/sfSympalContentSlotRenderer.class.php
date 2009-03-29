@@ -28,7 +28,7 @@ class sfSympalContentSlotRenderer
           'content' => $this->_contentSlot->RelatedContent,
           'menuItem' => $this->_contentSlot->RelatedContent->MenuItem
         );
-        $value = sfSympalTools::processPhpCode($value, $variables);
+        $value = sfSympalToolkit::processPhpCode($value, $variables);
       }
   
       $this->_rawValue = $value;

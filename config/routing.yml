@@ -28,6 +28,14 @@ sympal_toggle_edit:
   url:   /toggle_edit
   param: { module: sympal_editor, action: toggle_edit }
 
+sympal_edit_column_content_slot:
+  url:   /edit_column_content_slot/:id/:name
+  param: { module: sympal_editor, action: edit_slot, is_column: true }
+  class: sfDoctrineRoute
+  options:
+    model: ContentSlot
+    type: object
+
 sympal_edit_content_slot:
   url:   /edit_content_slot/:id
   param: { module: sympal_editor, action: edit_slot }
@@ -57,6 +65,14 @@ sympal_preview_content_slot:
   requirements:
     id: \d+
     sf_method: [POST]
+
+sympal_change_column_content_slot_type:
+  url:   /change_column_content_slot_type/:id/:type/:name
+  param: { module: sympal_editor, action: change_content_slot_type, is_column: true }
+  class: sfDoctrineRoute
+  options:
+    model: ContentSlot
+    type: object
 
 sympal_change_content_slot_type:
   url:   /change_content_slot_type/:id/:type

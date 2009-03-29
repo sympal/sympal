@@ -90,10 +90,10 @@ EOF;
 
   protected function _installSympalPlugins($arguments = array(), $options = array())
   {
-    $plugins = sfSympalTools::getAvailablePlugins();
+    $plugins = $this->configuration->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getOtherPlugins();
     foreach ($plugins as $plugin)
     {
-      $manager = sfSympalPluginManager::getActionInstance($plugin, 'install');
+      $manager = sfSympalPluginManager::getActionInstance($plugin, 'install', $this->configuration, $this->formatter);
       $manager->install();
     }
   }

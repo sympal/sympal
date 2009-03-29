@@ -24,7 +24,7 @@ class NewCommentForm extends CommentForm
 
     if (sfSympalConfig::get('sfSympalCommentsPlugin', 'enable_recaptcha'))
     {
-      sfSympalTools::embedRecaptcha($this);
+      sfSympalFormToolkit::embedRecaptcha($this);
     }
   }
 }

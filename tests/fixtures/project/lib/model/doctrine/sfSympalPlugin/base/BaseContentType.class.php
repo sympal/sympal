@@ -28,8 +28,6 @@ abstract class BaseContentType extends sfSympalDoctrineRecord
                                                              'foreign' => 'content_type_id'));
 
         $sluggable0 = new Doctrine_Template_Sluggable(array('fields' => array(0 => 'name')));
-        $i18n0 = new Doctrine_Template_I18n(array('fields' => array(0 => 'label')));
         $this->actAs($sluggable0);
-        $this->actAs($i18n0);
     }
 }

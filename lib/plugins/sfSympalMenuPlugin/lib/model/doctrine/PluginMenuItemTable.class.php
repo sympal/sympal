@@ -13,7 +13,7 @@ class PluginMenuItemTable extends Doctrine_Table
       ->andWhere('m.is_content_type_list = 1')
       ->limit(1);
 
-    if (!sfSympalTools::isEditMode())
+    if (!sfSympalToolkit::isEditMode())
     {
       $q->andWhere('m.is_published = 1');
     }

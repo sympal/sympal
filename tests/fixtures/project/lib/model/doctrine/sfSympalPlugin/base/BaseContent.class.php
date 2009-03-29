@@ -78,7 +78,9 @@ abstract class BaseContent extends sfSympalDoctrineRecord
 
         $sluggable0 = new Doctrine_Template_Sluggable();
         $timestampable0 = new Doctrine_Template_Timestampable();
+        $sfsympalcontent0 = new sfSympalContent();
         $this->actAs($sluggable0);
         $this->actAs($timestampable0);
+        $this->actAs($sfsympalcontent0);
     }
 }

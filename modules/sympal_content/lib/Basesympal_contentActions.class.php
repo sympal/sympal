@@ -5,7 +5,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
   public function preExecute()
   {
     parent::preExecute();
-    if (!sfSympalTools::isEditMode())
+    if (!sfSympalToolkit::isEditMode())
     {
       $this->getUser()->setFlash('error', 'In order to work with content you must turn on edit mode!');
       $this->redirect('@homepage');

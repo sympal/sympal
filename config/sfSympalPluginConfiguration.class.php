@@ -117,7 +117,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $help->addChild('Report Doctrine Bug', 'http://trac.doctrine-project.org', 'target=_BLANK');
     $help->addChild('Report symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK');
 
-    if (sfSympalTools::isEditMode())
+    if (sfSympalToolkit::isEditMode())
     {
       $content = $menu->addChild('Content', '@sympal_content');
       $contentTypes = Doctrine::getTable('ContentType')->findAll();

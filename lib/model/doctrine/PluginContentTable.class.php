@@ -150,7 +150,7 @@ class PluginContentTable extends Doctrine_Table
       ->leftJoin('e.MenuItem mm')
       ->innerJoin('e.Site esi WITH esi.slug = ?', $sympalContext->getSite());
 
-    if (!sfSympalTools::isEditMode())
+    if (!sfSympalToolkit::isEditMode())
     {
       $q->andWhere('e.is_published = 1');
     }

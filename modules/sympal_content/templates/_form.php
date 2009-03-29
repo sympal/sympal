@@ -26,13 +26,6 @@
         <?php endif; ?>
       <?php endforeach; ?>
 
-      <?php foreach ($form->getObject()->getSlots() as $slot): ?>
-        <fieldset>
-          <legend>Edit Slot: <?php echo $slot['name'] ?></legend>
-          <?php echo get_sympal_content_slot($form->getObject(), $slot['name']) ?>
-        </fieldset>
-      <?php endforeach; ?>
-
       <?php echo get_partial('sympal_content/form_part', array('name' => 'Publish', 'form' => $form, 'fields' => array('is_published', 'date_published'))) ?>
     </div>
 

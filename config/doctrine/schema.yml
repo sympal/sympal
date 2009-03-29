@@ -13,7 +13,7 @@ Site:
     description: clob
 
 Content:
-  actAs: [Sluggable, Timestampable]
+  actAs: [Sluggable, Timestampable, sfSympalContent]
   columns:
     id:
       type: integer(4)
@@ -100,10 +100,6 @@ ContentType:
   actAs:
     Sluggable:
       fields: [name]
-<?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
-    I18n:
-      fields: [label]
-<?php endif; ?>
   columns:
     id:
       type: integer(4)
@@ -156,6 +152,9 @@ ContentSlot:
     content_slot_type_id:
       type: integer(4)
       notnull: true
+    is_column:
+      type: boolean
+      default: false
     name:
       type: string(255)
       notnull: true

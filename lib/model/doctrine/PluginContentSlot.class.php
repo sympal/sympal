@@ -5,6 +5,8 @@
  */
 abstract class PluginContentSlot extends BaseContentSlot
 {
+  protected $_saveContent = false;
+
   public function render()
   {
     $class = 'sfSympalContentSlot'.$this->Type->name.'Renderer';
@@ -16,13 +18,30 @@ abstract class PluginContentSlot extends BaseContentSlot
     return (string) $renderer;
   }
 
+  public function construct()
+  {
+    $this->setValue($this->getValue());
+  }
+
   public function getValue()
   {
-    return $this->getI18n('value');
+    if ($this->is_column)
+    {
+      $name = $this->name;
+      return $this->RelatedContent->$name;
+    } else {
+      return $this->getI18n('value');
+    }
   }
 
   public function setValue($value)
   {
-    return $this->setI18n('value', $value);
+    if ($this->is_column)
+    {
+      $name = $this->name;
+      return $this->RelatedContent->$name = $value;
+    } else {
+      return $this->setI18n('value', $value);
+    }
   }
 }

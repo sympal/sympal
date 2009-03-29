@@ -19,7 +19,7 @@ class Basesympal_commentsActions extends autoSympal_commentsActions
       $this->form->setDefault('user_id', $this->getUser()->getGuardUser()->getId());
     }
 
-    sfSympalTools::bindFormRecaptcha($this->form, sfSympalConfig::get('sfSympalCommentsPlugin', 'enable_recaptcha'));
+    sfSympalFormToolkit::bindFormRecaptcha($this->form, sfSympalConfig::get('sfSympalCommentsPlugin', 'enable_recaptcha'));
 
     if ($this->form->isValid())
     {

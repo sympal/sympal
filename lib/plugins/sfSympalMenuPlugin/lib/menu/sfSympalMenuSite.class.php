@@ -61,7 +61,7 @@ class sfSympalMenuSite extends sfSympalMenu
     $this->requiresNoAuth($menuItem->requires_no_auth);
     $this->setCredentials($menuItem->getAllPermissions());
 
-    $currentMenuItem = sfSympalTools::getCurrentMenuItem();
+    $currentMenuItem = sfSympalToolkit::getCurrentMenuItem();
 
     if ($currentMenuItem && $currentMenuItem->exists())
     {

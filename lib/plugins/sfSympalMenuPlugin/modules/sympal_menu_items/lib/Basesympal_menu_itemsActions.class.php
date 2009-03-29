@@ -18,7 +18,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executeEdit(sfWebRequest $request)
   {
     parent::executeEdit($request);
-    sfSympalTools::setCurrentMenuItem($this->menu_item);
+    sfSympalToolkit::setCurrentMenuItem($this->menu_item);
   }
 
   protected function addSortQuery($query)

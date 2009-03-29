@@ -10,6 +10,5 @@ all:
       enabled: true
       ContentSlot: true
       MenuItem: true
-      ContentType: true
     sympal_plugin_svn_sources: ["http://svn.symfony-project.com/plugins"]
     markdown_styled_boxes: [quote, tip, caution, note]

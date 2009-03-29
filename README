@@ -387,7 +387,7 @@ The function accepts a second argument for whether or not to display the menu hi
 You can also get a submenu based on another menu item. It will return a menu with the children of the menu item you passed. In the below example we get the sub menu for the current menu item.
 
     [php]
-    $menuItem = sfSympalTools::getCurrentMenuItem();
+    $menuItem = sfSympalToolkit::getCurrentMenuItem();
     echo get_sympal_menu($menuItem);
 
 #### Performance

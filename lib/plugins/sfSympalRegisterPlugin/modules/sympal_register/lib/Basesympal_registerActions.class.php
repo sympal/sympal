@@ -6,7 +6,7 @@ class Basesympal_registerActions extends sfActions
   {
     $this->form = sfSympalRegisterForm::getInstance();
 
-    sfSympalTools::bindFormRecaptcha($this->form, sfSympalConfig::get('sfSympalRegisterPlugin', 'enable_recaptcha'));
+    sfSympalFormToolkit::bindFormRecaptcha($this->form, sfSympalConfig::get('sfSympalRegisterPlugin', 'enable_recaptcha'));
 
     if ($this->form->isValid())
     {

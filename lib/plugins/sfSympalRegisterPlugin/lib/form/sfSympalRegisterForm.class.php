@@ -20,7 +20,7 @@ class sfSympalRegisterForm extends sfGuardUserAdminForm
 
     if (sfSympalConfig::get('sfSympalRegisterPlugin', 'enable_recaptcha'))
     {
-      sfSympalTools::embedRecaptcha($this);
+      sfSympalFormToolkit::embedRecaptcha($this);
     }
   }
 

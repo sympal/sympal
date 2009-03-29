@@ -9,7 +9,6 @@ class sfSympalPluginUninstallTask extends sfBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('content-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the content type to remove', null),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'sympal'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('delete', null, sfCommandOption::PARAMETER_NONE, 'Delete the plugin files.'),
@@ -29,14 +28,14 @@ EOF;
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    if (!$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.sfSympalTools::getLongPluginName($arguments['name']), 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.sfSympalPluginToolkit::getLongPluginName($arguments['name']), 'Are you sure you want to proceed? (y/N)'), null, false))
     {
       $this->logSection('sympal', 'Plugin uninstall aborted');
 
       return 1;
     }
 
-    $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'uninstall');
-    $pluginManager->uninstall($arguments['name'], $options['content-type'], $options['delete']);
+    $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'uninstall', $this->configuration, $this->formatter);
+    $pluginManager->uninstall($options['delete']);
   }
 }

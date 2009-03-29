@@ -31,25 +31,25 @@ EOF;
     {
       $this->logSection('sympal', 'Check sources for sympal plugins');
 
-      $plugins = sfSympalTools::getAvailablePlugins();
+      $plugins = sfSympalPluginToolkit::getAvailablePlugins();
       if (!empty($plugins))
       {
         $this->logSection('sympal', 'Found '.count($plugins).' Sympal Plugin(s)');
         $this->logSection('sympal', str_repeat('-', 30));
         foreach ($plugins as $plugin)
         {
-          $name = sfSympalTools::getShortPluginName($plugin);
+          $name = sfSympalPluginToolkit::getShortPluginName($plugin);
           $this->logSection('sympal', $plugin.' [php symfony sympal:plugin-download '.$name.' --install]');
         }
       } else {
         throw new sfException('No sympal plugins found');
       }
     } else {
-      $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'download');
-      $pluginManager->download($arguments['name']);
+      $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'download', $this->configuration, $this->formatter);
+      $pluginManager->download();
 
-      $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install');
-      $pluginManager->install($arguments['name']);
+      $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install', $this->configuration, $this->formatter);
+      $pluginManager->install();
     }
   }
 }

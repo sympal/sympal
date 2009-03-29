@@ -180,7 +180,7 @@ abstract class PluginMenuItem extends BaseMenuItem
           $breadcrumbs[$subItem] = null;
         }
       }
-      $this->_breadcrumbs = sfSympalTools::generateBreadcrumbs($breadcrumbs);
+      $this->_breadcrumbs = sfSympalToolkit::generateBreadcrumbs($breadcrumbs);
     }
     return $this->_breadcrumbs;
   }

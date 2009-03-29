@@ -74,7 +74,7 @@ class sfSympalUser extends sfGuardSecurityUser
 
   public function obtainContentLock(Content $content)
   {
-    if (!sfSympalTools::isEditMode())
+    if (!sfSympalToolkit::isEditMode())
     {
       return false;
     }

@@ -10,7 +10,7 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null, $se
   // If we were passed an array then generate manual breacrumbs from it
   if (is_array($menuItem))
   {
-    return sfSympalTools::generateBreadcrumbs($menuItem);
+    return sfSympalToolkit::generateBreadcrumbs($menuItem);
   }
 
   if ($setTitle)
@@ -58,12 +58,12 @@ function get_sympal_comments($content)
 
 function get_sympal_editor($menuItem = null, $content = null)
 {
-  $menuItem = $menuItem ? $menuItem:sfSympalTools::getCurrentMenuItem();
-  $content = $content ? $content:sfSympalTools::getCurrentContent();
+  $menuItem = $menuItem ? $menuItem:sfSympalToolkit::getCurrentMenuItem();
+  $content = $content ? $content:sfSympalToolkit::getCurrentContent();
 
   $editor = '';
 
-  if (sfSympalTools::isEditMode() && $content && $menuItem)
+  if (sfSympalToolkit::isEditMode() && $content && $menuItem)
   {
     $editor .= get_component('sympal_editor', 'tools', array('content' => $content, 'menuItem' => $menuItem));
   }
@@ -122,10 +122,14 @@ function get_sympal_pager_navigation($pager, $uri)
   return $navigation;
 }
 
-function get_sympal_content_slot($content, $name, $type = 'Text', $defaultValue = '[Double click to edit slot content]')
+function get_sympal_column_content_slot($content, $name, $type = 'Text', $holderTag = 'div')
 {
-  $user = sfContext::getInstance()->getUser();
+  return get_sympal_content_slot($content, $name, $type, true, $holderTag);
+}
 
+function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $holderTag = 'div')
+{
+  $defaultValue = '[Double click to edit slot content]';
   $slotsCollection = $content->getSlots();
   $slots = array();
   foreach ($slotsCollection as $slot)
@@ -137,15 +141,18 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $defaultValue 
   {
     $slot = new ContentSlot();
     $slot->content_id = $content->id;
+    $slot->is_column = $isColumn;
 
     if (!$slot->exists())
     {
       $type = Doctrine::getTable('ContentSlotType')->findOneByName($type);
+
       if (!$type)
       {
         $type = new ContentSlotType();
         $type->setName($type);
       }
+
       $slot->setType($type);
       $slot->setName($name);
     }
@@ -155,7 +162,7 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $defaultValue 
     $slot = $slots[$name];
   }
 
-  if (sfSympalTools::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()))
+  if (sfSympalToolkit::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()))
   {
     if ($slot->getValue())
     {
@@ -164,9 +171,14 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $defaultValue 
       $contentSlot = $defaultValue;
     }
 
-    $html  = '<div class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
+    $html  = '<'.$holderTag.' class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
     $html .= $contentSlot;
-    $html .= '</div>';
+    $html .= '</'.$holderTag.'>';
+
+    if ($isColumn)
+    {
+      $html .= '<input type="hidden" id="content_slot_'.$slot['id'].'_is_column" value="'.$slot['name'].'" />';
+    }
 
     $editor  = '<div class="sympal_edit_slot_box yui-skin-sam">';
     $editor .= '<div id="edit_content_slot_'.$slot['id'].'">';

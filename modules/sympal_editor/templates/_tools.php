@@ -56,12 +56,20 @@ function unhighlight_sympal_content_slot(id)
 var interval;
 function edit_sympal_content_slot(id)
 {
-	var url = "<?php echo url_for('@sympal_edit_content_slot?id=##REPLACE##', 'absolute=true') ?>";
-	url = url.replace('##REPLACE##', id);
+  var hiddenName = document.getElementById('content_slot_'+id+'_is_column');
+  if (hiddenName)
+  {
+    var name = hiddenName.value
+    var url = "<?php echo url_for('@sympal_edit_column_content_slot?id=ID&name=NAME', 'absolute=true') ?>";
+    url = url.replace('NAME', name);
+  } else {
+  	var url = "<?php echo url_for('@sympal_edit_content_slot?id=ID', 'absolute=true') ?>";
+  }
 
   interval = setInterval(function() { preview_sympal_content_slot(id) }, 500);
 
-  YAHOO.plugin.Dispatcher.fetch('edit_content_slot_content_' + id, url);
+  url = url.replace('ID', id);
+  YAHOO.plugin.Dispatcher.fetch('edit_content_slot_content_' + id, url);    
 }
 
 function preview_sympal_content_slot(id)
@@ -74,12 +82,12 @@ function preview_sympal_content_slot(id)
   changed = false;
   clearInterval(interval);
 
-	var url = "<?php echo url_for('@sympal_preview_content_slot?id=##REPLACE##', 'absolute=true') ?>";
-	url = url.replace('##REPLACE##', id);
+	var url = "<?php echo url_for('@sympal_preview_content_slot?id=ID', 'absolute=true') ?>";
+	url = url.replace('ID', id);
 
 	var callback = {
 		success: function(o) {
-			document.getElementById('edit_content_slot_button_' + id).innerHTML = o.responseText;
+			  document.getElementById('edit_content_slot_button_' + id).innerHTML = o.responseText;
 			}
 		} 
 
@@ -88,26 +96,37 @@ function preview_sympal_content_slot(id)
 
 function save_sympal_content_slot(id)
 {
-	var url = "<?php echo url_for('@sympal_save_content_slot?id=888', 'absolute=true') ?>";
-	url = url.replace('888', id);
-
   highlight_sympal_content_slot(id);
+
+	var url = "<?php echo url_for('@sympal_save_content_slot?id=ID', 'absolute=true') ?>";
+	url = url.replace('ID', id);
 
 	var callback = {
 		success: function(o) {
-			document.getElementById('edit_content_slot_button_' + id).innerHTML = o.responseText;
-			unhighlight_sympal_content_slot(id);
+			  document.getElementById('edit_content_slot_button_' + id).innerHTML = o.responseText;
+			  unhighlight_sympal_content_slot(id);
 			}
 		} 
 
-	YAHOO.util.Connect.asyncRequest('POST', url, callback, 'value=' + escape(document.getElementById('content_slot_value_' + id).value));
+  var formObject = document.getElementById('edit_content_slot_form_' + id);
+  YAHOO.util.Connect.setForm(formObject);
+  var cObj = YAHOO.util.Connect.asyncRequest('POST', url, callback);
 }
 
 function change_content_slot_type(id, slotTypeId)
 {
-	var url = "<?php echo url_for('@sympal_change_content_slot_type?id=888&type=999', 'absolute=true') ?>";
-	url = url.replace('888', id);
-  url = url.replace('999', slotTypeId);
+  var hiddenName = document.getElementById('content_slot_'+id+'_is_column');
+  if (hiddenName)
+  {
+    var name = hiddenName.value
+    var url = "<?php echo url_for('@sympal_change_column_content_slot_type?name=NAME&id=ID&type=TYPE', 'absolute=true') ?>";
+    url = url.replace('NAME', name);
+  } else {
+	  var url = "<?php echo url_for('@sympal_change_content_slot_type?id=ID&type=TYPE', 'absolute=true') ?>";
+  }
+	
+	url = url.replace('ID', id);
+  url = url.replace('TYPE', slotTypeId);
 
   YAHOO.plugin.Dispatcher.fetch('edit_content_slot_content_' + id, url);
 }

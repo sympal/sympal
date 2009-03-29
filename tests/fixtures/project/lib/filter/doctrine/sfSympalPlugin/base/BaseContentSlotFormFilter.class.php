@@ -16,12 +16,14 @@ class BaseContentSlotFormFilter extends BaseFormFilterDoctrine
     $this->setWidgets(array(
       'content_id'           => new sfWidgetFormDoctrineChoice(array('model' => 'Content', 'add_empty' => true)),
       'content_slot_type_id' => new sfWidgetFormDoctrineChoice(array('model' => 'ContentSlotType', 'add_empty' => true)),
+      'is_column'            => new sfWidgetFormChoice(array('choices' => array('' => 'yes or no', 1 => 'yes', 0 => 'no'))),
       'name'                 => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
       'content_id'           => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'Content', 'column' => 'id')),
       'content_slot_type_id' => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'ContentSlotType', 'column' => 'id')),
+      'is_column'            => new sfValidatorChoice(array('required' => false, 'choices' => array('', 1, 0))),
       'name'                 => new sfValidatorPass(array('required' => false)),
     ));
 
@@ -43,6 +45,7 @@ class BaseContentSlotFormFilter extends BaseFormFilterDoctrine
       'id'                   => 'Number',
       'content_id'           => 'ForeignKey',
       'content_slot_type_id' => 'ForeignKey',
+      'is_column'            => 'Boolean',
       'name'                 => 'Text',
     );
   }

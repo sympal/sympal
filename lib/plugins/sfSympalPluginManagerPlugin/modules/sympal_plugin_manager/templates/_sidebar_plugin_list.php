@@ -3,9 +3,9 @@
   <ul>
     <?php foreach ($plugins as $plugin): ?>
       <?php if (isset($link) && $link): ?>
-        <li><?php echo link_to(sfSympalTools::getShortPluginName($plugin), '@sympal_plugin_manager_view?plugin='.$plugin) ?></li>
+        <li><?php echo link_to(sfSympalPluginToolkit::getShortPluginName($plugin), '@sympal_plugin_manager_view?plugin='.$plugin) ?></li>
       <?php else: ?>
-        <li><?php echo sfSympalTools::getShortPluginName($plugin) ?></li>
+        <li><?php echo sfSympalPluginToolkit::getShortPluginName($plugin) ?></li>
       <?php endif; ?>
     <?php endforeach; ?>
   </ul>

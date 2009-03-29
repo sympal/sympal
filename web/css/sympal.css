@@ -636,7 +636,7 @@ table tr th {
   padding: 4px 4px 4px 30px;
   background: url(../images/error.png) no-repeat 10px 4px;
   background-color: #f33;
-  color: #fff;
+  color: red;
 }
 
 .notice, .error {
@@ -645,6 +645,7 @@ table tr th {
   margin-right: 10px;
   margin-bottom: 10px;
   border: 1px solid #ddd;
+  font-weight: bold;
 }
 
 ul.error_list

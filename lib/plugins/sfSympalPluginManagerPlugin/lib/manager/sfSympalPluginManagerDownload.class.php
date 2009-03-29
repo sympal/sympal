@@ -14,7 +14,8 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
 
       $pluginInstall = new sfPluginInstallTask($this->_dispatcher, $this->_formatter);
       $ret = @$pluginInstall->run(array($this->_pluginName), array());
-      if (!sfSympalTools::isPluginInstalled($this->_pluginName))
+
+      if (!sfSympalPluginToolkit::isPluginInstalled($this->_pluginName))
       {
         $success = false;
       }
@@ -23,14 +24,14 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
     }
     if (!$success)
     {
-      $path = sfSympalTools::getPluginDownloadPath($this->_pluginName);
+      $path = sfSympalPluginToolkit::getPluginDownloadPath($this->_pluginName);
       if (is_dir($path))
       {
-        $this->filesystem->mirror($path, sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName, sfFinder::type('dir'));
-        $this->filesystem->mirror($path, sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName, sfFinder::type('files'));
+        $this->_filesystem->mirror($path, sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName, sfFinder::type('dir'));
+        $this->_filesystem->mirror($path, sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName, sfFinder::type('files'));
       } else {
         $svn = exec('which svn');
-        $this->filesystem->sh($svn.' co '.$path.' '.sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName);
+        $this->_filesystem->sh($svn.' co '.$path.' '.sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName);
       }
     }
 

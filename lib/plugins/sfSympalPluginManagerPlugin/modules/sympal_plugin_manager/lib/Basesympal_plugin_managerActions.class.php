@@ -133,7 +133,7 @@ abstract class Basesympal_plugin_managerActions extends sfActions
 
       return true;
     } catch (Exception $e) {
-      $this->getUser()->setFlash('error', $pluginName.' "'.$action.'" action failed with error "'.$e->getMessage().'"!');
+      $this->getUser()->setFlash('error', $pluginName.' "'.$action.'" action failed with error "'.$e->getMessage().'"!'.(sfConfig::get('sf_debug') ? "<br/><br/>".nl2br($e->getTraceAsString()):null));
 
       return false;
     }
@@ -146,7 +146,9 @@ abstract class Basesympal_plugin_managerActions extends sfActions
     $request = $this->getRequest();
     $pluginName = $request->getParameter('plugin');
 
-    sfSympalTools::askConfirmation(ucfirst($action).' '.$pluginName, 'Are you sure you wish to run the action "'.$action.'" on the plugin named '.$pluginName.'?');
+    $title = ucfirst($action).' '.$pluginName;
+    $message = 'Are you sure you wish to run the action "'.$action.'" on the plugin named '.$pluginName.'?';
+    sfSympalToolkit::askConfirmation($title, $message);
 
     $this->_executeAction($action, $pluginName);
 

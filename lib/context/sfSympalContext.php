@@ -62,7 +62,7 @@ class sfSympalContext
 
       $actions->forward404Unless($menuItem);
 
-      sfSympalTools::changeLayout($content->getLayout());
+      sfSympalToolkit::changeLayout($content->getLayout());
 
       $actions->getUser()->obtainContentLock($content);
 

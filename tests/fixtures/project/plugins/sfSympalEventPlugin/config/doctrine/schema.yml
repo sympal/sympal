@@ -1,6 +1,0 @@
----
-Event:
-  actAs: [sfSympalContentType]
-  columns:
-    name: string(255)
-    body: clob

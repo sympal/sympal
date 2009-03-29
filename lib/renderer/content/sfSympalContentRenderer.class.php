@@ -32,17 +32,17 @@ class sfSympalContentRenderer
 
     $response = $context->getResponse();
 
-    sfSympalTools::setCurrentMenuItem($this->_menuItem);
+    sfSympalToolkit::setCurrentMenuItem($this->_menuItem);
 
     if ($this->_content instanceof Doctrine_Record)
     {
-      sfSympalTools::setCurrentContent($this->_content);
+      sfSympalToolkit::setCurrentContent($this->_content);
 
-      sfSympalTools::changeLayout($this->_content->getLayout());
+      sfSympalToolkit::changeLayout($this->_content->getLayout());
 
       $title = $this->_menuItem->getBreadcrumbs($this->_content)->getPathAsString();
     } else {
-      sfSympalTools::changeLayout($this->_menuItem->getLayout());
+      sfSympalToolkit::changeLayout($this->_menuItem->getLayout());
 
       $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
     }
@@ -105,7 +105,7 @@ class sfSympalContentRenderer
     }
     else if ($template && $body = $template->getBody())
     {
-      return sfSympalTools::processPhpCode($body, $options);;
+      return sfSympalToolkit::processPhpCode($body, $options);;
     } else {
       return get_sympal_breadcrumbs($this->_menuItem, ($type == 'list' ? $content:null)).$this->_renderDoctrineData($content, $type);
     }
@@ -237,7 +237,7 @@ class sfSympalContentRenderer
       $output .= '<p><strong>No results found.</strong></p>';
     }
 
-    if (sfSympalTools::isEditMode())
+    if (sfSympalToolkit::isEditMode())
     {
       $output .= link_to('Create New', '@sympal_content_create_type?type='.$this->_menuItem->getContentType()->getSlug());
     }

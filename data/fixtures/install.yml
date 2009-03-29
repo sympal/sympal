@@ -13,3 +13,5 @@ ContentSlotType:
     name: Text
   ContentSlotType_RichText:
     name: RichText
+  ContentSlotType_ContentProperty:
+    name: ContentProperty

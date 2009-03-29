@@ -119,6 +119,6 @@ class ForgotPasswordForm extends sfForm
     $forgotPassword->expires_at = new Doctrine_Expression('NOW() + 86400');
     $forgotPassword->save();
 
-    sfSympalTools::sendEmail('sympal_forgot_password/send_request', array('forgot_password' => $forgotPassword, 'email_address' => $this->profile->email_address, 'profile' => $this->profile));
+    sfSympalToolkit::sendEmail('sympal_forgot_password/send_request', array('forgot_password' => $forgotPassword, 'email_address' => $this->profile->email_address, 'profile' => $this->profile));
   }
 }

@@ -15,8 +15,9 @@ class sfSympalPluginInfo
   
   protected function _initialize()
   {
-    $packageXmlPath = sfSympalTools::getPluginDownloadPath($this->_name).'/package.xml';
-    $readmePath = sfSympalTools::getPluginDownloadPath($this->_name).'/README';
+    $downloadPath = sfSympalPluginToolkit::getPluginDownloadPath($this->_name);
+    $packageXmlPath = $downloadPath.'/package.xml';
+    $readmePath = $downloadPath.'/README';
 
     if (@file_get_contents($packageXmlPath))
     {

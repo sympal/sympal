@@ -8,7 +8,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
   {
     $this->_disableProdApplication();
 
-    $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName);
+    $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
     $uninstall->uninstall();
 
     try {
@@ -17,16 +17,12 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       $pluginConfig = $this->_configuration->getPluginConfiguration($this->_pluginName);
 
       $installVars = array();
-
       if (file_exists($schema))
       {
         $dataFixtures = sfFinder::type('file')->in($path.'/data/fixtures/install.yml');
         $models = array_keys(sfYaml::load($schema));
 
-        if ($ret = $this->_generateFilesFromSchema())
-        {
-          return $ret;
-        }
+        $this->_generateFilesFromSchema();
 
         $this->logSection('sympal', 'Create the tables for the models');
 
@@ -66,6 +62,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     } catch (Exception $e) {
       $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName);
       $uninstall->uninstall();
+
+      throw $e;
     }
   }
 

@@ -8,6 +8,17 @@ abstract class PluginContent extends BaseContent
   protected
     $_allPermissions;
 
+  public function getContentTypeClassName()
+  {
+    $contentTypes = sfSympalToolkit::getContentTypesCache();
+    if (isset($contentTypes[$this['content_type_id']]))
+    {
+      return $contentTypes[$this['content_type_id']];
+    } else {
+      throw new sfException('Invalid content type id "'.$this['content_type_id'].'". Id was not found in content type cache.');
+    }
+  }
+
   public function getAllPermissions()
   {
     if (!$this->_allPermissions)

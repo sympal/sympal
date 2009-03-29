@@ -28,7 +28,7 @@ EOF;
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install');
-    $pluginManager->install($arguments['name'], $options['content-type']);
+    $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install', $this->configuration, $this->formatter);
+    $pluginManager->install();
   }
 }

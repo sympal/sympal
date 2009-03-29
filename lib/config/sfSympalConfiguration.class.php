@@ -80,12 +80,35 @@ class sfSympalConfiguration
 
     if (!sfContext::getInstance()->getRequest()->isXmlHttpRequest())
     {
-      sfSympalTools::changeLayout(sfSympalConfig::get('default_layout'));
+      sfSympalToolkit::changeLayout(sfSympalConfig::get('default_layout'));
     }
 
     if (sfConfig::get('sf_debug'))
     {
-      $this->checkPluginDependencies();
+      $this->checkDependencies();
+    }
+
+    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
+    if (!file_exists($cachePath))
+    {
+      $this->_writeContentTypesCache();
+    }
+    $contentTypes = sfSympalToolkit::getContentTypesCache();
+    Doctrine::initializeModels($contentTypes);
+  }
+
+  protected function _writeContentTypesCache()
+  {
+    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
+    if (!file_exists($cachePath))
+    {
+      $typesArray = array();
+      $contentTypes = Doctrine::getTable('ContentType')->findAll();
+      foreach ($contentTypes as $contentType)
+      {
+        $typesArray[$contentType['id']] = $contentType['name'];
+      }
+      file_put_contents($cachePath, serialize($typesArray));
     }
   }
 
@@ -96,7 +119,7 @@ class sfSympalConfiguration
     {
       if (strpos($pluginName, 'sfSympal') !== false)
       {
-        $dependencies = sfSympalTools::getPluginDependencies($pluginName);
+        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
         $requiredPlugins = array_merge($requiredPlugins, $dependencies);
       }
     }
@@ -116,7 +139,7 @@ class sfSympalConfiguration
 
   public function getAddonPlugins()
   {
-    return sfSympalTools::getAvailablePlugins();
+    return sfSympalPluginToolkit::getAvailablePlugins();
   }
 
   public function getOtherPlugins()
@@ -132,14 +155,14 @@ class sfSympalConfiguration
     return $plugins;
   }
 
-  public function checkPluginDependencies()
+  public function checkDependencies()
   {
     foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
     {
       if (strpos($pluginName, 'sfSympal') !== false)
       {
-        $dependencies = sfSympalTools::getPluginDependencies($pluginName);
-        sfSympalTools::checkPluginDependencies($pluginName, $dependencies);
+        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
+        sfSympalPluginToolkit::checkPluginDependencies($pluginName, $dependencies);
       }
     }
   }

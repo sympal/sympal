@@ -36,27 +36,53 @@ class Basesympal_editorActions extends sfActions
     $this->contentSlot->content_slot_type_id = $request->getParameter('type');
     $this->contentSlot->save();
 
-    $this->form = new ContentSlotForm($this->contentSlot);
+    $this->form = $this->_getContentSlotForm($request);
+
     $this->setLayout(false);
     $this->setTemplate('edit_slot');
   }
 
-  public function executeEdit_slot()
+  protected function _getContentSlotForm(sfWebRequest $request)
+  {
+    $this->form = new ContentSlotForm($this->contentSlot);
+
+    if ($request->getParameter('is_column'))
+    {
+      unset($this->form[$this->getUser()->getCulture()]);
+
+      $name = $request->getParameter('name');
+      $form = new InlineContentPropertyForm($this->contentSlot->RelatedContent, array('contentSlot' => $this->contentSlot));
+      $this->form->embedForm('RelatedContent', $form);      
+      $widgetSchema = $this->form->getWidgetSchema();
+      $widgetSchema['content_slot_type_id'] = new sfWidgetFormInputHidden();
+    }
+
+    return $this->form;
+  }
+
+  public function executeEdit_slot(sfWebRequest $request)
   {
     $this->setLayout(false);
 
     $this->contentSlot = $this->getRoute()->getObject();
-    $this->form = new ContentSlotForm($this->contentSlot);
+    $this->form = $this->_getContentSlotForm($request);
   }
 
   public function executeSave_slot(sfWebrequest $request)
   {
-    $this->setLayout(false);
-
     $this->contentSlot = $this->getRoute()->getObject();
-    $this->contentSlot->value = $request->getParameter('value');
-    $this->contentSlot->save();
+    $this->form = $this->_getContentSlotForm($request);
 
+    $this->form->bind($request->getParameter($this->form->getName()));
+    if ($this->form->isValid())
+    {
+      $this->form->save();
+    } else {
+      exit((string) $this->form);
+      // handle errors?
+    }
+
+    $this->setLayout(false);
     $this->setTemplate('preview_slot');
   }
 
@@ -65,7 +91,7 @@ class Basesympal_editorActions extends sfActions
     $this->setLayout(false);
 
     $this->contentSlot = $this->getRoute()->getObject();
-    $this->contentSlot->value = $request->getParameter('value');
+    $this->contentSlot->setValue($request->getParameter('value'));
   }
 
   public function executeToggle_edit(sfWebRequest $request)
@@ -74,9 +100,9 @@ class Basesympal_editorActions extends sfActions
 
     if ($mode == 'off')
     {
-      $msg = 'Edit mode turned off successfully. Any content you had a lock on were released!';
+      $msg = 'Edit mode turned off successfully.';
     } else {
-      $msg = 'Edit mode turned on successfully. To edit an content you must obtain an edit lock first!';
+      $msg = 'Edit mode turned on successfully.';
     }
 
     $this->getUser()->setFlash('notice', $msg);
