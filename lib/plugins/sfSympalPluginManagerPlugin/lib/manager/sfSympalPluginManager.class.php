@@ -26,9 +26,18 @@ abstract class sfSympalPluginManager
     $this->_filesystem = new sfFilesystem($this->_dispatcher, $this->_formatter);
   }
 
-  public static function getActionInstance($pluginName, $action, ProjectConfiguration $configuration = null, sfFormatter $formatter = null)
+  public static function getActionInstance($name, $action, ProjectConfiguration $configuration = null, sfFormatter $formatter = null)
   {
+    if (is_null($name))
+    {
+      throw new sfException('You must speciy the plugin name you want to get the action instance for.');
+    }
+
+    $name = sfSympalPluginToolkit::getShortPluginName($name);
+    $pluginName = sfSympalPluginToolkit::getLongPluginName($name);
+
     $class = $pluginName.ucfirst($action);
+
     if (!class_exists($class))
     {
       $class = 'sfSympalPluginManager'.ucfirst($action);

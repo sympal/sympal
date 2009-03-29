@@ -7,4 +7,4 @@ all:
 test:
   doctrine:
     param:
-      dsn:  sqlite::memory:
+      dsn:  mysql://root@localhost/sympal_test

@@ -1,7 +1,5 @@
 <?php
-$app = 'sympal';
-$database = true;
-require_once(dirname(__FILE__).'/../bootstrap/unit.php');
+require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 
 $configuration->loadHelpers(array('Url'));
 

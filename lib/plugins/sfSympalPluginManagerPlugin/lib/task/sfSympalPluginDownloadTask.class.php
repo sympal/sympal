@@ -12,7 +12,6 @@ class sfSympalPluginDownloadTask extends sfBaseTask
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'sympal'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('list-available', null, sfCommandOption::PARAMETER_NONE, 'List the available sympal plugins.'),
-      new sfCommandOption('install', null, sfCommandOption::PARAMETER_NONE, 'Install the plugin after downloading.'),
     ));
 
     $this->aliases = array();
@@ -39,17 +38,22 @@ EOF;
         foreach ($plugins as $plugin)
         {
           $name = sfSympalPluginToolkit::getShortPluginName($plugin);
-          $this->logSection('sympal', $plugin.' [php symfony sympal:plugin-download '.$name.' --install]');
+          $this->logSection('sympal', $plugin);
+          $this->logSection('sympal', "\$ php symfony sympal:plugin-download ".$name." --install");
         }
       } else {
         throw new sfException('No sympal plugins found');
       }
     } else {
+      if (!isset($arguments['name']))
+      {
+        throw new sfException('You must specify the plugin name to download.');
+      }
+
+      $databaseManager = new sfDatabaseManager($this->configuration);
+
       $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'download', $this->configuration, $this->formatter);
       $pluginManager->download();
-
-      $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install', $this->configuration, $this->formatter);
-      $pluginManager->install();
     }
   }
 }

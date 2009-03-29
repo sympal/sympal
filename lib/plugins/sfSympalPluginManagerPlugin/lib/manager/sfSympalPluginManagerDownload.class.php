@@ -36,5 +36,6 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
     }
 
     $this->_enableProdApplication();
+  
   }
 }
