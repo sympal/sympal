@@ -14,21 +14,23 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
   public function setup()
   {
     $this->setWidgets(array(
-      'name'      => new sfWidgetFormFilterInput(),
-      'label'     => new sfWidgetFormFilterInput(),
-      'list_path' => new sfWidgetFormFilterInput(),
-      'view_path' => new sfWidgetFormFilterInput(),
-      'layout'    => new sfWidgetFormFilterInput(),
-      'slug'      => new sfWidgetFormFilterInput(),
+      'name'        => new sfWidgetFormFilterInput(),
+      'label'       => new sfWidgetFormFilterInput(),
+      'plugin_name' => new sfWidgetFormFilterInput(),
+      'list_path'   => new sfWidgetFormFilterInput(),
+      'view_path'   => new sfWidgetFormFilterInput(),
+      'layout'      => new sfWidgetFormFilterInput(),
+      'slug'        => new sfWidgetFormFilterInput(),
     ));
 
     $this->setValidators(array(
-      'name'      => new sfValidatorPass(array('required' => false)),
-      'label'     => new sfValidatorPass(array('required' => false)),
-      'list_path' => new sfValidatorPass(array('required' => false)),
-      'view_path' => new sfValidatorPass(array('required' => false)),
-      'layout'    => new sfValidatorPass(array('required' => false)),
-      'slug'      => new sfValidatorPass(array('required' => false)),
+      'name'        => new sfValidatorPass(array('required' => false)),
+      'label'       => new sfValidatorPass(array('required' => false)),
+      'plugin_name' => new sfValidatorPass(array('required' => false)),
+      'list_path'   => new sfValidatorPass(array('required' => false)),
+      'view_path'   => new sfValidatorPass(array('required' => false)),
+      'layout'      => new sfValidatorPass(array('required' => false)),
+      'slug'        => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('content_type_filters[%s]');
@@ -46,13 +48,14 @@ class BaseContentTypeFormFilter extends BaseFormFilterDoctrine
   public function getFields()
   {
     return array(
-      'id'        => 'Number',
-      'name'      => 'Text',
-      'label'     => 'Text',
-      'list_path' => 'Text',
-      'view_path' => 'Text',
-      'layout'    => 'Text',
-      'slug'      => 'Text',
+      'id'          => 'Number',
+      'name'        => 'Text',
+      'label'       => 'Text',
+      'plugin_name' => 'Text',
+      'list_path'   => 'Text',
+      'view_path'   => 'Text',
+      'layout'      => 'Text',
+      'slug'        => 'Text',
     );
   }
 }

@@ -111,6 +111,7 @@ ContentType:
     label:
       type: string(255)
       notnull: true
+    plugin_name: string(255)
     list_path: string(255)
     view_path: string(255)
     layout: string(255)

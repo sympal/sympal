@@ -36,7 +36,7 @@ generator:
       form:
         display:
           "NONE": [layout]
-          "Information": [name, label, slug]
+          "Information": [plugin_name, name, label, slug]
           "Routing": [list_path, view_path]
       edit:    ~
       new:     ~

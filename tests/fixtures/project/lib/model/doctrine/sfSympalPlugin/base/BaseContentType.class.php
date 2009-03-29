@@ -11,6 +11,7 @@ abstract class BaseContentType extends sfSympalDoctrineRecord
         $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('label', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
+        $this->hasColumn('plugin_name', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('list_path', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('view_path', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('layout', 'string', 255, array('type' => 'string', 'length' => '255'));

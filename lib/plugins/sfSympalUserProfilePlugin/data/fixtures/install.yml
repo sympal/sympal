@@ -4,6 +4,7 @@ ContentType:
   ContentType_user_profile:
     name: UserProfile
     label: UserProfile
+    plugin_name: sfSympalUserProfilePlugin
     slug: user_profile
     list_path: /user_profile/list
     view_path: /user_profile/:slug

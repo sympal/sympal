@@ -78,7 +78,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       'label' => $this->_contentTypeName,
       'list_path' => "/$lowerName/list",
       'view_path' => "/$lowerName/:slug",
-      'slug' => $lowerName
+      'slug' => $lowerName,
+      'plugin_name' => $this->_pluginName,
     );
 
     $contentType = $this->newContentType($this->_contentTypeName, $properties);

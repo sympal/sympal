@@ -311,6 +311,7 @@ Page:
 
 ContentType:
   ContentType_Page:
+    plugin_name: sfSympalPagesPlugin
     name: Page
     label: Page
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
