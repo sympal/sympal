@@ -30,7 +30,13 @@ abstract class Basesympal_forgot_passwordActions extends sfActions
       {
         $this->getUser()->setFlash('notice', 'E-mail successfully sent!');
 
-        $this->form->send();
+        $forgotPassword = new ForgotPassword();
+        $forgotPassword->user_id = $this->form->profile->user_id;
+        $forgotPassword->unique_key = md5(rand() + time());
+        $forgotPassword->expires_at = new Doctrine_Expression('NOW() + 86400');
+        $forgotPassword->save();
+
+        $this->sendEmail('sympal_forgot_password/send_request', array('forgot_password' => $forgotPassword, 'email_address' => $this->form->profile->email_address, 'profile' => $this->form->profile));
 
         $this->redirect('@homepage');
       } else {
@@ -109,16 +115,5 @@ class ForgotPasswordForm extends sfForm
     } else {
       return false;
     }
-  }
-
-  public function send()
-  {
-    $forgotPassword = new ForgotPassword();
-    $forgotPassword->user_id = $this->profile->user_id;
-    $forgotPassword->unique_key = md5(rand() + time());
-    $forgotPassword->expires_at = new Doctrine_Expression('NOW() + 86400');
-    $forgotPassword->save();
-
-    sfSympalToolkit::sendEmail('sympal_forgot_password/send_request', array('forgot_password' => $forgotPassword, 'email_address' => $this->profile->email_address, 'profile' => $this->profile));
   }
 }

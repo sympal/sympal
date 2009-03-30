@@ -142,7 +142,7 @@ abstract class Basesympal_plugin_managerActions extends sfActions
 
     $title = ucfirst($action).' '.$pluginName;
     $message = 'Are you sure you wish to run the action "'.$action.'" on the plugin named '.$pluginName.'?';
-    sfSympalToolkit::askConfirmation($title, $message);
+    $this->askConfirmation($title, $message);
 
     $this->_executeAction($action, $pluginName);
 

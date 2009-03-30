@@ -64,6 +64,7 @@ class sfSympalConfiguration
     sfConfig::set('doctrine_model_builder_options', $options);
 
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
+    $this->_dispatcher->connect('component.method_not_found', array('sfSympalActions', 'handleAction'));
   }
 
   public function setup()
