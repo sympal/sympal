@@ -118,6 +118,8 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       $this->logSection('sympal', 'On the '.$this->_pluginName.'Configuration class you can define a uninstall() method to perform additional uninstall operaitons for your sympal plugin!');
     }
 
+    $this->_rebuildFilesFromSchema();
+
     chdir(sfConfig::get('sf_root_dir'));
     $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
     $ret = @$assets->run(array(), array());

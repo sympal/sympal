@@ -20,7 +20,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
         $dataFixtures = sfFinder::type('file')->in($path.'/data/fixtures/install.yml');
         $models = array_keys(sfYaml::load($schema));
 
-        $this->_generateFilesFromSchema();
+        $this->_rebuildFilesFromSchema();
 
         $this->logSection('sympal', 'Create the tables for the models');
 
@@ -131,54 +131,5 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installVars['contentType']->save();
     $installVars['contentTemplate']->save();
     $installVars['content']->save();
-  }
-
-  protected function _generateFilesFromSchema()
-  {
-    $this->logSection('sympal', 'Generate new forms, filters and models.');
-
-    $baseOptions = $this->_configuration instanceof sfApplicationConfiguration ? array(
-      '--application='.sfConfig::get('sf_app'),
-      '--env='.sfConfig::get('sf_env', 'dev'),
-    ) : array();
-
-    $cwd = getcwd();
-    chdir(sfConfig::get('sf_root_dir'));
-
-    $buildModel = new sfDoctrineBuildModelTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildModel->run(array(), $baseOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    $buildSql = new sfDoctrineBuildSqlTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildSql->run(array(), $baseOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    $buildForms = new sfDoctrineBuildFormsTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildForms->run(array(), $baseOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    $buildFilters = new sfDoctrineBuildFiltersTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildFilters->run(array(), $baseOptions);
-
-    if ($ret)
-    {
-      return $ret;
-    }
-
-    $cc = new sfCacheClearTask($this->_dispatcher, $this->_formatter);
-    $ret = $cc->run(array(), array());
-    chdir($cwd);
   }
 }

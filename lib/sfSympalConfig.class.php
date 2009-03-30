@@ -40,6 +40,10 @@ class sfSympalConfig
   public static function writeSetting($group, $name, $value)
   {
     $path = sfConfig::get('sf_config_dir').'/app.yml';
+    if (!file_exists($path))
+    {
+      touch($path);
+    }
     $array = (array) sfYaml::load(file_get_contents($path));
 
     if (is_null($group))

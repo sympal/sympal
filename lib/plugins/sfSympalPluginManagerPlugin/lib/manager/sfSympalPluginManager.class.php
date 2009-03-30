@@ -162,4 +162,53 @@ abstract class sfSympalPluginManager
 
     return false;
   }
+
+  protected function _rebuildFilesFromSchema()
+  {
+    $this->logSection('sympal', 'Generate forms, filters and models.');
+
+    $baseOptions = $this->_configuration instanceof sfApplicationConfiguration ? array(
+      '--application='.sfConfig::get('sf_app'),
+      '--env='.sfConfig::get('sf_env', 'dev'),
+    ) : array();
+
+    $cwd = getcwd();
+    chdir(sfConfig::get('sf_root_dir'));
+
+    $buildModel = new sfDoctrineBuildModelTask($this->_dispatcher, $this->_formatter);
+    $ret = $buildModel->run(array(), $baseOptions);
+
+    if ($ret)
+    {
+      return $ret;
+    }
+
+    $buildSql = new sfDoctrineBuildSqlTask($this->_dispatcher, $this->_formatter);
+    $ret = $buildSql->run(array(), $baseOptions);
+
+    if ($ret)
+    {
+      return $ret;
+    }
+
+    $buildForms = new sfDoctrineBuildFormsTask($this->_dispatcher, $this->_formatter);
+    $ret = $buildForms->run(array(), $baseOptions);
+
+    if ($ret)
+    {
+      return $ret;
+    }
+
+    $buildFilters = new sfDoctrineBuildFiltersTask($this->_dispatcher, $this->_formatter);
+    $ret = $buildFilters->run(array(), $baseOptions);
+
+    if ($ret)
+    {
+      return $ret;
+    }
+
+    $cc = new sfCacheClearTask($this->_dispatcher, $this->_formatter);
+    $ret = $cc->run(array(), array());
+    chdir($cwd);
+  }
 }

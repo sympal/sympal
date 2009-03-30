@@ -85,34 +85,6 @@ abstract class Basesympal_plugin_managerActions extends sfActions
     $this->_executeSfAction('download');
   }
 
-  public function executeBatch_action($request)
-  {
-    $this->_redirectIfPermissionsError();
-
-    $plugins = $request->getParameter('plugins');
-    if (empty($plugins))
-    {
-      $this->getUser()->setFlash('error', 'You must select at least one plugin!');
-      $this->redirect('@sympal_plugin_manager');
-    }
-
-    $actions = array('install', 'uninstall', 'delete', 'download');
-    foreach ($actions as $action)
-    {
-      if ($request->hasParameter($action))
-      {
-        break;
-      }
-    }
-
-    foreach ($plugins as $pluginName)
-    {
-      $this->_executeAction($action, $pluginName);
-    }
-
-    $this->redirect('@sympal_plugin_manager');
-  }
-
   protected function _executeAction($action, $pluginName)
   {
     try {
