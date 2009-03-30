@@ -88,6 +88,12 @@ MenuItem:
         Site: Site_default
         label: README
         RelatedContent: Content_Page_readme
+      MenuItem_primary_trac:
+        name: Trac
+        is_published: true
+        Site: Site_default
+        label: Trac
+        route: http://trac.jwage.com/sympal
   MenuItem_footer:
     name: footer
     is_published: true
