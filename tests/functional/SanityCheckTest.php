@@ -1,8 +1,6 @@
 <?php
 require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 
-$configuration->loadHelpers(array('Url'));
-
 $browser = new sfTestFunctional(new sfBrowser());
 $browser->get('/');
 
@@ -44,17 +42,12 @@ $browser->
   followRedirect()
 ;
 
-$current = sfSympalConfig::get('sfSympalRegisterPlugin', 'enable_recaptcha');
-sfSympalConfig::set('sfSympalRegisterPlugin', 'enable_recaptcha', false);
-
 $browser->
   get('/register')->
   post('/register/save', array('sf_guard_user' => array('username' => 'test', 'password' => 'test', 'password_again' => 'test')))->
   isRedirected()->
   followRedirect()
 ;
-
-sfSympalConfig::set('sfSympalRegisterPlugin', 'enable_recaptcha', $current);
 
 $browser->
   click('Signout')->

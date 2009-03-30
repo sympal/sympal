@@ -12,6 +12,7 @@ class sfSympalPluginUninstallTask extends sfBaseTask
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'sympal'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('delete', null, sfCommandOption::PARAMETER_NONE, 'Delete the plugin files.'),
+      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
     $this->aliases = array();
@@ -28,7 +29,7 @@ EOF;
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    if (!$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.sfSympalPluginToolkit::getLongPluginName($arguments['name']), 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.sfSympalPluginToolkit::getLongPluginName($arguments['name']), 'Are you sure you want to proceed? (y/N)'), null, false))
     {
       $this->logSection('sympal', 'Plugin uninstall aborted');
 

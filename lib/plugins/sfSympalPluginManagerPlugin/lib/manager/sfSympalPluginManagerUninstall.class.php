@@ -4,8 +4,6 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 {
   public function uninstall($delete = false)
   {
-    $this->_disableProdApplication();
-
     $uninstallVars = array();
 
     $this->logSection('sympal', 'Uninstall sympal plugin named '.$this->_pluginName);
@@ -124,8 +122,6 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     chdir(sfConfig::get('sf_root_dir'));
     $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
     $ret = @$assets->run(array(), array());
-
-    $this->_enableProdApplication();
 
     sfSympalConfig::writeSetting($this->_pluginName, 'installed', false);
   }

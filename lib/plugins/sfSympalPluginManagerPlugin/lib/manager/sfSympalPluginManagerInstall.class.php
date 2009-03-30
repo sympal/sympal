@@ -6,8 +6,6 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   public function install()
   {
-    $this->_disableProdApplication();
-
     $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
     $uninstall->uninstall();
 
@@ -55,8 +53,6 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       chdir(sfConfig::get('sf_root_dir'));
       $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
       $ret = @$assets->run(array(), array());
-
-      $this->_enableProdApplication();
 
       sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);
     } catch (Exception $e) {

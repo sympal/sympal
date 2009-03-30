@@ -15,6 +15,7 @@ class sfSympalPluginGenerateTask extends sfBaseTask
       new sfCommandOption('content-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the content type to create', null),
       new sfCommandOption('re-generate', null, sfCommandOption::PARAMETER_NONE, 'Re-generate the plugin. Will remove it if it exists already and re-generate everything.'),
       new sfCommandOption('install', null, sfCommandOption::PARAMETER_NONE, 'Install the plugin after generating it.'),
+      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
     $this->aliases = array();
@@ -33,7 +34,7 @@ EOF;
     $pluginName = 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
     $path = sfConfig::get('sf_plugins_dir').'/'.$pluginName;
 
-    if (!$this->askConfirmation(array('This command will create a new plugin named '.$pluginName, 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will create a new plugin named '.$pluginName, 'Are you sure you want to proceed? (y/N)'), null, false))
     {
       $this->logSection('sympal', 'Plugin creation aborted');
 
@@ -47,10 +48,8 @@ EOF;
         $uninstall = new sfSympalPluginUninstallTask($this->dispatcher, $this->formatter);
         $uninstall->setCommandApplication($this->commandApplication);
         $uninstallOptions = array();
-        if (isset($options['content-type']))
-        {
-          $uninstallOptions[] = '--content-type='.$options['content-type'];
-        }
+        $uninstallOptions[] = '--delete';
+        $uninstallOptions[] = '--no-confirmation';
         $ret = $uninstall->run(array($name), $uninstallOptions);
       } else {
         throw new sfException('A plugin with the name '.$pluginName.' already exists!');
@@ -142,5 +141,8 @@ EOF;
       }
       $ret = $install->run(array($name), $installOptions);
     }
+
+    $cc = new sfCacheClearTask($this->dispatcher, $this->formatter);
+    $ret = $cc->run(array(), array());
   }
 }

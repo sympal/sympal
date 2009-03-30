@@ -162,27 +162,4 @@ abstract class sfSympalPluginManager
 
     return false;
   }
-
-  protected function _disableProdApplication()
-  {
-    $app = sfConfig::get('sf_app');
-    $env = 'prod';
-
-    $file = sfConfig::get('sf_data_dir').'/'.$app.'_'.$env.'.lck';
-    self::$_lockFile = $file;
-    @touch($file);
-  }
-
-  protected function _enableProdApplication()
-  {
-    if (!self::$_lockFile)
-    {
-      return;
-    }
-
-    @unlink(self::$_lockFile);
-    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
-
-    self::$_lockFile = null;
-  }
 }

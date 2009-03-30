@@ -2,9 +2,5 @@ all:
   sympal_settings:
     sfSympalBlogPlugin:
       installed: false
-    sfSympalUserPlugin:
-      installed: false
     sfSympalEventPlugin:
       installed: false
-    sfSympalRegisterPlugin:
-      enable_recaptcha: false

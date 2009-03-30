@@ -4,8 +4,6 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
 {
   public function download()
   {
-    $this->_disableProdApplication();
-
     $this->logSection('sympal', 'Download '.$this->_pluginName);
 
     $success = true;
@@ -34,8 +32,5 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
         $this->_filesystem->sh($svn.' co '.$path.' '.sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName);
       }
     }
-
-    $this->_enableProdApplication();
-  
   }
 }

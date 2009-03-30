@@ -6,6 +6,7 @@ CREATE TABLE sf_guard_user (id INT AUTO_INCREMENT, username VARCHAR(128) NOT NUL
 CREATE TABLE sf_guard_user_group (user_id INT, group_id INT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, group_id)) ENGINE = INNODB;
 CREATE TABLE sf_guard_user_permission (user_id INT, permission_id INT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, permission_id)) ENGINE = INNODB;
 CREATE TABLE comment (id INT AUTO_INCREMENT, status VARCHAR(255) DEFAULT 'Pending' NOT NULL, user_id INT, name VARCHAR(255), subject VARCHAR(255), body LONGTEXT NOT NULL, created_at DATETIME, updated_at DATETIME, INDEX user_id_idx (user_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE event (id BIGINT AUTO_INCREMENT, name VARCHAR(255), body LONGTEXT, content_id INT, INDEX content_id_idx (content_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE forgot_password (id BIGINT AUTO_INCREMENT, user_id INT NOT NULL, unique_key VARCHAR(255), expires_at DATETIME NOT NULL, INDEX user_id_idx (user_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_translation (id INT, label VARCHAR(255), lang CHAR(2), PRIMARY KEY(id, lang)) ENGINE = INNODB;
 CREATE TABLE menu_item (id INT AUTO_INCREMENT, site_id INT NOT NULL, content_type_id INT, content_id INT, name VARCHAR(255) NOT NULL, custom_path VARCHAR(255), is_content_type_list TINYINT(1) DEFAULT '0', requires_auth TINYINT(1), requires_no_auth TINYINT(1), is_primary TINYINT(1), is_published TINYINT(1), date_published DATETIME, slug VARCHAR(255), root_id INT, lft INT, rgt INT, level SMALLINT, UNIQUE INDEX sluggable_idx (slug), INDEX content_id_idx (content_id), INDEX site_id_idx (site_id), INDEX content_type_id_idx (content_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
@@ -31,6 +32,7 @@ ALTER TABLE sf_guard_user_group ADD FOREIGN KEY (group_id) REFERENCES sf_guard_g
 ALTER TABLE sf_guard_user_permission ADD FOREIGN KEY (user_id) REFERENCES sf_guard_user(id) ON DELETE CASCADE;
 ALTER TABLE sf_guard_user_permission ADD FOREIGN KEY (permission_id) REFERENCES sf_guard_permission(id) ON DELETE CASCADE;
 ALTER TABLE comment ADD FOREIGN KEY (user_id) REFERENCES sf_guard_user(id) ON DELETE CASCADE;
+ALTER TABLE event ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
 ALTER TABLE forgot_password ADD FOREIGN KEY (user_id) REFERENCES sf_guard_user(id) ON DELETE CASCADE;
 ALTER TABLE menu_item_translation ADD FOREIGN KEY (id) REFERENCES menu_item(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;

@@ -1,4 +1,4 @@
 all:
   sympal_settings:
     sfSympalRegisterPlugin:
-      enable_recaptcha: true
+      enable_recaptcha: false
