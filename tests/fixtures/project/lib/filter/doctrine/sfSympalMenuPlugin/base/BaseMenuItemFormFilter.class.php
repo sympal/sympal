@@ -30,8 +30,8 @@ class BaseMenuItemFormFilter extends BaseFormFilterDoctrine
       'lft'                  => new sfWidgetFormFilterInput(),
       'rgt'                  => new sfWidgetFormFilterInput(),
       'level'                => new sfWidgetFormFilterInput(),
-      'groups_list'          => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardGroup')),
-      'permissions_list'     => new sfWidgetFormDoctrineChoiceMany(array('model' => 'sfGuardPermission')),
+      'groups_list'          => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Group')),
+      'permissions_list'     => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Permission')),
     ));
 
     $this->setValidators(array(
@@ -51,8 +51,8 @@ class BaseMenuItemFormFilter extends BaseFormFilterDoctrine
       'lft'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'rgt'                  => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
       'level'                => new sfValidatorSchemaFilter('text', new sfValidatorInteger(array('required' => false))),
-      'groups_list'          => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardGroup', 'required' => false)),
-      'permissions_list'     => new sfValidatorDoctrineChoiceMany(array('model' => 'sfGuardPermission', 'required' => false)),
+      'groups_list'          => new sfValidatorDoctrineChoiceMany(array('model' => 'Group', 'required' => false)),
+      'permissions_list'     => new sfValidatorDoctrineChoiceMany(array('model' => 'Permission', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('menu_item_filters[%s]');

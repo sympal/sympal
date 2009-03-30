@@ -8,8 +8,6 @@ abstract class BasePage extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('page');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
-        $this->hasColumn('content_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
         $this->hasColumn('title', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('disable_comments', 'boolean', null, array('type' => 'boolean'));
     }

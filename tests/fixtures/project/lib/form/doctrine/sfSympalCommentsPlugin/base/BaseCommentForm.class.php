@@ -14,7 +14,7 @@ class BaseCommentForm extends BaseFormDoctrine
     $this->setWidgets(array(
       'id'           => new sfWidgetFormInputHidden(),
       'status'       => new sfWidgetFormChoice(array('choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'user_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'User', 'add_empty' => true)),
       'name'         => new sfWidgetFormInput(),
       'subject'      => new sfWidgetFormInput(),
       'body'         => new sfWidgetFormTextarea(),
@@ -26,7 +26,7 @@ class BaseCommentForm extends BaseFormDoctrine
     $this->setValidators(array(
       'id'           => new sfValidatorDoctrineChoice(array('model' => 'Comment', 'column' => 'id', 'required' => false)),
       'status'       => new sfValidatorChoice(array('choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'      => new sfValidatorDoctrineChoice(array('model' => 'sfGuardUser', 'required' => false)),
+      'user_id'      => new sfValidatorDoctrineChoice(array('model' => 'User', 'required' => false)),
       'name'         => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'subject'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'body'         => new sfValidatorString(),

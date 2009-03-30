@@ -85,7 +85,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       'Type' => $contentType,
       'slug' => $slug,
       'is_published' => true,
-      'CreatedBy' => Doctrine::getTable('sfGuardUser')->findOneByIsSuperAdmin(1),
+      'CreatedBy' => Doctrine::getTable('User')->findOneByIsSuperAdmin(1),
       'Site' => Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app')),
     );
 

@@ -15,7 +15,7 @@ class BaseCommentFormFilter extends BaseFormFilterDoctrine
   {
     $this->setWidgets(array(
       'status'       => new sfWidgetFormChoice(array('choices' => array('' => '', 'Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'sfGuardUser', 'add_empty' => true)),
+      'user_id'      => new sfWidgetFormDoctrineChoice(array('model' => 'User', 'add_empty' => true)),
       'name'         => new sfWidgetFormFilterInput(),
       'subject'      => new sfWidgetFormFilterInput(),
       'body'         => new sfWidgetFormFilterInput(),
@@ -26,7 +26,7 @@ class BaseCommentFormFilter extends BaseFormFilterDoctrine
 
     $this->setValidators(array(
       'status'       => new sfValidatorChoice(array('required' => false, 'choices' => array('Pending' => 'Pending', 'Approved' => 'Approved', 'Denied' => 'Denied'))),
-      'user_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'sfGuardUser', 'column' => 'id')),
+      'user_id'      => new sfValidatorDoctrineChoice(array('required' => false, 'model' => 'User', 'column' => 'id')),
       'name'         => new sfValidatorPass(array('required' => false)),
       'subject'      => new sfValidatorPass(array('required' => false)),
       'body'         => new sfValidatorPass(array('required' => false)),

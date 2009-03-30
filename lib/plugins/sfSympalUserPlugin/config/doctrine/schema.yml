@@ -1,0 +1,158 @@
+Group:
+  tableName: groups
+  actAs: [Timestampable]
+  columns:
+    name:
+      type: string(255)
+      unique: true
+    description: string(1000)
+  relations:
+    Users:
+      class: User
+      refClass: UserGroup
+      local: group_id
+      foreign: user_id
+      foreignAlias: Groups
+    Permissions:
+      class: Permission
+      local: group_id
+      foreign: permission_id
+      refClass: GroupPermission
+      foreignAlias: Groups
+
+Permission:
+  actAs: [Timestampable]
+  columns:
+    name:
+      type: string(255)
+      unique: true
+    description: string(1000)
+
+GroupPermission:
+  actAs: [Timestampable]
+  columns:
+    group_id:
+      type: integer
+      primary: true
+    permission_id:
+      type: integer
+      primary: true
+  relations:
+    Group:
+      local: group_id
+      onDelete: CASCADE
+    Permission:
+      local: permission_id
+      onDelete: CASCADE
+
+User:
+  actAs: [Timestampable]
+  columns:
+    first_name: string(255)
+    last_name: string(255)
+    email_address:
+      type: string(255)
+      notnull: true
+      unique: true
+    username:
+      type: string(128)
+      notnull: true
+      unique: true
+    algorithm:
+      type: string(128)
+      default: sha1
+      notnull: true
+    salt: string(128)
+    password: string(128)
+    is_active:
+      type: boolean
+      default: 1
+    is_super_admin:
+      type: boolean
+      default: 0
+    last_login:
+      type: timestamp
+  indexes:
+    is_active_idx:
+      fields: [is_active]
+  relations:
+    groups:
+      class: Group
+      local: user_id
+      foreign: group_id
+      refClass: UserGroup
+      foreignAlias: Users
+    permissions:
+      class: Permission
+      local: user_id
+      foreign: permission_id
+      refClass: UserPermission
+      foreignAlias: Users
+
+UserPermission:
+  actAs: [Timestampable]
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    permission_id:
+      type: integer
+      primary: true
+  relations:
+    User:
+      local: user_id
+      onDelete: CASCADE
+    Permission:
+      local: permission_id
+      onDelete: CASCADE
+
+UserGroup:
+  actAs: [Timestampable]
+  columns:
+    user_id:
+      type: integer
+      primary: true
+    group_id:
+      type: integer
+      primary: true
+  relations:
+    User:
+      local: user_id
+      onDelete: CASCADE
+    Group:
+      local: group_id
+      onDelete: CASCADE
+
+RememberKey:
+  actAs: [Timestampable]
+  columns:
+    user_id:
+      type: integer
+    remember_key: string(32)
+    ip_address:
+      type: string(50)
+      primary: true
+  relations:
+    User:
+      local: user_id
+      foreignAlias: RememberKeys
+      foreignType: one
+      onDelete: CASCADE
+
+ForgotPassword:
+  columns:
+    user_id:
+      type: integer
+      notnull: true
+    unique_key: string(255)
+    expires_at:
+      type: timestamp
+      notnull: true
+  relations:
+    User:
+      class: User
+      local: user_id
+      type: one
+      foreignType: one
+      foreignAlias: ForgotPassword
+      onDelete: CASCADE

@@ -20,6 +20,11 @@ class sfSympalActions
     return sfSympalToolkit::changeLayout($name);
   }
 
+  public function loadDefaultLayout()
+  {
+    return sfSympalToolkit::loadDefaultLayout();
+  }
+
   public function askConfirmation($title, $message)
   {
     $request = $this->getRequest();

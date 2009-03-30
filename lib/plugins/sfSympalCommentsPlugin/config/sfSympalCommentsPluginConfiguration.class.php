@@ -4,9 +4,7 @@ class sfSympalCommentsPluginConfiguration extends sfPluginConfiguration
   public static
     $dependencies = array(
       'sfSympalPlugin',
-      'sfSympalRegisterPlugin',
-      'sfSympalSecurityPlugin',
-      'sfSympalUserProfilePlugin',
+      'sfSympalUserPlugin',
       'sfFormExtraPlugin'
     );
 

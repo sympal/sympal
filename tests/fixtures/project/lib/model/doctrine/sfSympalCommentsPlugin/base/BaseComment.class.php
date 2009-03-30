@@ -8,9 +8,8 @@ abstract class BaseComment extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('comment');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('status', 'enum', null, array('type' => 'enum', 'values' => array(0 => 'Pending', 1 => 'Approved', 2 => 'Denied'), 'default' => 'Pending', 'notnull' => true));
-        $this->hasColumn('user_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
+        $this->hasColumn('user_id', 'integer', null, array('type' => 'integer'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('subject', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('body', 'clob', null, array('type' => 'clob', 'notnull' => true));
@@ -18,9 +17,9 @@ abstract class BaseComment extends sfSympalDoctrineRecord
 
     public function setUp()
     {
-        $this->hasOne('sfGuardUser as Author', array('local' => 'user_id',
-                                                     'foreign' => 'id',
-                                                     'onDelete' => 'CASCADE'));
+        $this->hasOne('User as Author', array('local' => 'user_id',
+                                              'foreign' => 'id',
+                                              'onDelete' => 'CASCADE'));
 
         $this->hasMany('Content', array('refClass' => 'ContentComment',
                                         'local' => 'comment_id',

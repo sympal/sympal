@@ -1,3 +1,0 @@
-sympal_register_save:
-  url:   /register/save
-  param: { module: sympal_register, action: save }

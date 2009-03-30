@@ -8,8 +8,8 @@ abstract class BaseContentPermission extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('content_permission');
-        $this->hasColumn('content_id', 'integer', 4, array('primary' => true, 'type' => 'integer', 'length' => '4'));
-        $this->hasColumn('permission_id', 'integer', 4, array('primary' => true, 'type' => 'integer', 'length' => '4'));
+        $this->hasColumn('content_id', 'integer', null, array('primary' => true, 'type' => 'integer'));
+        $this->hasColumn('permission_id', 'integer', null, array('primary' => true, 'type' => 'integer'));
     }
 
     public function setUp()
@@ -18,8 +18,8 @@ abstract class BaseContentPermission extends sfSympalDoctrineRecord
                                        'foreign' => 'id',
                                        'onDelete' => 'CASCADE'));
 
-        $this->hasOne('sfGuardPermission as Permission', array('local' => 'permission_id',
-                                                               'foreign' => 'id',
-                                                               'onDelete' => 'CASCADE'));
+        $this->hasOne('Permission', array('local' => 'permission_id',
+                                          'foreign' => 'id',
+                                          'onDelete' => 'CASCADE'));
     }
 }

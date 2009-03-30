@@ -91,7 +91,7 @@ abstract class sfSympalMenu
     return $this->_showChildren;
   }
 
-  public function checkUserAccess(sfGuardUser $user = null)
+  public function checkUserAccess(User $user = null)
   {
     if (!sfContext::hasInstance())
     {

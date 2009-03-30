@@ -8,7 +8,6 @@ abstract class BaseSite extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('site');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('layout', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('title', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('description', 'clob', null, array('type' => 'clob'));

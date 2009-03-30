@@ -13,16 +13,16 @@ class BasePageForm extends BaseFormDoctrine
   {
     $this->setWidgets(array(
       'id'               => new sfWidgetFormInputHidden(),
-      'content_id'       => new sfWidgetFormDoctrineChoice(array('model' => 'Content', 'add_empty' => true)),
       'title'            => new sfWidgetFormInput(),
       'disable_comments' => new sfWidgetFormInputCheckbox(),
+      'content_id'       => new sfWidgetFormDoctrineChoice(array('model' => 'Content', 'add_empty' => true)),
     ));
 
     $this->setValidators(array(
       'id'               => new sfValidatorDoctrineChoice(array('model' => 'Page', 'column' => 'id', 'required' => false)),
-      'content_id'       => new sfValidatorDoctrineChoice(array('model' => 'Content', 'required' => false)),
       'title'            => new sfValidatorString(array('max_length' => 255)),
       'disable_comments' => new sfValidatorBoolean(array('required' => false)),
+      'content_id'       => new sfValidatorDoctrineChoice(array('model' => 'Content', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('page[%s]');

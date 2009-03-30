@@ -4,7 +4,7 @@ class sfSympalContentType extends Doctrine_Template
 {
   public function setTableDefinition()
   {
-    $this->hasColumn('content_id', 'integer', 4);
+    $this->hasColumn('content_id', 'integer');
   }
 
   public function setUp()

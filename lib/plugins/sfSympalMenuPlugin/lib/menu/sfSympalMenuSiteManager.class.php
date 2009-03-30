@@ -122,7 +122,7 @@ class sfSympalMenuSiteManager
       $q = Doctrine_Query::create()
         ->from('MenuItem m INDEXBY m.id')
         ->leftJoin('m.Groups g')
-        ->leftJoin('g.permissions gp')
+        ->leftJoin('g.Permissions gp')
         ->leftJoin('m.Permissions mp')
         ->leftJoin('m.RelatedContent c')
         ->leftJoin('c.Type ct')

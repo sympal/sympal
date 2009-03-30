@@ -1,0 +1,57 @@
+# sfSympalUserPlugin routing
+
+sympal_forgot_password:
+  url: /user/forgot_password
+  param: { module: sympal_forgot_password, action: index }
+
+sympal_forgot_password_change:
+  url: /user/forgot_password/:unique_key
+  param: { module: sympal_forgot_password, action: change }
+  class: sfDoctrineRoute
+  options: { model: ForgotPassword, type: object }
+  requirements:
+    sf_method: get
+
+sympal_forgot_password_change_save:
+  url: /user/forgot_password/:unique_key
+  param: { module: sympal_forgot_password, action: change }
+  class: sfDoctrineRoute
+  options: { model: ForgotPassword, type: object }
+  requirements:
+    sf_method: post
+
+sympal_signin:
+  url:   /security/signin
+  param: { module: sympal_auth, action: signin }
+
+sympal_signout:
+  url:   /security/signout
+  param: { module: sympal_auth, action: signout }
+
+sympal_users:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                User
+    module:               sympal_users
+    prefix_path:          admin/security/user
+    with_wildcard_routes: true
+
+sympal_groups:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                Group
+    module:               sympal_groups
+    prefix_path:          admin/security/group
+    with_wildcard_routes: true
+
+sympal_permissions:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                Permission
+    module:               sympal_permissions
+    prefix_path:          admin/security/permission
+    with_wildcard_routes: true
+
+sympal_register_save:
+  url:   /register/save
+  param: { module: sympal_register, action: save }

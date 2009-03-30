@@ -8,10 +8,9 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('menu_item');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
-        $this->hasColumn('site_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
-        $this->hasColumn('content_type_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
-        $this->hasColumn('content_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
+        $this->hasColumn('site_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
+        $this->hasColumn('content_type_id', 'integer', null, array('type' => 'integer'));
+        $this->hasColumn('content_id', 'integer', null, array('type' => 'integer'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('label', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('custom_path', 'string', 255, array('type' => 'string', 'length' => '255'));
@@ -36,13 +35,13 @@ abstract class BaseMenuItem extends sfSympalDoctrineRecord
                                            'foreign' => 'id',
                                            'onDelete' => 'CASCADE'));
 
-        $this->hasMany('sfGuardGroup as Groups', array('refClass' => 'MenuItemGroup',
-                                                       'local' => 'menu_item_id',
-                                                       'foreign' => 'group_id'));
+        $this->hasMany('Group as Groups', array('refClass' => 'MenuItemGroup',
+                                                'local' => 'menu_item_id',
+                                                'foreign' => 'group_id'));
 
-        $this->hasMany('sfGuardPermission as Permissions', array('refClass' => 'MenuItemPermission',
-                                                                 'local' => 'menu_item_id',
-                                                                 'foreign' => 'permission_id'));
+        $this->hasMany('Permission as Permissions', array('refClass' => 'MenuItemPermission',
+                                                          'local' => 'menu_item_id',
+                                                          'foreign' => 'permission_id'));
 
         $this->hasMany('MenuItemGroup as MenuItemGroups', array('local' => 'id',
                                                                 'foreign' => 'menu_item_id'));

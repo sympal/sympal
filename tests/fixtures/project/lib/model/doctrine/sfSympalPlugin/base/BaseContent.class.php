@@ -8,14 +8,13 @@ abstract class BaseContent extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('content');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
-        $this->hasColumn('site_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
-        $this->hasColumn('content_type_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
-        $this->hasColumn('content_template_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
-        $this->hasColumn('master_menu_item_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
-        $this->hasColumn('last_updated_by', 'integer', 4, array('type' => 'integer', 'length' => '4'));
-        $this->hasColumn('created_by', 'integer', 4, array('type' => 'integer', 'length' => '4'));
-        $this->hasColumn('locked_by', 'integer', 4, array('type' => 'integer', 'length' => '4'));
+        $this->hasColumn('site_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
+        $this->hasColumn('content_type_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
+        $this->hasColumn('content_template_id', 'integer', null, array('type' => 'integer'));
+        $this->hasColumn('master_menu_item_id', 'integer', null, array('type' => 'integer'));
+        $this->hasColumn('last_updated_by', 'integer', null, array('type' => 'integer'));
+        $this->hasColumn('created_by', 'integer', null, array('type' => 'integer'));
+        $this->hasColumn('locked_by', 'integer', null, array('type' => 'integer'));
         $this->hasColumn('is_published', 'boolean', null, array('type' => 'boolean'));
         $this->hasColumn('date_published', 'timestamp', null, array('type' => 'timestamp'));
         $this->hasColumn('custom_path', 'string', 255, array('type' => 'string', 'length' => '255'));
@@ -28,17 +27,17 @@ abstract class BaseContent extends sfSympalDoctrineRecord
                                                           'foreign' => 'id',
                                                           'onDelete' => 'CASCADE'));
 
-        $this->hasOne('sfGuardUser as LastUpdatedBy', array('local' => 'last_updated_by',
-                                                            'foreign' => 'id',
-                                                            'onDelete' => 'SET NULL'));
+        $this->hasOne('User as LastUpdatedBy', array('local' => 'last_updated_by',
+                                                     'foreign' => 'id',
+                                                     'onDelete' => 'SET NULL'));
 
-        $this->hasOne('sfGuardUser as CreatedBy', array('local' => 'created_by',
-                                                        'foreign' => 'id',
-                                                        'onDelete' => 'SET NULL'));
+        $this->hasOne('User as CreatedBy', array('local' => 'created_by',
+                                                 'foreign' => 'id',
+                                                 'onDelete' => 'SET NULL'));
 
-        $this->hasOne('sfGuardUser as LockedBy', array('local' => 'locked_by',
-                                                       'foreign' => 'id',
-                                                       'onDelete' => 'SET NULL'));
+        $this->hasOne('User as LockedBy', array('local' => 'locked_by',
+                                                'foreign' => 'id',
+                                                'onDelete' => 'SET NULL'));
 
         $this->hasOne('Site', array('local' => 'site_id',
                                     'foreign' => 'id',
@@ -52,13 +51,13 @@ abstract class BaseContent extends sfSympalDoctrineRecord
                                                            'foreign' => 'id',
                                                            'onDelete' => 'SET NULL'));
 
-        $this->hasMany('sfGuardGroup as Groups', array('refClass' => 'ContentGroup',
-                                                       'local' => 'content_id',
-                                                       'foreign' => 'group_id'));
+        $this->hasMany('Group as Groups', array('refClass' => 'ContentGroup',
+                                                'local' => 'content_id',
+                                                'foreign' => 'group_id'));
 
-        $this->hasMany('sfGuardPermission as Permissions', array('refClass' => 'ContentPermission',
-                                                                 'local' => 'content_id',
-                                                                 'foreign' => 'permission_id'));
+        $this->hasMany('Permission as Permissions', array('refClass' => 'ContentPermission',
+                                                          'local' => 'content_id',
+                                                          'foreign' => 'permission_id'));
 
         $this->hasMany('Comment as Comments', array('refClass' => 'ContentComment',
                                                     'local' => 'content_id',

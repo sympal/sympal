@@ -8,8 +8,8 @@ abstract class BaseContentComment extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('content_comment');
-        $this->hasColumn('content_id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'length' => '4'));
-        $this->hasColumn('comment_id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'length' => '4'));
+        $this->hasColumn('content_id', 'integer', null, array('type' => 'integer', 'primary' => true));
+        $this->hasColumn('comment_id', 'integer', null, array('type' => 'integer', 'primary' => true));
     }
 
     public function setUp()

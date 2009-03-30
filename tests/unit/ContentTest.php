@@ -45,7 +45,10 @@ $t->is($content[0]['Site']['slug'], 'sympal');
 $t->is(isset($content[0]['Page']), true);
 $t->is($content[0]['slug'], 'testing-this-out');
 
-$user = new sfGuardUser();
+$user = new User();
+$user->first_name = 'test';
+$user->last_name = 'test';
+$user->email_address = 'test@gmail.com';
 $user->username = 'test';
 $user->password = 'test';
 $user->save();

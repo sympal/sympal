@@ -2,16 +2,12 @@
 Comment:
   actAs: [Timestampable]
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     status:
       type: enum
       values: [Pending, Approved, Denied]
       default: Pending
       notnull: true
-    user_id: integer(4)
+    user_id: integer
     name: string(255)
     subject:
       type: string(255)
@@ -20,7 +16,7 @@ Comment:
       notnull: true
   relations:
     Author:
-      class: sfGuardUser
+      class: User
       local: user_id
       foreignAlias: Comments
       onDelete: CASCADE

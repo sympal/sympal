@@ -11,15 +11,11 @@ MenuItem:
       fields: [label]
 <?php endif; ?>
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     site_id:
-      type: integer(4)
+      type: integer
       notnull: true
-    content_type_id: integer(4)
-    content_id: integer(4)
+    content_type_id: integer
+    content_id: integer
     name:
       type: string(255)
       notnull: true
@@ -45,13 +41,13 @@ MenuItem:
       foreignAlias: MenuItems
       onDelete: CASCADE
     Groups:
-      class: sfGuardGroup
+      class: Group
       local: menu_item_id
       foreign: group_id
       refClass: MenuItemGroup
       foreignAlias: MenuItems
     Permissions:
-      class: sfGuardPermission
+      class: Permission
       local: menu_item_id
       foreign: permission_id
       refClass: MenuItemPermission
@@ -61,16 +57,16 @@ MenuItemGroup:
   columns:
     menu_item_id:
       primary: true
-      type: integer(4)
+      type: integer
     group_id:
       primary: true
-      type: integer(4)
+      type: integer
   relations:
     MenuItem:
       foreignAlias: MenuItemGroups
       onDelete: CASCADE
     Group:
-      class: sfGuardGroup
+      class: Group
       local: group_id
       foreignAlias: MenuItemGroups
       onDelete: CASCADE
@@ -79,16 +75,16 @@ MenuItemPermission:
   columns:
     menu_item_id:
       primary: true
-      type: integer(4)
+      type: integer
     permission_id:
       primary: type
-      type: integer(4)
+      type: integer
   relations:
     MenuItem:
       foreignAlias: MenuItemPermissions
       onDelete: CASCADE
     Permission:
-      class: sfGuardPermission
+      class: Permission
       local: permission_id
       foreignAlias: MenuItemPermissions
       onDelete: CASCADE

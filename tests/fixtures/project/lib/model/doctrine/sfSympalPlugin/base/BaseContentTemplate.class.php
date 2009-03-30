@@ -8,10 +8,9 @@ abstract class BaseContentTemplate extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('content_template');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('type', 'enum', null, array('type' => 'enum', 'values' => array(0 => 'View', 1 => 'List')));
-        $this->hasColumn('content_type_id', 'integer', 4, array('type' => 'integer', 'length' => '4'));
+        $this->hasColumn('content_type_id', 'integer', null, array('type' => 'integer'));
         $this->hasColumn('partial_path', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('component_path', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('body', 'clob', null, array('type' => 'clob'));

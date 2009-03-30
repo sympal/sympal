@@ -8,8 +8,8 @@ abstract class BaseContentGroup extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('content_group');
-        $this->hasColumn('content_id', 'integer', 4, array('primary' => true, 'type' => 'integer', 'length' => '4'));
-        $this->hasColumn('group_id', 'integer', 4, array('primary' => true, 'type' => 'integer', 'length' => '4'));
+        $this->hasColumn('content_id', 'integer', null, array('primary' => true, 'type' => 'integer'));
+        $this->hasColumn('group_id', 'integer', null, array('primary' => true, 'type' => 'integer'));
     }
 
     public function setUp()
@@ -18,8 +18,8 @@ abstract class BaseContentGroup extends sfSympalDoctrineRecord
                                        'foreign' => 'id',
                                        'onDelete' => 'CASCADE'));
 
-        $this->hasOne('sfGuardGroup as Group', array('local' => 'group_id',
-                                                     'foreign' => 'id',
-                                                     'onDelete' => 'CASCADE'));
+        $this->hasOne('Group', array('local' => 'group_id',
+                                     'foreign' => 'id',
+                                     'onDelete' => 'CASCADE'));
     }
 }

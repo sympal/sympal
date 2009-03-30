@@ -80,22 +80,6 @@ installation.
 Add a nice web log functionality to your Sympal installation with the 
 sfSympalBlog Plugin.
 
-**sfSympalForgotPasswordPlugin**
-
-Easily add forgot password functionality to your users/security functionality
-with the sfSympalForgotPasswordPlugin.
-
-**sfSympalCommentsPlugin**
-
-Want to turn on comments on any of your content? With the sfSympalCommentsPlugin
-you can do this easily.
-
-**sfSympalUserProfilePlugin**
-
-Add additional information to your users by giving them a user profile. This 
-allows users to create a nice public profile page and store additional 
-information like name, email, address, avatar, etc. It also gives them a way to change their password from a web interface.
-
 ## Demo
 
 [Sympal Demo](http://www.jwage.com/sympal_demo)

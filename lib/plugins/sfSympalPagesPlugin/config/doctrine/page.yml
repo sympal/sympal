@@ -1,13 +1,6 @@
 Page:
   actAs: [sfSympalContentType]
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
-    content_id:
-      type: integer(4)
-      notnull: true
     title:
       type: string(255)
       notnull: true

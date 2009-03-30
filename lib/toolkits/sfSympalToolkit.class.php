@@ -96,6 +96,8 @@ class sfSympalToolkit
     } else {
       $response->addStylesheet($name, 'last');
     }
+
+    return true;
   }
 
   public static function isEditMode()

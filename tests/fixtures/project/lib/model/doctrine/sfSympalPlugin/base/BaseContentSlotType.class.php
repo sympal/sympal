@@ -8,7 +8,6 @@ abstract class BaseContentSlotType extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('content_slot_type');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
     }
 

@@ -3,10 +3,6 @@ Site:
     Sluggable:
       fields: [title]
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     layout: string(255)
     title:
       type: string(255)
@@ -15,21 +11,17 @@ Site:
 Content:
   actAs: [Sluggable, Timestampable, sfSympalContent]
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     site_id:
-      type: integer(4)
+      type: integer
       notnull: true
     content_type_id:
-      type: integer(4)
+      type: integer
       notnull: true
-    content_template_id: integer(4)
-    master_menu_item_id: integer(4)
-    last_updated_by: integer(4)
-    created_by: integer(4)
-    locked_by: integer(4)
+    content_template_id: integer
+    master_menu_item_id: integer
+    last_updated_by: integer
+    created_by: integer
+    locked_by: integer
     is_published: boolean
     date_published: timestamp
     custom_path: string(255)
@@ -42,17 +34,17 @@ Content:
       foreignAlias: MasterContent
       foreignType: one
     LastUpdatedBy:
-      class: sfGuardUser
+      class: User
       local: last_updated_by
       foreignAlias: LastUpdatedContent
       onDelete: SET NULL
     CreatedBy:
-      class: sfGuardUser
+      class: User
       local: created_by
       foreignAlias: CreatedContent
       onDelete: SET NULL
     LockedBy:
-      class: sfGuardUser
+      class: User
       local: locked_by
       foreignAlias: LockedContent
       onDelete: SET NULL
@@ -65,12 +57,12 @@ Content:
       class: ContentTemplate
       onDelete: SET NULL
     Groups:
-      class: sfGuardGroup
+      class: Group
       local: content_id
       foreign: group_id
       refClass: ContentGroup
     Permissions:
-      class: sfGuardPermission
+      class: Permission
       local: content_id
       foreign: permission_id
       refClass: ContentPermission
@@ -83,10 +75,10 @@ Content:
 ContentComment:
   columns:
     content_id:
-      type: integer(4)
+      type: integer
       primary: true
     comment_id:
-      type: integer(4)
+      type: integer
       primary: true
   relations:
     Content:
@@ -101,10 +93,6 @@ ContentType:
     Sluggable:
       fields: [name]
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     name:
       type: string(255)
       notnull: true
@@ -118,17 +106,13 @@ ContentType:
 
 ContentTemplate:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     name:
       type: string(255)
       notnull: true
     type:
       type: enum
       values: [View, List]
-    content_type_id: integer(4)
+    content_type_id: integer
     partial_path: string(255)
     component_path: string(255)
     body: clob
@@ -143,15 +127,11 @@ ContentSlot:
       fields: [value]
 <?php endif; ?> 
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     content_id:
-      type: integer(4)
+      type: integer
       notnull: true
     content_slot_type_id:
-      type: integer(4)
+      type: integer
       notnull: true
     is_column:
       type: boolean
@@ -173,10 +153,6 @@ ContentSlot:
 
 ContentSlotType:
   columns:
-    id:
-      type: integer(4)
-      primary: true
-      autoincrement: true
     name:
       type: string(255)
       notnull: true
@@ -185,16 +161,16 @@ ContentGroup:
   columns:
     content_id:
       primary: true
-      type: integer(4)
+      type: integer
     group_id:
       primary: true
-      type: integer(4)
+      type: integer
   relations:
     Content:
       foreignAlias: ContentGroups
       onDelete: CASCADE
     Group:
-      class: sfGuardGroup
+      class: Group
       local: group_id
       foreignAlias: ContentGroups
       onDelete: CASCADE
@@ -203,16 +179,16 @@ ContentPermission:
   columns:
     content_id:
       primary: true
-      type: integer(4)
+      type: integer
     permission_id:
       primary: true8
-      type: integer(4)
+      type: integer
   relations:
     Content:
       foreignAlias: ContentGroups
       onDelete: CASCADE
     Permission:
-      class: sfGuardPermission
+      class: Permission
       local: permission_id
       foreignAlias: ContentPermissions
       onDelete: CASCADE

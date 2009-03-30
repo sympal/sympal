@@ -27,8 +27,8 @@ foreach ($menuItems as $menuItem)
 }
 
 $browser->
-  get('/signin')->
-  post('/signin', array('signin' => array('username' => 'admin', 'password' => 'admin')))->
+  get('/security/signin')->
+  post('/security/signin', array('signin' => array('username' => 'admin', 'password' => 'admin')))->
   isRedirected()->
   followRedirect()->
   with('user')->begin()->
@@ -37,14 +37,14 @@ $browser->
 ;
 
 $browser->
-  get('/security/logout')->
+  get('/security/signout')->
   isRedirected()->
   followRedirect()
 ;
 
 $browser->
   get('/register')->
-  post('/register/save', array('sf_guard_user' => array('username' => 'test', 'password' => 'test', 'password_again' => 'test')))->
+  post('/register/save', array('user' => array('first_name' => 'Jonathan', 'last_name' => 'Wage', 'email_address' => 'jonathan.wage@sensio.com', 'username' => 'test', 'password' => 'test', 'password_again' => 'test')))->
   isRedirected()->
   followRedirect()
 ;
@@ -54,7 +54,7 @@ $browser->
   isRedirected()->
   followRedirect()->
   click('Signin')->
-  post('/signin', array('signin' => array('username' => 'test', 'password' => 'test')))->
+  post('/security/signin', array('signin' => array('username' => 'test', 'password' => 'test')))->
   with('user')->begin()->
     isAuthenticated()->
   end()

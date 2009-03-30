@@ -8,9 +8,8 @@ abstract class BaseContentSlot extends sfSympalDoctrineRecord
     public function setTableDefinition()
     {
         $this->setTableName('content_slot');
-        $this->hasColumn('id', 'integer', 4, array('type' => 'integer', 'primary' => true, 'autoincrement' => true, 'length' => '4'));
-        $this->hasColumn('content_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
-        $this->hasColumn('content_slot_type_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
+        $this->hasColumn('content_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
+        $this->hasColumn('content_slot_type_id', 'integer', null, array('type' => 'integer', 'notnull' => true));
         $this->hasColumn('is_column', 'boolean', null, array('type' => 'boolean', 'default' => false));
         $this->hasColumn('render_function', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
