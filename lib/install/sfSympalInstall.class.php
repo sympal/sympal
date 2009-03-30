@@ -32,7 +32,7 @@ class sfSympalInstall
     $buildAllLoad = new sfDoctrineBuildAllLoadTask($this->_dispatcher, $this->_formatter);
     $buildAllLoadOptions = array();
     $buildAllLoadOptions[] = '--env='.sfConfig::get('sf_environment');
-    if (file_exists(sfConfig::get('sf_data_dir').'/fixtures/install.yml') && !$options['dir'])
+    if (file_exists(sfConfig::get('sf_data_dir').'/fixtures/install.yml'))
     {
       $buildAllLoadOptions[] = '--dir='.sfConfig::get('sf_data_dir').'/fixtures';
     }
