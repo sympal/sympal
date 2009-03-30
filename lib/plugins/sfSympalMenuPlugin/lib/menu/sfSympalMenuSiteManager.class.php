@@ -124,8 +124,16 @@ class sfSympalMenuSiteManager
         ->leftJoin('m.Groups g')
         ->leftJoin('g.permissions gp')
         ->leftJoin('m.Permissions mp')
-        ->leftJoin('m.RelatedContent e')
+        ->leftJoin('m.RelatedContent c')
+        ->leftJoin('c.Type ct')
+        ->leftJoin('m.ContentType ct2')
+        ->leftJoin('m.Site s')
         ->orderBy('m.root_id, m.lft ASC');
+
+      if (sfSympalConfig::get('I18n', 'MenuItem'))
+      {
+        $q->leftJoin('m.Translation t');
+      }
 
       $this->_menuItems = $q->execute();
 

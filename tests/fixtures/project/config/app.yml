@@ -1,6 +1,0 @@
-all:
-  sympal_settings:
-    sfSympalBlogPlugin:
-      installed: false
-    sfSympalEventPlugin:
-      installed: false

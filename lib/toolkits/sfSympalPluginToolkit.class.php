@@ -164,11 +164,15 @@ class sfSympalPluginToolkit
       {
         $branchSvnPath = $path.'/'.$pluginName.'/branches/'.$version;
         $trunkSvnPath = $path.'/'.$pluginName.'/trunk';
-        if (@file_get_contents($branchSvnPath) !== false)
+        if (@file_get_contents($branchSvnPath) !== false || is_dir($branchSvnPath))
         {
           $path = $branchSvnPath;
-        } else if (@file_get_contents($trunkSvnPath) !== false) {
+          break;
+        } else if (@file_get_contents($trunkSvnPath) !== false || is_dir($trunkSvnPath)) {
           $path = $trunkSvnPath;
+          break;
+        } else if (is_dir($path)) {
+          break;
         }
       }
     }

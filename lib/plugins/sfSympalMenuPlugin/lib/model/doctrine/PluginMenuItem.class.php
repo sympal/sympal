@@ -146,9 +146,19 @@ abstract class PluginMenuItem extends BaseMenuItem
         $tree = $this->getTable()->getTree();
 
         $q = Doctrine_Query::create()
-          ->addSelect('m.*, e.*')
-          ->from('MenuItem m')
-          ->leftJoin('m.RelatedContent e');
+          ->addSelect('m.*, c.*, ct.*, ct2.*, s.*')
+          ->from('MenuItem m INDEXBY m.id')
+          ->leftJoin('m.RelatedContent c')
+          ->leftJoin('c.Site s')
+          ->leftJoin('c.Type ct')
+          ->leftJoin('m.ContentType ct2')
+          ->leftJoin('m.Site s2');
+
+        if (sfSympalConfig::get('I18n', 'MenuItem'))
+        {
+          $q->leftJoin('m.Translation t');
+          $q->addSelect('t.*');
+        }
 
         $tree->setBaseQuery($q);
         $ancestors = $this->getNode()->getAncestors();

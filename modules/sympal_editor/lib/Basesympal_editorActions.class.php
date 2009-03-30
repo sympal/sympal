@@ -49,6 +49,7 @@ class Basesympal_editorActions extends sfActions
     if ($request->getParameter('is_column'))
     {
       unset($this->form[$this->getUser()->getCulture()]);
+      unset($this->form['value']);
 
       $name = $request->getParameter('name');
       $form = new InlineContentPropertyForm($this->contentSlot->RelatedContent, array('contentSlot' => $this->contentSlot));

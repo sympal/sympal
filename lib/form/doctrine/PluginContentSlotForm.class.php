@@ -23,6 +23,6 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
       sfSympalFormToolkit::changeContentSlotValueWidget($this->object, $this);
     }
 
-    sfSympalFormToolkit::embedI18n('MenuItem', $this);
+    sfSympalFormToolkit::embedI18n('ContentSlot', $this);
   }
 }

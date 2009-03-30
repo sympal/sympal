@@ -52,18 +52,26 @@ abstract class PluginContentForm extends BaseContentForm
 
     if ($this instanceof InlineContentPropertyForm)
     {
+      unset($this['value']);
       foreach ($this as $key => $value)
       {
         if (!$value instanceof sfFormFieldSchema && $this->contentSlot->name != $key)
         {
           unset($this[$key]);
+        } elseif (!$value instanceof sfFormFieldSchema && $this->contentSlot->name == $key) {
+          $this->widgetSchema[$key]->setAttribute('id', 'content_slot_value_' . $this->contentSlot['id']);
+          $this->widgetSchema[$key]->setAttribute('onKeyUp', "edit_on_key_up('".$this->contentSlot['id']."');");
         }
       }
+      $typeFormWidgetSchema = $typeForm->getWidgetSchema();
       foreach ($typeForm as $key => $value)
       {
         if (!$value instanceof sfFormFieldSchema && $this->contentSlot->name != $key)
         {
           unset($typeForm[$key]);
+        } elseif (!$value instanceof sfFormFieldSchema && $this->contentSlot->name == $key) {
+          $typeFormWidgetSchema[$key]->setAttribute('id', 'content_slot_value_' . $this->contentSlot['id']);
+          $typeFormWidgetSchema[$key]->setAttribute('onKeyUp', "edit_on_key_up('".$this->contentSlot['id']."');");
         }
       }
     }
