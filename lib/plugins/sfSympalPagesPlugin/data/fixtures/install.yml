@@ -131,7 +131,7 @@ Content:
     Site: Site_default
     is_published: true
     custom_path: /register
-    Slots: [Register_slot_title, Register_slot_body]
+    Slots: [Register_slot_body]
     CreatedBy: admin
   Content_Page_home:
     Type: ContentType_Page
@@ -139,53 +139,41 @@ Content:
     Site: Site_default
     is_published: true
     custom_path: "/"
-    Slots: [Home_slot_title, Home_slot_body]
+    Slots: [Home_slot_body]
     CreatedBy: admin
   Content_Page_about:
     Type: ContentType_Page
     slug: about
     Site: Site_default
     is_published: true
-    Slots: [About_slot_title, About_slot_body]
+    Slots: [About_slot_body]
     CreatedBy: admin
   Content_Page_markdown_examples:
     Type: ContentType_Page
     slug: markdown-examples
     Site: Site_default
     is_published: true
-    Slots: [Markdown_examples_slot_title, Markdown_examples_slot_body]
+    Slots: [Markdown_examples_slot_body]
     CreatedBy: admin
   Content_Page_readme:
     Type: ContentType_Page
     slug: readme
     Site: Site_default
     is_published: true
-    Slots: [Readme_slot_title, Readme_slot_body]
+    Slots: [Readme_slot_body]
     CreatedBy: admin
 
 ContentSlot:
-  Readme_slot_title:
-    name: title
-    Type: ContentSlotType_Text
-    value: README
   Readme_slot_body:
     name: body
     Type: ContentSlotType_Markdown
     value: |
       [?php echo file_get_contents($sf_context->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/README') ?]
-  Register_slot_title:
-    name: title
-    Type: ContentSlotType_Text
-    value: Sympal Register
   Register_slot_body:
     name: body
     Type: ContentSlotType_Markdown
     value: |
       [?php echo get_component('sympal_register', 'form') ?]
-  Home_slot_title:
-    name: title
-    Type: ContentSlotType_Text
-    value: Welcome to the default homepage
   Home_slot_body:
     name: body
     Type: ContentSlotType_Markdown
@@ -199,10 +187,6 @@ ContentSlot:
       [?php if (!$sf_user->isAuthenticated()): ?]
         [?php echo get_component('sympal_auth', 'signin_form') ?]
       [?php endif; ?]
-  About_slot_title:
-    name: title
-    Type: ContentSlotType_Text
-    value: About Sympal
   About_slot_body:
     name: body
     Type: ContentSlotType_Markdown
@@ -221,10 +205,6 @@ ContentSlot:
       * Custom Content Slot Types
       * Multiple Site Menus
       * Use PHP in your Content
-  Markdown_examples_slot_title:
-    name: title
-    Type: ContentSlotType_Text
-    value: Markdown Slot Type Examples
   Markdown_examples_slot_body:
     name: body
     Type: ContentSlotType_Markdown
