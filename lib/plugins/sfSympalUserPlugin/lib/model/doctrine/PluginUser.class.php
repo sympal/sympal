@@ -11,6 +11,14 @@ abstract class PluginUser extends BaseUser
     $permissions    = null,
     $allPermissions = null;
 
+  public function getGravatarUrl($size = 40)
+  {
+    $default = "http://www.somewhere.com/homestar.jpg";
+
+    $url = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(strtolower($this->email_address)).'&default='.urlencode($default).'&size='.$size;
+    return $url;
+  }
+
   public function getName()
   {
     return trim($this->getFirstName().' '.$this->getLastName());
