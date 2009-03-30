@@ -131,15 +131,12 @@ First you need to install Sympal by installing the `sfSympalPlugin`.
 The `sfSympalPlugin` is the main plugin that makes up the Sympal core. It contains several other plugins inside that are a part of the core. Because of this enabling `sfSympalPlugin` requires a little extra work by you in your `ProjectConfiguration` class. Open `config/ProjectConfiguration.class.php` in your favorite editor and place the following code in the `setup()` method.
 
     [php]
-    $sympalPluginPath = dirname(__FILE__).'/../../../..';
-    $this->setPluginPath('sfSympalPlugin', $sympalPluginPath);
-
-    require_once($sympalPluginPath.'/config/sfSympalPluginConfiguration.class.php');
-    $dependencies = sfSympalPluginConfiguration::$dependencies;
-    $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
-    foreach ($dependencies as $plugin)
+    public function setup()
     {
-      $this->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
+      require_once(dirname(__FILE__).'/../plugins/sfSympalPlugin/config/sfSympalPluginConfiguration.class.php');
+      sfSympalPluginConfiguration::enableSympalPlugins($this);
+
+      $this->enableAllPluginsExcept(array('sfPropelPlugin', 'sfCompat10Plugin'));
     }
 
 > **NOTE**
@@ -195,7 +192,8 @@ You can list the available Sympal plugins:
     >> sympal    Check http://svn.symfony-project.com/plugins for sympal plugins
     >> sympal    Found 1 Sympal Plugin(s)
     >> sympal    ------------------------------
-    >> sympal    sfSympalBlogPlugin [php symfony sympal:plugin-install Blog]
+    >> sympal    sfSympalBlogPlugin
+    >> sympal    php symfony sympal:plugin-install Blog
 
 Download a Sympal plugin from the official symfony plugin repositories. This task also has an option to install the plugin after downloading. This task allows you to download Sympal plugins and install them in to existing installations where the database already exists.
 
@@ -369,6 +367,11 @@ When you want to include breadcrumbs in your content templates you can use the f
 
     [php]
     echo get_sympal_breadcrumbs($menuItem, $content = null)
+
+If you want to just generate some breadcrumbs manually you can also pass just a normal array:
+
+    [php]
+    echo get_sympal_breadcrumbs(array('Home' => '@homepage', 'About Sympal' => null));
 
 ### Menus
 
