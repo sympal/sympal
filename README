@@ -383,13 +383,6 @@ The menus are retrieved with one query and only processed once so you can retrie
 
 You can also enable symfony view caching to increase performance even more!
 
-### Comments
-
-You can enable comments in your content easily with the `get_sympal_comments()` method:
-
-    [php]
-    echo get_sympal_comments($content)
-
 ## Tests
 
 Sympal comes with unit and functional tests. You can run the tests by navigating to `sfSympalPlugin/tests/bin` and executing `prove.php`.

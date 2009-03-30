@@ -72,12 +72,12 @@ class BaseUserForm extends BaseFormDoctrine
 
     if (isset($this->widgetSchema['groups_list']))
     {
-      $this->setDefault('groups_list', $this->object->groups->getPrimaryKeys());
+      $this->setDefault('groups_list', $this->object->Groups->getPrimaryKeys());
     }
 
     if (isset($this->widgetSchema['permissions_list']))
     {
-      $this->setDefault('permissions_list', $this->object->permissions->getPrimaryKeys());
+      $this->setDefault('permissions_list', $this->object->Permissions->getPrimaryKeys());
     }
 
   }
@@ -86,11 +86,11 @@ class BaseUserForm extends BaseFormDoctrine
   {
     parent::doSave($con);
 
-    $this->savegroupsList($con);
-    $this->savepermissionsList($con);
+    $this->saveGroupsList($con);
+    $this->savePermissionsList($con);
   }
 
-  public function savegroupsList($con = null)
+  public function saveGroupsList($con = null)
   {
     if (!$this->isValid())
     {
@@ -108,16 +108,16 @@ class BaseUserForm extends BaseFormDoctrine
       $con = $this->getConnection();
     }
 
-    $this->object->unlink('groups', array());
+    $this->object->unlink('Groups', array());
 
     $values = $this->getValue('groups_list');
     if (is_array($values))
     {
-      $this->object->link('groups', $values);
+      $this->object->link('Groups', $values);
     }
   }
 
-  public function savepermissionsList($con = null)
+  public function savePermissionsList($con = null)
   {
     if (!$this->isValid())
     {
@@ -135,12 +135,12 @@ class BaseUserForm extends BaseFormDoctrine
       $con = $this->getConnection();
     }
 
-    $this->object->unlink('permissions', array());
+    $this->object->unlink('Permissions', array());
 
     $values = $this->getValue('permissions_list');
     if (is_array($values))
     {
-      $this->object->link('permissions', $values);
+      $this->object->link('Permissions', $values);
     }
   }
 

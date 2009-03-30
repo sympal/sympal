@@ -25,11 +25,11 @@ abstract class BaseUser extends sfSympalDoctrineRecord
 
     public function setUp()
     {
-        $this->hasMany('Group as groups', array('refClass' => 'UserGroup',
+        $this->hasMany('Group as Groups', array('refClass' => 'UserGroup',
                                                 'local' => 'user_id',
                                                 'foreign' => 'group_id'));
 
-        $this->hasMany('Permission as permissions', array('refClass' => 'UserPermission',
+        $this->hasMany('Permission as Permissions', array('refClass' => 'UserPermission',
                                                           'local' => 'user_id',
                                                           'foreign' => 'permission_id'));
 

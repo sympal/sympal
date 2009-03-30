@@ -76,13 +76,13 @@ User:
     is_active_idx:
       fields: [is_active]
   relations:
-    groups:
+    Groups:
       class: Group
       local: user_id
       foreign: group_id
       refClass: UserGroup
       foreignAlias: Users
-    permissions:
+    Permissions:
       class: Permission
       local: user_id
       foreign: permission_id

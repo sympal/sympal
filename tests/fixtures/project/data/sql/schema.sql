@@ -5,7 +5,6 @@ CREATE TABLE menu_item_group (menu_item_id BIGINT, group_id BIGINT, PRIMARY KEY(
 CREATE TABLE menu_item_permission (menu_item_id BIGINT, permission_id BIGINT, PRIMARY KEY(menu_item_id, permission_id)) ENGINE = INNODB;
 CREATE TABLE page (id BIGINT AUTO_INCREMENT, title VARCHAR(255) NOT NULL, disable_comments TINYINT(1), content_id BIGINT, INDEX content_id_idx (content_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE content (id BIGINT AUTO_INCREMENT, site_id BIGINT NOT NULL, content_type_id BIGINT NOT NULL, content_template_id BIGINT, master_menu_item_id BIGINT, last_updated_by BIGINT, created_by BIGINT, locked_by BIGINT, is_published TINYINT(1), date_published DATETIME, custom_path VARCHAR(255), layout VARCHAR(255), slug VARCHAR(255), created_at DATETIME, updated_at DATETIME, INDEX master_menu_item_id_idx (master_menu_item_id), INDEX last_updated_by_idx (last_updated_by), INDEX created_by_idx (created_by), INDEX locked_by_idx (locked_by), INDEX site_id_idx (site_id), INDEX content_type_id_idx (content_type_id), INDEX content_template_id_idx (content_template_id), PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE content_comment (content_id BIGINT, comment_id BIGINT, PRIMARY KEY(content_id, comment_id)) ENGINE = INNODB;
 CREATE TABLE content_group (content_id BIGINT, group_id BIGINT, PRIMARY KEY(content_id, group_id)) ENGINE = INNODB;
 CREATE TABLE content_permission (content_id BIGINT, permission_id BIGINT, PRIMARY KEY(content_id, permission_id)) ENGINE = INNODB;
 CREATE TABLE content_slot_translation (id BIGINT, value LONGTEXT, lang CHAR(2), PRIMARY KEY(id, lang)) ENGINE = INNODB;
@@ -39,7 +38,6 @@ ALTER TABLE content ADD FOREIGN KEY (last_updated_by) REFERENCES user(id) ON DEL
 ALTER TABLE content ADD FOREIGN KEY (created_by) REFERENCES user(id) ON DELETE SET NULL;
 ALTER TABLE content ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id) ON DELETE CASCADE;
 ALTER TABLE content ADD FOREIGN KEY (content_template_id) REFERENCES content_template(id) ON DELETE SET NULL;
-ALTER TABLE content_comment ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
 ALTER TABLE content_group ADD FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE;
 ALTER TABLE content_group ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
 ALTER TABLE content_permission ADD FOREIGN KEY (permission_id) REFERENCES permission(id) ON DELETE CASCADE;

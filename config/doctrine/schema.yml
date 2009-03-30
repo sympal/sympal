@@ -66,27 +66,6 @@ Content:
       local: content_id
       foreign: permission_id
       refClass: ContentPermission
-    Comments:
-      class: Comment
-      local: content_id
-      foreign: comment_id
-      refClass: ContentComment
-
-ContentComment:
-  columns:
-    content_id:
-      type: integer
-      primary: true
-    comment_id:
-      type: integer
-      primary: true
-  relations:
-    Content:
-      foreignAlias: ContentComments
-      onDelete: CASCADE
-    Comment:
-      foreignAlias: ContentComments
-      onDelete: CASCADE
 
 ContentType:
   actAs:
