@@ -89,7 +89,7 @@ EOF;
 $contentType:
   actAs: [sfSympalContentType]
   columns:
-    name: string(255)
+    title: string(255)
     body: clob
 EOF;
 

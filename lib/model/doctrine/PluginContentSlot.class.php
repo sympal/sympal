@@ -9,13 +9,27 @@ abstract class PluginContentSlot extends BaseContentSlot
 
   public function render()
   {
-    $class = 'sfSympalContentSlot'.$this->Type->name.'Renderer';
-    if (!class_exists($class))
+    if ($this->render_function)
     {
-      $class = 'sfSympalContentSlotRenderer';
+      $renderFunction = $this->render_function;
+      if (method_exists($this->RelatedContent, $renderFunction))
+      {
+        return $this->RelatedContent->$renderFunction($this);
+      } else {
+        sfSympalToolkit::autoloadHelper($renderFunction);
+        return $renderFunction($this->RelatedContent, $this->name);
+      }
+    } else {
+      $class = 'sfSympalContentSlot'.$this->Type->name.'Renderer';
+
+      if (!class_exists($class))
+      {
+        $class = 'sfSympalContentSlotRenderer';
+      }
+
+      $renderer = new $class($this);
+      return (string) $renderer;
     }
-    $renderer = new $class($this);
-    return (string) $renderer;
   }
 
   public function construct()

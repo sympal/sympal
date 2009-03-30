@@ -12,6 +12,7 @@ abstract class BaseContentSlot extends sfSympalDoctrineRecord
         $this->hasColumn('content_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
         $this->hasColumn('content_slot_type_id', 'integer', 4, array('type' => 'integer', 'notnull' => true, 'length' => '4'));
         $this->hasColumn('is_column', 'boolean', null, array('type' => 'boolean', 'default' => false));
+        $this->hasColumn('render_function', 'string', 255, array('type' => 'string', 'length' => '255'));
         $this->hasColumn('name', 'string', 255, array('type' => 'string', 'notnull' => true, 'length' => '255'));
         $this->hasColumn('value', 'clob', null, array('type' => 'clob'));
     }

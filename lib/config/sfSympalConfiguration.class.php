@@ -88,30 +88,66 @@ class sfSympalConfiguration
       $this->checkDependencies();
     }
 
-    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-    if (!file_exists($cachePath))
-    {
-      $this->_writeContentTypesCache();
-    }
+    $this->_writeContentTypesCache();
+    $this->_writeHelperAutoloadCache();
+
     $contentTypes = sfSympalToolkit::getContentTypesCache();
     Doctrine::initializeModels($contentTypes);
   }
 
+  protected function _writeHelperAutoloadCache()
+  {
+    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/helper_autoload.cache';
+    if (!file_exists($cachePath))
+    {
+      $cache = array();
+      $dirs = $this->_projectConfiguration->getHelperDirs();
+      foreach ($dirs as $dir)
+      {
+        $helpers = sfFinder::type('file')->name('*Helper.php')->in($dir);
+        foreach ($helpers as $helper)
+        {
+          require_once($helper);
+          $lines = file($helper);
+          foreach ($lines as $line)
+          {
+            preg_match("/function (.*)\(/", $line, $matches);
+            if ($matches)
+            {
+              $function = $matches[1];
+              $e = explode('(', $function);
+              $function = $e[0];
+              if (function_exists($function))
+              {
+                $cache[$function] = $helper;
+              }
+            }
+          }
+        }
+      }
+      file_put_contents($cachePath, serialize($cache));
+    }
+  }
+
   protected function _writeContentTypesCache()
   {
-    try {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-      if (!file_exists($cachePath))
-      {
-        $typesArray = array();
-        $contentTypes = Doctrine::getTable('ContentType')->findAll();
-        foreach ($contentTypes as $contentType)
+    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
+    if (!file_exists($cachePath))
+    {
+      try {
+        $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
+        if (!file_exists($cachePath))
         {
-          $typesArray[$contentType['id']] = $contentType['name'];
+          $typesArray = array();
+          $contentTypes = Doctrine::getTable('ContentType')->findAll();
+          foreach ($contentTypes as $contentType)
+          {
+            $typesArray[$contentType['id']] = $contentType['name'];
+          }
+          file_put_contents($cachePath, serialize($typesArray));
         }
-        file_put_contents($cachePath, serialize($typesArray));
-      }
-    } catch (Exception $e) {}
+      } catch (Exception $e) {}
+    }
   }
 
   public function getRequiredPlugins()

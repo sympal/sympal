@@ -117,12 +117,22 @@ function get_sympal_pager_navigation($pager, $uri)
   return $navigation;
 }
 
-function get_sympal_column_content_slot($content, $name, $type = 'Text', $holderTag = 'div')
+function get_sympal_content_property($content, $name)
 {
-  return get_sympal_content_slot($content, $name, $type, true, $holderTag);
+  return $content->$name;
 }
 
-function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $holderTag = 'div')
+function get_sympal_column_content_slot($content, $name, $renderFunction = null, $type = 'ContentProperty')
+{
+  if (is_null($renderFunction))
+  {
+    $renderFunction = 'get_sympal_content_property';
+  }
+
+  return get_sympal_content_slot($content, $name, $type, true, $renderFunction);
+}
+
+function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
 {
   $defaultValue = '[Double click to edit slot content]';
   $slotsCollection = $content->getSlots();
@@ -136,16 +146,19 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
   {
     $slot = new ContentSlot();
     $slot->content_id = $content->id;
-    $slot->is_column = $isColumn;
+    $slot->render_function = $renderFunction;
+    if ($isColumn)
+    {
+      $slot->is_column = true;
+    }
 
     if (!$slot->exists())
     {
-      $type = Doctrine::getTable('ContentSlotType')->findOneByName($type);
-
-      if (!$type)
+      if ($isColumn)
       {
-        $type = new ContentSlotType();
-        $type->setName($type);
+        $type = Doctrine::getTable('ContentSlotType')->findOneByName('ContentProperty');
+      } else {
+        $type = Doctrine::getTable('ContentSlotType')->findOneByName($type);
       }
 
       $slot->setType($type);
@@ -157,18 +170,17 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
     $slot = $slots[$name];
   }
 
+  if ($slot->getValue()) {
+    $renderedValue = $slot->render();
+  } else {
+    $renderedValue = $defaultValue;
+  }
+
   if (sfSympalToolkit::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()))
   {
-    if ($slot->getValue())
-    {
-      $contentSlot = $slot->render();
-    } else {
-      $contentSlot = $defaultValue;
-    }
-
-    $html  = '<'.$holderTag.' class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
-    $html .= $contentSlot;
-    $html .= '</'.$holderTag.'>';
+    $html  = '<span class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
+    $html .= $renderedValue;
+    $html .= '</span>';
 
     if ($isColumn)
     {
@@ -214,6 +226,6 @@ EOF
 
     return $html;
   } else {
-    return $slot->render();
+    return $renderedValue;
   }
 }

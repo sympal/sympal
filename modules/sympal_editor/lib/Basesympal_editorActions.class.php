@@ -73,7 +73,8 @@ class Basesympal_editorActions extends sfActions
     $this->contentSlot = $this->getRoute()->getObject();
     $this->form = $this->_getContentSlotForm($request);
 
-    $this->form->bind($request->getParameter($this->form->getName()));
+    $values = $request->getParameter($this->form->getName());
+    $this->form->bind($values);
     if ($this->form->isValid())
     {
       $this->form->save();

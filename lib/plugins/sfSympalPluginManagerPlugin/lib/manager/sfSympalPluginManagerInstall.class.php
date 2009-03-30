@@ -104,7 +104,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installVars['menuItem'] = $menuItem;
 
     $properties = array(
-      'body' => '<?php echo get_sympal_breadcrumbs($menuItem, $content) ?><h2><?php echo $content->getHeaderTitle() ?></h2><p><strong>Posted by <?php echo $content->CreatedBy->username ?> on <?php echo date(\'m/d/Y h:i:s\', strtotime($content->created_at)) ?></strong></p><p><?php echo $content->getRecord()->getBody() ?></p><?php echo get_sympal_comments($content) ?>',
+      'body' => '<?php echo get_sympal_breadcrumbs($menuItem, $content) ?><h2><?php echo get_sympal_column_content_slot($content, \'title\') ?></h2><p><strong>Posted by <?php echo $content->CreatedBy->username ?> on <?php echo get_sympal_column_content_slot($content, \'date_published\') ?></strong></p><p><?php echo get_sympal_column_content_slot($content, \'body\') ?></p><?php echo get_sympal_comments($content) ?>',
     );
 
     $contentTemplate = $this->newContentTemplate('View '.$this->_contentTypeName, 'View', $installVars['contentType'], $properties);
@@ -121,19 +121,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     $contentTypeName = $this->_contentTypeName;
     $contentTypeRecord = $installVars['content']->$contentTypeName;
-
-    $guesses = array('name',
-                     'title',
-                     'username',
-                     'subject',
-                     'body');
-
-    try {
-      foreach ($guesses as $guess)
-      {
-        $contentTypeRecord->$guess = 'Sample '.$this->_contentTypeName;
-      }
-    } catch (Exception $e) {}
+    $contentTypeRecord->title = 'Sample '.$this->_contentTypeName;
 
     if ($contentTypeRecord->getTable()->hasColumn('body'))
     {

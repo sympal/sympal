@@ -156,6 +156,7 @@ ContentSlot:
     is_column:
       type: boolean
       default: false
+    render_function: string(255)
     name:
       type: string(255)
       notnull: true

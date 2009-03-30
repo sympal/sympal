@@ -16,6 +16,7 @@ class BaseContentSlotForm extends BaseFormDoctrine
       'content_id'           => new sfWidgetFormDoctrineChoice(array('model' => 'Content', 'add_empty' => false)),
       'content_slot_type_id' => new sfWidgetFormDoctrineChoice(array('model' => 'ContentSlotType', 'add_empty' => false)),
       'is_column'            => new sfWidgetFormInputCheckbox(),
+      'render_function'      => new sfWidgetFormInput(),
       'name'                 => new sfWidgetFormInput(),
     ));
 
@@ -24,6 +25,7 @@ class BaseContentSlotForm extends BaseFormDoctrine
       'content_id'           => new sfValidatorDoctrineChoice(array('model' => 'Content')),
       'content_slot_type_id' => new sfValidatorDoctrineChoice(array('model' => 'ContentSlotType')),
       'is_column'            => new sfValidatorBoolean(array('required' => false)),
+      'render_function'      => new sfValidatorString(array('max_length' => 255, 'required' => false)),
       'name'                 => new sfValidatorString(array('max_length' => 255)),
     ));
 

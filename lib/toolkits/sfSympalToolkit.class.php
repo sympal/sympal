@@ -194,14 +194,43 @@ class sfSympalToolkit
     }
   }
 
+  protected static $_contentTypesCache = null;
+
   public static function getContentTypesCache()
   {
-    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-    if (file_exists($cachePath))
+    if (is_null(self::$_contentTypesCache))
     {
-      return unserialize(file_get_contents($cachePath));
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
+      if (file_exists($cachePath))
+      {
+        self::$_contentTypesCache = unserialize(file_get_contents($cachePath));
+      } else {
+        self::$_contentTypesCache = array();
+      }
+    }
+
+    return self::$_contentTypesCache;
+  }
+
+  protected static $_helperAutoloadCache = null;
+
+  public static function autoloadHelper($functionName)
+  {
+    if (is_null(self::$_helperAutoloadCache))
+    {
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/helper_autoload.cache';
+      if (file_exists($cachePath))
+      {
+        self::$_helperAutoloadCache = unserialize(file_get_contents($cachePath));
+      } else {
+        self::$_helperAutoloadCache = array();
+      }
+    }
+    if (isset(self::$_helperAutoloadCache[$functionName]))
+    {
+      require_once(self::$_helperAutoloadCache[$functionName]);
     } else {
-      return array();
+      throw new sfException('Could not autoload helper for function "'.$functionName.'"');
     }
   }
 }

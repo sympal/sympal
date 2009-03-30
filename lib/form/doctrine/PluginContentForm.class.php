@@ -16,7 +16,6 @@ abstract class PluginContentForm extends BaseContentForm
     unset(
       $this['created_at'],
       $this['updated_at'],
-      $this['created_by'],
       $this['last_updated_by']
     );
 
@@ -36,9 +35,8 @@ abstract class PluginContentForm extends BaseContentForm
     $type = ($this->object->Type->name ? $this->object->Type->name:'Page') . 'Form';
 
     $typeForm = new $type($this->object->getRecord());
+
     unset($typeForm['id'], $typeForm['content_id']);
-    sfSympalFormToolkit::embedI18n($this->object->Type->name, $typeForm);
-    $this->embedForm($this->object->Type->name, $typeForm);
 
     $q = Doctrine_Query::create()
       ->from('MenuItem m')
@@ -51,5 +49,30 @@ abstract class PluginContentForm extends BaseContentForm
     $this->widgetSchema['groups_list']->setLabel('Groups');
     $this->widgetSchema['permissions_list']->setLabel('Permissions');
     $this->widgetSchema['content_template_id']->setLabel('Template');
+
+    if ($this instanceof InlineContentPropertyForm)
+    {
+      foreach ($this as $key => $value)
+      {
+        if (!$value instanceof sfFormFieldSchema && $this->contentSlot->name != $key)
+        {
+          unset($this[$key]);
+        }
+      }
+      foreach ($typeForm as $key => $value)
+      {
+        if (!$value instanceof sfFormFieldSchema && $this->contentSlot->name != $key)
+        {
+          unset($typeForm[$key]);
+        }
+      }
+    }
+
+    sfSympalFormToolkit::embedI18n($this->object->Type->name, $typeForm);
+    
+    if (count($typeForm))
+    {
+      $this->embedForm($this->object->Type->name, $typeForm);
+    }
   }
 }
