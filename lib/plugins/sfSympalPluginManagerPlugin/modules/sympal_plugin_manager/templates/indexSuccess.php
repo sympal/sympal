@@ -11,14 +11,12 @@
       <table>
         <thead>
           <tr>
-            <th></th>
             <th>Plugin</th>
             <th>Actions</th>
           </tr>
         </thead>
         <?php foreach ($addonPlugins as $plugin): ?>
           <tr>
-            <td><input type="checkbox" name="plugins[]" value="<?php echo $plugin ?>" /></td>
             <td><strong><?php echo link_to(sfSympalPluginToolkit::getShortPluginName($plugin), '@sympal_plugin_manager_view?plugin='.$plugin) ?></strong></td>
             <td>
               <?php echo get_partial('sympal_plugin_manager/actions', array('plugin' => $plugin)) ?>

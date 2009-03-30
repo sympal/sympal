@@ -164,8 +164,10 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
 
   if ($slot->getValue()) {
     $renderedValue = $slot->render();
-  } else {
+  } else if (sfSympalToolkit::isEditMode()) {
     $renderedValue = $defaultValue;
+  } else {
+    $renderedValue = '';
   }
 
   if (sfSympalToolkit::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()))
