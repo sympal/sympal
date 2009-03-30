@@ -23,7 +23,7 @@ class Basesympal_commentsActions extends autoSympal_commentsActions
 
     if ($this->form->isValid())
     {
-      $this->form->getObject()->status = sfSympalConfig::get('Comments', 'default_status');
+      $this->form->getObject()->status = sfSympalConfig::get('Comments', 'default_status', 'Approved');
       $this->form->save();
 
       $obj = new ContentComment();
