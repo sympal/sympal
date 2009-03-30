@@ -30,7 +30,6 @@ class BaseContentFormFilter extends BaseFormFilterDoctrine
       'updated_at'          => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => true)),
       'groups_list'         => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Group')),
       'permissions_list'    => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Permission')),
-      'comments_list'       => new sfWidgetFormDoctrineChoiceMany(array('model' => 'Comment')),
     ));
 
     $this->setValidators(array(
@@ -50,7 +49,6 @@ class BaseContentFormFilter extends BaseFormFilterDoctrine
       'updated_at'          => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDate(array('required' => false)), 'to_date' => new sfValidatorDate(array('required' => false)))),
       'groups_list'         => new sfValidatorDoctrineChoiceMany(array('model' => 'Group', 'required' => false)),
       'permissions_list'    => new sfValidatorDoctrineChoiceMany(array('model' => 'Permission', 'required' => false)),
-      'comments_list'       => new sfValidatorDoctrineChoiceMany(array('model' => 'Comment', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('content_filters[%s]');
@@ -92,22 +90,6 @@ class BaseContentFormFilter extends BaseFormFilterDoctrine
           ->andWhereIn('ContentPermission.permission_id', $values);
   }
 
-  public function addCommentsListColumnQuery(Doctrine_Query $query, $field, $values)
-  {
-    if (!is_array($values))
-    {
-      $values = array($values);
-    }
-
-    if (!count($values))
-    {
-      return;
-    }
-
-    $query->leftJoin('r.ContentComment ContentComment')
-          ->andWhereIn('ContentComment.comment_id', $values);
-  }
-
   public function getModelName()
   {
     return 'Content';
@@ -133,7 +115,6 @@ class BaseContentFormFilter extends BaseFormFilterDoctrine
       'updated_at'          => 'Date',
       'groups_list'         => 'ManyKey',
       'permissions_list'    => 'ManyKey',
-      'comments_list'       => 'ManyKey',
     );
   }
 }

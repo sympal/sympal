@@ -59,10 +59,6 @@ abstract class BaseContent extends sfSympalDoctrineRecord
                                                           'local' => 'content_id',
                                                           'foreign' => 'permission_id'));
 
-        $this->hasMany('Comment as Comments', array('refClass' => 'ContentComment',
-                                                    'local' => 'content_id',
-                                                    'foreign' => 'comment_id'));
-
         $this->hasOne('MenuItem', array('local' => 'id',
                                         'foreign' => 'content_id'));
 

@@ -43,14 +43,6 @@ function get_sympal_split_menus($name, $showChildren = true, $max = null, $split
   return sfSympalMenuSiteManager::split($menu, $max, $split);
 }
 
-function get_sympal_comments($content)
-{
-  if (sfSympalConfig::get('sfSympalCommentsPlugin', 'enabled') && sfSympalConfig::get($content['Type']['name'], 'enable_comments'))
-  {
-    return get_component('sympal_comments', 'for_content', array('content' => $content));
-  }
-}
-
 function get_sympal_editor($menuItem = null, $content = null)
 {
   $menuItem = $menuItem ? $menuItem:sfSympalToolkit::getCurrentMenuItem();

@@ -17,9 +17,5 @@ abstract class BaseContentComment extends sfSympalDoctrineRecord
         $this->hasOne('Content', array('local' => 'content_id',
                                        'foreign' => 'id',
                                        'onDelete' => 'CASCADE'));
-
-        $this->hasOne('Comment', array('local' => 'comment_id',
-                                       'foreign' => 'id',
-                                       'onDelete' => 'CASCADE'));
     }
 }

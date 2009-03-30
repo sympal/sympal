@@ -33,9 +33,6 @@ abstract class BaseUser extends sfSympalDoctrineRecord
                                                           'local' => 'user_id',
                                                           'foreign' => 'permission_id'));
 
-        $this->hasMany('Comment as Comments', array('local' => 'id',
-                                                    'foreign' => 'user_id'));
-
         $this->hasMany('Content as LastUpdatedContent', array('local' => 'id',
                                                               'foreign' => 'last_updated_by'));
 

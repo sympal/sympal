@@ -1,7 +1,0 @@
-all:
-  sympal_settings:
-    sfSympalCommentsPlugin:
-      default_status: Approved
-      enabled: true
-      enable_recaptcha: true
-      requires_auth: true

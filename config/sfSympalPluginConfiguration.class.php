@@ -10,7 +10,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
       'sfSympalPagesPlugin',
-      'sfSympalCommentsPlugin',
     );
 
   public
