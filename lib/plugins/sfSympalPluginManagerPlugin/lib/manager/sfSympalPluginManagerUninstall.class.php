@@ -13,9 +13,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
     if (file_exists($schema))
     {
-      $dataFixtures = sfFinder::type('file')->in($path.'/data/fixtures/install.yml');
       $models = array_keys(sfYaml::load($schema));
-
       sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
       if ($this->_contentTypeName)
@@ -48,37 +46,38 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
           ->execute();
 
         $this->logSection('sympal', 'Clear database tables of data');
+      }
 
-        // Delete all data
-        foreach ($models as $model)
-        {
-          try {
-            if (class_exists($model))
-            {
-              Doctrine::getTable($model)
-                ->createQuery()
-                ->delete()
-                ->execute();
-            }
-          } catch (Exception $e) {
-            continue;
+      // Delete all data
+      foreach ($models as $model)
+      {
+        try {
+          if (class_exists($model))
+          {
+            Doctrine::getTable($model)
+              ->createQuery()
+              ->delete()
+              ->execute();
           }
+        } catch (Exception $e) {
+          $this->logSection('sympal', 'Could not truncate table for model "'.$model.'": "'.$e->getMessage().'"');
         }
+      }
 
-        $this->logSection('sympal', 'Drop database tables');
 
-        // Drop all tables
-        foreach ($models as $model)
-        {
-          try {
-            if (class_exists($model))
-            {
-              $table = Doctrine::getTable($model);
-              $table->getConnection()->export->dropTable($table->getTableName());
-            }
-          } catch (Exception $e) {
-            continue;
+      $this->logSection('sympal', 'Drop database tables');
+
+      // Drop all tables
+      foreach ($models as $model)
+      {
+        try {
+          if (class_exists($model))
+          {
+            $table = Doctrine::getTable($model);
+            $table->getConnection()->export->dropTable($table->getTableName());
           }
+        } catch (Exception $e) {
+          $this->logSection('sympal', 'Could not drop table for model "'.$model.'": "'.$e->getMessage().'"');
         }
       }
     }

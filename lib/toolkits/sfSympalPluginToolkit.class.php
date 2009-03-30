@@ -132,7 +132,10 @@ class sfSympalPluginToolkit
         }
       }
 
-      $available = array_unique($available);
+      if (isset($available['sfSympalPlugin']))
+      {
+        unset($available['sfSympalPlugin']);
+      }
 
       $cachePath = sfConfig::get('sf_cache_dir').'/sympal_available_plugins.cache';
       file_put_contents($cachePath, serialize($available));
