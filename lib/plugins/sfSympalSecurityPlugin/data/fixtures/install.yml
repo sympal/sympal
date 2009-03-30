@@ -1,6 +1,6 @@
 sfGuardUser:
   admin:
     is_active: true
-    username: admin
-    password: admin
+    username: <?php echo sfSympalConfig::get('sympal_install_admin_username', null, 'admin') ?> 
+    password: <?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?> 
     is_super_admin: true

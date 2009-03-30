@@ -154,6 +154,7 @@ sympal_content_create_type:
   url:    /admin/content/create/:type
   param:  { module: sympal_content, action: create_type }
 
+<?php try { ?>
 <?php
 $q = Doctrine_Query::create()
   ->from('Content e')
@@ -208,3 +209,4 @@ sympal_content_view_type_<?php echo $contentType['slug'] ?>:
     method: getContentObjectForSite
 <?php endif; ?>
 <?php endforeach; ?>
+<?php } catch (Exception $e) {}

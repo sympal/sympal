@@ -28,8 +28,8 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     chdir(sfConfig::get('sf_root_dir'));
 
-    $task = new sfSympalInstallTask($this->dispatcher, new sfFormatter());
-    $task->run(array(), array('--no-confirmation', '--application=sympal', '--env=test'));
+    $install = new sfSympalInstall($this, $this->dispatcher, new sfFormatter());
+    $install->install();
   }
 
   public function loadFixtures($fixtures)

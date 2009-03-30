@@ -1,10 +1,11 @@
 <?php
 
-class sfSympalInstallTask extends sfBaseTask
+class sfSympalInstallTask extends sfTaskExtraBaseTask
 {
   protected function configure()
   {
     $this->addOptions(array(
+      new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', 'sympal'),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('connection', null, sfCommandOption::PARAMETER_REQUIRED, 'The connection name', 'doctrine'),
@@ -38,106 +39,23 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $this->_buildSympalInstallation($arguments, $options);
-    $this->_installSympalPlugins($arguments, $options);
-    $this->_executePostInstallSql($arguments, $options);
-  }
-
-  protected function _buildSympalInstallation($arguments = array(), $options = array())
-  {
-    $dropDb = new sfDoctrineDropDbTask($this->dispatcher, $this->formatter);
-    $dropDb->setCommandApplication($this->commandApplication);
-
-    $dropDbOptions = array();
-    $dropDbOptions[] = '--env='.$options['env'];
-    if (isset($options['no-confirmation']) && $options['no-confirmation'])
+    if (!$options['no-confirmation'])
     {
-      $dropDbOptions[] = '--no-confirmation';
-    }
-    if (isset($options['application']) && $options['application'])
-    {
-      $dropDbOptions[] = '--application=' . $options['application'];
-    }
-    $dropDb->run(array(), $dropDbOptions);
-
-    $buildAllLoad = new sfDoctrineBuildAllLoadTask($this->dispatcher, $this->formatter);
-    $buildAllLoad->setCommandApplication($this->commandApplication);
-
-    $buildAllLoadOptions = array();
-    $buildAllLoadOptions[] = '--env='.$options['env'];
-    if (!empty($options['dir']))
-    {
-      $buildAllLoadOptions[] = '--dir=' . implode(' --dir=', $options['dir']);
-    }
-    if (isset($options['append']) && $options['append'])
-    {
-      $buildAllLoadOptions[] = '--append';
-    }
-    if (isset($options['application']) && $options['application'])
-    {
-      $buildAllLoadOptions[] = '--application=' . $options['application'];
-    }
-    if (isset($options['skip-forms']) && $options['skip-forms'])
-    {
-      $buildAllLoadOptions[] = '--skip-forms';
-    }
-    if (file_exists(sfConfig::get('sf_data_dir').'/fixtures/install.yml') && !$options['dir'])
-    {
-      $buildAllLoadOptions[] = '--dir='.sfConfig::get('sf_data_dir').'/fixtures';
-    }
-    $buildAllLoad->run(array(), $buildAllLoadOptions);
-  }
-
-  protected function _installSympalPlugins($arguments = array(), $options = array())
-  {
-    $plugins = $this->configuration->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getOtherPlugins();
-    foreach ($plugins as $plugin)
-    {
-      $manager = sfSympalPluginManager::getActionInstance($plugin, 'install', $this->configuration, $this->formatter);
-      $manager->install();
-    }
-  }
-
-  protected function _executePostInstallSql($arguments = array(), $options = array())
-  {
-    $dir = sfConfig::get('sf_data_dir').'/sql/sympal_install';
-    if (is_dir($dir))
-    {
-      $this->_executeSqlFiles($dir);
-    }
-
-    $manager = Doctrine_Manager::getInstance();
-    foreach ($manager as $conn)
-    {
-      $dir = sfConfig::get('sf_data_dir').'/sql/sympal_install/'.$conn->getName();
-      if (is_dir($dir))
+      if (!$this->askConfirmation(array('This command will remove all data in your configured databases and initialize the sympal database.', 'Are you sure you want to proceed? (y/N)'), null, false))
       {
-        $this->_executeSqlFiles($dir, null);
+        $this->logSection('sympal', 'Install task aborted');
+
+        return 1;
       }
     }
-  }
 
-  protected function _executeSqlFiles($dir, $maxDepth = 0, $conn = null)
-  {
-    if (is_null($conn))
+    if (isset($options['interactive']) && $options['interactive'])
     {
-      $conn = Doctrine_Manager::connection();
+      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Admin Username:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Admin Password:', new sfValidatorString()));
     }
 
-    $files = sfFinder::type('file')
-      ->name('*.sql')
-      ->maxdepth($maxDepth)
-      ->in($dir);
-
-    foreach ($files as $file)
-    {
-      $sqls = file($file);
-      foreach ($sqls as $sql)
-      {
-        $sql = trim($sql);
-        $this->logSection('sympal', $sql);
-        $conn->exec($sql);
-      }
-    }
+    $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);
+    $install->install();
   }
 }

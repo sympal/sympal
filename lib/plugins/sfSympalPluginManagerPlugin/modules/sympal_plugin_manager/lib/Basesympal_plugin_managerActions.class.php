@@ -23,34 +23,28 @@ abstract class Basesympal_plugin_managerActions extends sfActions
 
   protected function _redirectIfPermissionsError()
   {
-    if (!$this->_checkFilePermissions(false))
+    if (!$this->_checkFilePermissions())
     {
-      $this->getUser()->setFlash('error', 'Some required directories are not writable.');
-
       $this->redirect('@sympal_plugin_manager');
     }
   }
 
-  protected function _checkFilePermissions($flashError = true)
+  protected function _checkFilePermissions()
   {
-    $dirs = array(
-      sfConfig::get('sf_lib_dir').'/filter/doctrine',
-      sfConfig::get('sf_lib_dir').'/form/doctrine',
-      sfConfig::get('sf_lib_dir').'/model/doctrine',
-      sfConfig::get('sf_root_dir').'/plugins'
-    );
+    $checks = sfFinder::type('file')->in(sfConfig::get('sf_root_dir'));
+    $checks = array_merge($checks, sfFinder::type('dir')->in(sfConfig::get('sf_root_dir')));
 
     $error = false;
-    foreach ($dirs as $dir)
+    foreach ($checks as $check)
     {
-      if (!is_writable($dir))
+      if (!is_writable($check))
       {
         $error = true;
-        if ($flashError)
-        {
-          $this->getUser()->setFlash('error', $dir.' is not writable.');
-        }
       }
+    }
+    if ($error)
+    {
+      $this->getUser()->setFlash('error', 'You have some permissions problems. The plugin manager requires your symfony application directories to be writable by your web server.');
     }
 
     if ($error)

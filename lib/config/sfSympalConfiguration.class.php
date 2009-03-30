@@ -99,17 +99,19 @@ class sfSympalConfiguration
 
   protected function _writeContentTypesCache()
   {
-    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-    if (!file_exists($cachePath))
-    {
-      $typesArray = array();
-      $contentTypes = Doctrine::getTable('ContentType')->findAll();
-      foreach ($contentTypes as $contentType)
+    try {
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
+      if (!file_exists($cachePath))
       {
-        $typesArray[$contentType['id']] = $contentType['name'];
+        $typesArray = array();
+        $contentTypes = Doctrine::getTable('ContentType')->findAll();
+        foreach ($contentTypes as $contentType)
+        {
+          $typesArray[$contentType['id']] = $contentType['name'];
+        }
+        file_put_contents($cachePath, serialize($typesArray));
       }
-      file_put_contents($cachePath, serialize($typesArray));
-    }
+    } catch (Exception $e) {}
   }
 
   public function getRequiredPlugins()
