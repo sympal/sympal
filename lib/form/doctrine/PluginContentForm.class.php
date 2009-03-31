@@ -83,4 +83,19 @@ abstract class PluginContentForm extends BaseContentForm
       $this->embedForm($this->object->Type->name, $typeForm);
     }
   }
+
+  public function bind(array $taintedValues = null, array $taintedFiles = null)
+  {
+    $ret = parent::bind($taintedValues, $taintedFiles);
+    foreach ($this->embeddedForms as $name => $form)
+    {
+      $this->embeddedForms[$name]->isBound = true;
+      if (isset($this->values[$name]))
+      {
+        $this->embeddedForms[$name]->values = $this->values[$name];
+      }
+    }
+
+    return $ret;
+  }
 }
