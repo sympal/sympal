@@ -19,7 +19,7 @@
 var oMenuBar = new YAHOO.widget.MenuBar("sympal_admin_bar", { 
   autosubmenudisplay: true, 
   hidedelay: 1, 
-  lazyload: false,});
+  lazyload: false});
 
 oMenuBar.render();
 oMenuBar.show();
