@@ -79,7 +79,8 @@ class sfSympalToolkit
     if (isset($fullPath) && file_exists($fullPath))
     {
       $e = explode('.', $fullPath);
-      $path = $e[0];
+      unset($e[count($e) - 1]);
+      $path = implode('.', $e);
       $info = pathinfo($fullPath);
       $name = $info['filename'];
     }
