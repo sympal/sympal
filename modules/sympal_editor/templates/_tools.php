@@ -24,6 +24,7 @@
 <?php use_javascript('/sfSympalPlugin/js/bubbling/dispatcher/dispatcher-min') ?>
 
 <?php use_javascript('/sfSympalPlugin/yui/animation/animation-min.js') ?>
+<?php use_javascript('/sfSympalPlugin/js/yui-image-uploader26.js') ?>
 
 <div class="yui-skin-sam" id="sympal_edit_panel_container">
   <div id="sympal_edit_panel">
