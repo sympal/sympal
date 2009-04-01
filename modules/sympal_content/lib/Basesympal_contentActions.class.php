@@ -25,8 +25,10 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->setTemplate('new_type');
+    $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType('page');
     $this->contentTypes = Doctrine::getTable('ContentType')->findAll();
+
+    $this->setTemplate('new_type');
   }
 
   public function executeCreate_type(sfWebRequest $request)
@@ -60,6 +62,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeCreate(sfWebRequest $request)
   {
+    $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType('page');
+
     $this->content = new Content();
 
     $type = Doctrine::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
