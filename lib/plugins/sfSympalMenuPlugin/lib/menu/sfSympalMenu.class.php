@@ -3,47 +3,57 @@ abstract class sfSympalMenu
 {
   protected 
     $_name             = null,
+    $_route            = null,
     $_level            = null,
     $_parent           = null,
     $_requiresAuth     = null,
     $_requiresNoAuth   = null,
-    $_debug            = true,
     $_showChildren     = true,
     $_current          = false,
     $_options          = array(),
     $_children         = array(),
     $_credentials      = array();
 
-  public function __construct($name = null)
+  public function __construct($name, $route = null, $options = array())
   {
     $this->_name = $name;
+    $this->_route = $route;
+    $this->_options = $options;
   }
 
-  public function __toString()
+  public function getRoute()
   {
-    try {
-      return (string) $this->_renderChildren();
-    } catch (Exception $e) {
-      return $e->getMessage();
-    }
+    return $this->_route;
   }
 
-  public function debug($bool = null)
+  public function setRoute($route)
   {
-    if (!is_null($bool))
+    $this->_route = $route;
+  }
+
+  public function getOptions()
+  {
+    return $this->_options;
+  }
+
+  public function setOptions($options)
+  {
+    $this->_options = $options;
+  }
+
+  public function getOption($name, $default = null)
+  {
+    if (isset($this->_options[$name]))
     {
-      $this->_debug = $bool;
-
-      if ($this->hasChildren())
-      {
-        foreach ($this->_children as $child)
-        {
-          $child->debug($bool);
-        }
-      }
+      return $this->_options[$name];
     }
 
-    return $this->_debug;
+    return $default;
+  }
+
+  public function setOption($name, $value)
+  {
+    $this->_options[$name] = $value;
   }
 
   public function requiresAuth($bool = null)
@@ -173,7 +183,6 @@ abstract class sfSympalMenu
 
     $child->setParent($this);
     $child->showChildren($this->showChildren());
-    $child->debug($this->debug());
 
     $this->_children[$child->getName()] = $child;
 
@@ -205,54 +214,75 @@ abstract class sfSympalMenu
     return !empty($this->_children);
   }
 
-  protected function _renderChildren()
+  public function __toString()
   {
-    if ($this->hasChildren() && $this->checkUserAccess())
-    {
-      $html  = '<ul>';
+    try {
+      return (string) $this->render();
+    } catch (Exception $e) {
+      return $e->getMessage();
+    }
+  }
 
+  public function render()
+  {
+    if ($this->checkUserAccess() && $this->hasChildren())
+    {
+      $id = Doctrine_Inflector::urlize($this->getName()).'-menu';
+      $html = '<ul id="'.$id.'">';
       foreach ($this->_children as $child)
       {
-        $html .= $child->_render();
+        $html .= $child->renderChild();
       }
-
       $html .= '</ul>';
-
       return $html;
     }
   }
 
-  protected function _render()
+  public function renderChild()
   {
     if ($this->checkUserAccess())
     {
-      $html = '<li class="'.Doctrine_Inflector::urlize($this->getName()).'" '.($this->isCurrent() ? ' id="current"':null).'>';
-      if ($this->_route)
-      {
-        $options = $this->getOptions();
-        if  ($this->isCurrent())
-        {
-          $options['class'] = 'current';
-        }
-        sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
-        $menuItem = $this->getMenuItem();
-
-        $html .= link_to($this->getLabel(), $this->getRoute(), $options);
-      } else {
-        $html .= $this->getLabel();
-      }
+      $id = Doctrine_Inflector::urlize($this->getName());
+      $html = '<li id="'.$id.'" class="'.($this->isCurrent() ? ' current':null).'">';
+      $html .= $this->renderChildBody();
       if ($this->hasChildren() && $this->showChildren())
       {
-        $html .= '<ul>';
-        foreach ($this->_children as $child)
-        {
-          $html .= $child->_render();
-        }
-        $html .= '</ul>';
+        $html .= $this->render();
       }
       $html .= '</li>';
+      
       return $html;
     }
+  }
+
+  public function renderChildBody()
+  {
+    if ($this->_route)
+    {
+      $html = $this->renderLink();
+    } else {
+      $html = $this->renderLabel();
+    }
+    return $html;
+  }
+
+  public function renderLink()
+  {
+    $options = $this->getOptions();
+    if  ($this->isCurrent())
+    {
+      $options['class'] = 'current';
+    }
+    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+
+    $html = link_to($this->getLabel(), $this->getRoute(), $options);
+
+    return $html;
+  }
+
+  public function renderLabel()
+  {
+    return $this->getLabel();
   }
 
   public function isCurrent($bool = null)
@@ -284,5 +314,19 @@ abstract class sfSympalMenu
     } while ($obj = $obj->getParent());
 
     return implode(' > ', array_reverse($children));
+  }
+
+  public function callRecursively()
+  {
+    $args = func_get_args();
+    $arguments = $args;
+    unset($arguments[0]);
+
+    call_user_func_array(array($this, $args[0]), $arguments);
+
+    foreach ($this->_children as $child)
+    {
+      call_user_func_array(array($child, 'callRecursively'), $args);
+    }
   }
 }

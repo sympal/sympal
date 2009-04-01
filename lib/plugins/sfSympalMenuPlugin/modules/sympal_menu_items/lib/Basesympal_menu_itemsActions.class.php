@@ -9,6 +9,13 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->roots = $table->getTree()->fetchRoots();
   }
 
+  public function executeManager()
+  {
+    $this->menuItem = $this->getRoute()->getObject();
+    $table = Doctrine::getTable('MenuItem');
+    $this->roots = $table->getTree()->fetchRoots();
+  }
+
   public function executeView()
   {
     $this->menuItem = $this->getRoute()->getObject();

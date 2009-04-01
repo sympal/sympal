@@ -139,7 +139,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     $administration = $menu->getChild('Administration');
     $administration->addChild('Sites', '@sympal_sites');
-    $administration->addChild('Menus', '@sympal_menu_items');
     $administration->addChild('Configuration', '@sympal_config');
 
     $content = $administration->addChild('Content');

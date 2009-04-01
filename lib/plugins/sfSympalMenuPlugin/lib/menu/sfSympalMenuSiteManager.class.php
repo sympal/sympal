@@ -21,12 +21,18 @@ class sfSympalMenuSiteManager
     return self::$_instance;
   }
 
-  public static function getMenu($name, $showChildren = true)
+  public function getHierarchies()
   {
-    return self::getInstance()->_getMenu($name, $showChildren);
+    $this->_buildMenuHierarchies();
+    return $this->_hierarchies;
   }
 
-  protected function _getMenu($name, $showChildren = true)
+  public static function getMenu($name, $showChildren = true, $class = null)
+  {
+    return self::getInstance()->_getMenu($name, $showChildren, $class);
+  }
+
+  protected function _getMenu($name, $showChildren = true, $class = null)
   {
     if (!$name)
     {
@@ -46,7 +52,8 @@ class sfSympalMenuSiteManager
       $rootId = array_search($name, $this->_rootNames);
       $rootMenuItem = $this->_rootMenuItems[$rootId];
 
-      $menu = new sfSympalMenuSite();
+      $class = $class ? $class:'sfSympalMenuSite';
+      $menu = new $class($name);
       $menu->setMenuItem($rootMenuItem);
       $menu->showChildren($showChildren);
 

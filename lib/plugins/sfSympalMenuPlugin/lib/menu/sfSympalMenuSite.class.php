@@ -2,51 +2,7 @@
 class sfSympalMenuSite extends sfSympalMenu
 {
   protected 
-    $_name = null,
-    $_menuItem = null,
-    $_route = null;
-
-  public function __construct($name = null, $route = null, $options = array())
-  {
-    $this->_name = $name;
-    $this->_route = $route;
-    $this->_options = $options;
-  }
-
-  public function getRoute()
-  {
-    return $this->_route;
-  }
-
-  public function setRoute($route)
-  {
-    $this->_route = $route;
-  }
-
-  public function getOptions()
-  {
-    return $this->_options;
-  }
-
-  public function setOptions($options)
-  {
-    $this->_options = $options;
-  }
-
-  public function getOption($name, $default = null)
-  {
-    if (isset($this->_options[$name]))
-    {
-      return $this->_options[$name];
-    }
-
-    return $default;
-  }
-
-  public function setOption($name, $value)
-  {
-    $this->_options[$name] = $value;
-  }
+    $_menuItem = null;
 
   public function getMenuItem()
   {

@@ -1,23 +1,21 @@
 <?php
 class sfSympalMenuAdminBar extends sfSympalMenuSite
 {
-  protected function _renderChildren()
+  public function render()
   {
-    $html = '';
-    if ($this->hasChildren())
+    if ($this->checkUserAccess())
     {
-      $html  .= '<ul class="first-of-type">';
+      $html = '<ul>';
       foreach ($this->_children as $child)
       {
-        $html .= $child->_render();
+        $html .= $child->renderChild();
       }
       $html .= '</ul>';
+      return $html;
     }
-
-    return $html;
   }
 
-  protected function _render()
+  public function renderChild()
   {
     $html  = '<li class="'.Doctrine_Inflector::urlize($this->getName()).' yuimenuitem">';
 
@@ -35,7 +33,7 @@ class sfSympalMenuAdminBar extends sfSympalMenuSite
     {
       $html .= '<div class="yuimenu">';
       $html .= '<div class="bd">';
-      $html .= $this->_renderChildren();
+      $html .= $this->render();
       $html .= '</div>';
       $html .= '</div>';
     }

@@ -31,9 +31,9 @@ function set_sympal_title($title = null)
   sfContext::getInstance()->getResponse()->setTitle($title);
 }
 
-function get_sympal_menu($name, $showChildren = true)
+function get_sympal_menu($name, $showChildren = true, $class = null)
 {
-  return sfSympalMenuSiteManager::getMenu($name, $showChildren);
+  return sfSympalMenuSiteManager::getMenu($name, $showChildren, $class);
 }
 
 function get_sympal_split_menus($name, $showChildren = true, $max = null, $split = false)

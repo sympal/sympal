@@ -6,7 +6,6 @@
   <h3><?php echo ucfirst($root['name']) ?> Menu</h3>
   <?php
   $menu = get_sympal_menu($root['name'], true);
-  $menu->debug(false);
   echo $menu;
   ?>
 <?php endforeach; ?>

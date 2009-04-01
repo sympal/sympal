@@ -7,7 +7,7 @@
   <?php include_title() ?>
 </head>
 
-<body>
+<body class="yui-skin-sam">
 
   <?php echo get_sympal_admin_bar() ?>
 

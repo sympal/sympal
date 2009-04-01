@@ -1,3 +1,8 @@
+.sympal_menu_manager_child {
+  width: 250px;
+  height: 20px;
+}
+
 table span {
         background-position: center left;
         background-repeat: no-repeat;
