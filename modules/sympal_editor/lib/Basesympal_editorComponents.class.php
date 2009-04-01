@@ -19,14 +19,14 @@ class Basesympal_editorComponents extends sfComponents
 
     $this->lock = $this->getUser()->getOpenContentLock();
 
-    $this->menu = new sfSympalMenuTools();
+    $this->menu = new sfSympalMenuTools('Sympal Tools');
 
     $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_tools', array('menu' => $this->menu, 'content' => $this->content, 'menuItem' => $this->menuItem, 'lock' => $this->lock)));
   }
 
   public function executeAdmin_bar()
   {
-    $this->menu = new sfSympalMenuAdminBar('AdminBar');
+    $this->menu = new sfSympalMenuAdminBar('Sympal Admin Bar');
     $this->menu->addChild('Icon', null, array('label' => '<div id="sympal-icon">Sympal</div>'));
 
     $user = sfContext::getInstance()->getUser();
