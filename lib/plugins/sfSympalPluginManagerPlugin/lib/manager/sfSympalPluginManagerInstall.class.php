@@ -104,7 +104,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installVars['menuItem'] = $menuItem;
 
     $properties = array(
-      'body' => '<?php echo get_sympal_breadcrumbs($menuItem, $content) ?><h2><?php echo get_sympal_column_content_slot($content, \'title\') ?></h2><p><strong>Posted by <?php echo $content->CreatedBy->username ?> on <?php echo get_sympal_column_content_slot($content, \'date_published\') ?></strong></p><p><?php echo get_sympal_column_content_slot($content, \'body\') ?></p><?php echo get_sympal_comments($content) ?>',
+      'body' => '<?php echo get_sympal_breadcrumbs($menuItem, $content) ?><h2><?php echo get_sympal_column_content_slot($content, \'title\') ?></h2><p><strong>Posted by <?php echo $content->CreatedBy->username ?> on <?php echo get_sympal_column_content_slot($content, \'date_published\') ?></strong></p><p><?php echo get_sympal_column_content_slot($content, \'body\') ?></p>',
     );
 
     $contentTemplate = $this->newContentTemplate('View '.$this->_contentTypeName, 'View', $installVars['contentType'], $properties);
