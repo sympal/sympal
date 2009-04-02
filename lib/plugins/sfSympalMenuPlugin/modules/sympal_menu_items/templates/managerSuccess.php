@@ -80,6 +80,21 @@ class MyMenu extends sfSympalMenuSite
 
 <script type="text/javascript">
 
+function getElement(id)
+{
+  var el;
+
+  // this is called anytime we drag out of
+  // a potential valid target
+  // remove the highlight
+  if ("string" == typeof id) {
+      el = YAHOO.util.DDM.getElement(id);
+  } else {
+      el = YAHOO.util.DDM.getBestMatch(id).getEl();
+  }
+  return el;
+}
+
 (function() {
 	var tree;
 	
@@ -156,20 +171,21 @@ YAHOO.util.Event.onAvailable("sympal_menu_manager_tree", function ()
   }
 
   var oContextMenu = new YAHOO.widget.ContextMenu("mytreecontextmenu", {
-                            trigger: "sympal_menu_manager_tree",
-                            lazyload: true, 
-                            itemdata: [
-                                { text: "Add Child", onclick: { fn: addNode } },
-                                { text: "Edit Label", onclick: { fn: editNodeLabel } },
-                                { text: "Delete", onclick: { fn: deleteNode } }
-                            ] });
+    trigger: "sympal_menu_manager_tree",
+    lazyload: true, 
+    itemdata: [
+        { text: "Add Child", onclick: { fn: addNode } },
+        { text: "Edit Label", onclick: { fn: editNodeLabel } },
+        { text: "Delete", onclick: { fn: deleteNode } }
+    ] });
 
   oContextMenu.subscribe("triggerContextMenu", onTriggerContextMenu);
 });
 
-DDSend = function(id, sGroup, config) {
-
-    if (id) {
+DDSend = function(id, sGroup, config)
+{
+    if (id)
+    {
         this.init(id, sGroup, config);
         this.initFrame();
     }
@@ -183,11 +199,17 @@ DDSend = function(id, sGroup, config) {
 
 DDSend.prototype = new YAHOO.util.DDProxy();
 
-DDSend.prototype.onDragDrop = function(e, id) {
+DDSend.prototype.onDragDrop = function(e, id)
+{
     alert("dd " + this.id + " was dropped on " + id);
+
+    var el = getElement(id);
+
+    el.style.backgroundColor = "transparent";
 }
 
-DDSend.prototype.startDrag = function(x, y) {
+DDSend.prototype.startDrag = function(x, y)
+{
     var dragEl = this.getDragEl();
     var clickEl = this.getEl();
 
@@ -197,48 +219,21 @@ DDSend.prototype.startDrag = function(x, y) {
     dragEl.style.backgroundColor = "#ffc";
 };
 
-DDSend.prototype.onDragEnter = function(e, id) {
-    var el;
-
-    // this is called anytime we drag over
-    // a potential valid target
-    // highlight the target in red
-    if ("string" == typeof id) {
-        el = YAHOO.util.DDM.getElement(id);
-    } else {
-        el = YAHOO.util.DDM.getBestMatch(id).getEl();
-    }
-
+DDSend.prototype.onDragEnter = function(e, id)
+{
+    var el = getElement(id);
     el.style.backgroundColor = "#ffc";
 };
 
-DDSend.prototype.onDragOut = function(e, id) {
-    var el;
-
-    // this is called anytime we drag out of
-    // a potential valid target
-    // remove the highlight
-    if ("string" == typeof id) {
-        el = YAHOO.util.DDM.getElement(id);
-    } else {
-        el = YAHOO.util.DDM.getBestMatch(id).getEl();
-    }
-
-    el.style.backgroundColor = "transparent";
+DDSend.prototype.onDragOut = function(e, id)
+{
+  var el = getElement(id);
+  el.style.backgroundColor = "transparent";
 }
 
-DDSend.prototype.endDrag = function(e, id) {
-  var el;
-
-  // this is called anytime we drag out of
-  // a potential valid target
-  // remove the highlight
-  if ("string" == typeof id) {
-      el = YAHOO.util.DDM.getElement(id);
-  } else {
-      el = YAHOO.util.DDM.getBestMatch(id).getEl();
-  }
-
+DDSend.prototype.endDrag = function(e, id)
+{
+  var el = getElement(id);
   el.style.backgroundColor = "transparent";
 }
 </script>

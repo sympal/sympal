@@ -9,4 +9,4 @@
     <?php echo $form ?>
   </table>
   <input type="submit" name="change" value="Change" />
-</form?
+</form>
