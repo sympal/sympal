@@ -27,6 +27,16 @@ class sfSympalMenuSiteManager
     return $this->_hierarchies;
   }
 
+  public function refresh()
+  {
+    $this->_menuItems = array();
+    $this->_rootNames = array();
+    $this->_rootMenuItems = array();
+    $this->_hierarchies = array();
+    $this->_menus = array();
+    $this->_menuHierarchiesBuilt = false;
+  }
+
   public static function getMenu($name, $showChildren = true, $class = null)
   {
     return self::getInstance()->_getMenu($name, $showChildren, $class);

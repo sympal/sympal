@@ -1,62 +1,60 @@
-.sympal_menu_manager_child {
-  width: 250px;
+#sympal_menu_manager {
+  
+}
+
+#sympal_menu_manager h1 {
+  margin-bottom: 10px;
+}
+
+#sympal_menu_manager #top_menu {
   height: 20px;
+  border: 1px dotted #dedede;
+  background-color: #EBE4F2;
+  padding: 0.6em;
 }
 
-table span {
-        background-position: center left;
-        background-repeat: no-repeat;
-        padding: .2em 0 .2em 1.5em;
+#sympal_menu_manager #top_menu img {
+  vertical-align: middle;
 }
 
-table span.file {
-        background-image: url(../images/page_white_text.png);
+#sympal_menu_manager #top_menu ul {
+  margin: 0;
+  padding: 0;
 }
 
-table span.folder {
-        background-image: url(../images/folder.png);
+#sympal_menu_manager #top_menu ul li {
+  list-style-type: none;
+  float: left;
+  margin-right: 10px;
 }
 
-/* jQuery TreeTable Core 2.0 stylesheet
- *
- * This file contains styles that are used to display the tree table. Each tree
- * table is assigned the +treeTable+ class.
- * ========================================================================= */
-
-/* jquery.treeTable.collapsible
- * ------------------------------------------------------------------------- */
-.treeTable tr td .expander {
-	background-position: left center;
-	background-repeat: no-repeat;
-	cursor: pointer;
-	padding: 0;
-	zoom: 1; /* IE7 Hack */
+#sympal_menu_manager #controls {
+  background: #ffc;
+  margin: 0 0 .5em 0;
+  padding: 0.4em;
+  font-weight: bold;
 }
 
-.treeTable tr.collapsed td .expander {
-	background-image: url(../images/toggle-expand-dark.png);
+.drag_item {
+  display: block !important;
+  background: red !important;
+  border: 1px solid #ccc !important;
+  font-weight: bold;
+  color: white;
+  height: 15px !important;
+  padding-right: 10px !important;
+  padding-left: 4px !important;
+  white-space: nowrap !important;
 }
 
-.treeTable tr.expanded td .expander {
-	background-image: url(../images/toggle-collapse-dark.png);
+.drag_on_item {
+  background: green !important;
+  color: white !important;
 }
 
-/* jquery.treeTable.sortable
- * ------------------------------------------------------------------------- */
-.treeTable tr.selected, .treeTable tr.accept {
-	background-color: #3875d7 !important;
-	color: #fff !important;
-}
-
-.treeTable tr.collapsed.selected td .expander, .treeTable tr.collapsed.accept td .expander {
-	background-image: url(../images/toggle-expand-light.png);
-}
-
-.treeTable tr.expanded.selected td .expander, .treeTable tr.expanded.accept td .expander {
-	background-image: url(../images/toggle-collapse-light.png);
-}
-
-.treeTable .ui-draggable-dragging {
-	color: #000;
-	z-index: 1;
+#sympal_menu_manager #loading {
+  float: right;
+  background-color: red;
+  color: white;
+  font-weight: bold;
 }

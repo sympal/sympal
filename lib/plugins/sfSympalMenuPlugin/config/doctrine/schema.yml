@@ -11,14 +11,12 @@ MenuItem:
       fields: [label]
 <?php endif; ?>
   columns:
-    site_id:
-      type: integer
-      notnull: true
-    content_type_id: integer
-    content_id: integer
     name:
       type: string(255)
       notnull: true
+    is_primary: boolean
+    is_published: boolean
+    date_published: timestamp
     label: string(255)
     custom_path: string(255)
     is_content_type_list:
@@ -26,9 +24,11 @@ MenuItem:
       default: false
     requires_auth: boolean
     requires_no_auth: boolean
-    is_primary: boolean
-    is_published: boolean
-    date_published: timestamp
+    site_id:
+      type: integer
+      notnull: true
+    content_type_id: integer
+    content_id: integer
   relations:
     RelatedContent:
       class: Content

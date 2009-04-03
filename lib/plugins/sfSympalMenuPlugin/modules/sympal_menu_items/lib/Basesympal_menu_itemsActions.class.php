@@ -9,11 +9,107 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->roots = $table->getTree()->fetchRoots();
   }
 
-  public function executeManager()
+  public function executeIndex(sfWebRequest $request)
   {
     $this->menuItem = $this->getRoute()->getObject();
     $table = Doctrine::getTable('MenuItem');
     $this->roots = $table->getTree()->fetchRoots();
+  }
+
+  public function executeManager_move(sfWebRequest $request)
+  {
+    $this->menuItem = $this->getRoute()->getObject();
+    $moveId = $request->getParameter('move_id');
+    $toId = $request->getParameter('to_id');
+
+    $table = Doctrine::getTable('MenuItem');
+    $move = $table->find($moveId);
+    $to = $table->find($toId);
+
+    $moveAction = strtolower($request->getParameter('move_action'));
+    switch ($moveAction)
+    {
+      case 'before':
+        $func = 'moveAsPrevSiblingOf';
+      break;
+
+      case 'after':
+        $func = 'moveAsNextSiblingOf';
+      break;
+
+      case 'under':
+        $func = 'moveAsLastChildOf';
+      break;
+    }
+
+    $move->getNode()->$func($to);
+
+    $manager = sfSympalMenuSiteManager::getInstance();
+    $manager->refresh();
+
+    $this->setTemplate('refresh');
+  }
+
+  public function executeManager_delete_node(sfWebRequest $request)
+  {
+    $menuItem = $this->getRoute()->getObject();
+    if ($menuItem->getLevel() == 0)
+    {
+      $this->redirect('@sympal_menu_manager_tree_delete?slug='.$menuItem['slug']);
+    }
+    $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu item? This action is irreversible!');
+
+    $menuItem->getNode()->delete();
+
+    $this->getUser()->setFlash('notice', 'Menu item was successfully deleted!');
+    $this->redirect('@sympal_menu_manager_tree?slug='.$request->getParameter('root_slug'));
+  }
+
+  public function executeManager_delete(sfWebRequest $request)
+  {
+    $menuItem = $this->getRoute()->getObject();
+    if ($menuItem->is_primary)
+    {
+      $this->getUser()->setFlash('error', 'You cannot delete the primary sympal menu!');
+      $this->redirect($request->getReferer());
+    }
+    
+    $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu? This action is irreversible!');
+
+    $menuItem->getNode()->delete();
+
+    $this->getUser()->setFlash('notice', 'Menu was successfully deleted!');
+    $this->redirect('@sympal_menu_items');
+  }
+
+  public function executeManager_update(sfWebRequest $request)
+  {
+    $menuItem = $this->getRoute()->getObject();($request->getParameter('label'));
+    $menuItem->save();
+
+    $manager = sfSympalMenuSiteManager::getInstance();
+    $manager->refresh();
+
+    $this->menuItem = Doctrine::getTable('MenuItem')->findOneBySlug($request->getParameter('root_slug'));
+
+    $this->setTemplate('refresh');
+  }
+
+  public function executeManager_add(sfWebRequest $request)
+  {
+    $menuItem = $this->getRoute()->getObject();
+
+    $new = new MenuItem();
+    $new->label = $request->getParameter('label');
+    $new->name = $new->label;
+    $new->getNode()->insertAsLastChildOf($menuItem);
+
+    $manager = sfSympalMenuSiteManager::getInstance();
+    $manager->refresh();
+
+    $this->menuItem = Doctrine::getTable('MenuItem')->findOneBySlug($request->getParameter('root_slug'));
+
+    $this->setTemplate('refresh');
   }
 
   public function executeView()
@@ -28,81 +124,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     sfSympalToolkit::setCurrentMenuItem($this->menu_item);
   }
 
-  protected function addSortQuery($query)
-  {
-    $query->addOrderBy('root_id, lft');
-  }
-
-  public function executeBatch(sfWebRequest $request)
-  {
-    if ($request->getParameter('batch_action') == 'batchOrder')
-    {
-      return $this->executeBatchOrder($request);
-    }
-
-    parent::executeBatch($request);
-  }
-
-  public function executeBatchOrder(sfWebRequest $request)
-  {
-    $newParent = $request->getParameter('new_parent');
-
-    $ids = array();
-    foreach ($newParent as $key => $val)
-    {
-      $ids[$key] = true;
-      if (!empty($val))
-      {
-        $ids[$val] = true;
-      }
-    }
-    $ids = array_keys($ids);
-
-    $validator = new sfValidatorDoctrineChoiceMany(array('model' => 'MenuItem'));
-    try
-    {
-      // validate ids
-      $ids = $validator->clean($ids);
-
-      // the id's validate, now update the menu_item
-      $count = 0;
-      $flash = '';
-
-      $table = Doctrine::getTable('MenuItem');
-      foreach ($newParent as $id => $parentId)
-      {
-        if (!empty($parentId))
-        {
-          $node = $table->find($id);
-          $parent = $table->find($parentId);
-
-          if (!$parent->getNode()->isDescendantOfOrEqualTo($node))
-          {
-            $node->getNode()->moveAsFirstChildOf($parent);
-            $node->save();
-
-            $count++;
-
-            $flash .= "<br/>Moved '".$node['name']."' under '".$parent['name']."'.";
-          }
-        }
-      }
-
-      if ($count > 0)
-      {
-        $this->getUser()->setFlash('notice', sprintf("Menu item order updated, moved %s item%s:".$flash, $count, ($count > 1 ? 's' : '')));
-      } else {
-        $this->getUser()->setFlash('error', "You must at least move one item to update the menu item order");
-      }
-    }
-    catch (sfValidatorError $e)
-    {
-      $this->getUser()->setFlash('error', 'Cannot update the menu item order, maybe some item are deleted, try again');
-    }
-     
-    $this->redirect('@sympal_menu_items');
-  }
-  
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();

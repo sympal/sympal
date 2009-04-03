@@ -12,6 +12,7 @@ ContentTemplate:
 MenuItem:
   MenuItem_primary:
     name: primary
+    is_primary: true
     is_published: true
     label: Home
     Site: Site_default

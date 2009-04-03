@@ -46,8 +46,6 @@ generator:
         object_actions:
           new:
             label: Add Child
-          view:
-            action: view
           _edit:    ~
           _delete:  ~
         actions:
@@ -56,10 +54,5 @@ generator:
       filter:
         class: false
       form: ~
-      edit:
-        actions:
-          _delete:
-          _save:
-          view:
-            action: view
-      new:     ~
+      edit: ~
+      new:  ~

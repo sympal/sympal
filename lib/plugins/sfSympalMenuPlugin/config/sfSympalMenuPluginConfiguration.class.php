@@ -18,8 +18,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
     $menu = $event['menu'];
 
     $administration = $menu->getChild('Administration');
-    $administration->addChild('Menus', '@sympal_menu_items');
-    $administration->addChild('New Menu Manager', '@sympal_menu_manager');
+    $administration->addChild('Menu Manager', '@sympal_menu_manager');
   }
 
   public function loadTools(sfEvent $event)

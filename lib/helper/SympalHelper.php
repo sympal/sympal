@@ -1,5 +1,42 @@
 <?php
 
+function get_sympal_yui_path($type, $name)
+{
+  $skin = sfSympalConfig::get('yui_skin', 'null', 'sam');
+  $path = sfSympalConfig::get('yui_path', null, '/sfSympalPlugin/yui');
+  if ($type == 'js')
+  {
+    $path .= '/'.$name;
+    if (!sfConfig::get('sf_debug'))
+    {
+      $minPath = $path.'-min';
+      if (file_exists(sfConfig::get('sf_web_dir').$minPath))
+      {
+        $path = $minPath;
+      }
+    }
+  } else {
+    $path .= '/'.$name.'/assets/skins/'.$skin.'/'.$name;
+  }
+  return $path;
+}
+
+function use_sympal_yui($type, $name)
+{
+  $func = $type == 'js' ? 'use_javascript':'use_stylesheet';
+  return $func(get_sympal_yui_path($type, $name));
+}
+
+function use_sympal_yui_css($name)
+{
+  return use_sympal_yui('css', $name);
+}
+
+function use_sympal_yui_js($name)
+{
+  return use_sympal_yui('js', $name);
+}
+
 function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
 {
   if (!$menuItem)
