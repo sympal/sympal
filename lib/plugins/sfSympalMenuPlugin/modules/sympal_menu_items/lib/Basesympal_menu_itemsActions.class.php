@@ -84,7 +84,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeManager_update(sfWebRequest $request)
   {
-    $menuItem = $this->getRoute()->getObject();($request->getParameter('label'));
+    $menuItem = $this->getRoute()->getObject();
+    $menuItem->label = $request->getParameter('label');
     $menuItem->save();
 
     $manager = sfSympalMenuSiteManager::getInstance();
