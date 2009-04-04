@@ -53,6 +53,7 @@
   margin-bottom: 7px;
   color: #d33;
   border: none;
+  float: right;
   background-color: #f33;
 }
 
@@ -150,7 +151,6 @@
 #sf_admin_container ul li a
 {
   padding-left: 20px;
-  background: url(../images/default.png) no-repeat 0 0;
 }
 
 #sf_admin_container ul li.sf_admin_action_new a
@@ -231,7 +231,7 @@
   padding: 0 1em 3px 0;
   float: left;
   text-align: left;
-  width: 8em;
+  width: 10em;
   color: #666;
   font-weight: normal !important;
 }
@@ -248,6 +248,23 @@
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
+
+#sf_admin_container div.required {
+  background: #ffeaea;
+}
+
+#sf_admin_container div.required label {
+  font-weight: bold !important;
+  color: black;
+}
+
+#sf_admin_container div.required label:after
+{
+  content: " *";
+  color: red;
+  font-weight: bold;
+}
+
 
 #sf_admin_container .sf_admin_form_row .content
 {
@@ -273,4 +290,13 @@
 .sf_admin_list .sf_admin_boolean
 {
   text-align: center;
+}
+
+.yui-navset ul li.selected a {
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.yui-navset ul li a {
+  padding: 0 !important;
 }

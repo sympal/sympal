@@ -35,8 +35,8 @@ generator:
         class: false
       form:
         display:
-          "NONE": [layout]
-          "Information": [plugin_name, name, label, slug]
+          "NONE": [plugin_name, name, label, slug]
           "Routing": [list_path, view_path]
+          "Rendering": [layout]
       edit:    ~
       new:     ~

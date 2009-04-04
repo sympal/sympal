@@ -503,7 +503,7 @@ h3 {
 	background:                   url(../images/footer.gif) no-repeat top center;
 }
 
-#footer {
+div#footer {
   margin:                       0 auto;
   height:                       35px;
   width:                        880px;
@@ -517,27 +517,27 @@ h3 {
  	font-weight:                  bold;
 }
 
-#footer a {
+div#footer a {
   color: white;
 }
 
-#footer p {
+div#footer p {
   float: left;
 }
 
-#footer p img {
+div#footer p img {
   display: inline;
   vertical-align: middle;
 }
 
-#footer ul {
+div#footer ul {
   margin: 0;
   padding: 0;
   margin-top: 10px;
   float: right;
 }
 
-#footer ul li {
+div#footer ul li {
   float: left;
   list-style-type: none;
   color: white;
@@ -617,13 +617,13 @@ table tr th {
   color: #35acc5;
 }
 
-#sympal_breadcrumbs li.home
+#sympal_breadcrumbs li#home
 {
   background: url('../images/home.png') no-repeat;
   background-position: center;
 }
 
-#sympal_breadcrumbs li.home a
+#sympal_breadcrumbs li#home a
 {
   text-indent: -9999;
   font-size: 0;

@@ -49,7 +49,7 @@ abstract class PluginContent extends BaseContent
     return $this->getHeaderTitle();
   }
 
-  public function getMainMenuItem()
+  public function getRelatedMenuItem()
   {
     if ($this->master_menu_item_id)
     {
@@ -60,12 +60,23 @@ abstract class PluginContent extends BaseContent
       {
         return $menuItem;
       } else {
-        $q = Doctrine::getTable('MenuItem')
-          ->createQuery('m')
-          ->where('m.is_content_type_list = ?', true)
-          ->andWhere('m.content_type_id = ?', $this->content_type_id);
-        return $q->fetchOne();
+        return false;
       }
+    }
+  }
+
+  public function getMainMenuItem()
+  {
+    if ($menuItem = $this->getRelatedMenuItem())
+    {
+      return $menuItem;
+    } else {
+      $q = Doctrine::getTable('MenuItem')
+        ->createQuery('m')
+        ->where('m.is_content_type_list = ?', true)
+        ->andWhere('m.content_type_id = ?', $this->content_type_id);
+
+      return $q->fetchOne();
     }
   }
 

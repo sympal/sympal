@@ -9,4 +9,12 @@
  */
 abstract class PluginGroupForm extends BaseGroupForm
 {
+  public function setup()
+  {
+    parent::setup();
+    unset(
+      $this['created_at'],
+      $this['updated_at']
+    );
+  }
 }

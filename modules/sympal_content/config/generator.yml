@@ -17,7 +17,12 @@ generator:
           label: Site
         content_type_id:
           label: Content Type
-      form:    ~
+      form:
+        display:
+          "NONE": [created_by, is_published, date_published, slug]
+          "Routing": [master_menu_item_id, custom_path]
+          "Rendering": [content_template_id, layout]
+          "Security": [groups_list, permissions_list]
       list:
         title: Manage Content
         display: [=title, Type, is_published, date_published]

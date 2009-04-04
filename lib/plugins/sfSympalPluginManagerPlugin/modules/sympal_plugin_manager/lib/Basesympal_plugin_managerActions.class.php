@@ -18,7 +18,27 @@ abstract class Basesympal_plugin_managerActions extends sfActions
     $this->corePlugins = $sympalConfiguration->getCorePlugins();
     $this->installedPlugins = $sympalConfiguration->getInstalledPlugins();
 
+    $this->dispatcher->connect('sympal.load_side_bar', array($this, 'loadSideBar'));
+
     $this->_checkFilePermissions();
+  }
+
+  public function loadSideBar(sfEvent $event)
+  {
+    $menu = $event['menu'];
+    $core = $menu['Core Plugins'];
+    foreach  ($this->corePlugins as $plugin)
+    {
+      $core[$plugin]->setRoute('@sympal_plugin_manager_view?plugin='.sfSympalPluginToolkit::getLongPluginName($plugin));
+    }
+    if ($this->installedPlugins)
+    {
+      $downloaded = $menu['Downloaded Plugins'];
+      foreach ($this->installedPlugins as $plugin)
+      {
+        $downloaded[$plugin]->setRoute('@sympal_plugin_manager_view?plugin='.sfSympalPluginToolkit::getLongPluginName($plugin));
+      }
+    }
   }
 
   protected function _redirectIfPermissionsError()

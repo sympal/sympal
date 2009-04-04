@@ -10,6 +10,7 @@
 <body class="yui-skin-sam">
 
   <?php echo get_sympal_admin_bar() ?>
+  <?php echo get_sympal_side_bar() ?>
 
   <div id="container">
    <!-- header -->

@@ -19,5 +19,9 @@ generator:
         display: [username, is_active, is_super_admin, last_login]
       form:
         class: sfSympalUserAdminForm
+        display:
+          "NONE": [username, password, password_again, is_active, is_super_admin]
+          "Profile": [first_name, last_name, email_address]
+          "Security": [groups_list, permissions_list]
       edit:
       new:     ~

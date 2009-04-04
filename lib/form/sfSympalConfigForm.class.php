@@ -154,16 +154,15 @@ class sfSympalConfigForm extends sfForm
 
   public function renderFieldSet($name, $form, $fields)
   {
-    $html = '<fieldset id="'.$name.'"><legend>'.$name.'</legend>';
+    $html = '';
     foreach ($fields as $field)
     {
-      $html .= '<div class="form_row">';
+      $html .= '<span class="form_row">';
       $html .= $form[$field]->renderLabel();
       $html .= $form[$field];
       $html .= $form[$field]->renderHelp();
-      $html .= '</div>';
+      $html .= '</span>';
     }
-    $html .= '</fieldset>';
     return $html;
   }
 }

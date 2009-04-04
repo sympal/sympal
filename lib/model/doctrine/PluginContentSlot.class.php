@@ -53,7 +53,15 @@ abstract class PluginContentSlot extends BaseContentSlot
     if ($this->is_column)
     {
       $name = $this->name;
-      return $this->RelatedContent->$name = $value;
+      if ($r = $this->RelatedContent->getRecord()) {
+        try {
+          return $r->$name = $value;
+        } catch (Exception $e) {}
+      } else {
+        try {
+          return $this->RelatedContent->$name = $value;
+        } catch (Exception $e) {}
+      }
     } else {
       return $this->setI18n('value', $value);
     }

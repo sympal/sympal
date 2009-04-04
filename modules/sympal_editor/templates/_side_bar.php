@@ -1,3 +1,7 @@
+<?php if (!$menu['Root']->count()): ?>
+  <?php return; ?>
+<?php endif; ?>
+
 <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>
 
 <?php use_sympal_yui_css('menu/assets/skins/sam/menu') ?>
@@ -7,8 +11,8 @@
 <?php use_sympal_yui_js('container/container_core') ?>
 <?php use_sympal_yui_js('menu/menu') ?>
 
-<div id="sympal_admin_bar_container" class="yui-skin-sam">
-  <div id="sympal_admin_bar" class="yuimenubar yuimenubarnav">
+<div id="sympal_side_bar_container" class="yui-skin-sam">
+  <div id="sympal_side_bar" class="yuimenubar yuimenubarnav">
     <div class="bd">
         <?php echo $menu ?>
     </div>
@@ -16,9 +20,9 @@
 </div>
 
 <script type="text/javascript">
-var oMenuBar = new YAHOO.widget.MenuBar("sympal_admin_bar", { 
+var oMenuBar = new YAHOO.widget.MenuBar("sympal_side_bar", { 
   autosubmenudisplay: true, 
-  hidedelay: 1, 
+  hidedelay: 1,
   lazyload: false});
 
 oMenuBar.render();

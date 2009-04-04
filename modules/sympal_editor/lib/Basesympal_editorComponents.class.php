@@ -39,4 +39,12 @@ class Basesympal_editorComponents extends sfComponents
 
     $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_admin_bar', array('menu' => $this->menu)));
   }
+
+  public function executeSide_bar()
+  {
+    $this->menu = new sfSympalMenuSideBar('Sympal Side Bar');
+    $sideBar = $this->menu['Root']->setLabel('&nbsp;');
+
+    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_side_bar', array('menu' => $sideBar)));
+  }
 }

@@ -4,20 +4,24 @@ function get_sympal_yui_path($type, $name)
 {
   $skin = sfSympalConfig::get('yui_skin', 'null', 'sam');
   $path = sfSympalConfig::get('yui_path', null, '/sfSympalPlugin/yui');
-  if ($type == 'js')
+
+  $path .= '/'.$name;
+
+  if (sfConfig::get('sf_debug'))
   {
-    $path .= '/'.$name;
-    if (!sfConfig::get('sf_debug'))
+    $fullPath = sfConfig::get('sf_web_dir').$path.($type == 'css' ? '.css':'.js');
+    if (!file_exists($fullPath))
     {
-      $minPath = $path.'-min';
-      if (file_exists(sfConfig::get('sf_web_dir').$minPath))
-      {
-        $path = $minPath;
-      }
+      throw new sfException('YUI path does not exist: "'.$fullPath.'"');
     }
   } else {
-    $path .= '/'.$name.'/assets/skins/'.$skin.'/'.$name;
+    $minPath = $path.'-min';
+    if (file_exists(sfConfig::get('sf_web_dir').$minPath))
+    {
+      $path = $minPath;
+    }
   }
+
   return $path;
 }
 
@@ -102,6 +106,14 @@ function get_sympal_admin_bar()
   if (sfContext::getInstance()->getUser()->isAuthenticated())
   {
     return get_component('sympal_editor', 'admin_bar');
+  }
+}
+
+function get_sympal_side_bar()
+{
+  if (sfContext::getInstance()->getUser()->isAuthenticated())
+  {
+    return get_component('sympal_editor', 'side_bar');
   }
 }
 

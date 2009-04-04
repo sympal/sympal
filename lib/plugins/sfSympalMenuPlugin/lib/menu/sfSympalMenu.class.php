@@ -1,5 +1,5 @@
 <?php
-abstract class sfSympalMenu
+class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 {
   protected 
     $_name             = null,
@@ -21,6 +21,66 @@ abstract class sfSympalMenu
     $this->_options = $options;
   }
 
+  public function count()
+  {
+    return count($this->_children);
+  }
+
+  public function getIterator()
+  {
+    return new ArrayObject($this->_children);
+  }
+
+  public function add($value)
+  {
+    return $this->addChild($value)->setLabel($value);
+  }
+
+  public function current()
+  {
+    return current($this->_children);
+  }
+
+  public function next()
+  {
+    return next($this->_children);
+  }
+
+  public function key()
+  {
+    return key($this->_children);
+  }
+
+  public function valid()
+  {
+    return $this->current() !== false;
+  }
+
+  public function rewind()
+  {
+    return reset($this->_children);
+  }
+
+  public function offsetExists($name)
+  {
+    return isset($this->_children[$name]);
+  }
+
+  public function offsetGet($name)
+  {
+    return $this->getChild($name);
+  }
+
+  public function offsetSet($name, $value)
+  {
+    return $this->addChild($name)->setLabel($value);
+  }
+
+  public function offsetUnset($name)
+  {
+    unset($this->_children[$name]);
+  }
+
   public function getRoute()
   {
     return $this->_route;
@@ -29,6 +89,8 @@ abstract class sfSympalMenu
   public function setRoute($route)
   {
     $this->_route = $route;
+
+    return $this;
   }
 
   public function getOptions()
@@ -39,6 +101,8 @@ abstract class sfSympalMenu
   public function setOptions($options)
   {
     $this->_options = $options;
+
+    return $this;
   }
 
   public function getOption($name, $default = null)
@@ -54,6 +118,8 @@ abstract class sfSympalMenu
   public function setOption($name, $value)
   {
     $this->_options[$name] = $value;
+
+    return $this;
   }
 
   public function requiresAuth($bool = null)
@@ -79,6 +145,8 @@ abstract class sfSympalMenu
   public function setCredentials($credentials)
   {
     $this->_credentials = is_string($credentials) ? explode(',', $credentials):(array) $credentials;
+
+    return $this;
   }
 
   public function getCredentials()
@@ -101,7 +169,7 @@ abstract class sfSympalMenu
     return $this->_showChildren;
   }
 
-  public function checkUserAccess(User $user = null)
+  public function checkUserAccess(sfUser $user = null)
   {
     if (!sfContext::hasInstance())
     {
@@ -113,7 +181,12 @@ abstract class sfSympalMenu
       $user = sfContext::getInstance()->getUser();
     }
 
-    if (($user->isAuthenticated() && $this->requiresNoAuth()) || (!$user->isAuthenticated() && $this->requiresAuth()))
+    if ($user->isAuthenticated() && $this->requiresNoAuth())
+    {
+      return false;
+    }
+
+    if (!$user->isAuthenticated() && $this->requiresAuth())
     {
       return false;
     }
@@ -124,6 +197,8 @@ abstract class sfSympalMenu
   public function setLevel($level)
   {
     $this->_level = $level;
+
+    return $this;
   }
 
   public function getLevel()
@@ -161,6 +236,8 @@ abstract class sfSympalMenu
   public function setName($name)
   {
     $this->_name = $name;
+
+    return $this;
   }
 
   public function getChildren()
@@ -171,6 +248,8 @@ abstract class sfSympalMenu
   public function setChildren(array $children)
   {
     $this->_children = $children;
+
+    return $this;
   }
 
   public function addChild($child, $route = null, $options = array())
@@ -227,7 +306,7 @@ abstract class sfSympalMenu
   {
     if ($this->checkUserAccess() && $this->hasChildren())
     {
-      $id = Doctrine_Inflector::urlize($this->getName()).'-menu';
+      $id = Doctrine_Inflector::urlize($this->getName());
       $html = '<ul id="'.$id.'">';
       foreach ($this->_children as $child)
       {
@@ -243,7 +322,7 @@ abstract class sfSympalMenu
     if ($this->checkUserAccess())
     {
       $id = Doctrine_Inflector::urlize($this->getName());
-      $html = '<li id="'.$id.'" class="'.($this->isCurrent() ? ' current':null).'">';
+      $html = '<li id="'.$id.'"'.($this->isCurrent() ? ' class="current"':null).'>';
       $html .= $this->renderChildBody();
       if ($this->hasChildren() && $this->showChildren())
       {
@@ -291,6 +370,7 @@ abstract class sfSympalMenu
     {
       $this->_current = $bool;
     }
+
     return $this->_current;
   }
 
@@ -302,6 +382,8 @@ abstract class sfSympalMenu
   public function setLabel($label)
   {
     $this->_options['label'] = $label;
+
+    return $this;
   }
 
   public function getPathAsString()
@@ -328,5 +410,48 @@ abstract class sfSympalMenu
     {
       call_user_func_array(array($child, 'callRecursively'), $args);
     }
+
+    return $this;
+  }
+
+  public function toArray()
+  {
+    $array = array();
+    $array['name'] = $this->getName();
+    $array['level'] = $this->getLevel();
+    $array['is_current'] = $this->isCurrent();
+    $array['options'] = $this->getOptions();
+    foreach ($this->_children as $key => $child)
+    {
+      $array['children'][$key] = $child->toArray();
+    }
+    return $array;
+  }
+
+  public function fromArray($array)
+  {
+    $this->setName($array['name']);
+    if (isset($array['level']))
+    {
+      $this->setLevel($array['level']);
+    }
+    if (isset($array['is_current']))
+    {
+      $this->isCurrent($array['is_current']);
+    }
+    if (isset($array['options']))
+    {
+      $this->setOptions($array['options']);
+    }
+
+    if (isset($array['children']))
+    {
+      foreach ($array['children'] as $name => $child)
+      {
+        $this->addChild($name)->fromArray($child);
+      }
+    }
+
+    return $this;
   }
 }

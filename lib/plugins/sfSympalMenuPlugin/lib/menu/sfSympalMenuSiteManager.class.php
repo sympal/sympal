@@ -8,9 +8,14 @@ class sfSympalMenuSiteManager
     $_rootMenuItems = array(),
     $_hierarchies = array(),
     $_menus = array(),
-    $_menuHierarchiesBuilt = false;
+    $_initialized = false;
 
   protected static $_instance;
+
+  public function __construct()
+  {
+    $this->initializeMenus();
+  }
 
   public static function getInstance()
   {
@@ -23,7 +28,8 @@ class sfSympalMenuSiteManager
 
   public function getHierarchies()
   {
-    $this->_buildMenuHierarchies();
+    $this->initializeMenus();
+
     return $this->_hierarchies;
   }
 
@@ -34,7 +40,8 @@ class sfSympalMenuSiteManager
     $this->_rootMenuItems = array();
     $this->_hierarchies = array();
     $this->_menus = array();
-    $this->_menuHierarchiesBuilt = false;
+    $this->_initialized = false;
+    $this->initializeMenus();
   }
 
   public static function getMenu($name, $showChildren = true, $class = null)
@@ -49,7 +56,7 @@ class sfSympalMenuSiteManager
       return false;
     }
 
-    $this->_buildMenuHierarchies();
+    $this->initializeMenus();
 
     if ($name instanceof MenuItem)
     {
@@ -96,6 +103,7 @@ class sfSympalMenuSiteManager
     {
       $secondaryChildren = array();
       $secondary = clone $menu;
+      $secondary->setName('secondary');
     }
 
     foreach ($menu->getChildren() as $child)
@@ -131,9 +139,9 @@ class sfSympalMenuSiteManager
     }
   }
 
-  protected function _buildMenuHierarchies()
+  public function initializeMenus()
   {
-    if (!$this->_menuHierarchiesBuilt)
+    if (!$this->_initialized)
     {
       // Query for the all menu items
       $q = Doctrine_Query::create()
@@ -184,7 +192,7 @@ class sfSympalMenuSiteManager
       }
 
       // Mark the process as done so it is cached
-      $this->_menuHierarchiesBuilt = true;
+      $this->_initialized = true;
     }
   }
 

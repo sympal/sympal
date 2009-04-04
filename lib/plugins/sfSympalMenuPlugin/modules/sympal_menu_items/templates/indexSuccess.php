@@ -2,10 +2,9 @@
 
 <?php use_helper('SympalMenuManager') ?>
 
-<?php use_sympal_yui_css('menu') ?>
-<?php use_sympal_yui_css('tree') ?>
-<?php use_sympal_yui_css('fonts') ?>
-<?php use_sympal_yui_css('treeview') ?>
+<?php use_sympal_yui_css('fonts/fonts') ?>
+<?php use_sympal_yui_css('treeview/assets/skins/sam/treeview') ?>
+<?php use_sympal_yui_css('menu/assets/skins/sam/menu') ?>
 
 <?php use_sympal_yui_js('yahoo-dom-event/yahoo-dom-event') ?>
 <?php use_sympal_yui_js('treeview/treeview') ?>

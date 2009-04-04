@@ -26,6 +26,9 @@ generator:
           help: Unique slug string. Used for search engine friendly urls.
       list:
         display: [=title, description]
-      form:    ~
+      form:
+        display:
+          "NONE": [title, description, slug]
+          "Rendering": [layout]
       edit:    ~
       new:     ~
