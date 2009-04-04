@@ -14,6 +14,21 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->menuItem = $this->getRoute()->getObject();
     $table = Doctrine::getTable('MenuItem');
     $this->roots = $table->getTree()->fetchRoots();
+
+    $this->dispatcher->connect('sympal.load_side_bar', array($this, 'loadSideBar'));
+  }
+
+  public function loadSideBar(sfEvent $event)
+  {
+    $menu = $event['menu'];
+
+    foreach ($this->roots as $root)
+    {
+      $menu[$root['slug']]
+        ->setLabel('Manage '.$root['slug'].' Menu')
+        ->setRoute($root['route']);
+    }
+    $menu['Create New Menu']->setRoute('@sympal_menu_items_new');
   }
 
   public function executeManager_move(sfWebRequest $request)

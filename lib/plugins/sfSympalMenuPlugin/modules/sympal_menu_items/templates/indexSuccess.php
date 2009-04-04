@@ -43,15 +43,6 @@
     the item you dragged it to.
   </div>
 
-  <?php slot('sympal_right_sidebar') ?>
-    <h2>Manage Sympal Menus</h2>
-    <ul>
-      <?php foreach ($roots as $root): ?>
-        <li><?php echo link_to($root['name'], '@sympal_menu_manager_tree?slug='.$root['slug']) ?></li>
-      <?php endforeach; ?>
-    </ul>
-  <?php end_slot() ?>
-
   <h2>Managing <?php echo $menuItem['name'] ?> Menu</h2>
 
   <div id="sympal_menu_manager_tree_holder">
