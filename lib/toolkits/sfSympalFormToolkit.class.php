@@ -6,8 +6,16 @@ class sfSympalFormToolkit
   {
     if (sfSympalConfig::isI18nEnabled($name))
     {
-      $culture = sfContext::getInstance()->getUser()->getCulture();
+      $context = sfContext::getInstance();
+      $culture = $context->getUser()->getCulture();
       $form->embedI18n(array(strtolower($culture)));
+      $widgetSchema = $form->getWidgetSchema();
+      $context->getConfiguration()->loadHelpers(array('Helper'));
+
+      $c = sfCultureInfo::getInstance($culture);
+      $languages = $c->getLanguages();
+      $language = isset($languages[$culture]) ? $languages[$culture] : '';
+      $widgetSchema[$culture]->setLabel($language);
     }
   }
 

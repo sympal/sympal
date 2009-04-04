@@ -16,7 +16,7 @@
       [?php echo $form->renderGlobalErrors() ?]
     [?php endif; ?]
 
-    <div id="demo" class="yui-navset">
+    <div id="sympal_admin_gen_tab_view" class="yui-navset">
       <ul class="yui-nav">
         [?php foreach ($configuration->getFormFields($form, $form->isNew() ? 'new' : 'edit') as $fieldset => $fields): ?]
           <li[?php if (!isset($selected)) { echo ' class="selected"'; $selected = true; } ?]><a href="#[?php echo $fieldset ?]"><em>[?php echo $fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getModelName()))):$fieldset ?]</em></a></li>
@@ -24,7 +24,7 @@
 
         [?php foreach ($form as $key => $value): ?]
           [?php if ($value instanceof sfFormFieldSchema): ?]
-            <li><a href="#[?php echo $key ?]"><em>[?php echo sfInflector::humanize(sfInflector::tableize($key)) ?]</em></a></li>
+            <li><a href="#[?php echo $key ?]"><em>[?php echo $value->getWidget()->getLabel() ? $value->getWidget()->getLabel():$key ?]</em></a></li>
           [?php endif; ?]
         [?php endforeach; ?]
       </ul>
@@ -49,7 +49,7 @@
 
     <script>
     (function() {
-      var tabView = new YAHOO.widget.TabView('demo');
+      var tabView = new YAHOO.widget.TabView('sympal_admin_gen_tab_view');
       YAHOO.log("The example has finished loading; as you interact with it, you'll see log messages appearing here.", "info", "example");
     })();
     </script>
