@@ -65,31 +65,27 @@ class sfSympalToolkit
     $module = $actionEntry ? $actionEntry->getModuleName():$request->getParameter('module');
     $action = $actionEntry ? $actionEntry->getActionName():$request->getParameter('action');
 
-    $bundledLayout = false;
-    if (file_exists($name))
-    {
-      $fullPath = $name;
-    } else if (file_exists($path = sfConfig::get('sf_app_dir').'/templates/'.$name.'.php')) {
-      $fullPath = $path;
-    } else {
-      $path = $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir() . '/templates/' . $name;
-      $bundledLayout = true;
-    }
+    $paths = array(
+      $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir() . '/templates/' . $name,
+      sfConfig::get('sf_app_dir').'/templates/'.$name,
+      sfConfig::get('sf_root_dir').'/'.$name,
+      $name,
+    );
 
-    if (isset($fullPath) && file_exists($fullPath))
+    foreach ($paths as $path)
     {
-      $e = explode('.', $fullPath);
-      unset($e[count($e) - 1]);
-      $path = implode('.', $e);
-      $info = pathinfo($fullPath);
-      $name = $info['filename'];
+      $checkPath = strstr($path, '.php') ? $path:$path.'.php';
+      if (file_exists($checkPath))
+      {
+        break;
+      }
     }
 
     sfConfig::set('symfony.view.'.$module.'_'.$action.'_layout', $path);
     sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
     sfConfig::set('symfony.view.sympal_default_secure_layout', $path);
 
-    if ($bundledLayout)
+    if (strstr($path, 'sfSympalPlugin/templates'))
     {
       $response->addStylesheet('/sfSympalPlugin/css/global');
       $response->addStylesheet('/sfSympalPlugin/css/default');
