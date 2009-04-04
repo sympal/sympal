@@ -140,7 +140,11 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $administration = $menu->getChild('Administration');
     $administration->addChild('Dashboard', '@sympal_dashboard');
     $administration->addChild('Sites', '@sympal_sites');
-    $administration->addChild('Configuration', '@sympal_config');
+    $configuration = $administration->addChild('Configuration');
+
+    $configuration->addChild('Settings', '@sympal_config');
+    $configuration->addChild('Cache Manager', '@sympal_cache_manager');
+    $configuration->addChild('Settings', '@sympal_config');
 
     $content = $administration->addChild('Content');
     $content->addChild('Types', '@sympal_content_types');

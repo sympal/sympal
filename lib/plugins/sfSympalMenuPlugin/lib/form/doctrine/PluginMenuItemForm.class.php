@@ -15,6 +15,8 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
   {
     parent::setup();
 
+    sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
+
     $this->widgetSchema['parent_id'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'MenuItem',
       'add_empty' => '~ (object is at root level)',

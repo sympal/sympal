@@ -133,11 +133,6 @@ class sfSympalUser extends sfBasicSecurityUser
       ->set('locked_by', 'NULL')
       ->where('locked_by = ?', $user->id)
       ->execute();
-
-    if ($count)
-    {
-      $this->setFlash('notice', 'Lock released on previous content');
-    }
   }
 
   private $user = null;

@@ -19,6 +19,8 @@ abstract class PluginContentForm extends BaseContentForm
       $this['last_updated_by']
     );
 
+    sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
+
     $this->widgetSchema['site_id'] = new sfWidgetFormInputHidden();
 
     sfSympalFormToolkit::changeLayoutWidget($this);
