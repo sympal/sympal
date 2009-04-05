@@ -5,6 +5,14 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(31, new lime_output_color());
 
+$user = new User();
+$user->first_name = 'test';
+$user->last_name = 'test';
+$user->email_address = 'test@gmail.com';
+$user->username = 'test';
+$user->password = 'test';
+$user->save();
+
 $page = new Page();
 $page->title = 'Testing this out';
 
@@ -13,6 +21,7 @@ $content->content_type_id = Doctrine::getTable('ContentType')->findOneByName('Pa
 $content->slug = 'testing-this-out';
 $content->site_id = Doctrine::getTable('Site')->findOneByTitle('Sympal')->id;
 $content->is_published = true;
+$content->CreatedBy = $user;
 $content->save();
 
 $page->Content = $content;
@@ -44,14 +53,6 @@ $t->is($content[0]['Site']['title'], 'Sympal');
 $t->is($content[0]['Site']['slug'], 'sympal');
 $t->is(isset($content[0]['Page']), true);
 $t->is($content[0]['slug'], 'testing-this-out');
-
-$user = new User();
-$user->first_name = 'test';
-$user->last_name = 'test';
-$user->email_address = 'test@gmail.com';
-$user->username = 'test';
-$user->password = 'test';
-$user->save();
 
 class testMyUser extends myUser
 {

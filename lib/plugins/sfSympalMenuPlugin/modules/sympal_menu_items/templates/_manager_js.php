@@ -65,7 +65,7 @@ YAHOO.util.Event.onAvailable("sympal_menu_manager_tree", function ()
 
     if (sLabel && sLabel.length > 0)
     {
-      var url = '<?php echo url_for('@sympal_menu_manager_tree_add_node?root_slug='.$menuItem['slug'].'&id=NODE_ID&label=LABEL') ?>';
+      var url = '<?php echo url_for('@sympal_menu_manager_tree_add_node?root_slug='.$menuItem['slug'].'&id=NODE_ID&new_label=LABEL') ?>';
       url = url.replace('NODE_ID', currentMenuItemId);
       url = url.replace('LABEL', sLabel);
 
@@ -78,7 +78,7 @@ YAHOO.util.Event.onAvailable("sympal_menu_manager_tree", function ()
     var sLabel = window.prompt("Enter a new label for this child: ", getElement('node-' + currentMenuItemId).innerHTML);
 
     if (sLabel && sLabel.length > 0) {
-      var url = '<?php echo url_for('@sympal_menu_manager_tree_update_node?root_slug='.$menuItem['slug'].'&id=NODE_ID&label=LABEL') ?>';
+      var url = '<?php echo url_for('@sympal_menu_manager_tree_update_node?root_slug='.$menuItem['slug'].'&id=NODE_ID&new_label=LABEL') ?>';
       url = url.replace('NODE_ID', currentMenuItemId);
       url = url.replace('LABEL', sLabel);
 

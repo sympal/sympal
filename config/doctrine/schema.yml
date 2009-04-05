@@ -6,7 +6,10 @@ Site:
     layout: string(255)
     title:
       type: string(255)
-    description: clob
+      notnull: true
+    description:
+      type: clob
+      notnull: true
 
 Content:
   actAs: [Sluggable, Timestampable, sfSympalContent]
@@ -20,7 +23,9 @@ Content:
     content_template_id: integer
     master_menu_item_id: integer
     last_updated_by: integer
-    created_by: integer
+    created_by:
+      type: integer
+      notnull: true
     locked_by: integer
     is_published: boolean
     date_published: timestamp
@@ -42,7 +47,7 @@ Content:
       class: User
       local: created_by
       foreignAlias: CreatedContent
-      onDelete: SET NULL
+      onDelete: CASCADE
     LockedBy:
       class: User
       local: locked_by
@@ -91,7 +96,10 @@ ContentTemplate:
     type:
       type: enum
       values: [View, List]
-    content_type_id: integer
+      notnull: true
+    content_type_id:
+      type: integer
+      notnull: true
     partial_path: string(255)
     component_path: string(255)
     body: clob

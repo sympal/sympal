@@ -16,9 +16,7 @@ generator:
         name:
           help: Enter the name of the content template.
         type:
-          help: |
-            Enter what type of template this is used to render. Either to 
-            "View" an content or a view a "List" of content.
+          help: Select what type of template this is used to render. Either to View a content record or a view a List of content records.
         content_type_id:
           label: Content Type
           help: Choose the content type this template is used for.
@@ -27,15 +25,14 @@ generator:
         component_path:
           help: Specify the path to a component you wish to use to render the content or content.
         body:
-          help: You can also optionally specify the template code used to render the content or content below.
+          help: You can also optionally specify the template code used to render the content or content below. Content can contain PHP code and has access to the $content variable.
       list:
         display: [=name]
       filter:
         class: false
       form:
         display:
-          "NONE": [name]
-          "Configuration": [type, content_type_id]
+          "NONE": [name, type, content_type_id]
           "Rendering Template": [partial_path, component_path, body]
       edit:    ~
       new:     ~

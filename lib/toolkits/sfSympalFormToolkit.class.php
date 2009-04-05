@@ -116,7 +116,8 @@ class sfSympalFormToolkit
     )));
 
     $form->setValidator('layout', new sfValidatorChoice(array(
-      'choices'   => array_keys($layouts)
+      'choices'   => array_keys($layouts),
+      'required' => false
     )));
   }
 }

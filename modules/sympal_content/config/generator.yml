@@ -17,6 +17,22 @@ generator:
           label: Site
         content_type_id:
           label: Content Type
+        master_menu_item_id:
+          label: Under Menu Item
+          help: Select the menu item this content record is associated with.
+        custom_path:
+          help: Custom path to be used to generate content record url.
+        content_template_id:
+          label: Content Template
+          help: Choose the content template used to render this content record.
+        layout:
+          help: Choose the layout template used to render this content record.
+        groups_list:
+          label: Groups
+          help: Choose the groups this content record is restricted to.
+        permissions_list:
+          label: Permissions
+          help: Choose the permissions this content record is restricted to.
       form:
         display:
           "NONE": [created_by, is_published, date_published, slug]

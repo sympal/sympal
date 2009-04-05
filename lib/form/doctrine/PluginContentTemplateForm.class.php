@@ -14,5 +14,7 @@ abstract class PluginContentTemplateForm extends BaseContentTemplateForm
     parent::setup();
     $this->widgetSchema['body']->setAttribute('cols', 60);
     $this->widgetSchema['body']->setAttribute('rows', 16);
+    $this->widgetSchema['type']->setLabel('Template Type');
+    $this->widgetSchema['body']->setLabel('Template PHP Code');
   }
 }

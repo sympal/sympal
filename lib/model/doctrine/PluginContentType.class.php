@@ -5,9 +5,61 @@
  */
 abstract class PluginContentType extends BaseContentType
 {
+  public function construct()
+  {
+    if  (sfContext::hasInstance())
+    {
+      $this->mapValue('schema', $this->getSchemaYaml());
+    }
+  }
+
+  public function setSchema($value)
+  {
+    return $this->mapValue('schema', $value);
+  }
+
   public function __toString()
   {
     return (string) $this->getLabel();
+  }
+
+  public function getSchemaPath()
+  {
+    if ($this->plugin_name)
+    {
+      $search = glob(sfContext::getInstance()->getConfiguration()->getPluginConfiguration($this->plugin_name)->getRootDir().'/config/doctrine/*.yml');
+      return current($search);
+    } else {
+      return false;
+    }
+  }
+
+  public function getSchemaYaml()
+  {
+    if ($path = $this->getSchemaPath())
+    {
+      return file_get_contents($path);
+    } else {
+      return false;
+    }
+  }
+
+  public function saveSchema()
+  {
+    if ($this->getSchemaPath())
+    {
+      file_put_contents($this->getSchemaPath(), $this->schema);
+    }
+  }
+
+  public function save(Doctrine_Connection $conn = null)
+  {
+    if  (sfContext::hasInstance())
+    {
+      $this->saveSchema();
+    }
+
+    parent::save($conn);
   }
 
   public function setName($name)

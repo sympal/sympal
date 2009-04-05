@@ -16,17 +16,13 @@ generator:
         layout:
           help: Choose the layout template used to render this content type.
         name:
-          help: |
-            Enter the name o this content type. This is required to be the
-            same name as the content model name.
+          help: Enter the name o this content type. This is required to be the same name as the content model name.
         label:
           help: Enter the label used to render this content type.
         slug:
           help: Enter the unique slug used to identify this content type.
         list_path:
-          help: |
-            Enter the route pattern used for linking to a list of
-            this content type records.
+          help: Enter the route pattern used for linking to a list of this content type records.
         view_path:
           help: Enter the route pattern used for linking to a single content type.
       list:
@@ -38,5 +34,6 @@ generator:
           "NONE": [plugin_name, name, label, slug]
           "Routing": [list_path, view_path]
           "Rendering": [layout]
+          "Schema": [schema]
       edit:    ~
       new:     ~

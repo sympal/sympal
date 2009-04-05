@@ -48,11 +48,6 @@ abstract class PluginContentForm extends BaseContentForm
     $this->widgetSchema['content_type_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['locked_by'] = new sfWidgetFormInputHidden();
 
-    $this->widgetSchema['master_menu_item_id']->setLabel('Parent Menu Item');
-    $this->widgetSchema['groups_list']->setLabel('Groups');
-    $this->widgetSchema['permissions_list']->setLabel('Permissions');
-    $this->widgetSchema['content_template_id']->setLabel('Template');
-
     if ($this instanceof InlineContentPropertyForm)
     {
       unset($this['value']);

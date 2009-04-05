@@ -100,7 +100,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executeManager_update(sfWebRequest $request)
   {
     $menuItem = $this->getRoute()->getObject();
-    $menuItem->label = $request->getParameter('label');
+    $menuItem->label = $request->getParameter('new_label');
     $menuItem->save();
 
     $manager = sfSympalMenuSiteManager::getInstance();
@@ -116,7 +116,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $menuItem = $this->getRoute()->getObject();
 
     $new = new MenuItem();
-    $new->label = $request->getParameter('label');
+    $new->label = $request->getParameter('new_label');
     $new->name = $new->label;
     $new->getNode()->insertAsLastChildOf($menuItem);
 

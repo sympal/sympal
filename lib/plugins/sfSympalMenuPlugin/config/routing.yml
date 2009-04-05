@@ -33,13 +33,13 @@ sympal_menu_manager_tree_delete:
   options: { model: MenuItem, type: object }
 
 sympal_menu_manager_tree_update_node:
-  url: /admin/menus/manager/update/:root_slug/:id/:label
+  url: /admin/menus/manager/update/:root_slug/:id/:new_label
   param: { module: sympal_menu_items, action: manager_update }
   class: sfDoctrineRoute
   options: { model: MenuItem, type: object }
 
 sympal_menu_manager_tree_add_node:
-  url: /admin/menus/manager/add/:root_slug/:id/:label
+  url: /admin/menus/manager/add/:root_slug/:id/:new_label
   param: { module: sympal_menu_items, action: manager_add }
   class: sfDoctrineRoute
   options: { model: MenuItem, type: object }
