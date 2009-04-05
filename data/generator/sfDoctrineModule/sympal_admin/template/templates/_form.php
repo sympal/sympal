@@ -39,7 +39,7 @@
           [?php if ($value instanceof sfFormFieldSchema): ?]
             <div id="[?php echo $key ?]">
               <p>
-                [?php echo include_partial('<?php echo $this->getModuleName() ?>/render_embedded_form', array('form' => $embeddedForms[$key], 'embeddedForm' => $value)) ?]
+                [?php echo include_partial('<?php echo $this->getModuleName() ?>/render_embedded_form', array('name' => $key, 'form' => $embeddedForms[$key], 'embeddedForm' => $value)) ?]
               </p>
             </div>
           [?php endif; ?]

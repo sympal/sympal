@@ -33,6 +33,14 @@ generator:
         permissions_list:
           label: Permissions
           help: Choose the permissions this content record is restricted to.
+        created_by:
+          help: Choose the user that created this record. It will default to the logged in user who created the record.
+        is_published:
+          help: Check to publish this content record. Checking this will automatically set the date published value to the current date. A content record will not be accessible to the public until the published date has been reached.
+        date_published:
+          help: Select the date this content record is to be published. This can be a date in the future and the content record will not be available until that date.
+        slug:
+          help: Enter the unique slug for this content record. This is a human readable string used to identify a content record and can be used in the routing custom path.
       form:
         display:
           "NONE": [created_by, is_published, date_published, slug]

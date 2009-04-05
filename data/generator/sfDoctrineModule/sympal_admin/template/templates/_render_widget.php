@@ -6,10 +6,16 @@
 [?php $validatorSchema = $form->getValidatorSchema() ?]
 
 [?php $id = sfInflector::tableize($name).'_tool_tip' ?]
-<div id="[?php echo $id ?]" [?php if ($help || $help = $widget->renderHelp()): ?]title="[?php echo $help; ?]" [?php endif; ?]class="[?php echo $class ?][?php $widget->hasError() and print ' errors' ?][?php $validatorSchema[$name]->getOption('required') and print ' required' ?]">
+<div id="[?php echo $id ?]" class="[?php echo $class ?][?php $widget->hasError() and print ' errors' ?][?php $validatorSchema[$name]->getOption('required') and print ' required' ?]">
   [?php echo $widget->renderError() ?]
 
   <div>
+    [?php if ($help || $help = $widget->renderHelp()): ?]
+      <span id="[?php echo $id ?]_help" class="help" style="float: right;" title="[?php echo $help; ?]">
+        [?php echo image_tag('/sf/sf_admin/images/help.png') ?]
+      </span>
+    [?php endif; ?]
+
     [?php if (!$widget instanceof sfFormFieldSchema): ?]
       [?php echo $widget->renderLabel($label) ?]
     [?php endif; ?]
@@ -21,7 +27,7 @@
 [?php if ($help): ?]
 <script type="text/javascript">
 var ttA = new YAHOO.widget.Tooltip("ttA", { 
-			context: "[?php echo $id ?]",
+			context: "[?php echo $id ?]_help",
 			effect: { effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.20 }
 		});
 </script>
