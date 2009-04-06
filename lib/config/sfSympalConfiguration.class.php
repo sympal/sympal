@@ -276,6 +276,11 @@ class sfSympalConfiguration
       {
         $info = pathinfo($path);
         $name = $info['filename'];
+        // skip partial/component templates
+        if ($name[0] == '_')
+        {
+          continue;
+        }
         $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
         $this->_layouts[$path] = ucwords($name);
       }
