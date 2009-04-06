@@ -239,7 +239,7 @@ abstract class PluginContent extends BaseContent
       }
       return '@sympal_content_view_type_' . $this['Type']['slug'] . '?' . http_build_query($values);
     } else {
-      throw new sfException('Content has invalid route.');
+      return false;
     }
   }
 
