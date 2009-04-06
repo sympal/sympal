@@ -77,9 +77,13 @@ class sfSympalToolkit
       $checkPath = strstr($path, '.php') ? $path:$path.'.php';
       if (file_exists($checkPath))
       {
+        $path = str_replace('.php', '', $path);
         break;
       }
     }
+
+    $info = pathinfo($path);
+    $name = $info['filename'];
 
     sfConfig::set('symfony.view.'.$module.'_'.$action.'_layout', $path);
     sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
