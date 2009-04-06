@@ -80,6 +80,7 @@ ContentType:
     name:
       type: string(255)
       notnull: true
+    description: clob
     label:
       type: string(255)
       notnull: true

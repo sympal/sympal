@@ -300,6 +300,7 @@ ContentType:
   ContentType_Page:
     plugin_name: sfSympalPagesPlugin
     name: Page
+    description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
     label: Page
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
     view_path: /pages/:sf_culture/:slug

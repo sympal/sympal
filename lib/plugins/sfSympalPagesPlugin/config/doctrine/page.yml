@@ -1,0 +1,7 @@
+Page: 
+  actAs: [sfSympalContentType] 
+  columns: 
+    title: 
+      type: string(255) 
+      notnull: true 
+    disable_comments: boolean

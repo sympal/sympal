@@ -54,15 +54,15 @@
       </div>
     </div>
 
-    <?php use_sympal_yui_js('connection/connection') ?>
+    [?php use_sympal_yui_js('connection/connection') ?]
 
-    <script>
+    <script type="text/javascript">
     (function() {
       var tabView = new YAHOO.widget.TabView('sympal_admin_gen_tab_view');
       tabView.addListener('click', handleClick);
       function handleClick(e)
       {
-        var url = '<?php echo url_for('@sympal_save_form_tab_view_current_tab?name='.$this->getModuleName().'&id=') ?>'+e.target.id;
+        var url = '[?php echo url_for('@sympal_save_form_tab_view_current_tab?name='.$this->getModuleName().'&id=') ?]'+e.target.id;
         YAHOO.util.Connect.asyncRequest('GET', url);
       }
     })();

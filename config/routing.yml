@@ -28,15 +28,6 @@ sympal_dashboard:
   url:  /admin/dashboard
   param: { module: sympal_dashboard, action: index }
 
-sympal_cache_manager:
-  url:  /admin/cache_manager
-  param: { module: sympal_content_renderer, action: index, slug: home, type: page }
-  class: sfDoctrineRoute
-  options:
-    model:  Content
-    type:   object
-    method: getContent
-
 sympal_yui_image_uploader:
   url: /yui_image_uploader/upload
   param: { module: sympal_yui_image_uploader, action: upload }

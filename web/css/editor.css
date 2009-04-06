@@ -109,3 +109,25 @@ li a.on {
   text-align: center;
   cursor: pointer;
 }
+
+#create_new_content ul li {
+  list-style-type: none;
+  border-bottom: 1px solid #ccc;
+}
+
+#create_new_content ul li a {
+  color: none;
+}
+
+#create_new_content ul li h2 a {
+  font-weight: bold;
+  font-size: 12px;
+  text-decoration: none;
+  background: #ffc;
+  border: 1px solid #ccc;
+  padding: 4px;
+}
+
+#create_new_content ul li h2 a img {
+  vertical-align: middle;
+}
