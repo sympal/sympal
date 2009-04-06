@@ -3,8 +3,8 @@
 }
 
 #sympal-dashboard #boxes {
-  width: 525px;
-  float: left;
+  width: 80%;
+  margin-right: 200px;
 }
 
 #sympal-dashboard #boxes ul {
@@ -16,22 +16,31 @@
   float: left;
   list-style-type: none;
   height: 85px;
-  width: 25%;
-  background: #ffc;
+  width: 140px;
   margin-right: 5px;
   border: #f5f5f5;
   text-align: center;
-  background: url(../images/default.gif) no-repeat;
-  background-position: center;
-  margin: 0;
+  margin: 5px;
   padding: 0;
+  padding-top: 10px;
+  border: 1px solid #ccc;
+  filter: alpha(opacity=50);
+  -moz-opacity: .50;
 }
 
 #sympal-dashboard #boxes ul li a {
   width: 100%;
-  height: 75px;
+  height: 85px;
   display: block;
   font-weight: bold;
+  text-decoration: none;
+  background: #fff url(../images/default.gif) no-repeat;
+  background-position: center;
+}
+
+#sympal-dashboard #boxes ul li:hover {
+  filter: alpha(opacity=100);
+  -moz-opacity: 1;
 }
 
 #sympal-dashboard #right {
@@ -40,6 +49,7 @@
   margin-right: 30px;
   border-left: 1px solid #ccc;
   height: 400px;
+  width: 200px;
 }
 
 #sympal-dashboard #right ul {
@@ -48,64 +58,72 @@
 
 #sympal-dashboard #right ul li {
   list-style-type: square;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
 }
 
-#sympal-dashboard #boxes ul li#create-content {
+#sympal-dashboard #right ul li ul li {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+#sympal-dashboard #boxes ul li#create-content a {
   background: url(../images/content.gif) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#sitemap {
+#sympal-dashboard #boxes ul li#sitemap a {
   background: url(../images/sitemap.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#sites {
+#sympal-dashboard #boxes ul li#sites a {
   background: url(../images/sites.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#menu-manager {
+#sympal-dashboard #boxes ul li#menu-manager a {
   background: url(../images/menu_manager.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#plugin-manager {
+#sympal-dashboard #boxes ul li#plugin-manager a {
   background: url(../images/plugins.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#content-types {
+#sympal-dashboard #boxes ul li#content-types a {
   background: url(../images/content_types.gif) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#content-templates {
+#sympal-dashboard #boxes ul li#content-templates a {
   background: url(../images/templates.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#users {
+#sympal-dashboard #boxes ul li#users a {
   background: url(../images/users.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#groups {
+#sympal-dashboard #boxes ul li#groups a {
   background: url(../images/groups.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#permissions {
+#sympal-dashboard #boxes ul li#permissions a {
   background: url(../images/permissions.gif) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#configuration {
+#sympal-dashboard #boxes ul li#configuration a {
   background: url(../images/configuration.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#slot-types {
+#sympal-dashboard #boxes ul li#slot-types a {
   background: url(../images/slot_types.png) no-repeat;
   background-position: center;
 }

@@ -1,9 +1,80 @@
 User:
   admin:
-    first_name: Sympal
-    last_name: Admin
+    first_name: <?php echo sfSympalConfig::get('sympal_install_admin_first_name', null, 'Sympal') ?> 
+    last_name: <?php echo sfSympalConfig::get('sympal_install_admin_last_name', null, 'Admin') ?> 
     is_active: true
     email_address: <?php echo sfSympalConfig::get('sympal_install_admin_email_address', null, 'jonwage@gmail.com') ?> 
     username: <?php echo sfSympalConfig::get('sympal_install_admin_username', null, 'admin') ?> 
     password: <?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?> 
     is_super_admin: true
+  registered:
+    first_name: Sympal
+    last_name: Registered
+    is_active: true
+    email_address: registered@sympalphp.org
+    username: registered
+    password: registered
+    Groups: [RegisteredGroup]
+  NormalAdmin:
+    first_name: Normal Sympal
+    last_name: Admin
+    is_active: true
+    email_address: normaladmin@sympalphp.org
+    username: normaladmin
+    password: normaladmin
+    Groups: [AdministratorGroup]
+  EditorUser:
+    first_name: Sample
+    last_name: Editor
+    is_active: true
+    email_address: sympaleditor@sympalphp.org
+    username: editor
+    password: editor
+    Groups: [ContentEditorGroup]
+  SecurityUser:
+    first_name: Security
+    last_name: Manager
+    is_active: true
+    email_address: securityuser@sympalphp.org
+    username: security
+    password: security
+    Groups: [SecurityManagerGroup]
+
+Group:
+  AdministratorGroup:
+    name: Administrator
+    Permissions: [EditConfiguration, ManageContentSetup, ManageSites, ManageContent, PluginManager, MenuManager, ManageUsers, ManageGroups, ManagePermissions, ViewContent]
+  RegisteredGroup:
+    name: Registered
+    Permissions: [ViewContent]
+  GuestGroup:
+    name: Guest
+    Permissions: [ViewContent]
+  ContentEditorGroup:
+    name: Content Editor
+    Permissions: [ManageContent]
+  SecurityManagerGroup:
+    name: Security Manager
+    Permissions: [ManageUsers, ManageGroups, ManagePermissions]
+
+Permission:
+  ManageContent:
+    name: Manage Content
+  PluginManager:
+    name: Plugin Manager
+  MenuManager:
+    name: Menu Manager
+  ManageUsers:
+    name: Manage Users
+  ManageGroups:
+    name: Manage Groups
+  ManagePermissions:
+    name: Manage Permissions
+  ManageSites:
+    name: Manage Sites
+  ManageContentSetup:
+    name: Manage Content Setup
+  EditConfiguration:
+    name: Edit Configuration
+  ViewContent:
+    name: View Content

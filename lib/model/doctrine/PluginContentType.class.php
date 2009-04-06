@@ -46,7 +46,7 @@ abstract class PluginContentType extends BaseContentType
 
   public function saveSchema()
   {
-    if ($this->getSchemaPath())
+    if ($this->getSchemaPath() && $this->schema)
     {
       file_put_contents($this->getSchemaPath(), $this->schema);
     }

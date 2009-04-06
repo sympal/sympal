@@ -26,7 +26,28 @@ abstract class Basesympal_dashboardActions extends sfActions
     $this->boxes['Configuration']->setRoute('@sympal_config');
     $this->boxes['Sitemap']->setRoute('@sympal_sitemap');
 
-    $this->plugins = $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getInstalledPlugins();
-    $this->contentTypes = Doctrine::getTable('ContentType')->findAll();
+    $installedPlugins = $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getInstalledPlugins();
+    $contentTypes = Doctrine::getTable('ContentType')->findAll();
+
+    foreach ($contentTypes as $contentType)
+    {
+      $this->boxes[$contentType['label']]->setRoute('@sympal_content_create_type?type='.$contentType['slug']);
+    }
+
+    $this->right = new sfSympalMenu('Dashboard Right');
+    $plugins = $this->right['Sympal Plugins'];
+    $plugins->setRoute('@sympal_plugin_manager');
+    foreach ($installedPlugins as $plugin)
+    {
+      $plugins[$plugin]->setRoute('@sympal_plugin_manager_view?plugin='.$plugin);
+    }
+    $types = $this->right['Content Types']->setRoute('@sympal_content_types');
+    foreach ($contentTypes as $contentType)
+    {
+      $types[$contentType['label']]->setLabel('Create '.$contentType['label'])->setRoute('@sympal_content_create_type?type='.$contentType['slug']);
+    }
+
+    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_dashboard_boxes', array('menu' => $this->boxes)));
+    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_dashboard_right', array('menu' => $this->boxes)));
   }
 }

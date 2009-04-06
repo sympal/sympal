@@ -48,8 +48,11 @@ EOF;
 
     if (isset($options['interactive']) && $options['interactive'])
     {
-      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Admin Username:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Admin Password:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_email_address', $this->askAndValidate('Enter E-Mail Address:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_first_name', $this->askAndValidate('Enter First Name:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_last_name', $this->askAndValidate('Enter Last Name:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Username:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Password:', new sfValidatorString()));
     }
 
     $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);
