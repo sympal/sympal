@@ -17,14 +17,12 @@
     [?php endif; ?]
 
     [?php $fields = $configuration->getFormFields($form, $form->isNew() ? 'new' : 'edit') ?]
-    [?php $first = array_keys($fields); ?]
-    [?php $first = sfInflector::tableize(current($first)) ?]
-    [?php $currentTab = $sf_user->getAttribute('<?php echo $this->getModuleName() ?>.current_form_tab', $first, 'admin_module') ?]
+    [?php $currentTab = $sf_user->getAttribute('<?php echo $this->getModuleName() ?>.current_form_tab', null, 'admin_module'); ?]
     <div id="sympal_admin_gen_tab_view" class="yui-navset">
       <ul class="yui-nav">
         [?php foreach ($fields as $fieldset => $fields): ?]
-          [?php $id = sfInflector::tableize($fieldset) ?]
-          <li[?php if ($id == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo $fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getModelName()))):$fieldset ?]</em></a></li>
+          [?php $id = sfInflector::tableize($fieldset); ?]
+          <li[?php if ($id == $currentTab || is_null($currentTab)) echo ' class="selected"'; if (is_null($currentTab)) $currentTab = false; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo $fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getModelName()))):$fieldset ?]</em></a></li>
         [?php endforeach; ?]
 
         [?php foreach ($form as $key => $value): ?]
