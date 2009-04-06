@@ -24,10 +24,14 @@
 <?php use_javascript('/sfSympalPlugin/js/yui-image-uploader26.js') ?>
 <?php use_javascript('/sfSympalPlugin/js/bubbling/dispatcher/dispatcher-min') ?>
 
+<?php $state = $sf_user->getAttribute('editor_tools_state', 'visible', 'sympal') ?>
 <div class="yui-skin-sam" id="sympal_edit_panel_container">
   <div id="sympal_edit_panel">
-    <div class="hd">Sympal Editor Panel</div>
-    <div class="bd">
+    <div class="hd" style="height: 25px;">
+      <span id="title">Sympal Editor Panel</span>
+      <span id="toggle"><?php if ($state == 'hidden'): ?>Show<?php else: ?>Hide<?php endif; ?></span>
+    </div>
+    <div class="bd" id="sympal_edit_panel_contents">
       <?php echo $menu ?>
     </div>
   </div>
@@ -140,6 +144,35 @@ myPanel = new YAHOO.widget.Panel('sympal_edit_panel', {
 
 myPanel.render();
 myPanel.show();
+
+overlay = new YAHOO.widget.Overlay("sympal_edit_panel_contents", { visible:true,
+    						  zIndex:1000,
+    						  width:"330px" } );
+
+overlay.render();
+<?php if ($state == 'hidden'): ?>
+overlay.hide();
+<?php endif; ?>
+
+function overlayToggle()
+{
+  var toggle = document.getElementById('toggle');
+  var current = toggle.innerHTML;
+
+  if (current == 'Hide')
+  {
+    overlay.hide();
+    toggle.innerHTML = 'Show';
+  } else {
+    overlay.show();
+    toggle.innerHTML = 'Hide';
+  }
+
+  var url = '<?php echo url_for('@sympal_tools_save_state?state=hidden') ?>';
+	YAHOO.util.Connect.asyncRequest('GET', url);
+}
+
+YAHOO.util.Event.addListener("toggle", "click", overlayToggle, overlay, true);
 
 myPanel.dd.endDrag = function(e, id) {
 	var x = 0;

@@ -16,15 +16,22 @@
       [?php echo $form->renderGlobalErrors() ?]
     [?php endif; ?]
 
+    [?php $fields = $configuration->getFormFields($form, $form->isNew() ? 'new' : 'edit') ?]
+    [?php $first = array_keys($fields); ?]
+    [?php $first = sfInflector::tableize(current($first)) ?]
+    [?php $currentTab = $sf_user->getAttribute('<?php echo $this->getModuleName() ?>.current_form_tab', $first, 'admin_module') ?]
     <div id="sympal_admin_gen_tab_view" class="yui-navset">
       <ul class="yui-nav">
-        [?php foreach ($configuration->getFormFields($form, $form->isNew() ? 'new' : 'edit') as $fieldset => $fields): ?]
-          <li[?php if (!isset($selected)) { echo ' class="selected"'; $selected = true; } ?]><a href="#[?php echo $fieldset ?]"><em>[?php echo $fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getModelName()))):$fieldset ?]</em></a></li>
+        [?php foreach ($fields as $fieldset => $fields): ?]
+          [?php $id = sfInflector::tableize($fieldset) ?]
+          <li[?php if ($id == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo $fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getModelName()))):$fieldset ?]</em></a></li>
         [?php endforeach; ?]
 
         [?php foreach ($form as $key => $value): ?]
           [?php if ($value instanceof sfFormFieldSchema): ?]
-            <li><a href="#[?php echo $key ?]"><em>[?php echo $value->getWidget()->getLabel() ? $value->getWidget()->getLabel():$key ?]</em></a></li>
+            [?php $id = sfInflector::tableize($key) ?]
+            [?php $label = $value->getWidget()->getLabel() ? $value->getWidget()->getLabel():$key ?]
+            <li[?php if ($id == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $key ?]"><em id="[?php echo $id ?]">[?php echo $label ?]</em></a></li>
           [?php endif; ?]
         [?php endforeach; ?]
       </ul>
@@ -47,10 +54,17 @@
       </div>
     </div>
 
+    <?php use_sympal_yui_js('connection/connection') ?>
+
     <script>
     (function() {
       var tabView = new YAHOO.widget.TabView('sympal_admin_gen_tab_view');
-      YAHOO.log("The example has finished loading; as you interact with it, you'll see log messages appearing here.", "info", "example");
+      tabView.addListener('click', handleClick);
+      function handleClick(e)
+      {
+        var url = '<?php echo url_for('@sympal_save_form_tab_view_current_tab?name='.$this->getModuleName().'&id=') ?>'+e.target.id;
+        YAHOO.util.Connect.asyncRequest('GET', url);
+      }
     })();
     </script>
 

@@ -16,6 +16,14 @@ sympal_homepage:
     type:   object
     method: getContent
 
+sympal_save_form_tab_view_current_tab:
+  url:  /form/save_current_tab/:name/:id
+  param: { module: sympal_editor, action: save_form_current_tab }
+
+sympal_tools_save_state:
+  url:  /save_sympal_tools_state/:state
+  param: { module: sympal_editor, action: save_tools_state }
+
 sympal_dashboard:
   url:  /admin/dashboard
   param: { module: sympal_dashboard, action: index }

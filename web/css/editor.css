@@ -97,3 +97,15 @@ li a.on {
 .sympal_form ul li {
   background: transparent;
 }
+
+.hd #toggle {
+  color: #fff;
+  background: #375fc2;
+  height: 25px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  text-align: center;
+  cursor: pointer;
+}
