@@ -12,3 +12,8 @@ all:
       MenuItem: true
     sympal_plugin_svn_sources: ["http://svn.symfony-project.com/plugins"]
     markdown_styled_boxes: [quote, tip, caution, note]
+    page_cache:
+      enabled: true
+      with_layout: true
+      lifetime: 3600
+      super_cache_enabled: true

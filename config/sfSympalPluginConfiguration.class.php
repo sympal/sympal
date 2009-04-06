@@ -99,6 +99,10 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
     $form->addSetting(null, 'recaptcha_public_key', 'Recaptcha Public Key');
     $form->addSetting(null, 'recaptcha_private_key', 'Recaptcha Private Key');
+    $form->addSetting('page_cache', 'enabled', 'Enabled', 'InputCheckbox', 'Boolean');
+    $form->addSetting('page_cache', 'with_layout', 'With Layout', 'InputCheckbox', 'Boolean');
+    $form->addSetting('page_cache', 'lifetime', 'Lifetime');
+    $form->addSetting('page_cache', 'super_cache_enabled', 'Super Cache Enabled', 'InputCheckbox', 'Boolean');
   }
 
   public function loadAdminBar(sfEvent $event)
