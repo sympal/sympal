@@ -85,6 +85,7 @@ class PluginContentTable extends Doctrine_Table
       ->leftJoin('ty.Templates t')
       ->leftJoin('c.MasterMenuItem m')
       ->leftJoin('c.MenuItem mm')
+      ->leftJoin('c.CreatedBy u')
       ->innerJoin('c.Site csi WITH csi.slug = ?', $sympalContext->getSite());
 
     if (!sfSympalToolkit::isEditMode())
