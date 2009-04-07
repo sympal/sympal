@@ -60,8 +60,11 @@
       tabView.addListener('click', handleClick);
       function handleClick(e)
       {
-        var url = '[?php echo url_for('@sympal_save_form_tab_view_current_tab?name='.$this->getModuleName().'&id=') ?]'+e.target.id;
-        YAHOO.util.Connect.asyncRequest('GET', url);
+        if (e.target.toString() == '[object HTMLSpanElement]')
+        {
+          var url = '[?php echo url_for('@sympal_save_form_tab_view_current_tab?name='.$this->getModuleName().'&id=') ?]'+e.target.id;
+          YAHOO.util.Connect.asyncRequest('GET', url);
+        }
       }
     })();
     </script>
