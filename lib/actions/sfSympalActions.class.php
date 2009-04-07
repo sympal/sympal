@@ -12,7 +12,10 @@ class sfSympalActions
     $instance = new sfSympalActions();
     $instance->_actions = $event->getSubject();
 
-    return call_user_func_array(array($instance, $method), $arguments);
+    $value = call_user_func_array(array($instance, $method), $arguments);
+    $event->setReturnValue($value);
+
+    return true;
   }
 
   public function changeLayout($name)
@@ -60,7 +63,7 @@ class sfSympalActions
     }
   }
 
-  public function sendEmail($name, $vars = array())
+  public function newEmail($name, $vars = array())
   {
     $e = explode('/', $name);
     list($module, $action) = $e;
@@ -83,15 +86,61 @@ class sfSympalActions
       $emailBody = '';
     }
 
-    $mailer = new Swift(new Swift_Connection_NativeMail());
-    $message = new Swift_Message($emailSubject, $emailBody, 'text/html');
+    $this->mail = new sfSympalMail();
+    $this->message = $this->mail->setMessage($emailSubject, $emailBody, 'text/html');
 
-    $mailer->send($message, $vars['email_address'], sfSympalConfig::get('default_from_email_address', null, 'noreply@sympalphp.org'));
-    $mailer->disconnect();
+    return $this->mail;
+  }
 
-    $this->logMessage($emailBody, 'debug');
+  public function forwardToRoute($full)
+  {
+    if (strstr($full, '?'))
+    {
+      $pos = strpos($full, '?');
+      $route = substr($full, 1, $pos - 1);
+    } else {
+      $route = substr($full, 1, strlen($full));
+    }
 
-    return true;
+    $r = $this->getContext()->getRouting();
+    $routes = $r->getRoutes();
+    if ( ! isset($routes[$route]))
+    {
+      throw new sfException('Could not find route named: "' . $route . '"');
+    }
+
+    if (isset($pos))
+    {
+      $params = substr($full, $pos + 1, strlen($full));
+      $e = explode('&', $params);
+
+      foreach ($e as $param)
+      {
+        $e2 = explode('=', $param);
+        if ((isset($e2[0]) && $e2[0]) && (isset($e2[1]) && $e2[1]))
+        {
+          $this->getRequest()->setParameter($e2[0], $e2[1]);
+        }
+      }
+    }
+
+    $routeInfo = $routes[$route];
+    $params = $routeInfo[3];
+
+    foreach ($params as $key => $value)
+    {
+      if ($value)
+      {
+        $this->getRequest()->setParameter($key, $value);
+      }
+    }
+
+    $this->forward($params['module'], $params['action']);
+  }
+
+  public function goBack()
+  {
+    $this->redirect($this->getRequest()->getReferer());
   }
 
   public function __get($name)
