@@ -222,26 +222,47 @@ abstract class PluginContent extends BaseContent
     return sprintf('No description for object of class "%s"', $this->getTable()->getComponentName());
   }
 
-  public function getRoute()
+  public function getRoute($routeString = null, $path = null)
   {
-    if ($path = $this['custom_path'])
+    if (!$this->exists() || !$this['slug'])
     {
-      $routeString = '@sympal_content_' . str_replace('-', '_', $this['slug']);
-    } else if ($path = $this['Type']['view_path']) {
-      $routeString = '@sympal_content_view_type_' . str_replace('-', '_', $this['Type']['slug']);
+      return false;
     }
 
-    $route = new sfRoute($path);
-    $variables = $route->getVariables();
-
-    $values = array();
-    foreach (array_keys($variables) as $name)
+    if (is_null($routeString))
     {
-      try {
-        $values[$name] = $this->$name;
-      } catch (Exception $e) {}
+      if ($path = $this['custom_path'])
+      {
+        $routeString = '@sympal_content_' . str_replace('-', '_', $this['slug']);
+      } else if ($path = $this['Type']['view_path']) {
+        $routeString = '@sympal_content_view_type_' . str_replace('-', '_', $this['Type']['slug']);
+      } else if ($this['slug']) {
+        $path = '/content/:slug';
+        $routeString = '@sympal_content_view';
+      }
     }
-    return $routeString.'?'.http_build_query($values);
+
+    if (isset($path) && $path && isset($routeString) && $routeString)
+    {
+      $route = new sfRoute($path);
+      $variables = $route->getVariables();
+
+      $values = array();
+      foreach (array_keys($variables) as $name)
+      {
+        try {
+          $values[$name] = $this->$name;
+        } catch (Exception $e) {}
+      }
+      if (!empty($values))
+      {
+        return $routeString.'?'.http_build_query($values);
+      } else {
+        return $routeString;
+      }
+    } else {
+      return false;
+    }
   }
 
   public function getLayout()

@@ -30,7 +30,6 @@ $page->save();
 $menuItem = new MenuItem();
 $menuItem->name = 'test';
 $menuItem->RelatedContent = $page->Content;
-$menuItem->Site->setTitle('Sympal');
 $menuItem->is_published = true;
 $menuItem->save();
 
@@ -65,6 +64,7 @@ class testMyUser extends myUser
 
 $sfUser = sfContext::getInstance()->getUser();
 $sfUser->signIn($user);
+$sfUser->isEditMode(true);
 
 $q = Doctrine::getTable('Content')
   ->getTypeQuery('Page')

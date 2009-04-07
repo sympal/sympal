@@ -12,6 +12,15 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
   }
 
+  public function executeDelete_route(sfWebRequest $request)
+  {
+    $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this route?');
+    $this->getRoute()->getObject()->delete();
+
+    $this->getUser()->setFlash('notice', 'Route was deleted successfully!');
+    $this->redirect($request->getParameter('redirect_url'));
+  }
+
   /**
    * Redirects to the url of the content
    * Used by admin gen shortcut buttons/actions
@@ -38,7 +47,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->content = new Content();
     $type = Doctrine::getTable('ContentType')->findOneBySlug($request->getParameter('type'));
     $this->content->setType($type);
-    $this->content->LockedBy = $this->getUser()->getSympalUser();
+    $this->content->LockedBy = $this->getUser()->getGuardUser();
     $this->content->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
 
     Doctrine::initializeModels(array($type['name']));
@@ -68,7 +77,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $type = Doctrine::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
     $this->content->setType($type);
-    $this->content->LockedBy = $this->getUser()->getSympalUser();
+    $this->content->LockedBy = $this->getUser()->getGuardUser();
     $this->content->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
 
     Doctrine::initializeModels(array($type['name']));

@@ -179,11 +179,8 @@ ContentSlot:
     name: body
     Type: ContentSlotType_Markdown
     value: |
-      You can check out some markdown examples by clicking the "Examples" 
-      link in the menu to the left, or you can read about sympal by clicking "About".
-      
-      If you wish to preview the admin functionality of sympal you can signin 
-      below using "admin" as both the username and password.
+      Welcome to the default Sympal layout. You can sign in below and get started
+      using Sympal.
 
       [?php if (!$sf_user->isAuthenticated()): ?]
         [?php echo get_component('sympal_auth', 'signin_form') ?]
@@ -192,10 +189,11 @@ ContentSlot:
     name: body
     Type: ContentSlotType_Markdown
     value: |
-      The sympal content management framework is the result of years of 
-      experience and trial and error across dozens of developers. It has 
-      been influenced by literally every open source cms and was built in 
-      hopes of briding the gap between framework and content management.
+      Sympal was born through the desire to have a solid content management 
+      framework built on top of Symfony. The idea quickly expanded and Sympal
+      became an extension for Symfony that provides lots of new functionality
+      to help with producing content based web applications. Below is a list of
+      some of the features.
 
       # Features
 
@@ -204,8 +202,11 @@ ContentSlot:
       * Multiple Sites
       * Custom Content Types
       * Custom Content Slot Types
-      * Multiple Site Menus
+      * Multiple Menus
       * Use PHP in your Content
+      * Configurable/Extensible
+      * Page Caching
+      * Database Caching
   Markdown_examples_slot_body:
     name: body
     Type: ContentSlotType_Markdown

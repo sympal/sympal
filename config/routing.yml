@@ -16,6 +16,12 @@ sympal_homepage:
     type:   object
     method: getContent
 
+sympal_content_delete_route:
+  url:  /content/delete_route/:id
+  param: { module: sympal_content, action: delete_route }
+  class: sfDoctrineRoute
+  options: { model: Route, type: object }
+
 sympal_save_form_tab_view_current_tab:
   url:  /form/save_current_tab/:name/:id
   param: { module: sympal_editor, action: save_form_current_tab }
@@ -165,6 +171,15 @@ sympal_content:
     module:               sympal_content
     prefix_path:          admin/content
     with_wildcard_routes: true
+
+sympal_content_view:
+  url: /content/:slug
+  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page }
+  class: sfDoctrineRoute
+  options:
+    model:  Content
+    type:   object
+    method: getContent
 
 sympal_content_create_type:
   url:    /admin/content/create/:type

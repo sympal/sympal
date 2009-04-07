@@ -6,7 +6,7 @@
 [?php $validatorSchema = $form->getValidatorSchema() ?]
 
 [?php $id = sfInflector::tableize($name).'_tool_tip' ?]
-<div id="[?php echo $id ?]" class="[?php echo $class ?][?php $widget->hasError() and print ' errors' ?][?php $validatorSchema[$name]->getOption('required') and print ' required' ?]">
+<div class="[?php echo $class ?][?php $widget->hasError() and print ' errors' ?][?php $validatorSchema[$name]->getOption('required') and print ' required' ?]">
   [?php echo $widget->renderError() ?]
 
   <div>

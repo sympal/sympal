@@ -30,9 +30,18 @@ class sfSympalUser extends sfBasicSecurityUser
     return $access;
   }
 
+  public function isEditMode($bool = null)
+  {
+    if (!is_null($bool))
+    {
+      $this->setAttribute('sympal_edit', $bool);
+    }
+    return $this->getAttribute('sympal_edit');
+  }
+
   public function toggleEditMode()
   {
-    $this->setAttribute('sympal_edit', !$this->getAttribute('sympal_edit', false));
+    $this->isEditMode(!$this->getAttribute('sympal_edit', false));
     $mode = $this->getAttribute('sympal_edit', false) ? 'on':'off';
 
     if ($mode == 'off')

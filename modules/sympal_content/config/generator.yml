@@ -44,7 +44,7 @@ generator:
       form:
         display:
           "NONE": [created_by, is_published, date_published, slug]
-          "Routing": [master_menu_item_id, custom_path]
+          "Routing": [master_menu_item_id, custom_path, _content_urls]
           "Rendering": [content_template_id, layout]
           "Security": [groups_list, permissions_list]
       list:
