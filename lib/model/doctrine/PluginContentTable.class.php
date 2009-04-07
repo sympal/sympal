@@ -50,6 +50,11 @@ class PluginContentTable extends Doctrine_Table
 
       foreach ($params as $key => $value)
       {
+        if ($key == 'id' && $contentId || $key == 'slug' && $contentSlug)
+        {
+          continue;
+        }
+
         if ($this->hasField($key))
         {
           $q->andWhere('c.'.$key.' = ?', $value);

@@ -91,4 +91,45 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $this->setTemplate('new');
   }
+
+  protected function processForm(sfWebRequest $request, sfForm $form)
+  {
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    if ($form->isValid())
+    {
+      $this->getUser()->setFlash('notice', $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.');
+
+      $new = $form->isNew();
+      $content = $form->save();
+
+      if ($new)
+      {
+        try {
+          $renderer = new sfSympalContentRenderer($content->getMainMenuItem());
+          $renderer->setContent($content);
+          $renderer->initialize();
+          $html = $renderer->render();
+        } catch (Exception $e) {}
+      }
+      $config = sfContext::getInstance()->getConfigCache()->checkConfig('config/routing.yml', true);
+      sfContext::getInstance()->getRouting()->setRoutes(include($config));
+
+      $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));
+
+      if ($request->hasParameter('_save_and_add'))
+      {
+        $this->getUser()->setFlash('notice', $this->getUser()->getFlash('notice').' You can add another one below.');
+
+        $this->redirect('@sympal_content_new');
+      }
+      else
+      {
+        $this->redirect($content->getRoute());
+      }
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
+    }
+  }
 }

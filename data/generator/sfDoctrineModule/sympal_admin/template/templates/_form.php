@@ -57,7 +57,6 @@
     <script type="text/javascript">
     (function() {
       var tabView = new YAHOO.widget.TabView('sympal_admin_gen_tab_view');
-      tabView.render();
       tabView.addListener('click', handleClick);
     })();
     function handleClick(e)

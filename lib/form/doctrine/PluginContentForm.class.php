@@ -80,6 +80,23 @@ abstract class PluginContentForm extends BaseContentForm
     {
       $this->embedForm($this->object->Type->name, $typeForm);
     }
+
+    if (count($this->object->Slots) && !$this instanceof InlineContentPropertyForm)
+    {
+      $slotsForm = new sfForm();
+      foreach ($this->object->Slots as $key => $slot)
+      {
+        if ($slot->is_column)
+        {
+          continue;
+        }
+        $slotForm = new ContentSlotForm($slot);
+        unset($slotForm['id'], $slotForm['slot_type_id']);
+        $slotsForm->embedForm($key, $slotForm);
+        $slotsForm->widgetSchema[$key]->setLabel(sfInflector::humanize($slot['name']));
+      }
+      $this->embedForm('Content Slots', $slotsForm);
+    }
   }
 
   public function bind(array $taintedValues = null, array $taintedFiles = null)
