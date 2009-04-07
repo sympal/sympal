@@ -296,6 +296,7 @@ abstract class PluginContent extends BaseContent
         $route->name = 'sympal_content_'.str_replace('-', '_', $invoker['slug']);
         $route->type = 'View';
         $route->Content = $invoker;
+        $route->ContentType = $invoker->Type;
         $route->save();
       }
     }

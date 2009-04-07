@@ -24,6 +24,12 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
         $slug = 'sample-'.$lowerName;
 
         $contentType = Doctrine::getTable('ContentType')->findOneByName($this->_contentTypeName);
+
+        Doctrine::getTable('Route')
+          ->createQuery('r')
+          ->delete()
+          ->where('r.content_type_id = ?', $contentType['id'])
+          ->execute();
         Doctrine::getTable('ContentTemplate')
           ->createQuery('t')
           ->delete()
