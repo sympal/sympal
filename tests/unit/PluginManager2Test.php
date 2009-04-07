@@ -1,8 +1,11 @@
 <?php
+$app = 'sympal';
 $database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(20, new lime_output_color());
+
+$configuration->loadHelpers(array('I18n'));
 
 function installPlugin($name, $t)
 {

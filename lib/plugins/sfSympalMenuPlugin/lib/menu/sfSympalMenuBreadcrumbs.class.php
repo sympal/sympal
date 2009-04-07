@@ -6,7 +6,7 @@ class sfSympalMenuBreadcrumbs extends sfSympalMenuSite
     $children = array();
     foreach ($this->_children as $child)
     {
-      $children[] = $child->getLabel();
+      $children[] = $child->renderLabel();
     }
 
     return implode(' > ', $children);

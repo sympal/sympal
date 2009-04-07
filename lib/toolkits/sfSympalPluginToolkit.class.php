@@ -69,8 +69,7 @@ class sfSympalPluginToolkit
     $pluginName = sfSympalPluginToolkit::getLongPluginName($plugin);
 
     try {
-      sfContext::getInstance()->getConfiguration()->getPluginConfiguration($pluginName);
-      return true;
+      return sfContext::getInstance()->getConfiguration()->getPluginConfiguration($pluginName);
     } catch (Exception $e) {
       return false;
     }

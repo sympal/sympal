@@ -43,38 +43,41 @@ User:
 Group:
   AdministratorGroup:
     name: Administrator
-    Permissions: [EditConfiguration, ManageContentSetup, ManageSites, ManageContent, PluginManager, MenuManager, ManageUsers, ManageGroups, ManagePermissions, ViewContent]
+    Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
   RegisteredGroup:
     name: Registered
-    Permissions: [ViewContent]
   GuestGroup:
     name: Guest
-    Permissions: [ViewContent]
   ContentEditorGroup:
-    name: Content Editor
-    Permissions: [ManageContent]
+    name: ContentEditor
+    Permissions: [ViewDashboard, ManageContent]
   SecurityManagerGroup:
-    name: Security Manager
-    Permissions: [ManageUsers, ManageGroups, ManagePermissions]
+    name: SecurityManager
+    Permissions: [ViewDashboard, ManageUsers, ManageGroups, ManagePermissions]
+  DeveloperGroup:
+    name: Developer
+    Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
 
 Permission:
+  ViewDashboard:
+    name: ViewDashboard
   ManageContent:
-    name: Manage Content
-  PluginManager:
-    name: Plugin Manager
-  MenuManager:
-    name: Menu Manager
+    name: ManageContent
+  ManagePlugins:
+    name: ManagePlugins
+  ManageMenus:
+    name: ManageMenus
   ManageUsers:
-    name: Manage Users
+    name: ManageUsers
   ManageGroups:
-    name: Manage Groups
+    name: ManageGroups
   ManagePermissions:
-    name: Manage Permissions
+    name: ManagePermissions
   ManageSites:
-    name: Manage Sites
+    name: ManageSites
   ManageContentSetup:
-    name: Manage Content Setup
-  EditConfiguration:
-    name: Edit Configuration
-  ViewContent:
-    name: View Content
+    name: ManageContentSetup
+  ManageConfiguration:
+    name: ManageConfiguration
+  ViewDeveloperInformation:
+    name: ViewDeveloperInformation

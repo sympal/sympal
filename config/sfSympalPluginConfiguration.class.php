@@ -50,11 +50,12 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $user = sfContext::getInstance()->getUser();
     $request = sfContext::getInstance()->getRequest();
 
-    $contentEditor = $menu->addChild($content['Type']['name'] . ' Editor');
+    $contentEditor = $menu->addChild($content['Type']['name'] . ' Editor')
+      ->setCredentials(array('ManageContent'));
 
     if ($content['locked_by'])
     {
-       if ($content['locked_by'] == $user->getGuardUser()->getId())
+       if ($content['locked_by'] == $user->getSympalUser()->getId())
        {
          if ($request->getParameter('module') == 'sympal_content')
          {
@@ -75,7 +76,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     }
     $contentEditor->addChild(image_tag('/sf/sf_admin/images/delete.png').' Delete', '@sympal_content_delete?id='.$content['id']);
 
-    $contentType = $menu->addChild($content['Type']['name'].' Content');
+    $contentType = $menu->addChild($content['Type']['name'].' Content')
+      ->setCredentials(array('ManageContent'));
     $contentType->addChild(image_tag('/sf/sf_admin/images/add.png').' Create', '@sympal_content_create_type?type='.$content['Type']['name']);
     $contentType->addChild(image_tag('/sf/sf_admin/images/list.png').' List', '@sympal_content_type_'.$content['Type']['slug']);
 
@@ -114,23 +116,45 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $icon = $menu->getChild('Icon');
     $icon->addChild('Go To Homepage', '@sympal_homepage');
     $icon->addChild('Signout', '@sympal_signout', 'confirm=Are you sure you wish to signout?');
+    $icon->addChild('Logged in as '.$user->getSympalUser()->getUsername());
 
-    $help = $icon->addChild('Help');
-    $help->addChild('Logged in as '.$user->getGuardUser()->getUsername());
-    $help->addChild('Sympal '.sfSympal::VERSION);
-    $help->addChild('symfony '.SYMFONY_VERSION);
-    $help->addChild('Doctrine '.Doctrine::VERSION);
-    $help->addChild('About Sympal', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK');
-    $help->addChild('About Symfony', 'http://www.symfony-project.com/about', 'target=_BLANK');
-    $help->addChild('Documentation', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK');
-    $help->addChild('Doctrine Documentation', 'http://www.doctrine-project.org/documentation', 'target=_BLANK');
-    $help->addChild('symfony Documentation', 'http://www.symfony-project.org/doc', 'target=_BLANK');
-    $help->addChild('Report Doctrine Bug', 'http://trac.doctrine-project.org', 'target=_BLANK');
-    $help->addChild('Report symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK');
+    $help = $icon->addChild('Help')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('Sympal '.sfSympal::VERSION)
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('symfony '.SYMFONY_VERSION)
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('Doctrine '.Doctrine::VERSION)
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('About Sympal', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('About Symfony', 'http://www.symfony-project.com/about', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('Documentation', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('Doctrine Documentation', 'http://www.doctrine-project.org/documentation', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('symfony Documentation', 'http://www.symfony-project.org/doc', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('Report Doctrine Bug', 'http://trac.doctrine-project.org', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('Report symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
 
     if (sfSympalToolkit::isEditMode())
     {
-      $content = $menu->addChild('Content', '@sympal_content');
+      $content = $menu->addChild('Content', '@sympal_content')
+        ->setCredentials(array('ManageContent'));
       $contentTypes = Doctrine::getTable('ContentType')->findAll();
       $content->addChild('Create New Content', '@sympal_content_new');
       foreach ($contentTypes as $contentType)
@@ -142,12 +166,18 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     }
 
     $administration = $menu->getChild('Administration');
-    $administration->addChild('Dashboard', '@sympal_dashboard');
-    $administration->addChild('Sites', '@sympal_sites');
-    $administration->addChild('Configuration', '@sympal_config');
 
+    $administration->addChild('Dashboard', '@sympal_dashboard')
+      ->setCredentials(array('ViewDashboard'));
 
-    $content = $administration->addChild('Content');
+    $administration->addChild('Sites', '@sympal_sites')
+      ->setCredentials(array('ManageSites'));
+
+    $administration->addChild('Configuration', '@sympal_config')
+      ->setCredentials(array('ManageConfiguration'));
+
+    $content = $administration->addChild('Content Setup')
+      ->setCredentials(array('ManageContentSetup'));
     $content->addChild('Types', '@sympal_content_types');
     $content->addChild('Templates', '@sympal_content_templates');
     $content->addChild('Slot Types', '@sympal_content_slot_types');

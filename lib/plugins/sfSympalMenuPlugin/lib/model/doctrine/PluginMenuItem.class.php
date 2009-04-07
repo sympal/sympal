@@ -124,9 +124,7 @@ abstract class PluginMenuItem extends BaseMenuItem
         $type = $this->getContentType();
         if ($type->list_path)
         {
-          $route = '@sympal_content_type_'.$type['slug'];
-        } else {
-          throw new sfException($this['name'].' menu item is not mapped to any route/url');
+          $route = '@sympal_content_type_'.str_replace('-', '_', $type['slug']);
         }
       } else if (!$this->getContent() instanceof Doctrine_Null && $this->getContent()) {
         $route = $this->getContent()->getRoute();

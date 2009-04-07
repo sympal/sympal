@@ -70,7 +70,7 @@
           <?php echo get_slot('sympal_right_sidebar') ?>
 
           <?php if ($subMenu): ?>
-            <h2><?php echo $subMenu->getMenuItem()->getLabel() ?></h2>
+            <h2><?php echo $subMenu->renderLabel() ?></h2>
             <?php echo $subMenu ?>
           <?php endif; ?>
         </div>

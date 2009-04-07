@@ -77,7 +77,13 @@ class sfSympalConfiguration
 
   public function bootstrap()
   {
-    $this->_projectConfiguration->loadHelpers(array('Sympal'));
+    // Prime the sympal cache
+    if (!$this->_isCachePrimed())
+    {
+      $this->_primeCache();
+    }
+
+    $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
 
     if (!sfContext::getInstance()->getRequest()->isXmlHttpRequest())
     {
@@ -89,11 +95,20 @@ class sfSympalConfiguration
       $this->checkDependencies();
     }
 
-    $this->_writeContentTypesCache();
-    $this->_writeHelperAutoloadCache();
-
     $contentTypes = sfSympalToolkit::getContentTypesCache();
     Doctrine::initializeModels($contentTypes);
+  }
+
+  protected function _isCachePrimed()
+  {
+    return file_exists(sfConfig::get('sf_cache_dir').'/sympal/cache_primed.cache');
+  }
+
+  public function _primeCache()
+  {
+    $this->_writeContentTypesCache();
+    $this->_writeHelperAutoloadCache();
+    touch(sfConfig::get('sf_cache_dir').'/sympal/cache_primed.cache');
   }
 
   protected function _writeHelperAutoloadCache()
@@ -108,7 +123,6 @@ class sfSympalConfiguration
         $helpers = sfFinder::type('file')->name('*Helper.php')->in($dir);
         foreach ($helpers as $helper)
         {
-          require_once($helper);
           $lines = file($helper);
           foreach ($lines as $line)
           {
@@ -118,10 +132,7 @@ class sfSympalConfiguration
               $function = $matches[1];
               $e = explode('(', $function);
               $function = $e[0];
-              if (function_exists($function))
-              {
-                $cache[$function] = $helper;
-              }
+              $cache[$function] = $helper;
             }
           }
         }

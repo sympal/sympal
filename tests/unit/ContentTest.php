@@ -38,11 +38,11 @@ $page->Content->MasterMenuItem = $menuItem;
 $page->save();
 
 $content = Doctrine::getTable('Content')
-  ->createQuery('e')
-  ->leftJoin('e.Site s')
-  ->leftJoin('e.Type t')
-  ->leftJoin('e.Page p')
-  ->andWhere('e.slug = ?', 'testing-this-out')
+  ->createQuery('c')
+  ->leftJoin('c.Site s')
+  ->leftJoin('c.Type t')
+  ->leftJoin('c.Page p')
+  ->andWhere('c.slug = ?', 'testing-this-out')
   ->fetchArray();
 
 $t->is(isset($content[0]['Type']), true);
@@ -56,7 +56,7 @@ $t->is($content[0]['slug'], 'testing-this-out');
 
 class testMyUser extends myUser
 {
-  public function getGuardUser()
+  public function getSympalUser()
   {
     global $user;
     return $user;
@@ -68,7 +68,7 @@ $sfUser->signIn($user);
 
 $q = Doctrine::getTable('Content')
   ->getTypeQuery('Page')
-  ->andWhere('e.slug = ?', 'testing-this-out');
+  ->andWhere('c.slug = ?', 'testing-this-out');
 
 $content = $q->fetchOne();
 
@@ -192,6 +192,7 @@ $html = '<div class="sympal_markdown"><blockquote class="tip"><p>
 </div>';
 
 $slots[1]['value'] = $markdown;
+
 $t->is($slots[1]->render(), $html);
 
 $slots->save();

@@ -17,29 +17,32 @@ class sfSympalMenuAdminBar extends sfSympalMenuSite
 
   public function renderChild()
   {
-    $html  = '<li class="'.Doctrine_Inflector::urlize($this->getName()).' yuimenuitem">';
-
-    if ($this->_route)
+    if ($this->checkUserAccess())
     {
-      sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
-      $options = $this->getOptions();
-      $options['class'] = (isset($options['class']) ? $options['class'].' ':null).'yuimenuitemlabesl';
-      $html .= link_to($this->getLabel(), $this->getRoute(), $options);
-    } else {
-      $html .= '<a href="#" class="yuimenuitemlabel">'.$this->getLabel().'</a>';
+      $html  = '<li class="'.Doctrine_Inflector::urlize($this->getName()).' yuimenuitem">';
+
+      if ($this->_route)
+      {
+        sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
+        $options = $this->getOptions();
+        $options['class'] = (isset($options['class']) ? $options['class'].' ':null).'yuimenuitemlabesl';
+        $html .= link_to($this->renderLabel(), $this->getRoute(), $options);
+      } else {
+        $html .= '<a href="#" class="yuimenuitemlabel">'.$this->getLabel().'</a>';
+      }
+
+      if ($this->hasChildren())
+      {
+        $html .= '<div class="yuimenu">';
+        $html .= '<div class="bd">';
+        $html .= $this->render();
+        $html .= '</div>';
+        $html .= '</div>';
+      }
+
+      $html .= '</li>';
+
+      return $html;
     }
-
-    if ($this->hasChildren())
-    {
-      $html .= '<div class="yuimenu">';
-      $html .= '<div class="bd">';
-      $html .= $this->render();
-      $html .= '</div>';
-      $html .= '</div>';
-    }
-
-    $html .= '</li>';
-
-    return $html;
   }
 }

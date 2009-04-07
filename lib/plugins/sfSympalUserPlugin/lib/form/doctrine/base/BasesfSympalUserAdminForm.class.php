@@ -21,6 +21,11 @@ class BasesfSympalUserAdminForm extends BaseUserForm
 
     $this->widgetSchema->moveField('password_again', 'after', 'password');
 
+    if (!sfContext::getInstance()->getUser()->isSuperAdmin())
+    {
+      unset($this['is_super_admin']);
+    }
+
     $this->mergePostValidator(new sfValidatorSchemaCompare('password', sfValidatorSchemaCompare::EQUAL, 'password_again', array(), array('invalid' => 'The two passwords must be the same.')));
   }
 }

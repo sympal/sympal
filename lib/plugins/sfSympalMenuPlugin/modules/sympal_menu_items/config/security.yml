@@ -1,2 +1,3 @@
 all:
-  is_secure: true
+  is_secure: on
+  credentials: [ManageMenus]

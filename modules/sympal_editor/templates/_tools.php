@@ -28,8 +28,8 @@
 <div class="yui-skin-sam" id="sympal_edit_panel_container">
   <div id="sympal_edit_panel">
     <div class="hd" style="height: 25px;">
-      <span id="title">Sympal Editor Panel</span>
-      <span id="toggle"><?php if ($state == 'hidden'): ?>Show<?php else: ?>Hide<?php endif; ?></span>
+      <span id="title"><?php echo __('Sympal Editor Panel') ?></span>
+      <span id="toggle"><?php if ($state == 'hidden'): ?><?php echo __('Show') ?><?php else: ?><?php echo __('Hide') ?><?php endif; ?></span>
     </div>
     <div class="bd" id="sympal_edit_panel_contents">
       <?php echo $menu ?>
@@ -159,16 +159,19 @@ function overlayToggle()
   var toggle = document.getElementById('toggle');
   var current = toggle.innerHTML;
 
-  if (current == 'Hide')
+  if (current == '<?php echo __('Hide') ?>')
   {
     overlay.hide();
-    toggle.innerHTML = 'Show';
+    toggle.innerHTML = '<?php echo __('Show') ?>';
+
+    var url = '<?php echo url_for('@sympal_tools_save_state?state=hidden') ?>';
   } else {
     overlay.show();
-    toggle.innerHTML = 'Hide';
+    toggle.innerHTML = '<?php echo __('Hide') ?>';
+
+    var url = '<?php echo url_for('@sympal_tools_save_state?state=visible') ?>';
   }
 
-  var url = '<?php echo url_for('@sympal_tools_save_state?state=hidden') ?>';
 	YAHOO.util.Connect.asyncRequest('GET', url);
 }
 

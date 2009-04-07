@@ -26,7 +26,7 @@ class Basesympal_authActions extends sfActions
         $values = $this->form->getValues(); 
         $this->getUser()->signin($values['user'], array_key_exists('remember', $values) ? $values['remember'] : false);
 
-        if ($user->getGuardUser()->is_super_admin)
+        if ($user->getSympalUser()->is_super_admin)
         {
           $url = '@sympal_dashboard';
         } else {

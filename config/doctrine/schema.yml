@@ -180,3 +180,28 @@ ContentPermission:
       local: permission_id
       foreignAlias: ContentPermissions
       onDelete: CASCADE
+
+Route:
+  actAs:
+    Sluggable:
+      fields: [name]
+      unique: true
+  columns:
+    name:
+      type: string(255)
+      notnull: true
+    url:
+      type: string(255)
+      notnull: true
+    type:
+      type: enum
+      values: [List, View]
+    content_id: integer
+    content_type_id: integer
+  relations:
+    Content:
+      foreignAlias: Routes
+      onDelete: CASCADE
+    ContentType:
+      foreignAlias: Routes
+      onDelete: CASCADE

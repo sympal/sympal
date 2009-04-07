@@ -4,11 +4,4 @@
  */
 class PluginPageTable extends Doctrine_Table
 {
-  public function getContentQuery()
-  {
-    $q = Doctrine::getTable('Content')->getBaseQuery()
-      ->innerJoin('e.Page p');
-
-    return $q;
-  }
 }

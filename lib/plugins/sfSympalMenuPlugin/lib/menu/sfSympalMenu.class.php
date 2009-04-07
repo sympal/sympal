@@ -354,14 +354,14 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     }
     sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
 
-    $html = link_to($this->getLabel(), $this->getRoute(), $options);
+    $html = link_to($this->renderLabel(), $this->getRoute(), $options);
 
     return $html;
   }
 
   public function renderLabel()
   {
-    return $this->getLabel();
+    return __($this->getLabel());
   }
 
   public function isCurrent($bool = null)
@@ -392,7 +392,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     $obj = $this;
 
     do {
-    	$children[] = $obj->getName();
+    	$children[] = __($obj->getLabel());
     } while ($obj = $obj->getParent());
 
     return implode(' > ', array_reverse($children));

@@ -19,6 +19,8 @@ class sfSympalInstall
     $this->_installSympalPlugins();
     $this->_executePostInstallSql();
     $this->_executePostInstallHooks();
+
+    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
   }
 
   protected function _buildSympalInstallation()

@@ -4,76 +4,15 @@
  */
 class PluginContentTable extends Doctrine_Table
 {
-  public function getTypeQuery($params)
+  public function getTypeQuery($typeName)
   {
-    $request = sfContext::getInstance()->getRequest();
+    $table = Doctrine::getTable($typeName);
 
-    if (is_string($params))
+    if (method_exists($table, 'getContentQuery'))
     {
-      $typeSlug = $params;
-    } else if (is_array($params) && isset($params['type'])) {
-      $typeSlug = $params['type'];
-    } else if ($request->hasParameter('type')) {
-      $typeSlug = $request->getParameter('type');
-    }
-
-    // Try and get the information we need without having to query the database
-    // See if we can find the type table class
-    $typeClass = isset($typeSlug) ? Doctrine_Inflector::classify($typeSlug):false;
-    if ($typeClass && class_exists($typeClass.'Table'))
-    {
-      $table = Doctrine::getTable($typeClass);
-      $typeName = $typeClass;
+      $q = $table->getContentQuery();
     } else {
-      if (isset($typeSlug))
-      {
-        $q = Doctrine::getTable('ContentType')->createQuery('t')
-          ->andWhere('t.slug = ? OR t.name = ?', array($typeSlug, $typeSlug));
-      } else if (isset($params['slug'])) {
-        $slug = $request->getParameter('slug');
-        $contentSlugQuery = true;
-      } else if ($request->hasParameter('slug')) {
-        $slug = $request->getParameter('slug');
-        $contentSlugQuery = true;
-      }
-
-      if (isset($contentSlugQuery) && $contentSlugQuery)
-      {
-        $q = Doctrine_Query::create()
-          ->select('t.*')
-          ->from('ContentType t')
-          ->leftJoin('t.Content e')
-          ->where('e.slug = ?', $slug);
-      }
-
-      $type = $q->fetchOne();
-      $typeName = $type['name'];
-
-      if ($typeName)
-      {
-        $table = Doctrine::getTable($typeName);
-      }
-    }
-
-    $defaultQuery = true;
-    if ($typeName)
-    {
-      if (method_exists($table, 'getContentQuery'))
-      {
-        $defaultQuery = false;
-        $q = $table->getContentQuery();
-      }
-    }
-
-    if ($defaultQuery)
-    {
-      $q = $this->getBaseQuery('e');
-      if ($typeName)
-      {
-        $q->innerJoin('e.'.$typeName);
-      } else {
-        $q = $this->getBaseQuery();
-      }
+      $q = $this->getBaseQuery();
 
       if (sfConfig::get('sf_logging_enabled'))
       {
@@ -81,41 +20,47 @@ class PluginContentTable extends Doctrine_Table
       }
     }
 
+    $q->innerJoin('c.'.$typeName.' cr');
+
+    if ($table->hasRelation('Translation'))
+    {
+      $q->leftJoin('cr.Translation crt');
+    }
+
     return $q;
   }
 
-  public function getContent($params)
+  public function getContent($params = array())
   {
     $request = sfContext::getInstance()->getRequest();
-    $slug = $request->getParameter('slug');
+    $contentType = $request->getParameter('sympal_content_type');
+    $resultType = $request->getParameter('result_type');
+    $contentId = $request->getParameter('sympal_content_id');
+    $contentSlug = $request->getParameter('sympal_content_slug');
+    $q = $this->getTypeQuery($contentType);
 
-    $q = $this->getTypeQuery(array('slug' => $slug))
-      ->andWhere('e.slug = ?', $slug);
-
-    return $this->fetchContent($q);
-  }
-
-  public function getContentObjectForSite($params)
-  {
-    return $this->getContentForSite($params, 'object');
-  }
-
-  public function getContentListForSite($params)
-  {
-    return $this->getContentForSite($params, 'list');
-  }
-
-  public function getContentForSite($params, $type = 'object')
-  {
-    if ($type == 'object')
+    if ($resultType == 'object')
     {
-      $q = $this->getTypeQuery($params)
-        ->andWhere('e.slug = ?', $params['slug']);
+      if ($contentId)
+      {
+        $q->andWhere('c.id = ?', $contentId);
+      } else if ($contentSlug) {
+        $q->andWhere('c.slug = ?', $contentSlug);
+      }
 
-      return $this->fetchContent($q);
+      foreach ($params as $key => $value)
+      {
+        if ($this->hasField($key))
+        {
+          $q->andWhere('c.'.$key.' = ?', $value);
+        } else if ($this->getRelation($contentType)->getTable()->hasField($key)) {
+          $q->andWhere('cr.'.$key.' = ?', $value);
+        }
+      }
+
+      return $q->fetchOne();
     } else {
-      $q = $this->getTypeQuery($params);
-      $q->addOrderBy('e.date_published DESC');
+      $q->addOrderBy('c.date_published DESC');
 
       $pager = new sfDoctrinePager('Content', sfSympalConfig::get('rows_per_page'));
       $pager->setQuery($q);
@@ -124,29 +69,28 @@ class PluginContentTable extends Doctrine_Table
     }
   }
 
-  public function fetchContent($q)
-  {
-    $content = $q->fetchOne();
-
-    return $content;
-  }
-
   public function getBaseQuery()
   {
     $sympalContext = sfSympalContext::getInstance();
     $q = Doctrine_Query::create()
-      ->from('Content e')
-      ->leftJoin('e.Slots sl')
+      ->from('Content c')
+      ->leftJoin('c.Slots sl')
       ->leftJoin('sl.Type sty')
-      ->leftJoin('e.Type ty')
+      ->leftJoin('c.Type ty')
       ->leftJoin('ty.Templates t')
-      ->leftJoin('e.MasterMenuItem m')
-      ->leftJoin('e.MenuItem mm')
-      ->innerJoin('e.Site esi WITH esi.slug = ?', $sympalContext->getSite());
+      ->leftJoin('c.MasterMenuItem m')
+      ->leftJoin('c.MenuItem mm')
+      ->innerJoin('c.Site csi WITH csi.slug = ?', $sympalContext->getSite());
 
     if (!sfSympalToolkit::isEditMode())
     {
-      $q->andWhere('e.is_published = 1');
+      $q->andWhere('c.is_published = 1')
+        ->andWhere('c.date_published < NOW()');
+    }
+
+    if (sfSympalConfig::isI18nEnabled('ContentSlot'))
+    {
+      $q->leftJoin('sl.Translation slt');
     }
 
     return $q;

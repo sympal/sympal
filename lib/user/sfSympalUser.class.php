@@ -108,7 +108,7 @@ class sfSympalUser extends sfBasicSecurityUser
       $q = Doctrine_Query::create()
         ->from('Content e')
         ->leftJoin('e.Type t')
-        ->andWhere('e.locked_by = ?', $this->getGuardUser()->getId());
+        ->andWhere('e.locked_by = ?', $this->getSympalUser()->getId());
 
       $lock = $q->fetchOne();
       if ($lock)
@@ -125,7 +125,7 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function releaseOpenLock()
   {
-    $user = $this->getGuardUser();
+    $user = $this->getSympalUser();
 
     $count = Doctrine::getTable('Content')
       ->createQuery()
@@ -172,12 +172,12 @@ class sfSympalUser extends sfBasicSecurityUser
       return true;
     }
 
-    if (!$this->getGuardUser())
+    if (!$this->getSympalUser())
     {
       return false;
     }
 
-    if ($this->getGuardUser()->getIsSuperAdmin())
+    if ($this->getSympalUser()->getIsSuperAdmin())
     {
       return true;
     }
@@ -187,7 +187,7 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function isSuperAdmin()
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->getIsSuperAdmin() : false;
+    return $this->getSympalUser() ? $this->getSympalUser()->getIsSuperAdmin() : false;
   }
 
   public function isAnonymous()
@@ -264,7 +264,7 @@ class sfSympalUser extends sfBasicSecurityUser
     sfContext::getInstance()->getResponse()->setCookie($remember_cookie, '', time() - $expiration_age);
   }
 
-  public function getGuardUser()
+  public function getSympalUser()
   {
     if (!$this->user && $id = $this->getAttribute('user_id', null, 'sfSympalUser'))
     {
@@ -284,82 +284,82 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function __toString()
   {
-    return $this->getGuardUser()->__toString();
+    return $this->getSympalUser()->__toString();
   }
 
   public function getUsername()
   {
-    return $this->getGuardUser()->getUsername();
+    return $this->getSympalUser()->getUsername();
   }
 
   public function getEmail()
   {
-    return $this->getGuardUser()->getEmail();
+    return $this->getSympalUser()->getEmail();
   }
 
   public function setPassword($password, $con = null)
   {
-    $this->getGuardUser()->setPassword($password);
-    $this->getGuardUser()->save($con);
+    $this->getSympalUser()->setPassword($password);
+    $this->getSympalUser()->save($con);
   }
 
   public function checkPassword($password)
   {
-    return $this->getGuardUser()->checkPassword($password);
+    return $this->getSympalUser()->checkPassword($password);
   }
 
   public function hasGroup($name)
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->hasGroup($name) : false;
+    return $this->getSympalUser() ? $this->getSympalUser()->hasGroup($name) : false;
   }
 
   public function getGroups()
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->getGroups() : array();
+    return $this->getSympalUser() ? $this->getSympalUser()->getGroups() : array();
   }
 
   public function getGroupNames()
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->getGroupNames() : array();
+    return $this->getSympalUser() ? $this->getSympalUser()->getGroupNames() : array();
   }
 
   public function hasPermission($name)
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->hasPermission($name) : false;
+    return $this->getSympalUser() ? $this->getSympalUser()->hasPermission($name) : false;
   }
 
   public function getPermissions()
   {
-    return $this->getGuardUser()->getPermissions();
+    return $this->getSympalUser()->getPermissions();
   }
 
   public function getPermissionNames()
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->getPermissionNames() : array();
+    return $this->getSympalUser() ? $this->getSympalUser()->getPermissionNames() : array();
   }
 
   public function getAllPermissions()
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->getAllPermissions() : array();
+    return $this->getSympalUser() ? $this->getSympalUser()->getAllPermissions() : array();
   }
 
   public function getAllPermissionNames()
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->getAllPermissionNames() : array();
+    return $this->getSympalUser() ? $this->getSympalUser()->getAllPermissionNames() : array();
   }
 
   public function getProfile()
   {
-    return $this->getGuardUser() ? $this->getGuardUser()->getProfile() : null;
+    return $this->getSympalUser() ? $this->getSympalUser()->getProfile() : null;
   }
 
   public function addGroupByName($name, $con = null)
   {
-    return $this->getGuardUser()->addGroupByName($name, $con);
+    return $this->getSympalUser()->addGroupByName($name, $con);
   }
 
   public function addPermissionByName($name, $con = null)
   {
-    return $this->getGuardUser()->addPermissionByName($name, $con);
+    return $this->getSympalUser()->addPermissionByName($name, $con);
   }
 }

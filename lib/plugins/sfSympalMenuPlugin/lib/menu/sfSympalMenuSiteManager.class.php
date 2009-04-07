@@ -160,6 +160,12 @@ class sfSympalMenuSiteManager
         $q->leftJoin('m.Translation t');
       }
 
+      if (!sfSympalToolkit::isEditMode())
+      {
+        $q->andWhere('m.is_published = ?', 1)
+          ->andWhere('m.date_published < NOW()');
+      }
+
       $this->_menuItems = $q->execute();
 
       // Build array of root tree names, root menu items.

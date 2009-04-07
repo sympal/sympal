@@ -57,7 +57,7 @@ class sfSympalMenuManager extends sfSympalMenuSite
   {
     $html  = '<a href="#">';
     $html .= '<span class="ygtvlabel" id="node-'.$this->getMenuItem()->getId().'">';
-    $html .= $this->getLabel();
+    $html .= $this->renderLabel();
     $html .= '</span>';
     $html .= '</a>';
 

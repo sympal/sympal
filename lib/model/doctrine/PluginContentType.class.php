@@ -119,4 +119,45 @@ abstract class PluginContentType extends BaseContentType
   {
     return 'sympal_' . ($action ? $this->getPluralLower() . '_' . $action : $this->getPluralLower());
   }
+
+  public function postSave($event)
+  {
+    $invoker = $event->getInvoker();
+
+    if ($invoker->view_path)
+    {
+      $route = Doctrine_Query::create()
+        ->from('Route r')
+        ->where('r.url = ?', $invoker->view_path)
+        ->fetchOne();
+
+      if (!$route)
+      {
+        $route = new Route();
+        $route->url = $invoker->view_path;
+        $route->name = 'sympal_content_view_type_'.str_replace('-', '_', $invoker['slug']);
+        $route->type = 'View';
+        $route->ContentType = $invoker;
+        $route->save();
+      }
+    }
+
+    if ($invoker->list_path)
+    {
+      $route = Doctrine_Query::create()
+        ->from('Route r')
+        ->where('r.url = ?', $invoker->list_path)
+        ->fetchOne();
+
+      if (!$route)
+      {
+        $route = new Route();
+        $route->url = $invoker->list_path;
+        $route->name = 'sympal_content_type_'.str_replace('-', '_', $invoker['slug']);
+        $route->type = 'List';
+        $route->ContentType = $invoker;
+        $route->save();
+      }
+    }
+  }
 }

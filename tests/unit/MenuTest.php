@@ -4,6 +4,8 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(38, new lime_output_color());
 
+$configuration->loadHelpers(array('Tag'));
+
 class sfSympalMenuTest extends sfSympalMenu
 {
   
@@ -111,4 +113,4 @@ $t->is((string) $split['secondary'], '<ul id="secondary"><li id="about"><a href=
 $t->is($split['secondary']->count(), 4);
 
 $footerMenu = $manager->getMenu('footer');
-$t->is((string) $footerMenu, '<ul id="footer"><li id="about"><a href="MenuTest.php/MenuTest.php/pages/about">About</a></li><li id="markdown-examples"><a href="MenuTest.php/MenuTest.php/pages/markdown-examples">Markdown Examples</a></li><li id="readme"><a href="MenuTest.php/MenuTest.php/pages/readme">README</a></li><li id="sitemap"><a href="MenuTest.php/MenuTest.php/admin/sitemap">Sitemap</a></li></ul>');
+$t->is((string) $footerMenu, '<ul id="footer"><li id="about"><a href="MenuTest.php/MenuTest.php/pages/about">About</a></li><li id="markdown-examples"><a href="MenuTest.php/MenuTest.php/pages/markdown-examples">Markdown Examples</a></li><li id="readme"><a href="MenuTest.php/MenuTest.php/pages/readme">README</a></li><li id="sitemap"><a href="MenuTest.php/MenuTest.php/sitemap">Sitemap</a></li></ul>');

@@ -13,14 +13,14 @@ class sfSympalContentSlotRenderer
 
   public function render()
   {
-    return (string) $this->getRawValue();
+    return $this->getRawValue();
   }
 
   public function getRawValue()
   {
     if (!$this->_rawValue)
     {
-      $value = $this->_contentSlot->getValue();
+      $value = $this->_contentSlot->getRawValue();
 
       if (!sfSympalConfig::get('disallow_php_in_content'))
       {

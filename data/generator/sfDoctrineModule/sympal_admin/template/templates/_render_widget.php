@@ -27,8 +27,8 @@
 [?php if ($help): ?]
 <script type="text/javascript">
 var ttA = new YAHOO.widget.Tooltip("ttA", { 
-			context: "[?php echo $id ?]_help",
-			effect: { effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.20 }
-		});
+	context: "[?php echo $id ?]_help",
+	effect: { effect: YAHOO.widget.ContainerEffect.FADE, duration: 0.20 }
+});
 </script>
 [?php endif; ?]

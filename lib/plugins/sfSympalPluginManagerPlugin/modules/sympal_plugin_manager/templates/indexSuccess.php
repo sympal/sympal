@@ -3,7 +3,7 @@
 
 <div id="sympal_plugin_manager">
   <div id="list">
-    <h2>Sympal Plugin Manager</h2>
+    <h1>Sympal Plugin Manager</h1>
 
     <?php if ($count = count($addonPlugins)): ?>
       <h3><?php echo $count ?> Sympal addon plugin(s) found.</h3>

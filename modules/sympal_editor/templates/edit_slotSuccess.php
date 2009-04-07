@@ -6,5 +6,5 @@
     <?php echo $form ?>
   </table>
 
-  <input type="button" id="save_button" name="save" value="Save" onClick="javascript: save_sympal_content_slot('<?php echo $sf_request->getParameter('id') ?>');" />
+  <input type="button" id="save_button" name="save" value="<?php echo __('Save') ?>" onClick="javascript: save_sympal_content_slot('<?php echo $sf_request->getParameter('id') ?>');" />
 </form>

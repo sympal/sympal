@@ -183,40 +183,44 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
     $slots[$slot['name']] = $slot;
   }
 
-  if (!isset($slots[$name]))
+  if ($name instanceof ContentSlot)
   {
-    $slot = new ContentSlot();
-    $slot->content_id = $content->id;
-    $slot->render_function = $renderFunction;
-    if ($isColumn)
+    $slot = $name;
+    $type = $slot['Type'];
+  } else {
+    if (!isset($slots[$name]))
     {
-      $slot->is_column = true;
-    }
-
-    if (!$slot->exists())
-    {
+      $slot = new ContentSlot();
+      $slot->content_id = $content->id;
+      $slot->render_function = $renderFunction;
       if ($isColumn)
       {
-        $type = Doctrine::getTable('ContentSlotType')->findOneByName('ContentProperty');
-      } else {
-        $type = Doctrine::getTable('ContentSlotType')->findOneByName($type);
+        $slot->is_column = true;
       }
 
-      $slot->setType($type);
-      $slot->setName($name);
-    }
+      if (!$slot->exists())
+      {
+        if ($isColumn)
+        {
+          $type = Doctrine::getTable('ContentSlotType')->findOneByName('ContentProperty');
+        } else {
+          $type = Doctrine::getTable('ContentSlotType')->findOneByName($type);
+        }
 
-    $slot->save();
-  } else {
-    $slot = $slots[$name];
+        $slot->setType($type);
+        $slot->setName($name);
+      }
+
+      $slot->save();
+    } else {
+      $slot = $slots[$name];
+    }
   }
 
-  if ($slot->getValue()) {
-    $renderedValue = $slot->render();
-  } else if (sfSympalToolkit::isEditMode()) {
+  if (sfSympalToolkit::isEditMode() && !$slot->hasValue()) {
     $renderedValue = $defaultValue;
   } else {
-    $renderedValue = '';
+    $renderedValue = $slot->render();
   }
 
   if (sfSympalToolkit::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()))
@@ -245,7 +249,7 @@ myPanel = new YAHOO.widget.Panel('edit_content_slot_%s', {
 	visible:true,
 	context:['edit_content_slot_button_%s', 'tl', 'tl'],
   autofillheight: "body",
-  constraintoviewport: true,
+  constraintoviewport: false,
 	draggable:true} );
 
 myPanel.cfg.setProperty("underlay", "matte");

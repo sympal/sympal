@@ -5,65 +5,56 @@
  */
 abstract class PluginContentSlot extends BaseContentSlot
 {
-  protected $_saveContent = false;
+  protected $_rendered;
 
   public function render()
   {
-    if ($this->render_function)
+    if (!$this->_rendered)
     {
-      $renderFunction = $this->render_function;
-      if (method_exists($this->RelatedContent, $renderFunction))
+      if ($this->render_function)
       {
-        return $this->RelatedContent->$renderFunction($this);
+        $renderFunction = $this->render_function;
+        if (method_exists($this->RelatedContent, $renderFunction))
+        {
+          $this->_rendered = $this->RelatedContent->$renderFunction($this);
+        } else {
+          sfSympalToolkit::autoloadHelper($renderFunction);
+          $this->_rendered = $renderFunction($this->RelatedContent, $this->name);
+        }
       } else {
-        sfSympalToolkit::autoloadHelper($renderFunction);
-        return $renderFunction($this->RelatedContent, $this->name);
-      }
-    } else {
-      $class = 'sfSympalContentSlot'.$this->Type->name.'Renderer';
+        $class = 'sfSympalContentSlot'.$this->Type->name.'Renderer';
 
-      if (!class_exists($class))
-      {
-        $class = 'sfSympalContentSlotRenderer';
-      }
+        if (!class_exists($class))
+        {
+          $class = 'sfSympalContentSlotRenderer';
+        }
 
-      $renderer = new $class($this);
-      return (string) $renderer;
+        $renderer = new $class($this);
+        $this->_rendered = (string) $renderer;
+      }
     }
+    return $this->_rendered;
   }
 
-  public function construct()
+  public function setValue($value)
   {
-    $this->setValue($this->getValue());
+    $this->_rendered = null;
+    return $this->_set('value', $value);
   }
 
-  public function getValue()
+  public function getRawValue()
   {
     if ($this->is_column)
     {
       $name = $this->name;
       return $this->RelatedContent->$name;
     } else {
-      return $this->getI18n('value');
+      return $this->_get('value');
     }
   }
 
-  public function setValue($value)
+  public function hasValue()
   {
-    if ($this->is_column)
-    {
-      $name = $this->name;
-      if ($r = $this->RelatedContent->getRecord()) {
-        try {
-          return $r->$name = $value;
-        } catch (Exception $e) {}
-      } else {
-        try {
-          return $this->RelatedContent->$name = $value;
-        } catch (Exception $e) {}
-      }
-    } else {
-      return $this->setI18n('value', $value);
-    }
+    return trim(strip_tags($this->render()));
   }
 }

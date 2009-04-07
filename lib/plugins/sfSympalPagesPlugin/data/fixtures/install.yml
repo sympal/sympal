@@ -124,12 +124,6 @@ MenuItem:
         Site: Site_default
         RelatedContent: Content_Page_readme
         ContentType: ContentType_Page
-      MenuItem_footer_sitemap:
-        name: Sitemap
-        is_published: true
-        label: Sitemap
-        Site: Site_default
-        route: @sympal_sitemap
 
 Content:
   Content_Page_register:

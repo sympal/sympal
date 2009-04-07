@@ -22,9 +22,16 @@ class sfSympalUserPluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event['menu'];
 
-    $security = $menu->getChild('Security');
-    $security->addChild('Users', '@sympal_users');
-    $security->addChild('Groups', '@sympal_groups');
-    $security->addChild('Permissions', '@sympal_permissions');
+    $security = $menu->getChild('Security')
+      ->setCredentials(array(array('ManageUsers', 'ManageGroups', 'ManagePermissions')));
+
+    $security->addChild('Users', '@sympal_users')
+      ->setCredentials(array('ManageUsers'));
+
+    $security->addChild('Groups', '@sympal_groups')
+      ->setCredentials(array('ManageGroups'));
+
+    $security->addChild('Permissions', '@sympal_permissions')
+      ->setCredentials(array('ManagePermissions'));
   }
 }

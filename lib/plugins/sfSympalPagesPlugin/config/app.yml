@@ -2,3 +2,6 @@ all:
   sympal_settings:
     Page:
       enable_comments: true
+    I18n:
+      Page:
+        enabled: true

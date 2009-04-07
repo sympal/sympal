@@ -43,10 +43,10 @@ class sfSympalContext
 
     if ($routeOptions['type'] == 'list')
     {
-      $menuItem = Doctrine::getTable('MenuItem')->getForContentType($request->getParameter('type'));
+      $menuItem = Doctrine::getTable('MenuItem')->getForContentType($request->getParameter('sympal_content_type'));
       $actions->forward404Unless($menuItem);
 
-      $pager = $actions->getRoute()->getObjects();      
+      $pager = $actions->getRoute()->getObjects();
       $pager->setPage($request->getParameter('page', 1));
       $pager->init();
 

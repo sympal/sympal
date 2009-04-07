@@ -129,7 +129,10 @@ class Basesympal_editorActions extends sfActions
 
   public function executeSave_form_current_tab(sfWebRequest $request)
   {
-    $this->getUser()->setAttribute($request->getParameter('name').'.current_form_tab', $request->getParameter('id'), 'admin_module');
+    if ($request->getParameter('name'))
+    {
+      $this->getUser()->setAttribute($request->getParameter('name').'.current_form_tab', $request->getParameter('id'), 'admin_module');
+    }
 
     return sfView::NONE;
   }

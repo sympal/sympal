@@ -4,12 +4,12 @@
  */
 class PluginMenuItemTable extends Doctrine_Table
 {
-  public function getForContentType($type)
+  public function getForContentType($contentType)
   {
     $q = Doctrine_Query::create()
       ->from('MenuItem m')
       ->leftJoin('m.ContentType t')
-      ->andWhere('t.slug = ?', $type)
+      ->andWhere('t.name = ? OR t.slug = ?', array($contentType, $contentType))
       ->andWhere('m.is_content_type_list = 1')
       ->limit(1);
 
