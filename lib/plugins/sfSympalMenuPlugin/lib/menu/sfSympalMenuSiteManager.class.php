@@ -7,7 +7,6 @@ class sfSympalMenuSiteManager
     $_rootNames = array(),
     $_rootMenuItems = array(),
     $_hierarchies = array(),
-    $_menus = array(),
     $_initialized = false;
 
   protected static $_instance;
@@ -39,7 +38,6 @@ class sfSympalMenuSiteManager
     $this->_rootNames = array();
     $this->_rootMenuItems = array();
     $this->_hierarchies = array();
-    $this->_menus = array();
     $this->_initialized = false;
     $this->initializeMenus();
   }
@@ -64,26 +62,19 @@ class sfSympalMenuSiteManager
       $name = $this->_rootNames[$name['root_id']];
     }
 
-    if (!isset($this->_menus[$name]))
+    $rootId = array_search($name, $this->_rootNames);
+    $rootMenuItem = $this->_rootMenuItems[$rootId];
+
+    $class = $class ? $class:'sfSympalMenuSite';
+    $menu = new $class($name);
+    $menu->setMenuItem($rootMenuItem);
+
+    if (!$rootId)
     {
-      $rootId = array_search($name, $this->_rootNames);
-      $rootMenuItem = $this->_rootMenuItems[$rootId];
-
-      $class = $class ? $class:'sfSympalMenuSite';
-      $menu = new $class($name);
-      $menu->setMenuItem($rootMenuItem);
-
-      if (!$rootId)
-      {
-        return false;
-      }
-      $hierarchy = $this->_hierarchies[$rootId];
-      $this->_buildMenuHierarchy($hierarchy, $menu);
-
-      $this->_menus[$name] = $menu;
-    } else {
-      $menu = $this->_menus[$name];
+      return false;
     }
+    $hierarchy = $this->_hierarchies[$rootId];
+    $this->_buildMenuHierarchy($hierarchy, $menu);
 
     if (isset($menuItem))
     {
