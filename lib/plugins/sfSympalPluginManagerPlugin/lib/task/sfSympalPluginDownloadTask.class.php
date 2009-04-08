@@ -28,22 +28,9 @@ EOF;
   {
     if (isset($options['list-available']) && $options['list-available'])
     {
-      $this->logSection('sympal', 'Check sources for sympal plugins');
-
-      $plugins = sfSympalPluginToolkit::getAvailablePlugins();
-      if (!empty($plugins))
-      {
-        $this->logSection('sympal', 'Found '.count($plugins).' Sympal Plugin(s)');
-        $this->logSection('sympal', str_repeat('-', 30));
-        foreach ($plugins as $plugin)
-        {
-          $name = sfSympalPluginToolkit::getShortPluginName($plugin);
-          $this->logSection('sympal', $plugin);
-          $this->logSection('sympal', "\$ php symfony sympal:plugin-download ".$name." --install");
-        }
-      } else {
-        throw new sfException('No sympal plugins found');
-      }
+      $list = new sfSympalPluginListTask($this->dispatcher, $this->formatter);
+      $list->setCommandApplication($this->commandApplication);
+      $list->run(array(), array());
     } else {
       if (!isset($arguments['name']))
       {

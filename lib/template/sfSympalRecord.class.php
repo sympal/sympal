@@ -4,9 +4,14 @@ class sfSympalRecord extends Doctrine_Template
 {
   protected $_eventName;
 
+  public function setInvoker(Doctrine_Record_Abstract $invoker)
+  {
+    parent::setInvoker($invoker);
+    $this->_eventName = sfInflector::tableize(get_class($this->getInvoker()));
+  }
+
   public function setTableDefinition()
   {
-    $this->_eventName = sfInflector::tableize(get_class($this->getInvoker()));
     sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this->getInvoker(), 'sympal.'.$this->_eventName.'.set_table_definition', array('object' => $this)));
 
     $this->_table->unshiftFilter(new sfSympalRecordEventFilter());

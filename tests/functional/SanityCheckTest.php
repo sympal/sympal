@@ -20,7 +20,7 @@ foreach ($menuItems as $menuItem)
       isParameter('action', 'index')->
     end()->
     with('response')->begin()->
-      contains((string) $menuItem->getBreadcrumbs($content))->
+      contains(($menuItem->getBreadcrumbs()->count() ? (string) $menuItem->getBreadcrumbs():''))->
       contains($content->getSlots()->getFirst()->render())->
       contains($content->getSlots()->getLast()->render())->
     end();
