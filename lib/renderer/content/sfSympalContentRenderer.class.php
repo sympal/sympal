@@ -61,15 +61,12 @@ class sfSympalContentRenderer
     if ($this->_content instanceof Doctrine_Record)
     {
       sfSympalToolkit::setCurrentContent($this->_content);
-
       sfSympalToolkit::changeLayout($this->_content->getLayout());
-
-      $title = $this->_menuItem->getBreadcrumbs($this->_content)->getPathAsString();
     } else {
       sfSympalToolkit::changeLayout($this->_menuItem->getLayout());
-
-      $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
     }
+
+    $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
 
     $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;
 

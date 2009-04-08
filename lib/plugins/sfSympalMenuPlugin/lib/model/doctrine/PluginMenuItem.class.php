@@ -144,7 +144,7 @@ abstract class PluginMenuItem extends BaseMenuItem
       {
         $this->_breadcrumbs = $node->getBreadcrumbs();
       } else {
-        $this->_breadcrumbs = false;
+        $this->_breadcrumbs = sfSympalToolkit::generateBreadcrumbs(array());
       }
     }
 
