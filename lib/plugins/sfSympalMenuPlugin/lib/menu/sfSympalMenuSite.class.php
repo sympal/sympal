@@ -87,7 +87,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
       if (isset($result))
       {
-        $class = get_class($result->getParent());
+        $class = $result->getParent() ? get_class($result->getParent()):get_class($result);
         $instance = new $class($child->getName());
         $instance->setMenuItem($menuItem);
         $instance->setChildren($result->getChildren());
