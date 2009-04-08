@@ -1,6 +1,5 @@
 <?php
 $app = 'sympal';
-$database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(31, new lime_output_color());
@@ -9,7 +8,7 @@ $user = new User();
 $user->first_name = 'test';
 $user->last_name = 'test';
 $user->email_address = 'test@gmail.com';
-$user->username = 'test';
+$user->username = rand();
 $user->password = 'test';
 $user->save();
 

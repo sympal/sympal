@@ -53,14 +53,23 @@ class sfSympalActions
     sfContext::getInstance()->getConfiguration()->loadHelpers(array('Partial'));
 
     try {
-      return get_partial($module.'/'.$action, $vars);
+      $email = get_partial($module.'/'.$action, $vars);
     } catch (Exception $e1) {
       try {
-        return get_component($module, $action, $vars);
+        $email = get_component($module, $action, $vars);
       } catch (Exception $e2) {
         throw new sfException('Could not find a partial or component for '.$module.' and '.$action.': '.$e1->getMessage().' '.$e2->getMessage());
       }
     }
+
+    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($email, 'sympal.filter_email_presentation', array('module' => $module, 'action' => $action, 'variables' => $vars)));
+
+    if ($event->isProcessed() && $event->getReturnValue())
+    {
+      $email = $event->getReturnValue();
+    }
+
+    return $email;
   }
 
   public function newEmail($name, $vars = array())

@@ -36,7 +36,8 @@ abstract class Basesympal_forgot_passwordActions extends sfActions
         $forgotPassword->expires_at = new Doctrine_Expression('NOW() + 86400');
         $forgotPassword->save();
 
-        $this->sendEmail('sympal_forgot_password/send_request', array('forgot_password' => $forgotPassword, 'email_address' => $this->form->user->email_address, 'user' => $this->form->user));
+        $email = $this->newEmail('sympal_forgot_password/send_request', array('forgot_password' => $forgotPassword, 'user' => $this->form->user));
+        $email->send($this->form->user->email_address);
 
         $this->redirect('@homepage');
       } else {

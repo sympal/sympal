@@ -6,7 +6,7 @@
 abstract class PluginMenuItem extends BaseMenuItem
 {
   protected
-    $_breadcrumbs,
+    $_breadcrumbs = null,
     $_allPermissions;
 
   public function getAllPermissions()
@@ -133,63 +133,21 @@ abstract class PluginMenuItem extends BaseMenuItem
     return $route;
   }
 
-  public function getBreadcrumbs($content = null, $subItem = null)
+  public function getBreadcrumbs()
   {
-    if (!$this->_breadcrumbs)
+    if (is_null($this->_breadcrumbs))
     {
-      $breadcrumbs = array();
+      $menu = sfSympalMenuSiteManager::getMenu('primary');
+      $node = $menu->findMenuItem($this);
 
-      if ($this->getLevel() > 0)
+      if ($node)
       {
-        $tree = $this->getTable()->getTree();
-
-        $q = Doctrine_Query::create()
-          ->addSelect('m.*, c.*, ct.*, ct2.*, s.*')
-          ->from('MenuItem m INDEXBY m.id')
-          ->leftJoin('m.RelatedContent c')
-          ->leftJoin('c.Site s')
-          ->leftJoin('c.Type ct')
-          ->leftJoin('m.ContentType ct2')
-          ->leftJoin('m.Site s2');
-
-        if (sfSympalConfig::get('I18n', 'MenuItem'))
-        {
-          $q->leftJoin('m.Translation t');
-          $q->addSelect('t.*');
-        }
-
-        $tree->setBaseQuery($q);
-        $ancestors = $this->getNode()->getAncestors();
-        $tree->resetBaseQuery();
-
-        $breadcrumbs = array();
-        if ($ancestors)
-        {
-          foreach ($ancestors as $ancestor)
-          {
-            $breadcrumbs[$ancestor->getLabel()] = $ancestor->getItemRoute();
-          }
-        }
-
-        if ($content)
-        {
-          if ($this->is_content_type_list)
-          {
-            $breadcrumbs[$this->getLabel()] = $this->getItemRoute();
-          }
-
-          $breadcrumbs[$content->getHeaderTitle()] = $content->getRoute();
-        } else {
-          $breadcrumbs[$this->getLabel()] = $this->getItemRoute();
-        }
-
-        if ($subItem)
-        {
-          $breadcrumbs[$subItem] = null;
-        }
+        $this->_breadcrumbs = $node->getBreadcrumbs();
+      } else {
+        $this->_breadcrumbs = false;
       }
-      $this->_breadcrumbs = sfSympalToolkit::generateBreadcrumbs($breadcrumbs);
     }
+
     return $this->_breadcrumbs;
   }
 

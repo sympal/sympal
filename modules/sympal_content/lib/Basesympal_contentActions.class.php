@@ -53,6 +53,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     Doctrine::initializeModels(array($type['name']));
 
     $this->form = new ContentForm($this->content);
+    $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
     $this->setTemplate('new');
   }
 
@@ -70,6 +71,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $type = $this->content->Type;
     Doctrine::initializeModels(array($type['name']));
     $this->form = $this->configuration->getForm($this->content);
+    $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -86,7 +88,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
     Doctrine::initializeModels(array($type['name']));
 
     $this->form = new ContentForm($this->content);
-
+    $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
+  
     $this->processForm($request, $this->form);
 
     $this->setTemplate('new');
@@ -115,6 +118,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
       sfContext::getInstance()->getRouting()->setRoutes(include($config));
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));
+      $this->dispatcher->notify(new sfEvent($this, 'sympal.save_content', array('content' => $content)));
 
       if ($request->hasParameter('_save_and_add'))
       {

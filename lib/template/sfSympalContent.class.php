@@ -1,10 +1,11 @@
 <?php
 
-class sfSympalContent extends Doctrine_Template
+class sfSympalContent extends sfSympalRecord
 {
   public function setTableDefinition()
   {
-    $this->_table->unshiftFilter(new sfSympalSharedPropertiesFilter($this->_table));
+    parent::setTableDefinition();
+    $this->_table->unshiftFilter(new sfSympalSharedPropertiesFilter());
   }
 
   public function __call($method, $arguments)

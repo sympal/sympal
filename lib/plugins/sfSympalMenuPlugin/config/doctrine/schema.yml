@@ -1,5 +1,6 @@
 MenuItem:
   actAs:
+    sfSympalRecord:
     Sluggable:
       fields: [name]
       unique: true
@@ -54,6 +55,7 @@ MenuItem:
       foreignAlias: MenuItems
 
 MenuItemGroup:
+  actAs: [sfSympalRecord]
   columns:
     menu_item_id:
       primary: true
@@ -72,6 +74,7 @@ MenuItemGroup:
       onDelete: CASCADE
 
 MenuItemPermission:
+  actAs: [sfSympalRecord]
   columns:
     menu_item_id:
       primary: true

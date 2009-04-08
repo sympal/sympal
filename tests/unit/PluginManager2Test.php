@@ -1,9 +1,8 @@
 <?php
 $app = 'sympal';
-$database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(20, new lime_output_color());
+$t = new lime_test(18, new lime_output_color());
 
 $configuration->loadHelpers(array('I18n'));
 
@@ -21,8 +20,6 @@ function installPlugin($name, $t)
   $short = sfSympalPluginToolkit::getShortPluginName($name);
   $menuItem = Doctrine::getTable('MenuItem')->findOneByName($short);
   $t->is($menuItem['name'], $short);
-
-  $t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home > '.$short);
 }
 
 function uninstallPlugin($name, $t)

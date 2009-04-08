@@ -206,6 +206,8 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function signIn($user, $remember = false, $con = null)
   {
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($user, 'sympal.user.pre_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
+
     // signin
     $this->setAttribute('user_id', $user->getId(), 'sfSympalUser');
     $this->setAuthenticated(true);
@@ -248,6 +250,8 @@ class sfSympalUser extends sfBasicSecurityUser
       $remember_cookie = sfSympalConfig::get('sfSympalUserPlugin', 'remember_me_cookie_name', 'sfRemember');
       sfContext::getInstance()->getResponse()->setCookie($remember_cookie, $key, time() + $expiration_age);
     }
+
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($user, 'sympal.user.post_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
   }
 
   protected function generateRandomKey($len = 20)
@@ -357,11 +361,6 @@ class sfSympalUser extends sfBasicSecurityUser
     return $this->getSympalUser() ? $this->getSympalUser()->getAllPermissionNames() : array();
   }
 
-  public function getProfile()
-  {
-    return $this->getSympalUser() ? $this->getSympalUser()->getProfile() : null;
-  }
-
   public function addGroupByName($name, $con = null)
   {
     return $this->getSympalUser()->addGroupByName($name, $con);
@@ -370,5 +369,16 @@ class sfSympalUser extends sfBasicSecurityUser
   public function addPermissionByName($name, $con = null)
   {
     return $this->getSympalUser()->addPermissionByName($name, $con);
+  }
+
+  public function __call($method, $arguments)
+  {
+    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($this->getInvoker(), 'sympal.sf_user.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+    if (!$event->isProcessed())
+    {
+      throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
+    }
+
+    return $event->getReturnValue();
   }
 }

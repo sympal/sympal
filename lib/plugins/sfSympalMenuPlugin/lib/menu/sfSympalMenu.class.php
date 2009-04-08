@@ -454,4 +454,20 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
     return $this;
   }
+
+  public function __call($method, $arguments)
+  {
+    $class = get_class($this);
+    $class = str_replace('sfSympalMenu', '', $class);
+    $name  = $class ? 'sympal.menu.'.sfInflector::humanize($class):'sympal.menu';
+    $name .= '.method_not_found';
+
+    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($this, $name, array('method' => $method, 'arguments' => $arguments)));
+    if (!$event->isProcessed())
+    {
+      throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
+    }
+
+    return $event->getReturnValue();
+  }
 }

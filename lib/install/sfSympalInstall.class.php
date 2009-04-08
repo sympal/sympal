@@ -15,10 +15,14 @@ class sfSympalInstall
 
   public function install()
   {
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
+
     $this->_buildSympalInstallation();
     $this->_installSympalPlugins();
     $this->_executePostInstallSql();
     $this->_executePostInstallHooks();
+
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
 
     sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
   }

@@ -1,5 +1,4 @@
 <?php
-$database = true;
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
@@ -23,7 +22,7 @@ $t->is((string) $menuItem, '- About');
 $t->is($menuItem->getMainContent()->getHeaderTitle(), 'About');
 $t->is($menuItem->getLabel(), 'About');
 $t->is($menuItem->getItemRoute(), '@sympal_content_view_type_page?slug=about');
-$t->is($menuItem->getBreadcrumbs($menuItem->getMainContent())->getPathAsString(), 'Home > About');
+$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home > About');
 $t->is($menuItem->getLayout(), 'sympal');
 
 $hierarchy = sfSympalMenuSiteManager::toHierarchy($menuItems->toArray());

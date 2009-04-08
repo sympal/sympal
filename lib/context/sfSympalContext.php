@@ -40,6 +40,7 @@ class sfSympalContext
   {
     $routeOptions = $actions->getRoute()->getOptions();
     $request = $actions->getRequest();
+    $response = $actions->getResponse();
 
     if ($routeOptions['type'] == 'list')
     {
@@ -67,6 +68,20 @@ class sfSympalContext
       $actions->getUser()->obtainContentLock($content);
 
       $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
+    }
+
+    if ($renderer->getFormat() != 'html')
+    {
+      sfConfig::set('sf_web_debug', false);
+
+      $format = $request->getRequestFormat();
+      $request->setRequestFormat('html');
+      $actions->setLayout(false);
+
+      if ($mimeType = $request->getMimeType($format))
+      {
+        $response->setContentType($mimeType);
+      }
     }
 
     return $renderer;

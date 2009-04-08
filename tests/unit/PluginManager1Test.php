@@ -1,9 +1,10 @@
 <?php
 $app = 'sympal';
-$database = true;
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(2, new lime_output_color());
+
+chdir(sfConfig::get('sf_root_dir'));
 
 function generatePlugin($name, $contentType, $t)
 {

@@ -2,14 +2,6 @@
 
 class sfSympalSharedPropertiesFilter extends Doctrine_Record_Filter
 {
-  protected
-    $_table;
-
-  public function __construct($table)
-  {
-    $this->_table = $table;
-  }
-
   public function init()
   {
   }

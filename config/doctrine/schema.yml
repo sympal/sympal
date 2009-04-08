@@ -2,6 +2,7 @@ Site:
   actAs:
     Sluggable:
       fields: [title]
+    sfSympalRecord:
   columns:
     layout: string(255)
     title:
@@ -76,6 +77,7 @@ ContentType:
   actAs:
     Sluggable:
       fields: [name]
+    sfSympalRecord:
   columns:
     name:
       type: string(255)
@@ -90,6 +92,7 @@ ContentType:
     layout: string(255)
 
 ContentTemplate:
+  actAs: [sfSympalRecord]
   columns:
     name:
       type: string(255)
@@ -109,8 +112,9 @@ ContentTemplate:
       foreignAlias: Templates
 
 ContentSlot:
-<?php if (sfSympalConfig::isI18nEnabled('ContentSlot')): ?> 
   actAs:
+    sfSympalRecord:
+<?php if (sfSympalConfig::isI18nEnabled('ContentSlot')): ?> 
     I18n:
       fields: [value]
 <?php endif; ?> 
@@ -140,12 +144,14 @@ ContentSlot:
       onDelete: CASCADE
 
 ContentSlotType:
+  actAs: [sfSympalRecord]
   columns:
     name:
       type: string(255)
       notnull: true
 
 ContentGroup:
+  actAs: [sfSympalRecord]
   columns:
     content_id:
       primary: true
@@ -164,6 +170,7 @@ ContentGroup:
       onDelete: CASCADE
 
 ContentPermission:
+  actAs: [sfSympalRecord]
   columns:
     content_id:
       primary: true
@@ -182,6 +189,7 @@ ContentPermission:
       onDelete: CASCADE
 
 Route:
+  actAs: [sfSympalRecord]
   actAs:
     Sluggable:
       fields: [name]

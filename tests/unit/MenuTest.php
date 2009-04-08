@@ -101,16 +101,24 @@ $t->is(get_class($node), 'sfSympalMenuBreadcrumbsTest');
 $t->is($breadcrumbs->getPathAsString(), 'Documentation > 1.0 > The Guide to Doctrine ORM');
 $t->is((string) $breadcrumbs, '<div id="sympal_breadcrumbs"><ul id="doctrine"><li id="documentation"><a href="http://www.doctrine-project.org/documentation">Documentation</a></li><li id="1-0"><a href="http://www.doctrine-project.org/documentation/1_0">1.0</a></li><li id="the-guide-to-doctrine-orm"><a href="http://www.doctrine-project.org/documentation/1_0/manual">The Guide to Doctrine ORM</a></li></ul></div>');
 
+class sfSympalMenuSiteTest extends sfSympalMenuSite
+{
+  public function renderLink()
+  {
+    return $this->renderLabel();
+  }
+}
+
 $manager = sfSympalMenuSiteManager::getInstance();
-$primaryMenu = $manager->getMenu('primary');
-$t->is((string) $primaryMenu, '<ul id="primary"><li id="signout"><a href="MenuTest.php/MenuTest.php/security/signout">Signout</a></li><li id="pages"><a href="MenuTest.php/MenuTest.php/pages">Pages</a></li><li id="about"><a href="MenuTest.php/MenuTest.php/pages/about">About</a></li><li id="markdown-examples"><a href="MenuTest.php/MenuTest.php/pages/markdown-examples">Markdown Examples</a></li><li id="readme"><a href="MenuTest.php/MenuTest.php/pages/readme">README</a></li><li id="trac"><a href="http://trac.jwage.com/sympal">Trac</a></li></ul>');
+$primaryMenu = $manager->getMenu('primary', false, 'sfSympalMenuSiteTest');
+$t->is((string) $primaryMenu, '<ul id="primary"><li id="signout">Signout</li><li id="pages">Pages</li><li id="about">About</li><li id="markdown-examples">Markdown Examples</li><li id="readme">README</li><li id="trac">Trac</li></ul>');
 
 $split = $manager->split($primaryMenu, 2, true);
 $total = $primaryMenu->count();
 $t->is($split['primary']->count(), 2);
-$t->is((string) $split['primary'], '<ul id="primary"><li id="signout"><a href="MenuTest.php/MenuTest.php/security/signout">Signout</a></li><li id="pages"><a href="MenuTest.php/MenuTest.php/pages">Pages</a></li></ul>');
-$t->is((string) $split['secondary'], '<ul id="secondary"><li id="about"><a href="MenuTest.php/MenuTest.php/pages/about">About</a></li><li id="markdown-examples"><a href="MenuTest.php/MenuTest.php/pages/markdown-examples">Markdown Examples</a></li><li id="readme"><a href="MenuTest.php/MenuTest.php/pages/readme">README</a></li><li id="trac"><a href="http://trac.jwage.com/sympal">Trac</a></li></ul>');
+$t->is((string) $split['primary'], '<ul id="primary"><li id="signout">Signout</li><li id="pages">Pages</li></ul>');
+$t->is((string) $split['secondary'], '<ul id="secondary"><li id="about">About</li><li id="markdown-examples">Markdown Examples</li><li id="readme">README</li><li id="trac">Trac</li></ul>');
 $t->is($split['secondary']->count(), 4);
 
-$footerMenu = $manager->getMenu('footer');
-$t->is((string) $footerMenu, '<ul id="footer"><li id="about"><a href="MenuTest.php/MenuTest.php/pages/about">About</a></li><li id="markdown-examples"><a href="MenuTest.php/MenuTest.php/pages/markdown-examples">Markdown Examples</a></li><li id="readme"><a href="MenuTest.php/MenuTest.php/pages/readme">README</a></li></ul>');
+$footerMenu = $manager->getMenu('footer', false, 'sfSympalMenuSiteTest');
+$t->is((string) $footerMenu, '<ul id="footer"><li id="about">About</li><li id="markdown-examples">Markdown Examples</li><li id="readme">README</li></ul>');

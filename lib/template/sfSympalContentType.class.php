@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalContentType extends Doctrine_Template
+class sfSympalContentType extends sfSympalContent
 {
   public function setTableDefinition()
   {

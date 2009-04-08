@@ -23,9 +23,14 @@ class sfSympalMail
     $this->_fromAddress = $fromAddress;
   }
 
-  public function setMessage($subject, $body, $type = 'text/html')
+  public function setMessage($subject, $body = null, $type = 'text/html')
   {
-    $this->_message = new Swift_Message($subject, $body, $type);
+    if (!$subject instanceof Swift_Message)
+    {
+      $this->_message = new Swift_Message($subject, $body, $type);
+    } else {
+      $this->_message = $subject;
+    }
 
     return $this->_message;
   }
@@ -37,11 +42,20 @@ class sfSympalMail
 
   public function send($emailAddress = null, $fromAddress = null)
   {
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.pre_send_email', array('email_address' => $emailAddress)));
+
     $emailAddress = $emailAddress ? $emailAddress:$this->_emailAddress;
     $fromAddress = $fromAddress ? $fromAddress:$this->_fromAddress;
 
+    if (!$fromAddress)
+    {
+      $fromAddress = sfSympalConfig::get('default_from_email_address', null, 'noreply@domain.com');
+    }
+
     $this->_mailer->send($this->_message, $emailAddress, $fromAddress);
     $this->_mailer->disconnect();
+
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.post_send_email', array('email_address' => $emailAddress)));
   }
 
   public function __get($name)

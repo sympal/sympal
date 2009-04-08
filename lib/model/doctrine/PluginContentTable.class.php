@@ -27,6 +27,8 @@ class PluginContentTable extends Doctrine_Table
       $q->leftJoin('cr.Translation crt');
     }
 
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($q, 'sympal.load_content_type_query'));
+
     return $q;
   }
 
@@ -70,6 +72,8 @@ class PluginContentTable extends Doctrine_Table
       $pager = new sfDoctrinePager('Content', sfSympalConfig::get('rows_per_page'));
       $pager->setQuery($q);
 
+      sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($pager, 'sympal.load_content_list_pager'));
+
       return $pager;
     }
   }
@@ -98,6 +102,8 @@ class PluginContentTable extends Doctrine_Table
     {
       $q->leftJoin('sl.Translation slt');
     }
+
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($q, 'sympal.load_content_base_query'));
 
     return $q;
   }

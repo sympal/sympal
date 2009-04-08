@@ -1,6 +1,6 @@
 Group:
   tableName: groups
-  actAs: [Timestampable]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     name:
       type: string(255)
@@ -21,7 +21,7 @@ Group:
       foreignAlias: Groups
 
 Permission:
-  actAs: [Timestampable]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     name:
       type: string(255)
@@ -29,7 +29,7 @@ Permission:
     description: string(1000)
 
 GroupPermission:
-  actAs: [Timestampable]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     group_id:
       type: integer
@@ -46,7 +46,7 @@ GroupPermission:
       onDelete: CASCADE
 
 User:
-  actAs: [Timestampable]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     first_name: string(255)
     last_name: string(255)
@@ -90,7 +90,7 @@ User:
       foreignAlias: Users
 
 UserPermission:
-  actAs: [Timestampable]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     user_id:
       type: integer
@@ -107,7 +107,7 @@ UserPermission:
       onDelete: CASCADE
 
 UserGroup:
-  actAs: [Timestampable]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     user_id:
       type: integer
@@ -124,7 +124,7 @@ UserGroup:
       onDelete: CASCADE
 
 RememberKey:
-  actAs: [Timestampable]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     user_id:
       type: integer
@@ -140,6 +140,7 @@ RememberKey:
       onDelete: CASCADE
 
 ForgotPassword:
+  actAs: [sfSympalRecord]
   columns:
     user_id:
       type: integer

@@ -2,15 +2,12 @@
 
 class Basesympal_editorComponents extends sfComponents
 {
-  public function executeEdit_panel()
-  {
-    $this->content = $this->menuItem->getContent();
-  }
-
   public function executeLanguage(sfWebRequest $request)
   {
     $this->form = new sfFormLanguage($this->getUser(), array('languages' => sfSympalConfig::get('language_codes', null, array($this->getUser()->getCulture()))));
     unset($this->form[$this->form->getCSRFFieldName()]);
+
+    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_change_language_form', array('form' => $this->form)));
   }
 
   public function executeTools()

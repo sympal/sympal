@@ -72,7 +72,6 @@ class sfSympalMenuSiteManager
       $class = $class ? $class:'sfSympalMenuSite';
       $menu = new $class($name);
       $menu->setMenuItem($rootMenuItem);
-      $menu->showChildren($showChildren);
 
       if (!$rootId)
       {
@@ -80,16 +79,32 @@ class sfSympalMenuSiteManager
       }
       $hierarchy = $this->_hierarchies[$rootId];
       $this->_buildMenuHierarchy($hierarchy, $menu);
+
+      $this->_menus[$name] = $menu;
     } else {
       $menu = $this->_menus[$name];
-      $menu->showChildren($showChildren);
     }
 
     if (isset($menuItem))
     {
-      return $menu->getMenuItemSubMenu($menuItem);
+      $return = $menu->getMenuItemSubMenu($menuItem);
     } else {
-      return $menu;
+      $return = $menu;
+    }
+
+    if ($return)
+    {
+      $return->callRecursively('showChildren', $showChildren);
+
+      $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($return, 'sympal.load_'.$name.'_menu', array('name' => $name, 'showChildren' => $showChildren, 'class' => $class)));
+      if ($event->isProcessed() && $return = $event->getReturnValue())
+      {
+        return $return;
+      }
+
+      return $return;
+    } else {
+      return false;
     }
   }
 

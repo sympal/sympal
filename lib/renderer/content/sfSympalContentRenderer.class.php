@@ -15,6 +15,16 @@ class sfSympalContentRenderer
     $this->_format = $format ? $format:'html';
   }
 
+  public function getMenuItem()
+  {
+    return $this->_menuItem;
+  }
+
+  public function getContent()
+  {
+    return $this->_content;
+  }
+
   public function setContent($content)
   {
     $this->_content = $content;
@@ -25,12 +35,26 @@ class sfSympalContentRenderer
     $this->_pager = $pager;
   }
 
+  public function getPager()
+  {
+    return $this->_pager;
+  }
+
+  public function getFormat()
+  {
+    return $this->_format;
+  }
+
+  public function setFormat($format)
+  {
+    $this->_format = $format;
+  }
+
   public function initialize()
   {
     $context = sfContext::getInstance();
     $context->getConfiguration()->loadHelpers(array('Tag', 'Url'));
-
-    $response = $context->getResponse();
+    $request = $context->getResponse();
 
     sfSympalToolkit::setCurrentMenuItem($this->_menuItem);
 
@@ -48,7 +72,8 @@ class sfSympalContentRenderer
     }
 
     $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;
-    $response->setTitle($title);
+
+    $context->getResponse()->setTitle($title);
   }
 
   public function render()
@@ -72,13 +97,14 @@ class sfSympalContentRenderer
       case 'html':
         return $this->_getContentListHtml($content);
       break;
-      case 'rss':
-        return 'RSS feed coming soon...';
-      break;
+      case 'atom':
       case 'xml':
+      case 'rss':
+        return $content->exportTo('xml', true);
+      break;
       case 'json':
       case 'yml':
-        return $content->exportTo($format);
+        return $content->exportTo($format, true);
       default:
         $this->_throwInvalidFormatException($format);
     }
@@ -92,23 +118,36 @@ class sfSympalContentRenderer
     {
       $typeVarName = strtolower($content['Type']['name'][0]).substr($content['Type']['name'], 1, strlen($content['Type']['name']));
       $options[$typeVarName] = $content->getRecord();
+      $eventName = sfInflector::tableize($content->getTable()->getOption('name'));
+    } else {
+      $eventName = sfInflector::tableize($content->getTable()->getOption('name'));
     }
+
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.pre_render_'.$eventName.'_'.$type.'_content', array('content' => $content, 'template' => $template)));
 
     if ($template && $partialPath = $template->getPartialPath())
     {
-      return get_partial($partialPath, $options);
+      $return = get_partial($partialPath, $options);
     }
     else if ($template && $componentPath = $template->getComponentPath())
     {
       list($module, $action) = explode('/', $componentPath);
-      return get_component($module, $action, $options);
+      $return = get_component($module, $action, $options);
     }
     else if ($template && $body = $template->getBody())
     {
-      return sfSympalToolkit::processPhpCode($body, $options);;
+      $return = sfSympalToolkit::processPhpCode($body, $options);;
     } else {
-      return get_sympal_breadcrumbs($this->_menuItem, ($type == 'list' ? $content:null)).$this->_renderDoctrineData($content, $type);
+      $return = get_sympal_breadcrumbs($this->_menuItem, ($type == 'list' ? $content:null)).$this->_renderDoctrineData($content, $type);
     }
+
+    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($this, 'sympal.post_render_'.$eventName.'_'.$type.'_content', array('html' => $return, 'content' => $content, 'template' => $template)));
+    if ($event->isProcessed() && $return = $event->getReturnValue())
+    {
+      return $return;
+    }
+
+    return $return;
   }
 
   protected function _renderDoctrineData($content, $type)
@@ -143,10 +182,15 @@ class sfSympalContentRenderer
       case 'html':
         return $this->_getContentViewHtml($content);
       break;
+      case 'atom':
       case 'xml':
+      case 'rss':
+        return $content->exportTo('xml', true);
+      break;
       case 'json':
       case 'yml':
-        return $content->exportTo($format);
+      case 'yaml':
+        return $content->exportTo($format, true);
       default:
         $this->_throwInvalidFormatException($format);
     }
