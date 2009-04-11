@@ -7,6 +7,6 @@ abstract class PluginVersionChange extends BaseVersionChange
 {
   public function getRevertValue()
   {
-    return (isset($this['old_value']) && $this['old_value']) ? $this['old_value']:$this['new_value'];
+    return $this['old_value'];
   }
 }

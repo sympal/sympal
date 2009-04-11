@@ -2,7 +2,9 @@ Page:
   actAs:
     sfSympalContentType:
   columns: 
-    title: string(255)
+    title:
+      type: string(255)
+      notnull: true
     disable_comments:
       type: boolean
       default: 0
