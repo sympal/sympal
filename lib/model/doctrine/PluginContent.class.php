@@ -8,6 +8,22 @@ abstract class PluginContent extends BaseContent
   protected
     $_allPermissions;
 
+  public static function createNew($type)
+  {
+    if (is_string($type))
+    {
+      $type = Doctrine::getTable('ContentType')->findOneByName($type);
+    }
+
+    $name = $type->name;
+
+    $content = new Content();
+    $content->Type = $type;
+    $content->$name = new $name();
+
+    return $content;
+  }
+
   public function getContentTypeClassName()
   {
     $contentTypes = sfSympalToolkit::getContentTypesCache();
@@ -220,6 +236,16 @@ abstract class PluginContent extends BaseContent
     }
 
     return sprintf('No description for object of class "%s"', $this->getTable()->getComponentName());
+  }
+
+  public function getEditRoute()
+  {
+    if ($this->exists())
+    {
+      return '@sympal_content_edit?id='.$this['id'];
+    } else {
+      throw new sfException('You cannot get the edit route of a object that does not exist.');
+    }
   }
 
   public function getRoute($routeString = null, $path = null)

@@ -31,8 +31,6 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
     $this->widgetSchema->setLabel('parent_id', 'Child of');
 
     unset($this['site_id'], $this['Content'], $this['root_id'], $this['lft'], $this['rgt'], $this['level']);
-
-    sfSympalFormToolkit::embedI18n('MenuItem', $this);
   }
   
   public function updateParentIdColumn($parentId)

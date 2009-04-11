@@ -31,9 +31,40 @@ class sfSympalConfig
   {
     if ($name)
     {
-      return self::get('I18n', 'enabled') && self::get('I18n', $name);
+      if (is_object($name))
+      {
+        $name = get_class($name);
+      }
+      $i18nedModels = self::get('internationalized_models');
+      return self::get('i18n') && isset($i18nedModels[$name]);
     } else {
-      return self::get('I18n', 'enabled');
+      return self::get('i18n');
+    }
+  }
+
+  public static function isVersioningEnabled($name = null)
+  {
+    if ($name)
+    {
+      if (is_object($name))
+      {
+        $name = get_class($name);
+      }
+      $versionedModels = self::get('versioned_models');
+      return self::get('versioning') && isset($versionedModels[$name]);
+    } else {
+      return self::get('versioning');
+    }
+  }
+
+  public static function getVersionedModelOptions($name)
+  {
+    if (self::isVersioningEnabled($name))
+    {
+      $versionedModels = self::get('versioned_models');
+      return $versionedModels[$name];
+    } else {
+      return array();
     }
   }
 

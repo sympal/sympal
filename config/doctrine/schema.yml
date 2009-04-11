@@ -13,7 +13,7 @@ Site:
       notnull: true
 
 Content:
-  actAs: [Sluggable, Timestampable, sfSympalContent]
+  actAs: [Sluggable, Timestampable, sfSympalRecord]
   columns:
     site_id:
       type: integer
@@ -114,10 +114,6 @@ ContentTemplate:
 ContentSlot:
   actAs:
     sfSympalRecord:
-<?php if (sfSympalConfig::isI18nEnabled('ContentSlot')): ?> 
-    I18n:
-      fields: [value]
-<?php endif; ?> 
   columns:
     content_id:
       type: integer
@@ -189,8 +185,8 @@ ContentPermission:
       onDelete: CASCADE
 
 Route:
-  actAs: [sfSympalRecord]
   actAs:
+    sfSympalRecord:
     Sluggable:
       fields: [name]
       unique: true
@@ -213,3 +209,45 @@ Route:
     ContentType:
       foreignAlias: Routes
       onDelete: CASCADE
+
+Version:
+  tableName: versions
+  actAs:
+    Timestampable:
+      updated:
+        disabled: true
+  columns:
+    record_id:
+      type: integer
+      notnull: true
+    record_type:
+      type: string(255)
+      notnull: true
+    created_by: integer
+    num_changes:
+      type: integer
+      notnull: true
+    version:
+      type: integer
+      notnull: true
+  relations:
+    CreatedBy:
+      class: User
+      local: created_by
+      onDelete: CASCADE
+      foreignAlias: Versions
+
+VersionChange:
+  columns:
+    version_id:
+      type: integer
+      notnull: true
+    field:
+      type: string(255)
+      notnull: true
+    old_value: clob
+    new_value: clob
+  relations:
+    Version:
+      onDelete: CASCADE
+      foreignAlias: Changes

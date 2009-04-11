@@ -2,7 +2,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(31, new lime_output_color());
+$t = new lime_test(34, new lime_output_color());
 
 $user = new User();
 $user->first_name = 'test';
@@ -15,10 +15,8 @@ $user->save();
 $page = new Page();
 $page->title = 'Testing this out';
 
-$content = new Content();
-$content->content_type_id = Doctrine::getTable('ContentType')->findOneByName('Page')->id;
+$content = Content::createNew('Page');
 $content->slug = 'testing-this-out';
-$content->site_id = Doctrine::getTable('Site')->findOneByTitle('Sympal')->id;
 $content->is_published = true;
 $content->CreatedBy = $user;
 $content->save();
@@ -198,3 +196,11 @@ $slots->save();
 
 $t->is($slots[2]->render(), 'Body value<br />
 Testing');
+
+$content = Content::createNew('Page');
+
+$t->is($content->Type->name, 'Page');
+$t->is(get_class($content->getRecord()), 'Page');
+
+$content->title = 'test';
+$t->is($content->getRecord()->title, 'test');

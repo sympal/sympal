@@ -161,7 +161,7 @@ class sfSympalMenuSiteManager
         ->leftJoin('m.Site s')
         ->orderBy('m.root_id, m.lft ASC');
 
-      if (sfSympalConfig::get('I18n', 'MenuItem'))
+      if (sfSympalConfig::isI18nEnabled('MenuItem'))
       {
         $q->leftJoin('m.Translation t');
       }
@@ -169,7 +169,7 @@ class sfSympalMenuSiteManager
       if (!sfSympalToolkit::isEditMode())
       {
         $q->andWhere('m.is_published = ?', 1)
-          ->andWhere('m.date_published < NOW()');
+          ->andWhere('m.date_published <= NOW()');
       }
 
       $this->_menuItems = $q->execute();

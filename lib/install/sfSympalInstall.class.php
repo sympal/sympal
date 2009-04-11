@@ -15,6 +15,8 @@ class sfSympalInstall
 
   public function install()
   {
+    sfSympalConfig::set('installing', true);
+
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
 
     $this->_buildSympalInstallation();
@@ -25,6 +27,8 @@ class sfSympalInstall
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
 
     sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
+
+    sfSympalConfig::set('installing', false);
   }
 
   protected function _buildSympalInstallation()

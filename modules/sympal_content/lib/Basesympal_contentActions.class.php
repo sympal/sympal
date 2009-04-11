@@ -68,8 +68,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $user->checkContentSecurity($this->content);
     $user->obtainContentLock($this->content);
 
-    $type = $this->content->Type;
-    Doctrine::initializeModels(array($type['name']));
     $this->form = $this->configuration->getForm($this->content);
     $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
   }
@@ -78,18 +76,17 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType('page');
 
-    $this->content = new Content();
+    $user = $this->getUser()->getSympalUser();
 
     $type = Doctrine::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
-    $this->content->setType($type);
-    $this->content->LockedBy = $this->getUser()->getSympalUser();
-    $this->content->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
-
-    Doctrine::initializeModels(array($type['name']));
+    $this->content = Content::createNew($type);
+    $this->content->LockedBy = $user;
+    $this->content->LastUpdatedBy = $user;
+    $this->content->Site = sfSympalContext::getInstance()->getSiteRecord();
 
     $this->form = new ContentForm($this->content);
     $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
-  
+
     $this->processForm($request, $this->form);
 
     $this->setTemplate('new');
@@ -128,7 +125,12 @@ class Basesympal_contentActions extends autoSympal_contentActions
       }
       else
       {
-        $this->redirect($content->getRoute());
+        if ($new)
+        {
+          $this->redirect($content->getRoute());
+        } else {
+          $this->redirect($content->getEditRoute());
+        }
       }
     }
     else

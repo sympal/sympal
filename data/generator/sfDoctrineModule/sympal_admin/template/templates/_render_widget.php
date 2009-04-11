@@ -18,7 +18,7 @@
 
     <div>
       [?php if ($help || $help = $widget->renderHelp()): ?]
-        <span id="[?php echo $id ?]_help" class="help" style="float: right;" title="[?php echo $help; ?]">
+        <span id="[?php echo $id ?]_help" class="help" style="float: right;" title="[?php echo strip_tags($help); ?]">
           [?php echo image_tag('/sf/sf_admin/images/help.png') ?]
         </span>
       [?php endif; ?]

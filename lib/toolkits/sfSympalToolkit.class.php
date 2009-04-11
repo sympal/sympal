@@ -25,6 +25,25 @@ class sfSympalToolkit
     self::$_currentContent = $content;
   }
 
+  public static function getSymfonyResource($module, $action, $variables = array())
+  {
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
+
+    try {
+      return get_partial($module.'/'.$action, $variables);
+    } catch (Exception $e1) {
+      try {
+        return get_component($module, $action, $variables);
+      } catch (Exception $e2) {
+        try {
+          return sfContext::getInstance()->getController()->getPresentationFor($module, $action);
+        } catch (Exception $e3) {}
+      }
+    }
+
+    throw new sfException('Could not find symfony resource for the module "'.$module.'" and action "'.$action.'". '.$e1->getMessage().' - '.$e2->getMessage().' - '.$e3->getMessage());
+  }
+
   public static function processPhpCode($code, $variables = array())
   {
     $sf_context = sfContext::getInstance();

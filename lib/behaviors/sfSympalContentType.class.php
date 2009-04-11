@@ -1,14 +1,18 @@
 <?php
 
-class sfSympalContentType extends sfSympalContent
+class sfSympalContentType extends sfSympalRecord
 {
   public function setTableDefinition()
   {
+    parent::setTableDefinition();
+
     $this->hasColumn('content_id', 'integer');
   }
 
   public function setUp()
   {
+    parent::setUp();
+
     $this->hasOne('Content', array(
       'local' => 'content_id',
       'foreign' => 'id',

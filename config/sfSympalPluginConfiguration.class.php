@@ -35,6 +35,30 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_settings_form', array($this, 'loadSettings'));
     $this->dispatcher->connect('sympal.load_tools', array($this, 'loadTools'));
     $this->dispatcher->connect('context.load_factories', array($this, 'loadContext'));
+    $this->dispatcher->connect('command.post_command', array($this, 'changeBaseFormDoctrine'));
+  }
+
+  public function changeBaseFormDoctrine(sfEvent $event)
+  {
+    $subject = $event->getSubject();
+    if ($subject instanceof sfDoctrineBuildFormsTask)
+    {
+      $find = 'abstract class BaseFormDoctrine extends sfFormDoctrine
+{
+  public function setup()
+  {
+';
+
+      $replace = 'abstract class BaseFormDoctrine extends BaseFormDoctrineSympal
+{
+  public function setup()
+  {
+    parent::setup();
+';
+
+      $path = sfConfig::get('sf_lib_dir').'/form/doctrine/BaseFormDoctrine.class.php';
+      file_put_contents($path, str_replace($find, $replace, file_get_contents($path)));
+    }
   }
 
   public function loadContext()

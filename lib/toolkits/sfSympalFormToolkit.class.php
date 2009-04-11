@@ -109,8 +109,12 @@ class sfSympalFormToolkit
 
   public static function changeLayoutWidget($form)
   {
-    $layouts = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getLayouts();
-    array_unshift($layouts, '');
+    $all = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getLayouts();
+    $layouts = array('' => '');
+    foreach ($all as $path => $name)
+    {
+      $layouts[$path] = $name;
+    }
     $form->setWidget('layout', new sfWidgetFormChoice(array(
       'choices'   => $layouts
     )));

@@ -7,10 +7,6 @@ MenuItem:
     NestedSet:
       hasManyRoots: true
       rootColumnName: root_id
-<?php if (sfSympalConfig::isI18nEnabled('MenuItem')): ?> 
-    I18n:
-      fields: [label]
-<?php endif; ?>
   columns:
     name:
       type: string(255)

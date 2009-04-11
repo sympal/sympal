@@ -1,12 +1,8 @@
 Page: 
   actAs:
     sfSympalContentType:
-<?php if (sfSympalConfig::isI18nEnabled('Page')): ?>
-    I18n:
-      fields: [title]
-<?php endif; ?>
   columns: 
-    title: 
-      type: string(255) 
-      notnull: true 
-    disable_comments: boolean
+    title: string(255)
+    disable_comments:
+      type: boolean
+      default: 0

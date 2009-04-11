@@ -16,6 +16,14 @@ sympal_homepage:
     type:   object
     method: getContent
 
+sympal_revert_data:
+  url:   /revert/:id
+  param: { module: sympal_editor, action: revert_data }
+  class: sfDoctrineRoute
+  options:
+    model: Version
+    type: object
+
 sympal_content_delete_route:
   url:  /content/delete_route/:id
   param: { module: sympal_content, action: delete_route }

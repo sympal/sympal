@@ -32,7 +32,7 @@ generator:
         class: false
       form:
         display:
-          "NONE": [name, type, content_type_id]
+          "NONE": [revert_to_version, name, type, content_type_id]
           "Rendering Template": [partial_path, component_path, body]
       edit:    ~
       new:     ~

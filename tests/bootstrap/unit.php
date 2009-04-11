@@ -21,6 +21,11 @@ if (!isset($app))
   sfContext::createInstance($configuration);
 }
 
+if (isset($app))
+{
+  $configuration->initializeSympal();
+}
+
 if (isset($database) && $database)
 {
   $configuration->initializeSympal();

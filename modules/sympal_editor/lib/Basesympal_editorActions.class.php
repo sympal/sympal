@@ -143,4 +143,17 @@ class Basesympal_editorActions extends sfActions
 
     return sfView::NONE;
   }
+
+  public function executeRevert_data(sfWebRequest $request)
+  {
+    $version = $this->getRoute()->getObject();
+
+    $this->askConfirmation('Are you sure?', 'sympal_editor/confirm_revert', array('version' => $version));
+
+    $version->revert();
+
+    $this->getUser()->setFlash('notice', 'Record was successfully reverted back to version #'.$version['version']);
+
+    $this->redirect($request->getParameter('redirect_url'));
+  }
 }

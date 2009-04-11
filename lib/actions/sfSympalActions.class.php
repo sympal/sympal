@@ -28,8 +28,18 @@ class sfSympalActions
     return sfSympalToolkit::loadDefaultLayout();
   }
 
-  public function askConfirmation($title, $message)
+  public function askConfirmation($title, $message, $variables = array())
   {
+    $e = explode('/', $message);
+    if (count($e) == 2)
+    {
+      try {
+        $message = sfSympalToolkit::getSymfonyResource($e[0], $e[1], $variables);
+      } catch (Exception $e) {
+        throw new sfException('Invalid confirmation message: '.$e->getMessage());
+      }
+    }
+
     $request = $this->getRequest();
 
     if ($request->hasParameter('confirmation'))
@@ -48,21 +58,13 @@ class sfSympalActions
     }
   }
 
-  public function getEmailPresentationFor($module, $action, $vars = array())
+  public function getEmailPresentationFor($module, $action, $variables = array())
   {
     sfContext::getInstance()->getConfiguration()->loadHelpers(array('Partial'));
 
-    try {
-      $email = get_partial($module.'/'.$action, $vars);
-    } catch (Exception $e1) {
-      try {
-        $email = get_component($module, $action, $vars);
-      } catch (Exception $e2) {
-        throw new sfException('Could not find a partial or component for '.$module.' and '.$action.': '.$e1->getMessage().' '.$e2->getMessage());
-      }
-    }
+    $email = sfSympalToolkit::getSymfonyResource($model, $action, $variables);
 
-    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($email, 'sympal.filter_email_presentation', array('module' => $module, 'action' => $action, 'variables' => $vars)));
+    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($email, 'sympal.filter_email_presentation', array('module' => $module, 'action' => $action, 'variables' => $variables)));
 
     if ($event->isProcessed() && $event->getReturnValue())
     {
@@ -72,13 +74,13 @@ class sfSympalActions
     return $email;
   }
 
-  public function newEmail($name, $vars = array())
+  public function newEmail($name, $variables = array())
   {
     $e = explode('/', $name);
     list($module, $action) = $e;
 
     try {
-      $rawEmail = $this->getEmailPresentationFor($module, $action, $vars);
+      $rawEmail = $this->getEmailPresentationFor($module, $action, $variables);
     } catch (Exception $e) {
       throw new sfException('Could not send email: '.$e->getMessage());
     }

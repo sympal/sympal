@@ -22,6 +22,7 @@ abstract class PluginContentForm extends BaseContentForm
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
 
     $this->widgetSchema['site_id'] = new sfWidgetFormInputHidden();
+    $this->widgetSchema['created_by']->setOption('add_empty', true);
 
     sfSympalFormToolkit::changeLayoutWidget($this);
 
@@ -74,8 +75,6 @@ abstract class PluginContentForm extends BaseContentForm
       }
     }
 
-    sfSympalFormToolkit::embedI18n($this->object->Type->name, $typeForm);
-    
     if (count($typeForm))
     {
       $this->embedForm($this->object->Type->name, $typeForm);
