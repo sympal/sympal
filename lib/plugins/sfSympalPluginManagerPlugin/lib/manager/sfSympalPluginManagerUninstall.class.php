@@ -106,6 +106,12 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
       Doctrine_Lib::removeDirectories($path);
 
+      $task = new sfSympalDeleteModelTask($this->_dispatcher, $this->_formatter);
+      foreach ($models as $model)
+      {
+        $task->run(array($model), array('--no-confirmation'));
+      }
+
       $path = sfConfig::get('sf_lib_dir').'/*/doctrine/'.$this->_pluginName;
       $dirs = glob($path);
       sfToolkit::clearGlob($path);

@@ -8,6 +8,10 @@ class sfSympalDeleteModelTask extends sfTaskExtraBaseTask
       new sfCommandArgument('name', sfCommandArgument::REQUIRED, 'The name of the model you wish to delete all related files for.'),
     ));
 
+    $this->addOptions(array(
+      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
+    ));
+
     $this->aliases = array();
     $this->namespace = 'sympal';
     $this->name = 'delete-model';
@@ -24,7 +28,7 @@ EOF;
   {
     $modelName = $arguments['name'];
 
-    if (!$this->askConfirmation(array('This command will delete generated files related to the model named "'.$modelName.'"', 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will delete generated files related to the model named "'.$modelName.'"', 'Are you sure you want to proceed? (y/N)'), null, false))
     {
       $this->logSection('sympal', 'Delete model task aborted');
 
@@ -33,7 +37,9 @@ EOF;
 
     $names = array(
       $modelName.'.class.php',
+      $modelName.'Table.class.php',
       'Plugin'.$modelName.'.class.php',
+      'Plugin'.$modelName.'Table.class.php',
       'Base'.$modelName.'.class.php',
       $modelName.'Form.class.php',
       'Plugin'.$modelName.'Form.class.php',
@@ -70,7 +76,7 @@ EOF;
       $this->log('  '.$file);
     }
     $this->log(null);
-    if (!$this->askConfirmation(array('You are about to delete the above listed files!', 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array('You are about to delete the above listed files!', 'Are you sure you want to proceed? (y/N)'), null, false))
     {
       $this->logSection('sympal', 'Delete model task aborted');
 
