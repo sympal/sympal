@@ -1,5 +1,8 @@
 # sfSympalPlugin
 
+> **CAUTION**
+> Sympal is still under heavy development and has not had any sort of official release. It also requires that you use the latest version of symfony 1.2 from SVN. It must be from SVN as the latest package does not contain some required bug fixes.
+
 Sympal is an extension of symfony that provides a content management framework layer on top of all the greatness you get with symfony. It is a nice plug n' play architecture so other Sympal plugins can interact with the core and manipulate things with events.
 
 > **NOTE**
