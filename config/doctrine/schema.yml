@@ -32,6 +32,14 @@ Content:
     date_published: timestamp
     custom_path: string(255)
     layout: string(255)
+    page_title: string(255)
+    meta_keywords: string(500)
+    meta_description: string(500)
+  indexes:
+    is_published:
+      fields: [is_published]
+    date_published:
+      fields: [date_published]
   relations:
     MasterMenuItem:
       class: MenuItem
@@ -82,6 +90,7 @@ ContentType:
     name:
       type: string(255)
       notnull: true
+      unique: true
     description: clob
     label:
       type: string(255)
@@ -90,6 +99,9 @@ ContentType:
     list_path: string(255)
     view_path: string(255)
     layout: string(255)
+  indexes:
+    name:
+      fields: [name]
 
 ContentTemplate:
   actAs: [sfSympalRecord]
@@ -107,6 +119,9 @@ ContentTemplate:
     partial_path: string(255)
     component_path: string(255)
     body: clob
+  indexes:
+    type:
+      fields: [type]
   relations:
     ContentType:
       foreignAlias: Templates
@@ -129,6 +144,9 @@ ContentSlot:
       type: string(255)
       notnull: true
     value: clob
+  indexes:
+    name:
+      fields: [name]
   relations:
     RelatedContent:
       class: Content
@@ -145,6 +163,7 @@ ContentSlotType:
     name:
       type: string(255)
       notnull: true
+      unique: true
 
 ContentGroup:
   actAs: [sfSympalRecord]
@@ -194,6 +213,7 @@ Route:
     name:
       type: string(255)
       notnull: true
+      unique: true
     url:
       type: string(255)
       notnull: true
@@ -202,6 +222,9 @@ Route:
       values: [List, View]
     content_id: integer
     content_type_id: integer
+  indexes:
+    type:
+      fields: [type]
   relations:
     Content:
       foreignAlias: Routes
@@ -230,6 +253,13 @@ Version:
     version:
       type: integer
       notnull: true
+  indexes:
+    version:
+      fields: [version]
+    record_id:
+      fields: [record_id]
+    record_type:
+      fields: [record_type]
   relations:
     CreatedBy:
       class: User

@@ -68,6 +68,8 @@ class sfSympalContext
       $actions->getUser()->obtainContentLock($content);
 
       $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
+
+      $content->loadMetaData($response);
     }
 
     if ($renderer->getFormat() != 'html')

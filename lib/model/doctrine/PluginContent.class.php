@@ -327,4 +327,22 @@ abstract class PluginContent extends BaseContent
       }
     }
   }
+
+  public function loadMetaData(sfWebResponse $response)
+  {
+    if ($pageTitle = $this['page_title'])
+    {
+      $response->setTitle($pageTitle);
+    }
+
+    if ($metaKeywords = $this['meta_keywords'])
+    {
+      $response->addMeta('keywords', $metaKeywords);
+    }
+
+    if ($metaDescription = $this['meta_description'])
+    {
+      $response->addMeta('description', $metaDescription);
+    }
+  }
 }

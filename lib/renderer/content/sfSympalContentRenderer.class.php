@@ -55,6 +55,7 @@ class sfSympalContentRenderer
     $context = sfContext::getInstance();
     $context->getConfiguration()->loadHelpers(array('Tag', 'Url'));
     $request = $context->getResponse();
+    $response = $context->getResponse();
 
     sfSympalToolkit::setCurrentMenuItem($this->_menuItem);
 
@@ -66,11 +67,12 @@ class sfSympalContentRenderer
       sfSympalToolkit::changeLayout($this->_menuItem->getLayout());
     }
 
-    $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
-
-    $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;
-
-    $context->getResponse()->setTitle($title);
+    if (!$response->getTitle())
+    {
+      $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
+      $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;
+      $response->setTitle($title);
+    }
   }
 
   public function render()

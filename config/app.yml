@@ -1,7 +1,7 @@
 all:
   sympal_settings:
     versioned_models:
-      Content: [created_by, is_published, date_published, slug]
+      Content: [created_by, is_published, date_published, slug, page_title, meta_keywords, meta_description]
       ContentSlotTranslation: [value]
       PageTranslation: [title]
       ContentTemplate: [body]

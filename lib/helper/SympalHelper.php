@@ -59,7 +59,7 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
   sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($breadcrumbs, 'sympal.load_breadcrumbs', array('menuItem' => $menuItem, 'content' => $content, 'subItem' => $subItem)));
 
   $title = $breadcrumbs->getPathAsString();
-  sfContext::getInstance()->getResponse()->setTitle($title);
+  set_sympal_title($title);
 
   if ($html = (string) $breadcrumbs)
   {
@@ -71,7 +71,11 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
 
 function set_sympal_title($title = null)
 {
-  sfContext::getInstance()->getResponse()->setTitle($title);
+  $response = sfContext::getInstance()->getResponse();
+  if (!$response->getTitle())
+  {
+    $response->setTitle($title);
+  }
 }
 
 function get_sympal_menu($name, $showChildren = true, $class = null)
