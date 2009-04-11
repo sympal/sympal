@@ -107,6 +107,7 @@ function save_sympal_content_slot(id)
 		success: function(o) {
 			  document.getElementById('edit_content_slot_button_' + id).innerHTML = o.responseText;
 			  unhighlight_sympal_content_slot(id);
+			  edit_sympal_content_slot(id);
 			}
 		} 
 
