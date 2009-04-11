@@ -15,8 +15,23 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   public
     $sympalConfiguration;
 
+  public static function isSympalDisabledForApp($application = null)
+  {
+    if (is_null($application))
+    {
+      $application = sfConfig::get('sf_app');
+    }
+    $name = $application.'Configuration::disableSympal';
+    return constant($name);
+  }
+
   public static function enableSympalPlugins(ProjectConfiguration $configuration)
   {
+    if (self::isSympalDisabledForApp())
+    {
+      return;
+    }
+
     $sympalPluginPath = dirname(dirname(__FILE__));
     $configuration->setPluginPath('sfSympalPlugin', $sympalPluginPath);
     $dependencies = self::$dependencies;
