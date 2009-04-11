@@ -20,6 +20,8 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
         $this->validatorSchema['revert_to_version'] = new sfValidatorPass(array('required' => false));
       }
     }
+
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.sf_form_doctrine.setup'));
   }
 
   public function __call($method, $arguments)
