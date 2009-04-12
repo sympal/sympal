@@ -28,6 +28,7 @@ class sfSympalInstall
 
     sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
+    sfSympalConfig::writeSetting(null, 'installed', true);
     sfSympalConfig::set('installing', false);
   }
 

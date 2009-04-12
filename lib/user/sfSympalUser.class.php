@@ -68,13 +68,19 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function getFlash($name, $default = null)
   {
-    return end($this->getFlashArray($name, $default));
+    $array = $this->getFlashArray($name, $default);
+    if (!empty($array))
+    {
+      return end($array);
+    } else {
+      return false;
+    }
   }
 
   public function getFlashArray($type, $default = null)
   {
     $flash = parent::getFlash($type, $default);
-    $flash = array_unique($flash);
+    $flash = array_unique((array) $flash);
 
     $this->getAttributeHolder()->remove($type, null, 'symfony/user/sfUser/flash');
 

@@ -84,6 +84,8 @@ class sfSympalConfig
       $array['all']['sympal_settings'][$group][$name] = $value;
     }
 
+    sfSympalConfig::set($group, $name, $value);
+
     file_put_contents($path, sfYaml::dump($array, 4));
   }
 }

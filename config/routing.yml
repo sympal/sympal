@@ -16,6 +16,18 @@ sympal_homepage:
     type:   object
     method: getContent
 
+sympal_install_run:
+  url:  /install/run
+  param: { module: sympal_install, action: run }
+  requirements:
+    sf_method: [post]
+
+sympal_install:
+  url:  /install
+  param: { module: sympal_install, action: index }
+  requirements:
+    sf_method: [get]
+
 sympal_version_history:
   url:   /version/:record_type/:record_id
   param: { module: sympal_editor, action: version_history }
@@ -197,6 +209,7 @@ sympal_content_create_type:
   url:    /admin/content/create/:type
   param:  { module: sympal_content, action: create_type }
 
+<?php try { ?>
 <?php $content = Doctrine::getTable('Content')
   ->createQuery('c')
   ->leftJoin('c.Type t')
@@ -234,3 +247,4 @@ sympal_content_create_type:
     method: getContent
 <?php endforeach; ?> 
 <?php endforeach; ?> 
+<?php } catch (Exception $e) {} ?>

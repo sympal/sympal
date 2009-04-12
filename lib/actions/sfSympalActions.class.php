@@ -18,6 +18,32 @@ class sfSympalActions
     return true;
   }
 
+  public function checkFilePermissions()
+  {
+    $checks = sfFinder::type('file')->in(sfConfig::get('sf_root_dir'));
+    $checks = array_merge($checks, sfFinder::type('dir')->in(sfConfig::get('sf_root_dir')));
+
+    $error = false;
+    foreach ($checks as $check)
+    {
+      if (!is_writable($check))
+      {
+        $error = true;
+      }
+    }
+    if ($error)
+    {
+      $this->getUser()->setFlash('error', 'You have some permissions problems. Sympal requires your project to be writable by your web server.');
+    }
+
+    if ($error)
+    {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
   public function changeLayout($name)
   {
     return sfSympalToolkit::changeLayout($name);

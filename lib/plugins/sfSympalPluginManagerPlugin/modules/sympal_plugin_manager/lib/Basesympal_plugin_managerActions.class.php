@@ -20,7 +20,7 @@ abstract class Basesympal_plugin_managerActions extends sfActions
 
     $this->dispatcher->connect('sympal.load_side_bar', array($this, 'loadSideBar'));
 
-    $this->_checkFilePermissions();
+    $this->checkFilePermissions();
   }
 
   public function loadSideBar(sfEvent $event)
@@ -41,37 +41,11 @@ abstract class Basesympal_plugin_managerActions extends sfActions
     }
   }
 
-  protected function _redirectIfPermissionsError()
+  public function redirectIfPermissionsError()
   {
-    if (!$this->_checkFilePermissions())
+    if (!$this->checkFilePermissions())
     {
       $this->redirect('@sympal_plugin_manager');
-    }
-  }
-
-  protected function _checkFilePermissions()
-  {
-    $checks = sfFinder::type('file')->in(sfConfig::get('sf_root_dir'));
-    $checks = array_merge($checks, sfFinder::type('dir')->in(sfConfig::get('sf_root_dir')));
-
-    $error = false;
-    foreach ($checks as $check)
-    {
-      if (!is_writable($check))
-      {
-        $error = true;
-      }
-    }
-    if ($error)
-    {
-      $this->getUser()->setFlash('error', 'You have some permissions problems. The plugin manager requires your symfony application directories to be writable by your web server.');
-    }
-
-    if ($error)
-    {
-      return false;
-    } else {
-      return true;
     }
   }
 
@@ -127,7 +101,7 @@ abstract class Basesympal_plugin_managerActions extends sfActions
 
   protected function _executeSfAction($action)
   {
-    $this->_redirectIfPermissionsError();
+    $this->redirectIfPermissionsError();
 
     $request = $this->getRequest();
     $pluginName = $request->getParameter('plugin');

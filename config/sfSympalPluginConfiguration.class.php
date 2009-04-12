@@ -57,10 +57,11 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   {
     $this->sympalConfiguration = sfSympalConfiguration::getSympalConfiguration($this->dispatcher, $this->configuration);
 
+    $this->dispatcher->connect('context.load_factories', array($this, 'loadContext'));
+
     $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
     $this->dispatcher->connect('sympal.load_settings_form', array($this, 'loadSettings'));
     $this->dispatcher->connect('sympal.load_tools', array($this, 'loadTools'));
-    $this->dispatcher->connect('context.load_factories', array($this, 'loadContext'));
     $this->dispatcher->connect('command.post_command', array($this, 'changeBaseFormDoctrine'));
   }
 
@@ -87,8 +88,26 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     }
   }
 
+  public function _handleInstall()
+  {
+    $sfContext = sfContext::getInstance();
+    $request = $sfContext->getRequest();
+    $environment = sfConfig::get('sf_environment');
+    $module = $request->getParameter('module');
+
+    // Redirect to install module if...
+    //  not in test environment
+    //  sympal has not been installed
+    //  module is not already sympal_install
+    if ($environment != 'test' && !sfSympalConfig::get('installed') && $module != 'sympal_install')
+    {
+      $sfContext->getController()->redirect('@sympal_install');
+    }
+  }
+
   public function loadContext()
   {
+    $this->_handleInstall();
     sfSympalContext::createInstance(sfConfig::get('sf_app'), sfContext::getInstance());
   }
 
@@ -150,6 +169,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
     $form->addSetting(null, 'recaptcha_public_key', 'Recaptcha Public Key');
     $form->addSetting(null, 'recaptcha_private_key', 'Recaptcha Private Key');
+
     $form->addSetting('page_cache', 'enabled', 'Enabled', 'InputCheckbox', 'Boolean');
     $form->addSetting('page_cache', 'with_layout', 'With Layout', 'InputCheckbox', 'Boolean');
     $form->addSetting('page_cache', 'lifetime', 'Lifetime');
