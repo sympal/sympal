@@ -57,21 +57,25 @@ MenuItem:
         children:
           MenuItem_primary_about_doctrine:
             name: Doctrine
+            is_published: true
             label: Doctrine
             Site: Site_default
             route: http://www.doctrine-project.org/about
           MenuItem_primary_about_symfony:
             name: symfony
+            is_published: true
             label: symfony
             Site: Site_default
             route: http://www.symfony-project.org/about
           MenuItem_primary_about_sensio_labs:
-            name: Sensio LAbs
+            name: Sensio Labs
+            is_published: true
             label: Sensio Labs
             Site: Site_default
             route: http://www.sensiolabs.com
           MenuItem_primary_about_centresource:
             name: centresource
+            is_published: true
             label: "centre{source}"
             Site: Site_default
             route: http://www.centresource.com
