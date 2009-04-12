@@ -99,6 +99,8 @@ function preview_sympal_content_slot(id)
 function save_sympal_content_slot(id)
 {
   highlight_sympal_content_slot(id);
+  document.getElementById('loading').style.display = 'visible';
+  document.getElementById('loading').innerHTML = 'Loading...';
 
 	var url = "<?php echo url_for('@sympal_save_content_slot?id=ID', 'absolute=true') ?>";
 	url = url.replace('ID', id);
@@ -108,6 +110,7 @@ function save_sympal_content_slot(id)
 			  document.getElementById('edit_content_slot_button_' + id).innerHTML = o.responseText;
 			  unhighlight_sympal_content_slot(id);
 			  edit_sympal_content_slot(id);
+			  document.getElementById('loading').style.display = 'none';
 			}
 		} 
 

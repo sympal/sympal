@@ -170,3 +170,19 @@ li a.on {
   padding-left: 10px;
   border-left: 1px solid #ccc;
 }
+
+#save {
+  float: left;
+}
+
+#loading {
+  float: right;
+  background-color: red;
+  color: white;
+  font-weight: bold;
+}
+
+.notice, .error {
+  margin: 0;
+  margin-bottom: 15px;
+}

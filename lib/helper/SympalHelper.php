@@ -1,5 +1,10 @@
 <?php
 
+function get_sympal_flash()
+{
+  return get_partial('sympal_default/flash');
+}
+
 function get_sympal_yui_path($type, $name)
 {
   $skin = sfSympalConfig::get('yui_skin', 'null', 'sam');

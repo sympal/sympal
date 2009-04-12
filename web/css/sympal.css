@@ -653,10 +653,6 @@ table tr th {
   margin-bottom: 10px;
   border: 1px solid #ddd;
   font-weight: bold;
-  position: absolute;
-  top: -5px;
-  right: 0;
-  z-index: 100;
 }
 
 ul.error_list

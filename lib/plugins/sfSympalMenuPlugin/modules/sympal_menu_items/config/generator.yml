@@ -65,8 +65,7 @@ generator:
       form:
         display:
           "NONE": [parent_id, name, is_primary, is_published, date_published, slug]
-          "Configuration": [is_primary, is_content_type_list, content_type_id]
-          "Mapping": [content_id, content_type_id, custom_path]
+          "Configuration": [is_primary, is_content_type_list, content_id, content_type_id, custom_path]
           "Security": [requires_auth, requires_no_auth, groups_list, permissions_list, ]
       edit: ~
       new:  ~

@@ -86,6 +86,7 @@ class Basesympal_editorActions extends sfActions
 
     $this->setLayout(false);
     $this->setTemplate('preview_slot');
+    $this->getUser()->setFlash('notice', 'Successfully saved slot contents!');
   }
 
   public function executePreview_slot(sfWebRequest $request)
