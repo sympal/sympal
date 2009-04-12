@@ -182,7 +182,7 @@ li a.on {
   font-weight: bold;
 }
 
-.notice, .error {
+#edit_slot .notice, #edit_slot .error {
   margin: 0;
   margin-bottom: 15px;
 }
