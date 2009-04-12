@@ -124,7 +124,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     } else {
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/tick.png').' Publish', '@sympal_publish_content?id='.$content['id']);
     }
-    $contentEditor->addChild(image_tag('/sf/sf_admin/images/delete.png').' Delete', '@sympal_content_delete?id='.$content['id']);
 
     $contentType = $menu->addChild($content['Type']['name'].' Content')
       ->setCredentials(array('ManageContent'));

@@ -148,12 +148,32 @@ class Basesympal_editorActions extends sfActions
   {
     $version = $this->getRoute()->getObject();
 
-    $this->askConfirmation('Are you sure?', 'sympal_editor/confirm_revert', array('version' => $version));
+    $this->askConfirmation('Revert to version #'.$version['version'], 'sympal_editor/confirm_revert', array('version' => $version));
 
     $version->revert();
 
     $this->getUser()->setFlash('notice', 'Record was successfully reverted back to version #'.$version['version']);
 
     $this->redirect($request->getParameter('redirect_url'));
+  }
+
+  public function executeVersion_history(sfWebRequest $request)
+  {
+    $type = $request->getParameter('record_type');
+    $id = $request->getParameter('record_id');
+    $parentType = str_replace('Translation', '', $type);
+    Doctrine::initializeModels($parentType);
+
+    $this->record = Doctrine::getTable($type)
+      ->createQuery()
+      ->andWhere('id = ?', $id)
+      ->fetchOne();
+
+    $this->versions = Doctrine::getTable('Version')
+      ->createQuery('v')
+      ->andWhere('record_type = ?', $type)
+      ->andWhere('record_id = ?', $id)
+      ->orderBy('v.version ASC')
+      ->execute();
   }
 }

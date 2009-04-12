@@ -51,6 +51,7 @@ class sfSympalActions
         $this->redirect($request->getParameter('redirect_url'));
       }
     } else {
+      $this->getResponse()->setTitle($title);
       $request->setAttribute('title', $title);
       $request->setAttribute('message', $message);
 

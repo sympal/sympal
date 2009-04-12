@@ -14,15 +14,15 @@
 
   [?php $id = sfInflector::tableize($name).'_tool_tip' ?]
   <div class="[?php echo $class ?][?php $widget->hasError() and print ' errors' ?][?php $validatorSchema[$name]->getOption('required') and print ' required' ?]">
+    [?php if ($help || $help = $widget->renderHelp()): ?]
+      <span id="[?php echo $id ?]_help" class="help" style="float: right;" title="[?php echo strip_tags($help); ?]">
+        [?php echo image_tag('/sf/sf_admin/images/help.png') ?]
+      </span>
+    [?php endif; ?]
+
     [?php echo $widget->renderError() ?]
 
     <div>
-      [?php if ($help || $help = $widget->renderHelp()): ?]
-        <span id="[?php echo $id ?]_help" class="help" style="float: right;" title="[?php echo strip_tags($help); ?]">
-          [?php echo image_tag('/sf/sf_admin/images/help.png') ?]
-        </span>
-      [?php endif; ?]
-
       [?php if (!$widget instanceof sfFormFieldSchema): ?]
         [?php echo $widget->renderLabel($label) ?]
       [?php endif; ?]

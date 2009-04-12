@@ -1,4 +1,3 @@
-CREATE TABLE blog_post (id BIGINT AUTO_INCREMENT, title VARCHAR(255), teaser LONGTEXT, content_id BIGINT, INDEX content_id_idx (content_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_translation (id BIGINT, label VARCHAR(255), lang CHAR(2), PRIMARY KEY(id, lang)) ENGINE = INNODB;
 CREATE TABLE menu_item (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, is_primary TINYINT(1), is_published TINYINT(1), date_published DATETIME, custom_path VARCHAR(255), is_content_type_list TINYINT(1) DEFAULT '0', requires_auth TINYINT(1), requires_no_auth TINYINT(1), site_id BIGINT NOT NULL, content_type_id BIGINT, content_id BIGINT, slug VARCHAR(255), root_id INT, lft INT, rgt INT, level SMALLINT, UNIQUE INDEX sluggable_idx (slug), INDEX content_id_idx (content_id), INDEX site_id_idx (site_id), INDEX content_type_id_idx (content_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_group (menu_item_id BIGINT, group_id BIGINT, PRIMARY KEY(menu_item_id, group_id)) ENGINE = INNODB;
@@ -25,7 +24,6 @@ CREATE TABLE remember_key (user_id BIGINT, remember_key VARCHAR(32), ip_address 
 CREATE TABLE user (id BIGINT AUTO_INCREMENT, first_name VARCHAR(255), last_name VARCHAR(255), email_address VARCHAR(255) NOT NULL UNIQUE, username VARCHAR(128) NOT NULL UNIQUE, algorithm VARCHAR(128) DEFAULT 'sha1' NOT NULL, salt VARCHAR(128), password VARCHAR(128), is_active TINYINT(1) DEFAULT '1', is_super_admin TINYINT(1) DEFAULT '0', last_login DATETIME, created_at DATETIME, updated_at DATETIME, INDEX is_active_idx_idx (is_active), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE user_group (user_id BIGINT, group_id BIGINT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, group_id)) ENGINE = INNODB;
 CREATE TABLE user_permission (user_id BIGINT, permission_id BIGINT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, permission_id)) ENGINE = INNODB;
-ALTER TABLE blog_post ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
 ALTER TABLE menu_item_translation ADD FOREIGN KEY (id) REFERENCES menu_item(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id) ON DELETE CASCADE;

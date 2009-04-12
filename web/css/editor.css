@@ -131,3 +131,42 @@ li a.on {
 #create_new_content ul li h2 a img {
   vertical-align: middle;
 }
+
+.sympal_diff {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.sympal_diff h3 {
+  padding: 6px;
+  margin: 0;
+}
+
+.sympal_diff .normal_value tr td {
+  padding: 4px;
+}
+
+.sympal_diff table {
+  width: 100%;
+  border: 1px solid #ccc;
+}
+
+.sympal_diff table tr td {
+  padding: 4;
+  background: #fff;
+}
+
+.sympal_diff .added {
+  background: #ddffdd;
+}
+
+.sympal_diff .removed {
+  background: #ffdddd;
+}
+
+.sympal_diff .row {
+  padding-left: 10px;
+  border-left: 1px solid #ccc;
+}

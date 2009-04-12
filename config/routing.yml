@@ -16,6 +16,10 @@ sympal_homepage:
     type:   object
     method: getContent
 
+sympal_version_history:
+  url:   /version/:record_type/:record_id
+  param: { module: sympal_editor, action: version_history }
+
 sympal_revert_data:
   url:   /revert/:id
   param: { module: sympal_editor, action: revert_data }
