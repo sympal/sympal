@@ -32,7 +32,7 @@ generator:
       form:
         display:
           "NONE": [plugin_name, name, label, description, slug]
-          "Routing": [list_path, view_path, _content_urls]
+          "Routing": [list_path, view_path]
           "Rendering": [layout]
           "Schema": [schema]
       edit:    ~

@@ -8,6 +8,8 @@ class sfWidgetFormSympalVersion extends sfWidgetFormDoctrineChoice
 
   public function __construct($options = array(), $attributes = array())
   {
+    sfProjectConfiguration::getActive()->loadHelpers(array('Asset', 'Tag', 'Url'));
+
     if (!isset($options['object']))
     {
       throw new sfException('You must pass an object option with an instance of the object to retrieve the versions for.');

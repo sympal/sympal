@@ -16,7 +16,7 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
       if ($this->object->exists())
       {
         $this->widgetSchema['revert_to_version'] = new sfWidgetFormSympalVersion(array('object' => $this->object));
-        $this->widgetSchema->setHelp('revert_to_version', 'Choose the version of this record you wish to revert to. It will take you to a screen where you can confirm.');
+        $this->widgetSchema->setHelp('revert_to_version', 'Choose the version of this record you wish to revert to.');
         $this->validatorSchema['revert_to_version'] = new sfValidatorPass(array('required' => false));
       }
     }

@@ -45,7 +45,7 @@ generator:
         display:
           "NONE": [revert_to_version, created_by, is_published, date_published, slug]
           "Meta": [page_title, meta_keywords, meta_description]
-          "Routing": [master_menu_item_id, custom_path, _content_urls]
+          "Routing": [master_menu_item_id, custom_path]
           "Rendering": [content_template_id, layout]
           "Security": [groups_list, permissions_list]
       list:

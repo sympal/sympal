@@ -80,7 +80,7 @@ class Basesympal_editorActions extends sfActions
     {
       $this->form->save();
     } else {
-      exit((string) $this->form);
+      exit('errors'.(string) $this->form);
       // handle errors?
     }
 
