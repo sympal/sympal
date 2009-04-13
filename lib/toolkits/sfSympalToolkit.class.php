@@ -77,6 +77,12 @@ class sfSympalToolkit
     {
       throw new sfException('Your project databases.yml must be configured to use Doctrine and not Propel.');
     }
+
+    $apps = glob(sfConfig::get('sf_root_dir').'/apps/*');
+    if (empty($apps))
+    {
+      throw new sfException('You must have at least one application created in order to use Sympal.');
+    }
   }
 
   public static function processPhpCode($code, $variables = array())
