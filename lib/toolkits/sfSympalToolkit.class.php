@@ -56,6 +56,29 @@ class sfSympalToolkit
     return $info['filename'];
   }
 
+  public static function checkRequirements()
+  {
+    $user = sfContext::getInstance()->getUser();
+    $app = sfConfig::get('sf_app');
+    if (!$user instanceof sfSympalUser)
+    {
+      throw new sfException('myUser class located in '.sfConfig::get('sf_root_dir').'/apps/'.$app.'/myUser.class.php must extend sfSympalUser');
+    }
+
+    $routingPath = sfConfig::get('sf_root_dir').'/apps/'.$app.'/config/routing.yml';
+    $routes = sfYaml::load(file_get_contents($routingPath));
+    if (isset($routes['homepage']) || isset($routes['default']) || isset($routes['default_index']))
+    {
+      throw new sfException('Your application routing file must not have a homepage, default, or default_index route defined.');
+    }
+
+    $databasesPath = sfConfig::get('sf_config_dir').'/databases.yml';
+    if(stristr(file_get_contents($databasesPath), 'propel'))
+    {
+      throw new sfException('Your project databases.yml must be configured to use Doctrine and not Propel.');
+    }
+  }
+
   public static function processPhpCode($code, $variables = array())
   {
     $sf_context = sfContext::getInstance();

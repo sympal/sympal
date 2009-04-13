@@ -24,18 +24,11 @@ abstract class Basesympal_installActions extends sfActions
 
   public function _check()
   {
-    $this->checkFilePermissions();
-    
-    $app = sfConfig::get('sf_app');
-    if (!$this->getUser() instanceof sfSympalUser)
-    {
-      throw new sfException('myUser class located in '.sfConfig::get('sf_root_dir').'/apps/'.$app.'/myUser.class.php must extend sfSympalUser');
-    }
-    $routingPath = sfConfig::get('sf_root_dir').'/apps/'.$app.'/config/routing.yml';
-    $routes = sfYaml::load(file_get_contents($routingPath));
-    if (isset($routes['homepage']) || isset($routes['default']) || isset($routes['default_index']))
-    {
-      $this->getUser()->setFlash('error', 'Your application routing file must not have a homepage, default, or default_index route defined.');
+    try {
+      $this->checkFilePermissions();
+      sfSympalToolkit::checkRequirements();
+    } catch (Exception $e) {
+      $this->getUser()->setFlash('error', $e->getMessage());
     }
   }
 
