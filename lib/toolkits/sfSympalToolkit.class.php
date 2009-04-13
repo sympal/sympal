@@ -49,7 +49,7 @@ class sfSympalToolkit
     $apps = glob(sfConfig::get('sf_root_dir').'/apps/*');
     if (empty($apps))
     {
-      throw new sfException('No Symfony applications found. You must have at least one application.');
+      return 'sympal';
     }
     $app = current($apps);
     $info = pathinfo($app);
