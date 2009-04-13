@@ -7,9 +7,9 @@ class sfSympalConfig
     $default = is_null($default) ? false:$default;
     if (is_null($name))
     {
-      return sfConfig::get('app_sympal_settings_'.$group, $default);
+      return sfConfig::get('app_sympal_config_'.$group, $default);
     } else {
-      $settings = sfConfig::get('app_sympal_settings_'.$group);
+      $settings = sfConfig::get('app_sympal_config_'.$group);
 
       return isset($settings[$name]) ? $settings[$name]:$default;
     }
@@ -19,11 +19,11 @@ class sfSympalConfig
   {
     if (is_null($value))
     {
-      return sfConfig::set('app_sympal_settings_'.$group, $name);
+      return sfConfig::set('app_sympal_config_'.$group, $name);
     } else {
-      $settings = sfConfig::get('app_sympal_settings_'.$group);
+      $settings = sfConfig::get('app_sympal_config_'.$group);
       $settings[$name] = $value;
-      sfConfig::set('app_sympal_settings_'.$group, $settings);
+      sfConfig::set('app_sympal_config_'.$group, $settings);
     }
   }
 
@@ -79,9 +79,9 @@ class sfSympalConfig
 
     if (is_null($group))
     {
-      $array['all']['sympal_settings'][$name] = $value;
+      $array['all']['sympal_config'][$name] = $value;
     } else {
-      $array['all']['sympal_settings'][$group][$name] = $value;
+      $array['all']['sympal_config'][$group][$name] = $value;
     }
 
     sfSympalConfig::set($group, $name, $value);

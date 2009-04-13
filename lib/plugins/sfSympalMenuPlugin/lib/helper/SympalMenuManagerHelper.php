@@ -3,9 +3,14 @@
 function get_sympal_menu_manager($menuItem)
 {
   $menu = get_sympal_menu($menuItem['slug'], true, 'sfSympalMenuManager');
-  $menu->callRecursively('setRoute', null);
+  if ($menu)
+  {
+    $menu->callRecursively('setRoute', null);
 
-  return $menu;
+    return $menu;
+  } else {
+    return false;
+  }
 }
 
 function get_sympal_menu_manager_html($menuItem)

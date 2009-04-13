@@ -3,7 +3,7 @@ MenuItem:
     sfSympalRecord:
     Sluggable:
       fields: [name]
-      unique: true
+      unique: false
     NestedSet:
       hasManyRoots: true
       rootColumnName: root_id

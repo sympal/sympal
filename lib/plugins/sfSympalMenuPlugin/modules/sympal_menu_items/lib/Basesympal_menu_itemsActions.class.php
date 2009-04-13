@@ -11,7 +11,12 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->menuItem = Doctrine::getTable('MenuItem')->findOneByIsPrimary(true);
+    $this->menuItem = Doctrine::getTable('MenuItem')
+      ->createQuery()
+      ->andWhere('is_primary = ?', true)
+      ->andWhere('site_id = ?', sfSympalContext::getInstance()->getSiteRecord()->getId())
+      ->fetchOne();
+
     $table = Doctrine::getTable('MenuItem');
     $this->roots = $table->getTree()->fetchRoots();
 

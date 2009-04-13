@@ -138,12 +138,17 @@ abstract class PluginMenuItem extends BaseMenuItem
     if (is_null($this->_breadcrumbs))
     {
       $menu = sfSympalMenuSiteManager::getMenu('primary');
-      $node = $menu->findMenuItem($this);
-
-      if ($node)
+      if ($menu)
       {
-        $this->_breadcrumbs = $node->getBreadcrumbs();
-      } else {
+        $node = $menu->findMenuItem($this);
+
+        if ($node)
+        {
+          $this->_breadcrumbs = $node->getBreadcrumbs();
+        }
+      }
+      if (is_null($this->_breadcrumbs))
+      {
         $this->_breadcrumbs = sfSympalToolkit::generateBreadcrumbs(array());
       }
     }

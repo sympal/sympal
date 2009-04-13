@@ -1,5 +1,5 @@
 all:
-  sympal_settings:
+  sympal_config:
     i18n: true
     versioning: true
     versioned_models:

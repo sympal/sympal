@@ -60,7 +60,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('context.load_factories', array($this, 'loadContext'));
 
     $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
-    $this->dispatcher->connect('sympal.load_settings_form', array($this, 'loadSettings'));
+    $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfig'));
     $this->dispatcher->connect('sympal.load_tools', array($this, 'loadTools'));
     $this->dispatcher->connect('command.post_command', array($this, 'changeBaseFormDoctrine'));
   }
@@ -161,7 +161,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     return $this->sympalConfiguration;
   }
 
-  public function loadSettings(sfEvent $event)
+  public function loadConfig(sfEvent $event)
   {
     $form = $event->getSubject();
 

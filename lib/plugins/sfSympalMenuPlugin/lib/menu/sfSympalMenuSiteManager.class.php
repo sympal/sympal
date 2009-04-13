@@ -63,6 +63,10 @@ class sfSympalMenuSiteManager
     }
 
     $rootId = array_search($name, $this->_rootNames);
+    if (!$rootId)
+    {
+      return false;
+    }
     $rootMenuItem = $this->_rootMenuItems[$rootId];
 
     $class = $class ? $class:'sfSympalMenuSite';
@@ -158,7 +162,7 @@ class sfSympalMenuSiteManager
         ->leftJoin('m.RelatedContent c')
         ->leftJoin('c.Type ct')
         ->leftJoin('m.ContentType ct2')
-        ->leftJoin('m.Site s')
+        ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSite())
         ->orderBy('m.root_id, m.lft ASC');
 
       if (sfSympalConfig::isI18nEnabled('MenuItem'))

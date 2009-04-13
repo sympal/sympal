@@ -24,12 +24,14 @@
     <ul>
       <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to('Create New Menu', '@sympal_menu_items_new') ?></li>
 
-      <?php if (!$menuItem->is_primary): ?>
+      <?php if ($menuItem && !$menuItem->is_primary): ?>
         <li><?php echo image_tag('/sf/sf_admin/images/delete.png') ?> <?php echo link_to('Delete Menu', '@sympal_menu_manager_tree_delete?slug='.$menuItem['slug']) ?></li>
 	    <?php endif; ?>
 
-  	  <li><a id="expand" href="#">Expand all</a></li>
-  	  <li><a id="collapse" href="#">Collapse all</a></li>
+      <?php if ($menuItem): ?>
+  	    <li><a id="expand" href="#">Expand all</a></li>
+  	    <li><a id="collapse" href="#">Collapse all</a></li>
+	    <?php endif; ?>
   	</ul>
   	<span id="loading"></span>
   </div>
@@ -43,11 +45,15 @@
     the item you dragged it to.
   </div>
 
-  <h2>Managing <?php echo $menuItem['name'] ?> Menu</h2>
+  <?php if ($menuItem && $menuItem->exists()): ?>
+    <h2>Managing <?php echo $menuItem['name'] ?> Menu</h2>
 
-  <div id="sympal_menu_manager_tree_holder">
-    <?php echo get_sympal_menu_manager_html($menuItem) ?>
-  </div>
+    <div id="sympal_menu_manager_tree_holder">
+      <?php echo get_sympal_menu_manager_html($menuItem) ?>
+    </div>
 
-  <?php echo get_sympal_menu_manager_js($menuItem) ?>
+    <?php echo get_sympal_menu_manager_js($menuItem) ?>
+  <?php else: ?>
+    <p>Primary menu has not been created yet.</p>
+  <?php endif; ?>
 </div>

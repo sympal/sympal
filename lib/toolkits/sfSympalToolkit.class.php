@@ -156,6 +156,7 @@ class sfSympalToolkit
       $response->addStylesheet('/sfSympalPlugin/css/' . $name);
     } else {
       $response->addStylesheet($name, 'last');
+      $response->removeStylesheet('/sfSympalPlugin/css/sympal');
     }
 
     return true;

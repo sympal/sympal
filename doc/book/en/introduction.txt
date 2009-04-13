@@ -1,0 +1,123 @@
+# Introduction
+
+> **CAUTION**
+> Sympal is still under heavy development and has not had any sort of official 
+> release. It also requires that you use the latest version of Symfony 1.2 from 
+> SVN. It must be from SVN as the latest package does not contain some required 
+> bug fixes.
+
+Sympal is more or less an extension on top of Symfony that is designed specifically 
+for building content based web applications. It is more than just a content 
+management framework as it adds lots of new features and tools to Symfony to 
+make your life easier on a day to day basis when building websites.
+
+> **NOTE**
+> This plugin requires `sfDoctrinePlugin` so it assumes you have setup your 
+> project to be a Doctrine one.
+
+## Overview
+
+Sympal is built to be extremely modular and is made up of multiple plugins. Even 
+the core of Sympal is made up of multiple plugins and are bundled with `sfSympalPlugin`. 
+Below is a list of the plugins that make up the core.
+
+**Core Sympal Plugins**
+
+* sfSympalPlugin
+* sfSympalMenuPlugin
+* sfSympalPagesPlugin
+* sfSympalPluginManagerPlugin
+* sfSympalUserPlugin
+
+**Core Addon Plugins**
+
+* sfFormExtraPlugin
+* sfTaskExtraPlugin
+
+The task and form extra plugins are normal Symfony plugins but are included in 
+Sympal because the functionality they provide are very useful while working 
+with Sympal and in general when working in Symfony. We'll discuss later in more 
+detail the functionality they provide.
+
+All of these plugins together implement the basic functionality of a content 
+management system as well as an extendible infrastructure so developers can add 
+their own content types and Sympal plugins easily. They can also easily interact 
+and manipulate other Sympal plugins by taking advantage of implemented hooks and 
+events which will be discussed later.
+
+## Features
+
+**Multiple Sites**
+
+Easily manage multiple sites from within one Symfony/Sympal project.
+
+**Page Caching**
+
+Easily turn on and off page caching for your website. Optionally cache individual 
+pieces of content or cache the whole page and let apache serve it.
+
+**Database Caching**
+
+Want your pages to still be dynamic but lower the load on your database? With 
+database caching your pages can still be dynamic and have 0 queries.
+
+**E-mail**
+
+The problem of sending and managing e-mails is always a hurdle in Symfony and 
+this is solved by a custom layer built for this specific task.
+
+**Security**
+
+You can control who can edit/view content with the users, groups and 
+permissions system.
+
+**Internationalization**
+
+Easily enable internationalization for any of your content. Any property in your
+database can be internationalized by simply changing some configuration values.
+
+**Data Versioning**
+
+Need to version the data in your website? You can easily turn in on versioning 
+for any of your data by changing some configuration values.
+
+**Site Menus**
+
+Manage your site menus from a nice web interface and easily render them in your 
+site layouts with very little work.
+
+**Breadcrumbs Generation**
+
+Easily generate breadcrumbs from your current location in the sitemap or generate 
+breadcrumbs manually from an array of input.
+
+**Custom Content Types**
+
+Expand Sympal content by adding your own content types (i.e. BlogPost, Article, etc.)
+
+**Custom Slot Types**
+
+Even more specifically your content can have multiple defined "slots" that contain
+user input. You can add your own types that allow you to customize how the contents
+are edited and rendered.
+
+**CLI & Web Based Installer**
+
+Easily install Sympal from a command line or web based installer.
+
+**CLI & Web Based Plugin Installer**
+
+You can easily browse and install available Sympal plugins from the web based or 
+command line installer.
+
+**Templates**
+
+The templates used to render content can be configured and overridden at multiple
+levels of Sympal. Because of this rendering certain content with different templates
+is possible.
+
+**Layouts**
+
+The same goes for layouts as templates. You can customize what layout to use at 
+multiple levels. For example you can set a global layout, site layout, content 
+type layout, or even customize the layout for an individual content record.

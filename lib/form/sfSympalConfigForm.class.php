@@ -8,7 +8,7 @@ class sfSympalConfigForm extends sfForm
 
   public function setup()
   {
-    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_settings_form'));
+    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_config_form'));
 
     $otherSettings = array();
     foreach ($this->_settings as $group => $settings)
@@ -104,7 +104,7 @@ class sfSympalConfigForm extends sfForm
   protected function _buildArrayToWrite()
   {
     $array = array();
-    $array['all']['sympal_settings'] = $this->getValues();
+    $array['all']['sympal_config'] = $this->getValues();
 
     return $array;
   }

@@ -91,8 +91,12 @@ function get_sympal_menu($name, $showChildren = true, $class = null)
 function get_sympal_split_menus($name, $showChildren = true, $max = null, $split = false)
 {
   $menu = sfSympalMenuSiteManager::getMenu($name, $showChildren);
-
-  return sfSympalMenuSiteManager::split($menu, $max, $split);
+  if ($menu)
+  {
+    return sfSympalMenuSiteManager::split($menu, $max, $split);
+  } else {
+    return false;
+  }
 }
 
 function get_sympal_editor($menuItem = null, $content = null)

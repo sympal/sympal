@@ -214,6 +214,7 @@ sympal_content_create_type:
   ->createQuery('c')
   ->leftJoin('c.Type t')
   ->leftJoin('c.Routes r')
+  ->innerJoin('c.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
   ->execute(); ?>
 
 <?php foreach ($content as $c): ?> 
