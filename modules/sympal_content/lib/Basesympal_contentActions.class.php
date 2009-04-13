@@ -102,15 +102,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $new = $form->isNew();
       $content = $form->save();
 
-      if ($new)
-      {
-        try {
-          $renderer = new sfSympalContentRenderer($content->getMainMenuItem());
-          $renderer->setContent($content);
-          $renderer->initialize();
-          $html = $renderer->render();
-        } catch (Exception $e) {}
-      }
       $config = sfContext::getInstance()->getConfigCache()->checkConfig('config/routing.yml', true);
       sfContext::getInstance()->getRouting()->setRoutes(include($config));
 

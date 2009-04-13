@@ -233,6 +233,7 @@ sympal_content_create_type:
 <?php $contentTypes = Doctrine::getTable('ContentType')
   ->createQuery('t')
   ->leftJoin('t.Routes r')
+  ->andWhere('r.content_id IS NULL')
   ->orderBy('r.type ASC')
   ->execute(); ?>
 

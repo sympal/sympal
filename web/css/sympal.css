@@ -19,6 +19,18 @@
   padding:                        0 20px 0 0;
 }
 
+#column_right ul {
+  padding: 0;
+  margin: 0;
+  margin-left: 15px;
+  margin-top: 5px;
+}
+
+#column_right ul li {
+  list-style-type: square;
+  margin-bottom: 2px;
+}
+
 
 /*
  * Three Equidistant Columns

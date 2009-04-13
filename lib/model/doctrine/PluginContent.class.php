@@ -89,8 +89,12 @@ abstract class PluginContent extends BaseContent
     } else {
       $q = Doctrine::getTable('MenuItem')
         ->createQuery('m')
-        ->where('m.is_content_type_list = ?', true)
-        ->andWhere('m.content_type_id = ?', $this->content_type_id);
+        ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
+        ->andWhere('m.is_content_type_list = ?', true)
+        ->andWhere('m.content_type_id = ?', $this->content_type_id)
+        ->orWhere('m.is_primary = true')
+        ->orderBy('m.is_primary DESC')
+        ->limit(1);
 
       return $q->fetchOne();
     }
