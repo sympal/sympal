@@ -1,15 +1,11 @@
 <?php if ($sf_user->hasFlash('notice') || $sf_user->hasFlash('error')): ?>
   <div id="sympal_flash">
     <?php if ($sf_user->hasFlash('notice')): ?>
-      <?php foreach ($sf_user->getFlashArray('notice') as $notice): ?>
-        <div class="notice"><?php echo $notice ?></div>
-      <?php endforeach; ?>
+      <div class="notice"><?php echo $sf_user->getFlash('notice') ?></div>
     <?php endif; ?>
 
     <?php if ($sf_user->hasFlash('error')): ?>
-      <?php foreach ($sf_user->getFlashArray('error') as $error): ?>
-        <div class="error"><?php echo $error ?></div>
-      <?php endforeach; ?>
+      <div class="error"><?php echo $sf_user->getFlash('error') ?></div>
     <?php endif; ?>
   </div>
 

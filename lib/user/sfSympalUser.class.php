@@ -52,41 +52,6 @@ class sfSympalUser extends sfBasicSecurityUser
     return $mode;
   }
 
-  public function addFlash($name, $value, $persist = true)
-  {
-    $flash = (array) parent::getFlash($name, $value, $persist);
-    $flash = $flash ? $flash:array();
-    $flash[] = $value;
-
-    parent::setFlash($name, $flash);
-  }
-
-  public function setFlash($name, $value, $persist = true)
-  {
-    $this->addFlash($name, $value, $persist);
-  }
-
-  public function getFlash($name, $default = null)
-  {
-    $array = $this->getFlashArray($name, $default);
-    if (!empty($array))
-    {
-      return end($array);
-    } else {
-      return false;
-    }
-  }
-
-  public function getFlashArray($type, $default = null)
-  {
-    $flash = parent::getFlash($type, $default);
-    $flash = array_unique((array) $flash);
-
-    $this->getAttributeHolder()->remove($type, null, 'symfony/user/sfUser/flash');
-
-    return $flash;
-  }
-
   public function obtainContentLock(Content $content)
   {
     if (!sfSympalToolkit::isEditMode())
