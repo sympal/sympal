@@ -44,6 +44,18 @@ class sfSympalToolkit
     throw new sfException('Could not find symfony resource for the module "'.$module.'" and action "'.$action.'". '.$e1->getMessage().' - '.$e2->getMessage().' - '.$e3->getMessage());
   }
 
+  public static function getFirstApplication()
+  {
+    $apps = glob(sfConfig::get('sf_root_dir').'/apps/*');
+    if (empty($apps))
+    {
+      throw new sfException('No Symfony applications found. You must have at least one application.');
+    }
+    $app = current($apps);
+    $info = pathinfo($app);
+    return $info['filename'];
+  }
+
   public static function processPhpCode($code, $variables = array())
   {
     $sf_context = sfContext::getInstance();
