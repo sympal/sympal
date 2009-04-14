@@ -20,24 +20,7 @@ class sfSympalDiff
     $renderer = @new Text_Diff_Renderer_inline();
     $diff = (string) @$renderer->render($diff);
 
-    $diff = str_replace("<ins>\n", '<ins>', $diff);
-    $diff = str_replace("<del>\n", '<del>', $diff);
-
-    $e = explode("\n", $diff);
-    unset($e[count($e) - 1]);
-
-    $table = '<table>';
-    foreach ($e as $key => $value)
-    {
-      $line = $key + 1;
-      $table .= '<tr>';
-      $table .= '<th>'.$line.'</th>';
-      $table .= '<td>'.$value.'</td>';
-      $table .= '</tr>';
-    }
-    $table .= '</table>';
-
-    return $table;
+    return '<pre>'.$diff.'</pre>';
   }
 
   public static function diff($from, $to)
