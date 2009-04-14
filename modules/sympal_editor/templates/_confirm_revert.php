@@ -9,27 +9,27 @@ by <strong><?php echo $version['CreatedBy'] ?></strong>.
 
 <p>Below you will find a list of the changes that were made.</p>
 
-<h3><?php echo $version['num_changes'] ?> Change(s)</h3>
+<div class="sympal_diff">
 
-<ul>
+  <h2><?php echo $version['num_changes'] ?> Change(s)</h2>
+
+  <ul>
+    <?php foreach ($version['Changes'] as $change): ?>
+      <li><a href="#<?php echo $field = sfInflector::humanize($change['field']) ?>"><?php echo $field ?></a></li>
+    <?php endforeach; ?>
+  </ul>
+
+  <hr/>
+
   <?php foreach ($version['Changes'] as $change): ?>
-    <li><a href="#<?php echo $field = sfInflector::humanize($change['field']) ?>"><?php echo $field ?></a></li>
-  <?php endforeach; ?>
-</ul>
-
-<?php foreach ($version['Changes'] as $change): ?>
-  <div class="sympal_diff">
     <h3><?php echo sfInflector::humanize($change['field']) ?></h3>
 
-    <table>
-      <tr>
-        <th>Current Value</th>
-        <th>Revert Value To</th>
-      </tr>
-      <tr>
-        <td valign="top"><?php echo $change->getRenderValue('current') ?></td>
-        <td valign="top"><?php echo $change->getRenderValue('revert') ?></td>
-      </tr>
-    </table>
-  </div>
-<?php endforeach; ?>
+    <?php echo sfSympalDiff::diff($change['new_value'], $change['old_value']) ?>
+
+    <div class="legend">
+      <span><ins>&nbsp; &nbsp; </ins> &nbsp; <strong>Add</strong></span>
+      &nbsp; &nbsp; 
+      <span><del>&nbsp; &nbsp; </del> &nbsp; <strong>Delete</strong></span>
+    </div>
+  <?php endforeach; ?>
+</div>

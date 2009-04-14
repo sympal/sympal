@@ -144,31 +144,25 @@ li a.on {
   margin: 0;
 }
 
-.sympal_diff .normal_value tr td {
-  padding: 4px;
-}
-
 .sympal_diff table {
   width: 100%;
   border: 1px solid #ccc;
 }
 
+.sympal_diff table tr th {
+  margin: 0;
+  padding: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+  background-color: #eeeedd;
+  border-right: 1px solid #ccc;
+}
+
 .sympal_diff table tr td {
-  padding: 4;
   background: #fff;
-}
-
-.sympal_diff .added {
-  background: #ddffdd;
-}
-
-.sympal_diff .removed {
-  background: #ffdddd;
-}
-
-.sympal_diff .row {
-  padding-left: 10px;
-  border-left: 1px solid #ccc;
+  margin: 0;
+  padding: 0;
+  padding-left: 4px;
 }
 
 #save {
@@ -185,4 +179,12 @@ li a.on {
 #edit_slot .notice, #edit_slot .error {
   margin: 0;
   margin-bottom: 15px;
+}
+
+ins {
+  background-color: #ddffdd;
+}
+
+del {
+  background-color: #ffdddd;
 }
