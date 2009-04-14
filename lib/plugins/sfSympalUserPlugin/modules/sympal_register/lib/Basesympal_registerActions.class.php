@@ -2,6 +2,11 @@
 
 class Basesympal_registerActions extends sfActions
 {
+  public function executeIndex(sfWebRequest $request)
+  {
+    $this->form = sfSympalRegisterForm::getInstance();
+  }
+
   public function executeSave(sfWebRequest $request)
   {
     $this->form = sfSympalRegisterForm::getInstance();
@@ -15,8 +20,6 @@ class Basesympal_registerActions extends sfActions
       $this->getUser()->signIn($this->form->getObject());
       $this->redirect('@sympal_homepage');
     }
-
-    $sympalContext = sfSympalContext::createInstance('sympal', $this->getContext());
-    $this->renderer = $sympalContext->quickRenderContent('register');
+    $this->setTemplate('index');
   }
 }

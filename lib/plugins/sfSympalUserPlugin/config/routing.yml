@@ -52,6 +52,10 @@ sympal_permissions:
     prefix_path:          admin/security/permission
     with_wildcard_routes: true
 
+sympal_register:
+  url:   /register
+  param: { module: sympal_register, action: index }
+
 sympal_register_save:
   url:   /register/save
   param: { module: sympal_register, action: save }
