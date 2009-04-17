@@ -31,6 +31,12 @@ abstract class PluginContentSlot extends BaseContentSlot
 
         $renderer = new $class($this);
         $this->_rendered = (string) $renderer;
+        
+        $user = sfContext::getInstance()->getUser();
+        if ($user->hasUnsavedContentSlotValue($this))
+        {
+          $this->_rendered = '<span title="This content slow value has not been saved! It is currently saved in your browsers session." class="sympal_unsaved_content_slot_value">'.$this->_rendered.'</span>';
+        }
       }
     }
     return $this->_rendered;

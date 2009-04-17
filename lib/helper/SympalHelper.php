@@ -190,6 +190,8 @@ function get_sympal_column_content_slot($content, $name, $renderFunction = null,
 
 function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
 {
+  $user = sfContext::getInstance()->getUser();
+
   $defaultValue = '[Double click to edit slot content]';
   $slotsCollection = $content->getSlots();
   $slots = array();
@@ -238,7 +240,7 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
     $renderedValue = $slot->render();
   }
 
-  if (sfSympalToolkit::isEditMode() && $content->userHasLock(sfContext::getInstance()->getUser()))
+  if (sfSympalToolkit::isEditMode() && $content->userHasLock($user))
   {
     $html  = '<span class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
     $html .= $renderedValue;

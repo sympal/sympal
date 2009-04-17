@@ -66,6 +66,13 @@ class Basesympal_editorActions extends sfActions
     $this->setLayout(false);
 
     $this->contentSlot = $this->getRoute()->getObject();
+
+    if ($this->getUser()->hasUnsavedContentSlotValue($this->contentSlot))
+    {
+      $unsavedValue = $this->getUser()->getUnsavedContentSlotValue($this->contentSlot);
+      $this->contentSlot->setValue($unsavedValue);
+    }
+
     $this->form = $this->_getContentSlotForm($request);
   }
 
@@ -79,6 +86,7 @@ class Basesympal_editorActions extends sfActions
     if ($this->form->isValid())
     {
       $this->form->save();
+      $this->getUser()->clearUnsavedContentSlotValue($this->contentSlot);
     } else {
       exit('errors'.(string) $this->form);
       // handle errors?
@@ -95,6 +103,8 @@ class Basesympal_editorActions extends sfActions
 
     $this->contentSlot = $this->getRoute()->getObject();
     $this->contentSlot->setValue($request->getParameter('value'));
+
+    $this->getUser()->updateUnsavedContentSlotValue($this->contentSlot, $request->getParameter('value'));
   }
 
   public function executeToggle_edit(sfWebRequest $request)

@@ -68,6 +68,12 @@ div#sympal-icon {
 
 .sympal_editable_content_slot {
   border: 1px solid transparent;
+  display: block;
+}
+
+.sympal_unsaved_content_slot_value {
+  border: 1px solid red;
+  display: block;
 }
 
 li a.off, li a.on {
