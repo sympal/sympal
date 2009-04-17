@@ -39,7 +39,7 @@ class sfWidgetFormSympalVersion extends sfWidgetFormDoctrineChoice
     {
       $id = str_replace(array('[', ']'), array('_', ''), $name);
       $url = sfContext::getInstance()->getController()->genUrl('@sympal_revert_data?id=VERSION_ID');
-      $js = "javascript: var url = '".$url."'; url = url.replace('VERSION_ID', document.getElementById('".$id."').value); location.href = url;";
+      $js = "javascript: var id = document.getElementById('".$id."').value; if (!id) { return false; } var url = '".$url."'; url = url.replace('VERSION_ID', document.getElementById('".$id."').value); location.href = url;";
 
       $widget  = parent::render($name, $value, $attributes, $errors);
       $widget .= ' <a href="javascript: return false;" onClick="'.$js.'">'.image_tag('/sfSympalPlugin/images/revert.png').'</a>';

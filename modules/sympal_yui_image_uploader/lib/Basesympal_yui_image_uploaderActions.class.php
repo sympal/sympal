@@ -14,16 +14,26 @@ abstract class Basesympal_yui_image_uploaderActions extends sfActions
   {
     sfConfig::set('sf_web_debug', false);
 
-    $form = new sfSympalYuiImageUploadForm();
-    $form->bind(array(), $request->getFiles());
-    $savedPath = $form->save();
-    $info = pathinfo($savedPath);
-    $name = $info['basename'];
+    try {
+      $form = new sfSympalYuiImageUploadForm();
+      $form->bind(array(), $request->getFiles());
 
-    $dirName = sfSympalConfig::get('yui_image_upload_dir', null, 'yui_images');
-    $url = $request->getUriPrefix().$request->getRelativeUrlRoot().'/uploads/'.$dirName.'/'.$name;
-    $message = "{status:'UPLOADED', image_url:'".$url."'}";
+      if ($form->isValid())
+      {
+        $savedPath = $form->save();
+        $info = pathinfo($savedPath);
+        $name = $info['basename'];
 
-    return $this->renderText($message);
+        $dirName = sfSympalConfig::get('yui_image_upload_dir', null, 'yui_images');
+        $url = $request->getUriPrefix().$request->getRelativeUrlRoot().'/uploads/'.$dirName.'/'.$name;
+        $message = "{status:'UPLOADED', image_url:'".$url."'}";
+
+        return $this->renderText($message);
+      } else {
+        return $this->renderText("{status:'".str_replace("\n", '', strip_tags((string) $form))."'}");
+      }
+    } catch (Exception $e) {
+      return $this->renderText("{status:'".$e->getMessage()."'}");
+    }
   }
 }

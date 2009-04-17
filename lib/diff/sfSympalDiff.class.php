@@ -20,7 +20,7 @@ class sfSympalDiff
     $renderer = @new Text_Diff_Renderer_inline();
     $diff = (string) @$renderer->render($diff);
 
-    return '<pre>'.$diff.'</pre>';
+    return $diff;
   }
 
   public static function diff($from, $to)

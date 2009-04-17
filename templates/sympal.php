@@ -60,8 +60,9 @@
           <?php echo get_slot('sympal_right_sidebar') ?>
 
           <?php if ($subMenu): ?>
-            <h2><?php echo $subMenu->renderLabel() ?></h2>
-            <?php echo $subMenu ?>
+            <div id="sympal_sub_menu">
+              <?php echo $subMenu ?>
+            </div>
           <?php endif; ?>
         </div>
        </div>

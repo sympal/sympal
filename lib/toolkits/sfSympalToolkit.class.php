@@ -166,7 +166,7 @@ class sfSympalToolkit
   {
     $user = sfContext::getInstance()->getUser();
 
-    return $user->isAuthenticated() && $user->getAttribute('sympal_edit', false);
+    return $user->isAuthenticated() && $user->getAttribute('sympal_edit', true);
   }
 
   public static function generateBreadcrumbs($breadcrumbsArray)
