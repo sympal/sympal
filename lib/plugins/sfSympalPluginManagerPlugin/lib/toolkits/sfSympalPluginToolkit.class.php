@@ -109,7 +109,7 @@ class sfSympalPluginToolkit
       $installedPlugins = ProjectConfiguration::getActive()->getPlugins();
 
       $available = array();
-      $paths = sfSympalConfig::get('sympal_plugin_svn_sources');
+      $paths = sfSympalConfig::get('plugin_sources');
 
       foreach ($paths as $path)
       {

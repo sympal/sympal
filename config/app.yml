@@ -19,7 +19,7 @@ all:
     disallow_php_in_content: false
     default_layout: sympal
     rows_per_page: 10
-    sympal_plugin_svn_sources: ["http://svn.symfony-project.com/plugins"]
+    plugin_sources: ["http://svn.symfony-project.com/plugins"]
     markdown_styled_boxes: [quote, tip, caution, note]
     page_cache:
       enabled: true
