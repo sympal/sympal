@@ -171,6 +171,9 @@ li a.on {
   padding-left: 4px;
 }
 
+.sympal_diff pre {
+}
+
 #save {
   float: left;
 }

@@ -24,7 +24,7 @@ by <strong><?php echo $version['CreatedBy'] ?></strong>.
   <?php foreach ($version['Changes'] as $change): ?>
     <h3><?php echo sfInflector::humanize($change['field']) ?></h3>
 
-    <?php echo nl2br(sfSympalDiff::diff($change['new_value'], $change['old_value'])) ?>
+    <pre><code><?php echo sfSympalDiff::diff($change['new_value'], $change['old_value']) ?></code></pre>
 
     <div class="legend">
       <span><ins>&nbsp; &nbsp; </ins> &nbsp; <strong>Add</strong></span>
