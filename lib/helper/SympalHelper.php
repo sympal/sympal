@@ -63,8 +63,10 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
 
   sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($breadcrumbs, 'sympal.load_breadcrumbs', array('menuItem' => $menuItem, 'content' => $content, 'subItem' => $subItem)));
 
-  $title = $breadcrumbs->getPathAsString();
+  $title = $breadcrumbs->getPathAsString() instanceof sfOutputEscaper ? $breadcrumbs->getPathAsString()->getRawValue():$breadcrumbs->getPathAsString();
   set_sympal_title($title);
+
+  $breadcrumbs = $breadcrumbs instanceof sfOutputEscaper ? $breadcrumbs->getRawValue():$breadcrumbs;
 
   if ($html = (string) $breadcrumbs)
   {
@@ -237,7 +239,7 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
   if (sfSympalToolkit::isEditMode() && !$slot->hasValue()) {
     $renderedValue = $defaultValue;
   } else {
-    $renderedValue = $slot->render();
+    $renderedValue = $slot instanceof sfOutputEscaper ? $slot->getRawValue()->render():$slot->render();
   }
 
   if (sfSympalToolkit::isEditMode() && $content->userHasLock($user))

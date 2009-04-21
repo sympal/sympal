@@ -1,1 +1,1 @@
-<?php echo $renderer->render() ?>
+<?php echo $renderer instanceof sfOutputEscaper ? $renderer->getRawValue()->render():$renderer->render() ?>

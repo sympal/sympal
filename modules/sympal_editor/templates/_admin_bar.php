@@ -10,7 +10,7 @@
 <div id="sympal_admin_bar_container" class="yui-skin-sam">
   <div id="sympal_admin_bar" class="yuimenubar yuimenubarnav">
     <div class="bd">
-        <?php echo $menu ?>
+        <?php echo $menu instanceof sfOutputEscaper ? $menu->getRawValue():$menu ?>
     </div>
   </div>
 </div>

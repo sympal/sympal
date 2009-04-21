@@ -70,6 +70,7 @@ class sfSympalContentRenderer
     if (!$response->getTitle())
     {
       $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
+      $title = $title instanceof sfOutputEscaper ? $title->getRawValue():$title;
       $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;
       $response->setTitle($title);
     }

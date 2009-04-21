@@ -3,6 +3,7 @@
 [?php use_sympal_yui_js('animation/animation') ?]
 [?php use_sympal_yui_js('container/container') ?]
 
+[?php $widget = $widget instanceof sfOutputEscaper ? $widget->getRawValue():$widget ?]
 [?php $embeddedForms = $form->getEmbeddedForms() ?]
 [?php if ($widget instanceof sfFormFieldSchema): ?]
   <div class="sf_admin_form_row sf_admin_text sf_admin_form_field_content_urls">
