@@ -6,6 +6,7 @@
 abstract class PluginUser extends BaseUser
 {
   protected
+    $_dontExport    = array('password', 'salt', 'algorithm'),
     $profile        = null,
     $groups         = null,
     $permissions    = null,

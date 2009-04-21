@@ -2,8 +2,98 @@
 
 abstract class sfSympalDoctrineRecord extends sfDoctrineRecord
 {
-  protected $_oldValues = array();
-  protected $_newValues = array();
+  protected
+    $_export = array(),
+    $_dontExport = array(),
+    $_oldValues = array(),
+    $_newValues = array();
+
+  protected function _isPropertyExportable($property)
+  {
+    return ((empty($this->_export) || in_array($property, $this->_export)) && 
+      !in_array($property, $this->_dontExport)) ? true:false;
+  }
+
+  public function exportTo($type, $deep = true)
+  {
+      if ($type == 'array') {
+          return $this->exportData($deep);
+      } else {
+          return Doctrine_Parser::dump($this->exportData($deep, true), $type);
+      }
+  }
+
+  public function exportData($deep = true, $prefixKey = false)
+  {
+    if ($this->_state == self::STATE_LOCKED || $this->_state == self::STATE_TLOCKED)
+    {
+      return false;
+    }
+
+    $stateBeforeLock = $this->_state;
+    $this->_state = $this->exists() ? self::STATE_LOCKED : self::STATE_TLOCKED;
+
+    $a = array();
+
+    foreach ($this as $column => $value)
+    {
+      if ($value === self::$_null || is_object($value))
+      {
+        $value = null;
+      }
+
+      if ($this->_isPropertyExportable($column))
+      {
+        $a[$column] = $this->get($column);
+      }
+    }
+
+    if ($this->_table->getIdentifierType() ==  Doctrine::IDENTIFIER_AUTOINC)
+    {
+      if ($this->_isPropertyExportable($column))
+      {
+        $i      = $this->_table->getIdentifier();
+        $a[$i]  = $this->getIncremented();
+      }
+    }
+
+    if ($deep)
+    {
+      foreach ($this->_references as $key => $relation)
+      {
+        if (! $relation instanceof Doctrine_Null && $this->_isPropertyExportable($key))
+        {
+          if ($relation instanceof Doctrine_Record)
+          {
+            $a[$key] = $relation->exportData($deep, $prefixKey);
+          } else {
+            foreach ($relation as $k => $v)
+            {
+              $a[$key][get_class($v).'_'.implode('_', $v->identifier())] = $v->exportData($deep, $prefixKey);
+            }
+          }
+        }
+      }
+    }
+
+    // [FIX] Prevent mapped Doctrine_Records from being displayed fully
+    foreach ($this->_values as $key => $value)
+    {
+      if ($this->_isPropertyExportable($key))
+      {
+        if ($value instanceof Doctrine_Record)
+        {
+          $a[$key] = $value->exportData($deep, $prefixKey);
+        } else {
+          $a[$key] = $value;
+        }
+      }
+    }
+    
+    $this->_state = $stateBeforeLock;
+
+    return $a;
+  }
 
   public function set($fieldName, $value, $load = true)
   {

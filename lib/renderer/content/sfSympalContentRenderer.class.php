@@ -9,7 +9,7 @@ class sfSympalContentRenderer
 
   public function __construct(MenuItem $menuItem, $format = 'html')
   {
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url', 'Partial'));
+    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Tag', 'Url', 'Partial'));
 
     $this->_menuItem = $menuItem;
     $this->_format = $format ? $format:'html';
@@ -53,7 +53,6 @@ class sfSympalContentRenderer
   public function initialize()
   {
     $context = sfContext::getInstance();
-    $context->getConfiguration()->loadHelpers(array('Tag', 'Url'));
     $request = $context->getResponse();
     $response = $context->getResponse();
 
