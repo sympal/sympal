@@ -106,8 +106,11 @@ class sfSympalConfiguration
 
   public function _primeCache()
   {
+    mkdir(sfConfig::get('sf_cache_dir').'/sympal', 0777, true);
+
     $this->_writeContentTypesCache();
     $this->_writeHelperAutoloadCache();
+
     touch(sfConfig::get('sf_cache_dir').'/sympal/cache_primed.cache');
   }
 
