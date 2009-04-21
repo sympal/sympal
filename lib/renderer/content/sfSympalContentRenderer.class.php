@@ -121,10 +121,7 @@ class sfSympalContentRenderer
 
         return $feed->asXml();
       case 'xml':
-      break;
       case 'json':
-      case 'yaml':
-        $format = 'yml';
       case 'yml':
         return $content->exportTo($format, true);
       default:
@@ -206,9 +203,6 @@ class sfSympalContentRenderer
       break;
       case 'xml':
       case 'json':
-      case 'yml':
-      case 'yaml':
-        $format = 'yml';
       case 'yml':
         return $content->exportTo($format, true);
       default:
