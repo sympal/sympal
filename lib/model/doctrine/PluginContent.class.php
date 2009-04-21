@@ -24,6 +24,11 @@ abstract class PluginContent extends BaseContent
     return $content;
   }
 
+  public function getUrl()
+  {
+    return $this->getRoute();
+  }
+
   public function getContentTypeClassName()
   {
     $contentTypes = sfSympalToolkit::getContentTypesCache();
@@ -250,6 +255,28 @@ abstract class PluginContent extends BaseContent
     } else {
       throw new sfException('You cannot get the edit route of a object that does not exist.');
     }
+  }
+
+  public function getBody()
+  {
+    return sfSympalContext::getInstance()
+      ->renderContent($this->getMainMenuItem(), $this)
+      ->render();
+  }
+
+  public function getAuthorName()
+  {
+    return $this->getCreatedBy()->getName();
+  }
+
+  public function getAuthorEmail()
+  {
+    return $this->getCreatedBy()->getEmailAddress();
+  }
+
+  public function getUniqueId()
+  {
+    return $this->getId().'-'.$this->getSlug();
   }
 
   public function getRoute($routeString = null, $path = null)

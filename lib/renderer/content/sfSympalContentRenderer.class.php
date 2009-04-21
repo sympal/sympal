@@ -71,7 +71,7 @@ class sfSympalContentRenderer
     {
       $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
       $title = $title instanceof sfOutputEscaper ? $title->getRawValue():$title;
-      $title = $title ? $this->_menuItem->Site->title.' - '.$title:$this->_menuItem->Site->title;
+      $title = $title ? $this->_menuItem->Site->title.sfSympalConfig::get('breadcrumbs_separator', null, ' / ').$title:$this->_menuItem->Site->title;
       $response->setTitle($title);
     }
   }
@@ -98,9 +98,29 @@ class sfSympalContentRenderer
         return $this->_getContentListHtml($content);
       break;
       case 'atom':
-      case 'xml':
+      case 'feed':
+        $format = 'atom1';
+      case 'atom1':
+      case 'rss10':
+      case 'rss091':
+      case 'rss201':
       case 'rss':
-        return $content->exportTo('xml', true);
+        $context = sfContext::getInstance();
+        $response = $context->getResponse();
+        $request = $context->getRequest();
+
+        $feed = sfFeedPeer::newInstance($format);
+
+        $feed->initialize(array(
+          'title'       => $response->getTitle(),
+          'link'        => $request->getUri()
+        ));
+
+        $postItems = sfFeedPeer::convertObjectsToItems($content);
+        $feed->addItems($postItems);
+
+        return $feed->asXml();
+      case 'xml':
       break;
       case 'json':
       case 'yml':
@@ -160,7 +180,7 @@ class sfSympalContentRenderer
   {
     $template = $this->_menuItem->ContentType->getTemplate('List');
 
-    return $this->_renderContentTemplate('list', $content, $template);
+    return auto_discovery_link_tag('rss', $this->_menuItem->getItemRoute().'?sf_format=feed').$this->_renderContentTemplate('list', $content, $template);
   }
 
   protected function _getContentViewHtml(Content $content)
@@ -182,11 +202,7 @@ class sfSympalContentRenderer
       case 'html':
         return $this->_getContentViewHtml($content);
       break;
-      case 'atom':
       case 'xml':
-      case 'rss':
-        return $content->exportTo('xml', true);
-      break;
       case 'json':
       case 'yml':
       case 'yaml':

@@ -248,3 +248,46 @@
 .sympal_markdown blockquote.sidebar p {
   padding: 10px;
 }
+
+
+/* Yaml Highlighting */
+
+.yaml_top_dashes {
+  color: #CC8865;
+}
+
+.yaml_keys {
+  color: #ffffdd;
+}
+
+.yaml_colon {
+  color: #5598EE;
+}
+
+.yaml_string {
+  color: #9EE665;
+}
+
+.yaml_integer {
+  color: #57AAFF;
+}
+
+.yaml_float {
+  color: #57AAFF;
+}
+
+.yaml_decimal {
+  color: #57AAFF;
+}
+
+.yaml_boolean {
+  color: #57AAFF;
+}
+
+.yaml_array {
+  color: #ffffff;
+}
+
+.yaml_comment {
+  color: #ddd;
+}

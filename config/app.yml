@@ -1,5 +1,6 @@
 all:
   sympal_config:
+    breadcrumbs_separator: ' / '
     i18n: true
     versioning: true
     versioned_models:

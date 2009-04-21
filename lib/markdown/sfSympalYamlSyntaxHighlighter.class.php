@@ -1,19 +1,20 @@
 <?php
+
 class sfSympalYamlSyntaxHighlighter
 {
   protected $_yaml;
   protected $_html;
-  protected $_colors = array(
-      'top_dashes' => '#CC8865',
-      'keys' => '#ffffdd',
-      'colon' => '#5598EE',
-      'string' => '#9EE665',
-      'integer' => '#57AAFF',
-      'float' => '#57AAFF',
-      'decimal' => '#57AAFF',
-      'boolean' => '#57AAFF',
-      'array' => '#ffffff',
-      'comment' => '#ddd',
+  protected $_colorClasses = array(
+      'top_dashes' => 'yaml_top_dashes',
+      'keys' => 'yaml_keys',
+      'colon' => 'yaml_colon',
+      'string' => 'yaml_string',
+      'integer' => 'yaml_integer',
+      'float' => 'yaml_float',
+      'decimal' => 'yaml_decimal',
+      'boolean' => 'yaml_boolean',
+      'array' => 'yaml_array',
+      'comment' => 'yaml_comment',
   );
 
   public function __construct($yaml)
@@ -62,8 +63,8 @@ class sfSympalYamlSyntaxHighlighter
           $e[$key] = $this->_highlightLine($line);
         }
 
-        $color = $this->_colors['top_dashes'];
-        $yaml = "<span style=\"color: $color;\">---</span>\n" . implode("\n", $e);
+        $colorClass = $this->_colorClasses['top_dashes'];
+        $yaml = "<span class=\"".$colorClass."\">---</span>\n" . implode("\n", $e);
         return '<pre><code class="yaml">' . $yaml . '</code></pre>';
       }
     } catch (Exception $e) {}
@@ -85,7 +86,7 @@ class sfSympalYamlSyntaxHighlighter
     if (isset($el[0]) && $el[0])
     {
       $left = $el[0];
-      $return = '<span style="color: ' . $this->_colors['keys'] . ';">' . $left . '</span><span style="color: ' . $this->_colors['colon'] . ';">:</span>';
+      $return = '<span class="' . $this->_colorClasses['keys'] . '">' . $left . '</span><span class="' . $this->_colorClasses['colon'] . '">:</span>';
       if (isset($el[1]))
       {
         $value = isset($el[1]) ? $el[1]:null;
@@ -103,13 +104,13 @@ class sfSympalYamlSyntaxHighlighter
     $array = sfYaml::load($testYaml);
     $type = gettype($array['Test']);
 
-    if ($type && isset($this->_colors[$type]))
+    if ($type && isset($this->_colorClasses[$type]))
     {
-      $color = $this->_colors[$type];
+      $colorClass = $this->_colorClasses[$type];
 
       $value = $this->_highlightComment($value);
 
-      return '<span style="color: ' . $color . ';">' . $value . '</span>';
+      return '<span class="'.$colorClass.'">' . $value . '</span>';
     } else {
       return false;
     }
@@ -117,7 +118,7 @@ class sfSympalYamlSyntaxHighlighter
 
   protected function _highlightComment($value)
   {
-    $value = preg_replace("/#(.*)/", '<span style="color: ' . $this->_colors['comment'] . ';">#$1</span>', $value);
+    $value = preg_replace("/#(.*)/", '<span class="' . $this->_colorClasses['comment'] . '">#$1</span>', $value);
     return $value;
   }
 }

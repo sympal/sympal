@@ -9,7 +9,7 @@ class sfSympalMenuBreadcrumbs extends sfSympalMenuSite
       $children[] = $child->renderLabel();
     }
 
-    return implode(' > ', $children);
+    return implode(sfSympalConfig::get('breadcrumbs_separator', null, ' / '), $children);
   }
 
   public function __toString()
