@@ -123,6 +123,8 @@ class sfSympalContentRenderer
       case 'xml':
       break;
       case 'json':
+      case 'yaml':
+        $format = 'yml';
       case 'yml':
         return $content->exportTo($format, true);
       default:
@@ -206,6 +208,8 @@ class sfSympalContentRenderer
       case 'json':
       case 'yml':
       case 'yaml':
+        $format = 'yml';
+      case 'yml':
         return $content->exportTo($format, true);
       default:
         $this->_throwInvalidFormatException($format);
