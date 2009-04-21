@@ -106,7 +106,10 @@ class sfSympalConfiguration
 
   public function _primeCache()
   {
-    mkdir(sfConfig::get('sf_cache_dir').'/sympal', 0777, true);
+    if (!is_dir($path = sfConfig::get('sf_cache_dir').'/sympal'))
+    {
+      mkdir($path, 0777, true);
+    }
 
     $this->_writeContentTypesCache();
     $this->_writeHelperAutoloadCache();
