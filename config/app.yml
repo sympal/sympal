@@ -1,6 +1,5 @@
 all:
   sympal_config:
-    default_install_site_title: Sympal
     breadcrumbs_separator: ' / '
     i18n: true
     versioning: true
