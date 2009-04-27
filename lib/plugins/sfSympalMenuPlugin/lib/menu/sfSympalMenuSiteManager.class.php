@@ -4,7 +4,7 @@ class sfSympalMenuSiteManager
 {
   protected
     $_menuItems = array(),
-    $_rootNames = array(),
+    $_rootSlugs = array(),
     $_rootMenuItems = array(),
     $_hierarchies = array(),
     $_initialized = false;
@@ -35,7 +35,7 @@ class sfSympalMenuSiteManager
   public function refresh()
   {
     $this->_menuItems = array();
-    $this->_rootNames = array();
+    $this->_rootSlugs = array();
     $this->_rootMenuItems = array();
     $this->_hierarchies = array();
     $this->_initialized = false;
@@ -59,10 +59,10 @@ class sfSympalMenuSiteManager
     if ($name instanceof MenuItem)
     {
       $menuItem = $name;
-      $name = $this->_rootNames[$name['root_id']];
+      $name = $this->_rootSlugs[$name['root_id']];
     }
 
-    $rootId = array_search($name, $this->_rootNames);
+    $rootId = array_search($name, $this->_rootSlugs);
     if (!$rootId)
     {
       return false;
@@ -182,7 +182,7 @@ class sfSympalMenuSiteManager
       // Also build collection of sub arrays for each tree
       // so we can build the hierarchy for each tree
       $trees = array();
-      $this->_rootNames = array();
+      $this->_rootSlugs = array();
       foreach ($this->_menuItems as $menuItem)
       {
         if (!isset($trees[$menuItem['root_id']]))
@@ -193,7 +193,7 @@ class sfSympalMenuSiteManager
         if ($menuItem['level'] == 0)
         {
           $this->_rootMenuItems[$menuItem['root_id']] = $menuItem;
-          $this->_rootNames[$menuItem['root_id']] = $menuItem['name'];
+          $this->_rootSlugs[$menuItem['root_id']] = $menuItem['slug'];
           continue;
         }
 

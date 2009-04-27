@@ -85,6 +85,21 @@ abstract class PluginMenuItem extends BaseMenuItem
     return $this->getIndentedName();
   }
 
+  public function publish()
+  {
+    $this->is_published = true;
+    $this->date_published = new Doctrine_Expression('NOW()');
+    $this->save();
+    $this->refresh();
+  }
+
+  public function unpublish()
+  {
+    $this->is_published = false;
+    $this->date_published = null;
+    $this->save();
+  }
+
   public function getLabel()
   {
     return $this->_get('label') ? $this->_get('label'):$this->name;

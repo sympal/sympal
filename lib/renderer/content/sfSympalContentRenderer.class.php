@@ -178,7 +178,7 @@ class sfSympalContentRenderer
   {
     $template = $this->_menuItem->ContentType->getTemplate('List');
 
-    return auto_discovery_link_tag('rss', $this->_menuItem->getItemRoute().'?sf_format=feed').$this->_renderContentTemplate('list', $content, $template);
+    return auto_discovery_link_tag('rss', $this->_menuItem->getItemRoute().'?sf_format=rss').$this->_renderContentTemplate('list', $content, $template);
   }
 
   protected function _getContentViewHtml(Content $content)

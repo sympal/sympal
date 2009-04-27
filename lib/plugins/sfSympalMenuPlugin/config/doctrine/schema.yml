@@ -31,6 +31,7 @@ MenuItem:
       class: Content
       foreignAlias: MenuItem
       foreignType: one
+      onDelete: CASCADE
     Site:
       foreignAlias: MenuItems
       onDelete: CASCADE

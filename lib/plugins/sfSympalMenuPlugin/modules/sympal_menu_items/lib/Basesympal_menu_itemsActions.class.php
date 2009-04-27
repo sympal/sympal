@@ -2,6 +2,37 @@
 
 class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 {
+  public function executePublish(sfWebRequest $request, $publish = true)
+  {
+    $func = $publish ? 'publish':'unpublish';
+
+    $q = Doctrine::getTable('MenuItem')
+      ->createQuery('m')
+      ->where('m.id = ?', $request->getParameter('id'));
+
+    $menuItem = $q->fetchOne();
+    $this->forward404Unless($menuItem);
+
+    $menuItem->$func();
+
+    $q = Doctrine::getTable('MenuItem')
+      ->createQuery('m')
+      ->where('m.content_id = ?', $menuItem['content_id']);
+    $menuItems = $q->execute();
+    foreach ($menuItems as $menuItem)
+    {
+      $menuItem->$func();
+    }
+    $msg = $publish ? 'Menu items published successfully!':'Menu items unpublished successfully!';
+    $this->getUser()->setFlash('notice', $msg);
+    $this->redirect($request->getReferer());
+  }
+
+  public function executeUnpublish(sfWebRequest $request)
+  {
+    $this->executePublish($request, false);
+  }
+
   public function executeSitemap()
   {
     $table = Doctrine::getTable('MenuItem');
@@ -11,12 +42,18 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $this->menuItem = Doctrine::getTable('MenuItem')
+    $q = Doctrine::getTable('MenuItem')
       ->createQuery()
-      ->andWhere('is_primary = ?', true)
-      ->andWhere('site_id = ?', sfSympalContext::getInstance()->getSiteRecord()->getId())
-      ->fetchOne();
+      ->andWhere('site_id = ?', sfSympalContext::getInstance()->getSiteRecord()->getId());
 
+    if ($request->hasParameter('slug'))
+    {
+      $q->andWhere('slug = ?', $request->getParameter('slug'));
+    } else {
+      $q->andWhere('is_primary = ?', true);
+    }
+
+    $this->menuItem = $q->fetchOne();
     $table = Doctrine::getTable('MenuItem');
     $this->roots = $table->getTree()->fetchRoots();
 
@@ -30,8 +67,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     foreach ($this->roots as $root)
     {
       $menu[$root['slug']]
-        ->setLabel('Manage '.$root['slug'].' Menu')
-        ->setRoute($root['route']);
+        ->setLabel('Manage '.$root['name'])
+        ->setRoute('@sympal_menu_manager_tree?slug='.$root['slug']);
     }
     $menu['Create New Menu']->setRoute('@sympal_menu_items_new');
   }
@@ -96,7 +133,14 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     
     $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu? This action is irreversible!');
 
-    $menuItem->getNode()->delete();
+    if ($object->getNode()->isValidNode())
+    {
+      $object->getNode()->delete();
+    }
+    else
+    {
+      $object->delete();
+    }
 
     $this->getUser()->setFlash('notice', 'Menu was successfully deleted!');
     $this->redirect('@sympal_menu_items');
