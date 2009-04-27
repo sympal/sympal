@@ -1,5 +1,10 @@
 <?php
 
+function get_sympal_ui()
+{
+  return get_sympal_admin_bar().get_sympal_side_bar();
+}
+
 function get_sympal_flash()
 {
   return get_partial('sympal_default/flash');
