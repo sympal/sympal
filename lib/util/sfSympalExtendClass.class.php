@@ -57,14 +57,21 @@ class sfSympalExtendClass implements ArrayAccess
     $method = $event['method'];
     $arguments = $event['arguments'];
 
-    try {
+    $event->setProcessed(true);
+
+    if (method_exists($this, $method))
+    {
       $result = call_user_func_array(array($this, $method), $arguments);
 
       $event->setProcessed(true);
       $event->setReturnValue($result);
 
       return $result;
-    } catch (Exception $e) {}
+    } else {
+      $event->setProcessed(false);
+
+      return false;
+    }
   }
 
   public function __call($method, $arguments)

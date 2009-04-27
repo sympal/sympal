@@ -147,12 +147,21 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     {
       $this->redirect('@sympal_menu_manager_tree_delete?slug='.$menuItem['slug']);
     }
-    $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu item? This action is irreversible!');
 
-    $menuItem->getNode()->delete();
+    if ($this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu item? This action is irreversible!'))
+    {
+      if ($menuItem->getNode()->isValidNode())
+      {
+        $menuItem->getNode()->delete();
+      }
+      else
+      {
+        $menuItem->delete();
+      }
 
-    $this->getUser()->setFlash('notice', 'Menu item was successfully deleted!');
-    $this->redirect('@sympal_menu_manager_tree?slug='.$request->getParameter('root_slug'));
+      $this->getUser()->setFlash('notice', 'Menu item was successfully deleted!');
+      $this->redirect('@sympal_menu_manager_tree?slug='.$request->getParameter('root_slug'));
+    }
   }
 
   public function executeManager_delete(sfWebRequest $request)
@@ -166,13 +175,13 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     
     $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu? This action is irreversible!');
 
-    if ($object->getNode()->isValidNode())
+    if ($menuItem->getNode()->isValidNode())
     {
-      $object->getNode()->delete();
+      $menuItem->getNode()->delete();
     }
     else
     {
-      $object->delete();
+      $menuItem->delete();
     }
 
     $this->getUser()->setFlash('notice', 'Menu was successfully deleted!');
@@ -225,6 +234,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
+
+    $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu item? This action is irreversible!');
 
     $this->dispatcher->notify(new sfEvent($this, 'admin.delete_object', array('object' => $this->getRoute()->getObject())));
 

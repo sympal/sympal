@@ -52,7 +52,7 @@ class sfSympalActions extends sfSympalExtendClass
 
     $request = $this->getRequest();
 
-    if ($request->hasParameter('confirmation'))
+    if ($request->hasParameter('sympal_ask_confirmation') && $request->getParameter('sympal_ask_confirmation'))
     {
       if ($request->getParameter('yes'))
       {
