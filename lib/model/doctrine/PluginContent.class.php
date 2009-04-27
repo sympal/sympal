@@ -24,6 +24,11 @@ abstract class PluginContent extends BaseContent
     return $content;
   }
 
+  public function getIndented()
+  {
+    return str_repeat('-', $this->getMainMenuItem()->getLevel()).' '.$this->getTitle();
+  }
+
   public function getUrl()
   {
     return $this->getRoute();
@@ -62,7 +67,7 @@ abstract class PluginContent extends BaseContent
 
   public function __toString()
   {
-    return $this->getHeaderTitle();
+    return $this->getIndented();
   }
 
   public function getTitle()

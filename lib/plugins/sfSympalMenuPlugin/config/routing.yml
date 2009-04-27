@@ -1,6 +1,6 @@
 sympal_menu_manager:
   url: /admin/menus/manager
-  param: { module: sympal_menu_items, action: index }
+  param: { module: sympal_menu_items, action: manager }
 
 sympal_unpublish_menu_item:
   url: /admin/menus/manager/unpublish/:id
@@ -12,7 +12,7 @@ sympal_publish_menu_item:
 
 sympal_menu_manager_tree:
   url: /admin/menus/manager/:slug
-  param: { module: sympal_menu_items, action: index }
+  param: { module: sympal_menu_items, action: manager }
   class: sfDoctrineRoute
   options: { model: MenuItem, type: object }
 

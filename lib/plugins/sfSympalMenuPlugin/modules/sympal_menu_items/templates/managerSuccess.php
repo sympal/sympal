@@ -22,16 +22,17 @@
 
   <div id="top_menu">
     <ul>
-      <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to('Create New Menu', '@sympal_menu_items_new') ?></li>
+      <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to('Add New Menu', '@sympal_menu_items_new') ?></li>
 
       <?php if ($menuItem && !$menuItem->is_primary): ?>
         <li><?php echo image_tag('/sf/sf_admin/images/delete.png') ?> <?php echo link_to('Delete Menu', '@sympal_menu_manager_tree_delete?slug='.$menuItem['slug']) ?></li>
 	    <?php endif; ?>
 
       <?php if ($menuItem): ?>
-  	    <li><a id="expand" href="#">Expand all</a></li>
-  	    <li><a id="collapse" href="#">Collapse all</a></li>
+  	    <li><?php echo image_tag('/sfSympalPlugin/images/expand.gif') ?> <a id="expand" href="#">Expand all</a></li>
+  	    <li><?php echo image_tag('/sfSympalPlugin/images/collapse.gif') ?> <a id="collapse" href="#">Collapse all</a></li>
 	    <?php endif; ?>
+	    <li><?php echo image_tag('/sf/sf_admin/images/list.png').' '.link_to('Traditional List', '@sympal_menu_items') ?></li>
   	</ul>
   	<span id="loading"></span>
   </div>

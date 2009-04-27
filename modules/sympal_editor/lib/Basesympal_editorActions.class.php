@@ -4,14 +4,17 @@ class Basesympal_editorActions extends sfActions
 {
   public function executeChange_language(sfWebRequest $request)
   {
+    $oldCulture = $this->getUser()->getCulture();
     $this->form = new sfFormLanguage($this->getUser(), array('languages' => sfSympalConfig::get('language_codes', null, array($this->getUser()->getCulture()))));
     unset($this->form[$this->form->getCSRFFieldName()]);
 
     $this->form->process($request);
 
+    $newCulture = $this->getUser()->getCulture();
+
     $this->getUser()->setFlash('notice', 'Changed language successfully!');
 
-    return $this->redirect($request->getReferer());
+    return $this->redirect(str_replace('/'.$oldCulture.'/', '/'.$newCulture.'/', $request->getReferer()));
   }
 
   public function executePublish_content(sfWebRequest $request)

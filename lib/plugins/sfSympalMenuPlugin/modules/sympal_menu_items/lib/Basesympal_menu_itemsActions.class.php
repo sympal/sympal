@@ -2,35 +2,68 @@
 
 class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 {
-  public function executePublish(sfWebRequest $request, $publish = true)
+  protected function _getMenuItem(sfWebRequest $menuItem)
   {
-    $func = $publish ? 'publish':'unpublish';
-
     $q = Doctrine::getTable('MenuItem')
       ->createQuery('m')
       ->where('m.id = ?', $request->getParameter('id'));
 
     $menuItem = $q->fetchOne();
     $this->forward404Unless($menuItem);
+    return $menuItem;
+  }
 
-    $menuItem->$func();
+  protected function _publishMenuItem(MenuItem $menuItem, $publish = true)
+  {
+    $func = $publish ? 'publish':'unpublish';
+    return $menuItem->$func();
+  }
 
-    $q = Doctrine::getTable('MenuItem')
+  public function executeBatchPublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $menuItems = Doctrine::getTable('MenuItem')
       ->createQuery('m')
-      ->where('m.content_id = ?', $menuItem['content_id']);
-    $menuItems = $q->execute();
+      ->whereIn('m.id', $ids)
+      ->execute();
+
     foreach ($menuItems as $menuItem)
     {
-      $menuItem->$func();
+      $this->_publishMenuItem($menuItem, true);
     }
-    $msg = $publish ? 'Menu items published successfully!':'Menu items unpublished successfully!';
+  }
+
+
+  public function executeBatchUnpublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $menuItems = Doctrine::getTable('MenuItem')
+      ->createQuery('m')
+      ->whereIn('m.id', $ids)
+      ->execute();
+
+    foreach ($menuItems as $menuItem)
+    {
+      $this->_publishMenuItem($menuItem, false);
+    }
+  }
+
+  public function executePublish(sfWebRequest $request)
+  {
+    $menuItem = $this->_getMenuItem($request);
+    $this->_publishMenuItem($menuItem, $publish);
+
+    $msg = $publish ? 'Menu item published successfully!':'Menu item unpublished successfully!';
     $this->getUser()->setFlash('notice', $msg);
     $this->redirect($request->getReferer());
   }
 
   public function executeUnpublish(sfWebRequest $request)
   {
-    $this->executePublish($request, false);
+    $menuItem = $this->_getMenuItem($request);
+    $this->_publishMenuItem($menuItem, $publish);
   }
 
   public function executeSitemap()
@@ -40,7 +73,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->roots = $table->getTree()->fetchRoots();
   }
 
-  public function executeIndex(sfWebRequest $request)
+  public function executeManager(sfWebRequest $request)
   {
     $q = Doctrine::getTable('MenuItem')
       ->createQuery()

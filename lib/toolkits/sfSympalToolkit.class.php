@@ -228,4 +228,18 @@ class sfSympalToolkit
       throw new sfException('Could not autoload helper for function "'.$functionName.'"');
     }
   }
+
+  public static function getAllLanguageCodes()
+  {
+    $flags = sfFinder::type('file')
+      ->in(sfContext::getInstance()->getConfiguration()->getPluginConfiguration($pluginName)->getRootDir().'/web/images/flags');
+
+    $codes = array();
+    foreach ($flags as $flag)
+    {
+      $info = pathinfo($flag);
+      $codes[] = $info['basename'];
+    }
+    return $codes;
+  }
 }
