@@ -15,8 +15,43 @@ abstract class PluginRoute extends BaseRoute
     return str_replace('-', '_', $this['slug']);
   }
 
+  public function getYaml()
+  {
+    if ($this->yaml_override)
+    {
+      return $this->yaml_override;
+    } else {
+      $yaml = array();
+      $yaml[] = $this->getRouteName().':';
+
+      if ($this->getUrl() != '/')
+      {
+        $yaml[] = '  url:  '.$this->getUrl().'.:sf_format';
+      } else {
+        $yaml[] = '  url:  '.$this->getUrl();
+      }
+
+      if ($contentId = $this->getContentId())
+      {
+        $yaml[] = '  param: { module: sympal_content_renderer, action: index, sf_format: html, result_type: '.$this->getRouteType().', sympal_content_type: '.$this->getContentType()->getName().', sympal_content_id: '.$contentId.' }';
+      } else {
+        $yaml[] = '  param: { module: sympal_content_renderer, action: index, sf_format: html, result_type: '.$this->getRouteType().', sympal_content_type: '.$this->getContentType()->getName().' }';
+      }
+
+      $yaml[] = '  class: sfDoctrineRoute';
+      $yaml[] = '  options:';
+      $yaml[] = '    model:  Content';
+      $yaml[] = '    type:   '.$this->getRouteType();
+      $yaml[] = '    method: '.($this->getTableMethod() ? $this->getTableMethod():'getContent');
+      $yaml[] = '    requirements:';
+      $yaml[] = '      sf_format: ('.implode('|', array_merge(sfSympalConfig::get('language_codes'), array('html'))).')';
+
+      return implode("\n", $yaml);
+    }
+  }
+
   public function postSave($event)
   {
-    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
+    @unlink(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/config/config_routing.yml.php');
   }
 }

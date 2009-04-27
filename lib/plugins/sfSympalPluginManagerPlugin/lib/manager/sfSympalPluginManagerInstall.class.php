@@ -76,6 +76,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       'view_path' => "/$lowerName/:slug",
       'slug' => $lowerName,
       'plugin_name' => $this->_pluginName,
+      'Site' => Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'))
     );
 
     $contentType = $this->newContentType($this->_contentTypeName, $properties);

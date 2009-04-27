@@ -138,6 +138,7 @@ abstract class PluginContentType extends BaseContentType
         $route->name = 'sympal_content_view_type_'.str_replace('-', '_', $invoker['slug']);
         $route->type = 'View';
         $route->ContentType = $invoker;
+        $route->Site = $this->Site;
         $route->save();
       }
     }
@@ -156,6 +157,7 @@ abstract class PluginContentType extends BaseContentType
         $route->name = 'sympal_content_type_'.str_replace('-', '_', $invoker['slug']);
         $route->type = 'List';
         $route->ContentType = $invoker;
+        $route->Site = $this->Site;
         $route->save();
       }
     }

@@ -81,3 +81,7 @@ Permission:
     name: ManageConfiguration
   ViewDeveloperInformation:
     name: ViewDeveloperInformation
+  ManageRoutes:
+    name: ManageRoutes
+  ViewAdminBar:
+    name: ViewAdminBar

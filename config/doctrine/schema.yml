@@ -11,6 +11,9 @@ Site:
     description:
       type: clob
       notnull: true
+    page_title: string(255)
+    meta_keywords: string(500)
+    meta_description: string(500)
 
 Content:
   actAs: [Sluggable, Timestampable, sfSympalRecord]
@@ -99,6 +102,11 @@ ContentType:
     list_path: string(255)
     view_path: string(255)
     layout: string(255)
+    site_id: integer
+  relations:
+    Site:
+      onDelete: CASCADE
+      foreignAlias: ContentTypes
   indexes:
     name:
       fields: [name]
@@ -164,6 +172,13 @@ ContentSlotType:
       type: string(255)
       notnull: true
       unique: true
+    site_id:
+      type: integer
+      notnull: true
+  relations:
+    Site:
+      onDelete: CASCADE
+      foreignAlias: ContentSlotTypes
 
 ContentGroup:
   actAs: [sfSympalRecord]
@@ -213,15 +228,22 @@ Route:
     name:
       type: string(255)
       notnull: true
-      unique: true
     url:
       type: string(255)
       notnull: true
     type:
       type: enum
       values: [List, View]
+      notnull: true
     content_id: integer
-    content_type_id: integer
+    content_type_id:
+      type: integer
+      notnull: true
+    yaml_override: clob
+    site_id:
+      type: integer
+      notnull: true
+    table_method: string(55)
   indexes:
     type:
       fields: [type]
@@ -230,6 +252,9 @@ Route:
       foreignAlias: Routes
       onDelete: CASCADE
     ContentType:
+      foreignAlias: Routes
+      onDelete: CASCADE
+    Site:
       foreignAlias: Routes
       onDelete: CASCADE
 

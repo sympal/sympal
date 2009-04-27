@@ -31,7 +31,7 @@ generator:
         class: false
       form:
         display:
-          "NONE": [plugin_name, name, label, description, slug]
+          "NONE": [site_id, plugin_name, name, label, description, slug]
           "Routing": [list_path, view_path]
           "Rendering": [layout]
           "Schema": [schema]

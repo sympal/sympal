@@ -24,7 +24,7 @@ class Basesympal_editorComponents extends sfComponents
   public function executeAdmin_bar()
   {
     $this->menu = new sfSympalMenuAdminBar('Sympal Admin Bar');
-    $this->menu->setCredentials(array('AdminBar'));
+    $this->menu->setCredentials(array('ViewAdminBar'));
 
     $this->menu->addChild('Icon', null, array('label' => '<div id="sympal-icon">Sympal</div>'));
 

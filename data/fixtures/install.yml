@@ -7,11 +7,16 @@ Site:
 ContentSlotType:
   ContentSlotType_Markdown:
     name: Markdown
+    Site: Site_default
   ContentSlotType_MultiLineText:
     name: MultiLineText
+    Site: Site_default
   ContentSlotType_Text:
     name: Text
+    Site: Site_default
   ContentSlotType_RichText:
     name: RichText
+    Site: Site_default
   ContentSlotType_ContentProperty:
     name: ContentProperty
+    Site: Site_default

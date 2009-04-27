@@ -297,6 +297,7 @@ Page:
 
 ContentType:
   ContentType_Page:
+    Site: Site_default
     plugin_name: sfSympalPagesPlugin
     name: Page
     description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.

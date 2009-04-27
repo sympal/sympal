@@ -209,44 +209,40 @@ sympal_content_create_type:
   url:    /admin/content/create/:type
   param:  { module: sympal_content, action: create_type }
 
+sympal_routes:
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Route
+    module:               sympal_routes
+    prefix_path:          admin/content/routes
+    column:               id
+    with_wildcard_routes: true
+
 <?php try { ?>
 <?php $content = Doctrine::getTable('Content')
   ->createQuery('c')
   ->leftJoin('c.Type t')
   ->leftJoin('c.Routes r')
-  ->innerJoin('c.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
+  ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
   ->execute(); ?>
 
 <?php foreach ($content as $c): ?> 
 <?php foreach ($c['Routes'] as $route): ?> 
-<?php echo $route['route_name'] ?>:
-  url:   <?php echo $route['url'] ?><?php if ($route['url'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_content_renderer, action: index, sf_format: html, result_type: <?php echo $route['route_type'] ?>, sympal_content_type: <?php echo $c['Type']['name'] ?>, sympal_content_id: <?php echo $c['id'] ?> }
-  class: sfDoctrineRoute
-  options:
-    model:  Content
-    type: <?php echo $route['route_type'] ?> 
-    method: getContent
+<?php echo $route['yaml'] ?> 
 <?php endforeach; ?>
 <?php endforeach; ?>
 
 <?php $contentTypes = Doctrine::getTable('ContentType')
   ->createQuery('t')
   ->leftJoin('t.Routes r')
+  ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
   ->andWhere('r.content_id IS NULL')
   ->orderBy('r.type ASC')
   ->execute(); ?>
 
 <?php foreach ($contentTypes as $contentType): ?> 
 <?php foreach ($contentType['Routes'] as $route): ?> 
-<?php echo $route['route_name'] ?>:
-  url:   <?php echo $route['url'] ?><?php if ($route['url'] != '/'): ?>.:sf_format<?php endif; ?> 
-  param: { module: sympal_content_renderer, action: index, sf_format: html, result_type: <?php echo $route['route_type'] ?>, sympal_content_type: <?php echo $contentType['name'] ?> }
-  class: sfDoctrineRoute
-  options:
-    model:  Content
-    type: <?php echo $route['route_type'] ?> 
-    method: getContent
+<?php echo $route['yaml'] ?> 
 <?php endforeach; ?> 
 <?php endforeach; ?> 
 <?php } catch (Exception $e) {} ?>

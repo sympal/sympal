@@ -30,5 +30,6 @@ generator:
         display:
           "NONE": [title, description, slug]
           "Rendering": [layout]
+          "Meta": [page_title, meta_keywords, meta_description]
       edit:    ~
       new:     ~

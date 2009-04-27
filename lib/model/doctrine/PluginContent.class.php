@@ -257,7 +257,7 @@ abstract class PluginContent extends BaseContent
     }
   }
 
-  public function getBody()
+  public function getFeedDescription()
   {
     return sfSympalContext::getInstance()
       ->renderContent($this->getMainMenuItem(), $this)
@@ -354,6 +354,7 @@ abstract class PluginContent extends BaseContent
         $route->type = 'View';
         $route->Content = $invoker;
         $route->ContentType = $invoker->Type;
+        $route->Site = $this->Site;
         $route->save();
       }
     }
@@ -361,18 +362,27 @@ abstract class PluginContent extends BaseContent
 
   public function loadMetaData(sfWebResponse $response)
   {
+    // page title
     if ($pageTitle = $this['page_title'])
     {
       $response->setTitle($pageTitle);
+    } else if ($pageTitle = $this['Site']['page_title']) {
+      $response->setTitle($pageTitle);
     }
 
+    // meta keywords
     if ($metaKeywords = $this['meta_keywords'])
     {
       $response->addMeta('keywords', $metaKeywords);
+    } else if ($metaKeywords = $this['Site']['meta_keywords']) {
+      $response->addMeta('keywords', $metaKeywords);
     }
 
+    // meta description
     if ($metaDescription = $this['meta_description'])
     {
+      $response->addMeta('description', $metaDescription);
+    } else if ($metaDescription = $this['Site']['meta_description']) {
       $response->addMeta('description', $metaDescription);
     }
   }
