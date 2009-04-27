@@ -4,8 +4,22 @@ class sfSympalActions extends sfSympalExtendClass
 {
   public function checkFilePermissions()
   {
-    $checks = sfFinder::type('file')->in(sfConfig::get('sf_root_dir'));
-    $checks = array_merge($checks, sfFinder::type('dir')->in(sfConfig::get('sf_root_dir')));
+    $items = array();
+
+    if (file_exists(sfConfig::get('sf_upload_dir')))
+    {
+      $items[] = sfConfig::get('sf_upload_dir');
+    }
+    $items[] = sfConfig::get('sf_cache_dir');
+    $items[] = sfConfig::get('sf_cache_dir');
+    $items[] = sfConfig::get('sf_log_dir');
+    $items[] = sfConfig::get('sf_lib_dir');
+    $items[] = sfConfig::get('sf_plugins_dir');
+    $items[] = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'symfony';
+
+    $dirs = sfFinder::type('dir')->in($items);
+    $files = sfFinder::type('file')->in($items);
+    $checks = array_merge($dirs, $files);
 
     $error = false;
     foreach ($checks as $check)
