@@ -44,7 +44,8 @@ abstract class PluginRoute extends BaseRoute
       $yaml[] = '    type:   '.$this->getRouteType();
       $yaml[] = '    method: '.($this->getTableMethod() ? $this->getTableMethod():'getContent');
       $yaml[] = '    requirements:';
-      $yaml[] = '      sf_format: ('.implode('|', array_merge(sfSympalConfig::get('language_codes'), array('html'))).')';
+      $yaml[] = '      sf_culture: ('.implode('|', sfSympalConfig::get('language_codes')).')';
+      $yaml[] = '      sf_format:  ('.implode('|', sfSympalConfig::get('content_formats')).')';
 
       return implode("\n", $yaml);
     }

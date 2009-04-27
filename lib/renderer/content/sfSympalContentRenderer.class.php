@@ -124,7 +124,7 @@ class sfSympalContentRenderer
       case 'yml':
         return $content->exportTo($format, true);
       default:
-        $this->_throwInvalidFormatException($format);
+        $this->_throwInvalidFormat404($format);
     }
   }
 
@@ -205,7 +205,7 @@ class sfSympalContentRenderer
       case 'yml':
         return $content->exportTo($format, true);
       default:
-        $this->_throwInvalidFormatException($format);
+        $this->_throwInvalidFormat404($format);
     }
   }
 
@@ -302,8 +302,8 @@ class sfSympalContentRenderer
     return $output;
   }
 
-  protected function _throwInvalidFormatException($format)
+  protected function _throwInvalidFormat404($format)
   {
-    throw new sfException(sprintf('Invalid output format: %s', $format));
+    sfContext::getInstance()->getController()->getActionStack()->getLastEntry()->getActionInstance()->forward404();
   }
 }
