@@ -53,7 +53,7 @@ $menu['Test']['With Route']->setOption('target', '_BLANK');
 $t->is((string) $menu['Test'], '<ul id="test"><li id="with-route"><a target="_BLANK" href="http://www.google.com">With Route</a></li></ul>');
 
 $menu['Test']['With Route']->requiresAuth(true);
-$t->is((string) $menu['Test'], '<ul id="test"></ul>');
+$t->is((string) $menu['Test'], '');
 $user = sfContext::getInstance()->getUser();
 $user->setAuthenticated(true);
 $t->is($user->isAuthenticated(), true);
@@ -98,7 +98,7 @@ $breadcrumbs->addChild('1.0', 'http://www.doctrine-project.org/documentation/1_0
 $node = $breadcrumbs->addChild('The Guide to Doctrine ORM', 'http://www.doctrine-project.org/documentation/1_0/manual');
 
 $t->is(get_class($node), 'sfSympalMenuBreadcrumbsTest');
-$t->is($breadcrumbs->getPathAsString(), 'Documentation > 1.0 > The Guide to Doctrine ORM');
+$t->is($breadcrumbs->getPathAsString(), 'Documentation / 1.0 / The Guide to Doctrine ORM');
 $t->is((string) $breadcrumbs, '<div id="sympal_breadcrumbs"><ul id="doctrine"><li id="documentation"><a href="http://www.doctrine-project.org/documentation">Documentation</a></li><li id="1-0"><a href="http://www.doctrine-project.org/documentation/1_0">1.0</a></li><li id="the-guide-to-doctrine-orm"><a href="http://www.doctrine-project.org/documentation/1_0/manual">The Guide to Doctrine ORM</a></li></ul></div>');
 
 class sfSympalMenuSiteTest extends sfSympalMenuSite

@@ -1,6 +1,7 @@
 CREATE TABLE attendee (id BIGINT AUTO_INCREMENT, name VARCHAR(255), date_added DATETIME, category_id BIGINT, INDEX category_id_idx (category_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE attendee_tag (attendee_id BIGINT, tag_id BIGINT, PRIMARY KEY(attendee_id, tag_id)) ENGINE = INNODB;
 CREATE TABLE category (id BIGINT AUTO_INCREMENT, name VARCHAR(255), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE blog_post (id BIGINT AUTO_INCREMENT, title VARCHAR(255), teaser LONGTEXT, content_id BIGINT, INDEX content_id_idx (content_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_translation (id BIGINT, label VARCHAR(255), lang CHAR(2), PRIMARY KEY(id, lang)) ENGINE = INNODB;
 CREATE TABLE menu_item (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, is_primary TINYINT(1), is_published TINYINT(1), date_published DATETIME, custom_path VARCHAR(255), is_content_type_list TINYINT(1) DEFAULT '0', requires_auth TINYINT(1), requires_no_auth TINYINT(1), site_id BIGINT NOT NULL, content_type_id BIGINT, content_id BIGINT, slug VARCHAR(255), root_id INT, lft INT, rgt INT, level SMALLINT, INDEX content_id_idx (content_id), INDEX site_id_idx (site_id), INDEX content_type_id_idx (content_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_group (menu_item_id BIGINT, group_id BIGINT, PRIMARY KEY(menu_item_id, group_id)) ENGINE = INNODB;
@@ -31,6 +32,7 @@ CREATE TABLE tag (id BIGINT AUTO_INCREMENT, name VARCHAR(255), PRIMARY KEY(id)) 
 ALTER TABLE attendee ADD FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE;
 ALTER TABLE attendee_tag ADD FOREIGN KEY (tag_id) REFERENCES tag(id) ON DELETE CASCADE;
 ALTER TABLE attendee_tag ADD FOREIGN KEY (attendee_id) REFERENCES attendee(id) ON DELETE CASCADE;
+ALTER TABLE blog_post ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
 ALTER TABLE menu_item_translation ADD FOREIGN KEY (id) REFERENCES menu_item(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id) ON DELETE CASCADE;

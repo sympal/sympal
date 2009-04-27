@@ -18,6 +18,7 @@ $page->title = 'Testing this out';
 $content = Content::createNew('Page');
 $content->slug = 'testing-this-out';
 $content->is_published = true;
+$content->date_published = date('Y-m-d', time() - 3600);
 $content->CreatedBy = $user;
 $content->save();
 
@@ -181,10 +182,10 @@ $html = '<div class="sympal_markdown"><blockquote class="tip"><p>
 
 
 
-<pre><code class="yaml"><span style="color: #CC8865;">---</span>
-<span style="color: #ffffdd;">User</span><span style="color: #5598EE;">:</span>
-<span style="color: #ffffdd;">  columns</span><span style="color: #5598EE;">:</span>
-<span style="color: #ffffdd;">    username</span><span style="color: #5598EE;">:</span><span style="color: #9EE665;"> string(255)</span>
+<pre><code class="yaml"><span class="yaml_top_dashes">---</span>
+<span class="yaml_keys">User</span><span class="yaml_colon">:</span>
+<span class="yaml_keys">  columns</span><span class="yaml_colon">:</span>
+<span class="yaml_keys">    username</span><span class="yaml_colon">:</span><span class="yaml_string"> string(255)</span>
 </code></pre>
 </div>';
 
