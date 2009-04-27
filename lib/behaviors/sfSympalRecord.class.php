@@ -87,13 +87,7 @@ class sfSympalRecord extends Doctrine_Template
 
   public function __call($method, $arguments)
   {
-    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($this->getInvoker(), 'sympal.'.$this->_eventName.'.method_not_found', array('method' => $method, 'arguments' => $arguments)));
-    if (!$event->isProcessed())
-    {
-      return null;
-    }
-
-    return $event->getReturnValue();
+    return sfSympalExtendClass::extendEvent($this->getInvoker(), $method, $arguments);
   }
 }
 

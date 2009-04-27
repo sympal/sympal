@@ -370,12 +370,6 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function __call($method, $arguments)
   {
-    $event = $this->dispatcher->notifyUntil(new sfEvent($this, 'sympal.sf_user.method_not_found', array('method' => $method, 'arguments' => $arguments)));
-    if (!$event->isProcessed())
-    {
-      throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
-    }
-
-    return $event->getReturnValue();
+    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
   }
 }

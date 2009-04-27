@@ -26,12 +26,6 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
 
   public function __call($method, $arguments)
   {
-    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($this, 'sympal.sf_form_doctrine.method_not_found', array('method' => $method, 'arguments' => $arguments)));
-    if (!$event->isProcessed())
-    {
-      throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($this), $method));
-    }
-
-    return $event->getReturnValue();
+    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
   }
 }

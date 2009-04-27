@@ -24,12 +24,15 @@ class Basesympal_editorComponents extends sfComponents
   public function executeAdmin_bar()
   {
     $this->menu = new sfSympalMenuAdminBar('Sympal Admin Bar');
+    $this->menu->setCredentials(array('AdminBar'));
+
     $this->menu->addChild('Icon', null, array('label' => '<div id="sympal-icon">Sympal</div>'));
 
     $user = sfContext::getInstance()->getUser();
     $mode = sfSympalToolkit::isEditMode() ? 'off':'on';
     $currentMode = sfSympalToolkit::isEditMode() ? 'on':'off';
-    $this->menu->addChild('Toggle Edit Mode', '@sympal_toggle_edit', array('label' => image_tag('/sf/sf_admin/images/edit.png').' Turn '.ucfirst($mode), 'title' => 'Click to turn '.$mode.' edit mode. Edit mode is currently '.$currentMode.'.', 'class' => $mode));
+    $this->menu->addChild('Toggle Edit Mode', '@sympal_toggle_edit', array('label' => image_tag('/sf/sf_admin/images/edit.png').' Turn '.ucfirst($mode), 'title' => 'Click to turn '.$mode.' edit mode. Edit mode is currently '.$currentMode.'.', 'class' => $mode))
+      ->setCredentials(array('ManageContent'));
 
     $this->menu->addChild('Administration');
     $this->menu->addChild('Security');

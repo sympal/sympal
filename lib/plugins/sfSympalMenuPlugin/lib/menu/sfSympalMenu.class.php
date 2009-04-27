@@ -295,7 +295,15 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   public function hasChildren()
   {
-    return !empty($this->_children);
+    $children = array();
+    foreach ($this->_children as $child)
+    {
+      if ($child->checkUserAccess())
+      {
+        $children[] = $child;
+      }
+    }
+    return !empty($children);
   }
 
   public function __toString()

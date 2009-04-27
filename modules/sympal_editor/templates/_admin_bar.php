@@ -1,3 +1,6 @@
+<?php $menu = $menu instanceof sfOutputEscaper ? $menu->getRawValue()->render():$menu->render() ?>
+<?php if ($menu): ?>
+
 <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>
 
 <?php use_sympal_yui_css('menu/assets/skins/sam/menu') ?>
@@ -10,7 +13,7 @@
 <div id="sympal_admin_bar_container" class="yui-skin-sam">
   <div id="sympal_admin_bar" class="yuimenubar yuimenubarnav">
     <div class="bd">
-        <?php echo $menu instanceof sfOutputEscaper ? $menu->getRawValue():$menu ?>
+        <?php echo $menu ?>
     </div>
   </div>
 </div>
@@ -128,3 +131,4 @@ function onSubmenuShow(p_sType, p_sArgs) {
 oMenuBar.subscribe("beforeShow", onSubmenuBeforeShow);
 oMenuBar.subscribe("show", onSubmenuShow);
 </script>
+<?php endif; ?>

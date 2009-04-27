@@ -88,4 +88,9 @@ class sfSympalConfig
 
     file_put_contents($path, sfYaml::dump($array, 4));
   }
+
+  public function __call($method, $arguments)
+  {
+    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
+  }
 }

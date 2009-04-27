@@ -47,24 +47,36 @@ class sfSympalConfiguration
 
     sfConfig::set('sf_admin_module_web_dir', '/sfSympalPlugin');
 
-    sfConfig::set('sf_login_module', 'sympal_auth');
-    sfConfig::set('sf_login_action', 'signin');
+    if (sfConfig::get('sf_login_module') == 'default')
+    {
+      sfConfig::set('sf_login_module', 'sympal_auth');
+      sfConfig::set('sf_login_action', 'signin');
+    }
 
-    sfConfig::set('sf_secure_module', 'sympal_default');
-    sfConfig::set('sf_secure_action', 'secure');
+    if (sfConfig::get('sf_secure_module') == 'default')
+    {
+      sfConfig::set('sf_secure_module', 'sympal_default');
+      sfConfig::set('sf_secure_action', 'secure');
+    }
 
-    sfConfig::set('sf_error_404_module', 'sympal_default');
-    sfConfig::set('sf_error_404_action', 'error404');
+    if (sfConfig::get('sf_error_404_module') == 'default')
+    {
+      sfConfig::set('sf_error_404_module', 'sympal_default');
+      sfConfig::set('sf_error_404_action', 'error404');
+    }
 
-    sfConfig::set('sf_module_disabled_module', 'sympal_default');
-    sfConfig::set('sf_module_disabled_action', 'disabled');
+    if (sfConfig::get('sf_module_disabled_module') == 'default')
+    {
+      sfConfig::set('sf_module_disabled_module', 'sympal_default');
+      sfConfig::set('sf_module_disabled_action', 'disabled');
+    }
 
     $options = array('baseClassName' => 'sfSympalDoctrineRecord');
     $options = array_merge(sfConfig::get('doctrine_model_builder_options', array()), $options);
     sfConfig::set('doctrine_model_builder_options', $options);
 
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
-    $this->_dispatcher->connect('component.method_not_found', array('sfSympalActions', 'handleAction'));
+    $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
   }
 
   public function setup()

@@ -1,3 +1,5 @@
+<?php $menu = $menu instanceof sfOutputEscaper ? $menu->getRawValue()->render():$menu->render() ?>
+<?php if ($menu): ?>
 <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>
 
 <?php use_sympal_yui_css('container/assets/skins/sam/container') ?>
@@ -32,7 +34,7 @@
       <span id="toggle"><?php if ($state == 'hidden'): ?><?php echo __('Show') ?><?php else: ?><?php echo __('Hide') ?><?php endif; ?></span>
     </div>
     <div class="bd" id="sympal_edit_panel_contents">
-      <?php echo $menu instanceof sfOutputEscaper ? $menu->getRawValue()->render():$menu->render() ?>
+      <?php echo $menu ?>
     </div>
   </div>
 </div>
@@ -202,3 +204,4 @@ myPanel.dd.endDrag = function(e, id) {
 	YAHOO.util.Connect.asyncRequest('GET', url);
 }
 </script>
+<?php endif; ?>

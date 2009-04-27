@@ -1,23 +1,7 @@
 <?php
 
-class sfSympalActions
+class sfSympalActions extends sfSympalExtendClass
 {
-  protected $_actions;
-
-  public static function handleAction(sfEvent $event)
-  {
-    $method = $event['method'];
-    $arguments = $event['arguments'];
-
-    $instance = new sfSympalActions();
-    $instance->_actions = $event->getSubject();
-
-    $value = call_user_func_array(array($instance, $method), $arguments);
-    $event->setReturnValue($value);
-
-    return true;
-  }
-
   public function checkFilePermissions()
   {
     $checks = sfFinder::type('file')->in(sfConfig::get('sf_root_dir'));
@@ -179,20 +163,5 @@ class sfSympalActions
   public function goBack()
   {
     $this->redirect($this->getRequest()->getReferer());
-  }
-
-  public function __get($name)
-  {
-    return $this->_actions->$name;
-  }
-
-  public function __set($name, $value)
-  {
-    $this->_actions->$name = $value;
-  }
-
-  public function __call($method, $arguments)
-  {
-    return call_user_func_array(array($this->_actions, $method), $arguments);
   }
 }
