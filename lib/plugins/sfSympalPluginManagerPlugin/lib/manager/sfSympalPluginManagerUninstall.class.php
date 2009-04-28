@@ -30,15 +30,15 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
           ->delete()
           ->where('r.content_type_id = ?', $contentType['id'])
           ->execute();
-        Doctrine::getTable('ContentTemplate')
-          ->createQuery('t')
-          ->delete()
-          ->where('t.content_type_id = ?', $contentType['id'])
-          ->execute();
         Doctrine::getTable('ContentType')
           ->createQuery('t')
           ->delete()
           ->where('t.name = ?', $this->_contentTypeName)
+          ->execute();
+        Doctrine::getTable('ContentTemplate')
+          ->createQuery('t')
+          ->delete()
+          ->where('t.content_type_id = ?', $contentType['id'])
           ->execute();
         Doctrine::getTable('Content')
           ->createQuery('e')

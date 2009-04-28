@@ -21,19 +21,15 @@ generator:
           help: Enter the label used to render this content type.
         slug:
           help: Enter the unique slug used to identify this content type.
-        list_path:
-          help: Enter the route pattern used for linking to a list of this content type records.
-        view_path:
+        default_path:
           help: Enter the route pattern used for linking to a single content type.
       list:
-        display: [=name]
+        display: [=label]
       filter:
         class: false
       form:
         display:
-          "NONE": [site_id, plugin_name, name, label, description, slug]
-          "Routing": [list_path, view_path]
-          "Rendering": [layout]
+          "NONE": [site_id, plugin_name, name, label, description, default_path, layout slug]
           "Schema": [schema]
       edit:    ~
       new:     ~

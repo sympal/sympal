@@ -1,12 +1,9 @@
+# sfSympalPagesPlugin install data fixtures
+
 ContentTemplate:
   ContentTemplate_ViewPage:
     name: View Page
-    type: View
-    ContentType: ContentType_Page
     partial_path: sympal_page/view
-  ContentTemplate_ListPage:
-    name: List Page
-    type: List
     ContentType: ContentType_Page
 
 MenuItem:
@@ -40,13 +37,13 @@ MenuItem:
         route: @sympal_signout
         Site: Site_default
         requires_auth: true
-      Menuitem_primary_pages:
+      MenuItem_primary_pages:
         name: Pages
         is_published: true
         label: Pages
-        is_content_type_list: true
         Site: Site_default
-        ContentType: ContentType_Page
+        ContentType: ContentType_ContentList
+        RelatedContent: Content_ContentList_pages
       MenuItem_primary_about:
         name: About
         is_published: true
@@ -153,6 +150,13 @@ Content:
     is_published: true
     Slots: [About_slot_body]
     CreatedBy: admin
+  Content_ContentList_pages:
+    Type: ContentType_ContentList
+    slug: pages
+    Site: Site_default
+    is_published: true
+    CreatedBy: admin
+    Slots: [Pages_slot_header]
   Content_Page_markdown_examples:
     Type: ContentType_Page
     slug: markdown-examples
@@ -169,6 +173,10 @@ Content:
     CreatedBy: admin
 
 ContentSlot:
+  Pages_slot_header:
+    name: header
+    Type: ContentSlotType_Markdown
+    value: View a list of all the available pages below.
   Readme_slot_body:
     name: body
     Type: ContentSlotType_Markdown
@@ -295,6 +303,12 @@ Page:
     title: README
     Content: Content_Page_readme
 
+ContentList:
+  pages:
+    title: Pages
+    Content: Content_ContentList_pages
+    ContentType: ContentType_Page
+
 ContentType:
   ContentType_Page:
     Site: Site_default
@@ -303,9 +317,7 @@ ContentType:
     description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
     label: Page
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
-    view_path: /pages/:sf_culture/:slug
-    list_path: /pages/:sf_culture
+    default_path: /pages/:sf_culture/:slug
 <?php else: ?>
-    view_path: /pages/:slug
-    list_path: /pages
+    default_path: /pages/:slug
 <?php endif; ?>

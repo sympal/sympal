@@ -1,0 +1,25 @@
+---
+ContentList:
+  actAs: [sfSympalContentType]
+  columns:
+    title:
+      type: string(255)
+      notnull: true
+    content_type_id:
+      type: integer
+      notnull: true
+    content_template_id: integer
+    rows_per_page: integer
+    sort_column: string(255)
+    sort_order:
+      type: enum
+      values: [ASC, DESC]
+    table_method: string(255)
+    dql_query: clob
+  relations:
+    ContentType:
+      onDelete: CASCADE
+      foreignAlias: Lists
+    ContentTemplate:
+      onDelete: CASCADE
+      foreignAlias: Lists

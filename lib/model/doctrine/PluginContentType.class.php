@@ -78,21 +78,16 @@ abstract class PluginContentType extends BaseContentType
     }
   }
 
-  public function getTemplate($type = 'View')
+  public function getTemplate()
   {
-    $templates = $this->getTemplates();
-    if (isset($templates[$type]))
+    foreach ($this->ContentTemplates as $template)
     {
-      return $templates[$type];
-    } else {
-      foreach ($templates as $template)
+      if ($template->is_default)
       {
-        if ($template->getType() == $type)
-        {
-          return $template;
-        }
+        return $template;
       }
     }
+    return $this->ContentTemplates->getFirst();
   }
 
   public function getSingularUpper()
@@ -124,38 +119,18 @@ abstract class PluginContentType extends BaseContentType
   {
     $invoker = $event->getInvoker();
 
-    if ($invoker->view_path)
+    if ($invoker->default_path)
     {
       $route = Doctrine_Query::create()
         ->from('Route r')
-        ->where('r.url = ?', $invoker->view_path)
+        ->where('r.url = ?', $invoker->default_path)
         ->fetchOne();
 
       if (!$route)
       {
         $route = new Route();
-        $route->url = $invoker->view_path;
+        $route->url = $invoker->default_path;
         $route->name = 'sympal_content_view_type_'.str_replace('-', '_', $invoker['slug']);
-        $route->type = 'View';
-        $route->ContentType = $invoker;
-        $route->Site = $this->Site;
-        $route->save();
-      }
-    }
-
-    if ($invoker->list_path)
-    {
-      $route = Doctrine_Query::create()
-        ->from('Route r')
-        ->where('r.url = ?', $invoker->list_path)
-        ->fetchOne();
-
-      if (!$route)
-      {
-        $route = new Route();
-        $route->url = $invoker->list_path;
-        $route->name = 'sympal_content_type_'.str_replace('-', '_', $invoker['slug']);
-        $route->type = 'List';
         $route->ContentType = $invoker;
         $route->Site = $this->Site;
         $route->save();

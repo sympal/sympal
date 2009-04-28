@@ -1,0 +1,21 @@
+# sfSympalContentListPlugin install data fixtures
+
+ContentTemplate:
+  ContentTemplate_ViewContentList:
+    name: View Content List
+    partial_path: sympal_content_list/view
+    ContentType: ContentType_ContentList
+
+ContentType:
+  ContentType_ContentList:
+    Site: Site_default
+    Template: ContentTemplate_ViewContentList
+    plugin_name: sfSympalContentListPlugin
+    name: ContentList
+    description: The content list content type is the default Sympal content type for displaying lists of content.
+    label: Content List
+<?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
+    default_path: /lists/:sf_culture/:slug
+<?php else: ?>
+    default_path: /lists/:slug
+<?php endif; ?>

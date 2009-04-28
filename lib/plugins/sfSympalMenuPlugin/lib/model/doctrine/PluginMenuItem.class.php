@@ -134,14 +134,8 @@ abstract class PluginMenuItem extends BaseMenuItem
   {
     if (!$route = $this->getRoute())
     {
-      if ($this->getIsContentTypeList())
+      if (!$this->getContent() instanceof Doctrine_Null && $this->getContent())
       {
-        $type = $this->getContentType();
-        if ($type->list_path)
-        {
-          $route = '@sympal_content_type_'.str_replace('-', '_', $type['slug']);
-        }
-      } else if (!$this->getContent() instanceof Doctrine_Null && $this->getContent()) {
         $route = $this->getContent()->getRoute();
       }
     }

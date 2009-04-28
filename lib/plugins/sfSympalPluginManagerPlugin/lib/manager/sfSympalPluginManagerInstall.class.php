@@ -68,12 +68,10 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $this->logSection('sympal', 'Create default content type records');
 
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_name));
-    $slug = 'sample-'.$lowerName;
+    $slug = 'sample_'.$lowerName;
 
     $properties = array(
-      'label' => $this->_contentTypeName,
-      'list_path' => "/$lowerName/list",
-      'view_path' => "/$lowerName/:slug",
+      'default_path' => "/$lowerName/:slug",
       'slug' => $lowerName,
       'plugin_name' => $this->_pluginName,
       'Site' => Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'))
@@ -83,22 +81,28 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installVars['contentType'] = $contentType;
 
     $properties = array(
-      'Type' => $contentType,
       'slug' => $slug,
-      'is_published' => true,
-      'CreatedBy' => Doctrine::getTable('User')->findOneByIsSuperAdmin(1),
-      'Site' => Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app')),
+      'is_published' => true
     );
 
     $content = $this->newContent($contentType, $properties);
     $installVars['content'] = $content;
 
     $properties = array(
+      'slug' => $lowerName,
+      'ContentType' => Doctrine::getTable('ContentType')->findOneByName('ContentList')
+    );
+
+    $contentList = $this->newContent('ContentList', $properties);
+    $contentList->trySettingTitleProperty('Sample '.$contentType['label'].' List');
+    $contentList->getRecord()->setContentType($contentType);
+    $installVars['contentList'] = $contentList;
+
+    $properties = array(
       'is_published' => true,
       'label' => $this->_name,
-      'is_content_type_list' => true,
       'ContentType' => $contentType,
-      'Site' => Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'))
+      'RelatedContent' => $contentList
     );
 
     $menuItem = $this->newMenuItem($this->_name, $properties);
@@ -108,7 +112,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       'body' => '<?php echo get_sympal_breadcrumbs($menuItem, $content) ?><h2><?php echo get_sympal_column_content_slot($content, \'title\') ?></h2><p><strong>Posted by <?php echo $content->CreatedBy->username ?> on <?php echo get_sympal_column_content_slot($content, \'date_published\') ?></strong></p><p><?php echo get_sympal_column_content_slot($content, \'body\') ?></p>',
     );
 
-    $contentTemplate = $this->newContentTemplate('View '.$this->_contentTypeName, 'View', $installVars['contentType'], $properties);
+    $contentTemplate = $this->newContentTemplate('View '.$this->_contentTypeName, $contentType, $properties);
     $installVars['contentTemplate'] = $contentTemplate;
 
     return $installVars;
@@ -116,18 +120,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   protected function _defaultInstallation($installVars)
   {
-    $this->logSection('sympal', 'No customInstall() method found so running default installation');
-
     $this->saveMenuItem($installVars['menuItem']);
-
-    $contentTypeName = $this->_contentTypeName;
-    $contentTypeRecord = $installVars['content']->$contentTypeName;
-    $contentTypeRecord->title = 'Sample '.$this->_contentTypeName;
-
-    if ($contentTypeRecord->getTable()->hasColumn('body'))
-    {
-      $contentTypeRecord->body = 'This is some sample content for the body your new content type.';
-    }
 
     $installVars['contentType']->save();
     $installVars['contentTemplate']->save();

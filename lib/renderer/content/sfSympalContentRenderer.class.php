@@ -2,14 +2,17 @@
 class sfSympalContentRenderer
 {
   protected
+    $_dispatcher,
+    $_configuration,
     $_menuItem,
     $_content,
-    $_pager,
     $_format = 'html';
 
   public function __construct(MenuItem $menuItem, $format = 'html')
   {
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Tag', 'Url', 'Partial'));
+    $this->_configuration = sfProjectConfiguration::getActive();
+    $this->_dispatcher = $this->_configuration->getEventDispatcher();
+    $this->_configuration->loadHelpers(array('Tag', 'Url', 'Partial'));
 
     $this->_menuItem = $menuItem;
     $this->_format = $format ? $format:'html';
@@ -30,16 +33,6 @@ class sfSympalContentRenderer
     $this->_content = $content;
   }
 
-  public function setPager(sfDoctrinePager $pager)
-  {
-    $this->_pager = $pager;
-  }
-
-  public function getPager()
-  {
-    return $this->_pager;
-  }
-
   public function getFormat()
   {
     return $this->_format;
@@ -58,13 +51,8 @@ class sfSympalContentRenderer
 
     sfSympalToolkit::setCurrentMenuItem($this->_menuItem);
 
-    if ($this->_content instanceof Doctrine_Record)
-    {
-      sfSympalToolkit::setCurrentContent($this->_content);
-      sfSympalToolkit::changeLayout($this->_content->getLayout());
-    } else {
-      sfSympalToolkit::changeLayout($this->_menuItem->getLayout());
-    }
+    sfSympalToolkit::setCurrentContent($this->_content);
+    sfSympalToolkit::changeLayout($this->_content->getLayout());
 
     if (!$response->getTitle())
     {
@@ -77,139 +65,92 @@ class sfSympalContentRenderer
 
   public function render()
   {
-    $output = '';
+    $menuItem = $this->_menuItem;
+    $content = $this->_content;
+    $format = $this->_format;
 
-    if ($this->_content instanceof Doctrine_Collection)
+    $typeVarName = strtolower($content['Type']['name'][0]).substr($content['Type']['name'], 1, strlen($content['Type']['name']));
+
+    $variables = array(
+      'format' => $format,
+      'content' => $content,
+      'menuItem' => $menuItem,
+      $typeVarName => $content->getRecord(),
+      'contentRecord' => $content->getRecord()
+    );
+
+    $event = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_variables'), $variables);
+    $variables = $event->getReturnValue();
+
+    $return = null;
+
+    if ($format == 'html')
     {
-      $output .= $this->_getContentList($this->_content, $this->_format);
+      $return = $this->_getContentViewHtml($content, $variables);
     } else {
-      $output .= $this->_getContentView($this->_content, $this->_format);
+      switch ($format)
+      {
+        case 'xml':
+        case 'json':
+        case 'yml':
+          $return = $content->exportTo($format, true);
+        default:
+          $event = $this->_dispatcher->notifyUntil(new sfEvent($this, 'sympal.content_renderer.unknown_format', $variables));
+
+          if ($event->isProcessed())
+          {
+            $this->setFormat($event['format']);
+            $return = $event->getReturnValue();
+          }
+      }
     }
-
-    return $output;
-  }
-
-  protected function _getContentList(Doctrine_Collection $content, $format = 'html')
-  {
-    switch ($format)
+    
+    if (!$return)
     {
-      case 'html':
-        return $this->_getContentListHtml($content);
-      break;
-      case 'atom':
-      case 'feed':
-        $format = 'atom1';
-      case 'atom1':
-      case 'rss10':
-      case 'rss091':
-      case 'rss201':
-      case 'rss':
-        $context = sfContext::getInstance();
-        $response = $context->getResponse();
-        $request = $context->getRequest();
-
-        $feed = sfFeedPeer::newInstance($format);
-
-        $feed->initialize(array(
-          'title'       => $response->getTitle(),
-          'link'        => $request->getUri()
-        ));
-
-        $postItems = sfFeedPeer::convertObjectsToItems($content);
-        $feed->addItems($postItems);
-
-        return $feed->asXml();
-      case 'xml':
-      case 'json':
-      case 'yml':
-        return $content->exportTo($format, true);
-      default:
-        $this->_throwInvalidFormat404($format);
-    }
-  }
-
-  protected function _renderContentTemplate($type, $content, $template)
-  {
-    $options = array('content' => $content, 'menuItem' => $this->_menuItem, 'pager' => $this->_pager);
-
-    if ($type == 'object')
-    {
-      $typeVarName = strtolower($content['Type']['name'][0]).substr($content['Type']['name'], 1, strlen($content['Type']['name']));
-      $options[$typeVarName] = $content->getRecord();
-      $eventName = sfInflector::tableize($content->getTable()->getOption('name'));
-    } else {
-      $eventName = sfInflector::tableize($content->getTable()->getOption('name'));
-    }
-
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.pre_render_'.$eventName.'_'.$type.'_content', array('content' => $content, 'template' => $template)));
-
-    if ($template && $partialPath = $template->getPartialPath())
-    {
-      $return = get_partial($partialPath, $options);
-    }
-    else if ($template && $componentPath = $template->getComponentPath())
-    {
-      list($module, $action) = explode('/', $componentPath);
-      $return = get_component($module, $action, $options);
-    }
-    else if ($template && $body = $template->getBody())
-    {
-      $return = sfSympalToolkit::processPhpCode($body, $options);;
-    } else {
-      $return = get_sympal_breadcrumbs($this->_menuItem, ($type == 'list' ? $content:null)).$this->_renderDoctrineData($content, $type);
-    }
-
-    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($this, 'sympal.post_render_'.$eventName.'_'.$type.'_content', array('html' => $return, 'content' => $content, 'template' => $template)));
-    if ($event->isProcessed() && $return = $event->getReturnValue())
-    {
-      return $return;
+      $this->_throwUnknownFormat404($this->_format);
     }
 
     return $return;
   }
 
-  protected function _renderDoctrineData($content, $type)
-  {
-    $func = '_renderDoctrine'.$type;
-    return $this->$func($content);
-  }
-
-  protected function _getContentListHtml(Doctrine_Collection $content)
-  {
-    $template = $this->_menuItem->ContentType->getTemplate('List');
-
-    return auto_discovery_link_tag('rss', $this->_menuItem->getItemRoute().'?sf_format=rss').$this->_renderContentTemplate('list', $content, $template);
-  }
-
-  protected function _getContentViewHtml(Content $content)
+  protected function _getContentViewHtml(Content $content, $variables = array())
   {
     if ($content->content_template_id)
     {
       $template = $content->getTemplate();
     } else {
-      $template = $content->getType()->getTemplate('View');
+      $template = $content->getType()->getTemplate();
     }
 
-    return $this->_renderContentTemplate('object', $content, $template);
-  }
+    $eventName = sfInflector::tableize($content->getTable()->getOption('name'));
 
-  protected function _getContentView(Content $content, $format = 'html')
-  {
-    switch ($format)
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_render_'.$eventName.'_content', array('content' => $content, 'template' => $template)));
+
+    if ($template && $partialPath = $template->getPartialPath())
     {
-      case 'html':
-        return $this->_getContentViewHtml($content);
-      break;
-      case 'xml':
-      case 'json':
-      case 'yml':
-        return $content->exportTo($format, true);
-      default:
-        $this->_throwInvalidFormat404($format);
+      $return = get_partial($partialPath, $variables);
     }
+    else if ($template && $componentPath = $template->getComponentPath())
+    {
+      list($module, $action) = explode('/', $componentPath);
+      $return = get_component($module, $action, $variables);
+    }
+    else if ($template && $body = $template->getBody())
+    {
+      $return = sfSympalToolkit::processPhpCode($body, $variables);;
+    } else {
+      $return = get_sympal_breadcrumbs($this->_menuItem, $content).$this->_renderDoctrineData($content);
+    }
+
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_render_'.$eventName.'_content', array('content' => $content, 'template' => $template)));
+
+    $event = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_content'), $return);
+    $return = $event->getReturnValue();
+
+    return $return;
   }
 
-  protected function _renderDoctrineObject(Doctrine_Record $content)
+  protected function _renderDoctrineData($content)
   {
     $html  = '<h1>Content Data</h1>';
     $html .= $this->_renderData($content->toArray(), false);
@@ -257,53 +198,13 @@ class sfSympalContentRenderer
     return $html;
   }
 
-  protected function _renderDoctrineList(Doctrine_Collection $content)
-  {
-    $pager = get_sympal_pager_navigation($this->_pager, url_for($this->_menuItem->getItemRoute()));
-
-    $output = '';
-
-    if (count($content))
-    {
-      $output .= get_sympal_pager_header($this->_pager, $content);
-      $output .= '<table>';
-
-      if ($pager)
-      {
-        $output .= '<thead><tr><th colspan="3">' . $pager . '</th></thead>';
-      }
-
-      $output .= '<thead><tr><th>Title</th><th>Date Published</th><th>Created By</th></tr></thead>';
-      foreach ($content as $record)
-      {
-        $route = $record->getRoute();
-        $output .= '<tr>';
-        $output .= '<td><strong>' . link_to($record->getHeaderTitle(), $route, 'absolute=true') . '</strong></td>';
-        $output .= '<td>' . date('m/d/Y h:i', strtotime($record['date_published'])) . '</td>';
-        $output .= '<td>' . $record['CreatedBy']['username'] . '</td>';
-        $output .= '</tr>';
-      }
-
-      if ($pager)
-      {
-        $output .= '<tfoot><tr><th colspan="3">' . $pager . '</th></tfoot>';
-      }
-
-      $output .= '</table>';
-    } else {
-      $output .= '<p><strong>No results found.</strong></p>';
-    }
-
-    if (sfSympalToolkit::isEditMode())
-    {
-      $output .= link_to('Create New', '@sympal_content_create_type?type='.$this->_menuItem->getContentType()->getSlug());
-    }
-
-    return $output;
-  }
-
-  protected function _throwInvalidFormat404($format)
+  protected function _throwUnknownFormat404($format)
   {
     sfContext::getInstance()->getController()->getActionStack()->getLastEntry()->getActionInstance()->forward404();
+  }
+
+  public function __call($method, $arguments)
+  {
+    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
   }
 }

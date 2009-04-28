@@ -10,6 +10,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
       'sfSympalPagesPlugin',
+      'sfSympalContentListPlugin'
     );
 
   public
@@ -119,7 +120,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $user = sfContext::getInstance()->getUser();
     $request = sfContext::getInstance()->getRequest();
 
-    $contentEditor = $menu->addChild($content['Type']['name'] . ' Editor')
+    $contentEditor = $menu->addChild($content['Type']['label'] . ' Editor')
       ->setCredentials(array('ManageContent'));
 
     if ($content['locked_by'])
@@ -128,12 +129,12 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
        {
          if ($request->getParameter('module') == 'sympal_content')
          {
-           $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['name'].' Inline', $content->getRoute());
+           $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'].' Inline', $content->getRoute());
          } else {
-           $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['name'].' Backend', '@sympal_content_edit?id='.$content['id']);
+           $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'].' Backend', '@sympal_content_edit?id='.$content['id']);
          }
        } else {
-         $contentEditor->addChild($content['Type']['name'].' is currently locked by "'.$content['LockedBy']['username'].'" and cannot be edited.');
+         $contentEditor->addChild($content['Type']['label'].' is currently locked by "'.$content['LockedBy']['username'].'" and cannot be edited.');
        }
     }
 
@@ -144,10 +145,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/tick.png').' Publish', '@sympal_publish_content?id='.$content['id']);
     }
 
-    $contentType = $menu->addChild($content['Type']['name'].' Content')
+    $contentType = $menu->addChild($content['Type']['label'].' Content')
       ->setCredentials(array('ManageContent'));
-    $contentType->addChild(image_tag('/sf/sf_admin/images/add.png').' Create', '@sympal_content_create_type?type='.$content['Type']['name']);
-    $contentType->addChild(image_tag('/sf/sf_admin/images/list.png').' List', '@sympal_content_type_'.$content['Type']['slug']);
+    $contentType->addChild(image_tag('/sf/sf_admin/images/add.png').' Create', '@sympal_content_create_type?type='.$content['Type']['slug']);
 
     if (sfSympalConfig::isI18nEnabled())
     {

@@ -1,9 +1,6 @@
-CREATE TABLE attendee (id BIGINT AUTO_INCREMENT, name VARCHAR(255), date_added DATETIME, category_id BIGINT, INDEX category_id_idx (category_id), PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE attendee_tag (attendee_id BIGINT, tag_id BIGINT, PRIMARY KEY(attendee_id, tag_id)) ENGINE = INNODB;
-CREATE TABLE category (id BIGINT AUTO_INCREMENT, name VARCHAR(255), PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE blog_post (id BIGINT AUTO_INCREMENT, title VARCHAR(255), teaser LONGTEXT, content_id BIGINT, INDEX content_id_idx (content_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE content_list (id BIGINT AUTO_INCREMENT, title VARCHAR(255) NOT NULL, content_type_id BIGINT NOT NULL, content_template_id BIGINT, rows_per_page BIGINT, sort_column VARCHAR(255), sort_order VARCHAR(255), table_method VARCHAR(255), dql_query LONGTEXT, content_id BIGINT, INDEX content_type_id_idx (content_type_id), INDEX content_template_id_idx (content_template_id), INDEX content_id_idx (content_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_translation (id BIGINT, label VARCHAR(255), lang CHAR(2), PRIMARY KEY(id, lang)) ENGINE = INNODB;
-CREATE TABLE menu_item (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, is_primary TINYINT(1), is_published TINYINT(1), date_published DATETIME, custom_path VARCHAR(255), is_content_type_list TINYINT(1) DEFAULT '0', requires_auth TINYINT(1), requires_no_auth TINYINT(1), site_id BIGINT NOT NULL, content_type_id BIGINT, content_id BIGINT, slug VARCHAR(255), root_id INT, lft INT, rgt INT, level SMALLINT, INDEX content_id_idx (content_id), INDEX site_id_idx (site_id), INDEX content_type_id_idx (content_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE menu_item (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, is_primary TINYINT(1), is_published TINYINT(1), date_published DATETIME, custom_path VARCHAR(255), requires_auth TINYINT(1), requires_no_auth TINYINT(1), site_id BIGINT NOT NULL, content_type_id BIGINT, content_id BIGINT, slug VARCHAR(255), root_id INT, lft INT, rgt INT, level SMALLINT, INDEX content_id_idx (content_id), INDEX site_id_idx (site_id), INDEX content_type_id_idx (content_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE menu_item_group (menu_item_id BIGINT, group_id BIGINT, PRIMARY KEY(menu_item_id, group_id)) ENGINE = INNODB;
 CREATE TABLE menu_item_permission (menu_item_id BIGINT, permission_id BIGINT, PRIMARY KEY(menu_item_id, permission_id)) ENGINE = INNODB;
 CREATE TABLE page_translation (id BIGINT, title VARCHAR(255) NOT NULL, lang CHAR(2), version BIGINT DEFAULT 0, previous_version BIGINT DEFAULT 0, PRIMARY KEY(id, lang)) ENGINE = INNODB;
@@ -14,9 +11,9 @@ CREATE TABLE content_permission (content_id BIGINT, permission_id BIGINT, PRIMAR
 CREATE TABLE content_slot_translation (id BIGINT, value LONGTEXT, lang CHAR(2), version BIGINT DEFAULT 0, previous_version BIGINT DEFAULT 0, PRIMARY KEY(id, lang)) ENGINE = INNODB;
 CREATE TABLE content_slot (id BIGINT AUTO_INCREMENT, content_id BIGINT NOT NULL, content_slot_type_id BIGINT NOT NULL, is_column TINYINT(1) DEFAULT '0', render_function VARCHAR(255), name VARCHAR(255) NOT NULL, INDEX name_idx (name), INDEX content_id_idx (content_id), INDEX content_slot_type_id_idx (content_slot_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE content_slot_type (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL UNIQUE, site_id BIGINT NOT NULL, INDEX site_id_idx (site_id), PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE content_template (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, content_type_id BIGINT NOT NULL, partial_path VARCHAR(255), component_path VARCHAR(255), body LONGTEXT, version BIGINT DEFAULT 0, previous_version BIGINT DEFAULT 0, INDEX type_idx (type), INDEX content_type_id_idx (content_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE content_type (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL UNIQUE, description LONGTEXT, label VARCHAR(255) NOT NULL, plugin_name VARCHAR(255), list_path VARCHAR(255), view_path VARCHAR(255), layout VARCHAR(255), site_id BIGINT, slug VARCHAR(255), INDEX name_idx (name), UNIQUE INDEX sluggable_idx (slug), INDEX site_id_idx (site_id), PRIMARY KEY(id)) ENGINE = INNODB;
-CREATE TABLE route (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, url VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, content_id BIGINT, content_type_id BIGINT NOT NULL, yaml_override LONGTEXT, site_id BIGINT NOT NULL, table_method VARCHAR(55), slug VARCHAR(255), INDEX type_idx (type), UNIQUE INDEX sluggable_idx (slug), INDEX content_id_idx (content_id), INDEX content_type_id_idx (content_type_id), INDEX site_id_idx (site_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE content_template (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, partial_path VARCHAR(255), component_path VARCHAR(255), body LONGTEXT, is_default TINYINT(1) DEFAULT '1', content_type_id BIGINT NOT NULL, version BIGINT DEFAULT 0, previous_version BIGINT DEFAULT 0, INDEX content_type_id_idx (content_type_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE content_type (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL UNIQUE, description LONGTEXT, label VARCHAR(255) NOT NULL, plugin_name VARCHAR(255), default_path VARCHAR(255), layout VARCHAR(255), site_id BIGINT, slug VARCHAR(255), INDEX name_idx (name), UNIQUE INDEX sluggable_idx (slug), INDEX site_id_idx (site_id), PRIMARY KEY(id)) ENGINE = INNODB;
+CREATE TABLE route (id BIGINT AUTO_INCREMENT, name VARCHAR(255) NOT NULL, url VARCHAR(255) NOT NULL, content_id BIGINT, content_type_id BIGINT NOT NULL, yaml_override LONGTEXT, site_id BIGINT NOT NULL, table_method VARCHAR(55), slug VARCHAR(255), UNIQUE INDEX sluggable_idx (slug), INDEX content_type_id_idx (content_type_id), INDEX content_id_idx (content_id), INDEX site_id_idx (site_id), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE site (id BIGINT AUTO_INCREMENT, layout VARCHAR(255), title VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, page_title VARCHAR(255), meta_keywords TEXT, meta_description TEXT, slug VARCHAR(255), UNIQUE INDEX sluggable_idx (slug), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE versions (id BIGINT AUTO_INCREMENT, record_id BIGINT NOT NULL, record_type VARCHAR(255) NOT NULL, created_by BIGINT, num_changes BIGINT NOT NULL, version BIGINT NOT NULL, created_at DATETIME, INDEX version_idx (version), INDEX record_id_idx (record_id), INDEX record_type_idx (record_type), INDEX created_by_idx (created_by), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE version_change (id BIGINT AUTO_INCREMENT, version_id BIGINT NOT NULL, field VARCHAR(255) NOT NULL, old_value LONGTEXT, new_value LONGTEXT, INDEX version_id_idx (version_id), PRIMARY KEY(id)) ENGINE = INNODB;
@@ -28,11 +25,9 @@ CREATE TABLE remember_key (user_id BIGINT, remember_key VARCHAR(32), ip_address 
 CREATE TABLE user (id BIGINT AUTO_INCREMENT, first_name VARCHAR(255), last_name VARCHAR(255), email_address VARCHAR(255) NOT NULL UNIQUE, username VARCHAR(128) NOT NULL UNIQUE, algorithm VARCHAR(128) DEFAULT 'sha1' NOT NULL, salt VARCHAR(128), password VARCHAR(128), is_active TINYINT(1) DEFAULT '1', is_super_admin TINYINT(1) DEFAULT '0', last_login DATETIME, created_at DATETIME, updated_at DATETIME, INDEX is_active_idx_idx (is_active), PRIMARY KEY(id)) ENGINE = INNODB;
 CREATE TABLE user_group (user_id BIGINT, group_id BIGINT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, group_id)) ENGINE = INNODB;
 CREATE TABLE user_permission (user_id BIGINT, permission_id BIGINT, created_at DATETIME, updated_at DATETIME, PRIMARY KEY(user_id, permission_id)) ENGINE = INNODB;
-CREATE TABLE tag (id BIGINT AUTO_INCREMENT, name VARCHAR(255), PRIMARY KEY(id)) ENGINE = INNODB;
-ALTER TABLE attendee ADD FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE;
-ALTER TABLE attendee_tag ADD FOREIGN KEY (tag_id) REFERENCES tag(id) ON DELETE CASCADE;
-ALTER TABLE attendee_tag ADD FOREIGN KEY (attendee_id) REFERENCES attendee(id) ON DELETE CASCADE;
-ALTER TABLE blog_post ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
+ALTER TABLE content_list ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id) ON DELETE CASCADE;
+ALTER TABLE content_list ADD FOREIGN KEY (content_template_id) REFERENCES content_template(id) ON DELETE CASCADE;
+ALTER TABLE content_list ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
 ALTER TABLE menu_item_translation ADD FOREIGN KEY (id) REFERENCES menu_item(id) ON UPDATE CASCADE ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;
 ALTER TABLE menu_item ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id) ON DELETE CASCADE;
@@ -58,7 +53,7 @@ ALTER TABLE content_slot_translation ADD FOREIGN KEY (id) REFERENCES content_slo
 ALTER TABLE content_slot ADD FOREIGN KEY (content_slot_type_id) REFERENCES content_slot_type(id) ON DELETE CASCADE;
 ALTER TABLE content_slot ADD FOREIGN KEY (content_id) REFERENCES content(id) ON DELETE CASCADE;
 ALTER TABLE content_slot_type ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;
-ALTER TABLE content_template ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id);
+ALTER TABLE content_template ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id) ON DELETE CASCADE;
 ALTER TABLE content_type ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;
 ALTER TABLE route ADD FOREIGN KEY (site_id) REFERENCES site(id) ON DELETE CASCADE;
 ALTER TABLE route ADD FOREIGN KEY (content_type_id) REFERENCES content_type(id) ON DELETE CASCADE;

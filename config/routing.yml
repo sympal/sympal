@@ -218,31 +218,13 @@ sympal_routes:
     column:               id
     with_wildcard_routes: true
 
-<?php try { ?>
-<?php $content = Doctrine::getTable('Content')
-  ->createQuery('c')
-  ->leftJoin('c.Type t')
-  ->leftJoin('c.Routes r')
+<?php $routes = Doctrine::getTable('Route')
+  ->createQuery('r')
+  ->innerJoin('r.ContentType t')
+  ->leftJoin('r.Content c')
   ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
   ->execute(); ?>
 
-<?php foreach ($content as $c): ?> 
-<?php foreach ($c['Routes'] as $route): ?> 
+<?php foreach ($routes as $route): ?> 
 <?php echo $route['yaml'] ?> 
 <?php endforeach; ?>
-<?php endforeach; ?>
-
-<?php $contentTypes = Doctrine::getTable('ContentType')
-  ->createQuery('t')
-  ->leftJoin('t.Routes r')
-  ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
-  ->andWhere('r.content_id IS NULL')
-  ->orderBy('r.type ASC')
-  ->execute(); ?>
-
-<?php foreach ($contentTypes as $contentType): ?> 
-<?php foreach ($contentType['Routes'] as $route): ?> 
-<?php echo $route['yaml'] ?> 
-<?php endforeach; ?> 
-<?php endforeach; ?> 
-<?php } catch (Exception $e) {} ?>

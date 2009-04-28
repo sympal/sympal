@@ -36,46 +36,33 @@ class PluginContentTable extends Doctrine_Table
   {
     $request = sfContext::getInstance()->getRequest();
     $contentType = $request->getParameter('sympal_content_type');
-    $resultType = $request->getParameter('result_type');
     $contentId = $request->getParameter('sympal_content_id');
     $contentSlug = $request->getParameter('sympal_content_slug');
     $q = $this->getTypeQuery($contentType);
 
-    if ($resultType == 'object')
+    if ($contentId)
     {
-      if ($contentId)
-      {
-        $q->andWhere('c.id = ?', $contentId);
-      } else if ($contentSlug) {
-        $q->andWhere('c.slug = ?', $contentSlug);
-      }
-
-      foreach ($params as $key => $value)
-      {
-        if ($key == 'id' && $contentId || $key == 'slug' && $contentSlug)
-        {
-          continue;
-        }
-
-        if ($this->hasField($key))
-        {
-          $q->andWhere('c.'.$key.' = ?', $value);
-        } else if ($this->getRelation($contentType)->getTable()->hasField($key)) {
-          $q->andWhere('cr.'.$key.' = ?', $value);
-        }
-      }
-
-      return $q->fetchOne();
-    } else {
-      $q->addOrderBy('c.date_published DESC');
-
-      $pager = new sfDoctrinePager('Content', sfSympalConfig::get('rows_per_page'));
-      $pager->setQuery($q);
-
-      sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($pager, 'sympal.load_content_list_pager'));
-
-      return $pager;
+      $q->andWhere('c.id = ?', $contentId);
+    } else if ($contentSlug) {
+      $q->andWhere('c.slug = ?', $contentSlug);
     }
+
+    foreach ($params as $key => $value)
+    {
+      if ($key == 'id' && $contentId || $key == 'slug' && $contentSlug)
+      {
+        continue;
+      }
+
+      if ($this->hasField($key))
+      {
+        $q->andWhere('c.'.$key.' = ?', $value);
+      } else if ($this->getRelation($contentType)->getTable()->hasField($key)) {
+        $q->andWhere('cr.'.$key.' = ?', $value);
+      }
+    }
+
+    return $q->fetchOne();
   }
 
   public function getBaseQuery()
@@ -86,7 +73,7 @@ class PluginContentTable extends Doctrine_Table
       ->leftJoin('c.Slots sl')
       ->leftJoin('sl.Type sty')
       ->leftJoin('c.Type ty')
-      ->leftJoin('ty.Templates t')
+      ->leftJoin('ty.ContentTemplates t')
       ->leftJoin('c.MasterMenuItem m')
       ->leftJoin('c.MenuItem mm')
       ->leftJoin('c.CreatedBy u')

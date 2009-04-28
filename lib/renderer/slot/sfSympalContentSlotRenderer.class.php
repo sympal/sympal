@@ -49,4 +49,9 @@ class sfSympalContentSlotRenderer
       return $e->getMessage();
     }
   }
+
+  public function __call($method, $arguments)
+  {
+    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
+  }
 }

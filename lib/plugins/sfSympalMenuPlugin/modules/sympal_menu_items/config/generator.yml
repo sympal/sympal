@@ -33,11 +33,11 @@ generator:
           _new:
             label: Add New Menu
       filter:
-        display: [name, is_published, is_primary, is_content_type_list, requires_auth, requires_no_auth, site_id, content_type_id, content_id]
+        display: [name, is_published, is_primary, requires_auth, requires_no_auth, site_id, content_type_id, content_id]
       form:
         display:
           "NONE": [parent_id, name, is_primary, is_published, date_published, slug]
-          "Configuration": [is_primary, is_content_type_list, content_id, content_type_id, custom_path]
+          "Configuration": [is_primary, content_id, content_type_id, custom_path]
           "Security": [requires_auth, requires_no_auth, groups_list, permissions_list, ]
         fields:
           parent_id:
@@ -60,8 +60,6 @@ generator:
             help: Enter the menu item label.
           slug:
             help: Enter the unique slug for this menu item. This is a human readable string used to identify a menu item.
-          is_content_type_list:
-            help: Is this menu item a list of content records for the associated content type?
           custom_path:
             help: Enter the custom path that this menu item maps to. It can be a URL or a symfony route.
           requires_auth:

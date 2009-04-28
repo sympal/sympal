@@ -5,11 +5,6 @@
  */
 abstract class PluginRoute extends BaseRoute
 {
-  public function getRouteType()
-  {
-    return $this->type == 'View' ? 'object':'list';
-  }
-
   public function getRouteName()
   {
     return str_replace('-', '_', $this['slug']);
@@ -33,15 +28,15 @@ abstract class PluginRoute extends BaseRoute
 
       if ($contentId = $this->getContentId())
       {
-        $yaml[] = '  param: { module: sympal_content_renderer, action: index, sf_format: html, result_type: '.$this->getRouteType().', sympal_content_type: '.$this->getContentType()->getName().', sympal_content_id: '.$contentId.' }';
+        $yaml[] = '  param: { module: sympal_content_renderer, action: index, sf_format: html, sympal_content_type: '.$this->getContentType()->getName().', sympal_content_id: '.$contentId.' }';
       } else {
-        $yaml[] = '  param: { module: sympal_content_renderer, action: index, sf_format: html, result_type: '.$this->getRouteType().', sympal_content_type: '.$this->getContentType()->getName().' }';
+        $yaml[] = '  param: { module: sympal_content_renderer, action: index, sf_format: html, sympal_content_type: '.$this->getContentType()->getName().' }';
       }
 
       $yaml[] = '  class: sfDoctrineRoute';
       $yaml[] = '  options:';
       $yaml[] = '    model:  Content';
-      $yaml[] = '    type:   '.$this->getRouteType();
+      $yaml[] = '    type:   object';
       $yaml[] = '    method: '.($this->getTableMethod() ? $this->getTableMethod():'getContent');
       $yaml[] = '    requirements:';
       $yaml[] = '      sf_culture: ('.implode('|', sfSympalConfig::get('language_codes')).')';

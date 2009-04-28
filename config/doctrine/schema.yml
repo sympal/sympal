@@ -99,8 +99,7 @@ ContentType:
       type: string(255)
       notnull: true
     plugin_name: string(255)
-    list_path: string(255)
-    view_path: string(255)
+    default_path: string(255)
     layout: string(255)
     site_id: integer
   relations:
@@ -117,22 +116,19 @@ ContentTemplate:
     name:
       type: string(255)
       notnull: true
-    type:
-      type: enum
-      values: [View, List]
-      notnull: true
-    content_type_id:
-      type: integer
-      notnull: true
     partial_path: string(255)
     component_path: string(255)
     body: clob
-  indexes:
-    type:
-      fields: [type]
+    is_default:
+      type: boolean
+      default: true
+    content_type_id:
+      type: integer
+      notnull: true
   relations:
     ContentType:
-      foreignAlias: Templates
+      onDelete: CASCADE
+      foreignAlias: ContentTemplates
 
 ContentSlot:
   actAs:
@@ -231,10 +227,6 @@ Route:
     url:
       type: string(255)
       notnull: true
-    type:
-      type: enum
-      values: [List, View]
-      notnull: true
     content_id: integer
     content_type_id:
       type: integer
@@ -244,9 +236,6 @@ Route:
       type: integer
       notnull: true
     table_method: string(55)
-  indexes:
-    type:
-      fields: [type]
   relations:
     Content:
       foreignAlias: Routes

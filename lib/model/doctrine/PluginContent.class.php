@@ -95,7 +95,6 @@ abstract class PluginContent extends BaseContent
       $q = Doctrine::getTable('MenuItem')
         ->createQuery('m')
         ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
-        ->andWhere('m.is_content_type_list = ?', true)
         ->andWhere('m.content_type_id = ?', $this->content_type_id)
         ->orWhere('m.is_primary = true')
         ->orderBy('m.is_primary DESC')
@@ -122,7 +121,7 @@ abstract class PluginContent extends BaseContent
     {
       return $this->_get('Template');
     }
-    return $this->Type->getTemplate('View');
+    return $this->Type->getTemplate();
   }
 
   public function preValidate($event)
@@ -260,7 +259,7 @@ abstract class PluginContent extends BaseContent
   public function getFeedDescription()
   {
     return sfSympalContext::getInstance()
-      ->renderContent($this->getMainMenuItem(), $this)
+      ->getRenderer($this->getMainMenuItem(), $this)
       ->render();
   }
 
@@ -291,7 +290,7 @@ abstract class PluginContent extends BaseContent
       if ($path = $this['custom_path'])
       {
         $routeString = '@sympal_content_' . str_replace('-', '_', $this['slug']);
-      } else if ($path = $this['Type']['view_path']) {
+      } else if ($path = $this['Type']['default_path']) {
         $routeString = '@sympal_content_view_type_' . str_replace('-', '_', $this['Type']['slug']);
       } else if ($this['slug']) {
         $path = '/content/:slug';
@@ -351,7 +350,6 @@ abstract class PluginContent extends BaseContent
         $route = new Route();
         $route->url = $invoker->custom_path;
         $route->name = 'sympal_content_'.str_replace('-', '_', $invoker['slug']);
-        $route->type = 'View';
         $route->Content = $invoker;
         $route->ContentType = $invoker->Type;
         $route->Site = $this->Site;
@@ -384,6 +382,16 @@ abstract class PluginContent extends BaseContent
       $response->addMeta('description', $metaDescription);
     } else if ($metaDescription = $this['Site']['meta_description']) {
       $response->addMeta('description', $metaDescription);
+    }
+  }
+
+  public function trySettingTitleProperty($value)
+  {
+    foreach (array('title', 'name', 'subject', 'header') as $name)
+    {
+      try {
+        $this->$name = $value;
+      } catch (Exception $e) {}
     }
   }
 }

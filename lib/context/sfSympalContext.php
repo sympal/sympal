@@ -36,41 +36,34 @@ class sfSympalContext
     return $this->_sympalConfiguration;
   }
 
-  public function getRenderer(sfActions $actions)
+  public function getRenderer(MenuItem $menuItem, Content $content, $format = 'html')
   {
-    $routeOptions = $actions->getRoute()->getOptions();
+    $renderer = new sfSympalContentRenderer($menuItem, $format);
+    $renderer->setContent($content);
+    $renderer->initialize();
+
+    return $renderer;
+  }
+
+  public function getActionsRenderer(sfActions $actions)
+  {
     $request = $actions->getRequest();
     $response = $actions->getResponse();
 
-    if ($routeOptions['type'] == 'list')
-    {
-      $menuItem = Doctrine::getTable('MenuItem')->getForContentType($request->getParameter('sympal_content_type'));
-      $actions->forward404Unless($menuItem);
+    $content = $actions->getRoute()->getObject();
+    $actions->getUser()->checkContentSecurity($content);
+    $actions->forward404Unless($content);
+    $menuItem = $content->getMainMenuItem();
 
-      $pager = $actions->getRoute()->getObjects();
-      $pager->setPage($request->getParameter('page', 1));
-      $pager->init();
+    $actions->forward404Unless($menuItem);
 
-      $content = $pager->getResults();
+    sfSympalToolkit::changeLayout($content->getLayout());
 
-      $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
-      $renderer->setPager($pager);
-    } else {
-      $content = $actions->getRoute()->getObject();
-      $actions->getUser()->checkContentSecurity($content);
-      $actions->forward404Unless($content);
-      $menuItem = $content->getMainMenuItem();
+    $actions->getUser()->obtainContentLock($content);
 
-      $actions->forward404Unless($menuItem);
+    $renderer = $this->getRenderer($menuItem, $content, $request->getRequestFormat());
 
-      sfSympalToolkit::changeLayout($content->getLayout());
-
-      $actions->getUser()->obtainContentLock($content);
-
-      $renderer = $this->renderContent($menuItem, $content, $request->getRequestFormat());
-
-      $content->loadMetaData($response);
-    }
+    $content->loadMetaData($response);
 
     if ($renderer->getFormat() != 'html')
     {
@@ -100,15 +93,6 @@ class sfSympalContext
     return $renderer;
   }
 
-  public function renderContent($menuItem, $content = null, $format = 'html')
-  {
-    $renderer = new sfSympalContentRenderer($menuItem, $format);
-    $renderer->setContent($content);
-    $renderer->initialize();
-
-    return $renderer;
-  }
-
   public static function getInstance($site = null)
   {
     if (is_null($site))
@@ -132,5 +116,10 @@ class sfSympalContext
     self::$_current = $instance;
 
     return self::$_instances[$site];
+  }
+
+  public function __call($method, $arguments)
+  {
+    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
   }
 }

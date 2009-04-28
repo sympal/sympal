@@ -64,7 +64,7 @@ abstract class sfSympalPluginManager
     $obj->fromArray($properties, true);
   }
 
-  public function newContentTemplate($name, $templateType, $contentType, $properties = array())
+  public function newContentTemplate($name, $contentType, $properties = array())
   {
     if (is_string($contentType))
     {
@@ -73,7 +73,6 @@ abstract class sfSympalPluginManager
 
     $contentTemplate = new ContentTemplate();
     $contentTemplate->name = $name;
-    $contentTemplate->type = $templateType;
     $contentTemplate->ContentType = $contentType;
 
     $this->_setDoctrineProperties($contentTemplate, $properties);
@@ -87,11 +86,17 @@ abstract class sfSympalPluginManager
     {
       $contentType = Doctrine::getTable('ContentType')->findOneByName($contentType);
     }
+
     $content = new Content();
     $content->Type = $contentType;
+    $content->CreatedBy = Doctrine::getTable('User')->findOneByIsSuperAdmin(1);
+    $content->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
+    $content->is_published = true;
 
     $name = $contentType['name'];
     $content->$name = new $name();
+
+    $content->trySettingTitleProperty('Sample '.$contentType['label']);
 
     $this->_setDoctrineProperties($content, $properties);
 
@@ -102,6 +107,8 @@ abstract class sfSympalPluginManager
   {
     $contentType = new ContentType();
     $contentType->name = $name;
+    $contentType->label = sfInflector::humanize(sfInflector::tableize($name));
+    $contentType->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
 
     $this->_setDoctrineProperties($contentType, $properties);
 
@@ -112,6 +119,8 @@ abstract class sfSympalPluginManager
   {
     $menuItem = new MenuItem();
     $menuItem->name = $name;
+    $menuItem->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
+    $menuItem->is_published = true;
 
     $this->_setDoctrineProperties($menuItem, $properties);
 
@@ -120,9 +129,6 @@ abstract class sfSympalPluginManager
 
   public function saveMenuItem(MenuItem $menuItem)
   {
-    $menuItem->is_published = true;
-    $menuItem->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
-
     $roots = Doctrine::getTable('MenuItem')->getTree()->fetchRoots();
     $root = $roots[0];
     $menuItem->getNode()->insertAsLastChildOf($root);

@@ -16,9 +16,6 @@ MenuItem:
     date_published: timestamp
     label: string(255)
     custom_path: string(255)
-    is_content_type_list:
-      type: boolean
-      default: false
     requires_auth: boolean
     requires_no_auth: boolean
     site_id:
