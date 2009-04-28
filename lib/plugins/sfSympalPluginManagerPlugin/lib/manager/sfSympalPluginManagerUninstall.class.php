@@ -108,6 +108,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
       if ($this->_contentTypeName)
       {
+        chdir(sfConfig::get('sf_root_dir'));
         $task = new sfSympalDeleteModelTask($this->_dispatcher, $this->_formatter);
         foreach ($models as $model)
         {
