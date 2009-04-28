@@ -80,8 +80,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $type = Doctrine::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
     $this->content = Content::createNew($type);
-    $this->content->LockedBy = $user;
-    $this->content->LastUpdatedBy = $user;
     $this->content->Site = sfSympalContext::getInstance()->getSiteRecord();
 
     $this->form = new ContentForm($this->content);
@@ -107,6 +105,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));
       $this->dispatcher->notify(new sfEvent($this, 'sympal.save_content', array('content' => $content)));
+
+      $this->getUser()->obtainContentLock($content);
 
       if ($request->hasParameter('_save_and_add'))
       {
