@@ -30,10 +30,10 @@ class sfSympalToolkit
     sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
 
     try {
-      return get_partial($module.'/'.$action, $variables);
+      return get_component($module, $action, $variables);
     } catch (Exception $e1) {
       try {
-        return get_component($module, $action, $variables);
+        return get_partial($module.'/'.$action, $variables);
       } catch (Exception $e2) {
         try {
           return sfContext::getInstance()->getController()->getPresentationFor($module, $action);
@@ -85,7 +85,7 @@ class sfSympalToolkit
     }
   }
 
-  public static function processPhpCode($code, $variables = array())
+  public static function processTemplate($code, $variables = array())
   {
     $sf_context = sfContext::getInstance();
     $vars = array(
@@ -94,6 +94,8 @@ class sfSympalToolkit
       'sf_user' => $sf_context->getUser()
     );
     $variables = array_merge($variables, $vars);
+    sfSympalConfig::set('template_vars', $variables);
+
     foreach ($variables as $name => $variable)
     {
       $$name = $variable;
@@ -106,7 +108,17 @@ class sfSympalToolkit
     $rendered = ob_get_contents();
     ob_end_clean();
 
+    $rendered = preg_replace_callback("/##(.*)\/(.*)##/", array('sfSympalToolkit', 'replaceSymfonyResources'), $rendered);
+
     return $rendered;
+  }
+
+  public static function replaceSymfonyResources($matches)
+  {
+    list($match, $module, $action) = $matches;
+    $variables = sfSympalConfig::get('template_vars');
+    
+    return sfSympalToolkit::getSymfonyResource($module, $action, $variables);
   }
 
   public static function loadDefaultLayout()

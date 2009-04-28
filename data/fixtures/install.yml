@@ -20,3 +20,7 @@ ContentSlotType:
   ContentSlotType_ContentProperty:
     name: ContentProperty
     Site: Site_default
+    is_internal: true
+  ContentSlotType_Widget:
+    name: Widget
+    Site: Site_default

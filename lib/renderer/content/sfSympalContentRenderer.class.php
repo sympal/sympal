@@ -137,7 +137,7 @@ class sfSympalContentRenderer
     }
     else if ($template && $body = $template->getBody())
     {
-      $return = sfSympalToolkit::processPhpCode($body, $variables);;
+      $return = sfSympalToolkit::processTemplate($body, $variables);;
     } else {
       $return = get_sympal_breadcrumbs($this->_menuItem, $content).$this->_renderDoctrineData($content);
     }

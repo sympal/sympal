@@ -1,5 +1,7 @@
 all:
   sympal_config:
+    slot_widgets:
+      Signin Form: sympal_auth/signin_form
     content_formats: [html, atom, feed, atom1, rss, rss10, rss091, rss201, xml, yml, json]
     breadcrumbs_separator: ' / '
     i18n: true

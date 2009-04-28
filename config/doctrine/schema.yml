@@ -168,6 +168,9 @@ ContentSlotType:
       type: string(255)
       notnull: true
       unique: true
+    is_internal:
+      type: boolean
+      default: 0
     site_id:
       type: integer
       notnull: true
