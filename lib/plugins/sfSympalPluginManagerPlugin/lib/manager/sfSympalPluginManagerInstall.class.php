@@ -10,17 +10,16 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $uninstall->uninstall();
 
     try {
-      $path = $this->_configuration->getPluginConfiguration($this->_pluginName)->getRootDir();
-      $schema = $path.'/config/doctrine/schema.yml';
-      $pluginConfig = $this->_configuration->getPluginConfiguration($this->_pluginName);
+      $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
+      $schema = $pluginPath.'/config/doctrine/schema.yml';
 
       $installVars = array();
       if (file_exists($schema))
       {
-        $dataFixtures = sfFinder::type('file')->in($path.'/data/fixtures/install.yml');
+        $dataFixtures = sfFinder::type('file')->in($pluginPath.'/data/fixtures/install.yml');
         $models = array_keys(sfYaml::load($schema));
 
-        $this->_rebuildFilesFromSchema();
+        $this->rebuildFilesFromSchema();
 
         $this->logSection('sympal', 'Create the tables for the models');
 

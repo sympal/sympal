@@ -8,8 +8,8 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
     $this->logSection('sympal', 'Uninstall sympal plugin named '.$this->_pluginName);
 
-    $path = $this->_configuration->getPluginConfiguration($this->_pluginName)->getRootDir();
-    $schema = $path.'/config/doctrine/schema.yml';
+    $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
+    $schema = $pluginPath.'/config/doctrine/schema.yml';
 
     if (file_exists($schema))
     {
@@ -104,7 +104,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     {
       $this->logSection('sympal', 'Removing plugin files');
 
-      Doctrine_Lib::removeDirectories($path);
+      Doctrine_Lib::removeDirectories($pluginPath);
 
       if ($this->_contentTypeName)
       {
@@ -134,7 +134,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       $this->logSection('sympal', 'On the '.$this->_pluginName.'Configuration class you can define a uninstall() method to perform additional uninstall operaitons for your sympal plugin!');
     }
 
-    $this->_rebuildFilesFromSchema();
+    $this->rebuildFilesFromSchema();
 
     chdir(sfConfig::get('sf_root_dir'));
     $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);

@@ -2,6 +2,15 @@
 
 class sfSympalPluginToolkit
 {
+  public static function getPluginPath($pluginName)
+  {
+    try {
+      return ProjectConfiguration::getActive()->getPluginConfiguration($pluginName)->getRootDir();
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
   public static function checkPluginDependencies($pluginName, $dependencies)
   {
     $context = sfContext::getInstance();
@@ -68,11 +77,7 @@ class sfSympalPluginToolkit
   {
     $pluginName = sfSympalPluginToolkit::getLongPluginName($plugin);
 
-    try {
-      return sfContext::getInstance()->getConfiguration()->getPluginConfiguration($pluginName);
-    } catch (Exception $e) {
-      return false;
-    }
+    return is_dir(self::getPluginPath($pluginName)) ? true:false;
   }
 
   public static function getLongPluginName($name)
@@ -119,14 +124,20 @@ class sfSympalPluginToolkit
           foreach ($find as $p)
           {
             $info = pathinfo($p);
-            $available[$info['basename']] = $p;
+            if (!isset($available[$info['basename']]))
+            {
+              $available[$info['basename']] = $p;
+            }
           }
         } else {
           $html = file_get_contents($path);
           preg_match_all("/sfSympal(.*)Plugin/", strip_tags($html), $matches);
           foreach ($matches[0] as $plugin)
           {
-            $available[$plugin] = $path;
+            if (!isset($available[$plugin]))
+            {
+              $available[$plugin] = $path;
+            }
           }
         }
       }
