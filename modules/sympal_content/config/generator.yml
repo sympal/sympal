@@ -1,5 +1,6 @@
+<?php ob_start() ?>
 generator:
-  class: sfDoctrineGenerator
+  class:                   sfSympalGenerator
   param:
     model_class:           Content
     theme:                 sympal_admin
@@ -67,3 +68,13 @@ generator:
             action: view
       new:
         title: Create New Content
+<?php
+$yaml = ob_get_contents();
+ob_end_clean();
+
+$array = sfYaml::load($yaml);
+$array = ProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($array, 'sympal_content.filter_generator_yaml'), $array)->getReturnValue();
+
+$yaml = sfYaml::dump($array);
+
+echo $yaml;

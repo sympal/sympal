@@ -10,6 +10,33 @@
  */
 class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends sfModelGeneratorHelper
 {
+  public function getTabExtras($tab, $position)
+  {
+    $tab = str_replace(' ', '_', sfInflector::tableize($tab));
+    $extras = '';
+
+    $tabExtras = array();
+    $tabExtras = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, '<?php echo $this->getModuleName() ?>.'.$tab.'_tab_'.$position.'_extras'), $tabExtras)->getReturnValue();
+    foreach ($tabExtras as $tabExtra)
+    {
+      $e = explode('/', $tabExtra);
+      $resource = $this->getSymfonyResource($e[0], isset($e[1]) ? $e[1]:null);
+      $extras .= $resource ? $resource:$tabExtra;
+    }
+
+    return $extras;
+  }
+
+  public function getSymfonyResource($module, $action, $variables = array())
+  {
+    $action = str_replace(' ', '_', sfInflector::tableize($action));
+    try {
+      return sfSympalToolkit::getSymfonyResource($module, $action, $variables);
+    } catch (Exception $e) {
+      return false;
+    }
+  }
+
   public function linkToNew($params)
   {
     return '<li class="sf_admin_action_new">'.link_to(__($params['label'], array(), 'sf_admin'), $this->getUrlForAction('new')).'</li>';

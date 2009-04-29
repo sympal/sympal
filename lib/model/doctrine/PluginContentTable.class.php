@@ -27,7 +27,7 @@ class PluginContentTable extends Doctrine_Table
       $q->leftJoin('cr.Translation crt');
     }
 
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($q, 'sympal.load_content_type_query'));
+    $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.load_'.sfInflector::tableize($typeName).'_query'), $q)->getReturnValue();
 
     return $q;
   }
@@ -62,7 +62,13 @@ class PluginContentTable extends Doctrine_Table
       }
     }
 
-    return $q->fetchOne();
+    $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_get_content_query'), $q)->getReturnValue();
+
+    $content = $q->fetchOne();
+
+    $content = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_get_content'), $content)->getReturnValue();
+
+    return $content;
   }
 
   public function getBaseQuery()
@@ -90,7 +96,7 @@ class PluginContentTable extends Doctrine_Table
       $q->leftJoin('sl.Translation slt');
     }
 
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($q, 'sympal.load_content_base_query'));
+    $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_content_base_query'), $q)->getReturnValue();
 
     return $q;
   }

@@ -8,7 +8,6 @@ ContentList:
     content_type_id:
       type: integer
       notnull: true
-    content_template_id: integer
     rows_per_page: integer
     sort_column: string(255)
     sort_order:
@@ -18,8 +17,5 @@ ContentList:
     dql_query: clob
   relations:
     ContentType:
-      onDelete: CASCADE
-      foreignAlias: Lists
-    ContentTemplate:
       onDelete: CASCADE
       foreignAlias: Lists

@@ -128,6 +128,11 @@ class sfSympalToolkit
 
   public static function changeLayout($name)
   {
+    if (!$name)
+    {
+      throw new sfException('You must specify the name of the layout you want to change to.');
+    }
+
     $context = sfContext::getInstance();
     $request = $context->getRequest();
     $response = sfContext::getInstance()->getResponse();

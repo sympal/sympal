@@ -1,5 +1,5 @@
 generator:
-  class: sfDoctrineGenerator
+  class: sfSympalGenerator
   param:
 ##CONFIG##
 

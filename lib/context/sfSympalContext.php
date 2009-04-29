@@ -51,10 +51,11 @@ class sfSympalContext
     $response = $actions->getResponse();
 
     $content = $actions->getRoute()->getObject();
-    $actions->getUser()->checkContentSecurity($content);
-    $actions->forward404Unless($content);
-    $menuItem = $content->getMainMenuItem();
 
+    $actions->forward404Unless($content);
+    $actions->getUser()->checkContentSecurity($content);
+
+    $menuItem = $content->getMainMenuItem();
     $actions->forward404Unless($menuItem);
 
     sfSympalToolkit::changeLayout($content->getLayout());
