@@ -30,9 +30,10 @@ class sfSympalActions extends sfSympalExtendClass
         $error = true;
       }
     }
+
     if ($error)
     {
-      $this->getUser()->setFlash('error', 'You have some permissions problems. Sympal requires your project to be writable by your web server.');
+      $this->getUser()->setFlash('error', 'Sympal requires that some files and folders are writeable in your project. The file "'.$check.'" specifically is not writeable. Run the sympal:fix-perms task to fix or manually adjust the permissions.');
     }
 
     if ($error)
