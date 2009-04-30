@@ -28,6 +28,7 @@ class sfSympalActions extends sfSympalExtendClass
       if (!is_writable($check))
       {
         $error = true;
+        break;
       }
     }
 
