@@ -8,11 +8,7 @@ class sfSympalMarkdownRenderer
   {
     sfContext::getInstance()->getResponse()->addStylesheet('/sfSympalPlugin/css/markdown.css');
 
-    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($markdown, 'sympal.pre_markdown_convert'));
-    if ($event->isProcessed() and $event->getReturnValue())
-    {
-      $markdown = $event->getReturnValue();
-    }
+    $markdown = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.pre_markdown_convert'), $markdown)->getReturnValue();
 
     return '<div class="sympal_markdown">'.self::enhanceHtml(Markdown($markdown)).'</div>';
   }
@@ -38,11 +34,7 @@ class sfSympalMarkdownRenderer
     // Syntax highlighting
     $html = preg_replace_callback('#<pre><code>(.+?)</code></pre>#s', array('sfSympalMarkdownRenderer', 'highlightPhp'), $html);
 
-    $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($html, 'sympal.enhance_markdown_html'));
-    if ($event->isProcessed() and $event->getReturnValue())
-    {
-      $html = $event->getReturnValue();
-    }
+    $html = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.post_markdown_convert'), $html)->getReturnValue();
 
     return $html;
   }

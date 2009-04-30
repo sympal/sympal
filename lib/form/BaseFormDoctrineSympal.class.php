@@ -22,6 +22,7 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
     }
 
     sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.sf_form_doctrine.setup'));
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.'.sfInflector::tableize($this).'.setup'));
   }
 
   public function __call($method, $arguments)

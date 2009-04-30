@@ -42,7 +42,7 @@ class sfSympalMail
 
   public function send($emailAddress = null, $fromAddress = null)
   {
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.pre_send_email', array('email_address' => $emailAddress)));
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.pre_send_email', array('mailer' => $this->_mailer, 'message' => $this->_message, 'email_address' => $emailAddress)));
 
     $emailAddress = $emailAddress ? $emailAddress:$this->_emailAddress;
     $fromAddress = $fromAddress ? $fromAddress:$this->_fromAddress;
@@ -55,7 +55,7 @@ class sfSympalMail
     $this->_mailer->send($this->_message, $emailAddress, $fromAddress);
     $this->_mailer->disconnect();
 
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.post_send_email', array('email_address' => $emailAddress)));
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.post_send_email', array('mailer' => $this->_mailer, 'message' => $this->_message, 'email_address' => $emailAddress)));
   }
 
   public function __get($name)

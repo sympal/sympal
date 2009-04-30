@@ -92,13 +92,15 @@ class sfSympalConfigForm extends sfForm
 
   public function save()
   {
-    $array = $this->_buildArrayToWrite();
+    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.config_form.pre_save'));
 
-    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.settings_form.save'), array('values' => $this->getValues()));
+    $array = $this->_buildArrayToWrite();
 
     $this->_path = sfConfig::get('sf_config_dir').'/app.yml';
 
     file_put_contents($this->_path, sfYaml::dump($array, 4));
+
+    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.config_form.post_save'));
   }
 
   protected function _buildArrayToWrite()

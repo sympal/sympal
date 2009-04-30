@@ -122,7 +122,7 @@ class sfSympalContentRenderer
       $template = $content->getType()->getTemplate();
     }
 
-    $eventName = sfInflector::tableize($content->getTable()->getOption('name'));
+    $eventName = sfInflector::tableize($content->getType()->getName());
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_render_'.$eventName.'_content', array('content' => $content, 'template' => $template)));
 
@@ -144,7 +144,7 @@ class sfSympalContentRenderer
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_render_'.$eventName.'_content', array('content' => $content, 'template' => $template)));
 
-    $event = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_content'), $return);
+    $event = $this->_dispatcher->filter(new sfEvent($this, 'sympal.filter_'.$eventName.'_content'), $return);
     $return = $event->getReturnValue();
 
     return $return;

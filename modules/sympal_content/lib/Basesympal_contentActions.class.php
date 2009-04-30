@@ -53,7 +53,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     Doctrine::initializeModels(array($type['name']));
 
     $this->form = new ContentForm($this->content);
-    $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
     $this->setTemplate('new');
   }
 
@@ -69,7 +68,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $user->obtainContentLock($this->content);
 
     $this->form = $this->configuration->getForm($this->content);
-    $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -83,7 +81,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->content->Site = sfSympalContext::getInstance()->getSiteRecord();
 
     $this->form = new ContentForm($this->content);
-    $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content_form', array('form' => $this->form)));
 
     $this->processForm($request, $this->form);
 

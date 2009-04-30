@@ -177,7 +177,7 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function signIn($user, $remember = false, $con = null)
   {
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($user, 'sympal.user.pre_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.user.pre_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
 
     // signin
     $this->setAttribute('user_id', $user->getId(), 'sfSympalUser');
@@ -222,7 +222,7 @@ class sfSympalUser extends sfBasicSecurityUser
       sfContext::getInstance()->getResponse()->setCookie($remember_cookie, $key, time() + $expiration_age);
     }
 
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($user, 'sympal.user.post_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.user.post_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
   }
 
   protected function generateRandomKey($len = 20)
