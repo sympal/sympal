@@ -16,6 +16,8 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   public function __construct($name, $route = null, $options = array())
   {
+    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Tag', 'Url'));
+
     $this->_name = $name;
     $this->_route = $route;
     $this->_options = $options;
@@ -365,7 +367,6 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     {
       $options['class'] = 'current';
     }
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Url'));
 
     $html = link_to($this->renderLabel(), $this->getRoute(), $options);
 

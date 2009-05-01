@@ -86,13 +86,15 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
-  public function getEmailPresentationFor($module, $action, $variables = array())
+  public function getEmailTemplateFor($module, $action, $variables = array())
   {
+    $variables = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.email.filter_variables'), $variables)->getReturnValue();
+
     sfContext::getInstance()->getConfiguration()->loadHelpers(array('Partial'));
 
     $email = sfSympalToolkit::getSymfonyResource($module, $action, $variables);
 
-    $email = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.filter_email_presentation', array('module' => $module, 'action' => $action, 'variables' => $variables)), $email)->getReturnValue();
+    $email = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.email.filter_template', array('module' => $module, 'action' => $action, 'variables' => $variables)), $email)->getReturnValue();
 
     return $email;
   }
@@ -103,7 +105,7 @@ class sfSympalActions extends sfSympalExtendClass
     list($module, $action) = $e;
 
     try {
-      $rawEmail = $this->getEmailPresentationFor($module, $action, $variables);
+      $rawEmail = $this->getEmailTemplateFor($module, $action, $variables);
     } catch (Exception $e) {
       throw new sfException('Could not send email: '.$e->getMessage());
     }
