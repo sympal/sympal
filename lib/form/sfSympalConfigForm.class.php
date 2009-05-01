@@ -105,10 +105,11 @@ class sfSympalConfigForm extends sfForm
 
   protected function _buildArrayToWrite()
   {
+    $original = sfYaml::load(sfConfig::get('sf_config_dir').'/app.yml');
     $array = array();
     $array['all']['sympal_config'] = $this->getValues();
 
-    return $array;
+    return sfToolkit::arrayDeepMerge($original, $array);
   }
 
   public function getGroups()
