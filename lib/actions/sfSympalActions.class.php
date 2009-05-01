@@ -90,7 +90,7 @@ class sfSympalActions extends sfSympalExtendClass
   {
     sfContext::getInstance()->getConfiguration()->loadHelpers(array('Partial'));
 
-    $email = sfSympalToolkit::getSymfonyResource($model, $action, $variables);
+    $email = sfSympalToolkit::getSymfonyResource($module, $action, $variables);
 
     $email = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.filter_email_presentation', array('module' => $module, 'action' => $action, 'variables' => $variables)), $email)->getReturnValue();
 
