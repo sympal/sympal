@@ -1,11 +1,12 @@
 <?php
 class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 {
-  protected 
+  protected
     $_name             = null,
     $_route            = null,
     $_level            = null,
     $_parent           = null,
+    $_root             = null,
     $_requiresAuth     = null,
     $_requiresNoAuth   = null,
     $_showChildren     = true,
@@ -225,6 +226,19 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return $this->_level;
   }
 
+  public function getRoot()
+  {
+    if (is_null($this->_root))
+    {
+      $obj = $this;
+      do {
+        $found = $obj;
+      } while ($obj = $obj->getParent());
+      $this->_root = $found;
+    }
+    return $this->_root;
+  }
+
   public function getParent()
   {
     return $this->_parent;
@@ -321,7 +335,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   {
     if ($this->checkUserAccess() && $this->hasChildren())
     {
-      $id = Doctrine_Inflector::urlize($this->getName());
+      $id = Doctrine_Inflector::urlize($this->getName().'-menu');
       $html = '<ul id="'.$id.'">';
       foreach ($this->_children as $child)
       {
@@ -336,7 +350,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   {
     if ($this->checkUserAccess())
     {
-      $id = Doctrine_Inflector::urlize($this->getName());
+      $id = Doctrine_Inflector::urlize($this->getRoot()->getName().'-'.$this->getName());
       $html = '<li id="'.$id.'"'.($this->isCurrent() ? ' class="current"':null).'>';
       $html .= $this->renderChildBody();
       if ($this->hasChildren() && $this->showChildren())
