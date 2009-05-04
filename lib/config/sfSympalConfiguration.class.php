@@ -263,22 +263,30 @@ class sfSympalConfiguration
   {
     if (!$this->_modules)
     {
-      $this->_modules = array();
-      $plugins = $this->getPluginPaths();
-
-      foreach ($plugins as $plugin => $path)
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal_modules.cache';
+      if (!file_exists($cachePath))
       {
-        $path = $path . '/modules';
-        $find = glob($path . '/*');
+        $this->_modules = array();
+        $plugins = $this->getPluginPaths();
 
-        foreach ($find as $module)
+        foreach ($plugins as $plugin => $path)
         {
-          if (is_dir($module))
+          $path = $path . '/modules';
+          $find = glob($path . '/*');
+
+          foreach ($find as $module)
           {
-            $info = pathinfo($module);
-            $this->_modules[] = $info['basename'];
+            if (is_dir($module))
+            {
+              $info = pathinfo($module);
+              $this->_modules[] = $info['basename'];
+            }
           }
         }
+        file_put_contents($cachePath, serialize($this->_modules));
+      } else {
+        $serialized = file_get_contents($cachePath);
+        $this->_modules = unserialize($serialized);
       }
     }
 
