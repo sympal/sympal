@@ -68,62 +68,62 @@
   font-weight: normal;
 }
 
-#sympal-dashboard #boxes ul li#create-content a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-create-content a {
   background: url(../images/content.gif) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#sitemap a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-sitemap a {
   background: url(../images/sitemap.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#sites a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-sites a {
   background: url(../images/sites.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#menu-manager a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-menu-manager a {
   background: url(../images/menu_manager.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#plugin-manager a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-plugin-manager a {
   background: url(../images/plugins.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#content-types a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-content-types a {
   background: url(../images/content_types.gif) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#content-templates a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-content-templates a {
   background: url(../images/templates.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#users a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-users a {
   background: url(../images/users.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#groups a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-groups a {
   background: url(../images/groups.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#permissions a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-permissions a {
   background: url(../images/permissions.gif) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#configuration a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-configuration a {
   background: url(../images/configuration.png) no-repeat;
   background-position: center;
 }
 
-#sympal-dashboard #boxes ul li#slot-types a {
+#sympal-dashboard #boxes ul li#dashboard-boxes-slot-types a {
   background: url(../images/slot_types.png) no-repeat;
   background-position: center;
 }

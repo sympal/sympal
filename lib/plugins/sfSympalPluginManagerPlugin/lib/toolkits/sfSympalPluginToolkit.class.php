@@ -108,7 +108,7 @@ class sfSympalPluginToolkit
 
   public static function getAvailablePluginPaths()
   {
-    $cachePath = sfConfig::get('sf_cache_dir').'/sympal_available_plugins.cache';
+    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/plugins.cache';
     if (!file_exists($cachePath))
     {
       $installedPlugins = ProjectConfiguration::getActive()->getPlugins();

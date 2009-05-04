@@ -263,7 +263,7 @@ class sfSympalConfiguration
   {
     if (!$this->_modules)
     {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal_modules.cache';
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/modules.cache';
       if (!file_exists($cachePath))
       {
         $this->_modules = array();
