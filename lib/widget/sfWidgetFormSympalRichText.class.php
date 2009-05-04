@@ -24,7 +24,12 @@ class sfWidgetFormSympalRichText extends sfWidgetFormSympalMultiLineText
 
   public function render($name, $value = null, $attributes = array(), $errors = array())
   {
-    $e = explode('_', $attributes['id']);
+    $textarea = parent::render($name, $value, $attributes, $errors);
+
+    preg_match_all("/id=\"(\w+)\"/", $textarea, $matches);
+    $id = $matches[1][0];
+
+    $e = explode('_', $id);
     $contentSlotId = end($e);
 
     $url = sfContext::getInstance()->getController()->genUrl('sympal_yui_image_uploader');
@@ -59,13 +64,11 @@ myEditor.render();
 </script>
 EOF
     ,
-      $attributes['id'],
+      $id,
       $contentSlotId,
-      $attributes['id'],
+      $id,
       $url
     );
-
-    $textarea = parent::render($name, $value, $attributes, $errors);
 
     return '<div class="yui-skin-sam">'.$textarea.$js.'</div>';
   }
