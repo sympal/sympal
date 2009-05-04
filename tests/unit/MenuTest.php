@@ -45,12 +45,12 @@ foreach ($root1 as $key => $value)
 $new = $menu['Root 2'];
 $t->is(get_class($new), 'sfSympalMenuTest');
 $new2 = $new['Root 3']['Child 1'];
-$t->is((string) $new, '<ul id="root-2"><li id="child-1">Child 1<ul id="child-1"><li id="child-2">Child 2</li></ul></li><li id="root-3">Root 3<ul id="root-3"><li id="child-1">Child 1</li></ul></li></ul>');
+$t->is((string) $new, '<ul id="root-2-menu"><li id="test-menu-child-1">Child 1<ul id="child-1-menu"><li id="test-menu-child-2">Child 2</li></ul></li><li id="test-menu-root-3">Root 3<ul id="root-3-menu"><li id="test-menu-child-1">Child 1</li></ul></li></ul>');
 
 $menu['Test']['With Route']->setRoute('http://www.google.com');
-$t->is((string) $menu['Test'], '<ul id="test"><li id="with-route"><a href="http://www.google.com">With Route</a></li></ul>');
+$t->is((string) $menu['Test'], '<ul id="test-menu"><li id="test-menu-with-route"><a href="http://www.google.com">With Route</a></li></ul>');
 $menu['Test']['With Route']->setOption('target', '_BLANK');
-$t->is((string) $menu['Test'], '<ul id="test"><li id="with-route"><a target="_BLANK" href="http://www.google.com">With Route</a></li></ul>');
+$t->is((string) $menu['Test'], '<ul id="test-menu"><li id="test-menu-with-route"><a target="_BLANK" href="http://www.google.com">With Route</a></li></ul>');
 
 $menu['Test']['With Route']->requiresAuth(true);
 $t->is((string) $menu['Test'], '');
@@ -58,7 +58,7 @@ $user = sfContext::getInstance()->getUser();
 $user->setAuthenticated(true);
 $t->is($user->isAuthenticated(), true);
 $t->is($menu['Test']['With Route']->checkUserAccess($user), true);
-$t->is((string) $menu['Test'], '<ul id="test"><li id="with-route"><a target="_BLANK" href="http://www.google.com">With Route</a></li></ul>');
+$t->is((string) $menu['Test'], '<ul id="test-menu"><li id="test-menu-with-route"><a target="_BLANK" href="http://www.google.com">With Route</a></li></ul>');
 $menu->requiresNoAuth(true);
 $t->is((string) $menu, '');
 $t->is($menu->getLevel(), -1);
@@ -99,7 +99,7 @@ $node = $breadcrumbs->addChild('The Guide to Doctrine ORM', 'http://www.doctrine
 
 $t->is(get_class($node), 'sfSympalMenuBreadcrumbsTest');
 $t->is($breadcrumbs->getPathAsString(), 'Documentation / 1.0 / The Guide to Doctrine ORM');
-$t->is((string) $breadcrumbs, '<div id="sympal_breadcrumbs"><ul id="doctrine"><li id="documentation"><a href="http://www.doctrine-project.org/documentation">Documentation</a></li><li id="1-0"><a href="http://www.doctrine-project.org/documentation/1_0">1.0</a></li><li id="the-guide-to-doctrine-orm"><a href="http://www.doctrine-project.org/documentation/1_0/manual">The Guide to Doctrine ORM</a></li></ul></div>');
+$t->is((string) $breadcrumbs, '<div id="sympal_breadcrumbs"><ul id="doctrine-menu"><li id="doctrine-documentation"><a href="http://www.doctrine-project.org/documentation">Documentation</a></li><li id="doctrine-1-0"><a href="http://www.doctrine-project.org/documentation/1_0">1.0</a></li><li id="doctrine-the-guide-to-doctrine-orm"><a href="http://www.doctrine-project.org/documentation/1_0/manual">The Guide to Doctrine ORM</a></li></ul></div>');
 
 class sfSympalMenuSiteTest extends sfSympalMenuSite
 {
@@ -111,14 +111,14 @@ class sfSympalMenuSiteTest extends sfSympalMenuSite
 
 $manager = sfSympalMenuSiteManager::getInstance();
 $primaryMenu = $manager->getMenu('primary', false, 'sfSympalMenuSiteTest');
-$t->is((string) $primaryMenu, '<ul id="primary"><li id="signout">Signout</li><li id="pages">Pages</li><li id="about">About</li><li id="markdown-examples">Markdown Examples</li><li id="readme">README</li><li id="trac">Trac</li></ul>');
+$t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-signout">Signout</li><li id="primary-pages">Pages</li><li id="primary-about">About</li><li id="primary-markdown-examples">Markdown Examples</li><li id="primary-readme">README</li><li id="primary-trac">Trac</li></ul>');
 
 $split = $manager->split($primaryMenu, 2, true);
 $total = $primaryMenu->count();
 $t->is($split['primary']->count(), 2);
-$t->is((string) $split['primary'], '<ul id="primary"><li id="signout">Signout</li><li id="pages">Pages</li></ul>');
-$t->is((string) $split['secondary'], '<ul id="secondary"><li id="about">About</li><li id="markdown-examples">Markdown Examples</li><li id="readme">README</li><li id="trac">Trac</li></ul>');
+$t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-signout">Signout</li><li id="primary-pages">Pages</li></ul>');
+$t->is((string) $split['secondary'], '<ul id="secondary-menu"><li id="primary-about">About</li><li id="primary-markdown-examples">Markdown Examples</li><li id="primary-readme">README</li><li id="primary-trac">Trac</li></ul>');
 $t->is($split['secondary']->count(), 4);
 
 $footerMenu = $manager->getMenu('footer', false, 'sfSympalMenuSiteTest');
-$t->is((string) $footerMenu, '<ul id="footer"><li id="about">About</li><li id="markdown-examples">Markdown Examples</li><li id="readme">README</li></ul>');
+$t->is((string) $footerMenu, '<ul id="footer-menu"><li id="footer-about">About</li><li id="footer-markdown-examples">Markdown Examples</li><li id="footer-readme">README</li></ul>');
