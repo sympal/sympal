@@ -1,4 +1,4 @@
-<?php echo auto_discovery_link_tag('rss', $content->getRoute().'.rss') ?>
+<?php echo auto_discovery_link_tag('rss', $content->getRoute().'?sf_format=rss') ?>
 
 <?php echo get_sympal_breadcrumbs($menuItem) ?>
 
