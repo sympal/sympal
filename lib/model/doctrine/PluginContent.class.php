@@ -342,7 +342,8 @@ abstract class PluginContent extends BaseContent
     {
       $route = Doctrine_Query::create()
         ->from('Route r')
-        ->where('r.url = ?', $invoker->custom_path)
+        ->andWhere('r.url = ?', $invoker->custom_path)
+        ->andWhere('r.site_id = ?', $this->Site->id)
         ->fetchOne();
 
       if (!$route)

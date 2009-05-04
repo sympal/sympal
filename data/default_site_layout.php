@@ -6,7 +6,7 @@
     <?php include_title() ?>
     <link rel="shortcut icon" href="/favicon.ico" />
   </head>
-  <body>
+  <body class="yui-skin-sam">
     <?php echo get_sympal_admin_bar() ?>
     <?php echo get_sympal_side_bar() ?>
     

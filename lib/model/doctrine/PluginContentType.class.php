@@ -123,7 +123,8 @@ abstract class PluginContentType extends BaseContentType
     {
       $route = Doctrine_Query::create()
         ->from('Route r')
-        ->where('r.url = ?', $invoker->default_path)
+        ->andWhere('r.url = ?', $invoker->default_path)
+        ->andWhere('r.site_id = ?', $this->Site->id)
         ->fetchOne();
 
       if (!$route)

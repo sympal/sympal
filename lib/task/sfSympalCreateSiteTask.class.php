@@ -58,6 +58,7 @@ EOF;
     $testContent->Site = $site;
     $testContent->is_published = true;
     $testContent->title = 'Test Page';
+    $testContent->custom_path = '/test_page';
     $testContent->CreatedBy = Doctrine::getTable('User')->findOneByIsSuperAdmin(true);
     $testContent->save();
 

@@ -223,6 +223,7 @@ Route:
     Sluggable:
       fields: [name]
       unique: true
+      uniqueBy: [site_id, name]
   columns:
     name:
       type: string(255)
