@@ -25,6 +25,7 @@ abstract class Basesympal_yui_image_uploaderActions extends sfActions
         $name = $info['basename'];
 
         $dirName = sfSympalConfig::get('yui_image_upload_dir', null, 'yui_images');
+        @mkdir($dirName, 0777, true);
         $url = $request->getUriPrefix().$request->getRelativeUrlRoot().'/uploads/'.$dirName.'/'.$name;
         $message = "{status:'UPLOADED', image_url:'".$url."'}";
 
