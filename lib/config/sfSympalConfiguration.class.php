@@ -298,7 +298,7 @@ class sfSympalConfiguration
     if (!$this->_layouts)
     {
       $layouts = array();
-      foreach ($this->getPlugins() as $plugin => $path)
+      foreach ($this->getPluginPaths() as $plugin => $path)
       {
         $path = $path.'/templates';
         $find = glob($path.'/*.php');

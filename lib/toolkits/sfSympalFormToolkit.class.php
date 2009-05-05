@@ -109,19 +109,28 @@ class sfSympalFormToolkit
 
   public static function changeLayoutWidget($form)
   {
+    $array = self::getLayoutWidgetAndValidator();
+
+    $form->setWidget('layout', $array['widget']);
+    $form->setValidator('layout', $array['validator']);
+  }
+
+  public static function getLayoutWidgetAndValidator()
+  {
     $all = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getLayouts();
     $layouts = array('' => '');
     foreach ($all as $path => $name)
     {
-      $layouts[$path] = $name;
+      $info = pathinfo($path);
+      $layouts[$info['filename']] = $name;
     }
-    $form->setWidget('layout', new sfWidgetFormChoice(array(
+    $widget = new sfWidgetFormChoice(array(
       'choices'   => $layouts
-    )));
-
-    $form->setValidator('layout', new sfValidatorChoice(array(
+    ));
+    $validator = new sfValidatorChoice(array(
       'choices'   => array_keys($layouts),
       'required' => false
-    )));
+    ));
+    return array('widget' => $widget, 'validator' => $validator);
   }
 }
