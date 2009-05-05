@@ -27,6 +27,7 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
 
   public function processValues($values = null)
   {
+    $values = (array) $values;
     $values = parent::processValues($values);
     $values = $this->processValuesEmbeddedForms($values);
 
