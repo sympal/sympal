@@ -41,17 +41,14 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
         {
           $this->_defaultInstallation($installVars, $this->_contentTypeName);
         }
-        $createInstall = true;
       }
 
-      if (isset($createInstall) && $createInstall)
+      if (is_dir($pluginPath.'/web'))
       {
-        $this->logSection('sympal', 'On the '.$this->_pluginName.'Configuration class you can define a install() method to perform additional installation operaitons for your sympal plugin!');
+        chdir(sfConfig::get('sf_root_dir'));
+        $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
+        $ret = @$assets->run(array(), array());
       }
-
-      chdir(sfConfig::get('sf_root_dir'));
-      $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
-      $ret = @$assets->run(array(), array());
 
       sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);
     } catch (Exception $e) {

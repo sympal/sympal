@@ -90,14 +90,11 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
     $pluginConfig = $this->_configuration->getPluginConfiguration($this->_pluginName);
 
-    $createUninstall = false;
     if (method_exists($this, 'customUninstall'))
     {
       $this->logSection('sympal', 'Calling '.get_class($this).'::customUninstall()');
 
       $this->customUninstall($uninstallVars);
-    } else {
-      $createUninstall = true;
     }
 
     if ($delete)
@@ -129,16 +126,17 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
     sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
-    if (isset($createUninstall) && $createUninstall)
+    if (file_exists($schema))
     {
-      $this->logSection('sympal', 'On the '.$this->_pluginName.'Configuration class you can define a uninstall() method to perform additional uninstall operaitons for your sympal plugin!');
+      $this->rebuildFilesFromSchema();
     }
 
-    $this->rebuildFilesFromSchema();
-
-    chdir(sfConfig::get('sf_root_dir'));
-    $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
-    $ret = @$assets->run(array(), array());
+    if (is_dir($pluginPath.'/web'))
+    {
+      chdir(sfConfig::get('sf_root_dir'));
+      $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
+      $ret = @$assets->run(array(), array());
+    }
 
     sfSympalConfig::writeSetting($this->_pluginName, 'installed', false);
   }

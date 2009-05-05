@@ -143,14 +143,20 @@ class sfSympalToolkit
     $action = $actionEntry ? $actionEntry->getActionName():$request->getParameter('action');
 
     $paths = array(
-      $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir() . '/templates/' . $name,
-      sfConfig::get('sf_app_dir').'/templates/'.$name,
-      sfConfig::get('sf_root_dir').'/'.$name,
-      $name,
+      sfConfig::get('sf_app_dir'),
+      sfConfig::get('sf_root_dir'),
+      $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir(),
     );
+
+    $pluginPaths = $configuration->getAllPluginPaths();
+    foreach ($pluginPaths as $pluginPath)
+    {
+      $paths[] = $pluginPath;
+    }
 
     foreach ($paths as $path)
     {
+      $path .= '/templates/'.$name;
       $checkPath = strstr($path, '.php') ? $path:$path.'.php';
       if (file_exists($checkPath))
       {
@@ -166,14 +172,26 @@ class sfSympalToolkit
     sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
     sfConfig::set('symfony.view.sympal_default_secure_layout', $path);
 
+    $response->addStylesheet('/sfSympalPlugin/css/global');
+    $response->addStylesheet('/sfSympalPlugin/css/default');
+
     if (strstr($path, 'sfSympalPlugin/templates'))
     {
-      $response->addStylesheet('/sfSympalPlugin/css/global');
-      $response->addStylesheet('/sfSympalPlugin/css/default');
       $response->addStylesheet('/sfSympalPlugin/css/' . $name);
     } else {
-      $response->addStylesheet($name, 'last');
-      $response->removeStylesheet('/sfSympalPlugin/css/sympal');
+      if (file_exists(sfConfig::get('sf_web_dir').'/css/'.$name.'.css'))
+      {
+        $response->addStylesheet($name, 'last');
+      } else {
+        foreach ($pluginPaths as $plugin => $path)
+        {
+          if (file_exists($path.'/web/css/'.$name.'.css'))
+          {
+            $response->addStylesheet('/'.$plugin.'/css/'.$name.'.css', 'last');
+          }
+        }
+      }
+      $response->removeStylesheet('/sfSympalPlugin/css/'.sfSympalConfig::get('default_layout'));
     }
 
     return true;
