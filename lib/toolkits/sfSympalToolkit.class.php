@@ -130,7 +130,7 @@ class sfSympalToolkit
   {
     if (!$name)
     {
-      throw new sfException('You must specify the name of the layout you want to change to.');
+      return false;
     }
 
     $context = sfContext::getInstance();

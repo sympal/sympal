@@ -171,6 +171,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
     $form->addSetting(null, 'recaptcha_public_key', 'Recaptcha Public Key');
     $form->addSetting(null, 'recaptcha_private_key', 'Recaptcha Private Key');
+    $form->addSetting(null, 'breadcrumbs_separator', 'Breadcrumbs Separator');
+    $form->addSetting(null, 'config_form_class', 'Config Form Class');
+    $form->addSetting(null, 'default_from_email_address', 'Default From Address');
 
     $form->addSetting('page_cache', 'enabled', 'Enabled', 'InputCheckbox', 'Boolean');
     $form->addSetting('page_cache', 'with_layout', 'With Layout', 'InputCheckbox', 'Boolean');
