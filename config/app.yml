@@ -7,14 +7,26 @@ all:
     i18n: true
     versioning: true
     versioned_models:
-      Content: [created_by, is_published, date_published, slug, page_title, meta_keywords, meta_description]
+      Content: [created_by, is_published, date_published]
+      ContentTranslation: [page_title, meta_keywords, meta_description]
       ContentSlotTranslation: [value]
       PageTranslation: [title]
       ContentTemplate: [body]
     internationalized_models:
+      Content: [i18n_slug, page_title, meta_keywords, meta_description]
       ContentSlot: [value]
       MenuItem: [label]
       Page: [title]
+    sluggable_models:
+      Content: ~
+      Site:
+        fields: [title]
+      ContentType:
+        fields: [name]
+      Route:
+        fields: [name]
+        unique: true
+        uniqueBy: [site_id, name]
     default_from_email_address: noreply@sympalphp.org
     config_form_class: sfSympalConfigForm
     recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX

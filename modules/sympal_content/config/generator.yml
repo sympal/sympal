@@ -44,8 +44,7 @@ generator:
           help: Enter the unique slug for this content record. This is a human readable string used to identify a content record and can be used in the routing custom path.
       form:
         display:
-          "NONE": [revert_to_version, created_by, is_published, date_published, slug]
-          "Meta": [page_title, meta_keywords, meta_description]
+          "NONE": [revert_to_version, created_by, is_published, date_published, page_title, meta_keywords, meta_description, slug]
           "Routing": [master_menu_item_id, custom_path]
           "Rendering": [content_template_id, layout]
           "Security": [groups_list, permissions_list]

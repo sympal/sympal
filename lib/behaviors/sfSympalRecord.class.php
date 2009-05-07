@@ -14,6 +14,11 @@ class sfSympalRecord extends Doctrine_Template
   {
     $this->_table->unshiftFilter(new sfSympalRecordEventFilter());
 
+    if ($this->isSluggable())
+    {
+      $this->sympalActAs('Doctrine_Template_Sluggable', $this->getSluggableOptions());
+    }
+
     if ($this->isVersioned())
     {
       $this->sympalActAs('sfSympalVersionable');
@@ -74,6 +79,23 @@ class sfSympalRecord extends Doctrine_Template
     }
   }
 
+  public function isSluggable()
+  {
+    $sluggableModels = sfSympalConfig::get('sluggable_models', null, array());
+    return array_key_exists($this->_table->getOption('name'), $sluggableModels);
+  }
+
+  public function getSluggableOptions()
+  {
+    if ($this->isSluggable())
+    {
+      $sluggableModels = sfSympalConfig::get('sluggable_models', null, array());
+      return $sluggableModels[$this->_table->getOption('name')] ? $sluggableModels[$this->_table->getOption('name')]:array();
+    } else {
+      return array();
+    }
+  }
+
   public function isVersioned()
   {
     $versionedModels = sfSympalConfig::get('versioned_models', null, array());
@@ -117,20 +139,26 @@ class sfSympalContentFilter extends Doctrine_Record_Filter
 
   public function filterSet(Doctrine_Record $record, $name, $value)
   {
-      try {
-          $record->getRecord()->$name = $value;
-          return $record;
-      } catch (Exception $e) {}
+    try {
+      if ($record->getRecord())
+      {
+        $record->getRecord()->$name = $value;
+        return $record;
+      }
+    } catch (Exception $e) {}
 
-      throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, get_class($record)));
+    throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, get_class($record)));
   }
 
   public function filterGet(Doctrine_Record $record, $name)
   {
-      try {
-          return $record->getRecord()->$name;
-      } catch (Exception $e) {}
+    try {
+      if ($record->getRecord())
+      {
+        return $record->getRecord()->$name;
+      }
+    } catch (Exception $e) {}
 
-      throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, get_class($record)));
+    throw new Doctrine_Record_UnknownPropertyException(sprintf('Unknown record property / related component "%s" on "%s"', $name, get_class($record)));
   }
 }

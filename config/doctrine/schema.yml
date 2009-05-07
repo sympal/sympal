@@ -1,8 +1,5 @@
 Site:
-  actAs:
-    Sluggable:
-      fields: [title]
-    sfSympalRecord:
+  actAs: [sfSympalRecord]
   columns:
     layout: string(255)
     title:
@@ -16,7 +13,7 @@ Site:
     meta_description: string(500)
 
 Content:
-  actAs: [Sluggable, Timestampable, sfSympalRecord]
+  actAs: [Timestampable, sfSympalRecord]
   columns:
     site_id:
       type: integer
@@ -38,6 +35,7 @@ Content:
     page_title: string(255)
     meta_keywords: string(500)
     meta_description: string(500)
+    i18n_slug: string(255)
   indexes:
     is_published:
       fields: [is_published]
@@ -85,10 +83,7 @@ Content:
       refClass: ContentPermission
 
 ContentType:
-  actAs:
-    Sluggable:
-      fields: [name]
-    sfSympalRecord:
+  actAs: [sfSympalRecord]
   columns:
     name:
       type: string(255)
@@ -218,12 +213,7 @@ ContentPermission:
       onDelete: CASCADE
 
 Route:
-  actAs:
-    sfSympalRecord:
-    Sluggable:
-      fields: [name]
-      unique: true
-      uniqueBy: [site_id, name]
+  actAs: [sfSympalRecord]
   columns:
     name:
       type: string(255)

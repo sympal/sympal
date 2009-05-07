@@ -44,19 +44,30 @@ class PluginContentTable extends Doctrine_Table
     {
       $q->andWhere('c.id = ?', $contentId);
     } else if ($contentSlug) {
-      $q->andWhere('c.slug = ?', $contentSlug);
+      if ($this->hasRelation('Translation') && $this->getRelation('Translation')->getTable()->hasField('slug'))
+      {
+        $q->andWhere('c.slug = ? OR ct.i18n_slug = ?', array($contentSlug, $contentSlug));
+      } else {
+        $q->andWhere('c.slug = ?', $contentSlug);
+      }
     }
 
     foreach ($params as $key => $value)
     {
-      if ($key == 'id' && $contentId || $key == 'slug' && $contentSlug)
+      if ($key == 'slug' && $this->hasRelation('Translation'))
       {
+        $q->andWhere('c.slug = ? OR ct.i18n_slug = ?', array($value, $value));
         continue;
       }
 
       if ($this->hasField($key))
       {
         $q->andWhere('c.'.$key.' = ?', $value);
+      } else if ($this->hasRelation('Translation')) {
+        if ($this->getRelation('Translation')->getTable()->hasField($key))
+        {
+          $q->andWhere('ct.'.$key, $value);
+        }
       } else if ($this->getRelation($contentType)->getTable()->hasField($key)) {
         $q->andWhere('cr.'.$key.' = ?', $value);
       }
@@ -94,6 +105,11 @@ class PluginContentTable extends Doctrine_Table
     if (sfSympalConfig::isI18nEnabled('ContentSlot'))
     {
       $q->leftJoin('sl.Translation slt');
+    }
+
+    if (sfSympalConfig::isI18nEnabled('Content'))
+    {
+      $q->leftJoin('c.Translation ct');
     }
 
     $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_content_base_query'), $q)->getReturnValue();

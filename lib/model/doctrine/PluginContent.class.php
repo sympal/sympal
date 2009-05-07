@@ -311,10 +311,21 @@ abstract class PluginContent extends BaseContent
       $values = array();
       foreach (array_keys($variables) as $name)
       {
+        if ($name == 'slug')
+        {
+          try {
+            if ($this->i18n_slug)
+            {
+              $values[$name] = $this->i18n_slug;
+              continue;
+            }
+          } catch (Exception $e) {}
+        }
         try {
           $values[$name] = $this->$name;
         } catch (Exception $e) {}
       }
+
       if (!empty($values))
       {
         return $routeString.'?'.http_build_query($values);

@@ -132,9 +132,13 @@ Content:
     slug: register
     Site: Site_default
     is_published: true
-    custom_path: /register
     Slots: [Register_slot_body]
     CreatedBy: admin
+    Translation:
+      en:
+        i18n_slug: register
+      fr:
+        i18n_slug: registre
   Content_Page_home:
     Type: ContentType_Page
     slug: home
