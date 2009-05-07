@@ -17,7 +17,7 @@
         </thead>
         <?php foreach ($addonPlugins as $plugin): ?>
           <tr>
-            <td><strong><?php echo link_to(sfSympalPluginToolkit::getShortPluginName($plugin), '@sympal_plugin_manager_view?plugin='.$plugin) ?></strong></td>
+            <td><strong><?php echo link_to(sfInflector::humanize(sfInflector::tableize(sfSympalPluginToolkit::getShortPluginName($plugin))), '@sympal_plugin_manager_view?plugin='.$plugin) ?></strong></td>
             <td>
               <?php echo get_partial('sympal_plugin_manager/actions', array('plugin' => $plugin)) ?>
             </tr>
