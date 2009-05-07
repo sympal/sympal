@@ -132,3 +132,16 @@ oMenuBar.subscribe("beforeShow", onSubmenuBeforeShow);
 oMenuBar.subscribe("show", onSubmenuShow);
 </script>
 <?php endif; ?>
+
+<script type="text/javascript">
+  var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
+  document.write(unescape("%3Cscript src='" + uservoiceJsHost + "/javascripts/widgets/tab.js' type='text/javascript'%3E%3C/script%3E"))
+</script>
+<script type="text/javascript">
+UserVoice.Tab.show({ 
+  key: 'sympal',
+  host: 'sympal.uservoice.com', 
+  forum: 'general', 
+  lang: 'en'
+})
+</script>

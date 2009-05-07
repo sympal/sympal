@@ -190,6 +190,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $user = sfContext::getInstance()->getUser();
 
     $icon = $menu->getChild('Icon');
+    $icon->addChild('Feedback', 'http://sympal.uservoice.com', array('onClick' => 'UserVoice.Popin.show(); return false;'));
     $icon->addChild('Go To Homepage', '@sympal_homepage');
     $icon->addChild('Signout', '@sympal_signout', 'confirm=Are you sure you wish to signout?');
     $icon->addChild('Logged in as '.$user->getSympalUser()->getUsername());
