@@ -29,6 +29,11 @@ abstract class PluginContent extends BaseContent
     return $this->getRoute();
   }
 
+  public function getPubDate()
+  {
+    return strtotime($this->date_published);
+  }
+
   public function getContentTypeClassName()
   {
     $contentTypes = sfSympalToolkit::getContentTypesCache();

@@ -1,4 +1,5 @@
 <?php
+
 class sfWidgetFormSympalText extends sfWidgetFormInput
 {
   public function configure($options = array(), $attributes = array())

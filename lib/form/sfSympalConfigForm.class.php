@@ -59,8 +59,13 @@ class sfSympalConfigForm extends sfForm
     parent::setup();
   }
 
-  public function addSetting($group, $name, $label, $widget = 'Input', $validator = 'String')
+  public function addSetting($group, $name, $label = null, $widget = 'Input', $validator = 'String')
   {
+    if (is_null($label))
+    {
+      $label = sfInflector::humanize($name);
+    }
+
     if (!is_object($widget))
     {
       $widgetClass = 'sfWidgetForm' . $widget;
