@@ -218,6 +218,7 @@ sympal_routes:
     column:               id
     with_wildcard_routes: true
 
+<?php try { ?>
 <?php $routes = Doctrine::getTable('Route')
   ->createQuery('r')
   ->innerJoin('r.ContentType t')
@@ -229,3 +230,4 @@ sympal_routes:
 <?php foreach ($routes as $route): ?> 
 <?php echo $route['yaml'] ?> 
 <?php endforeach; ?>
+<?php } catch (Exception $e) {} ?>
