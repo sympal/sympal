@@ -4,4 +4,5 @@
  */
 class PluginPageTable extends Doctrine_Table
 {
+
 }

@@ -6,6 +6,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $dependencies = array(
       'sfFormExtraPlugin',
       'sfTaskExtraPlugin',
+      'sfFeed2Plugin',
+      'sfWebBrowserPlugin',
       'sfSympalUserPlugin',
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',

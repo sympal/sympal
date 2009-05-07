@@ -571,10 +571,6 @@ div#footer ul li {
  font-size:                    12px;
 }
 
-
-
-/* Style forms */
-
 table tr td {
   border: none;
 }
@@ -631,7 +627,7 @@ table tr th {
   color: #35acc5;
 }
 
-#sympal_breadcrumbs li#home
+#sympal_breadcrumbs li#breadcrumbs-home
 {
   background: url('../images/home.png') no-repeat;
   background-position: center;
@@ -709,7 +705,4 @@ ul.error_list li
   border: 1px solid #ddd;
   margin: 0 auto;
   width: 250px;
-}
-
-#sympal_signin_form table {
 }

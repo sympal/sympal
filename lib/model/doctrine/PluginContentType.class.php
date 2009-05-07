@@ -82,6 +82,14 @@ abstract class PluginContentType extends BaseContentType
   {
     foreach ($this->ContentTemplates as $template)
     {
+      if (!$template->is_default && $template->getContentType()->getId() == $this->getId())
+      {
+        return $template;
+      }
+    }
+
+    foreach ($this->ContentTemplates as $template)
+    {
       if ($template->is_default)
       {
         return $template;
