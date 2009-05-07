@@ -633,7 +633,7 @@ table tr th {
   background-position: center;
 }
 
-#sympal_breadcrumbs li#home a
+#sympal_breadcrumbs li#breadcrumbs-home a
 {
   text-indent: -9999;
   font-size: 0;
