@@ -8,7 +8,6 @@
   margin:                         0;
   padding:                        0px 5px 0 10px;
   left:                           0px;
-  width:                          97%;
 }
 
 #column_right {
@@ -117,12 +116,13 @@ h3 {
 */
 
 #container {
- z-index:						          0;
+ z-index:						           0;
  background-color:             #FFFFFF;
  background:                   url(../images/content_backplate.gif) repeat-y top center;
  margin:                       0 auto;
  padding:                      0;
- width:                        900px;
+ width:                        90%;
+ min-width:                    1000px;
 }
 
 
@@ -508,18 +508,11 @@ h3 {
 * Footer
 */
 
-#box_footer {
-  margin:                       0 auto;
-  height:                       15px;
-  width:                        900px;
-	padding:                      0;
-	background:                   url(../images/footer.gif) no-repeat top center;
-}
-
 div#footer {
   margin:                       0 auto;
   height:                       35px;
-  width:                        880px;
+  width:                        88%;
+  min-width:                    990px;
  	padding:                      0;
  	margin-top:                   10px;
  	margin-bottom:                10px;
@@ -556,19 +549,6 @@ div#footer ul li {
   color: white;
   margin-right: 10px;
   font-size: 13px;
-}
-
-#trademark {
- margin:                       0 auto;
- margin-top: 10px;
- width:                        900px;
- height:                       40px;
- padding:                      0;
- color:                        #11A8FF;
-}
-
-#trademark p {
- font-size:                    12px;
 }
 
 table tr td {
