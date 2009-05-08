@@ -10,4 +10,8 @@
  */
 class sympal_content_slot_typesGeneratorConfiguration extends BaseSympal_content_slot_typesGeneratorConfiguration
 {
+  public function getFilterDefaults()
+  {
+    return array('site_id' => sfSympalContext::getInstance()->getSiteRecord()->getId());
+  }
 }

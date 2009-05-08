@@ -10,4 +10,8 @@
  */
 class sympal_menu_itemsGeneratorConfiguration extends BaseSympal_menu_itemsGeneratorConfiguration
 {
+  public function getFilterDefaults()
+  {
+    return array('site_id' => sfSympalContext::getInstance()->getSiteRecord()->getId());
+  }
 }

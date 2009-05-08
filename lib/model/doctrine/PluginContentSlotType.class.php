@@ -5,6 +5,16 @@
  */
 abstract class PluginContentSlotType extends BaseContentSlotType
 {
+  public function preValidate($event)
+  {
+    $invoker = $event->getInvoker();
+
+    if (sfContext::hasInstance() && !$invoker->site_id)
+    {
+      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
+    }
+  }
+
   public function setName($name)
   {
     if ($name)

@@ -96,7 +96,9 @@ ContentType:
     plugin_name: string(255)
     default_path: string(255)
     layout: string(255)
-    site_id: integer
+    site_id:
+      type: integer
+      notnull: true
   relations:
     Site:
       onDelete: CASCADE
@@ -120,7 +122,13 @@ ContentTemplate:
     content_type_id:
       type: integer
       notnull: true
+    site_id:
+      type: integer
+      notnull: true
   relations:
+    Site:
+      onDelete: CASCADE
+      foreignAlias: ContentTemplates
     ContentType:
       onDelete: CASCADE
       foreignAlias: ContentTemplates

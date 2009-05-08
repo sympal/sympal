@@ -12,24 +12,25 @@ generator:
 
     config:
       actions: ~
-      fields:
-        layout:
-          help: Choose the layout template used to render this content type.
-        name:
-          help: Enter the name o this content type. This is required to be the same name as the content model name.
-        label:
-          help: Enter the label used to render this content type.
-        slug:
-          help: Enter the unique slug used to identify this content type.
-        default_path:
-          help: Enter the route pattern used for linking to a single content type.
+      fields: ~
       list:
         display: [=label]
       filter:
-        class: false
+        display: [name, site_id]
       form:
         display:
           "NONE": [site_id, plugin_name, name, label, description, default_path, layout slug]
           "Schema": [schema]
+        fields:
+          layout:
+            help: Choose the layout template used to render this content type.
+          name:
+            help: Enter the name of this content type. This is required to be the same name as the content model name.
+          label:
+            help: Enter the label used to render this content type.
+          slug:
+            help: Enter the unique slug used to identify this content type.
+          default_path:
+            help: Enter the route pattern used for linking to a single content type.
       edit:    ~
       new:     ~

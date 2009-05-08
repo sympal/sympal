@@ -5,6 +5,7 @@ ContentTemplate:
     name: View Content List
     partial_path: sympal_content_list/view
     ContentType: ContentType_ContentList
+    Site: Site_default
 
 ContentType:
   ContentType_ContentList:

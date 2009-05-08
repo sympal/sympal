@@ -15,7 +15,8 @@ generator:
       fields:  ~
       list:
         display: [_title, ContentType]
-      filter:  ~
+      filter:
+        display: [name, content_id, content_type_id, site_id, table_method]
       form:    ~
       edit:    ~
       new:     ~

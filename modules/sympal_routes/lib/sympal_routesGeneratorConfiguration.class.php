@@ -10,4 +10,8 @@
  */
 class sympal_routesGeneratorConfiguration extends BaseSympal_routesGeneratorConfiguration
 {
+  public function getFilterDefaults()
+  {
+    return array('site_id' => sfSympalContext::getInstance()->getSiteRecord()->getId());
+  }
 }

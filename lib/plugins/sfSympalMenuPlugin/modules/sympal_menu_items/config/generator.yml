@@ -14,8 +14,9 @@ generator:
       actions: ~
       fields:  ~
       list:
+        sort: [root_id, lft]
         max_per_page: 999999
-        display: [=indented, is_published, date_published]
+        display: [=indented, is_published]
         batch_actions:
           _delete:
           publish:

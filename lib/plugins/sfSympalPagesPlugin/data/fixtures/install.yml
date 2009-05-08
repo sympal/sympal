@@ -5,6 +5,7 @@ ContentTemplate:
     name: View Page
     partial_path: sympal_page/view
     ContentType: ContentType_Page
+    Site: Site_default
 
 MenuItem:
   MenuItem_primary:

@@ -62,7 +62,7 @@ abstract class PluginMenuItem extends BaseMenuItem
   
   public function getIndentedName()
   {
-    return str_repeat('-', $this->getLevel()) . ' ' . $this->getLabel();
+    return str_repeat('-', $this->getLevel()) . ' ' . $this->getLabel().($this->getLevel() == 0 ? ' ('.$this->getSlug().')':null);
   }
 
   public function preValidate($event)

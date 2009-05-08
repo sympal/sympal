@@ -239,9 +239,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $content->addChild('Create New Content', '@sympal_content_new');
       foreach ($contentTypes as $contentType)
       {
-        $node = $content->addChild($contentType->getLabel());
+        $node = $content->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getSlug());
         $node->addChild('Create', '@sympal_content_create_type?type='.$contentType->getSlug());
-        $node->addChild('List', '@sympal_content');
+        $node->addChild('List', '@sympal_content_list_type?type='.$contentType->getSlug());
       }
     }
 

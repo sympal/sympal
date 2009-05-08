@@ -30,6 +30,7 @@
 {
   background-color: #e7eef6;
   white-space: nowrap;
+  text-align: left;
 }
 
 #sf_admin_container td, th
@@ -292,6 +293,27 @@
   text-align: center;
 }
 
+.sf_admin_list table
+{
+  width: 100%;
+}
+
+#sf_admin_bar #filters
+{
+  background: #fff;
+  border: none;
+  border: 1px solid #ddd;
+  padding: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#sf_admin_bar #filters:hover
+{
+  background: #ffc;
+  color: red;
+}
+
 .yui-navset ul li.selected a {
   color: white !important;
   font-weight: bold !important;
@@ -299,4 +321,14 @@
 
 .yui-navset ul li a {
   padding: 0 !important;
+}
+
+.sf_admin_filter table {
+  border: 1px solid #ccc;
+  background: #fff;
+  width: 100%;
+}
+
+.sf_admin_filter table tfoot {
+  background-color: #e7eef6;
 }

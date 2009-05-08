@@ -34,7 +34,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     }
   }
 
-
   public function executeBatchUnpublish(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
@@ -53,7 +52,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executePublish(sfWebRequest $request)
   {
     $menuItem = $this->_getMenuItem($request);
-    $this->_publishMenuItem($menuItem, $publish);
+    $this->_publishMenuItem($menuItem, true);
 
     $msg = $publish ? 'Menu item published successfully!':'Menu item unpublished successfully!';
     $this->getUser()->setFlash('notice', $msg);
@@ -63,7 +62,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executeUnpublish(sfWebRequest $request)
   {
     $menuItem = $this->_getMenuItem($request);
-    $this->_publishMenuItem($menuItem, $publish);
+    $this->_publishMenuItem($menuItem, false);
   }
 
   public function executeSitemap()

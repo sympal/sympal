@@ -12,6 +12,79 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
   }
 
+  protected function _getContent(sfWebRequest $menuItem)
+  {
+    $q = Doctrine::getTable('Content')
+      ->createQuery('c')
+      ->where('c.id = ?', $request->getParameter('id'));
+
+    $content = $q->fetchOne();
+    $this->forward404Unless($content);
+    return $content;
+  }
+
+  protected function _publishContent(Content $content, $publish = true)
+  {
+    $func = $publish ? 'publish':'unpublish';
+    return $content->$func();
+  }
+
+  public function executeBatchPublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $content = Doctrine::getTable('Content')
+      ->createQuery('c')
+      ->whereIn('c.id', $ids)
+      ->execute();
+
+    foreach ($content as $content)
+    {
+      $this->_publishContent($content, true);
+    }
+  }
+
+  public function executeBatchUnpublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $content = Doctrine::getTable('Content')
+      ->createQuery('c')
+      ->whereIn('c.id', $ids)
+      ->execute();
+
+    foreach ($content as $content)
+    {
+      $this->_publishContent($content, false);
+    }
+  }
+
+  public function executePublish(sfWebRequest $request)
+  {
+    $content = $this->_getContent($request);
+    $this->_publishMenuItem($content, true);
+
+    $msg = $publish ? 'Content published successfully!':'Content unpublished successfully!';
+    $this->getUser()->setFlash('notice', $msg);
+    $this->redirect($request->getReferer());
+  }
+
+  public function executeUnpublish(sfWebRequest $request)
+  {
+    $content = $this->_getContent($request);
+    $this->_publishContent($content, false);
+  }
+
+  public function executeList_type(sfWebRequest $request)
+  {
+    $contentType = Doctrine::getTable('ContentType')->findOneBySlug($request->getParameter('type'));
+    $request->setParameter('content_filters', array(
+      'content_type_id' => $contentType->id
+    )); 
+
+    $this->forward('sympal_content', 'filter');
+  }
+
   public function executeDelete_route(sfWebRequest $request)
   {
     $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this route?');

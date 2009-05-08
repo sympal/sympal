@@ -123,6 +123,16 @@ abstract class PluginContentType extends BaseContentType
     return 'sympal_' . ($action ? $this->getPluralLower() . '_' . $action : $this->getPluralLower());
   }
 
+  public function preValidate($event)
+  {
+    $invoker = $event->getInvoker();
+
+    if (sfContext::hasInstance() && !$invoker->site_id)
+    {
+      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
+    }
+  }
+
   public function postSave($event)
   {
     $invoker = $event->getInvoker();

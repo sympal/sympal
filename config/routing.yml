@@ -209,6 +209,10 @@ sympal_content_create_type:
   url:    /admin/content/create/:type
   param:  { module: sympal_content, action: create_type }
 
+sympal_content_list_type:
+  url:    /admin/content/list/:type
+  param: { module: sympal_content, action: list_type }
+
 sympal_routes:
   class: sfDoctrineRouteCollection
   options:

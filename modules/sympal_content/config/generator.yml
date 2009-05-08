@@ -50,12 +50,16 @@ generator:
           "Security": [groups_list, permissions_list]
       list:
         title: Manage Content
-        display: [=title, Type, is_published, date_published]
-        object_actions:
-          view:
-            action: view
-          _edit:
+        display: [=title, Type, is_published]
+        object_actions: []
+        batch_actions:
           _delete:
+          publish:
+            action: publish
+            label: Publish
+          unpublish:
+            action: unpublish
+            label: Un-Publish
       filter:
         display: [site_id, content_type_id]
       edit:

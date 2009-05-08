@@ -12,27 +12,29 @@ generator:
 
     config:
       actions: ~
-      fields:
-        name:
-          help: Enter the name of the content template.
-        type:
-          help: Select what type of template this is used to render. Either to View a content record or a view a List of content records.
-        content_type_id:
-          label: Content Type
-          help: Choose the content type this template is used for.
-        partial_path:
-          help: Specify the path to a partial you wish to use to render the content or content.
-        component_path:
-          help: Specify the path to a component you wish to use to render the content or content.
-        body:
-          help: You can also optionally specify the template code used to render the content or content below. Content can contain PHP code and has access to the $content variable.
+      fields: ~
       list:
-        display: [=name]
+        display: [=name, ContentType, is_default]
       filter:
-        class: false
+        display: [name, partial_path, component_path, content_type_id, is_default, site_id]
       form:
         display:
           "NONE": [revert_to_version, name, type, content_type_id, is_default]
           "Rendering Template": [partial_path, component_path, body]
+        fields:
+          name:
+            help: Enter the name of the content template.
+          type:
+            help: Select what type of template this is used to render. Either to View a content record or a view a List of content records.
+          content_type_id:
+            label: Content Type
+            help: Choose the content type this template is used for.
+          partial_path:
+            help: Specify the path to a partial you wish to use to render the content or content.
+          component_path:
+            help: Specify the path to a component you wish to use to render the content or content.
+          body:
+            help: You can also optionally specify the template code used to render the content or content below. Content can contain PHP code and has access to the $content variable.
+          
       edit:    ~
       new:     ~
