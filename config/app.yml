@@ -1,8 +1,8 @@
 all:
   sympal_config:
     plugin_api:
-      username: 7e4312177b69ba69171e15b48052422f
-      password: x
+      username: 
+      password: 
     slot_widgets:
       Signin Form: sympal_auth/signin_form
     content_formats: [html, atom, feed, atom1, rss, rss10, rss091, rss201, xml, yml, json]

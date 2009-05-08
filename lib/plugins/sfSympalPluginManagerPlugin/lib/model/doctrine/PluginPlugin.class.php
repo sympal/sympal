@@ -35,4 +35,13 @@ abstract class PluginPlugin extends BasePlugin
     return $this->getIsInstalled();
   }
 
+  public function getImage()
+  {
+    if (!$image = $this->_get('image'))
+    {
+      return 'http://www.symfony-project.org/images/plugin_default.png';
+    } else {
+      return $image;
+    }
+  }
 }

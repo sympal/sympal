@@ -25,10 +25,7 @@ class sfSympalContext
 
   public function getSiteRecord()
   {
-    return Doctrine::getTable('Site')
-      ->createQuery('s')
-      ->where('s.slug = ?', $this->_site)
-      ->fetchOne();
+    return sfSympalToolkit::getCurrentSite();
   }
 
   public function getSympalConfiguration()

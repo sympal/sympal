@@ -24,6 +24,16 @@ class sfPluginApi
     $this->_cacheDir = $cacheDir;
   }
 
+  public function getUsername()
+  {
+    return $this->_username;
+  }
+
+  public function getPassword()
+  {
+    return $this->_password;
+  }
+
   public function getApiUrl()
   {
     return $this->_url;
@@ -32,6 +42,16 @@ class sfPluginApi
   public function getVersion()
   {
     return $this->_version;
+  }
+
+  public function setUsername($username)
+  {
+    $this->_username = $username;
+  }
+
+  public function setPassword($password)
+  {
+    $this->_password = $password;
   }
 
   public function setApiUrl($url)

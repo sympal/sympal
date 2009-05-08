@@ -3,7 +3,8 @@ class sfSympalToolkit
 {
   protected static
     $_currentMenuItem,
-    $_currentContent;
+    $_currentContent,
+    $_currentSite;
 
   public static function getCurrentMenuItem()
   {
@@ -23,6 +24,23 @@ class sfSympalToolkit
   public static function setCurrentContent(Content $content)
   {
     self::$_currentContent = $content;
+  }
+
+  public static function getCurrentSite()
+  {
+    if (!self::$_currentSite)
+    {
+      self::$_currentSite =  Doctrine::getTable('Site')
+        ->createQuery('s')
+        ->where('s.slug = ?', sfConfig::get('sf_app'))
+        ->fetchOne();
+    }
+    return self::$_currentSite;
+  }
+
+  public static function getCurrentSiteId()
+  {
+    return self::getCurrentSite()->id;
   }
 
   public static function getSymfonyResource($module, $action, $variables = array())

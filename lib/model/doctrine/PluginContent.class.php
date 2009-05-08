@@ -149,7 +149,11 @@ abstract class PluginContent extends BaseContent
           $invoker->created_by = $user->getSympalUser()->getId();
         }
       }
-      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
+    }
+
+    if (!$invoker->site_id)
+    {
+      $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
     }
   }
 

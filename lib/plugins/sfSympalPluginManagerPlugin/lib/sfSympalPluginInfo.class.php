@@ -59,17 +59,20 @@ class sfSympalPluginInfo
   protected function _loadFromSymfonyPlugins()
   {
     $api = new sfSympalPluginApi();
-    $plugins = $api->get('categories/Sympal.xml');
-
-    if (isset($plugins['plugins']['plugin']))
+    if ($api->getUsername() && $api->getPassword())
     {
-      foreach ($plugins['plugins']['plugin'] as $plugin)
+      $plugins = $api->get('categories/Sympal.xml');
+
+      if (isset($plugins['plugins']['plugin']))
       {
-        if ($plugin['id'] == $this->_name)
+        foreach ($plugins['plugins']['plugin'] as $plugin)
         {
-          $this->_plugin = $plugin;
-          $this->_plugin['name'] = $plugin['id'];
-          break;
+          if ($plugin['id'] == $this->_name)
+          {
+            $this->_plugin = $plugin;
+            $this->_plugin['name'] = $plugin['id'];
+            break;
+          }
         }
       }
     }
@@ -109,6 +112,8 @@ class sfSympalPluginInfo
       {
         $this->_plugin['readme'] = $readme;
       }
+
+      $this->_plugin['name'] = $this->_name;
 
       file_put_contents($cachePath, serialize($this->_plugin));
     } else {

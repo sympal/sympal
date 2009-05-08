@@ -9,9 +9,9 @@ abstract class PluginContentTemplate extends BaseContentTemplate
   {
     $invoker = $event->getInvoker();
 
-    if (sfContext::hasInstance() && !$invoker->site_id)
+    if (!$invoker->site_id)
     {
-      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
+      $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
     }
   }
 
