@@ -39,6 +39,7 @@
   background: #ffc;
   text-align: center !important;
   border-right: 1px solid #ccc !important;
+  width: 50px;
 }
 
 .sf_admin_list_td_image img {
@@ -81,4 +82,6 @@
   margin-right: 5px;
 }
 
-author
+.sf_admin_list table {
+  width: 100%;
+}
