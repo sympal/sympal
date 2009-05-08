@@ -30,14 +30,19 @@ EOF;
     $plugins = sfSympalPluginToolkit::getAvailablePlugins();
 
     $api = new sfSympalPluginApi();
-    foreach ($plugins as $plugin)
+    if ($api->getUsername() && $api->getPassword())
     {
-      $result = $api->put('plugins/'.$plugin.'/users.xml');
-
-      if ($result['status'] == 1)
+      foreach ($plugins as $plugin)
       {
-        $this->logSection('sympal', 'Reported use of "'.$plugin.'"...');
+        $result = $api->put('plugins/'.$plugin.'/users.xml');
+
+        if ($result['status'] == 1)
+        {
+          $this->logSection('sympal', 'Reported use of "'.$plugin.'"...');
+        }
       }
+    } else {
+      throw new sfException('You must specify a username and password for the Symfony plugins api in your Sympal configuration.');
     }
   }
 }
