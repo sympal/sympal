@@ -120,6 +120,8 @@ function get_sympal_editor($menuItem = null, $content = null)
 
   $editor .= get_slot('sympal_editors');
 
+  $editor = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($content, 'sympal.filter_content_slot_editors'), $editor)->getReturnValue();
+
   return $editor;
 }
 
@@ -293,7 +295,11 @@ EOF
       $slot['id']
     );
 
+    $editor = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($slot, 'sympal.filter_content_slot_editor'), $editor)->getReturnValue();
+
     slot('sympal_editors', get_slot('sympal_editors').$editor);
+
+    $html = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($slot, 'sympal.filter_content_slot_html'), $html)->getReturnValue();
 
     return $html;
   } else {

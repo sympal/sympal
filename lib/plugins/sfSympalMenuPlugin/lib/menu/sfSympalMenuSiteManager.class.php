@@ -91,11 +91,7 @@ class sfSympalMenuSiteManager
     {
       $return->callRecursively('showChildren', $showChildren);
 
-      $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($return, 'sympal.load_'.$name.'_menu', array('name' => $name, 'showChildren' => $showChildren, 'class' => $class)));
-      if ($event->isProcessed() && $return = $event->getReturnValue())
-      {
-        return $return;
-      }
+      $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($return, 'sympal.load_'.$name.'_menu', array('name' => $name, 'showChildren' => $showChildren, 'class' => $class)));
 
       return $return;
     } else {
