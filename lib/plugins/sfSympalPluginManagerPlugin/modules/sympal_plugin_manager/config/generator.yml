@@ -1,21 +1,26 @@
 generator:
   class: sfDoctrineGenerator
   param:
-    model_class:           Route
+    model_class:           Plugin
     theme:                 sympal_admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
     plural:                ~
-    route_prefix:          sympal_routes
+    route_prefix:          sympal_plugin_manager
     with_doctrine_route:     1
 
     config:
       actions: ~
       fields:  ~
       list:
-        display: [_title, ContentType]
-      filter:  ~
+        display: [_image, _title]
+        sort: [users, desc]
+        actions: []
+        batch_actions: []
+        object_actions: []
+      filter:
+        display: [plugin_author_id, name, description, is_downloaded, is_installed, is_theme]
       form:    ~
       edit:    ~
       new:     ~

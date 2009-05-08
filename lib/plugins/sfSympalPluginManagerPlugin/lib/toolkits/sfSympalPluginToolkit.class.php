@@ -147,6 +147,11 @@ class sfSympalPluginToolkit
         unset($available['sfSympalPlugin']);
       }
 
+      if (!is_dir($dir = dirname($cachePath)))
+      {
+        mkdir($dir, 0777, true);
+      }
+
       file_put_contents($cachePath, serialize($available));
     } else {
       $content = file_get_contents($cachePath);

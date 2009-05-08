@@ -1,0 +1,36 @@
+Plugin:
+  columns:
+    plugin_author_id: integer
+    title:
+      type: string(255)
+      notnull: true
+    name:
+      type: string(255)
+      notnull: true
+    description: clob
+    summary: clob
+    image: string(255)
+    users: string(255)
+    scm: string(255)
+    homepage: string(255)
+    ticketing: string(255)
+    link: string(255)
+    is_downloaded:
+      type: boolean
+      default: 0
+    is_installed:
+      type: boolean
+      default: 0
+    is_theme:
+      type: boolean
+      default: 0
+  relations:
+    Author:
+      class: PluginAuthor
+      foreignAlias: Plugins
+      onDelete: CASCADE
+
+PluginAuthor:
+  columns:
+    name: string(255)
+    email: string(255)

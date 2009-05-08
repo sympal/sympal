@@ -1,18 +1,84 @@
-#sympal_plugin_manager ul.actions
-{
-  margin: 0;
-  padding: 0;
-  list-style-type: none;
-}
-
-#sympal_plugin_manager ul.actions li
-{
-  float: left;
-  list-style-type: none;
-  margin-right: 10px;
-}
-
 #sympal_plugin_manager #view p
 {
   margin-top: 20px;
 }
+
+#sympal_plugin_manager #view #header {
+  background: #ffc;
+  padding: 8px;
+  border-bottom: 1px solid #ccc;
+  margin-top: 10px;
+}
+
+#sympal_plugin_manager #view #header img {
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+#sympal_plugin_manager #view #header h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 22px;
+  height: 10px;
+}
+
+#sympal_plugin_manager #view #header #description {
+  font-size: 10px;
+}
+
+#sympal_plugin_manager #view #actions {
+
+}
+
+#sympal_plugin_manager #view #readme {
+  clear: left;
+}
+
+.sf_admin_list_td_image {
+  font-weight: bold;
+  background: #ffc;
+  text-align: center !important;
+  border-right: 1px solid #ccc !important;
+}
+
+.sf_admin_list_td_image img {
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+.sf_admin_list_td_title strong a {
+  font-size: 20px;
+}
+
+.sf_admin_list_td_title p {
+  font-size: 10px;
+}
+
+.sf_admin_list_td_title {
+}
+
+.sf_admin_list_td_title .author {
+  float: right;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+.sympal_plugin_actions {
+  margin: 0;
+  padding: 0;
+}
+
+.sympal_plugin_actions li {
+  margin: 0 !important;
+  padding: 0 !important;
+  float: left;
+  list-style-type: none;
+  white-space: nowrap;
+}
+
+.sympal_plugin_actions li a {
+  padding-left: 0 !important;
+  margin-right: 5px;
+}
+
+author

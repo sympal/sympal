@@ -1,9 +1,14 @@
 # sfSympalPluginManagerPlugin routing
 
 sympal_plugin_manager:
-  url:  /admin/plugins
-  param: { module: sympal_plugin_manager, action: index }
-  
+  class: sfDoctrineRouteCollection
+  options:
+    model:                Plugin
+    module:               sympal_plugin_manager
+    prefix_path:          /admin/plugins
+    column:               id
+    with_wildcard_routes: true
+
 sympal_plugin_manager_view:
   url:  /admin/plugins/:plugin/view
   param: { module: sympal_plugin_manager, action: view }

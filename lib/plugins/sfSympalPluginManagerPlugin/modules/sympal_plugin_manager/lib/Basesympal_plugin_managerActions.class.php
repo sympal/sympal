@@ -8,10 +8,11 @@
  * @author      Your name here
  * @version     SVN: $Id: BaseActions.class.php 12534 2008-11-01 13:38:27Z Kris.Wallsmith $
  */
-abstract class Basesympal_plugin_managerActions extends sfActions
+abstract class Basesympal_plugin_managerActions extends autoSympal_plugin_managerActions
 {
   public function preExecute()
   {
+    parent::preExecute();
     $sympalConfiguration = sfSympalContext::getInstance()->getSympalConfiguration();
 
     $this->addonPlugins = $sympalConfiguration->getAllManageablePlugins();
@@ -49,32 +50,35 @@ abstract class Basesympal_plugin_managerActions extends sfActions
     }
   }
 
-  public function executeIndex()
+  public function executeIndex(sfWebRequest $request)
   {
+    sfSympalPluginInfo::synchronizeDatabase();
+
+    parent::executeIndex($request);
   }
 
-  public function executeView($request)
+  public function executeView(sfWebRequest $request)
   {
-    $key = array_search($request->getParameter('plugin'), $this->installedPlugins);
-    $this->plugin = new sfSympalPluginInfo($this->addonPlugins[$key]);
+    $name = $request->getParameter('plugin');
+    $this->plugin = Doctrine::getTable('Plugin')->findOneByName($name);
   }
 
-  public function executeUninstall($request)
+  public function executeUninstall(sfWebRequest $request)
   {
     $this->_executeSfAction('uninstall');
   }
 
-  public function executeDelete($request)
+  public function executeDelete(sfWebRequest $request)
   {
     $this->_executeSfAction('delete');
   }
 
-  public function executeInstall($request)
+  public function executeInstall(sfWebRequest $request)
   {
     $this->_executeSfAction('install');
   }
 
-  public function executeDownload($request)
+  public function executeDownload(sfWebRequest $request)
   {
     $this->_executeSfAction('download');
   }
@@ -112,6 +116,6 @@ abstract class Basesympal_plugin_managerActions extends sfActions
 
     $this->_executeAction($action, $pluginName);
 
-    $this->redirect($request->getParameter('redirect_url'));
+    $this->redirect($request->getParameter('redirect_url').'#'.$pluginName);
   }
 }

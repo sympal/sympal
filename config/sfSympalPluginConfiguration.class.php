@@ -181,6 +181,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form->addSetting('page_cache', 'with_layout', 'With Layout', 'InputCheckbox', 'Boolean');
     $form->addSetting('page_cache', 'lifetime', 'Lifetime');
     $form->addSetting('page_cache', 'super_cache_enabled', 'Super Cache Enabled', 'InputCheckbox', 'Boolean');
+
+    $form->addSetting('plugin_api', 'username', 'Username or API Key');
+    $form->addSetting('plugin_api', 'password');
   }
 
   public function loadAdminBar(sfEvent $event)
