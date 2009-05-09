@@ -179,11 +179,6 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
       return true;
     }
 
-    if (sfSympalToolkit::isEditMode())
-    {
-      return true;
-    }
-
     if (is_null($user))
     {
       $user = sfContext::getInstance()->getUser();
