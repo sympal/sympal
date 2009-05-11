@@ -50,4 +50,9 @@ abstract class PluginRoute extends BaseRoute
   {
     @unlink(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/config/config_routing.yml.php');
   }
+
+  public function postDelete($event)
+  {
+    $this->postSave($event);
+  }
 }
