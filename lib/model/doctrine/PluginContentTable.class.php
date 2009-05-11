@@ -98,8 +98,9 @@ class PluginContentTable extends Doctrine_Table
 
     if (!sfSympalToolkit::isEditMode())
     {
+      $expr = new Doctrine_Expression('NOW()');
       $q->andWhere('c.is_published = 1')
-        ->andWhere('c.date_published < NOW()');
+        ->andWhere('c.date_published < '.$expr);
     }
 
     if (sfSympalConfig::isI18nEnabled('ContentSlot'))

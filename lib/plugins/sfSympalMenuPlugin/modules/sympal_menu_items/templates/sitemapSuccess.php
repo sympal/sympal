@@ -1,6 +1,6 @@
 <?php echo get_sympal_breadcrumbs($menuItem, null, null, true) ?>
 
-<h2>Sitemap</h2>
+<h2><?php echo __('Sitemap') ?></h2>
 
 <?php foreach ($roots as $root): ?>
   <h3><?php echo ucfirst($root['name']) ?> Menu</h3>

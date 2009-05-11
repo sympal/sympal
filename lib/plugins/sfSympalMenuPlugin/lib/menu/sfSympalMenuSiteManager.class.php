@@ -168,8 +168,9 @@ class sfSympalMenuSiteManager
 
       if (!sfSympalToolkit::isEditMode())
       {
+        $expr = new Doctrine_Expression('NOW()');
         $q->andWhere('m.is_published = ?', 1)
-          ->andWhere('m.date_published <= NOW()');
+          ->andWhere('m.date_published <= '.$expr);
       }
 
       $this->_menuItems = $q->execute();
