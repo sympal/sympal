@@ -23,11 +23,7 @@ MenuItem:
       notnull: true
     content_type_id: integer
     content_id: integer
-    root_id: integer
   relations:
-    RootMenuItem:
-      foreignAlias: MenuItems
-      onDelete: CASCADE
     RelatedContent:
       class: Content
       foreignAlias: MenuItem
