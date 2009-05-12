@@ -22,7 +22,7 @@ class PluginContentTable extends Doctrine_Table
 
     $q->innerJoin('c.'.$typeName.' cr');
 
-    if ($table->hasRelation('Translation'))
+    if (sfSympalConfig::isI18nEnabled($typeName))
     {
       $q->leftJoin('cr.Translation crt');
     }
@@ -87,6 +87,8 @@ class PluginContentTable extends Doctrine_Table
     $sympalContext = sfSympalContext::getInstance();
     $q = Doctrine_Query::create()
       ->from('Content c')
+      ->leftJoin('c.Permissions p')
+      ->leftJoin('c.Groups g')
       ->leftJoin('c.Slots sl')
       ->leftJoin('sl.Type sty')
       ->leftJoin('c.Type ty')

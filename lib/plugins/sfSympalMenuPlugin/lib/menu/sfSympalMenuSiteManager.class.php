@@ -161,6 +161,11 @@ class sfSympalMenuSiteManager
         ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSite())
         ->orderBy('m.root_id, m.lft ASC');
 
+      if (sfSympalConfig::isI18nEnabled('Content'))
+      {
+        $q->leftJoin('c.Translation ctr');
+      }
+
       if (sfSympalConfig::isI18nEnabled('MenuItem'))
       {
         $q->leftJoin('m.Translation t');

@@ -134,7 +134,8 @@ abstract class PluginMenuItem extends BaseMenuItem
   {
     if (!$route = $this->getRoute())
     {
-      if (!$this->getContent() instanceof Doctrine_Null && $this->getContent())
+      $content = $this->getContent();
+      if ($content instanceof Content)
       {
         $route = $this->getContent()->getRoute();
       }
