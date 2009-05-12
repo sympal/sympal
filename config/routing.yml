@@ -228,7 +228,7 @@ sympal_routes:
   ->innerJoin('r.ContentType t')
   ->leftJoin('r.Content c')
   ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
-  ->orderBy('r.id ASC')
+  ->orderBy('r.id DESC')
   ->execute(); ?>
 
 <?php foreach ($routes as $route): ?> 
