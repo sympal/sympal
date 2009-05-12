@@ -120,4 +120,29 @@ class PluginContentTable extends Doctrine_Table
 
     return $q;
   }
+
+  public function getAdminGenQuery($q)
+  {
+    $q->leftJoin('r.Type t')
+      ->leftJoin('r.MasterMenuItem m')
+      ->leftJoin('r.MenuItem mm')
+      ->leftJoin('r.CreatedBy u');
+
+    if (sfSympalConfig::isI18nEnabled('Content'))
+    {
+      $q->leftJoin('r.Translation ct');
+    }
+
+    $types = sfSympalToolkit::getContentTypesCache();
+    foreach ($types as $type)
+    {
+      $q->leftJoin('r.'.$type.' '.$type);
+      if (sfSympalConfig::isI18nEnabled($type))
+      {
+        $q->leftJoin($type.'.Translation '.$type.'tr');
+      }
+    }
+
+    return $q;
+  }
 }

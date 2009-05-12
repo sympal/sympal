@@ -6,7 +6,8 @@
 abstract class PluginContent extends BaseContent
 {
   protected
-    $_allPermissions;
+    $_allPermissions,
+    $_route;
 
   public function preValidate($event)
   {
@@ -325,25 +326,38 @@ abstract class PluginContent extends BaseContent
 
   public function getRoute($routeString = null, $path = null)
   {
-    if (!$this->exists() || !$this['slug'])
+    if (!$this->_route)
     {
-      return false;
+      if (!$this->exists() || !$this['slug'])
+      {
+        return false;
+      }
+
+      if (is_null($routeString))
+      {
+        $routeString = $this->getRouteName();
+      }
+
+      if (is_null($path))
+      {
+        $path = $this->getRoutePath();
+      }
+
+      $route = new sfRoute($path);
+      $variables = $route->getVariables();
+
+      $this->_route = $this->_fillRoute($routeString, $variables);
     }
 
-    if (is_null($routeString))
-    {
-      $routeString = $this->getRouteName();
-    }
+    return $this->_route;
+  }
 
-    if (is_null($path))
-    {
-      $path = $this->getRoutePath();
-    }
+  public function getEvaluatedRoutePath()
+  {
+    $route = url_for($this->getRoute());
+    $replace = sfContext::getInstance()->getRequest()->getScriptName();
 
-    $route = new sfRoute($path);
-    $variables = $route->getVariables();
-
-    return $this->_fillRoute($routeString, $variables);
+    return str_replace($replace, null, $route);
   }
 
   protected function _fillRoute($route, $variables)

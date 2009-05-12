@@ -49,14 +49,11 @@ generator:
             help: Select the date this content record is to be published. This can be a date in the future and the content record will not be available until that date.
           slug:
             help: Enter the unique slug for this content record. This is a human readable string used to identify a content record and can be used in the routing custom path.
-          
       list:
+        table_method: getAdminGenQuery
         title: Manage Content
-        display: [=title, Type, is_published]
-        object_actions:
-          view:
-            action: view
-            label: View
+        display: [_title, is_published]
+        object_actions: []
         batch_actions:
           _delete:
           publish:
