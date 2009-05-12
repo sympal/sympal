@@ -89,6 +89,7 @@ class PluginContentTable extends Doctrine_Table
       ->from('Content c')
       ->leftJoin('c.Permissions p')
       ->leftJoin('c.Groups g')
+      ->leftJoin('c.Template cte')
       ->leftJoin('c.Slots sl')
       ->leftJoin('sl.Type sty')
       ->leftJoin('c.Type ty')
