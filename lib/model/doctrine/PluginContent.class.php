@@ -8,6 +8,34 @@ abstract class PluginContent extends BaseContent
   protected
     $_allPermissions;
 
+  public function preValidate($event)
+  {
+    $invoker = $event->getInvoker();
+    $modified = $invoker->getModified();
+    if (isset($modified['is_published']) && $modified['is_published'] && !isset($modified['date_published']))
+    {
+      $invoker->date_published = new Doctrine_Expression('NOW()');
+    }
+
+    if (sfContext::hasInstance())
+    {
+      $user = sfContext::getInstance()->getUser();
+      if ($user->isAuthenticated())
+      {
+        $invoker->last_updated_by = $user->getSympalUser()->getId();
+        if (!$invoker->exists() || !$invoker->created_by)
+        {
+          $invoker->created_by = $user->getSympalUser()->getId();
+        }
+      }
+    }
+
+    if (!$invoker->site_id)
+    {
+      $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
+    }
+  }
+
   public static function createNew($type)
   {
     if (is_string($type))
@@ -22,6 +50,18 @@ abstract class PluginContent extends BaseContent
     $content->$name = new $name();
 
     return $content;
+  }
+
+  public function hasField($name)
+  {
+    $result = parent::hasField($name);
+    $className = $this->getContentTypeClassName();
+    $table = Doctrine::getTable($className)->getRecordInstance();
+    if ($table->hasField($name))
+    {
+      $result = true;
+    }
+    return $result;
   }
 
   public function getUrl()
@@ -127,34 +167,6 @@ abstract class PluginContent extends BaseContent
       return $this->_get('Template');
     }
     return $this->Type->getTemplate();
-  }
-
-  public function preValidate($event)
-  {
-    $invoker = $event->getInvoker();
-    $modified = $invoker->getModified();
-    if (isset($modified['is_published']) && $modified['is_published'] && !isset($modified['date_published']))
-    {
-      $invoker->date_published = new Doctrine_Expression('NOW()');
-    }
-
-    if (sfContext::hasInstance())
-    {
-      $user = sfContext::getInstance()->getUser();
-      if ($user->isAuthenticated())
-      {
-        $invoker->last_updated_by = $user->getSympalUser()->getId();
-        if (!$invoker->exists() || !$invoker->created_by)
-        {
-          $invoker->created_by = $user->getSympalUser()->getId();
-        }
-      }
-    }
-
-    if (!$invoker->site_id)
-    {
-      $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
-    }
   }
 
   public function releaseLock()
@@ -287,6 +299,30 @@ abstract class PluginContent extends BaseContent
     return $this->getId().'-'.$this->getSlug();
   }
 
+  public function getRouteName()
+  {
+    if ($this['custom_path'])
+    {
+      return '@sympal_content_' . str_replace('-', '_', $this['slug']);
+    } else if ($this['Type']['default_path']) {
+      return '@sympal_content_view_type_' . str_replace('-', '_', $this['Type']['slug']);
+    } else if ($this['slug']) {
+      return '@sympal_content_view';
+    }
+  }
+
+  public function getRoutePath()
+  {
+    if ($path = $this['custom_path'])
+    {
+      return $path;
+    } else if ($path = $this['Type']['default_path']) {
+      return $path;
+    } else if ($this['slug']) {
+      return '/content/:slug';
+    }
+  }
+
   public function getRoute($routeString = null, $path = null)
   {
     if (!$this->exists() || !$this['slug'])
@@ -296,48 +332,38 @@ abstract class PluginContent extends BaseContent
 
     if (is_null($routeString))
     {
-      if ($path = $this['custom_path'])
+      $routeString = $this->getRouteName();
+    }
+
+    if (is_null($path))
+    {
+      $path = $this->getRoutePath();
+    }
+
+    $route = new sfRoute($path);
+    $variables = $route->getVariables();
+
+    return $this->_fillRoute($routeString, $variables);
+  }
+
+  protected function _fillRoute($route, $variables)
+  {
+    $values = array();
+    foreach (array_keys($variables) as $name)
+    {
+      if ($name == 'slug' && $this->hasField('i18n_slug') && $i18nSlug = $this->i18n_slug)
       {
-        $routeString = '@sympal_content_' . str_replace('-', '_', $this['slug']);
-      } else if ($path = $this['Type']['default_path']) {
-        $routeString = '@sympal_content_view_type_' . str_replace('-', '_', $this['Type']['slug']);
-      } else if ($this['slug']) {
-        $path = '/content/:slug';
-        $routeString = '@sympal_content_view';
+        $values[$name] = $i18nSlug;
+      } else if ($this->hasField($name)) {
+        $values[$name] = $this->$name;
       }
     }
 
-    if (isset($path) && $path && isset($routeString) && $routeString)
+    if (!empty($values))
     {
-      $route = new sfRoute($path);
-      $variables = $route->getVariables();
-
-      $values = array();
-      foreach (array_keys($variables) as $name)
-      {
-        if ($name == 'slug')
-        {
-          try {
-            if ($this->i18n_slug)
-            {
-              $values[$name] = $this->i18n_slug;
-              continue;
-            }
-          } catch (Exception $e) {}
-        }
-        try {
-          $values[$name] = $this->$name;
-        } catch (Exception $e) {}
-      }
-
-      if (!empty($values))
-      {
-        return $routeString.'?'.http_build_query($values);
-      } else {
-        return $routeString;
-      }
+      return $route.'?'.http_build_query($values);
     } else {
-      return false;
+      return $route;
     }
   }
 

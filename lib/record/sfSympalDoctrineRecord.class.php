@@ -8,6 +8,22 @@ abstract class sfSympalDoctrineRecord extends sfDoctrineRecord
     $_oldValues = array(),
     $_newValues = array();
 
+  public function hasField($name)
+  {
+    $result = false;
+    if ($this->getTable()->hasField($name))
+    {
+      $result = true;
+    }
+
+    if ($this->getTable()->hasRelation('Translation') && $this->getTable()->getRelation('Translation')->getTable()->hasField($name))
+    {
+      $result = true;
+    }
+
+    return $result;
+  }
+
   protected function _isPropertyExportable($property)
   {
     return ((empty($this->_export) || in_array($property, $this->_export)) && 
