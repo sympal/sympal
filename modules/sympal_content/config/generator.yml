@@ -53,7 +53,10 @@ generator:
       list:
         title: Manage Content
         display: [=title, Type, is_published]
-        object_actions: []
+        object_actions:
+          view:
+            action: view
+            label: View
         batch_actions:
           _delete:
           publish:
