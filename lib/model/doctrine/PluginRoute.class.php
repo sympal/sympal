@@ -5,11 +5,6 @@
  */
 abstract class PluginRoute extends BaseRoute
 {
-  public function getRouteName()
-  {
-    return str_replace('-', '_', $this['slug']);
-  }
-
   public function getYaml()
   {
     if ($this->yaml_override)
@@ -17,7 +12,7 @@ abstract class PluginRoute extends BaseRoute
       return $this->yaml_override;
     } else {
       $yaml = array();
-      $yaml[] = $this->getRouteName().':';
+      $yaml[] = $this->getName().':';
 
       if ($this->getUrl() != '/')
       {
