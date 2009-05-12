@@ -10,7 +10,7 @@ all:
     i18n: true
     versioning: true
     versioned_models:
-      Content: [created_by, is_published, date_published]
+      Content: [created_by, is_published, date_published, slug]
       ContentTranslation: [page_title, meta_keywords, meta_description]
       ContentSlotTranslation: [value]
       PageTranslation: [title]

@@ -7,7 +7,7 @@ class sfSympalUser extends sfBasicSecurityUser
     $_flash           = false,
     $_openContentLock = null;
 
-  public function checkContentSecurity($content)
+  public function hasAccessToContent($content)
   {
     $access = true;
     $allPermissions = $content->getAllPermissions();
@@ -21,7 +21,13 @@ class sfSympalUser extends sfBasicSecurityUser
     {
       $access = false;
     }
+    
+    return $access;
+  }
 
+  public function checkContentSecurity($content)
+  {
+    $access = $this->hasAccessToContent($content);
     if (!$access && !$this->_forwarded)
     {
       $this->_forwarded = true;

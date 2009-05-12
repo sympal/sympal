@@ -1,4 +1,5 @@
 <?php
+
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 

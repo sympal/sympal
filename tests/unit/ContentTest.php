@@ -1,8 +1,9 @@
 <?php
+
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(34, new lime_output_color());
+$t = new lime_test(33, new lime_output_color());
 
 $user = new User();
 $user->first_name = 'test';
@@ -131,67 +132,6 @@ $t->is($slots[0]->render(), 'Title value');
 $slots[1]['value'] = "<?php echo 'test'; ?>";
 $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>test</p>
 </div>');
-
-$markdown = "
->**TIP**
->Testing tip
-
--
-
->**NOTE**
->Testing note
-
--
-
->**QUOTE**
->Testing quote
-
-    [php]
-    echo 'test';
-
--
-
-    [yml]
-    ---
-    User:
-      columns:
-        username: string(255)
-";
-
-$html = '<div class="sympal_markdown"><blockquote class="tip"><p>
-  Testing tip</p>
-</blockquote>
-
-
-
-<blockquote class="note"><p>
-  Testing note</p>
-</blockquote>
-
-
-
-<blockquote class="quote"><p>
-  Testing quote</p>
-</blockquote>
-
-<pre class="php"><span class="kw2">&lt;?php</span>
-&nbsp;
-<span class="kw3">echo</span> <span class="st0">\'test\'</span>;
-&nbsp;
-<span class="kw2">?&gt;</span></pre>
-
-
-
-<pre><code class="yaml"><span class="yaml_top_dashes">---</span>
-<span class="yaml_keys">User</span><span class="yaml_colon">:</span>
-<span class="yaml_keys">  columns</span><span class="yaml_colon">:</span>
-<span class="yaml_keys">    username</span><span class="yaml_colon">:</span><span class="yaml_string"> string(255)</span>
-</code></pre>
-</div>';
-
-$slots[1]['value'] = $markdown;
-
-$t->is($slots[1]->render(), $html);
 
 $slots->save();
 

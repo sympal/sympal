@@ -88,13 +88,13 @@ class sfSympalActions extends sfSympalExtendClass
 
   public function getEmailTemplateFor($module, $action, $variables = array())
   {
-    $variables = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.email.filter_variables'), $variables)->getReturnValue();
+    $variables = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.email.filter_variables'), $variables)->getReturnValue();
 
     sfContext::getInstance()->getConfiguration()->loadHelpers(array('Partial'));
 
     $email = sfSympalToolkit::getSymfonyResource($module, $action, $variables);
 
-    $email = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.email.filter_template', array('module' => $module, 'action' => $action, 'variables' => $variables)), $email)->getReturnValue();
+    $email = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.email.filter_template', array('module' => $module, 'action' => $action, 'variables' => $variables)), $email)->getReturnValue();
 
     return $email;
   }
@@ -128,14 +128,15 @@ class sfSympalActions extends sfSympalExtendClass
     return $this->mail;
   }
 
-  public function forwardToRoute($full)
+  public function forwardToRoute($route, $params = array())
   {
-    if (strstr($full, '?'))
+    $full = $route;
+    if (strstr($route, '?'))
     {
-      $pos = strpos($full, '?');
-      $route = substr($full, 1, $pos - 1);
+      $pos = strpos($route, '?');
+      $route = substr($route, 1, $pos - 1);
     } else {
-      $route = substr($full, 1, strlen($full));
+      $route = substr($route, 1, strlen($route));
     }
 
     $r = $this->getContext()->getRouting();
@@ -147,28 +148,25 @@ class sfSympalActions extends sfSympalExtendClass
 
     if (isset($pos))
     {
-      $params = substr($full, $pos + 1, strlen($full));
-      $e = explode('&', $params);
+      $p = substr($full, $pos + 1, strlen($full));
+      $e = explode('&', $p);
 
-      foreach ($e as $param)
+      foreach ($e as $k => $v)
       {
-        $e2 = explode('=', $param);
+        $e2 = explode('=', $v);
         if ((isset($e2[0]) && $e2[0]) && (isset($e2[1]) && $e2[1]))
         {
-          $this->getRequest()->setParameter($e2[0], $e2[1]);
+          $params[$e2[0]] = $e2[1];
         }
       }
     }
 
     $routeInfo = $routes[$route];
-    $params = $routeInfo[3];
+    $params = array_merge($routeInfo->getDefaults(), $params);
 
     foreach ($params as $key => $value)
     {
-      if ($value)
-      {
-        $this->getRequest()->setParameter($key, $value);
-      }
+      $this->getRequest()->setParameter($key, $value);
     }
 
     $this->forward($params['module'], $params['action']);

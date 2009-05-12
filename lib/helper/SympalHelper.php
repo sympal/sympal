@@ -19,17 +19,19 @@ function get_sympal_yui_path($type, $name)
 
   if (sfConfig::get('sf_debug'))
   {
-    $fullPath = sfConfig::get('sf_web_dir').$path.($type == 'css' ? '.css':'.js');
-    if (!file_exists($fullPath))
-    {
-      throw new sfException('YUI path does not exist: "'.$fullPath.'"');
-    }
-  } else {
     $minPath = $path.'-min';
-    if (file_exists(sfConfig::get('sf_web_dir').$minPath))
+    $fullMinPath = sfConfig::get('sf_web_dir').$minPath.($type == 'css' ? '.css':'.js');
+    
+    if (file_exists($fullMinPath))
     {
       $path = $minPath;
     }
+  }
+
+  $fullPath = sfConfig::get('sf_web_dir').$path.($type == 'css' ? '.css':'.js');
+  if (!file_exists($fullPath))
+  {
+    throw new sfException('YUI path does not exist: "'.$fullPath.'"');
   }
 
   return $path;

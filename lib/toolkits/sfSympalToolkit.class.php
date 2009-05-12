@@ -43,8 +43,15 @@ class sfSympalToolkit
     return self::getCurrentSite()->id;
   }
 
-  public static function getSymfonyResource($module, $action, $variables = array())
+  public static function getSymfonyResource($module, $action = null, $variables = array())
   {
+    if (strpos($module, '/'))
+    {
+      $variables = (array) $action;
+      $e = explode('/', $module);
+      list($module, $action) = $e;
+    }
+
     sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
 
     try {
@@ -85,7 +92,7 @@ class sfSympalToolkit
 
     $routingPath = sfConfig::get('sf_root_dir').'/apps/'.$app.'/config/routing.yml';
     $routes = sfYaml::load(file_get_contents($routingPath));
-    if (isset($routes['homepage']) || isset($routes['default']) || isset($routes['default_index']))
+    if (isset($routes['homepage']) || isset($routes['default_index']))
     {
       throw new sfException('Your application routing file must not have a homepage, default, or default_index route defined.');
     }
@@ -285,13 +292,13 @@ class sfSympalToolkit
   public static function getAllLanguageCodes()
   {
     $flags = sfFinder::type('file')
-      ->in(sfContext::getInstance()->getConfiguration()->getPluginConfiguration($pluginName)->getRootDir().'/web/images/flags');
+      ->in(sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/web/images/flags');
 
     $codes = array();
     foreach ($flags as $flag)
     {
       $info = pathinfo($flag);
-      $codes[] = $info['basename'];
+      $codes[] = $info['filename'];
     }
     return $codes;
   }

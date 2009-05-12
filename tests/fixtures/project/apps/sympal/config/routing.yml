@@ -1,0 +1,6 @@
+default:
+  url: /:module/:action/*
+
+forward_to_route:
+  url: /forward/to/route/:param1/:param2
+  param: { module: test, action: route_to_forward_to }
