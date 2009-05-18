@@ -22,13 +22,13 @@ class sfSympalFormToolkit
   public static function embedRichDateWidget($name, sfFormDoctrine $form)
   {
     $response = sfContext::getInstance()->getResponse();
-    $response->addStylesheet('http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/ui-lightness/jquery-ui.css');
-    $response->addStylesheet('http://static.jquery.com/ui/css/demo-docs-theme/ui.theme.css');
+    $response->addStylesheet('/sfSympalPlugin/jquery/css/jquery-ui.css');
+    $response->addStylesheet('/sfSympalPlugin/jquery/css/ui.theme.css');
 
-    $response->addJavascript('http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js');
-    $response->addJavascript('http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js');
-    $response->addJavascript('http://jquery-ui.googlecode.com/svn/tags/latest/external/bgiframe/jquery.bgiframe.min.js');
-    $response->addJavascript('http://jquery-ui.googlecode.com/svn/tags/latest/ui/minified/i18n/jquery-ui-i18n.min.js');
+    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery.min.js');
+    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js');
+    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery.bgiframe.min.js');
+    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui-i18n.min.js');
 
     $widgetSchema = $form->getWidgetSchema();
     $widgetSchema[$name] = new sfWidgetFormJQueryDate();
