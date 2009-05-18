@@ -10,7 +10,7 @@
   </div>
 
   <script type="text/javascript">
-  var interval = setInterval(hideFlash, 5000);
+  var interval = setInterval(hideFlash, 10000);
   function hideFlash()
   {
 	   document.getElementById('sympal_flash').style.display = 'none';
