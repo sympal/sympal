@@ -26,7 +26,7 @@ class sfWidgetFormSympalRichText extends sfWidgetFormSympalMultiLineText
   {
     $textarea = parent::render($name, $value, $attributes, $errors);
 
-    preg_match_all("/id=\"(\w+)\"/", $textarea, $matches);
+    preg_match_all("/id=\"([^\"]+)\"/", $textarea, $matches);
     $id = $matches[1][0];
 
     $e = explode('_', $id);
