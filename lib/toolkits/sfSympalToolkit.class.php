@@ -163,6 +163,12 @@ class sfSympalToolkit
     $response = sfContext::getInstance()->getResponse();
     $configuration = $context->getConfiguration();
 
+    if (sfSympalConfig::get('load_default_css'))
+    {
+      $response->addStylesheet('/sfSympalPlugin/css/global');
+      $response->addStylesheet('/sfSympalPlugin/css/default');
+    }
+
     $actionEntry = $context->getController()->getActionStack()->getLastEntry();
     $module = $actionEntry ? $actionEntry->getModuleName():$request->getParameter('module');
     $action = $actionEntry ? $actionEntry->getActionName():$request->getParameter('action');
@@ -197,27 +203,29 @@ class sfSympalToolkit
     sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
     sfConfig::set('symfony.view.sympal_default_secure_layout', $path);
 
-    $response->addStylesheet('/sfSympalPlugin/css/global');
-    $response->addStylesheet('/sfSympalPlugin/css/default');
-
     if (strstr($path, 'sfSympalPlugin/templates'))
     {
-      $response->addStylesheet('/sfSympalPlugin/css/' . $name);
+      $path = '/sfSympalPlugin/css/' . $name;
     } else {
       if (file_exists(sfConfig::get('sf_web_dir').'/css/'.$name.'.css'))
       {
-        $response->addStylesheet($name, 'last');
+        $path = $name;
       } else {
         foreach ($pluginPaths as $plugin => $path)
         {
           if (file_exists($path.'/web/css/'.$name.'.css'))
           {
-            $response->addStylesheet('/'.$plugin.'/css/'.$name.'.css', 'last');
+            $path = '/'.$plugin.'/css/'.$name.'.css';
+            break;
           }
         }
       }
-      $response->removeStylesheet('/sfSympalPlugin/css/'.sfSympalConfig::get('default_layout'));
     }
+
+    $response->removeStylesheet(sfSympalConfig::get('last_stylesheet'));
+
+    sfSympalConfig::set('last_stylesheet', $path);
+    $response->addStylesheet($path);
 
     return true;
   }

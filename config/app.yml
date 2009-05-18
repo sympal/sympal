@@ -1,5 +1,6 @@
 all:
   sympal_config:
+    load_default_css: true
     plugin_api:
       username: 
       password: 
