@@ -15,12 +15,11 @@ generator:
       fields: ~
       list:
         display: [=label]
+        actions: []
       filter:
         display: [name, site_id]
       form:
-        display:
-          "NONE": [site_id, plugin_name, name, label, description, default_path, layout slug]
-          "Schema": [schema]
+        display: [label, description, default_path, layout slug]
         fields:
           layout:
             help: Choose the layout template used to render this content type.

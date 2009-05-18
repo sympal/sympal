@@ -142,6 +142,6 @@ UserVoice.Tab.show({
   key: 'sympal',
   host: 'sympal.uservoice.com', 
   forum: 'general', 
-  lang: 'en'
+  lang: '<?php echo $sf_user->getCulture() ?>'
 })
 </script>
