@@ -27,7 +27,8 @@ abstract class PluginUser extends BaseUser
 
   public function __toString()
   {
-    return $this->getName();
+    $name = $this->getName();
+    return $name ? $name.' ('.$this->username.')':$this->username;
   }
 
   public function setPassword($password)
