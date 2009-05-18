@@ -81,4 +81,9 @@ class sfSympalMenuManager extends sfSympalMenuSite
     }
     return $dd;
   }
+
+  public function checkUserAccess(sfUser $user = null)
+  {
+    return true;
+  }
 }
