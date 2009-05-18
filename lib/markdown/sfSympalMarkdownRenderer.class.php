@@ -6,6 +6,9 @@ class sfSympalMarkdownRenderer
 {
   public static function convertToHtml($markdown)
   {
+    $markdown = str_replace('{?php', '<?php', $markdown);
+    $markdown = str_replace('?}', '?>', $markdown);
+
     sfContext::getInstance()->getResponse()->addStylesheet('/sfSympalPlugin/css/markdown.css');
 
     $markdown = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($markdown, 'sympal.pre_markdown_convert'), $markdown)->getReturnValue();
@@ -120,7 +123,9 @@ class sfSympalMarkdownRenderer
       } else if ($match[1] == 'yaml' || $match[1] == 'yml') {
         return self::highlightYaml($match[2]);
       } else if ($match[1] == 'php') {
-        return self::getGeshi("<?php\n\n" . html_entity_decode($match[2]) . "\n?>", 'php');
+        $code = html_entity_decode($match[2]);
+        $code = !strpos($code, '?php') ? "<?php\n\n" . $code . "\n?>":$code;
+        return self::getGeshi($code, 'php');
       } else {
         return self::getGeshi(html_entity_decode($match[2]), $match[1]);
       }
