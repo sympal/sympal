@@ -116,6 +116,7 @@ YAHOO.util.Event.onAvailable("sympal_menu_manager_tree", function ()
     }
   }
 
+  <?php if (!$sf_request->isXmlHttpRequest()): ?>
   var oContextMenu = new YAHOO.widget.ContextMenu("mytreecontextmenu", {
     trigger: "sympal_menu_manager_tree",
     lazyload: true, 
@@ -125,23 +126,29 @@ YAHOO.util.Event.onAvailable("sympal_menu_manager_tree", function ()
         { text: "Edit", onclick: { fn: editNode } },
         { text: "Delete", onclick: { fn: deleteNode } }
     ] });
+  <?php else: ?>
+  var oContextMenu = new YAHOO.widget.ContextMenu("mytreecontextmenu", {
+    trigger: "sympal_menu_manager_tree",
+    lazyload: true
+    });
+  <?php endif; ?>
 
   oContextMenu.subscribe("triggerContextMenu", onTriggerContextMenu);
 });
 
 DDSend = function(id, sGroup, config)
 {
-    if (id)
-    {
-        this.init(id, sGroup, config);
-        this.initFrame();
-    }
+  if (id)
+  {
+    this.init(id, sGroup, config);
+    this.initFrame();
+  }
 
-    var s = this.getDragEl().style;
-    s.borderColor = "transparent";
-    s.backgroundColor = "#f6f5e5";
-    s.opacity = 0.76;
-    s.filter = "alpha(opacity=76)";
+  var s = this.getDragEl().style;
+  s.borderColor = "transparent";
+  s.backgroundColor = "#f6f5e5";
+  s.opacity = 0.76;
+  s.filter = "alpha(opacity=76)";
 };
 
 DDSend.prototype = new YAHOO.util.DDProxy();
