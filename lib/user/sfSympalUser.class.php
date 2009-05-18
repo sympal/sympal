@@ -31,7 +31,8 @@ class sfSympalUser extends sfBasicSecurityUser
     if (!$access && !$this->_forwarded)
     {
       $this->_forwarded = true;
-      return sfContext::getInstance()->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+      sfContext::getInstance()->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
+      throw new sfStopException();
     }
     return $access;
   }
