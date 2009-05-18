@@ -87,13 +87,30 @@ class sfSympalConfiguration
   {
   }
 
+
+  public function _handleInstall()
+  {
+    $sfContext = sfContext::getInstance();
+    $request = $sfContext->getRequest();
+    $environment = sfConfig::get('sf_environment');
+    $module = $request->getParameter('module');
+
+    // Redirect to install module if...
+    //  not in test environment
+    //  sympal has not been installed
+    //  module is not already sympal_install
+    if ($environment != 'test' && !sfSympalConfig::get('installed') && $module != 'sympal_install')
+    {
+      $sfContext->getController()->redirect('@sympal_install');
+    }
+  }
+
   public function bootstrap()
   {
-    // Prime the sympal cache
-    if (!$this->_isCachePrimed())
-    {
-      $this->_primeCache();
-    }
+    sfSympalContext::createInstance(sfConfig::get('sf_app'), sfContext::getInstance());
+
+    $this->_primeCache();
+    $this->_handleInstall();
 
     $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
 
@@ -118,6 +135,11 @@ class sfSympalConfiguration
 
   public function _primeCache()
   {
+    if ($this->_isCachePrimed())
+    {
+      return true;
+    }
+
     if (!is_dir($path = sfConfig::get('sf_cache_dir').'/sympal'))
     {
       mkdir($path, 0777, true);
@@ -301,29 +323,37 @@ class sfSympalConfiguration
   {
     if (!$this->_layouts)
     {
-      $layouts = array();
-      foreach ($this->getPluginPaths() as $plugin => $path)
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/layouts.cache';
+      if (!file_exists($cachePath))
       {
-        $path = $path.'/templates';
-        $find = glob($path.'/*.php');
-        $layouts = array_merge($layouts, $find);
-      }
-
-      $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
-      $layouts = array_merge($layouts, $find);
-
-      $this->_layouts = array();
-      foreach ($layouts as $path)
-      {
-        $info = pathinfo($path);
-        $name = $info['filename'];
-        // skip partial/component templates
-        if ($name[0] == '_')
+        $layouts = array();
+        foreach ($this->getPluginPaths() as $plugin => $path)
         {
-          continue;
+          $path = $path.'/templates';
+          $find = glob($path.'/*.php');
+          $layouts = array_merge($layouts, $find);
         }
-        $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
-        $this->_layouts[$path] = ucwords($name);
+
+        $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
+        $layouts = array_merge($layouts, $find);
+
+        $this->_layouts = array();
+        foreach ($layouts as $path)
+        {
+          $info = pathinfo($path);
+          $name = $info['filename'];
+          // skip partial/component templates
+          if ($name[0] == '_')
+          {
+            continue;
+          }
+          $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
+          $this->_layouts[$path] = $name;
+        }
+        file_put_contents($cachePath, serialize($this->_layouts));
+      } else {
+        $serialized = file_get_contents($cachePath);
+        $this->_layouts = unserialize($serialized);
       }
     }
     return $this->_layouts;

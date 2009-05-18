@@ -60,8 +60,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   {
     $this->sympalConfiguration = sfSympalConfiguration::getSympalConfiguration($this->dispatcher, $this->configuration);
 
-    $this->dispatcher->connect('context.load_factories', array($this, 'loadContext'));
-
     $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfig'));
     $this->dispatcher->connect('sympal.load_tools', array($this, 'loadTools'));
@@ -89,29 +87,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $path = sfConfig::get('sf_lib_dir').'/form/doctrine/BaseFormDoctrine.class.php';
       file_put_contents($path, str_replace($find, $replace, file_get_contents($path)));
     }
-  }
-
-  public function _handleInstall()
-  {
-    $sfContext = sfContext::getInstance();
-    $request = $sfContext->getRequest();
-    $environment = sfConfig::get('sf_environment');
-    $module = $request->getParameter('module');
-
-    // Redirect to install module if...
-    //  not in test environment
-    //  sympal has not been installed
-    //  module is not already sympal_install
-    if ($environment != 'test' && !sfSympalConfig::get('installed') && $module != 'sympal_install')
-    {
-      $sfContext->getController()->redirect('@sympal_install');
-    }
-  }
-
-  public function loadContext()
-  {
-    $this->_handleInstall();
-    sfSympalContext::createInstance(sfConfig::get('sf_app'), sfContext::getInstance());
   }
 
   public function loadTools(sfEvent $event)

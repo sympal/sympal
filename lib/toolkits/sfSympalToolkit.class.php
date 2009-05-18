@@ -162,6 +162,7 @@ class sfSympalToolkit
     $request = $context->getRequest();
     $response = sfContext::getInstance()->getResponse();
     $configuration = $context->getConfiguration();
+    $sympalConfiguration = sfSympalContext::getInstance()->getSympalConfiguration();
 
     if (sfSympalConfig::get('load_default_css'))
     {
@@ -173,30 +174,17 @@ class sfSympalToolkit
     $module = $actionEntry ? $actionEntry->getModuleName():$request->getParameter('module');
     $action = $actionEntry ? $actionEntry->getActionName():$request->getParameter('action');
 
-    $paths = array(
-      sfConfig::get('sf_app_dir'),
-      sfConfig::get('sf_root_dir'),
-      $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir(),
-    );
-
     $pluginPaths = $configuration->getAllPluginPaths();
-    foreach ($pluginPaths as $pluginPath)
-    {
-      $paths[] = $pluginPath;
-    }
 
-    foreach ($paths as $path)
+    $layouts = $sympalConfiguration->getLayouts();
+    $path = array_search($name, $layouts);
+    if (!file_exists($path))
     {
-      $path .= '/templates/'.$name;
-      $checkPath = strstr($path, '.php') ? $path:$path.'.php';
-      if (file_exists($checkPath))
-      {
-        $path = str_replace('.php', '', $path);
-        break;
-      }
+      $path = sfConfig::get('sf_root_dir').'/'.$path;
     }
 
     $info = pathinfo($path);
+    $path = $info['dirname'].'/'.$info['filename'];
     $name = $info['filename'];
 
     sfConfig::set('symfony.view.'.$module.'_'.$action.'_layout', $path);
