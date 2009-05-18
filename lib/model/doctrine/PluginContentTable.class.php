@@ -123,10 +123,13 @@ class PluginContentTable extends Doctrine_Table
 
   public function getAdminGenQuery($q)
   {
+    $sympalContext = sfSympalContext::getInstance();
+
     $q->leftJoin('r.Type t')
       ->leftJoin('r.MasterMenuItem m')
       ->leftJoin('r.MenuItem mm')
-      ->leftJoin('r.CreatedBy u');
+      ->leftJoin('r.CreatedBy u')
+      ->innerJoin('r.Site csi WITH csi.slug = ?', $sympalContext->getSite());
 
     if (sfSympalConfig::isI18nEnabled('Content'))
     {

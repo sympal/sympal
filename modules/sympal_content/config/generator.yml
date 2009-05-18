@@ -21,8 +21,6 @@ generator:
           "Rendering": [content_template_id, layout]
           "Security": [groups_list, permissions_list]
         fields:
-          site_id:
-            label: Site
           content_type_id:
             label: Content Type
           master_menu_item_id:
@@ -63,7 +61,7 @@ generator:
             action: unpublish
             label: Un-Publish
       filter:
-        display: [site_id, content_type_id, content_template_id, master_menu_item_id, created_by, locked_by, last_updated_by, is_published, date_published]
+        display: [content_type_id, content_template_id, master_menu_item_id, created_by, locked_by, last_updated_by, is_published, date_published]
       edit:
         title: "Editing Content #%%id%%"
         actions:
