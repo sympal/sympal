@@ -46,6 +46,7 @@ GroupPermission:
       onDelete: CASCADE
 
 User:
+  tableName: users
   actAs: [Timestampable, sfSympalRecord]
   columns:
     first_name: string(255)
