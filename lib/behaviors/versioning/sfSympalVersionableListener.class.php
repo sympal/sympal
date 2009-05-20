@@ -97,16 +97,21 @@ class sfSympalVersionableListener extends Doctrine_Record_Listener
 
   public function getNextVersion(Doctrine_Record $record)
   {
-    $recordType = get_class($record);
+    if ($record->exists())
+    {
+        $recordType = get_class($record);
 
-    $q = Doctrine_Query::create()
-      ->select('MAX(v.version) AS max_version')
-      ->from('Version v')
-      ->andWhere('v.record_type = ?', $recordType)
-      ->andWhere('v.record_id = ?', $record->id);
+        $q = Doctrine_Query::create()
+          ->select('MAX(v.version) AS max_version')
+          ->from('Version v')
+          ->andWhere('v.record_type = ?', $recordType)
+          ->andWhere('v.record_id = ?', $record->id);
 
-    $result = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+        $result = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
 
-    return isset($result[0]['max_version']) ? ($result[0]['max_version'] + 1):1;
+        return isset($result[0]['max_version']) ? ($result[0]['max_version'] + 1):1;
+    } else {
+        return 1;
+    }
   }
 }

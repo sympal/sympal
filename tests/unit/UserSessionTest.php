@@ -41,5 +41,5 @@ $t->is($user->isSuperAdmin(), true);
 $t->is($user->isAnonymous(), false);
 $t->is($user->hasCredential('BlahSomethingFake'), true);
 $t->is($user->getSympalUser()->id, $admin->id);
-$t->is((string) $user, 'Sympal Admin');
+$t->is((string) $user, 'Sympal Admin (admin)');
 $t->is($user->checkPassword('admin'), true);

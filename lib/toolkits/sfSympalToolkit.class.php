@@ -178,6 +178,12 @@ class sfSympalToolkit
 
     $layouts = $sympalConfiguration->getLayouts();
     $path = array_search($name, $layouts);
+
+    if ($realPath = realpath($path))
+    {
+      $path = $realPath;
+    }
+
     if (!file_exists($path))
     {
       $path = sfConfig::get('sf_root_dir').'/'.$path;

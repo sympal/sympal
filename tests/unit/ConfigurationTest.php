@@ -67,4 +67,4 @@ $modules = $sympalConfiguration->getModules();
 $t->is(in_array('sympal_content_renderer', $modules), true);
 
 $layouts = $sympalConfiguration->getLayouts();
-$t->is(in_array('Sympal', $layouts), true);
+$t->is(in_array('sympal', $layouts), true);

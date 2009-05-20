@@ -104,7 +104,7 @@ ContentType:
       onDelete: CASCADE
       foreignAlias: ContentTypes
   indexes:
-    name:
+    content_type_name:
       fields: [name]
 
 ContentTemplate:

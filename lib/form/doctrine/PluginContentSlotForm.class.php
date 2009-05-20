@@ -20,7 +20,7 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
 
     $q = Doctrine::getTable('ContentSlotType')
       ->createQuery('t')
-      ->where('t.is_internal = 0')
+      ->where('t.is_internal = ?', 0)
       ->orderBy('t.name ASC');
 
     $this->widgetSchema['content_slot_type_id']->setOption('query', $q);

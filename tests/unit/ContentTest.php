@@ -135,6 +135,7 @@ $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>test</p>
 
 $slots->save();
 
+$slots[2]->Type = Doctrine::getTable('ContentSlotType')->findOneByName('MultiLineText');
 $t->is($slots[2]->render(), 'Body value<br />
 Testing');
 

@@ -97,12 +97,13 @@ class PluginContentTable extends Doctrine_Table
       ->leftJoin('c.MasterMenuItem m')
       ->leftJoin('c.MenuItem mm')
       ->leftJoin('c.CreatedBy u')
-      ->innerJoin('c.Site csi WITH csi.slug = ?', $sympalContext->getSite());
+      ->innerJoin('c.Site csi')
+      ->andWhere('csi.slug = ?', $sympalContext->getSite());
 
     if (!sfSympalToolkit::isEditMode())
     {
       $expr = new Doctrine_Expression('NOW()');
-      $q->andWhere('c.is_published = 1')
+      $q->andWhere('c.is_published = ?', true)
         ->andWhere('c.date_published < '.$expr);
     }
 
