@@ -18,32 +18,15 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   public
     $sympalConfiguration;
 
-  public static function isSympalDisabledForApp($application = null)
-  {
-    if (is_null($application))
-    {
-      $application = sfConfig::get('sf_app');
-    }
-
-    if ($application)
-    {
-      $name = $application.'Configuration::disableSympal';
-      if (defined($name))
-      {
-        return constant($name);
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
   public static function enableSympalPlugins(ProjectConfiguration $configuration)
   {
-    if (self::isSympalDisabledForApp())
+    if ($application = sfConfig::get('sf_app'))
     {
-      return;
+      $reflection = new ReflectionClass($application.'Configuration');
+      if ($reflection->getConstant('disableSympal'))
+      {
+        return false;
+      }
     }
 
     $sympalPluginPath = dirname(dirname(__FILE__));
@@ -151,11 +134,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form->addSetting(null, 'breadcrumbs_separator', 'Breadcrumbs Separator');
     $form->addSetting(null, 'config_form_class', 'Config Form Class');
     $form->addSetting(null, 'default_from_email_address', 'Default From Address');
-
-    $form->addSetting('page_cache', 'enabled', 'Enabled', 'InputCheckbox', 'Boolean');
-    $form->addSetting('page_cache', 'with_layout', 'With Layout', 'InputCheckbox', 'Boolean');
-    $form->addSetting('page_cache', 'lifetime', 'Lifetime');
-    $form->addSetting('page_cache', 'super_cache_enabled', 'Super Cache Enabled', 'InputCheckbox', 'Boolean');
 
     $form->addSetting('plugin_api', 'username', 'Username or API Key');
     $form->addSetting('plugin_api', 'password');

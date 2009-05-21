@@ -1,13 +1,6 @@
 rendering: ~
 security:  ~
 
-<?php if (sfSympalConfig::get('page_cache', 'super_cache_enabled', false)): ?>
-supercache:
-  class: sfSuperCacheFilter
-  param:
-    cache_dir: cache
-<?php endif; ?>
-
 # insert your own filters here
 
 cache:     ~
