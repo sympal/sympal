@@ -99,6 +99,7 @@ h1 {
  font-size:                    22px;
  padding:                      0;
  margin:                       0;
+ margin-bottom: 10px;
 }
 
 h2 {
@@ -621,27 +622,9 @@ table tr th {
   width: 20px;
 }
 
-.notice {
-  margin: 4px 0;
-  padding: 4px 4px 4px 30px;
-  background: url(../images/tick.png) no-repeat 10px 4px;
-}
-
-.error {
-  margin: 4px 0;
-  padding: 4px 4px 4px 30px;
-  background: url(../images/error.png) no-repeat 10px 4px;
-  background-color: #f33;
-  color: red;
-}
-
 .notice, .error {
-  background-color: #ffc;
   margin-left: 10px;
   margin-right: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ddd;
-  font-weight: bold;
 }
 
 ul.error_list

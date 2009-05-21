@@ -283,6 +283,11 @@ class sfSympalUser extends sfBasicSecurityUser
     return $this->getSympalUser()->getUsername();
   }
 
+  public function getName()
+  {
+    return $this->getSympalUser()->getName();
+  }
+
   public function getEmail()
   {
     return $this->getSympalUser()->getEmail();

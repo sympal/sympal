@@ -140,7 +140,7 @@ abstract class PluginContent extends BaseContent
     } else {
       $q = Doctrine::getTable('MenuItem')
         ->createQuery('m')
-        ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
+        ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
         ->andWhere('m.content_type_id = ?', $this->content_type_id)
         ->orWhere('m.is_primary = true')
         ->orderBy('m.is_primary DESC')

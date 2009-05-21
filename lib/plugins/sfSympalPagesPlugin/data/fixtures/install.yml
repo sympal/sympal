@@ -196,12 +196,7 @@ ContentSlot:
     name: body
     Type: ContentSlotType_Markdown
     value: |
-      Welcome to the default Sympal layout. You can sign in below and get started
-      using Sympal.
-
-      [?php if (!$sf_user->isAuthenticated()): ?]
-        [?php echo get_component('sympal_auth', 'signin_form') ?]
-      [?php endif; ?]
+      Welcome to the Sympal content management system.
   About_slot_body:
     name: body
     Type: ContentSlotType_Markdown

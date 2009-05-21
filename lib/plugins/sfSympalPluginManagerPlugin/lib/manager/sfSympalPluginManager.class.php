@@ -90,7 +90,7 @@ abstract class sfSympalPluginManager
     $content = new Content();
     $content->Type = $contentType;
     $content->CreatedBy = Doctrine::getTable('User')->findOneByIsSuperAdmin(1);
-    $content->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
+    $content->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $content->is_published = true;
 
     $name = $contentType['name'];
@@ -108,7 +108,7 @@ abstract class sfSympalPluginManager
     $contentType = new ContentType();
     $contentType->name = $name;
     $contentType->label = sfInflector::humanize(sfInflector::tableize($name));
-    $contentType->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
+    $contentType->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
 
     $this->_setDoctrineProperties($contentType, $properties);
 
@@ -119,7 +119,7 @@ abstract class sfSympalPluginManager
   {
     $menuItem = new MenuItem();
     $menuItem->name = $name;
-    $menuItem->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('sf_app'));
+    $menuItem->Site = Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $menuItem->is_published = true;
 
     $this->_setDoctrineProperties($menuItem, $properties);
@@ -174,7 +174,7 @@ abstract class sfSympalPluginManager
     $this->logSection('sympal', 'Generate forms, filters and models.');
 
     $baseOptions = $this->_configuration instanceof sfApplicationConfiguration ? array(
-      '--application='.sfConfig::get('sf_app'),
+      '--application='.sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')),
       '--env='.sfConfig::get('sf_env', 'dev'),
     ) : array();
 

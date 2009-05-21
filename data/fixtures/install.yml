@@ -1,7 +1,7 @@
 ---
 Site:
   Site_default:
-    title: <?php echo sfInflector::humanize(sfConfig::get('sf_app')) ?> 
+    title: <?php echo sfInflector::humanize(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'))) ?> 
     description: Flexible content management framework built on top of symfony.
 
 ContentSlotType:

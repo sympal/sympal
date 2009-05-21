@@ -43,9 +43,16 @@ class sfSympalConfiguration
 
   public function initialize()
   {
-    sfConfig::set('sf_enabled_modules', array_merge(sfConfig::get('sf_enabled_modules', array()), $this->getModules()));
+    $modules = sfConfig::get('sf_enabled_modules', array());
+    if (sfSympalConfig::get('enable_all_modules'))
+    {
+      $modules = array_merge($modules, $this->getModules());
+    }
+    $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
 
-    sfConfig::set('sf_admin_module_web_dir', '/sfSympalPlugin');
+    sfConfig::set('sf_enabled_modules', $modules);
+
+    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', '/sfSympalPlugin'));
 
     if (sfConfig::get('sf_login_module') == 'default')
     {
@@ -107,14 +114,16 @@ class sfSympalConfiguration
 
   public function bootstrap()
   {
-    sfSympalContext::createInstance(sfConfig::get('sf_app'), sfContext::getInstance());
+    sfSympalContext::createInstance(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')), sfContext::getInstance());
 
     $this->_primeCache();
     $this->_handleInstall();
 
     $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
 
-    if (!sfContext::getInstance()->getRequest()->isXmlHttpRequest())
+    $request = sfContext::getInstance()->getRequest();
+
+    if (!$request->isXmlHttpRequest() && $request->getParameter('module') != 'sympal_content_renderer')
     {
       sfSympalToolkit::changeLayout(sfSympalConfig::get('default_layout'));
     }

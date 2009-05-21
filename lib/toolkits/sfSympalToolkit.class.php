@@ -32,7 +32,7 @@ class sfSympalToolkit
     {
       self::$_currentSite =  Doctrine::getTable('Site')
         ->createQuery('s')
-        ->where('s.slug = ?', sfConfig::get('sf_app'))
+        ->where('s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
         ->fetchOne();
     }
     return self::$_currentSite;
@@ -84,7 +84,7 @@ class sfSympalToolkit
   public static function checkRequirements()
   {
     $user = sfContext::getInstance()->getUser();
-    $app = sfConfig::get('sf_app');
+    $app = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
     if (!$user instanceof sfSympalUser)
     {
       throw new sfException('myUser class located in '.sfConfig::get('sf_root_dir').'/apps/'.$app.'/myUser.class.php must extend sfSympalUser');
@@ -219,7 +219,7 @@ class sfSympalToolkit
     $response->removeStylesheet(sfSympalConfig::get('last_stylesheet'));
 
     sfSympalConfig::set('last_stylesheet', $path);
-    $response->addStylesheet($path);
+    $response->addStylesheet($path, 'last');
 
     return true;
   }

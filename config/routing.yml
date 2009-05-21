@@ -227,7 +227,7 @@ sympal_routes:
   ->createQuery('r')
   ->innerJoin('r.ContentType t')
   ->leftJoin('r.Content c')
-  ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
+  ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
   ->orderBy('r.id DESC')
   ->execute(); ?>
 

@@ -2,15 +2,15 @@
 <?php use_stylesheet('/sfSympalPlugin/css/dashboard') ?>
 
 <div id="sympal-dashboard">
-  <h1><?php echo __('Sympal Dashboard') ?></h1>
-
   <div id="right">
     <?php $right = $right instanceof sfOutputEscaper ? $right->getRawValue()->render():$right->render() ?>
     <?php echo $right ?>
   </div>
 
   <div id="boxes">
-    <h2><?php echo __('Sympal Management') ?></h2>
+    <h1><?php echo __('Sympal Dashboard') ?></h1>
+
+    <p><?php echo __('Hello <strong>%name%</strong>! Welcome to your Sympal Dashboard. Below are a set of icons that you can use to navigate around Sympal.', array('%name%' => $sf_user->getName())) ?></p>
 
     <?php $boxes = $boxes instanceof sfOutputEscaper ? $boxes->getRawValue()->render():$boxes->render() ?>
     <?php echo $boxes ?>

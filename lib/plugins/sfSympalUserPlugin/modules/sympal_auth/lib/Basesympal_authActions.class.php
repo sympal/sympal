@@ -28,11 +28,14 @@ class Basesympal_authActions extends sfActions
 
         if ($user->getSympalUser()->is_super_admin)
         {
-          $url = '@sympal_dashboard';
+          $url = sfSympalConfig::get('super_admin_signin_url', null, '@sympal_dashboard');
         } else {
           $signinUrl = sfConfig::get('app_sf_guard_plugin_success_signin_url', $user->getReferer($request->getReferer()));
           $url = $signinUrl == '' ? '@homepage':$signinUrl;
         }
+
+        $url = $this->getContext()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_signin_url'), $url)->getReturnValue();
+
         return $this->redirect($url);
       }
     }

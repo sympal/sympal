@@ -49,7 +49,7 @@
 
     <?php $subMenu = get_sympal_menu(sfSympalToolkit::getCurrentMenuItem(), true) ?>
     <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
-      <?php use_stylesheet('/sfSympalPlugin/css/right.css') ?>
+      <?php use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
       <!-- right column -->
       <div id="column_right">
        <br />

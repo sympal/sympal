@@ -59,7 +59,7 @@ Since the Sympal sites are bound to Symfony applications, we can know the slug o
 the site by using the `sf_app` config value.
 
     [php]
-    $siteSlug = sfConfig::get('sf_app');
+    $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
 
 We can also retrieve this same value from the Sympal context.
 
