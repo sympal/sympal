@@ -4,5 +4,17 @@
  */
 class PluginSiteTable extends Doctrine_Table
 {
+  protected $_byIdentifierCache = array();
 
+  public function findOneBySlug($slug)
+  {
+    if (!isset($this->_bySlugCache[$slug]))
+    {
+      $record = $this->findBy('slug', $slug);
+
+      $this->_byIdentifierCache[$record->id] = $record;
+      $this->_byIdentifierCache[$slug] = $record;
+    }
+    return $this->_byIdentifierCache[$slug];
+  }
 }

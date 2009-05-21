@@ -4,5 +4,8 @@
  */
 class PluginContentListTable extends Doctrine_Table
 {
-
+  public function getContentQuery($q)
+  {
+    return $q->leftJoin('cr.ContentType crct');
+  }
 }

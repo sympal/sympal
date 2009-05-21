@@ -8,17 +8,7 @@ class PluginContentTable extends Doctrine_Table
   {
     $table = Doctrine::getTable($typeName);
 
-    if (method_exists($table, 'getContentQuery'))
-    {
-      $q = $table->getContentQuery();
-    } else {
-      $q = $this->getBaseQuery();
-
-      if (sfConfig::get('sf_logging_enabled'))
-      {
-        sfContext::getInstance()->getLogger()->notice('To improve performance you should have a callable method named "getContentQuery()" on your table class that efficiently selects all the required data for your content type with joins and specific selects.');
-      }
-    }
+    $q = $this->getBaseQuery();
 
     $q->innerJoin('c.'.$typeName.' cr');
 
@@ -28,6 +18,11 @@ class PluginContentTable extends Doctrine_Table
     }
 
     $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.load_'.sfInflector::tableize($typeName).'_query'), $q)->getReturnValue();
+
+    if (method_exists($table, 'getContentQuery'))
+    {
+      $q = $table->getContentQuery($q);
+    }
 
     return $q;
   }

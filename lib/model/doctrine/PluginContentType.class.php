@@ -80,22 +80,25 @@ abstract class PluginContentType extends BaseContentType
 
   public function getTemplate()
   {
-    foreach ($this->ContentTemplates as $template)
+    if ($this->hasReference('ContentTemplates'))
     {
-      if (!$template->is_default && $template->getContentType()->getId() == $this->getId())
+      foreach ($this->ContentTemplates as $template)
       {
-        return $template;
+        if (!$template->is_default && $template->content_type_id == $this->getId())
+        {
+          return $template;
+        }
       }
-    }
 
-    foreach ($this->ContentTemplates as $template)
-    {
-      if ($template->is_default)
+      foreach ($this->ContentTemplates as $template)
       {
-        return $template;
+        if ($template->is_default)
+        {
+          return $template;
+        }
       }
+      return $this->ContentTemplates->getFirst();
     }
-    return $this->ContentTemplates->getFirst();
   }
 
   public function getSingularUpper()

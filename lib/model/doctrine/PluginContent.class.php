@@ -167,7 +167,10 @@ abstract class PluginContent extends BaseContent
     {
       return $this->_get('Template');
     }
-    return $this->Type->getTemplate();
+    if ($this->hasReference('Type'))
+    {
+      return $this->Type->getTemplate();
+    }
   }
 
   public function releaseLock()
