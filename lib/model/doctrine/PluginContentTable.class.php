@@ -127,21 +127,6 @@ class PluginContentTable extends Doctrine_Table
       ->leftJoin('r.CreatedBy u')
       ->innerJoin('r.Site csi WITH csi.slug = ?', $sympalContext->getSite());
 
-    if (sfSympalConfig::isI18nEnabled('Content'))
-    {
-      $q->leftJoin('r.Translation ct');
-    }
-
-    $types = sfSympalToolkit::getContentTypesCache();
-    foreach ($types as $type)
-    {
-      $q->leftJoin('r.'.$type.' '.$type);
-      if (sfSympalConfig::isI18nEnabled($type))
-      {
-        $q->leftJoin($type.'.Translation '.$type.'tr');
-      }
-    }
-
     return $q;
   }
 }
