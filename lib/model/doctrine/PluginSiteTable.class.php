@@ -8,11 +8,10 @@ class PluginSiteTable extends Doctrine_Table
 
   public function findOneBySlug($slug)
   {
-    if (!isset($this->_bySlugCache[$slug]))
+    if (!isset($this->_byIdentifierCache[$slug]))
     {
-      $record = $this->findBy('slug', $slug);
+      $record = $this->findOneBy('slug', $slug);
 
-      $this->_byIdentifierCache[$record->id] = $record;
       $this->_byIdentifierCache[$slug] = $record;
     }
     return $this->_byIdentifierCache[$slug];
