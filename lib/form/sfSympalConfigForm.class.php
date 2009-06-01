@@ -106,6 +106,13 @@ class sfSympalConfigForm extends sfForm
     file_put_contents($this->_path, sfYaml::dump($array, 4));
 
     sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.config_form.post_save'));
+
+    // Clear cache for app.yml
+    $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/config/config_app.yml.php';
+    if (file_exists($cachePath))
+    {
+      unlink($cachePath);
+    }
   }
 
   protected function _buildArrayToWrite()
