@@ -84,7 +84,7 @@ abstract class PluginContentType extends BaseContentType
     {
       foreach ($this->ContentTemplates as $template)
       {
-        if (!$template->is_default && $template->content_type_id == $this->getId())
+        if ($template->is_default)
         {
           return $template;
         }
@@ -92,11 +92,12 @@ abstract class PluginContentType extends BaseContentType
 
       foreach ($this->ContentTemplates as $template)
       {
-        if ($template->is_default)
+        if (!$template->is_default && $template->content_type_id == $this->getId())
         {
           return $template;
         }
       }
+
       return $this->ContentTemplates->getFirst();
     }
   }
