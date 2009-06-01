@@ -13,7 +13,7 @@ function get_sympal_flash()
 function get_sympal_yui_path($type, $name)
 {
   $skin = sfSympalConfig::get('yui_skin', 'null', 'sam');
-  $path = sfSympalConfig::get('yui_path', null, sfConfig::get('sf_web_dir').'/sfSympalPlugin/yui');
+  $path = sfSympalConfig::get('yui_path', null, 'http://yui.yahooapis.com/2.7.0/build');
 
   $path .= '/'.$name;
 
