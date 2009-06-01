@@ -135,6 +135,11 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
     return $this->saveFile($field, $filename, $values[$field]);
   }
 
+  public function getAdminGenMainTabLabel()
+  {
+    return $this->getModelName();
+  }
+
   public function __call($method, $arguments)
   {
     return sfSympalExtendClass::extendEvent($this, $method, $arguments);

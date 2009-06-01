@@ -24,7 +24,7 @@
       <ul class="yui-nav">
         [?php foreach ($fields as $fieldset => $f): ?]
           [?php $id = sfInflector::tableize($fieldset); ?]
-          <li[?php if ($id == $currentTab || is_null($currentTab)) echo ' class="selected"'; if (is_null($currentTab)) $currentTab = false; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo __($fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getModelName()))):$fieldset, array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
+          <li[?php if ($id == $currentTab || is_null($currentTab)) echo ' class="selected"'; if (is_null($currentTab)) $currentTab = false; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo __($fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getAdminGenMainTabLabel()))):$fieldset, array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
         [?php endforeach; ?]
 
         [?php foreach ($form as $key => $value): ?]

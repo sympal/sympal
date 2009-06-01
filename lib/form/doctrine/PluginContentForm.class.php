@@ -80,6 +80,7 @@ abstract class PluginContentForm extends BaseContentForm
       $this->embedForm('Content Slots', $slotsForm);
     }
   }
+
   protected function _unsetWidgetsExceptContentSlot($form, $widgetSchema = null)
   {
     if (is_null($widgetSchema))
@@ -104,5 +105,10 @@ abstract class PluginContentForm extends BaseContentForm
     {
       $this->_unsetWidgetsExceptContentSlot($embeddedForm, $widgetSchema[$key]);
     }
+  }
+
+  public function getAdminGenMainTabLabel()
+  {
+    return 'Settings';
   }
 }
