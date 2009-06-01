@@ -177,6 +177,7 @@ li a.on {
 
 #save {
   float: left;
+  padding: 8px;
 }
 
 #loading {

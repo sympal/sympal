@@ -117,7 +117,7 @@ class sfPluginApi
 
   public static function simpleXmlToArray($xml)
   {
-    if (get_class($xml) == 'SimpleXMLElement')
+    if ($xml instanceof SimpleXMLElement)
     {
       $x = $xml;
       $xml = get_object_vars($xml);

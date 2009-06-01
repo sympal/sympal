@@ -31,13 +31,7 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
     }
   }
 
-  protected $_breadcrumbs = array();
   protected $_widgets = array();
-
-  public function getBreadcrumbs()
-  {
-    return get_sympal_breadcrumbs($this->_breadcrumbs);
-  }
 
   protected function _findWidgets($form)
   {
@@ -50,14 +44,12 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
       if ($value instanceof sfFormFieldSchema)
       {
         $label = strip_tags($value->renderLabel());
-        $this->_breadcrumbs[$label] = null;
 
         foreach ($value as $k => $v)
         {
           if ($v instanceof sfFormFieldSchema)
           {
             $label = strip_tags($v->renderLabel());
-            $this->_breadcrumbs[$label] = null;
 
             $this->_findWidgets($v);
           } else {
@@ -74,7 +66,6 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
   public function renderSlotForm()
   {
     $class = get_class($this->object);
-    $this->_breadcrumbs[$class] = null;
 
     $widgets = $this->_findWidgets($this);
 
@@ -86,12 +77,14 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
     }
 
     $return .= $this->renderHiddenFields();
-    $return .= '<table>';
     foreach ($this->_widgets as $widget)
     {
-      $return .= $widget->renderRow();
+      $return .= '<div class="sf_admin_form_row">';
+      $return .= $widget->renderLabel();
+      $return .= $widget;
+      $return .= $widget->renderHelp();
+      $return .= '</div>';
     }
-    $return .= '</table>';
 
     return $return;
   }
