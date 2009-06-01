@@ -158,7 +158,7 @@ class sfSympalMenuSiteManager
         ->leftJoin('m.RelatedContent c')
         ->leftJoin('c.Type ct')
         ->leftJoin('m.ContentType ct2')
-        ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSite())
+        ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
         ->orderBy('m.root_id, m.lft ASC');
 
       if (sfSympalConfig::isI18nEnabled('Content'))

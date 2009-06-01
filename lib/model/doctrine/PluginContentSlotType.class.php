@@ -11,7 +11,7 @@ abstract class PluginContentSlotType extends BaseContentSlotType
 
     if (sfContext::hasInstance() && !$invoker->site_id)
     {
-      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
+      $invoker->site_id = sfSympalContext::getInstance()->getSite()->getId();
     }
   }
 

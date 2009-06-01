@@ -20,12 +20,12 @@ class sfSympalContext
 
   public function getSite()
   {
-    return $this->_site;
+    return sfSympalToolkit::getCurrentSite();
   }
 
-  public function getSiteRecord()
+  public function getSiteSlug()
   {
-    return sfSympalToolkit::getCurrentSite();
+    return $this->_site;
   }
 
   public function getSympalConfiguration()

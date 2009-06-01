@@ -93,7 +93,7 @@ class PluginContentTable extends Doctrine_Table
       ->leftJoin('c.MenuItem mm')
       ->leftJoin('c.CreatedBy u')
       ->innerJoin('c.Site csi')
-      ->andWhere('csi.slug = ?', $sympalContext->getSite());
+      ->andWhere('csi.slug = ?', $sympalContext->getSiteSlug());
 
     if (!sfSympalToolkit::isEditMode())
     {
@@ -125,7 +125,7 @@ class PluginContentTable extends Doctrine_Table
       ->leftJoin('r.MasterMenuItem m')
       ->leftJoin('r.MenuItem mm')
       ->leftJoin('r.CreatedBy u')
-      ->innerJoin('r.Site csi WITH csi.slug = ?', $sympalContext->getSite());
+      ->innerJoin('r.Site csi WITH csi.slug = ?', $sympalContext->getSiteSlug());
 
     return $q;
   }

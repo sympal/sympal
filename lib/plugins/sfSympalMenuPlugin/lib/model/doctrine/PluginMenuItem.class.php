@@ -76,7 +76,7 @@ abstract class PluginMenuItem extends BaseMenuItem
 
     if (sfContext::hasInstance())
     {
-      $invoker->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
+      $invoker->site_id = sfSympalContext::getInstance()->getSite()->getId();
     }
   }
 

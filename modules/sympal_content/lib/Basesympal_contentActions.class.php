@@ -121,7 +121,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $type = Doctrine::getTable('ContentType')->findOneBySlug($request->getParameter('type'));
     $this->content->setType($type);
     $this->content->LockedBy = $this->getUser()->getSympalUser();
-    $this->content->site_id = sfSympalContext::getInstance()->getSiteRecord()->getId();
+    $this->content->site_id = sfSympalContext::getInstance()->getSite()->getId();
 
     Doctrine::initializeModels(array($type['name']));
 
@@ -151,7 +151,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $type = Doctrine::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
     $this->content = Content::createNew($type);
-    $this->content->Site = sfSympalContext::getInstance()->getSiteRecord();
+    $this->content->Site = sfSympalContext::getInstance()->getSite();
 
     $this->form = new ContentForm($this->content);
 

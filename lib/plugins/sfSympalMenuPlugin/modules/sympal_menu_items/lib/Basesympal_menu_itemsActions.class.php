@@ -76,7 +76,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $q = Doctrine::getTable('MenuItem')
       ->createQuery()
-      ->andWhere('site_id = ?', sfSympalContext::getInstance()->getSiteRecord()->getId());
+      ->andWhere('site_id = ?', sfSympalContext::getInstance()->getSite()->getId());
 
     if ($request->hasParameter('slug'))
     {
