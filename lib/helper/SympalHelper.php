@@ -13,26 +13,19 @@ function get_sympal_flash()
 function get_sympal_yui_path($type, $name)
 {
   $skin = sfSympalConfig::get('yui_skin', 'null', 'sam');
-  $path = sfSympalConfig::get('yui_path', null, '/sfSympalPlugin/yui');
+  $path = sfSympalConfig::get('yui_path', null, sfConfig::get('sf_web_dir').'/sfSympalPlugin/yui');
 
   $path .= '/'.$name;
 
-  if (sfConfig::get('sf_debug'))
+  $minExceptions = array(
+    'yahoo-dom-event/yahoo-dom-event'
+  );
+  if (!sfConfig::get('sf_debug') && !in_array($name, $minExceptions) && $type == 'js')
   {
-    $minPath = $path.'-min';
-    $fullMinPath = sfConfig::get('sf_web_dir').$minPath.($type == 'css' ? '.css':'.js');
-    
-    if (file_exists($fullMinPath))
-    {
-      $path = $minPath;
-    }
+    $path = $path.'-min';
   }
 
-  $fullPath = sfConfig::get('sf_web_dir').$path.($type == 'css' ? '.css':'.js');
-  if (!file_exists($fullPath))
-  {
-    throw new sfException('YUI path does not exist: "'.$fullPath.'"');
-  }
+  $path = $path.($type == 'css' ? '.css':'.js');
 
   return $path;
 }
