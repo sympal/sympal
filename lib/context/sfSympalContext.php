@@ -47,13 +47,17 @@ class sfSympalContext
     $request = $actions->getRequest();
     $response = $actions->getResponse();
 
-    $content = $actions->getRoute()->getObject();
+    $content = null;
+    $e = null;
+    try {
+      $content = $actions->getRoute()->getObject();
+    } catch (Exception $e) {}
 
-    $actions->forward404Unless($content);
+    $this->_handleForward404($content, $actions, $e);
     $actions->getUser()->checkContentSecurity($content);
 
     $menuItem = $content->getMainMenuItem();
-    $actions->forward404Unless($menuItem);
+    $this->_handleForward404($menuItem, $actions, $e);
 
     sfSympalToolkit::changeLayout($content->getLayout());
 
@@ -78,6 +82,30 @@ class sfSympalContext
     }
 
     return $renderer;
+  }
+
+  protected function _handleForward404($record, sfActions $actions, Exception $e = null)
+  {
+    if (!$record)
+    {
+      $site = sfSympalToolkit::getCurrentSite();
+      if (!$site)
+      {
+        $message = "The Sympal database is not installed for this Symfony application.";
+        if ($e)
+        {
+          $message .= "\n\n".$e->getMessage();
+        }
+        throw new sfException($message);
+      } else {
+        if ($e)
+        {
+          throw $e;
+        } else {
+          $actions->forward404();
+        }
+      }
+    }
   }
 
   public function quickRenderContent($slug, $format = 'html')

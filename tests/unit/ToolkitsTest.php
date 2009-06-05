@@ -18,7 +18,7 @@ $resource = sfSympalToolkit::getSymfonyResource('test', 'email', array(
 $t->is($resource, 'Subject
 Body Variable 1 Variable 2');
 
-$t->is(sfSympalToolkit::getFirstApplication(), 'sympal');
+$t->is(sfSympalToolkit::getDefaultApplication(), 'sympal');
 
 $template = "
 ##test/test##

@@ -37,11 +37,13 @@ class sfSympalInstall
     $dropDb = new sfDoctrineDropDbTask($this->_dispatcher, $this->_formatter);
     $dropDbOptions = array();
     $dropDbOptions[] = '--no-confirmation';
+    $dropDbOptions[] = '--application='.sfConfig::get('sf_app');
     $dropDbOptions[] = '--env='.sfConfig::get('sf_environment');
     $dropDb->run(array(), $dropDbOptions);
 
     $buildAllLoad = new sfDoctrineBuildAllLoadTask($this->_dispatcher, $this->_formatter);
     $buildAllLoadOptions = array();
+    $buildAllLoadOptions[] = '--application='.sfConfig::get('sf_app');
     $buildAllLoadOptions[] = '--env='.sfConfig::get('sf_environment');
     if (file_exists(sfConfig::get('sf_data_dir').'/fixtures/install.yml'))
     {
