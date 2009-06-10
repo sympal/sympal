@@ -69,7 +69,7 @@ class sfSympalMenuSiteManager
     }
     $rootMenuItem = $this->_rootMenuItems[$rootId];
 
-    $class = $class ? $class:'sfSympalMenuSite';
+    $class = $class ? $class:sfSympalConfig::get('menu_class', null, 'sfSympalMenuSite');
     $menu = new $class($name);
     $menu->setMenuItem($rootMenuItem);
 
