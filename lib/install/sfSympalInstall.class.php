@@ -26,7 +26,7 @@ class sfSympalInstall
 
     sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
-    sfSympalConfig::writeSetting(null, 'installed', true);
+    sfSympalConfig::writeSetting('installed', true);
     sfSympalConfig::set('installing', false);
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));

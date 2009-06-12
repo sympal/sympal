@@ -15,7 +15,7 @@ class sfSympalConfig
     }
   }
 
-  public static function set($group, $name = null, $value = null)
+  public static function set($group, $name, $value = null)
   {
     if (is_null($value))
     {
@@ -68,8 +68,15 @@ class sfSympalConfig
     }
   }
 
-  public static function writeSetting($group, $name, $value)
+  public static function writeSetting($group, $name, $value = null)
   {
+    if (is_null($value))
+    {
+      $value = $name;
+      $name = $group;
+      $group = null;
+    }
+
     $path = sfConfig::get('sf_config_dir').'/app.yml';
     if (!file_exists($path))
     {
@@ -84,7 +91,12 @@ class sfSympalConfig
       $array['all']['sympal_config'][$group][$name] = $value;
     }
 
-    sfSympalConfig::set($group, $name, $value);
+    if (is_null($group))
+    {
+      sfSympalConfig::set($name, $value);
+    } else {
+      sfSympalConfig::set($group, $name, $value);
+    }
 
     file_put_contents($path, sfYaml::dump($array, 4));
   }

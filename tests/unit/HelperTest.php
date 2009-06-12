@@ -19,10 +19,10 @@ $breadcrumbs = array(
 );
 $t->is(get_sympal_breadcrumbs($breadcrumbs), '<div id="sympal_breadcrumbs"><ul id="breadcrumbs-menu"><li id="breadcrumbs-home"><a href="/index.php/">Home</a></li><li id="breadcrumbs-about"><a href="http://www.google.com">About</a></li><li id="breadcrumbs-jonathan-h-wage">Jonathan H. Wage</li></ul></div>');
 
-$t->is(get_sympal_yui_path('css', 'menu/assets/skins/sam/menu'), '/sfSympalPlugin/yui/menu/assets/skins/sam/menu');
-$t->is(get_sympal_yui_path('js', 'animation/animation'), '/sfSympalPlugin/yui/animation/animation-min');
+$t->is(get_sympal_yui_path('css', 'menu/assets/skins/sam/menu'), 'http://yui.yahooapis.com/2.7.0/build/menu/assets/skins/sam/menu.css');
+$t->is(get_sympal_yui_path('js', 'animation/animation'), 'http://yui.yahooapis.com/2.7.0/build/animation/animation.js');
 
 $orig = sfConfig::get('sf_debug');
 sfConfig::set('sf_debug', false);
-$t->is(get_sympal_yui_path('js', 'animation/animation'), '/sfSympalPlugin/yui/animation/animation');
+$t->is(get_sympal_yui_path('js', 'animation/animation'), 'http://yui.yahooapis.com/2.7.0/build/animation/animation-min.js');
 sfConfig::set('sf_debug', $orig);

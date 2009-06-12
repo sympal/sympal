@@ -99,7 +99,7 @@ class PluginContentTable extends Doctrine_Table
     {
       $expr = new Doctrine_Expression('NOW()');
       $q->andWhere('c.is_published = ?', true)
-        ->andWhere('c.date_published < '.$expr);
+        ->andWhere('c.date_published <= '.$expr);
     }
 
     if (sfSympalConfig::isI18nEnabled('ContentSlot'))

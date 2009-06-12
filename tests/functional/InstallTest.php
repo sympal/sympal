@@ -19,8 +19,7 @@ require_once(dirname(__FILE__).'/../bootstrap/cleanup.php');
 require_once dirname(__FILE__).'/../fixtures/project/config/ProjectConfiguration.class.php';
 $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', isset($debug) ? $debug : true);
 
-sfSympalConfig::writeSetting(null, 'installed', false);
-sfSympalConfig::set('installed', false);
+sfSympalConfig::writeSetting('installed', false);
 
 sfContext::createInstance($configuration);
 
@@ -50,4 +49,4 @@ $browser->
   end()
 ;
 
-sfSympalConfig::writeSetting(null, 'installed', false);
+sfSympalConfig::writeSetting('installed', false);

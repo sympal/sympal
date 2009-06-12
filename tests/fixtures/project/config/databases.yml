@@ -2,9 +2,9 @@ all:
   doctrine:
     class:  sfDoctrineDatabase
     param:
-      dsn:        mysql://root@localhost/sympal
+      dsn:  mysql://root@localhost/sympal
 
 test:
   doctrine:
     param:
-      dsn:  mysql://root@localhost/sympal_test
+      dsn:  sqlite:%SF_DATA_DIR%/test.sqlite

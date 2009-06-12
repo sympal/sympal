@@ -116,7 +116,7 @@ class sfSympalConfiguration
   {
     sfSympalContext::createInstance(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')), sfContext::getInstance());
 
-    $this->_primeCache();
+    $this->primeCache();
     $this->_handleInstall();
 
     $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
@@ -137,14 +137,9 @@ class sfSympalConfiguration
     Doctrine::initializeModels($contentTypes);
   }
 
-  protected function _isCachePrimed()
+  public function primeCache($force = false)
   {
-    return file_exists(sfConfig::get('sf_cache_dir').'/sympal/cache_primed.cache');
-  }
-
-  public function _primeCache()
-  {
-    if ($this->_isCachePrimed())
+    if (file_exists(sfConfig::get('sf_cache_dir').'/sympal/cache_primed.cache') && !$force)
     {
       return true;
     }
@@ -163,52 +158,42 @@ class sfSympalConfiguration
   protected function _writeHelperAutoloadCache()
   {
     $cachePath = sfConfig::get('sf_cache_dir').'/sympal/helper_autoload.cache';
-    if (!file_exists($cachePath))
+    $cache = array();
+    $dirs = $this->_projectConfiguration->getHelperDirs();
+    foreach ($dirs as $dir)
     {
-      $cache = array();
-      $dirs = $this->_projectConfiguration->getHelperDirs();
-      foreach ($dirs as $dir)
+      $helpers = sfFinder::type('file')->name('*Helper.php')->in($dir);
+      foreach ($helpers as $helper)
       {
-        $helpers = sfFinder::type('file')->name('*Helper.php')->in($dir);
-        foreach ($helpers as $helper)
+        $lines = file($helper);
+        foreach ($lines as $line)
         {
-          $lines = file($helper);
-          foreach ($lines as $line)
+          preg_match("/function (.*)\(/", $line, $matches);
+          if ($matches)
           {
-            preg_match("/function (.*)\(/", $line, $matches);
-            if ($matches)
-            {
-              $function = $matches[1];
-              $e = explode('(', $function);
-              $function = $e[0];
-              $cache[$function] = $helper;
-            }
+            $function = $matches[1];
+            $e = explode('(', $function);
+            $function = $e[0];
+            $cache[$function] = $helper;
           }
         }
       }
-      file_put_contents($cachePath, serialize($cache));
     }
+    file_put_contents($cachePath, serialize($cache));
   }
 
   protected function _writeContentTypesCache()
   {
-    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-    if (!file_exists($cachePath))
-    {
-      try {
-        $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-        if (!file_exists($cachePath))
-        {
-          $typesArray = array();
-          $contentTypes = Doctrine::getTable('ContentType')->findAll();
-          foreach ($contentTypes as $contentType)
-          {
-            $typesArray[$contentType['id']] = $contentType['name'];
-          }
-          file_put_contents($cachePath, serialize($typesArray));
-        }
-      } catch (Exception $e) {}
-    }
+    try {
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
+      $typesArray = array();
+      $contentTypes = Doctrine::getTable('ContentType')->findAll();
+      foreach ($contentTypes as $contentType)
+      {
+        $typesArray[$contentType['id']] = $contentType['name'];
+      }
+      file_put_contents($cachePath, serialize($typesArray));
+    } catch (Exception $e) {}
   }
 
   public function getRequiredPlugins()
@@ -305,12 +290,15 @@ class sfSympalConfiguration
           $path = $path . '/modules';
           $find = glob($path . '/*');
 
-          foreach ($find as $module)
+          if (is_array($find))
           {
-            if (is_dir($module))
+            foreach ($find as $module)
             {
-              $info = pathinfo($module);
-              $this->_modules[] = $info['basename'];
+              if (is_dir($module))
+              {
+                $info = pathinfo($module);
+                $this->_modules[] = $info['basename'];
+              }
             }
           }
         }
@@ -340,11 +328,17 @@ class sfSympalConfiguration
         {
           $path = $path.'/templates';
           $find = glob($path.'/*.php');
-          $layouts = array_merge($layouts, $find);
+          if (is_array($find))
+          {
+            $layouts = array_merge($layouts, $find);
+          }
         }
 
         $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
-        $layouts = array_merge($layouts, $find);
+        if (is_array($find))
+        {
+          $layouts = array_merge($layouts, $find);
+        }
 
         $this->_layouts = array();
         foreach ($layouts as $path)

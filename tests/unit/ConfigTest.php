@@ -15,7 +15,7 @@ $t->is(sfSympalConfig::get('group', 'test'), true);
 
 $t->is(sfSympalConfig::get('doesnt_exists', null, 'default_value'), 'default_value');
 
-sfSympalConfig::writeSetting(null, 'test_write_value', 1);
+sfSympalConfig::writeSetting('test_write_value', 1);
 
 $path = sfConfig::get('sf_config_dir').'/app.yml';
 $array = (array) sfYaml::load(file_get_contents($path));
