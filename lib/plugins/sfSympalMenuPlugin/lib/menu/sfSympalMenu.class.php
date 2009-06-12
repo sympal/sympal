@@ -5,6 +5,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     $_name             = null,
     $_route            = null,
     $_level            = null,
+    $_num              = null,
     $_parent           = null,
     $_root             = null,
     $_requiresAuth     = null,
@@ -268,6 +269,16 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return $this;
   }
 
+  public function getNum()
+  {
+    return $this->_num;
+  }
+
+  public function setNum($num)
+  {
+    $this->_num = $num;
+  }
+
   public function addChild($child, $route = null, $options = array())
   {
     if (!$child instanceof sfSympalMenu)
@@ -278,6 +289,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
     $child->setParent($this);
     $child->showChildren($this->showChildren());
+    $child->setNum($this->count() + 1);
 
     $this->_children[$child->getName()] = $child;
 
@@ -345,8 +357,21 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   {
     if ($this->checkUserAccess())
     {
+      $class = array();
+      if ($this->isCurrent())
+      {
+        $class[] = 'current';
+      }
+      if ($this->isFirst())
+      {
+        $class[] = 'first';
+      }
+      if ($this->isLast())
+      {
+        $class[] = 'last';
+      }
       $id = Doctrine_Inflector::urlize($this->getRoot()->getName().'-'.$this->getName());
-      $html = '<li id="'.$id.'"'.($this->isCurrent() ? ' class="current"':null).'>';
+      $html = '<li id="'.$id.'"'.(!empty($class) ? ' class="'.implode(' ', $class).'"':null).'>';
       $html .= $this->renderChildBody();
       if ($this->hasChildren() && $this->showChildren())
       {
@@ -476,6 +501,16 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     }
 
     return $this;
+  }
+
+  public function isLast()
+  {
+    return $this->getNum() == $this->getParent()->count() ? true:false;
+  }
+
+  public function isFirst()
+  {
+    return $this->getNum() == 1 ? true:false;
   }
 
   public function __call($method, $arguments)
