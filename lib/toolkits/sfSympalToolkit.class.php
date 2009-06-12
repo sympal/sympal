@@ -261,8 +261,6 @@ class sfSympalToolkit
       if (file_exists($cachePath))
       {
         self::$_contentTypesCache = unserialize(file_get_contents($cachePath));
-      } else {
-        self::$_contentTypesCache = array();
       }
     }
 
@@ -279,8 +277,6 @@ class sfSympalToolkit
       if (file_exists($cachePath))
       {
         self::$_helperAutoloadCache = unserialize(file_get_contents($cachePath));
-      } else {
-        self::$_helperAutoloadCache = array();
       }
     }
     if (isset(self::$_helperAutoloadCache[$functionName]))
