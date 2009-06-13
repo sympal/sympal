@@ -13,6 +13,6 @@ abstract class PluginSiteForm extends BaseSiteForm
   {
     parent::setup();
 
-    sfSympalFormToolkit::changeLayoutWidget($this);
+    sfSympalFormToolkit::changeThemeWidget($this);
   }
 }

@@ -19,7 +19,7 @@ abstract class Basesympal_installActions extends sfActions
       $this->redirect('@homepage');
     }
 
-    $this->changeLayout('install');
+    $this->changeTheme('install');
   }
 
   public function _check()

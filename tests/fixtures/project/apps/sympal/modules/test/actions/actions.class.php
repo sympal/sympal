@@ -63,6 +63,6 @@ class testActions extends sfActions
 
   public function executeChange_layout()
   {
-    $this->changeLayout('test');
+    $this->changeTheme('test');
   }
 }

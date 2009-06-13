@@ -4,7 +4,7 @@ class Basesympal_defaultActions extends sfActions
 {
   public function preExecute()
   {
-    sfSympalToolkit::loadDefaultLayout();
+    sfSympalTheme::loadDefault();
   }
 
   public function executeAsk_confirmation(sfWebRequest $request)

@@ -43,47 +43,12 @@ class sfSympalConfiguration
 
   public function initialize()
   {
-    $modules = sfConfig::get('sf_enabled_modules', array());
-    if (sfSympalConfig::get('enable_all_modules'))
-    {
-      $modules = array_merge($modules, $this->getModules());
-    }
-    $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
+    $bootstrap = new sfSympalBootstrap($this);
+  }
 
-    sfConfig::set('sf_enabled_modules', $modules);
-
-    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', '/sfSympalPlugin'));
-
-    if (sfConfig::get('sf_login_module') == 'default')
-    {
-      sfConfig::set('sf_login_module', 'sympal_auth');
-      sfConfig::set('sf_login_action', 'signin');
-    }
-
-    if (sfConfig::get('sf_secure_module') == 'default')
-    {
-      sfConfig::set('sf_secure_module', 'sympal_default');
-      sfConfig::set('sf_secure_action', 'secure');
-    }
-
-    if (sfConfig::get('sf_error_404_module') == 'default')
-    {
-      sfConfig::set('sf_error_404_module', 'sympal_default');
-      sfConfig::set('sf_error_404_action', 'error404');
-    }
-
-    if (sfConfig::get('sf_module_disabled_module') == 'default')
-    {
-      sfConfig::set('sf_module_disabled_module', 'sympal_default');
-      sfConfig::set('sf_module_disabled_action', 'disabled');
-    }
-
-    $options = array('baseClassName' => 'sfSympalDoctrineRecord');
-    $options = array_merge(sfConfig::get('doctrine_model_builder_options', array()), $options);
-    sfConfig::set('doctrine_model_builder_options', $options);
-
-    $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
-    $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
+  public function getProjectConfiguration()
+  {
+    return $this->_projectConfiguration;
   }
 
   public function setup()
@@ -92,108 +57,6 @@ class sfSympalConfiguration
 
   public function configure()
   {
-  }
-
-
-  public function _handleInstall()
-  {
-    $sfContext = sfContext::getInstance();
-    $request = $sfContext->getRequest();
-    $environment = sfConfig::get('sf_environment');
-    $module = $request->getParameter('module');
-
-    // Redirect to install module if...
-    //  not in test environment
-    //  sympal has not been installed
-    //  module is not already sympal_install
-    if ($environment != 'test' && !sfSympalConfig::get('installed') && $module != 'sympal_install')
-    {
-      $sfContext->getController()->redirect('@sympal_install');
-    }
-  }
-
-  public function bootstrap()
-  {
-    sfSympalContext::createInstance(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')), sfContext::getInstance());
-
-    $this->primeCache();
-    $this->_handleInstall();
-
-    $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
-
-    $request = sfContext::getInstance()->getRequest();
-
-    if (!$request->isXmlHttpRequest() && $request->getParameter('module') != 'sympal_content_renderer')
-    {
-      sfSympalToolkit::changeLayout(sfSympalConfig::get('default_layout'));
-    }
-
-    if (sfConfig::get('sf_debug'))
-    {
-      $this->checkDependencies();
-    }
-
-    $contentTypes = sfSympalToolkit::getContentTypesCache();
-    Doctrine::initializeModels($contentTypes);
-  }
-
-  public function primeCache($force = false)
-  {
-    if (file_exists(sfConfig::get('sf_cache_dir').'/sympal/cache_primed.cache') && !$force)
-    {
-      return true;
-    }
-
-    if (!is_dir($path = sfConfig::get('sf_cache_dir').'/sympal'))
-    {
-      mkdir($path, 0777, true);
-    }
-
-    $this->_writeContentTypesCache();
-    $this->_writeHelperAutoloadCache();
-
-    touch(sfConfig::get('sf_cache_dir').'/sympal/cache_primed.cache');
-  }
-
-  protected function _writeHelperAutoloadCache()
-  {
-    $cachePath = sfConfig::get('sf_cache_dir').'/sympal/helper_autoload.cache';
-    $cache = array();
-    $dirs = $this->_projectConfiguration->getHelperDirs();
-    foreach ($dirs as $dir)
-    {
-      $helpers = sfFinder::type('file')->name('*Helper.php')->in($dir);
-      foreach ($helpers as $helper)
-      {
-        $lines = file($helper);
-        foreach ($lines as $line)
-        {
-          preg_match("/function (.*)\(/", $line, $matches);
-          if ($matches)
-          {
-            $function = $matches[1];
-            $e = explode('(', $function);
-            $function = $e[0];
-            $cache[$function] = $helper;
-          }
-        }
-      }
-    }
-    file_put_contents($cachePath, serialize($cache));
-  }
-
-  protected function _writeContentTypesCache()
-  {
-    try {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-      $typesArray = array();
-      $contentTypes = Doctrine::getTable('ContentType')->findAll();
-      foreach ($contentTypes as $contentType)
-      {
-        $typesArray[$contentType['id']] = $contentType['name'];
-      }
-      file_put_contents($cachePath, serialize($typesArray));
-    } catch (Exception $e) {}
   }
 
   public function getRequiredPlugins()
@@ -237,18 +100,6 @@ class sfSympalConfiguration
     $plugins = array_unique($plugins);
 
     return $plugins;
-  }
-
-  public function checkDependencies()
-  {
-    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
-    {
-      if (strpos($pluginName, 'sfSympal') !== false)
-      {
-        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
-        sfSympalPluginToolkit::checkPluginDependencies($pluginName, $dependencies);
-      }
-    }
   }
 
   public function getPlugins()

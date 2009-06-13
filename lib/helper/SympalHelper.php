@@ -56,7 +56,7 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
   // If we were passed an array then generate manual breacrumbs from it
   if (is_array($menuItem))
   {
-    $breadcrumbs = sfSympalToolkit::generateBreadcrumbs($menuItem);
+    $breadcrumbs = sfSympalMenuBreadcrumbs::generate($menuItem);
   } else {
     $breadcrumbs = $menuItem->getBreadcrumbs($content, $subItem);
   }

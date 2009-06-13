@@ -24,7 +24,7 @@ abstract class PluginContentForm extends BaseContentForm
     $this->widgetSchema['site_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['created_by']->setOption('add_empty', true);
 
-    sfSympalFormToolkit::changeLayoutWidget($this);
+    sfSympalFormToolkit::changeThemeWidget($this);
 
     if (!$this->object->content_type_id)
     {

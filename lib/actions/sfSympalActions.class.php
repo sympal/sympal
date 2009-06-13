@@ -45,14 +45,14 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
-  public function changeLayout($name)
+  public function changeTheme($name)
   {
-    return sfSympalToolkit::changeLayout($name);
+    return sfSympalTheme::change($name);
   }
 
   public function loadDefaultLayout()
   {
-    return sfSympalToolkit::loadDefaultLayout();
+    return sfSympalTheme::loadDefault();
   }
 
   public function askConfirmation($title, $message, $variables = array())

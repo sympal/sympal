@@ -77,7 +77,7 @@ abstract class PluginContent extends BaseContent
 
   public function getContentTypeClassName()
   {
-    $contentTypes = sfSympalToolkit::getContentTypesCache();
+    $contentTypes = sfSympalCache::getContentTypes();
     if (isset($contentTypes[$this['content_type_id']]))
     {
       return $contentTypes[$this['content_type_id']];

@@ -43,32 +43,6 @@ class sfSympalToolkit
     return self::getCurrentSite()->id;
   }
 
-  public static function getSymfonyResource($module, $action = null, $variables = array())
-  {
-    if (strpos($module, '/'))
-    {
-      $variables = (array) $action;
-      $e = explode('/', $module);
-      list($module, $action) = $e;
-    }
-
-    sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
-
-    try {
-      return get_component($module, $action, $variables);
-    } catch (Exception $e1) {
-      try {
-        return get_partial($module.'/'.$action, $variables);
-      } catch (Exception $e2) {
-        try {
-          return sfContext::getInstance()->getController()->getPresentationFor($module, $action);
-        } catch (Exception $e3) {}
-      }
-    }
-
-    throw new sfException('Could not find symfony resource for the module "'.$module.'" and action "'.$action.'". '.$e1->getMessage().' - '.$e2->getMessage().' - '.$e3->getMessage());
-  }
-
   public static function getDefaultApplication()
   {
     $apps = glob(sfConfig::get('sf_root_dir').'/apps/*');
@@ -110,118 +84,30 @@ class sfSympalToolkit
     }
   }
 
-  public static function processTemplate($code, $variables = array())
+  public static function getSymfonyResource($module, $action = null, $variables = array())
   {
-    $sf_context = sfContext::getInstance();
-    $vars = array(
-      'sf_request' => $sf_context->getRequest(),
-      'sf_response' => $sf_context->getResponse(),
-      'sf_user' => $sf_context->getUser()
-    );
-    $variables = array_merge($variables, $vars);
-    sfSympalConfig::set('template_vars', $variables);
-
-    foreach ($variables as $name => $variable)
+    if (strpos($module, '/'))
     {
-      $$name = $variable;
+      $variables = (array) $action;
+      $e = explode('/', $module);
+      list($module, $action) = $e;
     }
 
-    ob_start();
-    $code = str_replace('[?php', '<?php', $code);
-    $code = str_replace('?]', '?>', $code);
-    eval("?>" . $code);
-    $rendered = ob_get_contents();
-    ob_end_clean();
+    sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
 
-    $rendered = preg_replace_callback("/##(.*)\/(.*)##/", array('sfSympalToolkit', 'replaceSymfonyResources'), $rendered);
-
-    return $rendered;
-  }
-
-  public static function replaceSymfonyResources($matches)
-  {
-    list($match, $module, $action) = $matches;
-    $variables = sfSympalConfig::get('template_vars');
-    
-    return sfSympalToolkit::getSymfonyResource($module, $action, $variables);
-  }
-
-  public static function loadDefaultLayout()
-  {
-    return self::changeLayout(sfSympalConfig::get('default_layout'));
-  }
-
-  public static function changeLayout($name)
-  {
-    if (!$name)
-    {
-      return false;
-    }
-
-    $context = sfContext::getInstance();
-    $request = $context->getRequest();
-    $response = sfContext::getInstance()->getResponse();
-    $configuration = $context->getConfiguration();
-    $sympalConfiguration = sfSympalContext::getInstance()->getSympalConfiguration();
-
-    if (sfSympalConfig::get('load_default_css'))
-    {
-      $response->addStylesheet('/sfSympalPlugin/css/global');
-      $response->addStylesheet('/sfSympalPlugin/css/default');
-    }
-
-    $actionEntry = $context->getController()->getActionStack()->getLastEntry();
-    $module = $actionEntry ? $actionEntry->getModuleName():$request->getParameter('module');
-    $action = $actionEntry ? $actionEntry->getActionName():$request->getParameter('action');
-
-    $pluginPaths = $configuration->getAllPluginPaths();
-
-    $layouts = $sympalConfiguration->getLayouts();
-    $path = array_search($name, $layouts);
-
-    if ($realPath = realpath($path))
-    {
-      $path = $realPath;
-    }
-
-    if (!file_exists($path))
-    {
-      $path = sfConfig::get('sf_root_dir').'/'.$path;
-    }
-
-    $info = pathinfo($path);
-    $path = $info['dirname'].'/'.$info['filename'];
-    $name = $info['filename'];
-
-    sfConfig::set('symfony.view.'.$module.'_'.$action.'_layout', $path);
-    sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
-    sfConfig::set('symfony.view.sympal_default_secure_layout', $path);
-
-    if (strstr($path, 'sfSympalPlugin/templates'))
-    {
-      $path = '/sfSympalPlugin/css/' . $name;
-    } else {
-      if (file_exists(sfConfig::get('sf_web_dir').'/css/'.$name.'.css'))
-      {
-        $path = $name;
-      } else {
-        foreach ($pluginPaths as $plugin => $path)
-        {
-          if (file_exists($path.'/web/css/'.$name.'.css'))
-          {
-            $path = '/'.$plugin.'/css/'.$name.'.css';
-            break;
-          }
-        }
+    try {
+      return get_component($module, $action, $variables);
+    } catch (Exception $e1) {
+      try {
+        return get_partial($module.'/'.$action, $variables);
+      } catch (Exception $e2) {
+        try {
+          return sfContext::getInstance()->getController()->getPresentationFor($module, $action);
+        } catch (Exception $e3) {}
       }
     }
 
-    $response->removeStylesheet(sfSympalConfig::get('last_stylesheet'));
-
-    sfSympalConfig::set('last_stylesheet', $path);
-    $response->addStylesheet($path, 'last');
-
-    return true;
+    throw new sfException('Could not find symfony resource for the module "'.$module.'" and action "'.$action.'". '.$e1->getMessage().' - '.$e2->getMessage().' - '.$e3->getMessage());
   }
 
   public static function isEditMode()
@@ -229,42 +115,6 @@ class sfSympalToolkit
     $user = sfContext::getInstance()->getUser();
 
     return $user->isAuthenticated()  && $user->hasCredential('ManageContent') && $user->getAttribute('sympal_edit', true);
-  }
-
-  public static function generateBreadcrumbs($breadcrumbsArray)
-  {
-    $breadcrumbs = new sfSympalMenuBreadcrumbs('Breadcrumbs');
-
-    $count = 0;
-    $total = count($breadcrumbsArray);
-    foreach ($breadcrumbsArray as $name => $route)
-    {
-      $count++;
-      if ($count == $total)
-      {
-        $breadcrumbs->addChild($name);
-      } else {
-        $breadcrumbs->addChild($name, $route);
-      }
-    }
-
-    return $breadcrumbs;
-  }
-
-  protected static $_contentTypesCache = null;
-
-  public static function getContentTypesCache()
-  {
-    if (is_null(self::$_contentTypesCache))
-    {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
-      if (file_exists($cachePath))
-      {
-        self::$_contentTypesCache = unserialize(file_get_contents($cachePath));
-      }
-    }
-
-    return self::$_contentTypesCache;
   }
 
   protected static $_helperAutoloadCache = null;

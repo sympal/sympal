@@ -13,7 +13,7 @@ abstract class PluginContentTypeForm extends BaseContentTypeForm
   {
     parent::setup();
 
-    sfSympalFormToolkit::changeLayoutWidget($this);
+    sfSympalFormToolkit::changeThemeWidget($this);
 
     $this->widgetSchema['schema'] = new sfWidgetFormTextarea(array(), array('style' => 'width: 600px; height: 400px;'));
     $this->validatorSchema['schema'] = new sfValidatorString(array('required' => true));

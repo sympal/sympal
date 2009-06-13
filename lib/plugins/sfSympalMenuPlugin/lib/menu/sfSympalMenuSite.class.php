@@ -48,7 +48,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
   public function getBreadcrumbs()
   {
-    return sfSympalToolkit::generateBreadcrumbs($this->getBreadcrumbsArray());
+    return sfSympalMenuBreadcrumbs::generate($this->getBreadcrumbsArray());
   }
 
   public function getMenuItem()

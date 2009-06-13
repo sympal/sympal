@@ -59,7 +59,7 @@ class sfSympalContext
     $menuItem = $content->getMainMenuItem();
     $this->_handleForward404($menuItem, $actions, $e);
 
-    sfSympalToolkit::changeLayout($content->getLayout());
+    sfSympalTheme::change($content->getLayout());
 
     $actions->getUser()->obtainContentLock($content);
 

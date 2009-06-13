@@ -52,7 +52,7 @@ class sfSympalContentRenderer
     sfSympalToolkit::setCurrentMenuItem($this->_menuItem);
 
     sfSympalToolkit::setCurrentContent($this->_content);
-    sfSympalToolkit::changeLayout($this->_content->getLayout());
+    sfSympalTheme::change($this->_content->getLayout());
 
     if (!$response->getTitle())
     {
@@ -137,7 +137,7 @@ class sfSympalContentRenderer
     }
     else if ($template && $body = $template->getBody())
     {
-      $return = sfSympalToolkit::processTemplate($body, $variables);;
+      $return = sfSympalTemplate::process($body, $variables);;
     } else {
       $return = get_sympal_breadcrumbs($this->_menuItem, $content).$this->_renderDoctrineData($content);
     }

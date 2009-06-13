@@ -33,9 +33,10 @@ class ProjectConfiguration extends sfProjectConfiguration
     $install = new sfSympalInstall($this, $this->dispatcher, new sfFormatter());
     $install->install();
 
-    $this->getPluginConfiguration('sfSympalPlugin')
-      ->getSympalConfiguration()
-      ->primeCache(true);
+    $cache = new sfSympalCache(
+      $this->getPluginConfiguration('sfSympalPlugin')
+           ->getSympalConfiguration()
+    );
   }
 
   public function loadFixtures($fixtures)
