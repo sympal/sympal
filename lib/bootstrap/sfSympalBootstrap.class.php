@@ -21,7 +21,7 @@ class sfSympalBootstrap
 
     sfConfig::set('sf_enabled_modules', $modules);
 
-    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', '/sfSympalPlugin'));
+    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalPlugin'));
 
     if (sfConfig::get('sf_login_module') == 'default')
     {
