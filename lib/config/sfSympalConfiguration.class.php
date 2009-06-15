@@ -171,7 +171,7 @@ class sfSympalConfiguration
   {
     if (!$this->_layouts)
     {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/layouts.cache';
+      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/'.sfConfig::get('sf_app').'_layouts.cache';
       if (!file_exists($cachePath))
       {
         $layouts = array();
