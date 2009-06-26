@@ -21,7 +21,11 @@ class sfSympalTemplate
 
   public function __toString()
   {
-    return (string) $this->render();
+    try {
+        return (string) $this->render();
+    } catch (Exception $e) {
+        return (string) $e->getMessage()."<br/>".$e->getTraceAsString();
+    }
   }
 
   public function render()
