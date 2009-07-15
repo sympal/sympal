@@ -48,12 +48,14 @@ function edit_on_key_up(e)
 
 function highlight_sympal_content_slot(id)
 {
+  document.getElementById('edit_content_slot_button_' + id).style.color = '#000';
   document.getElementById('edit_content_slot_button_' + id).style.background = '#ffc';
   document.getElementById('edit_content_slot_button_' + id).style.border = '1px solid #ddd';
 }
 
 function unhighlight_sympal_content_slot(id)
 {
+  document.getElementById('edit_content_slot_button_' + id).style.color = null;
   document.getElementById('edit_content_slot_button_' + id).style.background = 'none';
   document.getElementById('edit_content_slot_button_' + id).style.border = '1px solid transparent';
 }

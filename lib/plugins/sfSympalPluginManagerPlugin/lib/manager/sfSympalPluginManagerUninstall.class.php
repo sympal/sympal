@@ -18,43 +18,12 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
       if ($this->_contentTypeName)
       {
-        $this->logSection('sympal', 'Delete content from database');
-
-        $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_name));
-        $slug = 'sample-'.$lowerName;
-
-        $contentType = Doctrine::getTable('ContentType')->findOneByName($this->_contentTypeName);
-
-        Doctrine::getTable('Route')
-          ->createQuery('r')
-          ->delete()
-          ->where('r.content_type_id = ?', $contentType['id'])
-          ->execute();
-        Doctrine::getTable('ContentType')
-          ->createQuery('t')
-          ->delete()
-          ->where('t.name = ?', $this->_contentTypeName)
-          ->execute();
-        Doctrine::getTable('ContentTemplate')
-          ->createQuery('t')
-          ->delete()
-          ->where('t.content_type_id = ?', $contentType['id'])
-          ->execute();
-        Doctrine::getTable('Content')
-          ->createQuery('e')
-          ->delete()
-          ->where('e.slug = ?', $slug)
-          ->execute();
-        Doctrine::getTable('MenuItem')
-          ->createQuery('m')
-          ->delete()
-          ->where('m.name = ?', $this->_name)
-          ->execute();
-
-        $this->logSection('sympal', 'Clear database tables of data');
+        $this->deleteRelatedRecords();
       }
 
-      // Delete all data
+      $this->logSection('sympal', 'Clear database tables of data');
+
+      // Delete all data from models included in plugin
       foreach ($models as $model)
       {
         try {
@@ -69,7 +38,6 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
           $this->logSection('sympal', 'Could not truncate table for model "'.$model.'": "'.$e->getMessage().'"');
         }
       }
-
 
       $this->logSection('sympal', 'Drop database tables');
 
@@ -139,5 +107,61 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     }
 
     sfSympalConfig::writeSetting($this->_pluginName, 'installed', false);
+  }
+
+  public function deleteRelatedRecords()
+  {
+    $this->logSection('sympal', 'Delete content from database');
+
+    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_name));
+    $slug = 'sample-'.$lowerName;
+
+    $contentType = Doctrine::getTable('ContentType')->findOneByName($this->_contentTypeName);
+
+    // Delete routes related to this content type
+    Doctrine::getTable('Route')
+      ->createQuery('r')
+      ->delete()
+      ->where('r.content_type_id = ?', $contentType['id'])
+      ->execute();
+
+    // Delete content templates related to this content type
+    Doctrine::getTable('ContentTemplate')
+      ->createQuery('t')
+      ->delete()
+      ->where('t.content_type_id = ?', $contentType['id'])
+      ->execute();
+
+    // Find content lists related to this conten type
+    $q = Doctrine::getTable('ContentList')
+      ->createQuery('c')
+      ->select('c.id, c.content_id')
+      ->from('ContentList c INDEXBY c.content_id')
+      ->where('c.content_type_id = ?', $contentType['id']);
+
+    $contentTypes = $q->fetchArray();
+    $contentIds = array_keys($contentTypes);
+
+    // Delete content records related to this content type
+    Doctrine::getTable('Content')
+      ->createQuery('c')
+      ->delete()
+      ->where('c.content_type_id = ?', $contentType['id'])
+      ->orWhereIn('c.id', $contentIds)
+      ->execute();
+
+    // Delete menu items related to this content type
+    Doctrine::getTable('MenuItem')
+      ->createQuery('m')
+      ->delete()
+      ->where('m.name = ? OR m.content_type_id = ?', array($this->_name, $contentType['id']))
+      ->execute();
+
+    // Delete the content type record
+    Doctrine::getTable('ContentType')
+      ->createQuery('t')
+      ->delete()
+      ->where('t.id = ?', $contentType['id'])
+      ->execute();
   }
 }

@@ -26,6 +26,7 @@
   border: 1px solid #ccc;
   filter: alpha(opacity=50);
   -moz-opacity: .50;
+  font-size: 14px;
 }
 
 #sympal-dashboard #boxes ul li a {

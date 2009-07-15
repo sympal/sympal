@@ -108,12 +108,16 @@ class sfSympalContext
     }
   }
 
-  public function quickRenderContent($slug, $format = 'html')
+  public function quickRenderContent($type, $slug, $format = 'html')
   {
-    $content = Doctrine::getTable('Content')->getContentForSite(array('slug' => $slug));
-    $menuItem = $content->getMenuItem();
+    $content = Doctrine::getTable('Content')
+      ->getTypeQuery($type)
+      ->andWhere('c.slug = ?', $slug)
+      ->fetchOne();
 
-    $renderer = self::renderContent($menuItem, $content, $format);
+    $menuItem = $content->getMainMenuItem();
+
+    $renderer = $this->getRenderer($menuItem, $content, $format);
     $renderer->initialize();
 
     return $renderer;

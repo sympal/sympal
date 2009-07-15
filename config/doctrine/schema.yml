@@ -45,7 +45,7 @@ Content:
     MasterMenuItem:
       class: MenuItem
       local: master_menu_item_id
-      onDelete: CASCADE
+      onDelete: SET NULL
       foreignAlias: MasterContent
       foreignType: one
     LastUpdatedBy:

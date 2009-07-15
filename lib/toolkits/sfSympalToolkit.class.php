@@ -93,21 +93,18 @@ class sfSympalToolkit
       list($module, $action) = $e;
     }
 
-    sfContext::getInstance()->getConfiguration()->loadHelpers('Partial');
+    $context = sfContext::getInstance();
+    $context->getConfiguration()->loadHelpers('Partial');
+    $controller = $context->getController();
 
-    try {
+    if ($controller->componentExists($module, $action))
+    {
       return get_component($module, $action, $variables);
-    } catch (Exception $e1) {
-      try {
-        return get_partial($module.'/'.$action, $variables);
-      } catch (Exception $e2) {
-        try {
-          return sfContext::getInstance()->getController()->getPresentationFor($module, $action);
-        } catch (Exception $e3) {}
-      }
+    } else {
+      return get_partial($module.'/'.$action, $variables);
     }
 
-    throw new sfException('Could not find symfony resource for the module "'.$module.'" and action "'.$action.'". '.$e1->getMessage().' - '.$e2->getMessage().' - '.$e3->getMessage());
+    throw new sfException('Could not find component or partial for the module "'.$module.'" and action "'.$action.'"');
   }
 
   public static function isEditMode()

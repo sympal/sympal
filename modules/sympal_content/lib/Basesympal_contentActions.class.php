@@ -5,10 +5,23 @@ class Basesympal_contentActions extends autoSympal_contentActions
   public function preExecute()
   {
     parent::preExecute();
+
     if (!sfSympalToolkit::isEditMode())
     {
       $this->getUser()->setFlash('error', 'In order to work with content you must turn on edit mode!');
       $this->redirect('@homepage');
+    }
+
+    $this->loadDefaultLayout();
+
+    // Make sure we have a filter on content type id set
+    $filters = $this->getFilters();
+    if (!$filters['content_type_id'])
+    {
+      $contentTypes = sfSympalCache::getContentTypes();
+      $contentTypes = array_keys($contentTypes);
+      $filters['content_type_id'] = current($contentTypes);
+      $this->setFilters($filters);
     }
   }
 
@@ -77,10 +90,18 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeList_type(sfWebRequest $request)
   {
-    $contentType = Doctrine::getTable('ContentType')->findOneBySlug($request->getParameter('type'));
+    $type = $request->getParameter('type');
+    if (is_numeric($type))
+    {
+      $contentTypeId = $type;
+    } else {
+      $contentType = Doctrine::getTable('ContentType')->findOneBySlug($type);
+      $contentTypeId = $contentType->id;
+    }
+
     $request->setParameter('content_filters', array(
-      'content_type_id' => $contentType->id
-    )); 
+      'content_type_id' => $contentTypeId
+    ));
 
     $this->forward('sympal_content', 'filter');
   }
@@ -115,15 +136,21 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeCreate_type(sfWebRequest $request)
   {
-    $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType('page');
+    $type = $request->getParameter('type');
+    if (is_numeric($type))
+    {
+      $type = Doctrine::getTable('ContentType')->find($type);      
+    } else {
+      $type = Doctrine::getTable('ContentType')->findOneBySlug($type);
+    }
+
+    $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType($type['slug']);
 
     $this->content = new Content();
-    $type = Doctrine::getTable('ContentType')->findOneBySlug($request->getParameter('type'));
     $this->content->setType($type);
     $this->content->LockedBy = $this->getUser()->getSympalUser();
     $this->content->CreatedBy = $this->getUser()->getSympalUser();
     $this->content->site_id = sfSympalContext::getInstance()->getSite()->getId();
-    
 
     Doctrine::initializeModels(array($type['name']));
 

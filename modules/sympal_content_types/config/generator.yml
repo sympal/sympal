@@ -19,7 +19,7 @@ generator:
       filter:
         display: [name, site_id]
       form:
-        display: [label, description, default_path, layout slug]
+        display: [label, description, default_path, layout, slug]
         fields:
           layout:
             help: Choose the layout template used to render this content type.

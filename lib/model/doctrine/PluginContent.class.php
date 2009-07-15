@@ -253,18 +253,23 @@ abstract class PluginContent extends BaseContent
   {
     if ($record = $this->getRecord())
     {
-      $guesses = array('name',
-                       'title',
-                       'username',
-                       'subject');
-
-      // we try to guess a column which would give a good description of the object
-      foreach ($guesses as $descriptionColumn)
+      if (method_exists($record, '__toString'))
       {
-        try
+        return $record->__toString();
+      } else {
+        $guesses = array('name',
+                         'title',
+                         'username',
+                         'subject');
+
+        // we try to guess a column which would give a good description of the object
+        foreach ($guesses as $descriptionColumn)
         {
-          return (string) $record->get($descriptionColumn);
-        } catch (Exception $e) {}
+          try
+          {
+            return (string) $record->get($descriptionColumn);
+          } catch (Exception $e) {}
+        }
       }
     }
 
@@ -373,6 +378,8 @@ abstract class PluginContent extends BaseContent
         $values[$name] = $i18nSlug;
       } else if ($this->hasField($name)) {
         $values[$name] = $this->$name;
+      } else if (is_callable(array($this, $method = 'get'.sfInflector::camelize($name)))) {
+        $values[$name] = $this->$method();
       }
     }
 
