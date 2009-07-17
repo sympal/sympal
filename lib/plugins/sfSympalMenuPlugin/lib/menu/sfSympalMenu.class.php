@@ -437,6 +437,8 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   {
     $menuItem = sfSympalToolkit::getCurrentMenuItem();
     if ($menuItem){
+      $ret = false;
+      
       while ($menuItem->getLevel() != 0)
       {
         if ($this->_menuItem == $menuItem)
@@ -446,7 +448,6 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
           break;
         }
       
-        $ret = false;
         $menuItem = $menuItem->getNode()->getParent();
       }
     }
