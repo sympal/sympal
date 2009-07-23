@@ -2,7 +2,7 @@
 
 class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 {
-  protected function _getMenuItem(sfWebRequest $menuItem)
+  protected function _getMenuItem(sfWebRequest $request)
   {
     $q = Doctrine::getTable('MenuItem')
       ->createQuery('m')
@@ -52,7 +52,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executePublish(sfWebRequest $request)
   {
     $menuItem = $this->_getMenuItem($request);
-    $this->_publishMenuItem($menuItem, true);
+    $publish = $this->_publishMenuItem($menuItem, true);
 
     $msg = $publish ? 'Menu item published successfully!':'Menu item unpublished successfully!';
     $this->getUser()->setFlash('notice', $msg);
