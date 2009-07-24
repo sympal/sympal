@@ -96,4 +96,27 @@ class sfSympalMenuSite extends sfSympalMenu
       }
     }
   }
+
+  public function isCurrentAncestor()
+  {
+    $menuItem = sfSympalToolkit::getCurrentMenuItem();
+    if ($menuItem) {
+
+      $current = $this;
+      $children = $current->getChildren();
+      do {
+        foreach ($children as $child)
+        {
+          if ($child->getMenuItem() == $menuItem)
+          {
+            return true;
+          } else {
+            $current = $child;
+          }
+        }
+      } while ($children = $current->getChildren());
+    }
+
+    return false;
+  }
 }

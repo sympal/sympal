@@ -432,32 +432,6 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
     return $this->_current;
   }
-  
-  public function isCurrentAncestor()
-  {
-    $menuItem = sfSympalToolkit::getCurrentMenuItem();
-    if ($menuItem){
-      $ret = false;
-      
-      while ($menuItem->getLevel() != 0)
-      {
-        if ($this->_menuItem == $menuItem)
-        {
-          $ret = true;
-        
-          break;
-        }
-      
-        $menuItem = $menuItem->getNode()->getParent();
-      }
-    }
-    else
-    {
-      $ret = false;
-    }
-    
-    return $ret;
-  }
 
   public function getLabel()
   {
