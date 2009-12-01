@@ -6,7 +6,7 @@ class PluginContentTable extends Doctrine_Table
 {
   public function getTypeQuery($typeName, $alias = 'c')
   {
-    $table = Doctrine::getTable($typeName);
+    $table = Doctrine_Core::getTable($typeName);
 
     $q = $this->getBaseQuery($alias);
 
@@ -128,7 +128,7 @@ class PluginContentTable extends Doctrine_Table
     $contentTypeId = $filters['content_type_id'];
     $name = $contentTypes[$contentTypeId];
 
-    $q = Doctrine::getTable('Content')
+    $q = Doctrine_Core::getTable('Content')
       ->getTypeQuery($name, 'r');
 
     return $q;

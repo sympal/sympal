@@ -28,7 +28,7 @@ abstract class PluginContentForm extends BaseContentForm
 
     if (!$this->object->content_type_id)
     {
-      $this->object->Type = Doctrine::getTable('ContentType')->findOneBySlug('page');
+      $this->object->Type = Doctrine_Core::getTable('ContentType')->findOneBySlug('page');
     } else {
       $this->object->Type;
     }

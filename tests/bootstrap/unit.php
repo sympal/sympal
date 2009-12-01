@@ -1,17 +1,9 @@
 <?php
 
-if (!isset($_SERVER['SYMFONY']))
-{
-  throw new RuntimeException('Could not find symfony core libraries.');
-}
-
-require_once $_SERVER['SYMFONY'].'/autoload/sfCoreAutoload.class.php';
-sfCoreAutoload::register();
-
-require_once(dirname(__FILE__).'/cleanup.php');
-
 $projectPath = dirname(__FILE__).'/../fixtures/project';
 require_once($projectPath.'/config/ProjectConfiguration.class.php');
+
+require_once(dirname(__FILE__).'/cleanup.php');
 
 if (!isset($app))
 {

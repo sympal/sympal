@@ -10,6 +10,7 @@ $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
 $t->is(get_class($sympalConfiguration), 'sympalSympalConfiguration');
 
 $requiredPlugins = array(
+  'sfSympalPlugin',
   'sfFormExtraPlugin',
   'sfTaskExtraPlugin',
   'sfFeed2Plugin',
@@ -18,8 +19,7 @@ $requiredPlugins = array(
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
-  'sfSympalContentListPlugin',
-  'sfSympalPlugin'
+  'sfSympalContentListPlugin'
 );
 
 $t->is($sympalConfiguration->getRequiredPlugins(), $requiredPlugins);

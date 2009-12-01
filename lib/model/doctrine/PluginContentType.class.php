@@ -104,22 +104,22 @@ abstract class PluginContentType extends BaseContentType
 
   public function getSingularUpper()
   {
-    return Doctrine::getTable($this->getName())->getOption('name');
+    return Doctrine_Core::getTable($this->getName())->getOption('name');
   }
 
   public function getSingularLower()
   {
-    return Doctrine_Inflector::tableize(Doctrine::getTable($this->getName())->getOption('name'));
+    return Doctrine_Inflector::tableize(Doctrine_Core::getTable($this->getName())->getOption('name'));
   }
 
   public function getPluralUpper()
   {
-    return Doctrine_Inflector::classify(Doctrine::getTable($this->getName())->getTableName()) . 's';
+    return Doctrine_Inflector::classify(Doctrine_Core::getTable($this->getName())->getTableName()) . 's';
   }
 
   public function getPluralLower()
   {
-    return Doctrine::getTable($this->getName())->getTableName() . 's';
+    return Doctrine_Core::getTable($this->getName())->getTableName() . 's';
   }
 
   public function getRoute($action = null)

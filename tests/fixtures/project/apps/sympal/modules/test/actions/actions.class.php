@@ -15,24 +15,6 @@ class testActions extends sfActions
     $this->askConfirmation('Are you sure?', 'Are you sure you wish to execute this?');
   }
 
-  public function executeNew_email(sfWebRequest $request)
-  {
-    $dispatcher = sfProjectConfiguration::getActive()->getEventDispatcher();
-    $dispatcher->connect('sympal.email.filter_variables', array($this, 'filterEmailVariables'));
-
-    $email = $this->newEmail('test/email', array('variable' => 'Test variable'));
-    $request->setAttribute('email', $email);
-
-    return sfView::NONE;
-  }
-
-  public function filterEmailVariables(sfEvent $event, $variables)
-  {
-    $variables['variable2'] = 'Test variable 2';
-
-    return $variables;
-  }
-
   public function executeForward_to_route()
   {
     $this->forwardToRoute('@forward_to_route?param1=value1&param2=value2');

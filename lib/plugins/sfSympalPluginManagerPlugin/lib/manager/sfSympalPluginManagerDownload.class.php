@@ -29,7 +29,7 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
         $this->_filesystem->mirror($path, sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName, sfFinder::type('files'));
       } else {
         $svn = exec('which svn');
-        $this->_filesystem->sh($svn.' co '.$path.' '.sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName);
+        $this->_filesystem->execute($svn.' co '.$path.' '.sfConfig::get('sf_plugins_dir').'/'.$this->_pluginName);
       }
     }
   }

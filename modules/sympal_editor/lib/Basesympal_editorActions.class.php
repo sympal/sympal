@@ -161,14 +161,14 @@ class Basesympal_editorActions extends sfActions
     $type = $request->getParameter('record_type');
     $id = $request->getParameter('record_id');
     $parentType = str_replace('Translation', '', $type);
-    Doctrine::initializeModels($parentType);
+    Doctrine_Core::initializeModels($parentType);
 
-    $this->record = Doctrine::getTable($type)
+    $this->record = Doctrine_Core::getTable($type)
       ->createQuery()
       ->andWhere('id = ?', $id)
       ->fetchOne();
 
-    $this->versions = Doctrine::getTable('Version')
+    $this->versions = Doctrine_Core::getTable('Version')
       ->createQuery('v')
       ->andWhere('record_type = ?', $type)
       ->andWhere('record_id = ?', $id)

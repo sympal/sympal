@@ -35,7 +35,7 @@ $menuItem->save();
 $page->Content->MasterMenuItem = $menuItem;
 $page->save();
 
-$content = Doctrine::getTable('Content')
+$content = Doctrine_Core::getTable('Content')
   ->createQuery('c')
   ->leftJoin('c.Site s')
   ->leftJoin('c.Type t')
@@ -65,7 +65,7 @@ $sfUser = sfContext::getInstance()->getUser();
 $sfUser->signIn($user);
 $sfUser->isEditMode(true);
 
-$q = Doctrine::getTable('Content')
+$q = Doctrine_Core::getTable('Content')
   ->getTypeQuery('Page')
   ->andWhere('c.slug = ?', 'testing-this-out');
 
@@ -135,7 +135,7 @@ $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>test</p>
 
 $slots->save();
 
-$slots[2]->Type = Doctrine::getTable('ContentSlotType')->findOneByName('MultiLineText');
+$slots[2]->Type = Doctrine_Core::getTable('ContentSlotType')->findOneByName('MultiLineText');
 $t->is($slots[2]->render(), 'Body value<br />
 Testing');
 

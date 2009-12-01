@@ -13,13 +13,13 @@ function installPlugin($name, $t)
   $manager->install();
 
   $contentTypeName = $manager->getContentTypeForPlugin($name);
-  $contentType = Doctrine::getTable('ContentType')->findOneByName($contentTypeName);
+  $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($contentTypeName);
   $t->is($contentType['name'], $contentTypeName);
   $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize($contentTypeName)));
   $t->is($contentType['plugin_name'], $name);
 
   $short = sfSympalPluginToolkit::getShortPluginName($name);
-  $menuItem = Doctrine::getTable('MenuItem')->findOneByName($short);
+  $menuItem = Doctrine_Core::getTable('MenuItem')->findOneByName($short);
   $t->is($menuItem['name'], $short);
 }
 

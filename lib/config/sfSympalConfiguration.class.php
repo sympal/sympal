@@ -71,7 +71,7 @@ class sfSympalConfiguration
       }
     }
 
-    return array_unique($requiredPlugins);
+    return array_values(array_unique($requiredPlugins));
   }
 
   public function getCorePlugins()

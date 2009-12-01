@@ -64,7 +64,7 @@ abstract class sfSympalDoctrineRecord extends sfDoctrineRecord
       }
     }
 
-    if ($this->_table->getIdentifierType() ==  Doctrine::IDENTIFIER_AUTOINC)
+    if ($this->_table->getIdentifierType() ==  Doctrine_Core::IDENTIFIER_AUTOINC)
     {
       if ($this->_isPropertyExportable($column))
       {

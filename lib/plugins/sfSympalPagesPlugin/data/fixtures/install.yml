@@ -12,6 +12,7 @@ MenuItem:
     name: primary
     is_primary: true
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     label: Home
     Site: Site_default
     ContentType: ContentType_Page
@@ -20,6 +21,7 @@ MenuItem:
       MenuItem_primary_register:
         name: Register
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Register
         Site: Site_default
         RelatedContent: Content_Page_register
@@ -27,6 +29,7 @@ MenuItem:
       MenuItem_primary_signin:
         name: Signin
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Signin
         Site: Site_default
         route: @sympal_signin
@@ -34,6 +37,7 @@ MenuItem:
       MenuItem_primary_signout:
         name: Signout
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Signout
         route: @sympal_signout
         Site: Site_default
@@ -41,6 +45,7 @@ MenuItem:
       MenuItem_primary_pages:
         name: Pages
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Pages
         Site: Site_default
         ContentType: ContentType_ContentList
@@ -48,6 +53,7 @@ MenuItem:
       MenuItem_primary_about:
         name: About
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: About
         Site: Site_default
         RelatedContent: Content_Page_about
@@ -56,30 +62,35 @@ MenuItem:
           MenuItem_primary_about_doctrine:
             name: Doctrine
             is_published: true
+            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
             label: Doctrine
             Site: Site_default
             route: http://www.doctrine-project.org/about
           MenuItem_primary_about_symfony:
             name: symfony
             is_published: true
+            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
             label: symfony
             Site: Site_default
             route: http://www.symfony-project.org/about
           MenuItem_primary_about_sensio_labs:
             name: Sensio Labs
             is_published: true
+            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
             label: Sensio Labs
             Site: Site_default
             route: http://www.sensiolabs.com
           MenuItem_primary_about_centresource:
             name: centresource
             is_published: true
+            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
             label: "centre{source}"
             Site: Site_default
             route: http://www.centresource.com
       MenuItem_primary_markdown_examples:
         name: Markdown Examples
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         ContentType: ContentType_Page
         Site: Site_default
         label: Markdown Examples
@@ -87,6 +98,7 @@ MenuItem:
       MenuItem_primary_readme:
         name: README
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         ContentType: ContentType_Page
         Site: Site_default
         label: README
@@ -94,12 +106,14 @@ MenuItem:
       MenuItem_primary_trac:
         name: Trac
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         Site: Site_default
         label: Trac
         route: http://trac.jwage.com/sympal
   MenuItem_footer:
     name: footer
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     label: Home
     Site: Site_default
     ContentType: ContentType_Page
@@ -108,6 +122,7 @@ MenuItem:
       MenuItem_footer_about:
         name: About
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: About
         Site: Site_default
         RelatedContent: Content_Page_about
@@ -115,6 +130,7 @@ MenuItem:
       MenuItem_footer_markdown_examples:
         name: Markdown Examples
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Markdown Examples
         Site: Site_default
         RelatedContent: Content_Page_markdown_examples
@@ -122,6 +138,7 @@ MenuItem:
       MenuItem_footer_readme:
         name: README
         is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: README
         Site: Site_default
         RelatedContent: Content_Page_readme
@@ -133,6 +150,7 @@ Content:
     slug: register
     Site: Site_default
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [Register_slot_body]
     CreatedBy: admin
     Translation:
@@ -145,6 +163,7 @@ Content:
     slug: home
     Site: Site_default
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     custom_path: "/"
     Slots: [Home_slot_body]
     CreatedBy: admin
@@ -153,6 +172,7 @@ Content:
     slug: about
     Site: Site_default
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [About_slot_body]
     CreatedBy: admin
   Content_ContentList_pages:
@@ -160,6 +180,7 @@ Content:
     slug: pages
     Site: Site_default
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     CreatedBy: admin
     Slots: [Pages_slot_header]
   Content_Page_markdown_examples:
@@ -167,6 +188,7 @@ Content:
     slug: markdown-examples
     Site: Site_default
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [Markdown_examples_slot_body]
     CreatedBy: admin
   Content_Page_readme:
@@ -174,6 +196,7 @@ Content:
     slug: readme
     Site: Site_default
     is_published: true
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [Readme_slot_body]
     CreatedBy: admin
 

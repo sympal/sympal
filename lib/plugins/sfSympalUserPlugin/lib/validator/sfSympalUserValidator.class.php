@@ -17,7 +17,7 @@ class sfSympalUserValidator extends sfValidatorBase
     $password = isset($values[$this->getOption('password_field')]) ? $values[$this->getOption('password_field')] : '';
 
     // user exists?
-    if ($user = Doctrine::getTable('User')->findOneByUsername($username))
+    if ($user = Doctrine_Core::getTable('User')->findOneByUsername($username))
     {
       // password is ok?
       if ($user->getIsActive() && $user->checkPassword($password))

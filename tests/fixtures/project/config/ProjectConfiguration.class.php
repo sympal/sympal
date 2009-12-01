@@ -1,6 +1,6 @@
 <?php
 
-$_SERVER['SYMFONY'] = '/Users/jwage/Sites/symfonysvn/1.2/lib';
+$_SERVER['SYMFONY'] = '/Users/jwage/Sites/symfonysvn/1.4/lib';
 
 if (!isset($_SERVER['SYMFONY']))
 {
@@ -17,7 +17,12 @@ class ProjectConfiguration extends sfProjectConfiguration
     require_once(dirname(__FILE__).'/../../../../config/sfSympalPluginConfiguration.class.php');
     sfSympalPluginConfiguration::enableSympalPlugins($this);
 
-    $this->enableAllPluginsExcept(array('sfPropelPlugin', 'sfCompat10Plugin'));
+    $this->enableAllPluginsExcept('sfPropelPlugin');
+  }
+
+  public function configureDoctrine(Doctrine_Manager $manager)
+  {
+    $manager->setAttribute(Doctrine_Core::ATTR_VALIDATE, Doctrine_Core::VALIDATE_ALL);
   }
 
   /**

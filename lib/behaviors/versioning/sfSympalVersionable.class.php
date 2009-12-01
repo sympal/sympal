@@ -38,7 +38,7 @@ class sfSympalVersionable extends Doctrine_Template
     $record = $this->getInvoker();
     $recordType = get_class($record);
 
-    $q = Doctrine::getTable('Version')
+    $q = Doctrine_Core::getTable('Version')
       ->createQuery('v')
       ->innerJoin('v.Changes c')
       ->andWhere('v.record_type = ?', $recordType)
@@ -52,7 +52,7 @@ class sfSympalVersionable extends Doctrine_Template
     $record = $this->getInvoker();
     $recordType = get_class($record);
 
-    $q = Doctrine::getTable('Version')
+    $q = Doctrine_Core::getTable('Version')
       ->createQuery('v')
       ->innerJoin('v.Changes c')
       ->andWhere('v.record_type = ?', $recordType)

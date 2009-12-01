@@ -7,7 +7,7 @@ $configuration->loadHelpers(array('Url', 'Tag'));
 
 $t = new lime_test(9, new lime_output_color());
 
-$table = Doctrine::getTable('MenuItem');
+$table = Doctrine_Core::getTable('MenuItem');
 
 $menuItems = $table
   ->createQuery('m')

@@ -52,7 +52,7 @@ class sfSympalVersionableListener extends Doctrine_Record_Listener
         {
           $user = sfContext::getInstance()->getUser()->getSympalUser();
         } else {
-          $user = Doctrine::getTable('User')->findOneByIsSuperAdmin(true);
+          $user = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(true);
         }
 
         $version->CreatedBy = $user;
@@ -107,7 +107,7 @@ class sfSympalVersionableListener extends Doctrine_Record_Listener
           ->andWhere('v.record_type = ?', $recordType)
           ->andWhere('v.record_id = ?', $record->id);
 
-        $result = $q->execute(array(), Doctrine::HYDRATE_ARRAY);
+        $result = $q->execute(array(), Doctrine_Core::HYDRATE_ARRAY);
 
         return isset($result[0]['max_version']) ? ($result[0]['max_version'] + 1):1;
     } else {

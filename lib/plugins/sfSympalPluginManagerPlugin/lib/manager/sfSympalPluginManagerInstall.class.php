@@ -23,7 +23,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
         $this->logSection('sympal', 'Create the tables for the models');
 
-        Doctrine::createTablesFromArray($models);
+        Doctrine_Core::createTablesFromArray($models);
 
         if ($this->_contentTypeName)
         {
@@ -70,7 +70,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       'default_path' => "/$lowerName/:slug",
       'slug' => $lowerName,
       'plugin_name' => $this->_pluginName,
-      'Site' => Doctrine::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
+      'Site' => Doctrine_Core::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
     );
 
     $contentType = $this->newContentType($this->_contentTypeName, $properties);
@@ -86,7 +86,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     $properties = array(
       'slug' => $lowerName,
-      'ContentType' => Doctrine::getTable('ContentType')->findOneByName('ContentList')
+      'ContentType' => Doctrine_Core::getTable('ContentType')->findOneByName('ContentList')
     );
 
     $contentList = $this->newContent('ContentList', $properties);

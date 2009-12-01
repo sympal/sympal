@@ -30,7 +30,7 @@ class sfSympalToolkit
   {
     if (!self::$_currentSite)
     {
-      self::$_currentSite =  Doctrine::getTable('Site')
+      self::$_currentSite =  Doctrine_Core::getTable('Site')
         ->createQuery('s')
         ->where('s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
         ->fetchOne();

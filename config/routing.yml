@@ -223,7 +223,7 @@ sympal_routes:
     with_wildcard_routes: true
 
 <?php try { ?>
-<?php $routes = Doctrine::getTable('Route')
+<?php $routes = Doctrine_Core::getTable('Route')
   ->createQuery('r')
   ->innerJoin('r.ContentType t')
   ->leftJoin('r.Content c')

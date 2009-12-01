@@ -7,17 +7,17 @@ sleep(1);
 $t = new lime_test(14, new lime_output_color());
 
 $user = sfContext::getInstance()->getUser();
-$content = Doctrine::getTable('Content')
+$content = Doctrine_Core::getTable('Content')
   ->getTypeQuery('Page')
   ->andWhere('c.slug = ?', 'home')
   ->fetchOne();
 
 $t->is($user->hasAccessToContent($content), true);
 
-$content->Permissions[] = Doctrine::getTable('Permission')->findOneByName('ManageContent');
+$content->Permissions[] = Doctrine_Core::getTable('Permission')->findOneByName('ManageContent');
 $content->save();
 
-$admin = Doctrine::getTable('User')->findOneByIsSuperAdmin(1);
+$admin = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(1);
 $user->signIn($admin);
 
 $t->is($user->hasAccessToContent($content), true);

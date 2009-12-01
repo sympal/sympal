@@ -83,7 +83,7 @@ class sfSympalBootstrap
     }
 
     $contentTypes = sfSympalCache::getContentTypes();
-    Doctrine::initializeModels($contentTypes);
+    Doctrine_Core::initializeModels($contentTypes);
   }
 
   protected function _handleInstall()

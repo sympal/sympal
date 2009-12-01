@@ -19,7 +19,7 @@ class sfSympalContentType extends sfSympalRecord
       'onDelete' => 'CASCADE'
     ));
 
-    $contentTable = Doctrine::getTable('Content');
+    $contentTable = Doctrine_Core::getTable('Content');
     $name = $this->getInvoker()->getTable()->getOption('name');
     $contentTable->bind(array($name, array('local' => 'id', 'foreign' => 'content_id')), Doctrine_Relation::ONE);
   }

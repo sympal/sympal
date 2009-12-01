@@ -8,7 +8,7 @@ $t = new lime_test(6, new lime_output_color());
 $browser = new sfTestFunctional(new sfBrowser());
 $browser->get('/');
 
-$menuItem = Doctrine::getTable('MenuItem')->findOneBySlug('about');
+$menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug('about');
 $t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / About');
 $t->is(get_sympal_breadcrumbs($menuItem), '<div id="sympal_breadcrumbs"><ul id="breadcrumbs-menu"><li id="breadcrumbs-home" class="first"><a href="/index.php/">Home</a></li><li id="breadcrumbs-about" class="last">About</li></ul></div>');
 

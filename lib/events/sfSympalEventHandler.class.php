@@ -31,7 +31,7 @@ class sfSympalEventHandler
     $help->addChild('symfony '.SYMFONY_VERSION)
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('Doctrine '.Doctrine::VERSION)
+    $help->addChild('Doctrine '.Doctrine_Core::VERSION)
       ->setCredentials(array('ViewDeveloperInformation'));
 
     $help->addChild('About Sympal', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK')
@@ -59,7 +59,7 @@ class sfSympalEventHandler
     {
       $content = $menu->addChild('Content', '@sympal_content')
         ->setCredentials(array('ManageContent'));
-      $contentTypes = Doctrine::getTable('ContentType')->findAll();
+      $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
       $content->addChild('Create New Content', '@sympal_content_new');
       foreach ($contentTypes as $contentType)
       {

@@ -24,7 +24,7 @@ class sfSympalPluginInfo
 
   public function synchronizeWithDatabase()
   {
-    $q = Doctrine::getTable('Plugin')
+    $q = Doctrine_Core::getTable('Plugin')
       ->createQuery('p')
       ->where('p.name = ?', $this->getName());
 

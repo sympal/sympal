@@ -7,7 +7,7 @@ abstract class PluginContentList extends BaseContentList
 {
   public function buildPager($page = 1)
   {
-    $table = Doctrine::getTable('Content');
+    $table = Doctrine_Core::getTable('Content');
 
     if ($this->table_method)
     {

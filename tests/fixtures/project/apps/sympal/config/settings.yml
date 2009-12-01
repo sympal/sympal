@@ -1,24 +1,24 @@
 prod:
   .settings:
-    no_script_name:         on
-    logging_enabled:        off
-    cache: off
+    no_script_name:         true
+    logging_enabled:        false
+    cache: false
 
 dev:
   .settings:
     error_reporting:        <?php echo (E_ALL | E_STRICT)."\n" ?>
-    web_debug:              on
-    cache:                  off
-    no_script_name:         off
-    etag:                   off
+    web_debug:              true
+    cache:                  false
+    no_script_name:         false
+    etag:                   false
 
 test:
   .settings:
     error_reporting:        <?php echo ((E_ALL | E_STRICT) ^ E_NOTICE)."\n" ?>
-    cache:                  off
-    web_debug:              off
-    no_script_name:         off
-    etag:                   off
+    cache:                  false
+    web_debug:              false
+    no_script_name:         false
+    etag:                   false
 
 all:
   .settings:
@@ -28,8 +28,8 @@ all:
     # Output escaping settings
     escaping_strategy:      true            # Determines how variables are made available to templates. Accepted values: on, off.
     escaping_method:        ESC_SPECIALCHARS # Function or helper used for escaping. Accepted values: ESC_RAW, ESC_ENTITIES, ESC_JS, ESC_JS_NO_ENTITIES, and ESC_SPECIALCHARS.
-    check_lock:             on
-    lazy_cache_key:         on
+    check_lock:             true
+    lazy_cache_key:         true
 
 #all:
 #  .actions:
@@ -90,7 +90,7 @@ all:
 #    max_forwards:           5
 #
 #    # Logging
-#    logging_enabled:        on
+#    logging_enabled:        true
 #
 #    # i18n
 #    default_culture:        en        # Default user culture

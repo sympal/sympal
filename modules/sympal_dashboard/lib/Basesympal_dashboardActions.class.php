@@ -63,7 +63,7 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setCredentials(array('ManageMenus'));
 
     $installedPlugins = $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getInstalledPlugins();
-    $contentTypes = Doctrine::getTable('ContentType')->findAll();
+    $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
 
     foreach ($contentTypes as $contentType)
     {

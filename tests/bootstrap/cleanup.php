@@ -1,4 +1,5 @@
 <?php
+
 function sympal_cleanup()
 {
   sfToolkit::clearDirectory(dirname(__FILE__).'/../fixtures/project/cache');

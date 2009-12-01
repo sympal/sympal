@@ -34,22 +34,17 @@ class sfSympalInstall
 
   protected function _buildSympalInstallation()
   {
-    $dropDb = new sfDoctrineDropDbTask($this->_dispatcher, $this->_formatter);
-    $dropDbOptions = array();
-    $dropDbOptions[] = '--no-confirmation';
-    $dropDbOptions[] = '--application='.sfConfig::get('sf_app');
-    $dropDbOptions[] = '--env='.sfConfig::get('sf_environment');
-    $dropDb->run(array(), $dropDbOptions);
+    $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
+    $options = array('all' => true, 'no-confirmation' => true);
 
-    $buildAllLoad = new sfDoctrineBuildAllLoadTask($this->_dispatcher, $this->_formatter);
-    $buildAllLoadOptions = array();
-    $buildAllLoadOptions[] = '--application='.sfConfig::get('sf_app');
-    $buildAllLoadOptions[] = '--env='.sfConfig::get('sf_environment');
     if (file_exists(sfConfig::get('sf_data_dir').'/fixtures/install.yml'))
     {
-      $buildAllLoadOptions[] = '--dir='.sfConfig::get('sf_data_dir').'/fixtures';
+      $options['and-load'] = sfConfig::get('sf_data_dir').'/fixtures';
+    } else {
+      $options['and-load'] = true;
     }
-    $buildAllLoad->run(array(), $buildAllLoadOptions);
+
+    $task->run(array(), $options);
   }
 
   protected function _installSympalPlugins($arguments = array(), $options = array())

@@ -61,7 +61,7 @@ abstract class Basesympal_installActions extends sfActions
       $install = new sfSympalInstall($this->getContext()->getConfiguration(), $this->getContext()->getEventDispatcher(), new sfFormatter());
       $install->install();
 
-      $user = Doctrine::getTable('User')->findOneByUsername($values['username']);
+      $user = Doctrine_Core::getTable('User')->findOneByUsername($values['username']);
       $this->getUser()->signin($user);
 
       $this->getUser()->setFlash('notice', 'Sympal installed successfully!');

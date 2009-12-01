@@ -29,7 +29,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
         try {
           if (class_exists($model))
           {
-            Doctrine::getTable($model)
+            Doctrine_Core::getTable($model)
               ->createQuery()
               ->delete()
               ->execute();
@@ -47,7 +47,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
         try {
           if (class_exists($model))
           {
-            $table = Doctrine::getTable($model);
+            $table = Doctrine_Core::getTable($model);
             $table->getConnection()->export->dropTable($table->getTableName());
           }
         } catch (Exception $e) {
@@ -116,24 +116,24 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_name));
     $slug = 'sample-'.$lowerName;
 
-    $contentType = Doctrine::getTable('ContentType')->findOneByName($this->_contentTypeName);
+    $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($this->_contentTypeName);
 
     // Delete routes related to this content type
-    Doctrine::getTable('Route')
+    Doctrine_Core::getTable('Route')
       ->createQuery('r')
       ->delete()
       ->where('r.content_type_id = ?', $contentType['id'])
       ->execute();
 
     // Delete content templates related to this content type
-    Doctrine::getTable('ContentTemplate')
+    Doctrine_Core::getTable('ContentTemplate')
       ->createQuery('t')
       ->delete()
       ->where('t.content_type_id = ?', $contentType['id'])
       ->execute();
 
     // Find content lists related to this conten type
-    $q = Doctrine::getTable('ContentList')
+    $q = Doctrine_Core::getTable('ContentList')
       ->createQuery('c')
       ->select('c.id, c.content_id')
       ->from('ContentList c INDEXBY c.content_id')
@@ -143,7 +143,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     $contentIds = array_keys($contentTypes);
 
     // Delete content records related to this content type
-    Doctrine::getTable('Content')
+    Doctrine_Core::getTable('Content')
       ->createQuery('c')
       ->delete()
       ->where('c.content_type_id = ?', $contentType['id'])
@@ -151,14 +151,14 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       ->execute();
 
     // Delete menu items related to this content type
-    Doctrine::getTable('MenuItem')
+    Doctrine_Core::getTable('MenuItem')
       ->createQuery('m')
       ->delete()
       ->where('m.name = ? OR m.content_type_id = ?', array($this->_name, $contentType['id']))
       ->execute();
 
     // Delete the content type record
-    Doctrine::getTable('ContentType')
+    Doctrine_Core::getTable('ContentType')
       ->createQuery('t')
       ->delete()
       ->where('t.id = ?', $contentType['id'])

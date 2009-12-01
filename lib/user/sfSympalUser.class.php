@@ -100,7 +100,7 @@ class sfSympalUser extends sfBasicSecurityUser
       $lock = $q->fetchOne();
       if ($lock)
       {
-        Doctrine::initializeModels(array($lock['Type']['name']));
+        Doctrine_Core::initializeModels(array($lock['Type']['name']));
         $this->_openContentLock = $lock;
       } else {
         $this->_openContentLock = false;
@@ -114,7 +114,7 @@ class sfSympalUser extends sfBasicSecurityUser
   {
     $user = $this->getSympalUser();
 
-    $count = Doctrine::getTable('Content')
+    $count = Doctrine_Core::getTable('Content')
       ->createQuery()
       ->update()
       ->set('locked_by', 'NULL')
@@ -259,7 +259,7 @@ class sfSympalUser extends sfBasicSecurityUser
   {
     if (!$this->user && $id = $this->getAttribute('user_id', null, 'sfSympalUser'))
     {
-      $this->user = Doctrine::getTable('User')->find($id);
+      $this->user = Doctrine_Core::getTable('User')->find($id);
 
       if (!$this->user)
       {

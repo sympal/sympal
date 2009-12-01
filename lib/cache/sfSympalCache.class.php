@@ -80,7 +80,7 @@ class sfSympalCache
     try {
       $cachePath = sfConfig::get('sf_cache_dir').'/sympal/content_types.cache';
       $typesArray = array();
-      $contentTypes = Doctrine::getTable('ContentType')->findAll();
+      $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
       foreach ($contentTypes as $contentType)
       {
         $typesArray[$contentType['id']] = $contentType['name'];

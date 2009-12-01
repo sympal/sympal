@@ -91,7 +91,7 @@ abstract class PluginUser extends BaseUser
 
   public function addGroupByName($name, $con = null)
   {
-    $group = Doctrine::getTable('Group')->findOneByName($name);
+    $group = Doctrine_Core::getTable('Group')->findOneByName($name);
     if (!$group)
     {
       throw new Exception(sprintf('The group "%s" does not exist.', $name));
@@ -106,7 +106,7 @@ abstract class PluginUser extends BaseUser
 
   public function addPermissionByName($name, $con = null)
   {
-    $permission = Doctrine::getTable('Permission')->findOneByName($name);
+    $permission = Doctrine_Core::getTable('Permission')->findOneByName($name);
     if (!$permission)
     {
       throw new Exception(sprintf('The permission "%s" does not exist.', $name));

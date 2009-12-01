@@ -20,7 +20,7 @@ abstract class Basesympal_forgot_passwordActions extends sfActions
 
   public function executeIndex($request)
   {
-    $this->menuItem = Doctrine::getTable('MenuItem')->getForSlug('forgot-password');
+    $this->menuItem = Doctrine_Core::getTable('MenuItem')->getForSlug('forgot-password');
 
     $this->form = new ForgotPasswordForm();
     if ($request->getMethod() == sfRequest::POST)
@@ -48,7 +48,7 @@ abstract class Basesympal_forgot_passwordActions extends sfActions
 
   public function executeChange($request)
   {
-    $this->menuItem = Doctrine::getTable('MenuItem')->getForSlug('forgot-password');
+    $this->menuItem = Doctrine_Core::getTable('MenuItem')->getForSlug('forgot-password');
 
     $this->forgotPassword = $this->getRoute()->getObject();
     $this->user = $this->forgotPassword->User;
@@ -70,7 +70,7 @@ abstract class Basesympal_forgot_passwordActions extends sfActions
       {
         $this->form->save();
 
-        Doctrine::getTable('ForgotPassword')
+        Doctrine_Core::getTable('ForgotPassword')
           ->createQuery('p')
           ->delete()
           ->where('p.user_id = ?', $this->user->id)
@@ -101,7 +101,7 @@ class ForgotPasswordForm extends sfForm
     {
       $values = $this->getValues();
       $emailAddress = $values['email_address'];
-      $this->user = Doctrine::getTable('User')
+      $this->user = Doctrine_Core::getTable('User')
         ->createQuery('u')
         ->where('u.email_address = ?', $emailAddress)
         ->fetchOne();

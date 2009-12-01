@@ -86,48 +86,6 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
-  public function getEmailTemplateFor($module, $action, $variables = array())
-  {
-    $variables = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.email.filter_variables'), $variables)->getReturnValue();
-
-    sfContext::getInstance()->getConfiguration()->loadHelpers(array('Partial'));
-
-    $email = sfSympalToolkit::getSymfonyResource($module, $action, $variables);
-
-    $email = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.email.filter_template', array('module' => $module, 'action' => $action, 'variables' => $variables)), $email)->getReturnValue();
-
-    return $email;
-  }
-
-  public function newEmail($name, $variables = array())
-  {
-    $e = explode('/', $name);
-    list($module, $action) = $e;
-
-    try {
-      $rawEmail = $this->getEmailTemplateFor($module, $action, $variables);
-    } catch (Exception $e) {
-      throw new sfException('Could not send email: '.$e->getMessage());
-    }
-
-    if ($rawEmail)
-    {
-      $e = explode("\n", $rawEmail);
-      
-      $emailSubject = $e[0];
-      unset($e[0]);
-      $emailBody = implode("\n", $e);
-    } else {
-      $emailSubject = '';
-      $emailBody = '';
-    }
-
-    $this->mail = new sfSympalMail();
-    $this->message = $this->mail->setMessage($emailSubject, $emailBody, 'text/html');
-
-    return $this->mail;
-  }
-
   public function forwardToRoute($route, $params = array())
   {
     $full = $route;

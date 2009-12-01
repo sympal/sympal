@@ -223,9 +223,9 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
       {
         if ($isColumn)
         {
-          $type = Doctrine::getTable('ContentSlotType')->findOneByName('ContentProperty');
+          $type = Doctrine_Core::getTable('ContentSlotType')->findOneByName('ContentProperty');
         } else {
-          $type = Doctrine::getTable('ContentSlotType')->findOneByName($type);
+          $type = Doctrine_Core::getTable('ContentSlotType')->findOneByName($type);
         }
 
         $slot->setType($type);

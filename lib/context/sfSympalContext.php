@@ -110,7 +110,7 @@ class sfSympalContext
 
   public function quickRenderContent($type, $slug, $format = 'html')
   {
-    $content = Doctrine::getTable('Content')
+    $content = Doctrine_Core::getTable('Content')
       ->getTypeQuery($type)
       ->andWhere('c.slug = ?', $slug)
       ->fetchOne();

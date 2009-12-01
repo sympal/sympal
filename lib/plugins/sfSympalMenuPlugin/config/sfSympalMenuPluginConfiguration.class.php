@@ -21,7 +21,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
     $menus = $administration->addChild('Menu Manager', '@sympal_menu_manager')
       ->setCredentials(array('ManageMenus'));
 
-    $table = Doctrine::getTable('MenuItem');
+    $table = Doctrine_Core::getTable('MenuItem');
     $roots = $table->getTree()->fetchRoots();
     foreach ($roots as $root)
     {

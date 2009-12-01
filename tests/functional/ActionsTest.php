@@ -18,7 +18,7 @@ $browser->
     isParameter('yes', 'Yes')->
   end()->
   with('response')->begin()->
-    contains('Ok!')->
+    matches('/Ok!/')->
   end()->
   get('/admin/dashboard')->
   get('/test/ask_confirmation')->
@@ -32,16 +32,6 @@ $browser->
     isParameter('action', 'index')->
   end()
 ;
-
-$browser->get('test/new_email');
-
-$actions = $browser->getContext()->getController()->getActionStack()->getLastEntry()->getActionInstance();
-$email = $browser->getRequest()->getAttribute('email');
-$message = $email->getMessage();
-
-$t = $browser->test();
-$t->is($message->getSubject(), 'Subject');
-$t->is($message->getBody(), "Body Test variable Test variable 2");
 
 $browser->
   get('/test/forward_to_route')->
@@ -66,8 +56,10 @@ $browser->
 $browser->
   get('/test/start_go_back')->
   get('/test/go_back')->
-  isRedirected()->
-  followRedirect()->
+  with('response')->begin()->
+    isRedirected()->
+    followRedirect()->
+  end()->
   with('request')->begin()->
     isParameter('module', 'test')->
     isParameter('action', 'start_go_back')->
@@ -79,10 +71,10 @@ $browser->get('/test/change_layout');
 $response = $browser->getResponse();
 
 $stylesheets = $response->getStylesheets();
-$t->is(isset($stylesheets['test']), true);
+$browser->test()->is(isset($stylesheets['test']), true);
 
 $browser->
   with('response')->begin()->
-    contains('Test Layout')->
+    matches('/Test Layout/')->
   end()
 ;

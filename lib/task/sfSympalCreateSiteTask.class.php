@@ -50,7 +50,7 @@ EOF;
     $homeContent->is_published = true;
     $homeContent->title = 'New Site Home';
     $homeContent->custom_path = '/';
-    $homeContent->CreatedBy = Doctrine::getTable('User')->findOneByIsSuperAdmin(true);
+    $homeContent->CreatedBy = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(true);
     $homeContent->save();
 
     $testContent = Content::createNew('Page');
@@ -59,10 +59,10 @@ EOF;
     $testContent->is_published = true;
     $testContent->title = 'Test Page';
     $testContent->custom_path = '/test_page';
-    $testContent->CreatedBy = Doctrine::getTable('User')->findOneByIsSuperAdmin(true);
+    $testContent->CreatedBy = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(true);
     $testContent->save();
 
-    $tree = Doctrine::getTable('MenuItem')->getTree();
+    $tree = Doctrine_Core::getTable('MenuItem')->getTree();
     $root = new MenuItem();
     $root->name = 'primary';
     $root->label = 'New Site';

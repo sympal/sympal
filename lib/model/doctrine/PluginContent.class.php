@@ -41,7 +41,7 @@ abstract class PluginContent extends BaseContent
   {
     if (is_string($type))
     {
-      $type = Doctrine::getTable('ContentType')->findOneByName($type);
+      $type = Doctrine_Core::getTable('ContentType')->findOneByName($type);
     }
 
     $name = $type->name;
@@ -57,7 +57,7 @@ abstract class PluginContent extends BaseContent
   {
     $result = parent::hasField($name);
     $className = $this->getContentTypeClassName();
-    $table = Doctrine::getTable($className)->getRecordInstance();
+    $table = Doctrine_Core::getTable($className)->getRecordInstance();
     if ($table->hasField($name))
     {
       $result = true;
@@ -138,7 +138,7 @@ abstract class PluginContent extends BaseContent
     {
       return $menuItem;
     } else {
-      $q = Doctrine::getTable('MenuItem')
+      $q = Doctrine_Core::getTable('MenuItem')
         ->createQuery('m')
         ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
         ->andWhere('m.content_type_id = ?', $this->content_type_id)
@@ -154,7 +154,7 @@ abstract class PluginContent extends BaseContent
   {
     if ($this['Type']['name'])
     {
-      Doctrine::initializeModels(array($this['Type']['name']));
+      Doctrine_Core::initializeModels(array($this['Type']['name']));
       return $this[$this['Type']['name']];
     } else {
       return false;

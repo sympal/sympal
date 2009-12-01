@@ -4,7 +4,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 {
   protected function _getMenuItem(sfWebRequest $request)
   {
-    $q = Doctrine::getTable('MenuItem')
+    $q = Doctrine_Core::getTable('MenuItem')
       ->createQuery('m')
       ->where('m.id = ?', $request->getParameter('id'));
 
@@ -23,7 +23,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $ids = $request->getParameter('ids');
 
-    $menuItems = Doctrine::getTable('MenuItem')
+    $menuItems = Doctrine_Core::getTable('MenuItem')
       ->createQuery('m')
       ->whereIn('m.id', $ids)
       ->execute();
@@ -38,7 +38,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $ids = $request->getParameter('ids');
 
-    $menuItems = Doctrine::getTable('MenuItem')
+    $menuItems = Doctrine_Core::getTable('MenuItem')
       ->createQuery('m')
       ->whereIn('m.id', $ids)
       ->execute();
@@ -67,14 +67,14 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeSitemap()
   {
-    $table = Doctrine::getTable('MenuItem');
+    $table = Doctrine_Core::getTable('MenuItem');
     $this->menuItem = $table->getForSlug('sitemap');
     $this->roots = $table->getTree()->fetchRoots();
   }
 
   public function executeManager(sfWebRequest $request)
   {
-    $q = Doctrine::getTable('MenuItem')
+    $q = Doctrine_Core::getTable('MenuItem')
       ->createQuery()
       ->andWhere('site_id = ?', sfSympalContext::getInstance()->getSite()->getId());
 
@@ -86,7 +86,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     }
 
     $this->menuItem = $q->fetchOne();
-    $table = Doctrine::getTable('MenuItem');
+    $table = Doctrine_Core::getTable('MenuItem');
     $this->roots = $table->getTree()->fetchRoots();
 
     $this->dispatcher->connect('sympal.load_side_bar', array($this, 'loadSideBar'));
@@ -111,7 +111,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $moveId = $request->getParameter('move_id');
     $toId = $request->getParameter('to_id');
 
-    $table = Doctrine::getTable('MenuItem');
+    $table = Doctrine_Core::getTable('MenuItem');
     $move = $table->find($moveId);
     $to = $table->find($toId);
 
@@ -196,7 +196,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $manager = sfSympalMenuSiteManager::getInstance();
     $manager->refresh();
 
-    $this->menuItem = Doctrine::getTable('MenuItem')->findOneBySlug($request->getParameter('root_slug'));
+    $this->menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug($request->getParameter('root_slug'));
 
     $this->setTemplate('refresh');
   }
@@ -213,7 +213,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $manager = sfSympalMenuSiteManager::getInstance();
     $manager->refresh();
 
-    $this->menuItem = Doctrine::getTable('MenuItem')->findOneBySlug($request->getParameter('root_slug'));
+    $this->menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug($request->getParameter('root_slug'));
 
     $this->setTemplate('refresh');
   }

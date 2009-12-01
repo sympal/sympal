@@ -54,10 +54,10 @@ abstract class PluginVersion extends BaseVersion
       $parent = str_replace('Translation', '', $this['record_type']);
       if(class_exists($parent))
       {
-        Doctrine::initializeModels($parent);
+        Doctrine_Core::initializeModels($parent);
       }
 
-      $this->_record = Doctrine::getTable($this['record_type'])
+      $this->_record = Doctrine_Core::getTable($this['record_type'])
         ->createQuery()
         ->where('id = ?', $this['record_id'])
         ->fetchOne();

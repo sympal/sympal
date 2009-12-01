@@ -27,7 +27,7 @@ abstract class PluginVersionChange extends BaseVersionChange
     {
       if ($relation['local'] == $this['field'])
       {
-        $q = Doctrine::getTable($relation['class'])
+        $q = Doctrine_Core::getTable($relation['class'])
           ->createQuery()
           ->where('id = ?', $this[$type.'_value']);
         $result = $q->fetchOne();

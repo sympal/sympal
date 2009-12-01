@@ -21,7 +21,7 @@ class sfWidgetFormSympalVersion extends sfWidgetFormDoctrineChoice
     $options['add_empty'] = true;
     $options['model'] = 'Version';
 
-    $this->_q = Doctrine::getTable('Version')
+    $this->_q = Doctrine_Core::getTable('Version')
       ->createQuery('v')
       ->leftJoin('v.Changes c')
       ->leftJoin('v.CreatedBy u')

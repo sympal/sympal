@@ -1,23 +1,14 @@
 <?php
 
-if (!isset($_SERVER['SYMFONY']))
-{
-  throw new RuntimeException('Could not find symfony core libraries.');
-}
-
 if (!isset($app))
 {
   $app = 'sympal';
 }
 
-require_once $_SERVER['SYMFONY'].'/autoload/sfCoreAutoload.class.php';
-sfCoreAutoload::register();
-
-require_once(dirname(__FILE__).'/../bootstrap/cleanup.php');
-
-
 require_once dirname(__FILE__).'/../fixtures/project/config/ProjectConfiguration.class.php';
 $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', isset($debug) ? $debug : true);
+
+require_once(dirname(__FILE__).'/../bootstrap/cleanup.php');
 
 sfSympalConfig::writeSetting('installed', false);
 
@@ -39,8 +30,10 @@ $install = array(
 
 $browser->
   click('Install Now', $install)->
-  isRedirected()->
-  followRedirect()->
+  with('response')->begin()->
+    isRedirected()->
+    followRedirect()->
+  end()->
   with('request')->begin()->
     isParameter('module', 'sympal_dashboard')->
   end()->

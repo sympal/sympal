@@ -27,7 +27,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   protected function _getContent(sfWebRequest $menuItem)
   {
-    $q = Doctrine::getTable('Content')
+    $q = Doctrine_Core::getTable('Content')
       ->createQuery('c')
       ->where('c.id = ?', $request->getParameter('id'));
 
@@ -46,7 +46,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     $ids = $request->getParameter('ids');
 
-    $content = Doctrine::getTable('Content')
+    $content = Doctrine_Core::getTable('Content')
       ->createQuery('c')
       ->whereIn('c.id', $ids)
       ->execute();
@@ -61,7 +61,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     $ids = $request->getParameter('ids');
 
-    $content = Doctrine::getTable('Content')
+    $content = Doctrine_Core::getTable('Content')
       ->createQuery('c')
       ->whereIn('c.id', $ids)
       ->execute();
@@ -95,7 +95,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     {
       $contentTypeId = $type;
     } else {
-      $contentType = Doctrine::getTable('ContentType')->findOneBySlug($type);
+      $contentType = Doctrine_Core::getTable('ContentType')->findOneBySlug($type);
       $contentTypeId = $contentType->id;
     }
 
@@ -128,8 +128,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeNew(sfWebRequest $request)
   {
-    $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType('page');
-    $this->contentTypes = Doctrine::getTable('ContentType')->findAll();
+    $this->menuItem = Doctrine_Core::getTable('MenuItem')->getForContentType('page');
+    $this->contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
 
     $this->setTemplate('new_type');
   }
@@ -139,12 +139,12 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $type = $request->getParameter('type');
     if (is_numeric($type))
     {
-      $type = Doctrine::getTable('ContentType')->find($type);      
+      $type = Doctrine_Core::getTable('ContentType')->find($type);      
     } else {
-      $type = Doctrine::getTable('ContentType')->findOneBySlug($type);
+      $type = Doctrine_Core::getTable('ContentType')->findOneBySlug($type);
     }
 
-    $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType($type['slug']);
+    $this->menuItem = Doctrine_Core::getTable('MenuItem')->getForContentType($type['slug']);
 
     $this->content = new Content();
     $this->content->setType($type);
@@ -152,7 +152,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->content->CreatedBy = $this->getUser()->getSympalUser();
     $this->content->site_id = sfSympalContext::getInstance()->getSite()->getId();
 
-    Doctrine::initializeModels(array($type['name']));
+    Doctrine_Core::initializeModels(array($type['name']));
 
     $this->form = new ContentForm($this->content);
     $this->setTemplate('new');
@@ -160,7 +160,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->content = Doctrine::getTable('Content')
+    $this->content = Doctrine_Core::getTable('Content')
       ->getBaseQuery()
       ->where('c.id = ?', $request->getParameter('id'))
       ->fetchOne();
@@ -174,11 +174,11 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeCreate(sfWebRequest $request)
   {
-    $this->menuItem = Doctrine::getTable('MenuItem')->getForContentType('page');
+    $this->menuItem = Doctrine_Core::getTable('MenuItem')->getForContentType('page');
 
     $user = $this->getUser()->getSympalUser();
 
-    $type = Doctrine::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
+    $type = Doctrine_Core::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
     $this->content = Content::createNew($type);
     $this->content->Site = sfSympalContext::getInstance()->getSite();
 
