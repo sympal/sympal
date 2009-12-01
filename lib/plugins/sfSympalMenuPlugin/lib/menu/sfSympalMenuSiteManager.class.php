@@ -3,6 +3,7 @@
 class sfSympalMenuSiteManager
 {
   protected
+    $_menus = array(),
     $_menuItems = array(),
     $_rootSlugs = array(),
     $_rootMenuItems = array(),
@@ -49,6 +50,12 @@ class sfSympalMenuSiteManager
 
   protected function _getMenu($name, $showChildren = true, $class = null)
   {
+    $key = md5($name.var_export($showChildren, true).$class);
+    if (isset($this->_menus[$key]))
+    {
+      return $this->_menus[$key];
+    }
+
     if (!$name)
     {
       return false;
@@ -92,6 +99,8 @@ class sfSympalMenuSiteManager
       $return->callRecursively('showChildren', $showChildren);
 
       $event = sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($return, 'sympal.load_'.$name.'_menu', array('name' => $name, 'showChildren' => $showChildren, 'class' => $class)));
+
+      $this->_menus[$key] = $return;
 
       return $return;
     } else {
@@ -178,35 +187,13 @@ class sfSympalMenuSiteManager
           ->andWhere('m.date_published <= '.$expr);
       }
 
-      $this->_menuItems = $q->execute();
+      $this->_menuItems = $q->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);
 
-      // Build array of root tree names, root menu items.
-      // Also build collection of sub arrays for each tree
-      // so we can build the hierarchy for each tree
-      $trees = array();
-      $this->_rootSlugs = array();
       foreach ($this->_menuItems as $menuItem)
       {
-        if (!isset($trees[$menuItem['root_id']]))
-        {
-          $trees[$menuItem['root_id']] = new Doctrine_Collection('MenuItem');
-        }
-  
-        if ($menuItem['level'] == 0)
-        {
-          $this->_rootMenuItems[$menuItem['root_id']] = $menuItem;
-          $this->_rootSlugs[$menuItem['root_id']] = $menuItem['slug'];
-          continue;
-        }
-
-        $trees[$menuItem['root_id']][] = $menuItem;
-      }
-
-      // Build the hierarchies from the flat array of menu items
-      $this->_hierarchies = array();
-      foreach ($trees as $rootId => $tree)
-      {
-        $this->_hierarchies[$rootId] = self::toHierarchy($tree->toArray());
+        $this->_rootSlugs[$menuItem['root_id']] = $menuItem['slug'];
+        $this->_rootMenuItems[$menuItem['root_id']] = $menuItem;
+        $this->_hierarchies[$menuItem['root_id']] = $menuItem['__children'];
       }
 
       // Mark the process as done so it is cached
@@ -218,9 +205,8 @@ class sfSympalMenuSiteManager
   {
     $user = sfContext::getInstance()->getUser();
 
-    foreach ($hierarchy as $child)
+    foreach ($hierarchy as $menuItem)
     {
-      $menuItem = $this->_menuItems[$child['id']];
       $new = $menu->addChild($menuItem->getLabel(), $menuItem->getItemRoute());
       $new->setMenuItem($menuItem);
 
@@ -229,46 +215,5 @@ class sfSympalMenuSiteManager
         $this->_buildMenuHierarchy($child['__children'], $new);
       }
     }
-  }
-
-  public static function toHierarchy($collection)
-  {
-  	// Trees mapped
-  	$trees = array();
-  	$l = 0;
-
-  	if (count($collection) > 0) {
-  		// Node Stack. Used to help building the hierarchy
-  		$stack = array();
-
-  		foreach ($collection as $child) {
-  			$item = $child;
-  			$item['__children'] = array();
-
-  			// Number of stack items
-  			$l = count($stack);
-
-  			// Check if we're dealing with different levels
-  			while($l > 0 && $stack[$l - 1]['level'] >= $item['level']) {
-  				array_pop($stack);
-  				$l--;
-  			}
-
-  			// Stack is empty (we are inspecting the root)
-  			if ($l == 0) {
-  				// Assigning the root child
-  				$i = count($trees);
-  				$trees[$i] = $item;
-  				$stack[] = & $trees[$i];
-  			} else {
-  				// Add child to parent
-  				$i = count($stack[$l - 1]['__children']);
-  				$stack[$l - 1]['__children'][$i] = $item;
-  				$stack[] = & $stack[$l - 1]['__children'][$i];
-  			}
-  		}
-  	}
-
-  	return $trees;
   }
 }

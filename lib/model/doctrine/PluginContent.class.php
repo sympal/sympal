@@ -118,7 +118,7 @@ abstract class PluginContent extends BaseContent
 
   public function getRelatedMenuItem()
   {
-    if ($this->master_menu_item_id)
+    if ($this->get('master_menu_item_id', false))
     {
       return $this->MasterMenuItem;
     } else {
@@ -163,7 +163,7 @@ abstract class PluginContent extends BaseContent
 
   public function getTemplate()
   {
-    if ($this->content_template_id)
+    if ($this->get('content_template_id', false))
     {
       return $this->_get('Template');
     }
