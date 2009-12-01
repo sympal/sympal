@@ -14,11 +14,11 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfiguration ex
 
 <?php include dirname(__FILE__).'/fieldsConfiguration.php' ?>
 
-  public function getForm($object = null)
+  public function getForm($object = null, $options = array())
   {
     $class = $this->getFormClass();
 
-    return new $class($object, $this->getFormOptions());
+    return new $class($object, array_merge($this->getFormOptions(), $options));
   }
 
   /**
