@@ -65,3 +65,20 @@ $browser->
     isAuthenticated()->
   end()
 ;
+
+$profiler = new Doctrine_Connection_Profiler();
+$conn = Doctrine_Manager::connection();
+$conn->addListener($profiler);
+
+// Test base query count for pulling a page is 2
+$browser->get('/pages/about');
+
+$count = 0;
+foreach ($profiler as $event)
+{
+  if ($event->getName() == 'execute')
+  {
+    $count++;
+  }
+}
+$browser->test()->is($count, 4, 'Make sure we do not have more than 4 queries');
