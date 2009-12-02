@@ -25,7 +25,7 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
     sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.'.sfInflector::tableize(get_class($this)).'.setup'));
   }
 
-  public function processValues($values = null)
+  public function processValues($values)
   {
     $values = (array) $values;
     $values = parent::processValues($values);
