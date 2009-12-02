@@ -15,9 +15,11 @@ class Basesympal_registerActions extends sfActions
 
     if ($this->form->isValid())
     {
-      $this->form->save();
+      $user = $this->form->save();
+      $this->getUser()->signIn($user);
 
-      $this->getUser()->signIn($this->form->getObject());
+      sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'user.register_success', array('user' => $user)));
+
       $this->redirect('@sympal_homepage');
     }
     $this->setTemplate('index');
