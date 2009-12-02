@@ -1,5 +1,6 @@
 all:
   sympal_config:
+    menu_manager_class: sfSympalMenuSiteManager
     menu_class: sfSympalMenuSite
     yui_path: http://yui.yahooapis.com/2.7.0/build
     super_admin_signin_url: @sympal_dashboard

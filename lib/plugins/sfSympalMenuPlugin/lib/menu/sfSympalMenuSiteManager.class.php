@@ -21,7 +21,8 @@ class sfSympalMenuSiteManager
   {
     if (!self::$_instance)
     {
-      self::$_instance = new sfSympalMenuSiteManager();
+      $className = sfConfig::get('app_sympal_config_menu_manager_class');
+      self::$_instance = new $className();
     }
     return self::$_instance;
   }
