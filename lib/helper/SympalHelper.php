@@ -1,15 +1,35 @@
 <?php
 
+/**
+ * Get the Sympal User Interface
+ *
+ *  - The top admin bar menu
+ *  - The extra sidebar
+ *
+ * @return string $html
+ */
 function get_sympal_ui()
 {
   return get_sympal_admin_bar().get_sympal_side_bar();
 }
 
+/**
+ * Get the Sympal flash boxes
+ *
+ * @return string $html
+ */
 function get_sympal_flash()
 {
   return get_partial('sympal_default/flash');
 }
 
+/**
+ * Get the path to a YUI file
+ *
+ * @param string $type  Type of file (css/js)
+ * @param string $name  The name of the file to get
+ * @return string $path
+ */
 function get_sympal_yui_path($type, $name)
 {
   $skin = sfSympalConfig::get('yui_skin', 'null', 'sam');
@@ -30,22 +50,49 @@ function get_sympal_yui_path($type, $name)
   return $path;
 }
 
+/**
+ * Use a Sympal YUI file
+ *
+ * @param string $type  The type (css, js)
+ * @param string $name  The name of the file
+ * @return void
+ */
 function use_sympal_yui($type, $name)
 {
   $func = $type == 'js' ? 'use_javascript':'use_stylesheet';
   return $func(get_sympal_yui_path($type, $name));
 }
 
+/**
+ * Use a YUI css file
+ *
+ * @param string $name 
+ * @return void
+ */
 function use_sympal_yui_css($name)
 {
   return use_sympal_yui('css', $name);
 }
 
+/**
+ * Use a YUI js file
+ *
+ * @param string $name 
+ * @return void
+ */
 function use_sympal_yui_js($name)
 {
   return use_sympal_yui('js', $name);
 }
 
+/**
+ * Get a sfSympalMenuBreadcrumbs instances for the given MenuItem 
+ *
+ * @param MenuItem $menuItem  The MenuItem instance to generate the breadcrumbs for
+ * @param Content $content    The Content instance to add to the end of the breadcrumbs
+ * @param string $subItem     A string to append to the end of the breadcrumbs  
+ * @return string $html
+ */
 function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
 {
   if (!$menuItem)
@@ -76,6 +123,12 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
   }
 }
 
+/**
+ * Set the response title
+ *
+ * @param string $title 
+ * @return void
+ */
 function set_sympal_title($title = null)
 {
   $response = sfContext::getInstance()->getResponse();
@@ -85,11 +138,27 @@ function set_sympal_title($title = null)
   }
 }
 
+/**
+ * Get a sfSympalMenu instance for the given menu root
+ *
+ * @param string $name  The slug of the root menu item you wish to retrieve
+ * @param bool $showChildren Whether or not it should show the children when rendering
+ * @param string $class The menu class to return an instance of
+ */
 function get_sympal_menu($name, $showChildren = true, $class = null)
 {
   return sfSympalMenuSiteManager::getMenu($name, $showChildren, $class);
 }
 
+/**
+ * Get a menu split into 2 instances, a primary and submenu
+ *
+ * @param string $name  The slug of the root menu item you wish to retrieve
+ * @param string $showChildren  Whether or not it should show the children when rendering
+ * @param string $max The max menu items to include in the first menu
+ * @param string $split Whether to return a 2nd menu item with the remaining menu items in it
+ * @return mixed Either one sfSympalMenu instance of an array with 2 sfSympalMenu instances
+ */
 function get_sympal_split_menus($name, $showChildren = true, $max = null, $split = false)
 {
   $menu = sfSympalMenuSiteManager::getMenu($name, $showChildren);
@@ -101,6 +170,13 @@ function get_sympal_split_menus($name, $showChildren = true, $max = null, $split
   }
 }
 
+/**
+ * Get the floating sympal editor for the given MenuItem and Content instances
+ *
+ * @param MenuItem $menuItem 
+ * @param Content $content 
+ * @return string $html
+ */
 function get_sympal_editor($menuItem = null, $content = null)
 {
   $menuItem = $menuItem ? $menuItem:sfSympalToolkit::getCurrentMenuItem();
@@ -120,6 +196,11 @@ function get_sympal_editor($menuItem = null, $content = null)
   return $editor;
 }
 
+/**
+ * Get the Sympal admin bar at top of screen
+ *
+ * @return string $html
+ */
 function get_sympal_admin_bar()
 {
   if (sfContext::getInstance()->getUser()->isAuthenticated())
@@ -128,6 +209,11 @@ function get_sympal_admin_bar()
   }
 }
 
+/**
+ * Get the Sympal sidebar
+ *
+ * @return string $html
+ */
 function get_sympal_side_bar()
 {
   if (sfContext::getInstance()->getUser()->isAuthenticated())
@@ -136,12 +222,26 @@ function get_sympal_side_bar()
   }
 }
 
+/**
+ * Get a Sympal pager header <h3>
+ *
+ * @param sfDoctrinePager $pager
+ * @param Content $content 
+ * @return string $html
+ */
 function get_sympal_pager_header($pager, $content)
 {
   $indice = $pager->getFirstIndice();
   return '<h3>Showing '.$indice.' to '.($indice + count($content) - 1).' of '.$pager->getNbResults().' total results.</h3>';
 }
 
+/**
+ * Get the navigation links for given sfDoctrinePager instance
+ *
+ * @param sfDoctrinePager $pager
+ * @param string $uri  The uri to prefix to the links
+ * @return string $html
+ */
 function get_sympal_pager_navigation($pager, $uri)
 {
   $navigation = '';
@@ -177,11 +277,27 @@ function get_sympal_pager_navigation($pager, $uri)
   return $navigation;
 }
 
+/**
+ * Get a Sympal Content instance property
+ *
+ * @param Content $content 
+ * @param string $name 
+ * @return mixed $value
+ */
 function get_sympal_content_property($content, $name)
 {
   return $content->$name;
 }
 
+/**
+ * Get Sympal content slot value which is just a column value on the Content
+ *
+ * @param Content $content  The Content instance
+ * @param string $name The name of the slot
+ * @param string $renderFunction The function to use to render
+ * @param string $type The type of slot
+ * @return string $value
+ */
 function get_sympal_column_content_slot($content, $name, $renderFunction = null, $type = 'ContentProperty')
 {
   if (is_null($renderFunction))
@@ -192,6 +308,17 @@ function get_sympal_column_content_slot($content, $name, $renderFunction = null,
   return get_sympal_content_slot($content, $name, $type, true, $renderFunction);
 }
 
+/**
+ * Get Sympal content slot value
+ *
+ * @param Content $content  The Content instance
+ * @param string $name The name of the slot
+ * @param string $type The type of slot
+ * @param string $isColumn  Whether it is a column property
+ * @param string $renderFunction The function to use to render the value
+ * @return void
+ * @author Jonathan Wage
+ */
 function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
 {
   $user = sfContext::getInstance()->getUser();
@@ -302,6 +429,11 @@ EOF
   }
 }
 
+/**
+ * Get icons for changing languages
+ *
+ * @return string $html
+ */
 function get_change_language_icons()
 {
   $icons = array();
