@@ -3,6 +3,7 @@
 class sfSympalUser extends sfBasicSecurityUser
 {
   protected
+    $_user             = null,
     $_forwarded       = false,
     $_flash           = false,
     $_openContentLock = null;
@@ -122,8 +123,6 @@ class sfSympalUser extends sfBasicSecurityUser
       ->execute();
   }
 
-  private $user = null;
-
   public function initialize(sfEventDispatcher $dispatcher, sfStorage $storage, $options = array())
   {
     parent::initialize($dispatcher, $storage, $options);
@@ -132,7 +131,7 @@ class sfSympalUser extends sfBasicSecurityUser
     {
       // remove user if timeout
       $this->getAttributeHolder()->removeNamespace('sfSympalUser');
-      $this->user = null;
+      $this->_user = null;
     }
   }
 
@@ -247,7 +246,7 @@ class sfSympalUser extends sfBasicSecurityUser
   public function signOut()
   {
     $this->getAttributeHolder()->removeNamespace('sfSympalUser');
-    $this->user = null;
+    $this->_user = null;
     $this->clearCredentials();
     $this->setAuthenticated(false);
     $expiration_age = sfSympalConfig::get('sfSympalUserPlugin', 'remember_me_key_expiration_age', 15 * 24 * 3600);
@@ -257,11 +256,11 @@ class sfSympalUser extends sfBasicSecurityUser
 
   public function getSympalUser()
   {
-    if (!$this->user && $id = $this->getAttribute('user_id', null, 'sfSympalUser'))
+    if (!$this->_user && $id = $this->getAttribute('user_id', null, 'sfSympalUser'))
     {
-      $this->user = Doctrine_Core::getTable('User')->find($id);
+      $this->_user = Doctrine_Core::getTable('User')->find($id);
 
-      if (!$this->user)
+      if (!$this->_user)
       {
         // the user does not exist anymore in the database
         $this->signOut();
@@ -270,7 +269,7 @@ class sfSympalUser extends sfBasicSecurityUser
       }
     }
 
-    return $this->user;
+    return $this->_user;
   }
 
   public function __toString()
