@@ -11,7 +11,6 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     $_requiresAuth     = null,
     $_requiresNoAuth   = null,
     $_showChildren     = true,
-    $_activeTree       = false,
     $_current          = false,
     $_options          = array(),
     $_children         = array(),
@@ -172,16 +171,6 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     }
 
     return $this->_showChildren;
-  }
-  
-  public function setActiveTree($bool = null)
-  {
-    if (!is_null($bool))
-    {
-      $this->_activeTree = $bool;
-    }
-    
-    return $this->_activeTree;
   }
 
   public function checkUserAccess(sfUser $user = null)
@@ -369,7 +358,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     if ($this->checkUserAccess())
     {
       $class = array();
-      if ($this->isCurrent() || ($this->_activeTree && $this->isCurrentAncestor()))
+      if ($this->isCurrent() || $this->isCurrentAncestor())
       {
         $class[] = 'current';
       }
@@ -389,7 +378,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
         $html .= $this->render();
       }
       $html .= '</li>';
-      
+
       return $html;
     }
   }
@@ -408,7 +397,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   public function renderLink()
   {
     $options = $this->getOptions();
-    if  ($this->isCurrent() || ($this->_activeTree && $this->isCurrentAncestor()))
+    if  ($this->isCurrent() || $this->isCurrentAncestor())
     {
       $options['class'] = 'current';
     }
@@ -431,6 +420,31 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     }
 
     return $this->_current;
+  }
+
+  public function isCurrentAncestor()
+  {
+    $menuItem = sfSympalToolkit::getCurrentMenuItem();
+    if ($menuItem){
+      while ($menuItem->getLevel() != 0)
+      {
+        if ($this->getRoute() == $menuItem->getRoute() && $this->getLabel() == $menuItem->getLabel())
+        {
+          $ret = true;
+
+          break;
+        }
+
+        $ret = false;
+        $menuItem = $menuItem->getNode()->getParent();
+      }
+    }
+    else
+    {
+      $ret = false;
+    }
+
+    return $ret;
   }
 
   public function getLabel()

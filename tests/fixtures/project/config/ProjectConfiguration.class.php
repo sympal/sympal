@@ -15,7 +15,9 @@ class ProjectConfiguration extends sfProjectConfiguration
   public function setup()
   {
     require_once(dirname(__FILE__).'/../../../../config/sfSympalPluginConfiguration.class.php');
-    sfSympalPluginConfiguration::enableSympalPlugins($this, array('sfDoctrinePlugin'));
+    sfSympalPluginConfiguration::enableSympalPlugins($this);
+
+    $this->enableAllPluginsExcept('sfPropelPlugin');
   }
 
   public function configureDoctrine(Doctrine_Manager $manager)
