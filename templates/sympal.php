@@ -24,11 +24,12 @@
        <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
        <?php echo $menus['primary'] ?>
 
-       <?php $menus['secondary']->callRecursively('showChildren', true) ?>
-       <?php if ($secondary = (string) $menus['secondary']): ?>
-         <?php slot('sympal_right_sidebar', $secondary.get_slot('sympal_right_sidebar')) ?>
+       <?php if (isset($menus['secondary'])): ?>
+         <?php $menus['secondary']->callRecursively('showChildren', true) ?>
+         <?php if ($secondary = (string) $menus['secondary']): ?>
+           <?php slot('sympal_right_sidebar', $secondary.get_slot('sympal_right_sidebar')) ?>
+         <?php endif; ?>
        <?php endif; ?>
-     
      </div>
     </div>
     <!-- end top navigation -->
