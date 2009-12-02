@@ -13,8 +13,3 @@ require_once(dirname(__FILE__).'/cleanup.php');
 sfContext::createInstance($configuration);
 
 $configuration->initializeSympal();
-
-if (isset($fixtures))
-{
-  $configuration->loadFixtures($fixtures);
-}

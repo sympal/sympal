@@ -1,7 +1,5 @@
 <?php
 
-$_SERVER['SYMFONY'] = '/Users/jwage/Sites/symfonysvn/1.4/lib';
-
 if (!isset($_SERVER['SYMFONY']))
 {
   throw new RuntimeException('Could not find symfony core libraries.');
@@ -42,17 +40,5 @@ class ProjectConfiguration extends sfProjectConfiguration
       $this->getPluginConfiguration('sfSympalPlugin')
            ->getSympalConfiguration()
     );
-  }
-
-  public function loadFixtures($fixtures)
-  {
-    $fixtures = is_bool($fixtures) ? 'fixtures.yml' : $fixtures;
-    $path = sfConfig::get('sf_data_dir') . '/fixtures/' . $fixtures;
-    if ( ! file_exists($path)) {
-      throw new sfException('Invalid data fixtures file');
-    }
-    chdir(sfConfig::get('sf_root_dir'));
-    $task = new sfDoctrineLoadDataTask($this->dispatcher, new sfFormatter());
-    $task->run(array(), array('--env=test', '--dir=' . $path));
   }
 }

@@ -23,11 +23,6 @@ if (isset($database) && $database)
   $configuration->initializeSympal();
 
   $database = new sfDatabaseManager($configuration);
-
-  if (isset($fixtures))
-  {
-    $configuration->loadFixtures($fixtures);
-  }
 }
 
 require_once $configuration->getSymfonyLibDir().'/vendor/lime/lime.php';
