@@ -1,21 +1,3 @@
-homepage:
-  url:   /
-  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page, sympal_content_slug: home }
-  class: sfDoctrineRoute
-  options:
-    model:  Content
-    type:   object
-    method: getContent
-
-sympal_homepage:
-  url:   /
-  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page, sympal_content_slug: home }
-  class: sfDoctrineRoute
-  options:
-    model:  Content
-    type:   object
-    method: getContent
-
 sympal_install_run:
   url:  /install/run
   param: { module: sympal_install, action: run }
@@ -235,3 +217,21 @@ sympal_routes:
 <?php echo $route['yaml'] ?> 
 <?php endforeach; ?>
 <?php } catch (Exception $e) {} ?>
+
+homepage:
+  url:   /
+  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page, sympal_content_slug: home }
+  class: sfDoctrineRoute
+  options:
+    model:  Content
+    type:   object
+    method: getContent
+
+sympal_homepage:
+  url:   /
+  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page, sympal_content_slug: home }
+  class: sfDoctrineRoute
+  options:
+    model:  Content
+    type:   object
+    method: getContent
