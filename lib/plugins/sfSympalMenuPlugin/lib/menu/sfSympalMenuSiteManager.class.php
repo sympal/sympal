@@ -210,9 +210,9 @@ class sfSympalMenuSiteManager
       $new = $menu->addChild($menuItem->getLabel(), $menuItem->getItemRoute());
       $new->setMenuItem($menuItem);
 
-      if (isset($child['__children']) && !empty($child['__children']))
+      if (isset($menuItem['__children']) && !empty($menuItem['__children']))
       {
-        $this->_buildMenuHierarchy($child['__children'], $new);
+        $this->_buildMenuHierarchy($menuItem['__children'], $new);
       }
     }
   }
