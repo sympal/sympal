@@ -20,6 +20,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
   public static function enableSympalPlugins(ProjectConfiguration $configuration, $plugins = array())
   {
+    $plugins[] = 'sfSympalPlugin';
+
     if ($application = sfConfig::get('sf_app'))
     {
       $reflection = new ReflectionClass($application.'Configuration');
@@ -29,9 +31,12 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       }
     }
 
+    $dependencies = self::$dependencies;
+    $configuration->enablePlugins(array_merge($dependencies, $plugins));
+
     $sympalPluginPath = dirname(dirname(__FILE__));
     $configuration->setPluginPath('sfSympalPlugin', $sympalPluginPath);
-    $dependencies = self::$dependencies;
+    
     $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
     foreach ($dependencies as $plugin)
     {
