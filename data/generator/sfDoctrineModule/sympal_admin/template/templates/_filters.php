@@ -74,7 +74,7 @@ myPanel = new YAHOO.widget.Panel('test', {
 	close:true,
 	visible:true,
 	draggable:true,
-	context:['sf_admin_bar', 'tr', 'tl'],} );
+	context:['sf_admin_bar', 'tr', 'tl']} );
 
 myPanel.setHeader('Filters');
 myPanel.render();
