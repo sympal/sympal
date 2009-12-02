@@ -74,7 +74,12 @@ class sfSympalBootstrap
 
     if (!$request->isXmlHttpRequest() && $request->getParameter('module') != 'sympal_content_renderer')
     {
-      sfSympalTheme::change(sfSympalConfig::get('default_layout'));
+      $layout = sfSympalConfig::get($request->getParameter('module'), 'layout');
+      if (!$layout)
+      {
+        $layout = sfSympalConfig::get('default_layout');
+      }
+      sfSympalTheme::change($layout);
     }
 
     if (sfConfig::get('sf_debug'))
