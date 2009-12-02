@@ -17,9 +17,13 @@ abstract class PluginContentList extends BaseContentList
       $q = $table->createQuery()->query($this->dql_query);
     } else {
       $q = $table->getTypeQuery($this->ContentType->name);
+      if ($table->hasColumn($this->sort_column) && $this->sort_order) 
+	    { 
+	      $q->orderBy('c.'.$this->sort_column.' '.$this->sort_order); 
+	    }
     }
 
-    $pager = new sfDoctrinePager('Content', sfSympalConfig::get('rows_per_page', null, 10));
+    $pager = new sfDoctrinePager('Content', ($this->rows_per_page > 0 ? $this->rows_per_page : sfSympalConfig::get('rows_per_page', null, 10)));
     $pager->setQuery($q);
     $pager->setPage($page);
     $pager->init();
