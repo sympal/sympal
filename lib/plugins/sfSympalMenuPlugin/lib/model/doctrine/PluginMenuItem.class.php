@@ -6,6 +6,7 @@
 abstract class PluginMenuItem extends BaseMenuItem
 {
   protected
+    $_label = null,
     $_breadcrumbs = null,
     $_allPermissions;
 
@@ -102,8 +103,12 @@ abstract class PluginMenuItem extends BaseMenuItem
 
   public function getLabel()
   {
-    $label = $this->_get('label');
-    return $label ? $label:$this->name;
+    if (!$this->_label)
+    {
+      $label = $this->_get('label');
+      $this->_label = $label ? $label:$this->name;
+    }
+    return $this->_label;
   }
 
   public function getIndented()
