@@ -16,7 +16,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     // Make sure we have a filter on content type id set
     $filters = $this->getFilters();
-    if (!$filters['content_type_id'])
+    if (!isset($filters['content_type_id']))
     {
       $contentTypes = sfSympalCache::getContentTypes();
       $contentTypes = array_keys($contentTypes);
