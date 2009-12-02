@@ -44,6 +44,12 @@ abstract class PluginContentForm extends BaseContentForm
       ->from('MenuItem m')
       ->orderBy('m.root_id, m.lft ASC');
 
+    if (sfSympalConfig::isI18nEnabled('MenuItem'))
+    {
+      $q->leftJoin('m.Translation mt'); 
+    }
+
+    $this->widgetSchema['master_menu_item_id']->setOption('query', $q);
     $this->widgetSchema['master_menu_item_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'MenuItem', 'query' => $q, 'add_empty' => true));
     $this->widgetSchema['content_type_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['locked_by'] = new sfWidgetFormInputHidden();

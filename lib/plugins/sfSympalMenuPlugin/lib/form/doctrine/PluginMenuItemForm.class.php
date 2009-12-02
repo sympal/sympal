@@ -17,10 +17,22 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
 
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
 
+    $q = Doctrine::getTable('Content')->getBaseQuery();
+    $this->widgetSchema['content_id']->setOption('query', $q);
+
+    $q = Doctrine_Query::create()
+      ->from('MenuItem m');
+    
+    if (sfSympalConfig::isI18nEnabled('MenuItem'))
+    {
+      $q->leftJoin('m.Translation mt');
+    }
+
     $this->widgetSchema['parent_id'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'MenuItem',
       'add_empty' => '~ (object is at root level)',
       'order_by' => array('root_id, lft', ''),
+      'query' => $q,
       'method' => 'getIndentedName'
       ));
     $this->validatorSchema['parent_id'] = new sfValidatorDoctrineChoice(array(
