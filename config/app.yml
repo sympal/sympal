@@ -2,6 +2,7 @@ all:
   sympal_config:
     menu_manager_class: sfSympalMenuSiteManager
     menu_class: sfSympalMenuSite
+    breadcrumbs_class: sfSympalMenuBreadcrumbs
     yui_path: http://yui.yahooapis.com/2.7.0/build
     super_admin_signin_url: @sympal_dashboard
     enable_all_modules: true

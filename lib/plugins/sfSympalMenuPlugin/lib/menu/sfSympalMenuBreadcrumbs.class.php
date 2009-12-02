@@ -4,7 +4,8 @@ class sfSympalMenuBreadcrumbs extends sfSympalMenuSite
 {
   public static function generate($breadcrumbsArray)
   {
-    $breadcrumbs = new self('Breadcrumbs');
+    $className = sfSympalConfig::get('breadcrumbs_class');
+    $breadcrumbs = new $className('Breadcrumbs');
 
     $count = 0;
     $total = count($breadcrumbsArray);
