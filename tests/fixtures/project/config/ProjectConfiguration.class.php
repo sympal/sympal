@@ -31,8 +31,6 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     chdir(sfConfig::get('sf_root_dir'));
 
-    Doctrine_Manager::connection()->close();
-
     $install = new sfSympalInstall($this, $this->dispatcher, new sfFormatter());
     $install->install();
 
