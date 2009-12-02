@@ -11,13 +11,17 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     try {
       $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
-      $schema = $pluginPath.'/config/doctrine/schema.yml';
+      $schema = sfFinder::type('file')->name('*.yml')->in($pluginPath.'/config/doctrine');
 
       $installVars = array();
-      if (file_exists($schema))
+      if (!empty($schema))
       {
         $dataFixtures = sfFinder::type('file')->in($pluginPath.'/data/fixtures/install.yml');
-        $models = array_keys(sfYaml::load($schema));
+        $models = array();
+        foreach ($schema as $file)
+        {
+          $models = array_merge($models, array_keys(sfYaml::load($file)));
+        }
 
         $this->rebuildFilesFromSchema();
 
