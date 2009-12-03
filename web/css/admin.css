@@ -3,20 +3,6 @@ html {
   margin-bottom: 25px;
 }
 
-li.dashboard {
-  margin: 0;
-  padding: 0;
-  height: 20px;
-  background: url(http://www.leverthotel.com/assets/templates/vert/img/dashboard-icon.gif) no-repeat 5px 0px;
-  text-indent: 20px;
-  font-weight: bold;
-}
-
-li.dashboard:hover {
-  height: 20px;
-  background: url(http://www.leverthotel.com/assets/templates/vert/img/dashboard-icon.gif) no-repeat 5px -20px;
-}
-
 #container {
   margin-top: 10px;
   -khtml-border-radius:0.4em;
@@ -92,7 +78,7 @@ input:hover, input:focus {
 .notice, .error {
   position: absolute;
   top: 5px;
-  right: 5px;
+  right: 30px;
   margin-left: 10px;
   margin-right: 10px;
 }
