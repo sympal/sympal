@@ -48,6 +48,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
           if (class_exists($model))
           {
             $table = Doctrine_Core::getTable($model);
+            $this->logSection('sympal', $table->getConnection()->export->dropTableSql($table->getTableName()));
             $table->getConnection()->export->dropTable($table->getTableName());
           }
         } catch (Exception $e) {

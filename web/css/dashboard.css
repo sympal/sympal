@@ -18,15 +18,20 @@
   height: 85px;
   width: 140px;
   margin-right: 5px;
-  border: #f5f5f5;
+  border: 1px dotted #ccc;
   text-align: center;
   margin: 5px;
   padding: 0;
   padding-top: 10px;
+  background: #fff;
   border: 1px solid #ccc;
   filter: alpha(opacity=50);
   -moz-opacity: .50;
   font-size: 14px;
+  -khtml-border-radius:0.4em;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
 #sympal-dashboard #boxes ul li a {
@@ -35,7 +40,7 @@
   display: block;
   font-weight: bold;
   text-decoration: none;
-  background: #fff url(../images/default.gif) no-repeat;
+  background: url(../images/default.gif) no-repeat;
   background-position: center;
 }
 
