@@ -6,28 +6,6 @@
   margin-bottom: 10px;
 }
 
-#sympal_menu_manager #top_menu {
-  height: 20px;
-  border: 1px dotted #dedede;
-  background-color: #EBE4F2;
-  padding: 0.6em;
-}
-
-#sympal_menu_manager #top_menu img {
-  vertical-align: middle;
-}
-
-#sympal_menu_manager #top_menu ul {
-  margin: 0;
-  padding: 0;
-}
-
-#sympal_menu_manager #top_menu ul li {
-  list-style-type: none;
-  float: left;
-  margin-right: 10px;
-}
-
 #sympal_menu_manager #controls {
   background: #ffc;
   margin: 0 0 .5em 0;

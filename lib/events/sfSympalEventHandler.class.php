@@ -71,9 +71,6 @@ class sfSympalEventHandler
 
     $administration = $menu->getChild('Administration');
 
-    $administration->addChild('Dashboard', '@sympal_dashboard')
-      ->setCredentials(array('ViewDashboard'));
-
     $administration->addChild('Sites', '@sympal_sites')
       ->setCredentials(array('ManageSites'));
 

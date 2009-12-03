@@ -2,5 +2,5 @@
   <table>
     <?php echo $form ?>
   </table>
-  <input type="submit" value="<?php echo __('ok') ?>" />
+  <input type="submit" value="<?php echo __('Change Language') ?>" />
 </form>

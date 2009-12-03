@@ -19,6 +19,11 @@
 
 #sf_admin_container table
 {
+  width: 100%;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #c1dbff;
 }
 
 #sf_admin_container #sf_admin_list_batch_actions
@@ -28,13 +33,15 @@
 
 #sf_admin_container th
 {
-  background-color: #e7eef6;
+  color: #183359;
+  background: none;
   white-space: nowrap;
   text-align: left;
 }
 
 #sf_admin_container td, th
 {
+  background: #fff;
   border: 0;
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd;
@@ -44,8 +51,6 @@
 
 #sf_admin_container tr
 {
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
 }
 
 #sf_admin_container ul.error_list
@@ -112,8 +117,9 @@
 
 #sf_admin_bar
 {
-  float: right;
-  margin-left: 20px;
+  position: absolute;
+  top: -20px;
+  right: 0;
 }
 
 .sf_admin_pagination
@@ -138,6 +144,12 @@
 
 #sf_admin_container ul.sf_admin_actions
 {
+  -khtml-border-radius:0.4em;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  padding: 10px;
+  background: #333;
   margin: 10px 0;
   list-style-type: none;
 }
@@ -147,6 +159,12 @@
   list-style-type: none;
   display: inline;
   margin-right: 10px;
+}
+
+#sf_admin_container ul.sf_admin_actions li a
+{
+  color: white;
+  font-weight: bold;
 }
 
 #sf_admin_container ul li a
@@ -291,27 +309,6 @@
 .sf_admin_list .sf_admin_boolean
 {
   text-align: center;
-}
-
-.sf_admin_list table
-{
-  width: 100%;
-}
-
-#sf_admin_bar #filters
-{
-  background: #fff;
-  border: none;
-  border: 1px solid #ddd;
-  padding: 4px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-#sf_admin_bar #filters:hover
-{
-  background: #ffc;
-  color: red;
 }
 
 .yui-navset ul li.selected a {

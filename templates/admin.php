@@ -16,13 +16,6 @@
   <?php echo $ui ?>
 
   <div id="container">
-  <!-- header -->
-  <div id="header">
-    <div id="logo"><?php echo link_to(image_tag('/sfSympalPlugin/images/spacer.gif'), '@homepage', 'id=logo_spacer') ?></div>
-
-    <h1>Sympal Admin</h1>
-  </div>
-  <!-- end header -->
 
   <!-- content -->
   <div id="content">
@@ -35,49 +28,10 @@
   </div>
   <!-- end left column -->
 
-  <?php $subMenu = get_sympal_menu(sfSympalToolkit::getCurrentMenuItem(), true) ?>
-  <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
-    <?php use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
-    <!-- right column -->
-    <div id="column_right">
-     <br />
-     <div class="roundedbox">
-      <div class="roundedbox_head"><div></div></div>
-      <div class="roundedbox_body">
-        <?php echo get_slot('sympal_right_sidebar') ?>
-
-        <?php if ($subMenu): ?>
-          <div id="sympal_sub_menu">
-            <?php echo $subMenu ?>
-          </div>
-        <?php endif; ?>
-      </div>
-     </div>
-    </div>
-    <!-- end right column -->
-  <?php endif; ?>
-
-  <br style="clear: both;" />
-
   </div>
   <!-- end content -->
-
-  <!-- box_footer -->
-  <div id="box_footer">
+  <br style="clear: both;" />
   </div>
-  <!-- end box_footer -->
-  </div>
-
-  <!-- footer -->
-  <div id="footer">
-  <p>
-    Brought to you by <?php echo link_to(image_tag('/sfSympalPlugin/images/sensio_labs_button.gif'), 'http://www.sensiolabs.com', 'target=_BLANK') ?>.<br/>
-    Powered by <?php echo link_to(image_tag('/sfSympalPlugin/images/symfony_button.gif'), 'http://www.symfony-project.org', 'target=_BLANK') ?> 
-    and <?php echo link_to(image_tag('/sfSympalPlugin/images/doctrine_button.gif'), 'http://www.doctrine-project.org', 'target=_BLANK') ?>
-  </p>
-  <?php echo get_sympal_menu('footer') ?>
-  </div>
-  <!-- end footer -->
 
   <script type="text/javascript">
    var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";

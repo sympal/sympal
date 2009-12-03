@@ -120,7 +120,6 @@ h3 {
 #container {
  z-index:						           0;
  background-color:             #FFFFFF;
- background:                   url(../images/content_backplate.gif) repeat-y top center;
  margin:                       0 auto;
  padding:                      0;
  width:                        90%;
@@ -622,7 +621,8 @@ table tr th {
   width: 20px;
 }
 
-.notice, .error {
+.notice, .error
+{
   margin-left: 10px;
   margin-right: 10px;
 }
