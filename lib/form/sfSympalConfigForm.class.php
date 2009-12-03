@@ -172,11 +172,14 @@ class sfSympalConfigForm extends sfForm
     $html = '';
     foreach ($fields as $field)
     {
-      $html .= '<span class="form_row">';
-      $html .= $form[$field]->renderLabel();
-      $html .= $form[$field];
-      $html .= $form[$field]->renderHelp();
-      $html .= '</span>';
+      if (!$form[$field]->isHidden())
+      {
+        $html .= '<span class="form_row">';
+        $html .= $form[$field]->renderLabel();
+        $html .= $form[$field];
+        $html .= $form[$field]->renderHelp();
+        $html .= '</span>';
+      }
     }
     return $html;
   }
