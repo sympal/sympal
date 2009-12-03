@@ -37,10 +37,6 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
   {
     foreach ($form as $key => $value)
     {
-      if ($value->isHidden())
-      {
-        continue;
-      }
       if ($value instanceof sfFormFieldSchema)
       {
         $label = strip_tags($value->renderLabel());
@@ -53,11 +49,17 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
 
             $this->_findWidgets($v);
           } else {
-            $this->_widgets[] = $v;
+            if ($v->getName() == $this->object->name)
+            {
+              $this->_widgets[] = $v;
+            }
           }
         }
       } else {
-        $this->_widgets[] = $value;
+        if ($value->getName() == $this->object->name)
+        {
+          $this->_widgets[] = $value;
+        }
       }
     }
     return $this->_widgets;
@@ -65,8 +67,6 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
 
   public function renderSlotForm()
   {
-    $class = get_class($this->object);
-
     $widgets = $this->_findWidgets($this);
 
     $return = '';
@@ -79,11 +79,16 @@ abstract class PluginContentSlotForm extends BaseContentSlotForm
     $return .= $this->renderHiddenFields();
     foreach ($this->_widgets as $widget)
     {
-      $return .= '<div class="sf_admin_form_row">';
-      $return .= $widget->renderLabel();
-      $return .= $widget;
-      $return .= $widget->renderHelp();
-      $return .= '</div>';
+      if ($widget->isHidden())
+      {
+        $return .= $widget;
+      } else {
+        $return .= '<div class="sf_admin_form_row">';
+        $return .= $widget->renderLabel();
+        $return .= $widget;
+        $return .= $widget->renderHelp();
+        $return .= '</div>';
+      }
     }
 
     return $return;

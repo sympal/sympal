@@ -10,7 +10,9 @@
 abstract class PluginMenuItemForm extends BaseMenuItemForm
 {
   protected $parentId = null;
-  
+  protected $move = null;
+  protected $whereToMove = null;
+
   public function setup()
   {
     parent::setup();
@@ -22,7 +24,12 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
 
     $q = Doctrine_Query::create()
       ->from('MenuItem m');
-    
+
+    if ($this->object->exists())
+    {
+      $q->andWhere('m.id != ?', $this->object->id);
+    }
+
     if (sfSympalConfig::isI18nEnabled('MenuItem'))
     {
       $q->leftJoin('m.Translation mt');
@@ -42,13 +49,49 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
     $this->setDefault('parent_id', $this->object->getParentId());
     $this->widgetSchema->setLabel('parent_id', 'Child of');
 
+    if ($this->object->exists())
+    {
+      $this->widgetSchema['move'] = new sfWidgetFormDoctrineChoice(array(
+        'model' => 'MenuItem',
+        'add_empty' => true,
+        'order_by' => array('root_id, lft', ''),
+        'query' => $q,
+        'method' => 'getIndentedName'
+        ));
+      $this->validatorSchema['move'] = new sfValidatorDoctrineChoice(array(
+        'required' => false,
+        'model' => 'MenuItem'
+        ));
+      $this->widgetSchema->setLabel('move', 'Move to?');
+
+      $choices = array(
+        'Prev' => 'Before',
+        'Next' => 'After'
+      );
+      $this->widgetSchema['where_to_move'] = new sfWidgetFormChoice(array('choices' => $choices));
+      $this->validatorSchema['where_to_move'] = new sfValidatorChoice(array(
+        'required' => false,
+        'choices' => array_keys($choices)
+      ));
+      $this->widgetSchema->setLabel('where_to_move', 'Before or after?');
+    }
+
     unset($this['site_id'], $this['Content'], $this['root_id'], $this['lft'], $this['rgt'], $this['level']);
   }
   
   public function updateParentIdColumn($parentId)
   {    
     $this->parentId = $parentId;
-    // further action is handled in the save() method
+  }  
+
+  public function updateMoveColumn($move)
+  {    
+    $this->move = $move;
+  }  
+
+  public function updateWhereToMoveColumn($whereToMove)
+  {    
+    $this->whereToMove = $whereToMove;
   }  
 
   protected function doSave($con = null)
@@ -76,9 +119,16 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
       {
         //form validation ensures an existing ID for $this->parentId
         $parent = $this->object->getTable()->find($this->parentId);
-        $method = ($node->isValidNode() ? 'move' : 'insert') . 'AsFirstChildOf';
+        $method = ($node->isValidNode() ? 'move' : 'insert') . 'AsLastChildOf';
         $node->$method($parent); //calls $this->object->save internally
       }
+    }
+
+    if ($this->move)
+    {
+      $type = $this->whereToMove ? $this->whereToMove : 'Next';
+      $func = 'moveAs'.$type.'SiblingOf';
+      $node->$func($this->object->getTable()->find($this->move));
     }
   }
 }

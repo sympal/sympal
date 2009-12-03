@@ -1,4 +1,4 @@
-<?php $menu = $menu instanceof sfOutputEscaper ? $menu->getRawValue()->render():$menu->render() ?>
+<?php $menu = $menu->render() ?>
 <?php if ($menu): ?>
 <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>
 
@@ -34,6 +34,12 @@
       <span id="toggle"><?php if ($state == 'hidden'): ?><?php echo __('Show') ?><?php else: ?><?php echo __('Hide') ?><?php endif; ?></span>
     </div>
     <div class="bd" id="sympal_edit_panel_contents">
+      <?php if ($sf_request->getParameter('module') == 'sympal_content_renderer'): ?>
+        <?php echo button_to('Go to Admin Dashboard', '@sympal_dashboard', 'class="editor_button"') ?>
+      <?php else: ?>
+        <?php echo button_to('Go to Site', '/', 'class="editor_button"') ?>
+      <?php endif; ?>
+
       <?php echo $menu ?>
     </div>
   </div>

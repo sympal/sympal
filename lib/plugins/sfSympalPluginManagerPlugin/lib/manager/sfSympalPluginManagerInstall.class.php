@@ -9,6 +9,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
     $uninstall->uninstall();
 
+    $this->logSection('sympal', 'Install sympal plugin named '.$this->_pluginName);
+
     try {
       $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
       $schema = sfFinder::type('file')->name('*.yml')->in($pluginPath.'/config/doctrine');
@@ -51,7 +53,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       {
         chdir(sfConfig::get('sf_root_dir'));
         $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
-        $ret = @$assets->run(array(), array());
+        $ret = $assets->run(array($this->_pluginName), array());
       }
 
       sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);

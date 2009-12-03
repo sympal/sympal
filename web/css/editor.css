@@ -56,9 +56,12 @@
   width: 100%;
 }
 
-html {
-  margin-top: 25px;
-  margin-bottom: 25px;
+#sympal_edit_panel_contents input.editor_button {
+  color: #ffffff;
+  font-weight: bold;
+  background: #375fc2;
+  border: none;
+  padding: 4px;
 }
 
 div#sympal-icon {

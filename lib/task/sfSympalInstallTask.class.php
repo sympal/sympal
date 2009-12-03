@@ -53,6 +53,9 @@ EOF;
       sfSympalConfig::set('sympal_install_admin_last_name', $this->askAndValidate('Enter Last Name:', new sfValidatorString()));
       sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Username:', new sfValidatorString()));
       sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Password:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_database_dsn', $this->askAndValidate('Enter Database DSN:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_database_username', $this->askAndValidate('Enter Database Username:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_database_password', $this->askAndValidate('Enter Database Password:', new sfValidatorString(array('required' => false))));
     }
 
     $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);

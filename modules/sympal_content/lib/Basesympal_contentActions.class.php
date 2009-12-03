@@ -12,7 +12,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $this->redirect('@homepage');
     }
 
-    $this->loadDefaultLayout();
+    $this->useAdminTheme();
 
     // Make sure we have a filter on content type id set
     $filters = $this->getFilters();
@@ -178,7 +178,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $user = $this->getUser()->getSympalUser();
 
-    $type = Doctrine_Core::getTable('ContentType')->find($request->getParameter('content[content_type_id]'));
+    $type = Doctrine_Core::getTable('ContentType')->find($request['content']['content_type_id']);
     $this->content = Content::createNew($type);
     $this->content->Site = sfSympalContext::getInstance()->getSite();
 
@@ -200,9 +200,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $content = $form->save();
 
       $this->getUser()->obtainContentLock($content);
-
-      $config = sfContext::getInstance()->getConfigCache()->checkConfig('config/routing.yml', true);
-      sfContext::getInstance()->getRouting()->setRoutes(include($config));
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));
       $this->dispatcher->notify(new sfEvent($this, 'sympal.save_content', array('content' => $content)));

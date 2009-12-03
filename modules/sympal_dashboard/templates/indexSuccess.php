@@ -3,8 +3,7 @@
 
 <div id="sympal-dashboard">
   <div id="right">
-    <?php $right = $right instanceof sfOutputEscaper ? $right->getRawValue()->render():$right->render() ?>
-    <?php echo $right ?>
+    <?php echo $right->render() ?>
   </div>
 
   <div id="boxes">
@@ -12,7 +11,6 @@
 
     <p><?php echo __('Hello <strong>%name%</strong>! Welcome to your Sympal Dashboard. Below are a set of icons that you can use to navigate around Sympal.', array('%name%' => $sf_user->getName())) ?></p>
 
-    <?php $boxes = $boxes instanceof sfOutputEscaper ? $boxes->getRawValue()->render():$boxes->render() ?>
-    <?php echo $boxes ?>
+    <?php echo $boxes->render() ?>
   </div>
 </div>

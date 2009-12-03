@@ -1,5 +1,7 @@
 <?php
 
+$_SERVER['SYMFONY'] = '/Users/jwage/Sites/symfonysvn/1.4/lib';
+
 if (!isset($_SERVER['SYMFONY']))
 {
   throw new RuntimeException('Could not find symfony core libraries.');

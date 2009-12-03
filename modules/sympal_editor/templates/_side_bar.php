@@ -14,7 +14,7 @@
 <div id="sympal_side_bar_container" class="yui-skin-sam">
   <div id="sympal_side_bar" class="yuimenubar yuimenubarnav">
     <div class="bd">
-        <?php echo $menu instanceof sfOutputEscaper ? $menu->getRawValue():$menu ?>
+        <?php echo $menu; ?>
     </div>
   </div>
 </div>

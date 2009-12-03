@@ -30,20 +30,59 @@ class Basesympal_editorActions extends sfActions
     $this->setTemplate('edit_slot');
   }
 
+  protected function _getContentSlotColumnForm(sfWebRequest $request)
+  {
+    $content = $this->contentSlot->RelatedContent;
+    $contentTable = $content->getTable();;
+
+    if ($contentTable->hasField($this->contentSlot->name)) {
+      $form = new InlineEditContentForm($content);
+      $form->useFields(array($this->contentSlot->name));
+    }
+
+    if (sfSympalConfig::isI18nEnabled('Content'))
+    {
+      $contentTranslationTable = Doctrine::getTable('ContentTranslation');
+      if ($contentTranslationTable->hasField($this->contentSlot->name)) {
+        $form = new InlineEditContentForm($content);
+        $form->useFields(array($this->getUser()->getCulture()));
+      }      
+    }
+
+    $contentTypeClassName = $content->getContentTypeClassName();
+    $contentTypeFormClassName = $contentTypeClassName.'Form';
+    $contentTypeTable = Doctrine_Core::getTable($contentTypeClassName);
+    if ($contentTypeTable->hasField($this->contentSlot->name)) {
+      $form = new $contentTypeFormClassName($content->getRecord());
+      $form->useFields(array($this->contentSlot->name));
+    }
+
+    if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
+    {
+      $contentTypeTranslationClassName = $contentTypeClassName.'Translation';
+      $contentTypeTranslationFormClassName = $contentTypeTranslationClassName.'Form';
+      $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
+      if ($contentTypeTranslationTable->hasField($this->contentSlot->name)) {
+        $form = new $contentTypeFormClassName($content->getRecord());
+        $form->useFields(array($this->getUser()->getCulture()));
+      }
+    }
+
+    if (!$form)
+    {
+      throw new InvalidArgumentException('Invalid content slot');
+    }
+
+    return $form;
+  }
+
   protected function _getContentSlotForm(sfWebRequest $request)
   {
-    $this->form = new ContentSlotForm($this->contentSlot);
-
     if ($request->getParameter('is_column'))
     {
-      unset($this->form[$this->getUser()->getCulture()]);
-      unset($this->form['value']);
-
-      $name = $request->getParameter('name');
-      $form = new InlineContentPropertyForm($this->contentSlot->RelatedContent, array('contentSlot' => $this->contentSlot));
-      $this->form->embedForm('RelatedContent', $form);      
-      $widgetSchema = $this->form->getWidgetSchema();
-      $widgetSchema['content_slot_type_id'] = new sfWidgetFormInputHidden();
+      $this->form = $this->_getContentSlotColumnForm($request);
+    } else {
+      $this->form = new ContentSlotForm($this->contentSlot);
     }
 
     return $this->form;
@@ -54,13 +93,6 @@ class Basesympal_editorActions extends sfActions
     $this->setLayout(false);
 
     $this->contentSlot = $this->getRoute()->getObject();
-
-    if ($this->getUser()->hasUnsavedContentSlotValue($this->contentSlot))
-    {
-      $unsavedValue = $this->getUser()->getUnsavedContentSlotValue($this->contentSlot);
-      $this->contentSlot->setValue($unsavedValue);
-    }
-
     $this->form = $this->_getContentSlotForm($request);
   }
 
@@ -74,7 +106,6 @@ class Basesympal_editorActions extends sfActions
     if ($this->form->isValid())
     {
       $this->form->save();
-      $this->getUser()->clearUnsavedContentSlotValue($this->contentSlot);
     } else {
       exit('errors'.(string) $this->form);
       // handle errors?
@@ -91,8 +122,6 @@ class Basesympal_editorActions extends sfActions
 
     $this->contentSlot = $this->getRoute()->getObject();
     $this->contentSlot->setValue($request->getParameter('value'));
-
-    $this->getUser()->updateUnsavedContentSlotValue($this->contentSlot, $request->getParameter('value'));
   }
 
   public function executeToggle_edit(sfWebRequest $request)

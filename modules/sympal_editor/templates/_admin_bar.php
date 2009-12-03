@@ -1,4 +1,5 @@
-<?php $menu = $menu instanceof sfOutputEscaper ? $menu->getRawValue()->render():$menu->render() ?>
+<?php $menu = $menu->render() ?>
+
 <?php if ($menu): ?>
 
 <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>

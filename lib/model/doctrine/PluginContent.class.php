@@ -56,11 +56,14 @@ abstract class PluginContent extends BaseContent
   public function hasField($name)
   {
     $result = parent::hasField($name);
-    $className = $this->getContentTypeClassName();
-    $table = Doctrine_Core::getTable($className)->getRecordInstance();
-    if ($table->hasField($name))
+    if (!$result)
     {
-      $result = true;
+      $className = $this->getContentTypeClassName();
+      $table = Doctrine_Core::getTable($className)->getRecordInstance();
+      if ($table->hasField($name))
+      {
+        $result = true;
+      }
     }
     return $result;
   }

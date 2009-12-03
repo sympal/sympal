@@ -19,12 +19,14 @@ $browser->get('/install');
 
 $install = array(
   'install' => array(
-    'first_name' => 'Jonathan',
-    'last_name' => 'Wage',
-    'email_address' => 'jonwage@gmail.com',
-    'username' => 'jwage',
-    'password' => 'changeme',
-    'password_again' => 'changeme'
+    'user' => array(
+      'first_name' => 'Jonathan',
+      'last_name' => 'Wage',
+      'email_address' => 'jonwage@gmail.com',
+      'username' => 'jwage',
+      'password' => 'changeme',
+      'password_again' => 'changeme'
+    )
   )
 );
 

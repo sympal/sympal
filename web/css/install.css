@@ -1,6 +1,16 @@
 #sympal_install {
   margin: auto;
   background: #fff;
-  width: 300px;
+  width: 700px;
   padding: 20px;
+}
+
+#sympal_install #user {
+  float: left;
+  width: 300px;
+}
+
+#sympal_install #database {
+  float: right;
+  width: 300px;
 }

@@ -26,7 +26,7 @@ foreach ($menuItems as $menuItem)
 
 $browser->
   get('/security/signin')->
-  post('/security/signin', array('signin' => array('username' => 'admin', 'password' => 'admin')))->
+  click('input[type="submit"]', array('signin' => array('username' => 'admin', 'password' => 'admin')), array('method' => 'post', '_with_csrf' => true))->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -46,7 +46,7 @@ $browser->
 
 $browser->
   get('/register')->
-  post('/register/save', array('user' => array('first_name' => 'Jonathan', 'last_name' => 'Wage', 'email_address' => 'jonathan.wage@sensio.com', 'username' => 'test', 'password' => 'test', 'password_again' => 'test')))->
+  click('input[type="submit"]', array('user' => array('first_name' => 'Jonathan', 'last_name' => 'Wage', 'email_address' => 'jonathan.wage@sensio.com', 'username' => 'test', 'password' => 'test', 'password_again' => 'test')), array('method' => 'post', '_with_csrf' => true))->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -60,10 +60,11 @@ $browser->
     followRedirect()->
   end()->
   click('Signin')->
-  post('/security/signin', array('signin' => array('username' => 'test', 'password' => 'test')))->
+  click('input[type="submit"]', array('signin' => array('username' => 'test', 'password' => 'test')), array('method' => 'post', '_with_csrf' => true))->
   with('user')->begin()->
     isAuthenticated()->
-  end()
+  end()->
+  get('/security/signout')
 ;
 
 $profiler = new Doctrine_Connection_Profiler();
@@ -81,4 +82,4 @@ foreach ($profiler as $event)
     $count++;
   }
 }
-$browser->test()->is($count, 4, 'Make sure we do not have more than 4 queries');
+$browser->test()->is($count, 2, 'Make sure we do not have more than 4 queries');

@@ -55,6 +55,12 @@ class sfSympalActions extends sfSympalExtendClass
     return sfSympalTheme::loadDefault();
   }
 
+  public function useAdminTheme()
+  {
+    $this->changeTheme('admin');
+    $this->getResponse()->addStylesheet('/sfSympalPlugin/css/sympal');
+  }
+
   public function askConfirmation($title, $message, $variables = array())
   {
     $e = explode('/', $message);

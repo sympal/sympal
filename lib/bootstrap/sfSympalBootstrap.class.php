@@ -59,6 +59,14 @@ class sfSympalBootstrap
 
   public function bootstrap()
   {
+    sfOutputEscaper::markClassesAsSafe(array(
+      'Content',
+      'ContentSlot',
+      'MenuItem',
+      'sfSympalContentRenderer',
+      'sfSympalMenu'
+    ));
+
     sfSympalContext::createInstance(
       sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')),
       sfContext::getInstance()

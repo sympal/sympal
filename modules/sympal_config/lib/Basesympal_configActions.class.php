@@ -10,6 +10,13 @@
  */
 abstract class Basesympal_configActions extends sfActions
 {
+  public function preExecute()
+  {
+    parent::preExecute();
+
+    $this->useAdminTheme();
+  }
+
   protected function _getForm()
   {
     $class = sfSympalConfig::get('config_form_class', null, 'sfSympalConfigForm');

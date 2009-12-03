@@ -1,5 +1,13 @@
 <?php
 
+function sympal_link_to_site($site, $name, $path = null)
+{
+  $request = sfContext::getInstance()->getRequest();
+  $env = sfConfig::get('sf_environment');
+  $file = $env == 'dev' ? $site.'_dev.php' : ($site.'.php');
+  return '<a href="'.$request->getRelativeUrlRoot().'/'.$file.($path ? '/'.$path:null).'">'.$name.'</a>';
+}
+
 /**
  * Get the Sympal User Interface
  *
@@ -110,10 +118,8 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
 
   sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($breadcrumbs, 'sympal.load_breadcrumbs', array('menuItem' => $menuItem, 'content' => $content, 'subItem' => $subItem)));
 
-  $title = $breadcrumbs->getPathAsString() instanceof sfOutputEscaper ? $breadcrumbs->getPathAsString()->getRawValue():$breadcrumbs->getPathAsString();
+  $title = $breadcrumbs->getPathAsString();
   set_sympal_title($title);
-
-  $breadcrumbs = $breadcrumbs instanceof sfOutputEscaper ? $breadcrumbs->getRawValue():$breadcrumbs;
 
   if ($html = (string) $breadcrumbs)
   {
@@ -368,7 +374,7 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
   if (sfSympalToolkit::isEditMode() && !$slot->hasValue()) {
     $renderedValue = $defaultValue;
   } else {
-    $renderedValue = $slot instanceof sfOutputEscaper ? $slot->getRawValue()->render():$slot->render();
+    $renderedValue = $slot->render();
   }
 
   if (sfSympalToolkit::isEditMode() && $content->userHasLock($user))

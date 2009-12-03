@@ -171,30 +171,10 @@ abstract class sfSympalPluginManager
 
   public function rebuildFilesFromSchema()
   {
-    $this->logSection('sympal', 'Generate forms, filters and models.');
+    $this->logSection('sympal', 'Re-build all classes and generate sql');
 
-    $baseOptions = $this->_configuration instanceof sfApplicationConfiguration ? array(
-      '--application='.sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')),
-      '--env='.sfConfig::get('sf_env', 'dev'),
-    ) : array();
-
-    $cwd = getcwd();
     chdir(sfConfig::get('sf_root_dir'));
-
-    $buildModel = new sfDoctrineBuildModelTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildModel->run(array(), $baseOptions);
-
-    $buildSql = new sfDoctrineBuildSqlTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildSql->run(array(), $baseOptions);
-
-    $buildForms = new sfDoctrineBuildFormsTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildForms->run(array(), $baseOptions);
-
-    $buildFilters = new sfDoctrineBuildFiltersTask($this->_dispatcher, $this->_formatter);
-    $ret = $buildFilters->run(array(), $baseOptions);
-
-    $cc = new sfCacheClearTask($this->_dispatcher, $this->_formatter);
-    $ret = $cc->run(array(), array());
-    chdir($cwd);
+    $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
+    $task->run(array(), array('all-classes', 'sql'));
   }
 }

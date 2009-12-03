@@ -19,6 +19,7 @@ class sfSympalInstall
 
     sfSympalConfig::set('installing', true);
 
+    $this->_configureDatabases();
     $this->_buildSympalInstallation();
     $this->_installSympalPlugins();
     $this->_executePostInstallSql();
@@ -30,6 +31,42 @@ class sfSympalInstall
     sfSympalConfig::set('installing', false);
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
+  }
+
+  protected function _configureDatabases()
+  {
+    if (sfSympalConfig::get('sympal_install_database_dsn'))
+    {
+      $database = 'all:
+  doctrine:
+    class:  sfDoctrineDatabase
+    param:
+      dsn:        %s
+      username:   %s
+      password:   %s';
+
+      $database = sprintf($database,
+        sfSympalConfig::get('sympal_install_database_dsn'),
+        sfSympalConfig::get('sympal_install_database_username'),
+        sfSympalConfig::get('sympal_install_database_password')
+      );
+
+      $path = sfConfig::get('sf_config_dir').'/databases.yml';
+      $original = file($path);
+      $databases = $database."\n\n".'#'.implode('#', $original);
+
+      file_put_contents($path, $databases);
+
+      try {
+        $conn = Doctrine_Manager::getInstance()->openConnection(sfSympalConfig::get('sympal_install_database_dsn'), 'tmp', false);
+        $conn->setOption('username', sfSympalConfig::get('sympal_install_database_username'));
+        $conn->setOption('password', sfSympalConfig::get('sympal_install_database_password'));
+        $conn->connect();
+      } catch (Exception $e) {
+        file_put_contents($path, implode('', $original));
+        throw new InvalidArgumentException('Invalid database credentials specified, could not connect to database.');
+      }
+    }
   }
 
   protected function _buildSympalInstallation()

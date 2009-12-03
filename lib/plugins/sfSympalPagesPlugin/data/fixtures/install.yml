@@ -80,13 +80,6 @@ MenuItem:
             label: Sensio Labs
             Site: Site_default
             route: http://www.sensiolabs.com
-          MenuItem_primary_about_centresource:
-            name: centresource
-            is_published: true
-            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-            label: "centre{source}"
-            Site: Site_default
-            route: http://www.centresource.com
       MenuItem_primary_markdown_examples:
         name: Markdown Examples
         is_published: true

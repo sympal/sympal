@@ -24,22 +24,6 @@ abstract class PluginContentForm extends BaseContentForm
     $this->widgetSchema['site_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['created_by']->setOption('add_empty', true);
 
-    sfSympalFormToolkit::changeThemeWidget($this);
-
-    if (!$this->object->content_type_id)
-    {
-      $this->object->Type = Doctrine_Core::getTable('ContentType')->findOneBySlug('page');
-    } else {
-      $this->object->Type;
-    }
-
-    $typeModelClass = $this->object->Type->name ? $this->object->Type->name:'Page';
-    $typeFormClass = $typeModelClass . 'Form';
-
-    $typeForm = new $typeFormClass($this->object->getRecord());
-
-    unset($typeForm['id'], $typeForm['content_id']);
-
     $q = Doctrine_Query::create()
       ->from('MenuItem m')
       ->orderBy('m.root_id, m.lft ASC');
@@ -54,23 +38,38 @@ abstract class PluginContentForm extends BaseContentForm
     $this->widgetSchema['content_type_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['locked_by'] = new sfWidgetFormInputHidden();
 
+    sfSympalFormToolkit::changeThemeWidget($this);
+
+    if (!$this->object->content_type_id)
+    {
+      $this->object->Type = Doctrine_Core::getTable('ContentType')->findOneBySlug('page');
+    } else {
+      $this->object->Type;
+    }
+
+    $this->_embedTypeForm();
+    $this->_embedContentSlotForms();
+    $this->_embedMenuItem();
+  }
+
+  protected function _embedTypeForm()
+  {
+    $typeModelClass = $this->object->Type->name ? $this->object->Type->name:'Page';
+    $typeFormClass = $typeModelClass . 'Form';
+
+    $typeForm = new $typeFormClass($this->object->getRecord());
+
+    unset($typeForm['id'], $typeForm['content_id']);
+
     if (count($typeForm))
     {
       $this->embedForm($this->object->Type->name, $typeForm);
     }
-
-    if ($this instanceof InlineContentPropertyForm)
-    {
-      unset($this['value']);
-      $this->_unsetWidgetsExceptContentSlot($this);
-    }
-
-    $this->_embedContentSlots();
   }
 
-  protected function _embedContentSlots()
+  protected function _embedContentSlotForms()
   {
-    if (count($this->object->Slots) && !$this instanceof InlineContentPropertyForm)
+    if (count($this->object->Slots))
     {
       $slotsForm = new sfForm();
       foreach ($this->object->Slots as $key => $slot)
@@ -88,30 +87,22 @@ abstract class PluginContentForm extends BaseContentForm
     }
   }
 
-  protected function _unsetWidgetsExceptContentSlot($form, $widgetSchema = null)
+  protected function _embedMenuItem()
   {
-    if (is_null($widgetSchema))
-    {
-      $widgetSchema = $form->getWidgetSchema();
-    }
+    $menuItemForm = new MenuItemForm($this->object->MenuItem);
+    $menuItemForm->widgetSchema['parent_id']->setOption('add_empty', false);
+    unset(
+      $menuItemForm['id'],
+      $menuItemForm['is_primary'],
+      $menuItemForm['content_type_id'],
+      $menuItemForm['content_id'],
+      $menuItemForm['groups_list'],
+      $menuItemForm['permissions_list'],
+      $menuItemForm['slug'],
+      $menuItemForm['custom_path']
+    );
 
-    foreach ($form as $key => $value)
-    {
-      if (!$value instanceof sfFormFieldSchema && $this->contentSlot->name != $key)
-      {
-        unset($form[$key]);
-        unset($widgetSchema[$key]);
-      } elseif (!$value instanceof sfFormFieldSchema && $this->contentSlot->name == $key) {
-        $widgetSchema[$key]->setAttribute('id', 'content_slot_value_' . $this->contentSlot->id);
-        $widgetSchema[$key]->setAttribute('onKeyUp', "edit_on_key_up('".$this->contentSlot->id."');");
-      }
-    }
-
-    $embeddedForms = $form->getEmbeddedForms();
-    foreach ($embeddedForms as $key => $embeddedForm)
-    {
-      $this->_unsetWidgetsExceptContentSlot($embeddedForm, $widgetSchema[$key]);
-    }
+    $this->embedForm('Menu', $menuItemForm);
   }
 
   public function getAdminGenMainTabLabel()

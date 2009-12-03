@@ -52,7 +52,7 @@ abstract class PluginMenuItem extends BaseMenuItem
     $node = $this->getNode();
 
     if (!$node->isValidNode() || $node->isRoot())
-    {      
+    {
       return null;
     }
 

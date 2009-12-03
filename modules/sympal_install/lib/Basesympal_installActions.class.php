@@ -13,12 +13,6 @@ abstract class Basesympal_installActions extends sfActions
   public function preExecute()
   {
     $this->_check();
-
-    if (sfSympalConfig::get('installed'))
-    {
-      $this->redirect('@homepage');
-    }
-
     $this->changeTheme('install');
   }
 
@@ -34,11 +28,23 @@ abstract class Basesympal_installActions extends sfActions
 
   public function executeIndex()
   {
+    if (sfSympalConfig::get('installed'))
+    {
+      $this->redirect('@homepage');
+    }
+
     $this->form = new sfSympalInstallForm();
   }
 
   public function executeRun(sfWebRequest $request)
   {
+    if (sfSympalConfig::get('installed'))
+    {
+      $this->redirect('@homepage');
+    }
+
+    $this->setTemplate('index');
+
     $this->form = new sfSympalInstallForm();
     $this->form->bind($request->getParameter($this->form->getName()));
     $error = $this->getUser()->getFlash('error');
@@ -51,23 +57,66 @@ abstract class Basesympal_installActions extends sfActions
     {
       $values = $this->form->getValues();
 
-      sfSympalConfig::set('sympal_install_admin_email_address', $values['email_address']);
-      sfSympalConfig::set('sympal_install_admin_first_name', $values['first_name']);
-      sfSympalConfig::set('sympal_install_admin_last_name', $values['last_name']);
-      sfSympalConfig::set('sympal_install_admin_username', $values['username']);
-      sfSympalConfig::set('sympal_install_admin_password', $values['password']);
+      sfSympalConfig::set('sympal_install_admin_email_address', $values['user']['email_address']);
+      sfSympalConfig::set('sympal_install_admin_first_name', $values['user']['first_name']);
+      sfSympalConfig::set('sympal_install_admin_last_name', $values['user']['last_name']);
+      sfSympalConfig::set('sympal_install_admin_username', $values['user']['username']);
+      sfSympalConfig::set('sympal_install_admin_password', $values['user']['password']);
+      
+      if ($values['database']['type'])
+      {
+        $dsn = $values['database']['type'].'://'.$values['database']['username'].':'.$values['database']['password'].'@'.$values['database']['host'].'/'.$values['database']['name'];
 
-      chdir(sfConfig::get('sf_root_dir'));
-      $install = new sfSympalInstall($this->getContext()->getConfiguration(), $this->getContext()->getEventDispatcher(), new sfFormatter());
-      $install->install();
+        sfSympalConfig::set('sympal_install_database_dsn', $dsn);
+        sfSympalConfig::set('sympal_install_database_username', $values['database']['username']);
+        sfSympalConfig::set('sympal_install_database_password', $values['database']['password']);
+      }
 
-      $user = Doctrine_Core::getTable('User')->findOneByUsername($values['username']);
+      $formatter = new sfFormatter();
+      try {
+        chdir(sfConfig::get('sf_root_dir'));
+        $install = new sfSympalInstall($this->getContext()->getConfiguration(), $this->getContext()->getEventDispatcher(), $formatter);
+        $install->install();
+      } catch (Exception $e) {
+        $this->getUser()->setFlash('error', $e->getMessage());
+
+        return sfView::SUCCESS;
+      }
+
+      $user = Doctrine_Core::getTable('User')->findOneByUsername($values['user']['username']);
       $this->getUser()->signin($user);
 
-      $this->getUser()->setFlash('notice', 'Sympal installed successfully!');
-      $this->redirect('@sympal_dashboard');
+      if ($values['setup']['plugins'])
+      {
+        $plugins = $values['setup']['plugins'];
+        foreach ($plugins as $plugin)
+        {
+          $manager = sfSympalPluginManager::getActionInstance($plugin, 'download', $this->getContext()->getConfiguration(), $formatter);
+          $manager->download();
+        }
+        $this->getUser()->setAttribute('sympal_install_plugins', $plugins);
+        $this->redirect('@sympal_install_plugins');
+      } else {
+        $this->getUser()->setFlash('notice', 'Sympal installed successfully!');
+        $this->redirect('@sympal_dashboard');
+      }
+    }
+  }
+
+  public function executeInstall_plugins(sfWebRequest $request)
+  {
+    $formatter = new sfFormatter();
+    $plugins = $this->getUser()->getAttribute('sympal_install_plugins');
+
+    foreach ($plugins as $plugin)
+    {
+      $manager = sfSympalPluginManager::getActionInstance($plugin, 'install', $this->getContext()->getConfiguration(), $formatter);
+      $manager->install();
     }
 
-    $this->setTemplate('index');
+    $this->getUser()->setAttribute('sympal_install_plugins', array());
+
+    $this->getUser()->setFlash('notice', 'Sympal installed successfully!');
+    $this->redirect('@sympal_dashboard');
   }
 }

@@ -353,32 +353,6 @@ class sfSympalUser extends sfBasicSecurityUser
     return $this->getSympalUser()->addPermissionByName($name, $con);
   }
 
-  public function clearUnsavedContentSlotValue(ContentSlot $contentSlot)
-  {
-    $array = $this->getAttribute('sympal_unsaved_content_slots', array());
-    unset($array[$contentSlot['id']]);
-    $this->setAttribute('sympal_unsaved_content_slots', $array);
-  }
-
-  public function updateUnsavedContentSlotValue(ContentSlot $contentSlot, $value)
-  {
-    $array = $this->getAttribute('sympal_unsaved_content_slots', array());
-    $array[$contentSlot['id']] = $value;
-    $this->setAttribute('sympal_unsaved_content_slots', $array);
-  }
-
-  public function getUnsavedContentSlotValue(ContentSlot $contentSlot)
-  {
-    $array = $this->getAttribute('sympal_unsaved_content_slots', array());
-    return $array[$contentSlot['id']];
-  }
-
-  public function hasUnsavedContentSlotValue(ContentSlot $contentSlot)
-  {
-    $array = $this->getAttribute('sympal_unsaved_content_slots', array());
-    return isset($array[$contentSlot['id']]) ? true:false;
-  }
-
   public function __call($method, $arguments)
   {
     return sfSympalExtendClass::extendEvent($this, $method, $arguments);

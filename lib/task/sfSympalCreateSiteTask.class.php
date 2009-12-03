@@ -37,11 +37,28 @@ EOF;
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    $site = new Site();
-    $site->title = $arguments['title'];
-    $site->description = $arguments['description'] ? $arguments['description']:'Description for new site named '.$arguments['title'];
-    $site->layout = $options['layout'] ? $options['layout']:'layout';
-    $site->slug = str_replace('-', '_', Doctrine_Inflector::urlize($arguments['title']));
+    $site = Doctrine_Core::getTable('Site')->findOneByTitle($arguments['title']);
+    if (!$site)
+    {
+      $site = new Site();
+      $site->title = $arguments['title'];
+      $site->slug = str_replace('-', '_', Doctrine_Inflector::urlize($arguments['title']));
+    }
+
+    if ($arguments['description'])
+    {
+      $site->description = $arguments['description'];
+    } else if (!$site->description) {
+      $site->description = 'Description for new site named '.$arguments['title'];
+    }
+
+    if ($options['layout'])
+    {
+      $site->layout = $options['layout'];
+    } else if (!$site->layout) {
+      $site->layout = 'layout';
+    }
+
     $site->save();
 
     $homeContent = Content::createNew('Page');

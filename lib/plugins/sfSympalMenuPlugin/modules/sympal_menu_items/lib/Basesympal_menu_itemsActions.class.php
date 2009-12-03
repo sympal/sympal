@@ -2,6 +2,13 @@
 
 class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 {
+  public function preExecute()
+  {
+    parent::preExecute();
+
+    $this->useAdminTheme();
+  }
+
   protected function _getMenuItem(sfWebRequest $request)
   {
     $q = Doctrine_Core::getTable('MenuItem')

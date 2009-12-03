@@ -10,6 +10,13 @@
  */
 abstract class Basesympal_dashboardActions extends sfActions
 {
+  public function preExecute()
+  {
+    parent::preExecute();
+
+    $this->useAdminTheme();
+  }
+
   public function executeIndex()
   {
     $this->boxes = new sfSympalMenu('Dashboard Boxes');

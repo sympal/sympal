@@ -20,12 +20,7 @@ class sfSympalContentSlotRenderer
   {
     if (!$this->_rawValue)
     {
-      if (sfContext::hasInstance() && sfContext::getInstance()->getUser()->hasUnsavedContentSlotValue($this->_contentSlot))
-      {
-        $value = sfContext::getInstance()->getUser()->getUnsavedContentSlotValue($this->_contentSlot);
-      } else {
-        $value = $this->_contentSlot->getRawValue();
-      }
+      $value = $this->_contentSlot->getRawValue();
 
       if (!sfSympalConfig::get('disallow_php_in_content'))
       {

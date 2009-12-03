@@ -13,4 +13,10 @@ require_once dirname(__FILE__).'/../lib/sympal_routesGeneratorHelper.class.php';
  */
 class sympal_routesActions extends autoSympal_routesActions
 {
+  public function preExecute()
+  {
+    parent::preExecute();
+
+    $this->useAdminTheme();
+  }
 }
