@@ -10,9 +10,10 @@
       <?php echo $form ?>
     </table>
 
-    <div id="save">
+    <div class="black_bar">
       <input type="button" id="save_button" name="save" value="<?php echo __('Save') ?>" onClick="javascript: save_sympal_content_slot('<?php echo $sf_request->getParameter('id') ?>');" />
     </div>
+
     <div id="loading"></div>
     <br style="clear: both;" />
     </form>

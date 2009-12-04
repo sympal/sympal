@@ -16,10 +16,7 @@ generator:
       fields: ~
       form:
         display:
-          "NONE": [revert_to_version, created_by, is_published, date_published, page_title, meta_keywords, meta_description, slug]
-          "Routing": [master_menu_item_id, custom_path]
-          "Rendering": [content_template_id, layout]
-          "Security": [groups_list, permissions_list]
+          "NONE": [revert_to_version, created_by, is_published, date_published, page_title, meta_keywords, meta_description, master_menu_item_id, custom_path, content_template_id, layout, groups_list, permissions_list, slug]
         fields:
           content_type_id:
             label: Content Type
@@ -51,7 +48,6 @@ generator:
         table_method: getAdminGenQuery
         title: Manage Content
         display: [_title, is_published]
-        object_actions: []
         batch_actions:
           _delete:
           publish:

@@ -28,8 +28,7 @@ generator:
         display: [=title, description, _go_to]
       form:
         display:
-          "NONE": [title, description, slug]
-          "Rendering": [layout]
+          "NONE": [title, description, layout, slug]
           "Meta": [page_title, meta_keywords, meta_description]
       edit:    ~
       new:     ~

@@ -99,7 +99,9 @@ abstract class PluginContentForm extends BaseContentForm
       $menuItemForm['groups_list'],
       $menuItemForm['permissions_list'],
       $menuItemForm['slug'],
-      $menuItemForm['custom_path']
+      $menuItemForm['custom_path'],
+      $menuItemForm['requires_auth'],
+      $menuItemForm['requires_no_auth']
     );
 
     $this->embedForm('Menu', $menuItemForm);

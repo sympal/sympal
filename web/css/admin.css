@@ -25,16 +25,6 @@ html {
   margin-bottom: 10px;
 }
 
-#content .black_bar {
-  margin-bottom: 15px;
-  background-color: #333333;
-  padding: 0.6em;
-  -khtml-border-radius:0.4em;
-	-moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-}
-
 #content #top_menu {
   margin-bottom: 15px;
   height: 20px;

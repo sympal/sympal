@@ -4,17 +4,27 @@
   border-collapse: collapse;
 }
 
-.sympal_edit_slot_box table tr th {
-  background: #e7eef6;
+.sympal_edit_slot_box table tbody tr th {
+  background: #e7eef6 !important;
 }
 
-.sympal_edit_slot_box table tr td {
+.sympal_edit_slot_box table tbody tr td {
   border: 1px solid #ccc;
 }
 
 .sympal_edit_slot_box table tfoot tr td {
   border: none;
   background: #e7eef6;
+}
+
+.black_bar {
+  margin-bottom: 15px;
+  background-color: #333333;
+  padding: 0.6em;
+  -khtml-border-radius:0.4em;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }
 
 #sympal_edit_panel, #sympal_edit_panel_container {
