@@ -77,9 +77,6 @@ class sfSympalEventHandler
     $administration->addChild('Configuration', '@sympal_config')
       ->setCredentials(array('ManageConfiguration'));
 
-    $administration->addChild('Route Manager', '@sympal_routes')
-      ->setCredentials(array('ManageRoutes'));
-
     $content = $administration->addChild('Content Setup')
       ->setCredentials(array('ManageContentSetup'));
     $content->addChild('Types', '@sympal_content_types');

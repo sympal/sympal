@@ -407,31 +407,6 @@ abstract class PluginContent extends BaseContent
     }
   }
 
-  public function postSave($event)
-  {
-    $invoker = $event->getInvoker();
-
-    if ($invoker->custom_path)
-    {
-      $route = Doctrine_Query::create()
-        ->from('Route r')
-        ->andWhere('r.url = ?', $invoker->custom_path)
-        ->andWhere('r.site_id = ?', $this->Site->id)
-        ->fetchOne();
-
-      if (!$route)
-      {
-        $route = new Route();
-        $route->url = $invoker->custom_path;
-        $route->name = 'sympal_content_'.str_replace('-', '_', $invoker['slug']);
-        $route->Content = $invoker;
-        $route->ContentType = $invoker->Type;
-        $route->Site = $this->Site;
-        $route->save();
-      }
-    }
-  }
-
   public function loadMetaData(sfWebResponse $response)
   {
     // page title
@@ -467,5 +442,10 @@ abstract class PluginContent extends BaseContent
         $this->$name = $value;
       } catch (Exception $e) {}
     }
+  }
+
+  public function postSave($event)
+  {
+    @unlink(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/config/config_routing.yml.php');
   }
 }

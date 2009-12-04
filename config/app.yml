@@ -36,11 +36,6 @@ all:
       ContentType:
         fields: [name]
         indexName: content_type_sluggable
-      Route:
-        fields: [name]
-        unique: true
-        uniqueBy: [site_id, name]
-        indexName: route_sluggable
     default_from_email_address: noreply@sympalphp.org
     config_form_class: sfSympalConfigForm
     recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX

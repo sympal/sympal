@@ -195,28 +195,7 @@ sympal_content_list_type:
   url:    /admin/content/list/:type
   param: { module: sympal_content, action: list_type }
 
-sympal_routes:
-  class: sfDoctrineRouteCollection
-  options:
-    model:                Route
-    module:               sympal_routes
-    prefix_path:          admin/content/routes
-    column:               id
-    with_wildcard_routes: true
-
-<?php try { ?>
-<?php $routes = Doctrine_Core::getTable('Route')
-  ->createQuery('r')
-  ->innerJoin('r.ContentType t')
-  ->leftJoin('r.Content c')
-  ->innerJoin('r.Site s WITH s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
-  ->orderBy('r.id DESC')
-  ->execute(); ?>
-
-<?php foreach ($routes as $route): ?> 
-<?php echo $route['yaml'] ?> 
-<?php endforeach; ?>
-<?php } catch (Exception $e) {} ?>
+<?php echo sfSympalToolkit::getRoutesYaml() ?>
 
 homepage:
   url:   /

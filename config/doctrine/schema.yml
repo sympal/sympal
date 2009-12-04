@@ -220,35 +220,6 @@ ContentPermission:
       foreignAlias: ContentPermissions
       onDelete: CASCADE
 
-Route:
-  actAs: [sfSympalRecord]
-  columns:
-    name:
-      type: string(255)
-      notnull: true
-    url:
-      type: string(255)
-      notnull: true
-    content_id: integer
-    content_type_id:
-      type: integer
-      notnull: true
-    yaml_override: clob
-    site_id:
-      type: integer
-      notnull: true
-    table_method: string(55)
-  relations:
-    Content:
-      foreignAlias: Routes
-      onDelete: CASCADE
-    ContentType:
-      foreignAlias: Routes
-      onDelete: CASCADE
-    Site:
-      foreignAlias: Routes
-      onDelete: CASCADE
-
 Version:
   tableName: versions
   actAs:

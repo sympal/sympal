@@ -136,28 +136,4 @@ abstract class PluginContentType extends BaseContentType
       $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
     }
   }
-
-  public function postSave($event)
-  {
-    $invoker = $event->getInvoker();
-
-    if ($invoker->default_path)
-    {
-      $route = Doctrine_Query::create()
-        ->from('Route r')
-        ->andWhere('r.url = ?', $invoker->default_path)
-        ->andWhere('r.site_id = ?', $this->Site->id)
-        ->fetchOne();
-
-      if (!$route)
-      {
-        $route = new Route();
-        $route->url = $invoker->default_path;
-        $route->name = 'sympal_content_view_type_'.str_replace('-', '_', $invoker['slug']);
-        $route->ContentType = $invoker;
-        $route->Site = $this->Site;
-        $route->save();
-      }
-    }
-  }
 }

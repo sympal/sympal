@@ -147,4 +147,49 @@ class sfSympalToolkit
     }
     return $codes;
   }
+
+  public static function getRoutesYaml()
+  {
+    $routeTemplate =
+'%s:
+  url:   %s
+  param:
+    module: %s
+    action: %s
+    sf_format: html
+    sympal_content_type: %s
+    sympal_content_id: %s
+  class: sfDoctrineRoute
+  options:
+    model: %s
+    type: object
+    method: getContent
+    requirements:
+      sf_culture:  (%s)
+      sf_format:   (%s)
+';
+
+    $contents = Doctrine::getTable('Content')
+      ->createQuery('c')
+      ->leftJoin('c.Type t')
+      ->execute();
+
+    $routes = array();
+    foreach ($contents as $content)
+    {
+      $routes[] = sprintf($routeTemplate,
+        substr($content->getRouteName(), 1),
+        $content->getRoutePath(),
+        'sympal_content_renderer',
+        'index',
+        $content->Type->name,
+        $content->id,
+        'Content',
+        implode('|', sfSympalConfig::get('language_codes')),
+        implode('|', sfSympalConfig::get('content_formats'))
+      );
+    }
+
+    return implode("\n", $routes);
+  }
 }
