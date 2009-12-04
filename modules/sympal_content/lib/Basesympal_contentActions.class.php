@@ -100,7 +100,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
 
     $request->setParameter('content_filters', array(
-      'content_type_id' => $contentTypeId
+      //'content_type_id' => $contentTypeId
     ));
 
     $this->forward('sympal_content', 'filter');
@@ -183,6 +183,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->content->Site = sfSympalContext::getInstance()->getSite();
 
     $this->form = new ContentForm($this->content);
+
+    $this->content->MenuItem->Site = $this->content->Site;
 
     $this->processForm($request, $this->form);
 

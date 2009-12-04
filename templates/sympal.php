@@ -17,22 +17,27 @@
   <div id="header">
   <div id="logo"><?php echo link_to(image_tag('/sfSympalPlugin/images/spacer.gif'), '@homepage', 'id=logo_spacer') ?></div>
 
-  <!-- top navigation -->
-  <div id="top_navigation">
+  <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
+  <?php $primaryMenu = (string) $menus['primary'] ?>
+  
+  <?php if ($primaryMenu): ?>
+    <!-- top navigation -->
+    <div id="top_navigation">
 
-   <div class="top_navigation_head"></div>
-   <div class="top_navigation_body">
-     <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
-     <?php echo $menus['primary'] ?>
+     <div class="top_navigation_head"></div>
+     <div class="top_navigation_body">
+        <?php echo $primaryMenu ?>
+     </div>
+    </div>
+  <?php endif; ?>
 
-     <?php if (isset($menus['secondary'])): ?>
-       <?php $menus['secondary']->callRecursively('showChildren', true) ?>
-       <?php if ($secondary = (string) $menus['secondary']): ?>
-         <?php slot('sympal_right_sidebar', $secondary.get_slot('sympal_right_sidebar')) ?>
-       <?php endif; ?>
-     <?php endif; ?>
-   </div>
-  </div>
+  <?php if (isset($menus['secondary'])): ?>
+    <?php $menus['secondary']->callRecursively('showChildren', true) ?>
+    <?php if ($secondary = (string) $menus['secondary']): ?>
+      <?php slot('sympal_right_sidebar', $secondary.get_slot('sympal_right_sidebar')) ?>
+    <?php endif; ?>
+  <?php endif; ?>
+
   <!-- end top navigation -->
 
   </div>

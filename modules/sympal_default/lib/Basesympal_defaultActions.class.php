@@ -7,6 +7,11 @@ class Basesympal_defaultActions extends sfActions
     sfSympalTheme::loadDefault();
   }
 
+  public function executeNew_site(sfWebRequest $request)
+  {
+    
+  }
+
   public function executeChange_language(sfWebRequest $request)
   {
     $oldCulture = $this->getUser()->getCulture();

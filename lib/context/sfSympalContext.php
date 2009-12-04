@@ -49,6 +49,7 @@ class sfSympalContext
 
     $content = null;
     $e = null;
+
     try {
       $content = $actions->getRoute()->getObject();
     } catch (Exception $e) {}
@@ -91,13 +92,25 @@ class sfSympalContext
       $site = sfSympalToolkit::getCurrentSite();
       if (!$site)
       {
-        $message = "The Sympal database is not installed for this Symfony application.";
-        if ($e)
-        {
-          $message .= "\n\n".$e->getMessage();
-        }
+        $message = sprintf(
+          'The Symfony application "%s" does not have a site record in the database. You must either run the sympal:create-site %s or the sympal:install %s task in order to get started.',
+          sfConfig::get('sf_app'),
+          sfConfig::get('sf_app'),
+          sfConfig::get('sf_app')
+        );
         throw new sfException($message);
       } else {
+        $sympalContext = sfSympalContext::getInstance();
+        $q = Doctrine_Query::create()
+          ->from('Content c')
+          ->leftJoin('c.Site s')
+          ->andWhere('s.slug = ?', $sympalContext->getSiteSlug());
+        $count = $q->count();
+        if (!$count)
+        {
+          $actions->forward('sympal_default', 'new_site');
+        }
+
         if ($e)
         {
           throw $e;

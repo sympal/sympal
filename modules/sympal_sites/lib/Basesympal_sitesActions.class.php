@@ -94,11 +94,6 @@ class Basesympal_sitesActions extends autosympal_sitesActions
       $this->getUser()->setFlash('error', 'You cannot delete the site you are currently in!');
       $this->redirect('@sympal_sites');
     }
-    $site->delete();
-
-    sfToolkit::clearDirectory(sfConfig::get('sf_apps_dir').'/'.$site->slug);
-    rmdir(sfConfig::get('sf_apps_dir').'/'.$site->slug);
-    unlink(sfConfig::get('sf_web_dir').'/'.$site->slug.'_dev.php');
-    unlink(sfConfig::get('sf_web_dir').'/'.$site->slug.'.php');
+    $site->deleteSiteAndApplication();
   }
 }

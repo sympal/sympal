@@ -59,22 +59,6 @@ html {
   color: #000;
 }
 
-input, select, textarea {
-	padding:0.40em;
-	width:10em;
-	border:1px solid #ddd;
-	background:#fafafa;
-	font:bold 0.95em arial, sans-serif;
-	-khtml-border-radius:0.4em;
-	-moz-border-radius: 0.4em;
-  -webkit-border-radius: 0.4em;
-  border-radius: 0.4em;
-}
-input:hover, input:focus {
-	border-color:#c5c5c5;
-	background:#f6f6f6;
-} 
-
 .notice, .error {
   position: absolute;
   top: 5px;

@@ -4,7 +4,8 @@ class sfSympalInstall
 {
   protected
     $_dispatcher,
-    $_formatter;
+    $_formatter,
+    $_application = 'sympal';
 
   public function __construct(ProjectConfiguration $configuration, sfEventDispatcher $dispatcher, sfFormatter $formatter)
   {
@@ -13,15 +14,20 @@ class sfSympalInstall
     $this->_formatter = $formatter;
   }
 
+  public function setApplication($application)
+  {
+    $this->_application = $application;
+  }
+
   public function install()
   {
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
 
     sfSympalConfig::set('installing', true);
 
-    $this->_configureDatabases();
-    $this->_buildSympalInstallation();
-    $this->_installSympalPlugins();
+    $this->_setupDatabase();
+    $this->_installSympal();
+    $this->_installAddonPlugins();
     $this->_executePostInstallSql();
     $this->_executePostInstallHooks();
 
@@ -33,8 +39,10 @@ class sfSympalInstall
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
   }
 
-  protected function _configureDatabases()
+  protected function _setupDatabase()
   {
+    $path = sfConfig::get('sf_config_dir').'/databases.yml';
+
     if (sfSympalConfig::get('sympal_install_database_dsn'))
     {
       $database = 'all:
@@ -51,7 +59,6 @@ class sfSympalInstall
         sfSympalConfig::get('sympal_install_database_password')
       );
 
-      $path = sfConfig::get('sf_config_dir').'/databases.yml';
       $original = file($path);
       $databases = $database."\n\n".'#'.implode('#', $original);
 
@@ -67,24 +74,26 @@ class sfSympalInstall
         throw new InvalidArgumentException('Invalid database credentials specified, could not connect to database.');
       }
     }
-  }
 
-  protected function _buildSympalInstallation()
-  {
+    sfSympalConfig::set('site_slug', $this->_application);
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
-    $options = array('all' => true, 'no-confirmation' => true);
-
-    if (file_exists(sfConfig::get('sf_data_dir').'/fixtures/install.yml'))
-    {
-      $options['and-load'] = sfConfig::get('sf_data_dir').'/fixtures';
-    } else {
-      $options['and-load'] = true;
-    }
+    $options = array(
+      'db' => true,
+      'sql' => true,
+      'no-confirmation' => true,
+      'and-load' => true
+    );
 
     $task->run(array(), $options);
   }
 
-  protected function _installSympalPlugins($arguments = array(), $options = array())
+  protected function _installSympal()
+  {
+    $task = new sfSympalCreateSiteTask($this->_dispatcher, $this->_formatter);
+    $task->run(array('application' => $this->_application), array('no-confirmation' => true));  
+  }
+
+  protected function _installAddonPlugins()
   {
     $plugins = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getOtherPlugins();
     foreach ($plugins as $plugin)
@@ -94,7 +103,7 @@ class sfSympalInstall
     }
   }
 
-  protected function _executePostInstallSql($arguments = array(), $options = array())
+  protected function _executePostInstallSql()
   {
     $dir = sfConfig::get('sf_data_dir').'/sql/sympal_install';
     if (is_dir($dir))

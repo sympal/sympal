@@ -2,59 +2,103 @@
 
 class sfSympalPluginManagerInstall extends sfSympalPluginManager
 {
-  public $configuration;
+  protected
+    $_createTables = true,
+    $_loadData = true,
+    $_publishAssets = true,
+    $_uninstallFirst = true;
+
+  public function setOption($key, $value)
+  {
+    $name = '_'.$key;
+    $this->$name = $value;
+  }
+
+  protected function _createDatabaseTables()
+  {
+    $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
+    $schema = sfFinder::type('file')->name('*.yml')->in($pluginPath.'/config/doctrine');
+
+    if (!empty($schema))
+    {
+      $dataFixtures = sfFinder::type('file')->in($pluginPath.'/data/fixtures/install.yml');
+      $models = array();
+      foreach ($schema as $file)
+      {
+        $models = array_merge($models, array_keys(sfYaml::load($file)));
+      }
+
+      $this->rebuildFilesFromSchema();
+
+      $this->logSection('sympal', 'Create the tables for the models');
+
+      Doctrine_Core::createTablesFromArray($models);
+    }
+  }
+
+  protected function _loadData()
+  {
+    $installVars = array();
+
+    if ($this->_contentTypeName)
+    {
+      $this->_createDefaultContentTypeRecords($installVars);
+    }
+
+    if (method_exists($this, 'customInstall'))
+    {
+      $this->logSection('sympal', 'Calling '.get_class($this).'::customInstall()');
+
+      $this->customInstall($installVars);
+    } else {
+      if (isset($this->_contentTypeName) && $this->_contentTypeName)
+      {
+        $this->_defaultInstallation($installVars, $this->_contentTypeName);
+      }
+    }
+  }
+
+  protected function _publishAssets()
+  {
+    $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
+    if (is_dir($pluginPath.'/web'))
+    {
+      chdir(sfConfig::get('sf_root_dir'));
+      $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
+      $ret = $assets->run(array($this->_pluginName), array());
+    }
+  }
+
+  protected function _install()
+  {
+    if ($this->_createTables)
+    {
+      $this->_createDatabaseTables();
+    }
+
+    if ($this->_loadData)
+    {
+      $this->_loadData();
+    }
+
+    if ($this->_publishAssets)
+    {
+      $this->_publishAssets();
+    }
+  }
 
   public function install()
   {
-    $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
-    $uninstall->uninstall();
+    if ($this->_uninstallFirst)
+    {
+      $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
+      $uninstall->uninstall();
+    }
 
     $this->logSection('sympal', 'Install sympal plugin named '.$this->_pluginName);
 
     try {
-      $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
-      $schema = sfFinder::type('file')->name('*.yml')->in($pluginPath.'/config/doctrine');
-
-      $installVars = array();
-      if (!empty($schema))
-      {
-        $dataFixtures = sfFinder::type('file')->in($pluginPath.'/data/fixtures/install.yml');
-        $models = array();
-        foreach ($schema as $file)
-        {
-          $models = array_merge($models, array_keys(sfYaml::load($file)));
-        }
-
-        $this->rebuildFilesFromSchema();
-
-        $this->logSection('sympal', 'Create the tables for the models');
-
-        Doctrine_Core::createTablesFromArray($models);
-
-        if ($this->_contentTypeName)
-        {
-          $installVars = $this->_createDefaultContentTypeRecords($installVars);
-        }
-      }
-
-      if (method_exists($this, 'customInstall'))
-      {
-        $this->logSection('sympal', 'Calling '.get_class($this).'::customInstall()');
-
-        $this->customInstall($installVars);
-      } else {
-        if (isset($this->_contentTypeName) && $this->_contentTypeName)
-        {
-          $this->_defaultInstallation($installVars, $this->_contentTypeName);
-        }
-      }
-
-      if (is_dir($pluginPath.'/web'))
-      {
-        chdir(sfConfig::get('sf_root_dir'));
-        $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
-        $ret = $assets->run(array($this->_pluginName), array());
-      }
+      $this->_install();
 
       sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);
     } catch (Exception $e) {
@@ -65,7 +109,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     }
   }
 
-  protected function _createDefaultContentTypeRecords($installVars)
+  protected function _createDefaultContentTypeRecords(&$installVars)
   {
     $this->logSection('sympal', 'Create default content type records');
 
@@ -116,8 +160,6 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     $contentTemplate = $this->newContentTemplate('View '.$this->_contentTypeName, $contentType, $properties);
     $installVars['contentTemplate'] = $contentTemplate;
-
-    return $installVars;
   }
 
   protected function _defaultInstallation($installVars)

@@ -74,6 +74,7 @@ abstract class sfSympalPluginManager
     $contentTemplate = new ContentTemplate();
     $contentTemplate->name = $name;
     $contentTemplate->ContentType = $contentType;
+    $contentTemplate->Site = Doctrine_Core::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
 
     $this->_setDoctrineProperties($contentTemplate, $properties);
 

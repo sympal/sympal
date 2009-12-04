@@ -5,16 +5,14 @@ class sfSympalCreateSiteTask extends sfTaskExtraBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('title', sfCommandArgument::REQUIRED, 'The site/application title'),
-      new sfCommandArgument('description', sfCommandArgument::OPTIONAL, 'The site/application description'),
+      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The site/application title'),
     ));
 
     $this->addOptions(array(
       new sfCommandOption('layout', null, sfCommandOption::PARAMETER_OPTIONAL, 'The site/application layout', null),
-      new sfCommandOption('escaping-strategy', null, sfCommandOption::PARAMETER_REQUIRED, 'Output escaping strategy', false),
-      new sfCommandOption('csrf-secret', null, sfCommandOption::PARAMETER_REQUIRED, 'Secret to use for CSRF protection', false),
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', sfSympalToolkit::getDefaultApplication()),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
+      new sfCommandOption('load-dummy-data', null, sfCommandOption::PARAMETER_NONE, 'Load dummy data for the newly created site.'),
+      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
     $this->aliases = array();
@@ -30,108 +28,67 @@ and generate the according symfony application.
 EOF;
   }
 
-  /**
-   * @see sfTask
-   */
-  protected function execute($arguments = array(), $options = array())
+  protected function _getOrCreateSite($arguments, $options)
   {
-    $databaseManager = new sfDatabaseManager($this->configuration);
-
-    $site = Doctrine_Core::getTable('Site')->findOneByTitle($arguments['title']);
+    $site = Doctrine_Core::getTable('Site')->findOneBySlug($arguments['application']);
     if (!$site)
     {
       $site = new Site();
-      $site->title = $arguments['title'];
-      $site->slug = str_replace('-', '_', Doctrine_Inflector::urlize($arguments['title']));
+      $site->title = $arguments['application'];
+      $site->slug = $arguments['application'];
     }
-
-    if ($arguments['description'])
-    {
-      $site->description = $arguments['description'];
-    } else if (!$site->description) {
-      $site->description = 'Description for new site named '.$arguments['title'];
-    }
+    
+    $site->description = 'Description for '.$arguments['application'].' site.';
 
     if ($options['layout'])
     {
       $site->layout = $options['layout'];
     } else if (!$site->layout) {
-      $site->layout = 'layout';
+      $site->layout = 'sympal';
     }
 
     $site->save();
+    
+    return $site;
+  }
 
-    $homeContent = Content::createNew('Page');
-    $homeContent->slug = 'home';
-    $homeContent->Site = $site;
-    $homeContent->is_published = true;
-    $homeContent->title = 'New Site Home';
-    $homeContent->custom_path = '/';
-    $homeContent->CreatedBy = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(true);
-    $homeContent->save();
+  protected function _prepareApplication(Site $site)
+  {
+    $task = new sfSympalPrepareApplicationTask($this->dispatcher, $this->formatter);
+    $task->run(array($site->slug), array());
+  }
 
-    $testContent = Content::createNew('Page');
-    $testContent->slug = 'test-page';
-    $testContent->Site = $site;
-    $testContent->is_published = true;
-    $testContent->title = 'Test Page';
-    $testContent->custom_path = '/test_page';
-    $testContent->CreatedBy = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(true);
-    $testContent->save();
+  protected function _installSiteData()
+  {
+  }
 
-    $tree = Doctrine_Core::getTable('MenuItem')->getTree();
-    $root = new MenuItem();
-    $root->name = 'primary';
-    $root->label = 'New Site';
-    $root->is_published = true;
-    $root->is_primary = true;
-    $root->Site = $site;
-    $root->RelatedContent = $homeContent;
-    $root->save();
-    $tree->createRoot($root);
-
-    $menuItem = new MenuItem();
-    $menuItem->name = 'Test Page';
-    $menuItem->is_published = true;
-    $menuItem->Site = $site;
-    $menuItem->RelatedContent = $testContent;
-    $menuItem->getNode()->insertAsLastChildOf($root);
-
-    $menuItem = new MenuItem();
-    $menuItem->name = 'Home';
-    $menuItem->is_published = true;
-    $menuItem->Site = $site;
-    $menuItem->RelatedContent = $homeContent;
-    $menuItem->getNode()->insertAsLastChildOf($root);
-
-    $task = new sfGenerateAppTask($this->dispatcher, $this->formatter);
-    $task->setCommandApplication($this->commandApplication);
-
-    $taskOptions = array();
-    if (isset($options['escaping-strategy']) && $options['escaping-strategy'])
+  protected function execute($arguments = array(), $options = array())
+  {
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('You are about to create a new site named %s', $arguments['application']), 'Are you sure you want to proceed? (y/N)'), null, false))
     {
-      $taskOptions[] = '--escaping-strategy='.$options['escaping-strategy'];
-    }
-    if (isset($options['csrf-secret']) && $options['csrf-secret'])
-    {
-      $taskOptions[] = '--csrf-secret='.$options['csrf-secret'];
+      $this->logSection('sympal', 'Install task aborted');
+
+      return 1;
     }
 
-    $task->run(array($site->slug), $taskOptions);
+    $path = sfConfig::get('sf_apps_dir').'/'.$options['application'];
+    if (!file_exists($path))
+    {
+      throw new sfException(sprintf('Could not find a Symfony application named "%s". You must generate an application with the generate:app task.', $options['application']));
+    }
 
-    file_put_contents(sfConfig::get('sf_root_dir').'/apps/'.$site->slug.'/config/routing.yml', '');
+    if (isset($options['interactive']) && $options['interactive'])
+    {
+      sfSympalConfig::set('sympal_install_admin_email_address', $this->askAndValidate('Enter E-Mail Address:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_first_name', $this->askAndValidate('Enter First Name:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_last_name', $this->askAndValidate('Enter Last Name:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Username:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Password:', new sfValidatorString()));
+    }
 
-    $userPath = sfConfig::get('sf_root_dir').'/apps/'.$site->slug.'/lib/myUser.class.php';
-    file_put_contents($userPath, str_replace('extends sfBasicSecurityUser', 'extends sfSympalUser', file_get_contents($userPath)));
-
-    $yml = 'all:
-  sympal_config:
-    default_layout: '.$site->layout;
-
-    file_put_contents(sfConfig::get('sf_root_dir').'/apps/'.$site->slug.'/config/app.yml', $yml);
-
-    $layout = file_get_contents(realpath(dirname(__FILE__).'/../..').'/data/default_site_layout.php');
-    $path = sfConfig::get('sf_root_dir').'/apps/'.$site->slug.'/templates/layout.php';
-    file_put_contents($path, $layout);
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    $site = $this->_getOrCreateSite($arguments, $options);
+    $this->_prepareApplication($site);
+    $this->_installSiteData($site);
   }
 }

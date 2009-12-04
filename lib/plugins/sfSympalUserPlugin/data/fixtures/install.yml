@@ -7,38 +7,6 @@ User:
     username: <?php echo sfSympalConfig::get('sympal_install_admin_username', null, 'admin') ?> 
     password: <?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?> 
     is_super_admin: true
-  registered:
-    first_name: Sympal
-    last_name: Registered
-    is_active: true
-    email_address: registered@sympalphp.org
-    username: registered
-    password: registered
-    Groups: [RegisteredGroup]
-  NormalAdmin:
-    first_name: Normal Sympal
-    last_name: Admin
-    is_active: true
-    email_address: normaladmin@sympalphp.org
-    username: normaladmin
-    password: normaladmin
-    Groups: [AdministratorGroup]
-  EditorUser:
-    first_name: Sample
-    last_name: Editor
-    is_active: true
-    email_address: sympaleditor@sympalphp.org
-    username: editor
-    password: editor
-    Groups: [ContentEditorGroup]
-  SecurityUser:
-    first_name: Security
-    last_name: Manager
-    is_active: true
-    email_address: securityuser@sympalphp.org
-    username: security
-    password: security
-    Groups: [SecurityManagerGroup]
 
 Group:
   AdministratorGroup:
