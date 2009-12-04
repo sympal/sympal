@@ -49,5 +49,11 @@ EOF;
     $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);
     $install->setApplication($arguments['application']);
     $install->install();
+
+    $this->log(null);
+    $this->logSection('sympal', sprintf('Sympal was installed successfully...', $arguments['application']));
+
+    $url = 'http://localhost/'.sfConfig::get('sf_app').'_dev.php';
+    $this->logSection('sympal', sprintf('Open your browser to "%s"', $url));
   }
 }

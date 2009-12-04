@@ -121,15 +121,8 @@ class PluginContentTable extends Doctrine_Table
 
   public function getAdminGenQuery($q)
   {
-    $sympalContext = sfSympalContext::getInstance();
-
-    $contentTypes = sfSympalCache::getContentTypes();
-    $filters = sfContext::getInstance()->getUser()->getAttribute('sympal_content.filters', array(), 'admin_module');
-    $contentTypeId = $filters['content_type_id'];
-    $name = $contentTypes[$contentTypeId];
-
     $q = Doctrine_Core::getTable('Content')
-      ->getTypeQuery($name, 'r');
+      ->getTypeQuery(sfContext::getInstance()->getRequest()->getAttribute('content_type', 'Page'), 'r');
 
     return $q;
   }

@@ -13,16 +13,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
 
     $this->useAdminTheme();
-
-    // Make sure we have a filter on content type id set
-    $filters = $this->getFilters();
-    if (!isset($filters['content_type_id']))
-    {
-      $contentTypes = sfSympalCache::getContentTypes();
-      $contentTypes = array_keys($contentTypes);
-      $filters['content_type_id'] = current($contentTypes);
-      $this->setFilters($filters);
-    }
   }
 
   protected function _getContent(sfWebRequest $menuItem)
@@ -93,17 +83,15 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $type = $request->getParameter('type');
     if (is_numeric($type))
     {
-      $contentTypeId = $type;
+      $this->contentType = Doctrine_Core::getTable('ContentType')->find($type);
     } else {
-      $contentType = Doctrine_Core::getTable('ContentType')->findOneBySlug($type);
-      $contentTypeId = $contentType->id;
+      $this->contentType = Doctrine_Core::getTable('ContentType')->findOneBySlug($type);
     }
 
-    $request->setParameter('content_filters', array(
-      //'content_type_id' => $contentTypeId
-    ));
+    $request->setAttribute('content_type', $this->contentType->name);
 
-    $this->forward('sympal_content', 'filter');
+    $this->setTemplate('index');
+    $this->executeIndex($request);
   }
 
   public function executeDelete_route(sfWebRequest $request)
