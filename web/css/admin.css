@@ -69,7 +69,7 @@ html {
 .notice, .error {
   position: absolute;
   top: 5px;
-  right: 30px;
+  right: 75px;
   margin-left: 10px;
   margin-right: 10px;
 }

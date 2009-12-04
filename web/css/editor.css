@@ -211,7 +211,8 @@ input, select, textarea {
   -webkit-border-radius: 0.4em;
   border-radius: 0.4em;
 }
-input:hover, input:focus {
+
+input:hover, input:focus, select:hover, select:focus, textarea:hover, textarea:focus {
 	border-color:#c5c5c5;
-	background:#f6f6f6;
+	background:#ffffcc;
 }
