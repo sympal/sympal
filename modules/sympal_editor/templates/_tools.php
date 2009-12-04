@@ -37,7 +37,7 @@
       <?php if ($sf_request->getParameter('module') == 'sympal_content_renderer'): ?>
         <?php echo button_to('Go to Admin Dashboard', '@sympal_dashboard', 'class="editor_button"') ?>
       <?php else: ?>
-        <?php echo button_to('Go to Site', '/', 'class="editor_button"') ?>
+        <?php echo button_to('Go to Site', '@homepage', 'class="editor_button"') ?>
       <?php endif; ?>
 
       <?php echo $menu ?>
