@@ -161,7 +161,7 @@ class sfSympalToolkit
     sympal_content_id: %s
   class: sfDoctrineRoute
   options:
-    model: %s
+    model: Content
     type: object
     method: getContent
     requirements:
@@ -172,6 +172,7 @@ class sfSympalToolkit
     $contents = Doctrine::getTable('Content')
       ->createQuery('c')
       ->leftJoin('c.Type t')
+      ->where('c.custom_path IS NOT NULL')
       ->execute();
 
     $routes = array();
@@ -184,12 +185,28 @@ class sfSympalToolkit
         'index',
         $content->Type->name,
         $content->id,
-        'Content',
         implode('|', sfSympalConfig::get('language_codes')),
         implode('|', sfSympalConfig::get('content_formats'))
       );
     }
 
-    return implode("\n", $routes);
+    $contentTypes = Doctrine::getTable('ContentType')->findAll();
+    foreach ($contentTypes as $contentType)
+    {
+      $routes[] = sprintf($routeTemplate,
+        substr($contentType->getRouteName(), 1),
+        $contentType->getRoutePath(),
+        'sympal_content_renderer',
+        'index',
+        $contentType->name,
+        null,
+        implode('|', sfSympalConfig::get('language_codes')),
+        implode('|', sfSympalConfig::get('content_formats'))
+      );
+    }
+
+    $routes = implode("\n", $routes);
+    file_put_contents(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/routes.cache.yml', $routes);
+    return $routes;
   }
 }

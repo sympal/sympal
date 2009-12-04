@@ -317,7 +317,7 @@ abstract class PluginContent extends BaseContent
     {
       return '@sympal_content_' . str_replace('-', '_', $this['slug']);
     } else if ($this['Type']['default_path']) {
-      return '@sympal_content_view_type_' . str_replace('-', '_', $this['Type']['slug']);
+      return $this['Type']['route_name'];
     } else if ($this['slug']) {
       return '@sympal_content_view';
     }
@@ -327,8 +327,12 @@ abstract class PluginContent extends BaseContent
   {
     if ($path = $this['custom_path'])
     {
+      if ($path != '/')
+      {
+        $path .= '.:sf_format';
+      }
       return $path;
-    } else if ($path = $this['Type']['default_path']) {
+    } else if ($path = $this['Type']['route_path']) {
       return $path;
     } else if ($this['slug']) {
       return '/content/:slug';

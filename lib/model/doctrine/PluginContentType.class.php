@@ -122,9 +122,19 @@ abstract class PluginContentType extends BaseContentType
     return Doctrine_Core::getTable($this->getName())->getTableName() . 's';
   }
 
-  public function getRoute($action = null)
+  public function getRouteName()
   {
-    return 'sympal_' . ($action ? $this->getPluralLower() . '_' . $action : $this->getPluralLower());
+    return '@sympal_content_view_type_' . $this->getSingularLower();
+  }
+
+  public function getRoutePath()
+  {
+    $path = $this->default_path;
+    if ($path != '/')
+    {
+      $path .= '.:sf_format';
+    }
+    return $path;
   }
 
   public function preValidate($event)
