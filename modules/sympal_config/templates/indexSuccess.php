@@ -26,7 +26,9 @@
           <?php endforeach; ?>
         </div>
       </div>
-      <input type="submit" name="save" value="Save" />
+      <div class="black_bar">
+        <input type="submit" name="save" value="Save" />
+      </div>
     </form>
 
     <script type="text/javascript">
