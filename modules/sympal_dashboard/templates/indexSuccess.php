@@ -2,10 +2,6 @@
 <?php use_stylesheet('/sfSympalPlugin/css/dashboard') ?>
 
 <div id="sympal-dashboard">
-  <div id="right">
-    <?php echo $right->render() ?>
-  </div>
-
   <div id="boxes">
     <h1><?php echo __('Sympal Dashboard') ?></h1>
 

@@ -49,31 +49,6 @@
   -moz-opacity: 1;
 }
 
-#sympal-dashboard #right {
-  float: right;
-  padding-left: 15px;
-  margin-right: 30px;
-  border-left: 1px solid #ccc;
-  height: 400px;
-  width: 175px;
-}
-
-#sympal-dashboard #right ul {
-  margin-left: 20px;
-}
-
-#sympal-dashboard #right ul li {
-  list-style-type: square;
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-#sympal-dashboard #right ul li ul li {
-  font-size: 12px;
-  font-weight: normal;
-}
-
 #sympal-dashboard #boxes ul li#dashboard-boxes-create-content a {
   background: url(../images/content.gif) no-repeat;
   background-position: center;

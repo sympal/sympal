@@ -79,23 +79,6 @@ abstract class Basesympal_dashboardActions extends sfActions
         ->setCredentials(array('ManageContent'));
     }
 
-    $this->right = new sfSympalMenu('Dashboard Right');
-    $this->right->setCredentials(array('ManagePlugins'));
-    $plugins = $this->right['Sympal Plugins'];
-    $plugins->setRoute('@sympal_plugin_manager');
-    foreach ($installedPlugins as $plugin)
-    {
-      $plugins[$plugin]->setRoute('@sympal_plugin_manager_view?plugin='.$plugin);
-    }
-    $types = $this->right['Content Types']
-      ->setRoute('@sympal_content_types')
-      ->setCredentials(array('ManageContentSetup'));
-    foreach ($contentTypes as $contentType)
-    {
-      $types[$contentType['label']]->setLabel('Create '.$contentType['label'])->setRoute('@sympal_content_create_type?type='.$contentType['slug']);
-    }
-
     $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_dashboard_boxes', array('menu' => $this->boxes)));
-    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_dashboard_right', array('menu' => $this->boxes)));
   }
 }
