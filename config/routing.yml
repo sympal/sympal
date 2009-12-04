@@ -60,13 +60,9 @@ sympal_signin:
   url:   /signin
   param: { module: sympal_auth, action: signin }
 
-sympal_toggle_edit:
-  url:   /toggle_edit
-  param: { module: sympal_editor, action: toggle_edit }
-
 sympal_edit_column_content_slot:
   url:   /edit_column_content_slot/:id/:name
-  param: { module: sympal_editor, action: edit_slot, is_column: true }
+  param: { module: sympal_edit_slot, action: edit_slot, is_column: true }
   class: sfDoctrineRoute
   options:
     model: ContentSlot
@@ -74,7 +70,7 @@ sympal_edit_column_content_slot:
 
 sympal_edit_content_slot:
   url:   /edit_content_slot/:id
-  param: { module: sympal_editor, action: edit_slot }
+  param: { module: sympal_edit_slot, action: edit_slot }
   class: sfDoctrineRoute
   options:
     model: ContentSlot
@@ -82,7 +78,7 @@ sympal_edit_content_slot:
 
 sympal_save_content_slot:
   url:   /edit_content_slot/:id/save
-  param: { module: sympal_editor, action: save_slot }
+  param: { module: sympal_edit_slot, action: save_slot }
   class: sfDoctrineRoute
   options:
     model: ContentSlot
@@ -93,7 +89,7 @@ sympal_save_content_slot:
 
 sympal_preview_content_slot:
   url:   /preview_content_slot/:id
-  param: { module: sympal_editor, action: preview_slot }
+  param: { module: sympal_edit_slot, action: preview_slot }
   class: sfDoctrineRoute
   options:
     model: ContentSlot
@@ -104,7 +100,7 @@ sympal_preview_content_slot:
 
 sympal_change_column_content_slot_type:
   url:   /change_column_content_slot_type/:id/:type/:name
-  param: { module: sympal_editor, action: change_content_slot_type, is_column: true }
+  param: { module: sympal_edit_slot, action: change_content_slot_type, is_column: true }
   class: sfDoctrineRoute
   options:
     model: ContentSlot
@@ -112,7 +108,7 @@ sympal_change_column_content_slot_type:
 
 sympal_change_content_slot_type:
   url:   /change_content_slot_type/:id/:type
-  param: { module: sympal_editor, action: change_content_slot_type }
+  param: { module: sympal_edit_slot, action: change_content_slot_type }
   class: sfDoctrineRoute
   options:
     model: ContentSlot
