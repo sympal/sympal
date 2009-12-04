@@ -1,7 +1,3 @@
-sympal_menu_manager:
-  url: /admin/menus/manager
-  param: { module: sympal_menu_items, action: manager }
-
 sympal_unpublish_menu_item:
   url: /admin/menus/manager/unpublish/:id
   param: { module: sympal_menu_items, action: unpublish }
@@ -9,48 +5,6 @@ sympal_unpublish_menu_item:
 sympal_publish_menu_item:
   url: /admin/menus/manager/publish/:id
   param: { module: sympal_menu_items, action: publish }
-
-sympal_menu_manager_tree:
-  url: /admin/menus/manager/:slug
-  param: { module: sympal_menu_items, action: manager }
-  class: sfDoctrineRoute
-  options: { model: MenuItem, type: object }
-
-sympal_menu_manager_tree_refresh:
-  url: /admin/menus/manager/refresh/:slug
-  param: { module: sympal_menu_items, action: manager_refresh }
-  class: sfDoctrineRoute
-  options: { model: MenuItem, type: object }
-
-sympal_menu_manager_tree_move_node:
-  url: /admin/menus/manager/move/:slug/:move_id/:to_id/:move_action
-  param: { module: sympal_menu_items, action: manager_move }
-  class: sfDoctrineRoute
-  options: { model: MenuItem, type: object }
-
-sympal_menu_manager_tree_delete_node:
-  url: /admin/menus/manager/delete_node/:root_slug/:id
-  param: { module: sympal_menu_items, action: manager_delete_node }
-  class: sfDoctrineRoute
-  options: { model: MenuItem, type: object }
-
-sympal_menu_manager_tree_delete:
-  url: /admin/menus/manager/delete/:slug
-  param: { module: sympal_menu_items, action: manager_delete }
-  class: sfDoctrineRoute
-  options: { model: MenuItem, type: object }
-
-sympal_menu_manager_tree_update_node:
-  url: /admin/menus/manager/update/:root_slug/:id/:new_label
-  param: { module: sympal_menu_items, action: manager_update }
-  class: sfDoctrineRoute
-  options: { model: MenuItem, type: object }
-
-sympal_menu_manager_tree_add_node:
-  url: /admin/menus/manager/add/:root_slug/:id/:new_label
-  param: { module: sympal_menu_items, action: manager_add }
-  class: sfDoctrineRoute
-  options: { model: MenuItem, type: object }
 
 sympal_menu_items:
   class:                  sfDoctrineRouteCollection

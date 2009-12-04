@@ -1,0 +1,1 @@
+<?php echo get_sympal_editor($menu_item, ($menu_item->getMainContent() && $menu_item->getMainContent()->exists() ? $menu_item->getMainContent():null)) ?>

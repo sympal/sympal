@@ -200,6 +200,10 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
         $this->redirect('@sympal_content_new');
       }
+      else if ($request->hasParameter('_save_and_list'))
+      {
+        $this->redirect('@sympal_content');
+      }
       else
       {
         if ($new)

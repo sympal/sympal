@@ -69,12 +69,12 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends s
 
   public function linkToSaveAndAdd($object, $params)
   {
-    if (!$object->isNew())
-    {
-      return '';
-    }
-
     return '<li class="sf_admin_action_save_and_add"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" name="_save_and_add" /></li>';
+  }
+
+  public function linkToSaveAndList($object, $params)
+  {
+    return '<li class="sf_admin_action_save_and_list"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" name="_save_and_list" /></li>';
   }
 
   public function getUrlForAction($action)

@@ -18,7 +18,7 @@ function sympal_link_to_site($site, $name, $path = null)
  */
 function get_sympal_ui()
 {
-  return get_sympal_admin_bar().get_sympal_side_bar();
+  return get_sympal_admin_bar();
 }
 
 /**
@@ -212,19 +212,6 @@ function get_sympal_admin_bar()
   if (sfContext::getInstance()->getUser()->isAuthenticated())
   {
     return get_component('sympal_editor', 'admin_bar');
-  }
-}
-
-/**
- * Get the Sympal sidebar
- *
- * @return string $html
- */
-function get_sympal_side_bar()
-{
-  if (sfContext::getInstance()->getUser()->isAuthenticated())
-  {
-    return get_component('sympal_editor', 'side_bar');
   }
 }
 

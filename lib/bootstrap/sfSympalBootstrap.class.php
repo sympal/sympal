@@ -59,6 +59,9 @@ class sfSympalBootstrap
 
   public function bootstrap()
   {
+    $manager = Doctrine_Manager::getInstance();
+    $manager->setAttribute(Doctrine_Core::ATTR_VALIDATE, Doctrine_Core::VALIDATE_ALL);
+
     sfOutputEscaper::markClassesAsSafe(array(
       'Content',
       'ContentSlot',

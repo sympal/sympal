@@ -1,9 +1,7 @@
-<div id="sympal_menu_manager">
-  <div id="top_menu">
-    <ul>
-      <li><?php echo image_tag('/sf/sf_admin/images/add.png').' '.link_to(__('Add New Menu'), '@sympal_menu_items_new') ?></li>
-      <li><?php echo link_to(__('Back to Manager'), '@sympal_menu_manager') ?></li>
-  	</ul>
-  </div>
-</div>
-<br/>
+<h3>Important Information:</h3>
+
+<i>
+  After changing the order of the tree, the new order needs to be saved.
+  Pleaase choose <b>Update tree order</b> from the <b>Choose an action</b> dropdown
+  and click on <b>Go</b> to save the new order.
+</i>

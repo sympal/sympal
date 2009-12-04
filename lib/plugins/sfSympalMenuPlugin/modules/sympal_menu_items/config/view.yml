@@ -1,2 +1,2 @@
-all:
+default: 
   stylesheets: [/sfSympalPlugin/css/menu_items]

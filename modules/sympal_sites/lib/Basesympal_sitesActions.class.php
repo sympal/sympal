@@ -37,6 +37,10 @@ class Basesympal_sitesActions extends autosympal_sitesActions
 
         $this->redirect('@sympal_sites_new');
       }
+      else if ($request->hasParameter('_save_and_list'))
+      {
+        $this->redirect('@sympal_sites');
+      }
       else
       {
         $this->redirect('@sympal_sites_edit?id='.$site->getId());

@@ -76,7 +76,7 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
       $this->widgetSchema->setLabel('where_to_move', 'Before or after?');
     }
 
-    unset($this['site_id'], $this['Content'], $this['root_id'], $this['lft'], $this['rgt'], $this['level']);
+    unset($this['site_id'], $this['Content'], $this['root_id'], $this['lft'], $this['rgt'], $this['level'], $this['slug']);
   }
   
   public function updateParentIdColumn($parentId)

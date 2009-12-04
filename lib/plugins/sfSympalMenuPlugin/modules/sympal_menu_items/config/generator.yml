@@ -14,11 +14,12 @@ generator:
       actions: ~
       fields:  ~
       list:
-        sort: ["root_id, lft"]
+        display: [name]
         max_per_page: 999999
-        display: [=indented, is_published]
         batch_actions:
-          _delete:
+          order:
+            label: Update tree order
+          _delete: ~
           publish:
             action: publish
             label: Publish
@@ -34,10 +35,10 @@ generator:
           _new:
             label: Add New Menu
       filter:
-        display: [name, is_published, is_primary, requires_auth, requires_no_auth, site_id, content_type_id, content_id]
+        class: false
       form:
         display:
-          "NONE": [parent_id, name, is_primary, is_published, date_published, slug]
+          "NONE": [parent_id, name, is_primary, is_published, date_published]
           "Configuration": [content_id, content_type_id, custom_path]
           "Security": [requires_auth, requires_no_auth, groups_list, permissions_list, ]
         fields:

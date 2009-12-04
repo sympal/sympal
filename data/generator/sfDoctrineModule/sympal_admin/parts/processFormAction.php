@@ -15,6 +15,10 @@
 
         $this->redirect('@<?php echo $this->getUrlForAction('new') ?>');
       }
+      else if ($request->hasParameter('_save_and_list'))
+      {
+        $this->redirect('@<?php echo $this->getUrlForAction('list') ?>');
+      }
       else
       {
         $this->redirect('@<?php echo $this->getUrlForAction('edit') ?>?<?php echo $this->getPrimaryKeyUrlParams() ?>);

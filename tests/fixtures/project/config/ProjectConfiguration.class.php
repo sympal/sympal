@@ -20,11 +20,6 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enableAllPluginsExcept('sfPropelPlugin');
   }
 
-  public function configureDoctrine(Doctrine_Manager $manager)
-  {
-    $manager->setAttribute(Doctrine_Core::ATTR_VALIDATE, Doctrine_Core::VALIDATE_ALL);
-  }
-
   /**
    * Methods used by unit.php and functional.php bootstrap files
    */

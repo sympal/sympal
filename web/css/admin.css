@@ -9,6 +9,8 @@ html {
 	-moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 #content {

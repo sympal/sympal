@@ -91,17 +91,6 @@ li a.on {
   background-color: red;
 }
 
-#sympal_side_bar {
-  position: relative;
-}
-
-#sympal_side_bar_container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-}
-
 .sympal_form ul li {
   background: transparent;
 }

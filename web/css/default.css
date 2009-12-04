@@ -39,9 +39,12 @@
   text-align: left;
 }
 
+#sf_admin_container tbody {
+  background: #ffffff;
+}
+
 #sf_admin_container td, th
 {
-  background: #fff;
   border: 0;
   border-bottom: 1px solid #ddd;
   border-top: 1px solid #ddd;

@@ -30,7 +30,7 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setCredentials(array('ManageContent'));
 
     $this->boxes['Menu Manager']
-      ->setRoute('@sympal_menu_manager')
+      ->setRoute('@sympal_menu_items')
       ->setCredentials(array('ManageMenus'));
 
     $this->boxes['Plugin Manager']
