@@ -46,12 +46,6 @@ class sfSympalTheme
     $request = $context->getRequest();
     $response = $context->getResponse();
 
-    if (sfSympalConfig::get('load_default_css'))
-    {
-      $response->addStylesheet('/sfSympalPlugin/css/global');
-      $response->addStylesheet('/sfSympalPlugin/css/default');
-    }
-
     $actionEntry = $context->getController()->getActionStack()->getLastEntry();
     $module = $actionEntry ? $actionEntry->getModuleName():$request->getParameter('module');
     $action = $actionEntry ? $actionEntry->getActionName():$request->getParameter('action');

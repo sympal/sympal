@@ -7,7 +7,6 @@ all:
     super_admin_signin_url: @sympal_dashboard
     enable_all_modules: true
     admin_module_web_dir: "/sfSympalPlugin"
-    load_default_css: true
     plugin_api:
       username: 
       password: 
