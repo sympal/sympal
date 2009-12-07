@@ -32,20 +32,30 @@
 }
 
 #sympal_edit_panel ul {
-  margin-left: 5px;
+  padding: 0;
+  margin: 0;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 #sympal_edit_panel ul li {
+  padding: 0;
+  margin: 0;
   list-style-type: none;
   font-weight: bold;
   color: #3278B6;
   font-size: 13px;
 }
 
+#sympal_edit_panel ul li img {
+  border: none;
+}
+
 #sympal_edit_panel ul li ul li {
   font-weight: normal;
   color: #000;
   line-height: 25px;
+  margin-left: 20px;
 }
 
 #sympal_edit_panel ul li ul li a {
