@@ -9,6 +9,6 @@ class Basesympal_permissionsActions extends autosympal_permissionsActions
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
   }
 }

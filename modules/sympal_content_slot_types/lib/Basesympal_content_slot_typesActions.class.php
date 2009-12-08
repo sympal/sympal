@@ -6,6 +6,6 @@ class Basesympal_content_slot_typesActions extends autoSympal_content_slot_types
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
   }
 }

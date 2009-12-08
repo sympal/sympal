@@ -6,7 +6,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
   }
 
   protected function addSortQuery($query)

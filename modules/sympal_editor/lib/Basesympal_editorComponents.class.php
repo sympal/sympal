@@ -27,6 +27,7 @@ class Basesympal_editorComponents extends sfComponents
     $this->menu->setCredentials(array('ViewAdminBar'));
 
     $this->menu->addChild('Icon', null, array('label' => '<div id="sympal-icon">Sympal</div>'));
+    $this->menu->addChild('Site', '@homepage');
     $this->menu->addChild('Dashboard', '@sympal_dashboard')
       ->setCredentials(array('ViewDashboard'));
 

@@ -29,6 +29,8 @@ class Basesympal_defaultActions extends sfActions
 
   public function executeAsk_confirmation(sfWebRequest $request)
   {
+    $this->useAdminLayout();
+
     $this->url = $request->getUri();
     $this->title = $request->getAttribute('title');
     $this->message = $request->getAttribute('message');

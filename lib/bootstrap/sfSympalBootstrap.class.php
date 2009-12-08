@@ -64,10 +64,16 @@ class sfSympalBootstrap
 
     sfOutputEscaper::markClassesAsSafe(array(
       'Content',
+      'ContentTranslation',
       'ContentSlot',
+      'ContentSlotTranslation',
       'MenuItem',
+      'MenuItemTranslation',
+      'Version',
+      'VersionChange',
       'sfSympalContentRenderer',
-      'sfSympalMenu'
+      'sfSympalMenu',
+      'sfParameterHolder'
     ));
 
     sfSympalContext::createInstance(

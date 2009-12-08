@@ -9,6 +9,6 @@ class Basesympal_usersActions extends autosympal_usersActions
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
   }
 }

@@ -13,6 +13,8 @@ abstract class PluginContentForm extends BaseContentForm
   {
     parent::setup();
 
+    $this->validatorSchema->setOption('allow_extra_fields', true);
+
     unset(
       $this['created_at'],
       $this['updated_at'],
@@ -49,7 +51,10 @@ abstract class PluginContentForm extends BaseContentForm
 
     $this->_embedTypeForm();
     $this->_embedContentSlotForms();
-    $this->_embedMenuItem();
+    if (sfContext::getInstance()->getRequest()->getParameter('menu'))
+    {
+      $this->_embedMenuItem();
+    }
   }
 
   protected function _embedTypeForm()

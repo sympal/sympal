@@ -14,7 +14,7 @@ abstract class Basesympal_dashboardActions extends sfActions
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
   }
 
   public function executeIndex()
@@ -27,6 +27,10 @@ abstract class Basesympal_dashboardActions extends sfActions
 
     $this->boxes['Create Content']
       ->setRoute('@sympal_content_new')
+      ->setCredentials(array('ManageContent'));
+
+    $this->boxes['Manage Content']
+      ->setRoute('@sympal_content')
       ->setCredentials(array('ManageContent'));
 
     $this->boxes['Menu Manager']

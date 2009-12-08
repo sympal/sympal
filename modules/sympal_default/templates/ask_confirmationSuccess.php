@@ -1,7 +1,7 @@
 <div id="ask_confirmation">
   <h2><?php echo $title ?></h2>
 
-  <p><?php echo $message ?></p>
+  <p><?php echo htmlspecialchars_decode($message) ?></p>
 
   <form action="<?php echo $url ?>" method="POST">
     <input type="hidden" name="sf_method" value="<?php echo $sf_request->getMethod() ?>" />

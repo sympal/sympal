@@ -14,7 +14,7 @@ abstract class Basesympal_plugin_managerActions extends autoSympal_plugin_manage
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
 
     $sympalConfiguration = sfSympalContext::getInstance()->getSympalConfiguration();
 

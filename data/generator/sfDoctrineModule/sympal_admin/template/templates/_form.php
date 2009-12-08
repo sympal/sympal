@@ -10,9 +10,12 @@
 
 <div class="sf_admin_form sympal_form">
   [?php echo $helper->getSymfonyResource('<?php echo $this->getModuleName() ?>', 'outside_form_header', array('form' => $form)) ?>
-  [?php echo form_tag_for($form, '@<?php echo $this->params['route_prefix'] ?>') ?]
+  [?php echo form_tag_for($form, '@<?php echo $this->params['route_prefix'] ?>', array('id' => '<?php echo $this->getModuleName() ?>_form')) ?]
   [?php echo $helper->getSymfonyResource('<?php echo $this->getModuleName() ?>', 'inside_form_header', array('form' => $form)) ?>
     [?php echo $form->renderHiddenFields() ?]
+
+    <input type="hidden" id="menu" name="menu" value="[?php echo $sf_request->getParameter('menu', 0) ?]" />
+    <input type="hidden" id="save" name="save" value="1" />
 
     [?php if ($form->hasGlobalErrors()): ?]
       [?php echo $form->renderGlobalErrors() ?]
@@ -90,6 +93,10 @@
     <script type="text/javascript">
     (function() {
       var tabView = new YAHOO.widget.TabView('sympal_admin_gen_tab_view');
+      if (!tabView.get('activeIndex'))
+      {
+        tabView.set('activeIndex', 0);
+      }
       tabView.addListener('click', handleClick);
     })();
     function handleClick(e)

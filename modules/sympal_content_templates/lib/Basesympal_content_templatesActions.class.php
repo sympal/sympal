@@ -6,6 +6,6 @@ class Basesympal_content_templatesActions extends autoSympal_content_templatesAc
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
   }
 }

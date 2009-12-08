@@ -12,7 +12,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $this->redirect('@homepage');
     }
 
-    $this->useAdminTheme();
+    $this->useAdminLayout();
   }
 
   protected function _getContent(sfWebRequest $menuItem)
@@ -181,7 +181,19 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
-    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
+    $data = $request->getParameter($form->getName());
+    if (!isset($data['Menu']))
+    {
+      $data['Menu'] = $form->getObject()->MenuItem->toArray();
+    }
+
+    $form->bind($data, $request->getFiles($form->getName()));
+
+    if ( ! $request->getParameter('save'))
+    {
+      return sfView::SUCCESS;
+    }
+
     if ($form->isValid())
     {
       $this->getUser()->setFlash('notice', $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.');
