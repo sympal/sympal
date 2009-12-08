@@ -9,6 +9,7 @@ class sfSympalInstallTask extends sfTaskExtraBaseTask
     ));
 
     $this->addOptions(array(
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));

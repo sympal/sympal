@@ -26,11 +26,15 @@ EOF;
 
     $this->logSection('sympal', sprintf('Preparing Symfony application "%s" for Sympal...', $path));
 
-    file_put_contents(sfConfig::get('sf_apps_dir').'/'.$arguments['application'].'/config/routing.yml', '');
-    $this->logSection('sympal', '... clearing routing.yml');
-
     $code = file_get_contents($path.'/lib/myUser.class.php');
     file_put_contents($path.'/lib/myUser.class.php', str_replace('class myUser extends sfBasicSecurityUser',  'class myUser extends sfSympalUser', $code));
     $this->logSection('sympal', '... modifying myUser to extends sfSympalUser');
+
+    $path = sfConfig::get('sf_app_dir').'/config/routing.yml';
+    $array = sfYaml::load($path);
+    unset($array['homepage'], $array['default'], $array['default_index']);
+    file_put_contents($path, sfYaml::dump($array));
+
+    $this->logSection('sympal', '... removing default application default routes');
   }
 }

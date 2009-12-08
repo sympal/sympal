@@ -11,7 +11,7 @@ class sfSympalDeleteSiteTask extends sfTaskExtraBaseTask
     $this->addOptions(array(
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', sfSympalToolkit::getDefaultApplication()),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('delete-app', null, sfCommandOption::PARAMETER_NONE, 'Delete Symfony application directory as well.'),
+      new sfCommandOption('and-app', null, sfCommandOption::PARAMETER_NONE, 'Delete Symfony application directory as well.'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
@@ -24,7 +24,11 @@ class sfSympalDeleteSiteTask extends sfTaskExtraBaseTask
 The [sympal:delete-site|INFO] task will delete a Sympal site from the database
 and remove the Symfony application as well
 
-  [./sympal:delete-site my_site|INFO]
+  [./symfony sympal:delete-site my_site|INFO]
+
+You can delete the associated Symfony application as well:
+
+  [./symfony sympal:delete-site my_site --and-app|INFO]
 EOF;
   }
 
@@ -44,15 +48,19 @@ EOF;
 
     $site = Doctrine_Core::getTable('Site')->findOneBySlug($arguments['application']);
     if ($site) {
-      $this->logSection('sympal', sprintf('Deleting site named "%s"', $site->title));
+      $this->logSection('sympal', sprintf('Deleting site named "%s" from database...', $site->title));
 
       $site->delete();
-      if (isset($options['delete-app']) && $options['delete-app'])
-      {
-        $site->deleteApplication();
-      }
-    } else {
-      throw new InvalidArgumentException(sprintf('Could not find site "%s"', $arguments['application']));
+    }
+
+    if (isset($options['and-app']) && $options['and-app'])
+    {
+      $this->logSection('sympal', sprintf('Deleting Symfony application named "%s"', $arguments['application']));
+
+      sfToolkit::clearDirectory(sfConfig::get('sf_apps_dir').'/'.$arguments['application']);
+      rmdir(sfConfig::get('sf_apps_dir').'/'.$arguments['application']);
+      @unlink(sfConfig::get('sf_web_dir').'/'.$arguments['application'].'_dev.php');
+      @unlink(sfConfig::get('sf_web_dir').'/'.$arguments['application'].'.php');
     }
   }
 }

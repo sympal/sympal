@@ -9,6 +9,7 @@ class sfSympalCreateSiteTask extends sfTaskExtraBaseTask
     ));
 
     $this->addOptions(array(
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('layout', null, sfCommandOption::PARAMETER_OPTIONAL, 'The site/application layout', null),
       new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
       new sfCommandOption('load-dummy-data', null, sfCommandOption::PARAMETER_NONE, 'Load dummy data for the newly created site.'),
@@ -33,12 +34,16 @@ EOF;
     $site = Doctrine_Core::getTable('Site')->findOneBySlug($arguments['application']);
     if (!$site)
     {
+      $this->logSection('sympal', 'Creating new site record in database...');
       $site = new Site();
       $site->title = $arguments['application'];
       $site->slug = $arguments['application'];
     }
-    
-    $site->description = 'Description for '.$arguments['application'].' site.';
+
+    if (!$site->description)
+    {
+      $site->description = 'Description for '.$arguments['application'].' site.';
+    }
 
     if ($options['layout'])
     {
@@ -69,7 +74,7 @@ EOF;
       return 1;
     }
 
-    $path = sfConfig::get('sf_apps_dir').'/'.$options['application'];
+    $path = sfConfig::get('sf_apps_dir').'/'.$arguments['application'];
     if (!file_exists($path))
     {
       throw new sfException(sprintf('Could not find a Symfony application named "%s". You must generate an application with the generate:app task.', $options['application']));

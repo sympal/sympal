@@ -12,6 +12,10 @@ class sfSympalInstall
     $this->_configuration = $configuration;
     $this->_dispatcher = $dispatcher;
     $this->_formatter = $formatter;
+    if ($app = sfConfig::get('sf_app'))
+    {
+      $this->_application = $app;
+    }
   }
 
   public function setApplication($application)
@@ -89,8 +93,7 @@ class sfSympalInstall
     sfSympalConfig::set('site_slug', $this->_application);
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
     $options = array(
-      'db' => true,
-      'sql' => true,
+      'all' => true,
       'no-confirmation' => true,
       'and-load' => $fixtures
     );

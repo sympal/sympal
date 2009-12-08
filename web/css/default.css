@@ -1,3 +1,17 @@
+.sf_admin_embedded_form
+{
+  display: none;
+}
+
+.sf_admin_embedded_form_menu
+{
+  float: left;
+  width: 200px;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
 #sf_admin_container a
 {
   color: #464646;
@@ -46,8 +60,6 @@
 #sf_admin_container td, th
 {
   border: 0;
-  border-bottom: 1px solid #ddd;
-  border-top: 1px solid #ddd;
   text-align: left;
   vertical-align: top;
 }

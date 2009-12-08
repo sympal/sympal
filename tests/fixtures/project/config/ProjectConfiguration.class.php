@@ -20,6 +20,11 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enableAllPluginsExcept('sfPropelPlugin');
   }
 
+  public function configureDoctrineConnection(Doctrine_Connection $conn)
+  {
+      $conn->setCollate('utf8_unicode_ci');
+  }
+
   /**
    * Methods used by unit.php and functional.php bootstrap files
    */

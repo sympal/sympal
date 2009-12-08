@@ -3,6 +3,7 @@ all:
     class:  sfDoctrineDatabase
     param:
       dsn:  mysql://root@localhost/sympal
+      collate: utf8_unicode_ci
 
 test:
   doctrine:
