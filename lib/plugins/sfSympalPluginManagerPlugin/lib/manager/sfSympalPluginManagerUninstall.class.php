@@ -4,8 +4,6 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 {
   public function uninstall($delete = false)
   {
-    $uninstallVars = array();
-
     $this->logSection('sympal', 'Uninstall sympal plugin named '.$this->_pluginName);
 
     $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
@@ -13,6 +11,8 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
     if (file_exists($schema))
     {
+      $this->rebuildFilesFromSchema();
+
       $models = array_keys(sfYaml::load($schema));
       sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
@@ -22,6 +22,9 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       }
 
       $this->logSection('sympal', 'Clear database tables of data');
+
+      $models = Doctrine_Manager::connection()->unitOfWork->buildFlushTree($models);
+      $models = array_reverse($models);
 
       // Delete all data from models included in plugin
       foreach ($models as $model)
@@ -57,13 +60,15 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       }
     }
 
-    $pluginConfig = $this->_configuration->getPluginConfiguration($this->_pluginName);
-
     if (method_exists($this, 'customUninstall'))
     {
       $this->logSection('sympal', 'Calling '.get_class($this).'::customUninstall()');
 
-      $this->customUninstall($uninstallVars);
+      $this->customUninstall();
+    } else if (method_exists($this->_pluginConfig, 'customUninstall')) {
+      $this->logSection('sympal', 'Calling '.get_class($this->_pluginConfig).'::customUninstall()');
+
+      $this->_pluginConfig->customUninstall($this->_dispatcher, $this->_formatter);
     }
 
     if ($delete)
@@ -94,11 +99,6 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     $this->logSection('sympal', 'Clear cache');
 
     sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
-
-    if (file_exists($schema))
-    {
-      $this->rebuildFilesFromSchema();
-    }
 
     if (is_dir($pluginPath.'/web'))
     {

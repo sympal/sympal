@@ -201,6 +201,11 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $new = $form->isNew();
       $content = $form->save();
 
+      $context = sfContext::getInstance();
+      $configCache = $context->getConfigCache();
+      unlink($configCache->getCacheName('config/routing.yml'));
+      $context->getRouting()->loadConfiguration();
+
       $this->getUser()->obtainContentLock($content);
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));

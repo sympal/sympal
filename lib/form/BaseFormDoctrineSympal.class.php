@@ -6,6 +6,11 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
   {
     sfSympalFormToolkit::embedI18n($this->object, $this);
 
+    if (sfSympalConfig::get('remove_timestampable_from_forms', null, true))
+    {
+      unset($this['created_at'], $this['updated_at']);
+    }
+
     if (sfSympalConfig::isVersioningEnabled($this->object))
     {
       unset(

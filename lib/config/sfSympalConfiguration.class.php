@@ -5,6 +5,7 @@ class sfSympalConfiguration
   protected
     $_dispatcher,
     $_projectConfiguration,
+    $_bootstrap,
     $_plugins = array(),
     $_modules = array(),
     $_layouts = array();
@@ -22,7 +23,7 @@ class sfSympalConfiguration
     $appName = $info['filename'];
 
     if (is_dir($appDir) && file_exists($path = $appDir.'/config/'.$appName.'SympalConfiguration.class.php'))
-    {  
+    {
       require_once(sfConfig::get('sf_config_dir').'/SympalProjectConfiguration.class.php');
       require_once($path);
       $className = $appName.'SympalConfiguration';
@@ -43,7 +44,17 @@ class sfSympalConfiguration
 
   public function initialize()
   {
-    $bootstrap = new sfSympalBootstrap($this);
+    $this->_bootstrap = new sfSympalBootstrap($this);
+  }
+
+  public function getCache()
+  {
+    return $this->_bootstrap->getCache();
+  }
+
+  public function getContentTypes()
+  {
+    return $this->getCache()->getContentTypes();
   }
 
   public function getProjectConfiguration()
@@ -128,88 +139,11 @@ class sfSympalConfiguration
 
   public function getModules()
   {
-    if (!$this->_modules)
-    {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/modules.cache';
-      if (!file_exists($cachePath))
-      {
-        $this->_modules = array();
-        $plugins = $this->getPluginPaths();
-
-        foreach ($plugins as $plugin => $path)
-        {
-          $path = $path . '/modules';
-          $find = glob($path . '/*');
-
-          if (is_array($find))
-          {
-            foreach ($find as $module)
-            {
-              if (is_dir($module))
-              {
-                $info = pathinfo($module);
-                $this->_modules[] = $info['basename'];
-              }
-            }
-          }
-        }
-        if (!is_dir($dir = dirname($cachePath)))
-        {
-          mkdir($dir, 0777, true);
-        }
-        file_put_contents($cachePath, serialize($this->_modules));
-      } else {
-        $serialized = file_get_contents($cachePath);
-        $this->_modules = unserialize($serialized);
-      }
-    }
-
-    return $this->_modules;
+    return $this->getCache()->getModules();
   }
 
   public function getLayouts()
   {
-    if (!$this->_layouts)
-    {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/'.sfConfig::get('sf_app').'_layouts.cache';
-      if (!file_exists($cachePath))
-      {
-        $layouts = array();
-        foreach ($this->getPluginPaths() as $plugin => $path)
-        {
-          $path = $path.'/templates';
-          $find = glob($path.'/*.php');
-          if (is_array($find))
-          {
-            $layouts = array_merge($layouts, $find);
-          }
-        }
-
-        $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
-        if (is_array($find))
-        {
-          $layouts = array_merge($layouts, $find);
-        }
-
-        $this->_layouts = array();
-        foreach ($layouts as $path)
-        {
-          $info = pathinfo($path);
-          $name = $info['filename'];
-          // skip partial/component templates
-          if ($name[0] == '_')
-          {
-            continue;
-          }
-          $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
-          $this->_layouts[$path] = $name;
-        }
-        file_put_contents($cachePath, serialize($this->_layouts));
-      } else {
-        $serialized = file_get_contents($cachePath);
-        $this->_layouts = unserialize($serialized);
-      }
-    }
-    return $this->_layouts;
+    return $this->getCache()->getLayouts();
   }
 }

@@ -6,6 +6,13 @@ class PluginContentTable extends Doctrine_Table
 {
   public function getTypeQuery($typeName, $alias = 'c')
   {
+    Doctrine_Core::initializeModels(array($typeName));
+    return $this->createQuery($alias)
+      ->innerJoin($alias.'.'.$typeName.' cr');
+  }
+
+  public function getFullTypeQuery($typeName, $alias = 'c')
+  {
     $table = Doctrine_Core::getTable($typeName);
 
     $q = $this->getBaseQuery($alias);
@@ -33,7 +40,7 @@ class PluginContentTable extends Doctrine_Table
     $contentType = $request->getParameter('sympal_content_type');
     $contentId = $request->getParameter('sympal_content_id');
     $contentSlug = $request->getParameter('sympal_content_slug');
-    $q = $this->getTypeQuery($contentType);
+    $q = $this->getFullTypeQuery($contentType);
 
     if ($contentId)
     {
@@ -122,7 +129,7 @@ class PluginContentTable extends Doctrine_Table
   public function getAdminGenQuery($q)
   {
     $q = Doctrine_Core::getTable('Content')
-      ->getTypeQuery(sfContext::getInstance()->getRequest()->getAttribute('content_type', 'Page'), 'r');
+      ->getFullTypeQuery(sfContext::getInstance()->getRequest()->getAttribute('content_type', 'Page'), 'r');
 
     return $q;
   }

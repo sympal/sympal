@@ -43,8 +43,6 @@ EOF;
     if ($options['layout'])
     {
       $site->layout = $options['layout'];
-    } else if (!$site->layout) {
-      $site->layout = 'sympal';
     }
 
     $site->save();

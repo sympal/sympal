@@ -7,7 +7,6 @@ abstract class PluginMenuItem extends BaseMenuItem
 {
   protected
     $_label = null,
-    $_breadcrumbs = null,
     $_allPermissions;
 
   public function getAllPermissions()
@@ -149,27 +148,25 @@ abstract class PluginMenuItem extends BaseMenuItem
     return $route;
   }
 
-  public function getBreadcrumbs()
+  public function getBreadcrumbs($subItem = null)
   {
-    if (is_null($this->_breadcrumbs))
+    $breadcrumbs = null;
+    $menu = sfSympalMenuSiteManager::getMenu('primary');
+    if ($menu)
     {
-      $menu = sfSympalMenuSiteManager::getMenu('primary');
-      if ($menu)
-      {
-        $node = $menu->findMenuItem($this);
+      $node = $menu->findMenuItem($this);
 
-        if ($node)
-        {
-          $this->_breadcrumbs = $node->getBreadcrumbs();
-        }
-      }
-      if (is_null($this->_breadcrumbs))
+      if ($node)
       {
-        $this->_breadcrumbs = sfSympalMenuBreadcrumbs::generate(array());
+        $breadcrumbs = $node->getBreadcrumbs($subItem);
       }
     }
+    if (is_null($breadcrumbs))
+    {
+      $breadcrumbs = sfSympalMenuBreadcrumbs::generate(array());
+    }
 
-    return $this->_breadcrumbs;
+    return $breadcrumbs;
   }
 
   public function getLayout()

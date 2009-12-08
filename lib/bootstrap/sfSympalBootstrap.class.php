@@ -4,22 +4,14 @@ class sfSympalBootstrap
 {
   protected
     $_sympalConfiguration,
-    $_projectConfiguration;
+    $_projectConfiguration,
+    $_cache;
 
   public function __construct(sfSympalConfiguration $configuration)
   {
     $this->_sympalConfiguration = $configuration;
     $this->_projectConfiguration = $configuration->getProjectConfiguration();
     $this->_dispatcher = $this->_projectConfiguration->getEventDispatcher();
-
-    $modules = sfConfig::get('sf_enabled_modules', array());
-    if (sfSympalConfig::get('enable_all_modules'))
-    {
-      $modules = array_merge($modules, $this->_sympalConfiguration->getModules());
-    }
-    $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
-
-    sfConfig::set('sf_enabled_modules', $modules);
 
     sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalPlugin'));
 
@@ -51,16 +43,28 @@ class sfSympalBootstrap
     $options = array_merge(sfConfig::get('doctrine_model_builder_options', array()), $options);
     sfConfig::set('doctrine_model_builder_options', $options);
 
+    $manager = Doctrine_Manager::getInstance();
+    $manager->setAttribute(Doctrine_Core::ATTR_VALIDATE, Doctrine_Core::VALIDATE_ALL);
+
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
     $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
 
     $eventHandler = new sfSympalEventHandler($this->_dispatcher);
   }
 
+  public function getCache()
+  {
+    return $this->_cache;
+  }
+
   public function bootstrap()
   {
-    $manager = Doctrine_Manager::getInstance();
-    $manager->setAttribute(Doctrine_Core::ATTR_VALIDATE, Doctrine_Core::VALIDATE_ALL);
+    $this->_cache = new sfSympalCache($this->_sympalConfiguration);
+
+    if (sfSympalConfig::get('load_all_modules', null, true))
+    {
+      $this->_loadAllModules();
+    }
 
     sfOutputEscaper::markClassesAsSafe(array(
       'Content',
@@ -80,8 +84,6 @@ class sfSympalBootstrap
       sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')),
       sfContext::getInstance()
     );
-
-    $cache = new sfSympalCache($this->_sympalConfiguration);
 
     $this->_handleInstall();
 
@@ -106,9 +108,21 @@ class sfSympalBootstrap
 
     if ($request->getParameter('module') == 'sympal_content_renderer')
     {
-      $contentTypes = sfSympalCache::getContentTypes();
+      $contentTypes = $this->_sympalConfiguration->getContentTypes();
       Doctrine_Core::initializeModels($contentTypes);
     }
+  }
+
+  protected function _loadAllModules()
+  {
+    $modules = sfConfig::get('sf_enabled_modules', array());
+    if (sfSympalConfig::get('enable_all_modules'))
+    {
+      $modules = array_merge($modules, $this->_sympalConfiguration->getModules());
+    }
+    $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
+
+    sfConfig::set('sf_enabled_modules', $modules);
   }
 
   protected function _handleInstall()

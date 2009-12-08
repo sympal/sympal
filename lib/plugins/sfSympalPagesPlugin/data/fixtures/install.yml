@@ -1,12 +1,5 @@
 # sfSympalPagesPlugin install data fixtures
 
-ContentTemplate:
-  ContentTemplate_ViewPage:
-    name: View Page
-    partial_path: sympal_page/view
-    ContentType: ContentType_Page
-    Site: Site_default
-
 MenuItem:
   MenuItem_primary:
     name: primary
@@ -326,16 +319,3 @@ ContentList:
     title: Pages
     Content: Content_ContentList_pages
     ContentType: ContentType_Page
-
-ContentType:
-  ContentType_Page:
-    Site: Site_default
-    plugin_name: sfSympalPagesPlugin
-    name: Page
-    description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
-    label: Page
-<?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
-    default_path: /pages/:sf_culture/:slug
-<?php else: ?>
-    default_path: /pages/:slug
-<?php endif; ?>

@@ -120,11 +120,7 @@ class sfSympalToolkit
   {
     if (is_null(self::$_helperAutoloadCache))
     {
-      $cachePath = sfConfig::get('sf_cache_dir').'/sympal/helper_autoload.cache';
-      if (file_exists($cachePath))
-      {
-        self::$_helperAutoloadCache = unserialize(file_get_contents($cachePath));
-      }
+      self::$_helperAutoloadCache = sfSympalContext::getInstance()->getSympalConfiguration()->getCache()->getHelperAutoload();
     }
     if (isset(self::$_helperAutoloadCache[$functionName]))
     {
@@ -206,7 +202,7 @@ class sfSympalToolkit
     }
 
     $routes = implode("\n", $routes);
-    file_put_contents(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/routes.cache.yml', $routes);
+    file_put_contents(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml', $routes);
     return $routes;
   }
 }

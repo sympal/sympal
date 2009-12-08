@@ -97,11 +97,10 @@ function use_sympal_yui_js($name)
  * Get a sfSympalMenuBreadcrumbs instances for the given MenuItem 
  *
  * @param MenuItem $menuItem  The MenuItem instance to generate the breadcrumbs for
- * @param Content $content    The Content instance to add to the end of the breadcrumbs
  * @param string $subItem     A string to append to the end of the breadcrumbs  
  * @return string $html
  */
-function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
+function get_sympal_breadcrumbs($menuItem, $subItem = null)
 {
   if (!$menuItem)
   {
@@ -113,10 +112,10 @@ function get_sympal_breadcrumbs($menuItem, $content = null, $subItem = null)
   {
     $breadcrumbs = sfSympalMenuBreadcrumbs::generate($menuItem);
   } else {
-    $breadcrumbs = $menuItem->getBreadcrumbs($content, $subItem);
+    $breadcrumbs = $menuItem->getBreadcrumbs($subItem);
   }
 
-  sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($breadcrumbs, 'sympal.load_breadcrumbs', array('menuItem' => $menuItem, 'content' => $content, 'subItem' => $subItem)));
+  sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($breadcrumbs, 'sympal.load_breadcrumbs', array('menuItem' => $menuItem, 'subItem' => $subItem)));
 
   $title = $breadcrumbs->getPathAsString();
   set_sympal_title($title);

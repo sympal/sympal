@@ -202,8 +202,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $request->checkCSRFProtection();
 
-    $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this menu item? This action is irreversible!');
-
     $this->dispatcher->notify(new sfEvent($this, 'admin.delete_object', array('object' => $this->getRoute()->getObject())));
 
     $object = $this->getRoute()->getObject();

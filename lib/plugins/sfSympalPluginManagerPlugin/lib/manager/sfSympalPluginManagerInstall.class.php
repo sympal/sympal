@@ -38,6 +38,13 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   protected function _loadData()
   {
+    $installFixtures = $this->_pluginConfig->getRootDir().'/data/fixtures/install';
+    if (is_dir($installFixtures))
+    {
+      $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
+      $task->run(array($installFixtures), array());
+    }
+
     $installVars = array();
 
     if ($this->_contentTypeName)
@@ -50,6 +57,10 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       $this->logSection('sympal', 'Calling '.get_class($this).'::customInstall()');
 
       $this->customInstall($installVars);
+    } else if (method_exists($this->_pluginConfig, 'customInstall')) {
+        $this->logSection('sympal', 'Calling '.get_class($this->_pluginConfig).'::customInstall()');
+
+        $this->_pluginConfig->customInstall($installVars, $this->_dispatcher, $this->_formatter);
     } else {
       if (isset($this->_contentTypeName) && $this->_contentTypeName)
       {
@@ -164,10 +175,34 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   protected function _defaultInstallation($installVars)
   {
+    if (method_exists($this->_pluginConfig, 'filterInstallVars'))
+    {
+      $this->_pluginConfig->filterInstallVars($installVars);
+    } else {
+      $this->filterInstallVars($installVars);
+    }
+
     $this->saveMenuItem($installVars['menuItem']);
 
-    $installVars['contentType']->save();
-    $installVars['contentTemplate']->save();
-    $installVars['content']->save();
+    if (isset($installVars['contentType']))
+    {
+      $installVars['contentType']->save();
+    }
+    if (isset($installVars['contentTemplate']))
+    {
+      $installVars['contentTemplate']->save();
+    }
+    if (isset($installVars['contentList']))
+    {
+      $installVars['contentList']->save();
+    }
+    if (isset($installVars['content']))
+    {
+      $installVars['content']->save();
+    }
+  }
+
+  public function filterInstallVars(array &$content)
+  {
   }
 }

@@ -12,6 +12,7 @@ class sfSympalPluginInstallTask extends sfBaseTask
       new sfCommandOption('content-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the content type to create', null),
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', sfSympalToolkit::getDefaultApplication()),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
+      new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
     $this->aliases = array();
@@ -26,6 +27,13 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('This command will install the plugin "%s"', $arguments['name']), 'Are you sure you want to proceed? (y/N)'), null, false))
+    {
+      $this->logSection('sympal', 'Install task aborted');
+
+      return 1;
+    }
+
     $databaseManager = new sfDatabaseManager($this->configuration);
 
     $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install', $this->configuration, $this->formatter);

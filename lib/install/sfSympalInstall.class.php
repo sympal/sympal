@@ -75,13 +75,24 @@ class sfSympalInstall
       }
     }
 
+    $path = sfConfig::get('sf_data_dir').'/fixtures/install';
+    if (is_dir($path))
+    {
+      $fixtures = array();
+      $fixtures[] = $path;
+      $fixtures[] = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/data/fixtures/install.yml';
+      $fixtures[] = $this->_configuration->getPluginConfiguration('sfSympalUserPlugin')->getRootDir().'/data/fixtures/install.yml';
+    } else {
+      $fixtures = true;
+    }
+
     sfSympalConfig::set('site_slug', $this->_application);
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
     $options = array(
       'db' => true,
       'sql' => true,
       'no-confirmation' => true,
-      'and-load' => true
+      'and-load' => $fixtures
     );
 
     $task->run(array(), $options);

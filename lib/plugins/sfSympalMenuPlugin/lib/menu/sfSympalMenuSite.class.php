@@ -32,10 +32,23 @@ class sfSympalMenuSite extends sfSympalMenu
     return implode(' > ', array_reverse($path));
   }
 
-  public function getBreadcrumbsArray()
+  public function getBreadcrumbsArray($subItem = null)
   {
     $breadcrumbs = array();
     $obj = $this;
+
+    if ($subItem)
+    {
+      if (!is_array($subItem))
+      {
+        $subItem = array((string) $subItem => null);
+      }
+      $subItem = array_reverse($subItem);
+      foreach ($subItem as $key => $value)
+      {
+        $breadcrumbs[(string) $key] = $value;
+      }
+    }
 
     do {
       $menuItem = $obj->getMenuItem();
@@ -46,9 +59,9 @@ class sfSympalMenuSite extends sfSympalMenu
     return count($breadcrumbs) > 1 ? array_reverse($breadcrumbs):array();
   }
 
-  public function getBreadcrumbs()
+  public function getBreadcrumbs($subItem = null)
   {
-    return sfSympalMenuBreadcrumbs::generate($this->getBreadcrumbsArray());
+    return sfSympalMenuBreadcrumbs::generate($this->getBreadcrumbsArray($subItem));
   }
 
   public function getMenuItem()
