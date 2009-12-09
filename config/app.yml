@@ -1,5 +1,6 @@
 all:
   sympal_config:
+    automatic_url_hierarchy: false
     load_all_modules: true
     get_cache_driver_callback: [sfSympalCache, getCacheDriver]
     menu_manager_class: sfSympalMenuSiteManager
@@ -30,7 +31,8 @@ all:
       MenuItem: [label]
       Page: [title]
     sluggable_models:
-      Content: ~
+      Content:
+        builder: [Content, slugBuilder]
       Site:
         fields: [title]
         indexName: site_sluggable

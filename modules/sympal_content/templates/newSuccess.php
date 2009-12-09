@@ -1,5 +1,3 @@
-<?php echo get_sympal_breadcrumbs($menuItem, null, 'Create New '.$content->getType()->getLabel(), true) ?>
-
 <?php use_helper('I18N', 'Date') ?>
 <?php include_partial('sympal_content/assets') ?>
 

@@ -29,7 +29,7 @@ EOF;
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.sfSympalPluginToolkit::getLongPluginName($arguments['name']), 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.sfSympalPluginToolkit::getLongPluginName($arguments['name']), 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
     {
       $this->logSection('sympal', 'Plugin uninstall aborted');
 

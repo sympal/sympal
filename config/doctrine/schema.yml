@@ -118,7 +118,7 @@ ContentTemplate:
     body: clob
     is_default:
       type: boolean
-      default: true
+      default: false
     content_type_id:
       type: integer
       notnull: true

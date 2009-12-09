@@ -45,7 +45,7 @@
 }
 
 #toggle_menu_tab {
-  z-index: 10000;
+  z-index: 1;
   position: absolute;
   right: 10px;
   float: right;

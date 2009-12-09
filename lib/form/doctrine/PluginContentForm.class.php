@@ -62,7 +62,9 @@ abstract class PluginContentForm extends BaseContentForm
     $typeModelClass = $this->object->Type->name ? $this->object->Type->name:'Page';
     $typeFormClass = $typeModelClass . 'Form';
 
-    $typeForm = new $typeFormClass($this->object->getRecord());
+    $record = $this->object->getRecord();
+    $record->mapValue('contentForm', $this);
+    $typeForm = new $typeFormClass($record);
 
     unset($typeForm['id'], $typeForm['content_id']);
 

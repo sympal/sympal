@@ -62,7 +62,10 @@ generator:
         title: "Editing Content #%%id%%"
         actions:
           _delete:
+          _list:
           _save:
+          _save_and_list:
+          _save_and_add:
           view:
             action: view
       new:

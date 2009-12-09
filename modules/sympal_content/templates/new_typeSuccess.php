@@ -1,5 +1,3 @@
-<?php echo get_sympal_breadcrumbs(array('Home' => '@homepage', 'Create New Content' => null)) ?>
-
 <div id="create_new_content">
   <h1><?php echo __('Create New Content') ?></h2>
 

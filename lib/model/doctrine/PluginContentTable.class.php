@@ -28,7 +28,7 @@ class PluginContentTable extends Doctrine_Table
 
     if (method_exists($table, 'getContentQuery'))
     {
-      $q = $table->getContentQuery($q);
+      $table->getContentQuery($q);
     }
 
     return $q;

@@ -31,7 +31,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will remove all data in your configured databases and initialize the sympal database.', 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will remove all data in your configured databases and initialize the sympal database.', 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
     {
       $this->logSection('sympal', 'Install task aborted');
 

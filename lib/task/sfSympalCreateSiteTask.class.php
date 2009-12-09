@@ -67,7 +67,7 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('You are about to create a new site named %s', $arguments['application']), 'Are you sure you want to proceed? (y/N)'), null, false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('You are about to create a new site named %s', $arguments['application']), 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
     {
       $this->logSection('sympal', 'Install task aborted');
 

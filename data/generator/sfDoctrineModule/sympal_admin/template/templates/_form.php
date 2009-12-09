@@ -27,14 +27,15 @@
       <ul class="yui-nav">
         [?php foreach ($fields as $fieldset => $f): ?]
           [?php $id = sfInflector::tableize($fieldset); ?]
-          <li[?php if ($id == $currentTab || is_null($currentTab)) echo ' class="selected"'; if (is_null($currentTab)) $currentTab = false; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo __($fieldset == 'NONE' ? ucwords(sfInflector::humanize(sfInflector::tableize($form->getAdminGenMainTabLabel()))):$fieldset, array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
+          <li[?php if ($id == $currentTab || is_null($currentTab)) echo ' class="selected"'; if (is_null($currentTab)) $currentTab = false; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo __($fieldset == 'NONE' ? $form->getAdminGenMainTabLabel():$fieldset, array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
         [?php endforeach; ?]
 
+        [?php $embeddedForms = $form->getEmbeddedForms() ?]
         [?php foreach ($form as $key => $value): ?]
           [?php if ($value instanceof sfFormFieldSchema): ?]
             [?php $id = sfInflector::tableize($key) ?]
             [?php $label = $value->getWidget()->getLabel() ? $value->getWidget()->getLabel():$key ?]
-            <li[?php if ($id == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $key ?]"><em id="[?php echo $id ?]">[?php echo __($label, array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
+            <li[?php if ($id == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $key ?]"><em id="[?php echo $id ?]">[?php echo __(((method_exists($embeddedForms[$key], 'getAdminGenMainTabLabel') && $adminGenLabel = $embeddedForms[$key]->getAdminGenMainTabLabel()) ? $adminGenLabel : $label), array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
           [?php endif; ?]
         [?php endforeach; ?]
 

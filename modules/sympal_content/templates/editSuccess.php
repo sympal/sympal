@@ -1,8 +1,6 @@
 <?php use_helper('I18N', 'Date') ?>
 <?php include_partial('sympal_content/assets') ?>
 
-<?php echo get_sympal_breadcrumbs($content->getMainMenuItem(), $content, 'Edit', true) ?>
-
 <div id="sf_admin_container">
   <h2><?php echo __('Editing %%type%% titled "%%content%%"', array('%%type%%' => $content->getType()->getLabel(),'%%content%%' => $content->getHeaderTitle()), 'messages') ?></h2>
 

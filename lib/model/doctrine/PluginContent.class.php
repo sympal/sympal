@@ -339,6 +339,24 @@ abstract class PluginContent extends BaseContent
     }
   }
 
+  public function getAutomaticUrlHierarchy()
+  {
+    $menuItem = $this->getMainMenuItem();
+    unset($this->MenuItem);
+    if ($menuItem)
+    {
+      $url = str_replace(' / ', '/', $menuItem->getBreadcrumbs($this)->getPathAsString());
+      $e = explode('/', $url);
+      unset($e[0]);
+      $e = array_map(array('Doctrine_Inflector', 'urlize'), $e);
+      $url = implode('/', $e);
+      if ($url)
+      {
+        return '/'.$url;
+      }
+    }
+  }
+
   public function getRoute($routeString = null, $path = null)
   {
     if (!$this->_route)
@@ -451,5 +469,17 @@ abstract class PluginContent extends BaseContent
   public function postSave($event)
   {
     @unlink(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/config/config_routing.yml.php');
+  }
+
+  public static function slugBuilder($text, $content)
+  {
+    $record = $content->getRecord();
+
+    if (is_callable(array($record, 'slugBuilder')))
+    {
+      return $record->slugBuilder($text);
+    } else {
+      return Doctrine_Inflector::urlize($text);
+    }
   }
 }

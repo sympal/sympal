@@ -10,7 +10,7 @@
  */
 class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends sfModelGeneratorHelper
 {
-  public function getTabExtras($tab, $position)
+  public function getTabExtras($tab, $position, $variables = array())
   {
     $tab = str_replace(' ', '_', sfInflector::tableize($tab));
     $extras = '';
@@ -20,7 +20,7 @@ class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorHelper extends s
     foreach ($tabExtras as $tabExtra)
     {
       $e = explode('/', $tabExtra);
-      $resource = $this->getSymfonyResource($e[0], isset($e[1]) ? $e[1]:null);
+      $resource = $this->getSymfonyResource($e[0], isset($e[1]) ? $e[1]:null, $variables);
       $extras .= $resource ? $resource:$tabExtra;
     }
 

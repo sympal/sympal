@@ -124,7 +124,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
   {
     $this->logSection('sympal', 'Create default content type records');
 
-    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_name));
+    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_contentTypeName));
     $slug = 'sample_'.$lowerName;
 
     $properties = array(
@@ -157,12 +157,12 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     $properties = array(
       'is_published' => true,
-      'label' => $this->_name,
+      'label' => $this->_contentTypeName,
       'ContentType' => $contentType,
       'RelatedContent' => $contentList
     );
 
-    $menuItem = $this->newMenuItem($this->_name, $properties);
+    $menuItem = $this->newMenuItem($this->_contentTypeName, $properties);
     $installVars['menuItem'] = $menuItem;
 
     $properties = array(

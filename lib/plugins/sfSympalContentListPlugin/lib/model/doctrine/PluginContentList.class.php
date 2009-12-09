@@ -11,12 +11,13 @@ abstract class PluginContentList extends BaseContentList
 
     if ($this->table_method)
     {
+      $typeTable = Doctrine_Core::getTable($this->ContentType->name);
       $method = $this->table_method;
-      $q = $table->$method();
+      $q = $typeTable->$method();
     } else if ($this->dql_query) {
       $q = $table->createQuery()->query($this->dql_query);
     } else {
-      $q = $table->getTypeQuery($this->ContentType->name);
+      $q = $table->getFullTypeQuery($this->ContentType->name);
       if ($table->hasColumn($this->sort_column) && $this->sort_order) 
 	    { 
 	      $q->orderBy('c.'.$this->sort_column.' '.$this->sort_order); 

@@ -142,7 +142,6 @@ abstract class BaseFormDoctrineSympal extends sfFormDoctrine
 
   public function getAdminGenMainTabLabel()
   {
-    return $this->getModelName();
   }
 
   public function __call($method, $arguments)

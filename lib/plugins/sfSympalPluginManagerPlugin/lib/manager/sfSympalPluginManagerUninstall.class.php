@@ -114,7 +114,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
   {
     $this->logSection('sympal', 'Delete content from database');
 
-    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_name));
+    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_contentTypeName));
     $slug = 'sample-'.$lowerName;
 
     $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($this->_contentTypeName);
@@ -148,7 +148,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     Doctrine_Core::getTable('MenuItem')
       ->createQuery('m')
       ->delete()
-      ->where('m.name = ? OR m.content_type_id = ?', array($this->_name, $contentType['id']))
+      ->where('m.name = ? OR m.content_type_id = ?', array($this->_contentTypeName, $contentType['id']))
       ->execute();
 
     // Delete the content type record

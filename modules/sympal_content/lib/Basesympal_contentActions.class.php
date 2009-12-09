@@ -88,10 +88,22 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $this->contentType = Doctrine_Core::getTable('ContentType')->findOneBySlug($type);
     }
 
+    $this->getUser()->setAttribute('content_type_id', $this->contentType->id);
+
     $request->setAttribute('content_type', $this->contentType->name);
 
     $this->setTemplate('index');
     $this->executeIndex($request);
+  }
+
+  public function executeIndex(sfWebRequest $request)
+  {
+    $contentTypeId = $this->getUser()->getAttribute('content_type_id');
+    $this->contentType = Doctrine_Core::getTable('ContentType')->find($contentTypeId);
+    $request->setParameter('type', $contentTypeId);
+    $request->setAttribute('content_type', $this->contentType->name);
+
+    parent::executeIndex($request);
   }
 
   public function executeDelete_route(sfWebRequest $request)
@@ -172,8 +184,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $this->form = new ContentForm($this->content);
 
-    $this->content->MenuItem->Site = $this->content->Site;
-
     $this->processForm($request, $this->form);
 
     $this->setTemplate('new');
@@ -182,7 +192,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $data = $request->getParameter($form->getName());
-    if (!isset($data['Menu']))
+    if (!isset($data['Menu']) && $form->getObject()->hasReference('MenuItem'))
     {
       $data['Menu'] = $form->getObject()->MenuItem->toArray();
     }
@@ -200,6 +210,12 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
       $new = $form->isNew();
       $content = $form->save();
+
+      if (sfSympalConfig::get('automatic_url_hierarchy') && !$content->custom_path)
+      {
+        $content->custom_path = $content->getAutomaticUrlHierarchy();
+        $content->save();
+      }
 
       $context = sfContext::getInstance();
       $configCache = $context->getConfigCache();
@@ -219,7 +235,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
       }
       else if ($request->hasParameter('_save_and_list'))
       {
-        $this->redirect('@sympal_content');
+        $this->redirect('@sympal_content_list_type?type='.$content->content_type_id);
       }
       else
       {
