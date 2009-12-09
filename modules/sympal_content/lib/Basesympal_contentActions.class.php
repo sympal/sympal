@@ -78,19 +78,24 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->_publishContent($content, false);
   }
 
-  public function executeList_type(sfWebRequest $request)
+  protected function _getContentType($type, sfWebRequest $request)
   {
-    $type = $request->getParameter('type');
     if (is_numeric($type))
     {
       $this->contentType = Doctrine_Core::getTable('ContentType')->find($type);
     } else {
       $this->contentType = Doctrine_Core::getTable('ContentType')->findOneBySlug($type);
     }
-
     $this->getUser()->setAttribute('content_type_id', $this->contentType->id);
-
     $request->setAttribute('content_type', $this->contentType->name);
+
+    return $this->contentType;
+  }
+
+  public function executeList_type(sfWebRequest $request)
+  {
+    $type = $request->getParameter('type');
+    $this->contentType = $this->_getContentType($type, $request);
 
     $this->setTemplate('index');
     $this->executeIndex($request);
@@ -98,10 +103,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeIndex(sfWebRequest $request)
   {
-    $contentTypeId = $this->getUser()->getAttribute('content_type_id');
-    $this->contentType = Doctrine_Core::getTable('ContentType')->find($contentTypeId);
-    $request->setParameter('type', $contentTypeId);
-    $request->setAttribute('content_type', $this->contentType->name);
+    $type = $this->getUser()->getAttribute('content_type_id', sfSympalConfig::get('default_admin_list_content_type', null, 'Page'));
+    $this->contentType = $this->_getContentType($type, $request);
 
     parent::executeIndex($request);
   }
@@ -191,13 +194,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
-    $data = $request->getParameter($form->getName());
-    if (!isset($data['Menu']) && $form->getObject()->hasReference('MenuItem'))
-    {
-      $data['Menu'] = $form->getObject()->MenuItem->toArray();
-    }
-
-    $form->bind($data, $request->getFiles($form->getName()));
+    $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
     if ( ! $request->getParameter('save'))
     {

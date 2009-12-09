@@ -51,10 +51,6 @@ abstract class PluginContentForm extends BaseContentForm
 
     $this->_embedTypeForm();
     $this->_embedContentSlotForms();
-    if (sfContext::getInstance()->getRequest()->getParameter('menu'))
-    {
-      $this->_embedMenuItem();
-    }
   }
 
   protected function _embedTypeForm()
@@ -92,26 +88,6 @@ abstract class PluginContentForm extends BaseContentForm
       }
       $this->embedForm('Content Slots', $slotsForm);
     }
-  }
-
-  protected function _embedMenuItem()
-  {
-    $menuItemForm = new MenuItemForm($this->object->MenuItem);
-    $menuItemForm->widgetSchema['parent_id']->setOption('add_empty', false);
-    unset(
-      $menuItemForm['id'],
-      $menuItemForm['is_primary'],
-      $menuItemForm['content_type_id'],
-      $menuItemForm['content_id'],
-      $menuItemForm['groups_list'],
-      $menuItemForm['permissions_list'],
-      $menuItemForm['slug'],
-      $menuItemForm['custom_path'],
-      $menuItemForm['requires_auth'],
-      $menuItemForm['requires_no_auth']
-    );
-
-    $this->embedForm('Menu', $menuItemForm);
   }
 
   public function getAdminGenMainTabLabel()

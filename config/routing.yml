@@ -170,6 +170,16 @@ sympal_sites:
     prefix_path:          admin/sites
     with_wildcard_routes: true
 
+sympal_content_menu_item:
+  url:    /admin/content/:id/menu
+  param: { module: sympal_content_menu_item, action: index }
+  class: sfDoctrineRoute
+  options:
+    model:  Content
+    type:   object
+  requirements:
+    sf_method: [get, post]
+
 sympal_content:
   class:                  sfDoctrineRouteCollection
   options:
