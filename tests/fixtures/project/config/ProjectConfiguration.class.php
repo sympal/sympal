@@ -33,7 +33,7 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     chdir(sfConfig::get('sf_root_dir'));
 
-    $install = new sfSympalInstall($this, $this->dispatcher, new sfFormatter());
+    $install = new sfSympalInstall($this, $this->dispatcher, new BaseFormatter());
     $install->install();
 
     $cache = new sfSympalCache(

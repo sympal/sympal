@@ -74,7 +74,7 @@ abstract class PluginContentForm extends BaseContentForm
   {
     if (count($this->object->Slots))
     {
-      $slotsForm = new sfForm();
+      $slotsForm = new BaseForm();
       foreach ($this->object->Slots as $key => $slot)
       {
         if ($slot->is_column)

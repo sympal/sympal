@@ -72,7 +72,7 @@ abstract class Basesympal_installActions extends sfActions
         sfSympalConfig::set('sympal_install_database_password', $values['database']['password']);
       }
 
-      $formatter = new sfFormatter();
+      $formatter = new BaseFormatter();
       try {
         chdir(sfConfig::get('sf_root_dir'));
         $install = new sfSympalInstall($this->getContext()->getConfiguration(), $this->getContext()->getEventDispatcher(), $formatter);
@@ -105,7 +105,7 @@ abstract class Basesympal_installActions extends sfActions
 
   public function executeInstall_plugins(sfWebRequest $request)
   {
-    $formatter = new sfFormatter();
+    $formatter = new BaseFormatter();
     $plugins = $this->getUser()->getAttribute('sympal_install_plugins');
 
     foreach ($plugins as $plugin)

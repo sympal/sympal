@@ -15,7 +15,7 @@ class sfSympalConfigForm extends sfForm
     {
       if (!is_numeric($group))
       {
-        $form = new sfForm();
+        $form = new BaseForm();
         foreach ($settings as $setting)
         {
           $setting['widget']->setLabel($setting['label']);

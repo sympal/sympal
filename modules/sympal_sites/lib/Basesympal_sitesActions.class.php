@@ -23,7 +23,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
       if ($new)
       {
         chdir(sfConfig::get('sf_root_dir'));
-        $task = new sfSympalCreateSiteTask($this->getContext()->getEventDispatcher(), new sfFormatter());
+        $task = new sfSympalCreateSiteTask($this->getContext()->getEventDispatcher(), new BaseFormatter());
         $task->run(array($site->title, $site->description));
 
         $site = Doctrine_Core::getTable('Site')->findOneByTitle($site->title);

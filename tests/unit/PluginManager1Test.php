@@ -11,7 +11,7 @@ function generatePlugin($name, $contentType, $t)
 {
   global $configuration;
 
-  $generate = new sfSympalPluginGenerateTask($configuration->getEventDispatcher(), new sfFormatter());
+  $generate = new sfSympalPluginGenerateTask($configuration->getEventDispatcher(), new BaseFormatter());
   $generate->run(array($name), array('--re-generate', '--no-confirmation', '--content-type='.$contentType));
 
   $t->is(file_exists(sfConfig::get('sf_plugins_dir').'/'.sfSympalPluginToolkit::getLongPluginName($name)), true);
