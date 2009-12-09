@@ -14,4 +14,9 @@ class sympal_contentGeneratorHelper extends BaseSympal_contentGeneratorHelper
   {
     
   }
+
+  public function linkToSaveAndView($object, $params)
+  {
+    return '<li class="sf_admin_action_save_and_view"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" name="_save_and_view" /></li>';
+  }
 }

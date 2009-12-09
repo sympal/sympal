@@ -225,4 +225,26 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->form->setDefault('parent_id', $request->getParameter('id'));
     $this->setTemplate('edit');
   }
+
+  public function executeMove(sfWebRequest $request)
+  {
+    $menuItem = $this->getRoute()->getObject();
+    $node = $menuItem->getNode();
+    $direction = $request['direction'];
+
+    $name = $direction == 'up' ? 'Prev':'Next';
+    $getMethod = 'get'.$name.'Sibling';
+    $moveMethod = 'moveAs'.$name.'SiblingOf';
+
+    if (method_exists($node, $getMethod) && method_exists($node, $moveMethod))
+    {
+      $record = $node->$getMethod();
+      if ($record)
+      {
+        $node->$moveMethod($record);
+      }
+    }
+
+    $this->redirect($this->generateUrl('sympal_menu_items').'#list_top');
+  }
 }

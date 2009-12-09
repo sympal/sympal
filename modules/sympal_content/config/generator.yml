@@ -64,6 +64,7 @@ generator:
           _delete:
           _list:
           _save:
+          save_and_view:
           _save_and_list:
           _save_and_add:
           view:

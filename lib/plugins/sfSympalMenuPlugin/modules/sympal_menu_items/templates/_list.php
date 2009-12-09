@@ -7,11 +7,13 @@
   <?php if (!$pager->getNbResults()): ?>
     <p><?php echo __('No result', array(), 'sf_admin') ?></p>
   <?php else: ?>
+    <a name="list_top"></a>
     <table id="main_list" cellspacing="0">
       <thead>
         <tr>
           <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
           <?php include_partial('sympal_menu_items/list_th_tabular', array('sort' => $sort)) ?>
+          <th></th>
           <th id="sf_admin_list_th_actions"><?php echo __('Actions', array(), 'sf_admin') ?></th>
         </tr>
       </thead>
@@ -41,6 +43,12 @@
           ?>">
             <?php include_partial('sympal_menu_items/list_td_batch_actions', array('menu_item' => $menu_item, 'helper' => $helper)) ?>
             <?php include_partial('sympal_menu_items/list_td_tabular', array('menu_item' => $menu_item)) ?>
+            <td>
+              <?php if (!$node->isRoot()): ?>
+                <?php echo button_to('Up', '@sympal_menu_items_move?direction=up&id='.$menu_item['id']) ?>
+                <?php echo button_to('Down', '@sympal_menu_items_move?direction=down&id='.$menu_item['id']) ?>
+              <?php endif; ?>
+            </td>
             <?php include_partial('sympal_menu_items/list_td_actions', array('menu_item' => $menu_item, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
