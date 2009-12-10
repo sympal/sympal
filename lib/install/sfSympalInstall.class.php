@@ -99,6 +99,11 @@ class sfSympalInstall
         $conn = Doctrine_Manager::getInstance()->openConnection($this->_params['db_dsn'], 'test', false);
         $conn->setOption('username', $this->_params['db_username']);
         $conn->setOption('password', $this->_params['db_password']);
+
+        try {
+          $conn->createDatabase();
+        } catch (Exception $e) {}
+
         $conn->connect();
       } catch (Exception $e) {
         throw new InvalidArgumentException('Database credentials are not valid!');

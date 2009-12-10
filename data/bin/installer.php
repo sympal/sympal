@@ -62,7 +62,13 @@ function setupDatabase($task)
     $conn = Doctrine_Manager::getInstance()->openConnection($db['dsn'], 'test', false);
     $conn->setOption('username', $db['username']);
     $conn->setOption('password', $db['password']);
+
+    try {
+      $conn->createDatabase();
+    } catch (Exception $e) {}
+
     $conn->connect();
+
     $task->logSection('sympal', '...connection credentials valid');
   } catch (Exception $e) {
     $task->logBlock('Connection credentials invalid! Try again! '.$e->getMessage(), 'ERROR_LARGE');
