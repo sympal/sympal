@@ -48,8 +48,21 @@ class sfSympalBootstrap
 
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
     $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
+    $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterParameters'));
 
     $eventHandler = new sfSympalEventHandler($this->_dispatcher);
+  }
+
+  public function filterParameters(sfEvent $event, $parameters)
+  {
+    foreach ($parameters as $value)
+    {
+      if ($value instanceof MenuItem)
+      {
+        sfSympalToolkit::setCurrentMenuItem($value);
+      }
+    }
+    return $parameters;
   }
 
   public function getCache()

@@ -13,7 +13,7 @@ abstract class PluginContent extends BaseContent
   {
     $invoker = $event->getInvoker();
     $modified = $invoker->getModified();
-    if (isset($modified['is_published']) && $modified['is_published'] && !isset($modified['date_published']))
+    if (isset($modified['is_published']) && $modified['is_published'] && !isset($modified['date_published']) && !$invoker->date_published)
     {
       $invoker->date_published = new Doctrine_Expression('NOW()');
     }
@@ -256,24 +256,20 @@ abstract class PluginContent extends BaseContent
   {
     if ($record = $this->getRecord())
     {
-      if (method_exists($record, '__toString'))
-      {
-        return $record->__toString();
-      } else {
-        $guesses = array('name',
-                         'title',
-                         'username',
-                         'subject');
+      $guesses = array('name',
+                       'title',
+                       'username',
+                       'subject');
 
-        // we try to guess a column which would give a good description of the object
-        foreach ($guesses as $descriptionColumn)
+      // we try to guess a column which would give a good description of the object
+      foreach ($guesses as $descriptionColumn)
+      {
+        try
         {
-          try
-          {
-            return (string) $record->get($descriptionColumn);
-          } catch (Exception $e) {}
-        }
+          return (string) $record->get($descriptionColumn);
+        } catch (Exception $e) {}
       }
+      return (string) $this;
     }
 
     return sprintf('No description for object of class "%s"', $this->getTable()->getComponentName());
@@ -364,6 +360,11 @@ abstract class PluginContent extends BaseContent
       if (!$this->exists() || !$this['slug'])
       {
         return false;
+      }
+
+      if (method_exists($this->getRecord(), 'getRoute'))
+      {
+        return $this->getRecord()->getRoute();
       }
 
       if (is_null($routeString))

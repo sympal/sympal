@@ -25,7 +25,10 @@ abstract class sfSympalPluginManager
     $this->_dispatcher = $this->_configuration->getEventDispatcher();
     $this->_formatter = is_null($formatter) ? new BaseFormatter():$formatter;
     $this->_filesystem = new sfFilesystem($this->_dispatcher, $this->_formatter);
-    $this->_pluginConfig = $this->_configuration->getPluginConfiguration($this->_pluginName);
+
+    try {
+      $this->_pluginConfig = $this->_configuration->getPluginConfiguration($this->_pluginName);
+    } catch (Exception $e) {}
   }
 
   public static function getActionInstance($name, $action, ProjectConfiguration $configuration = null, sfFormatter $formatter = null)

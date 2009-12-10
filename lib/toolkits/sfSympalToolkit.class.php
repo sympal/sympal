@@ -1,4 +1,5 @@
 <?php
+
 class sfSympalToolkit
 {
   protected static

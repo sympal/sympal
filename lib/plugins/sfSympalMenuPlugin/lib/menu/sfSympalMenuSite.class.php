@@ -46,6 +46,11 @@ class sfSympalMenuSite extends sfSympalMenu
       $subItem = array_reverse($subItem);
       foreach ($subItem as $key => $value)
       {
+        if (is_numeric($key))
+        {
+          $key = $value;
+          $value = null;
+        }
         $breadcrumbs[(string) $key] = $value;
       }
     }

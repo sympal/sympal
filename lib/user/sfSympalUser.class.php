@@ -66,8 +66,6 @@ class sfSympalUser extends sfBasicSecurityUser
       if ($lock)
       {
         $this->_openContentLock = $content;
-
-        $this->setFlash('notice', 'Lock obtained successfully on "'.$title.'"');
       } else {
         if ($content->locked_by)
         {

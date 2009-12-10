@@ -28,8 +28,9 @@ class sfSympalContentListPluginConfiguration extends sfPluginConfiguration
       $content = $variables['content'];
       $contentList = $variables['contentList'];
 
-      $page = sfContext::getInstance()->getRequest()->getParameter('page', 1);
-      $pager = $contentList->buildPager($page);
+      $request = sfContext::getInstance()->getRequest();
+      $page = $request->getParameter('page', 1);
+      $pager = $contentList->buildPager($page, $request);
 
       $variables['pager'] = $pager;
     }

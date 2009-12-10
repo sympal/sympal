@@ -223,8 +223,10 @@ function get_sympal_admin_bar()
  */
 function get_sympal_pager_header($pager, $content)
 {
+  use_stylesheet('/sfSympalPlugin/css/pager.css');
+
   $indice = $pager->getFirstIndice();
-  return '<h3>Showing '.$indice.' to '.($indice + count($content) - 1).' of '.$pager->getNbResults().' total results.</h3>';
+  return '<div class="sympal_pager_header"><h3>Showing '.$indice.' to '.($indice + count($content) - 1).' of '.$pager->getNbResults().' total results.</h3></div>';
 }
 
 /**
@@ -236,7 +238,9 @@ function get_sympal_pager_header($pager, $content)
  */
 function get_sympal_pager_navigation($pager, $uri)
 {
-  $navigation = '';
+  use_stylesheet('/sfSympalPlugin/css/pager.css');
+
+  $navigation = '<div class="sympal_pager_navigation">';
  
   if ($pager->haveToPaginate())
   {  
@@ -253,7 +257,7 @@ function get_sympal_pager_navigation($pager, $uri)
     $links = array();
     foreach ($pager->getLinks() as $page)
     {
-      $links[] = link_to_unless($page == $pager->getPage(), $page, $uri.$page);
+      $links[] = '<span>'.link_to_unless($page == $pager->getPage(), $page, $uri.$page).'</span>';
     }
     $navigation .= join('  ', $links);
  
@@ -263,9 +267,9 @@ function get_sympal_pager_navigation($pager, $uri)
       $navigation .= ' '.link_to(image_tag('/sf/sf_admin/images/next.png', 'align=absmiddle'), $uri.$pager->getNextPage());
       $navigation .= link_to(image_tag('/sf/sf_admin/images/last.png', 'align=absmiddle'), $uri.$pager->getLastPage());
     }
- 
   }
- 
+  $navigation .= '</div>';
+
   return $navigation;
 }
 

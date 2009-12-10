@@ -48,6 +48,8 @@ EOF;
         $record = Content::createNew($model);
         $record->CreatedBy = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(true);
         $record->getRecord()->fromArray($row);
+        $record->is_published = true;
+        $record->slug = (string) $record;
       } else {
         $record = new $model();
         $record->fromArray($row);
