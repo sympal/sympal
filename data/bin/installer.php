@@ -65,7 +65,7 @@ function setupDatabase($task)
     $conn->connect();
     $task->logSection('sympal', '...connection credentials valid');
   } catch (Exception $e) {
-    $task->logBlock('Connection credentials invalid! Try again!', 'ERROR_LARGE');
+    $task->logBlock('Connection credentials invalid! Try again! '.$e->getMessage(), 'ERROR_LARGE');
 
     return setupDatabase($task);
   }
