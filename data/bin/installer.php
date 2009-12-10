@@ -1,9 +1,5 @@
 <?php
 
-// Silence notices/warnings from PEAR
-function sympal_installer_error_handler() {}
-set_error_handler('sympal_installer_error_handler');
-
 if (!$this->askConfirmation('Welcome to the Sympal installer! Do you wish to continue on with the installation? (y/n)', 'QUESTION_LARGE'))
 {
   $this->logBlock('Sympal installation was cancelled!', 'ERROR_LARGE');
