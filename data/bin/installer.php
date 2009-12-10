@@ -15,11 +15,7 @@ $manipulator->save();
 
 $this->logSection('sympal', '...downloading sfSympalPlugin');
 
-//$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
-$out = $err = null;
-$this->getFilesystem()->execute(
-  'cp -r /Users/jwage/Sites/sfSympalPlugin /Users/jwage/Sites/sympaltest/plugins/sfSympalPlugin', $out, $err
-);
+$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
 $this->reloadTasks();
 
 $this->logSection('sympal', '...setup initial data');
