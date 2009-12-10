@@ -45,7 +45,13 @@ function setupDatabase($task)
   $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
   $db['username']  = $task->askAndValidate('Enter your database username:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
   $db['password']  = $task->askAndValidate('Enter your database password:', new sfValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
-  $db['dsn']       = $db['driver'].'://'.$db['username'].':'.$db['password'].'@'.$db['host'].'/'.$db['name'];
+
+  if ($db['driver'] == 'sqlite')
+  {
+    $db['dsn'] = 'sqlite:///'.$db['name'];
+  } else {
+    $db['dsn'] = $db['driver'].'://'.$db['username'].':'.$db['password'].'@'.$db['host'].'/'.$db['name'];
+  }
 
   $task->logSection('sympal', sprintf('...testing connection dsn "%s"', $db['dsn']));
 

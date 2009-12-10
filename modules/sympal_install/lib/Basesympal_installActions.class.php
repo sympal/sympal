@@ -61,7 +61,13 @@ abstract class Basesympal_installActions extends sfActions
 
       if ($values['database']['type'])
       {
-        $params['db_dsn'] = $values['database']['type'].'://'.$values['database']['username'].':'.$values['database']['password'].'@'.$values['database']['host'].'/'.$values['database']['name'];
+        if ($values['database']['type'] == 'sqlite')
+        {
+          $params['db_dsn'] = 'sqlite:///'.$db['name'];
+        } else {
+          $params['db_dsn'] = $values['database']['type'].'://'.$values['database']['username'].':'.$values['database']['password'].'@'.$values['database']['host'].'/'.$values['database']['name'];
+        }
+
         $params['db_username'] = $values['database']['username'];
         $params['db_password'] = $values['database']['password'];
       }
