@@ -16,8 +16,11 @@ $manipulator->save();
 
 $this->logSection('sympal', '...downloading sfSympalPlugin');
 
-@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
-$this->disablePlugin('sfSympalPlugin'); // We don't want the explicit enabling of this plugin
+// Using SVN for now because PEAR ALWAYS FAILS FOR SOME PEOPLE
+$this->getFilesystem()->execute('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk plugins/sfSympalPlugin');
+
+//@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
+//$this->disablePlugin('sfSympalPlugin'); // We don't want the explicit enabling of this plugin
 $this->reloadTasks();
 
 $this->logSection('sympal', '...setup initial data');
