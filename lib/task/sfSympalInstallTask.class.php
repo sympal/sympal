@@ -5,12 +5,19 @@ class sfSympalInstallTask extends sfTaskExtraBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::OPTIONAL, 'The title of the Sympal site to install', sfSympalToolkit::getDefaultApplication()),
+      new sfCommandArgument('email-address', sfCommandArgument::OPTIONAL, 'The e-mail address of the first user to create.'),
+      new sfCommandArgument('username', sfCommandArgument::OPTIONAL, 'The username of the first user to create.'),
+      new sfCommandArgument('password', sfCommandArgument::OPTIONAL, 'The password of the first user to create.'),
     ));
 
     $this->addOptions(array(
+      new sfCommandOption('first-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'The first name of the first user to create.'),
+      new sfCommandOption('last-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'The last name of the first user to create.'),
+      new sfCommandOption('db-dsn', null, sfCommandOption::PARAMETER_OPTIONAL, 'The database DSN to install with.'),
+      new sfCommandOption('db-username', null, sfCommandOption::PARAMETER_OPTIONAL, 'The database username.'),
+      new sfCommandOption('db-password', null, sfCommandOption::PARAMETER_OPTIONAL, 'The database password.'),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The title of the Sympal site to install', sfSympalToolkit::getDefaultApplication()),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
-      new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
@@ -38,21 +45,38 @@ EOF;
       return 1;
     }
 
-    if (isset($options['interactive']) && $options['interactive'])
-    {
-      sfSympalConfig::set('sympal_install_database_dsn', $this->askAndValidate('Enter Database DSN:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_database_username', $this->askAndValidate('Enter Database Username:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_database_password', $this->askAndValidate('Enter Database Password:', new sfValidatorString(array('required' => false))));
-    }
-
     $databaseManager = new sfDatabaseManager($this->configuration);
 
     $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);
-    $install->setApplication($arguments['application']);
+    $install->setApplication($options['application']);
+    $install->setParam('email_address', $arguments['email-address']);
+    $install->setParam('username', $arguments['username']);
+    $install->setParam('password', $arguments['password']);
+    if (isset($options['first-name']))
+    {
+      $install->setParam('first_name', $options['first-name']);
+    }
+    if (isset($options['last-name']))
+    {
+      $install->setParam('last_name', $options['last-name']);
+    }
+    if (isset($options['db-dsn']))
+    {
+      $install->setParam('db_dsn', $options['db-dsn']);
+    }
+    if (isset($options['db-username']))
+    {
+      $install->setParam('db_username', $options['db-username']);
+    }
+    if (isset($options['db-password']))
+    {
+      $install->setParam('db_password', $options['db-password']);
+    }
+
     $install->install();
 
     $this->log(null);
-    $this->logSection('sympal', sprintf('Sympal was installed successfully...', $arguments['application']));
+    $this->logSection('sympal', sprintf('Sympal was installed successfully...', $options['application']));
 
     $url = 'http://localhost/'.sfConfig::get('sf_app').'_dev.php';
     $this->logSection('sympal', sprintf('Open your browser to "%s"', $url));

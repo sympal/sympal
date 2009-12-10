@@ -23,7 +23,7 @@ abstract class sfSympalPluginManager
 
     $this->_configuration = is_null($configuration) ? ProjectConfiguration::getActive():$configuration;
     $this->_dispatcher = $this->_configuration->getEventDispatcher();
-    $this->_formatter = is_null($formatter) ? new BaseFormatter():$formatter;
+    $this->_formatter = is_null($formatter) ? new sfFormatter():$formatter;
     $this->_filesystem = new sfFilesystem($this->_dispatcher, $this->_formatter);
 
     try {

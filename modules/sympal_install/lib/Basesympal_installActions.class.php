@@ -57,25 +57,20 @@ abstract class Basesympal_installActions extends sfActions
     {
       $values = $this->form->getValues();
 
-      sfSympalConfig::set('sympal_install_admin_email_address', $values['user']['email_address']);
-      sfSympalConfig::set('sympal_install_admin_first_name', $values['user']['first_name']);
-      sfSympalConfig::set('sympal_install_admin_last_name', $values['user']['last_name']);
-      sfSympalConfig::set('sympal_install_admin_username', $values['user']['username']);
-      sfSympalConfig::set('sympal_install_admin_password', $values['user']['password']);
-      
+      $params = $values['user'];
+
       if ($values['database']['type'])
       {
-        $dsn = $values['database']['type'].'://'.$values['database']['username'].':'.$values['database']['password'].'@'.$values['database']['host'].'/'.$values['database']['name'];
-
-        sfSympalConfig::set('sympal_install_database_dsn', $dsn);
-        sfSympalConfig::set('sympal_install_database_username', $values['database']['username']);
-        sfSympalConfig::set('sympal_install_database_password', $values['database']['password']);
+        $params['db_dsn'] = $values['database']['type'].'://'.$values['database']['username'].':'.$values['database']['password'].'@'.$values['database']['host'].'/'.$values['database']['name'];
+        $params['db_username'] = $values['database']['username'];
+        $params['db_password'] = $values['database']['password'];
       }
 
-      $formatter = new BaseFormatter();
+      $formatter = new sfFormatter();
       try {
         chdir(sfConfig::get('sf_root_dir'));
         $install = new sfSympalInstall($this->getContext()->getConfiguration(), $this->getContext()->getEventDispatcher(), $formatter);
+        $install->setParams($params);
         $install->install();
       } catch (Exception $e) {
         $this->getUser()->setFlash('error', $e->getMessage());
@@ -105,7 +100,7 @@ abstract class Basesympal_installActions extends sfActions
 
   public function executeInstall_plugins(sfWebRequest $request)
   {
-    $formatter = new BaseFormatter();
+    $formatter = new sfFormatter();
     $plugins = $this->getUser()->getAttribute('sympal_install_plugins');
 
     foreach ($plugins as $plugin)

@@ -5,7 +5,17 @@ class sfSympalInstall
   protected
     $_dispatcher,
     $_formatter,
-    $_application = 'sympal';
+    $_application = 'sympal',
+    $_params = array(
+      'db_dsn' => null,
+      'db_username' => null,
+      'db_password' => null,
+      'username' => 'admin',
+      'password' => 'admin',
+      'first_name' => 'Sympal',
+      'last_name' => 'Admin',
+      'email_address' => 'admin@sympalphp.org',
+    );
 
   public function __construct(ProjectConfiguration $configuration, sfEventDispatcher $dispatcher, sfFormatter $formatter)
   {
@@ -23,17 +33,38 @@ class sfSympalInstall
     $this->_application = $application;
   }
 
+  public function setParam($key, $value)
+  {
+    $this->_params[$key] = $value;
+  }
+
+  public function setParams(array $params)
+  {
+    $this->_params = $params;
+  }
+
   public function install()
   {
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
 
     sfSympalConfig::set('installing', true);
 
+    foreach ($this->_params as $key => $value)
+    {
+      if ($value)
+      {
+        sfSympalConfig::set('sympal_install_admin_'.$key, $value);
+      }
+    }
+
     $this->_setupDatabase();
     $this->_installSympal();
     $this->_installAddonPlugins();
     $this->_executePostInstallSql();
     $this->_executePostInstallHooks();
+
+    $task = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
+    $task->run();
 
     sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
 
@@ -45,37 +76,22 @@ class sfSympalInstall
 
   protected function _setupDatabase()
   {
-    $path = sfConfig::get('sf_config_dir').'/databases.yml';
-
-    if (sfSympalConfig::get('sympal_install_database_dsn'))
+    if (isset($this->_params['db_dsn']) && isset($this->_params['db_username']))
     {
-      $database = 'all:
-  doctrine:
-    class:  sfDoctrineDatabase
-    param:
-      dsn:        %s
-      username:   %s
-      password:   %s';
-
-      $database = sprintf($database,
-        sfSympalConfig::get('sympal_install_database_dsn'),
-        sfSympalConfig::get('sympal_install_database_username'),
-        sfSympalConfig::get('sympal_install_database_password')
-      );
-
-      $original = file($path);
-      $databases = $database."\n\n".'#'.implode('#', $original);
-
-      file_put_contents($path, $databases);
+      $task = new sfDoctrineConfigureDatabaseTask($this->_dispatcher, $this->_formatter);
+      $task->run(array(
+        'dsn' => $this->_params['db_dsn'],
+        'username' => $this->_params['db_username'],
+        'password' => $this->_params['db_password']
+      ));
 
       try {
-        $conn = Doctrine_Manager::getInstance()->openConnection(sfSympalConfig::get('sympal_install_database_dsn'), 'tmp', false);
-        $conn->setOption('username', sfSympalConfig::get('sympal_install_database_username'));
-        $conn->setOption('password', sfSympalConfig::get('sympal_install_database_password'));
+        $conn = Doctrine_Manager::getInstance()->openConnection($this->_params['db_dsn'], 'test', false);
+        $conn->setOption('username', $this->_params['db_username']);
+        $conn->setOption('password', $this->_params['db_password']);
         $conn->connect();
       } catch (Exception $e) {
-        file_put_contents($path, implode('', $original));
-        throw new InvalidArgumentException('Invalid database credentials specified, could not connect to database.');
+        throw new InvalidArgumentException('Database credentials are not valid!');
       }
     }
 
