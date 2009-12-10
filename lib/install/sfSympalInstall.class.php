@@ -33,6 +33,16 @@ class sfSympalInstall
     $this->_application = $application;
   }
 
+  public function getParam($key)
+  {
+    return $this->_params[$key];
+  }
+
+  public function getParams()
+  {
+    return $this->_params;
+  }
+
   public function setParam($key, $value)
   {
     $this->_params[$key] = $value;

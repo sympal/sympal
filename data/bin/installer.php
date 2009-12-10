@@ -1,7 +1,12 @@
 <?php
 
+// Silence notices/warnings from PEAR
+function sympal_installer_error_handler() {}
+set_error_handler('sympal_installer_error_handler');
+
 if (!$this->askConfirmation('Welcome to the Sympal installer! Do you wish to continue on with the installation? (y/n)', 'QUESTION_LARGE'))
 {
+  $this->logBlock('Sympal installation was cancelled!', 'ERROR_LARGE');
   return;
 }
 
@@ -15,31 +20,32 @@ $manipulator->save();
 
 $this->logSection('sympal', '...downloading sfSympalPlugin');
 
-$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
+@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
+$this->disablePlugin('sfSympalPlugin'); // We don't want the explicit enabling of this plugin
 $this->reloadTasks();
 
 $this->logSection('sympal', '...setup initial data');
 
-$application = $this->askAndValidate('What would you like your first application to be called?', new sfValidatorString());
-$firstName   = $this->askAndValidate('What is your first name?', new sfValidatorString());
-$lastName    = $this->askAndValidate('What is your last name?', new sfValidatorString());
+$application = $this->askAndValidate('What would you like your first application to be called?', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+$firstName   = $this->askAndValidate('What is your first name?', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+$lastName    = $this->askAndValidate('What is your last name?', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
 
 $validator = new sfValidatorEmail(array(), array('invalid' => 'Invalid e-mail address!'));
-$emailAddress = $this->askAndValidate('What is your e-mail address?', $validator);
+$emailAddress = $this->askAndValidate('What is your e-mail address?', $validator, array('style' => 'QUESTION_LARGE'));
 
 $this->runTask('configure:author', sprintf("'%s'", $emailAddress));
 
-$username    = $this->askAndValidate('Enter the username for the first user to create:', new sfValidatorString());
-$password    = $this->askAndValidate('Enter the password for the first user to create:', new sfValidatorString());
+$username = $this->askAndValidate('Enter the username for the first user to create:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+$password = $this->askAndValidate('Enter the password for the first user to create:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
 
 function setupDatabase($task)
 {
   $db = array();
-  $db['driver']    = $task->askAndValidate('What type of database will you be using? (mysql, pgsql, sqlite)', new sfValidatorString());
-  $db['host']      = $task->askAndValidate('Enter the host of your database:', new sfValidatorString());
-  $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString());
-  $db['username']  = $task->askAndValidate('Enter your database username:', new sfValidatorString());
-  $db['password']  = $task->askAndValidate('Enter your database password:', new sfValidatorString(array('required' => false)));
+  $db['driver']    = $task->askAndValidate('What type of database will you be using? (mysql, pgsql, sqlite)', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+  $db['host']      = $task->askAndValidate('Enter the host of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+  $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+  $db['username']  = $task->askAndValidate('Enter your database username:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+  $db['password']  = $task->askAndValidate('Enter your database password:', new sfValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
   $db['dsn']       = $db['driver'].'://'.$db['username'].':'.$db['password'].'@'.$db['host'].'/'.$db['name'];
 
   $task->logSection('sympal', sprintf('...testing connection dsn "%s"', $db['dsn']));
@@ -80,3 +86,20 @@ $command = sprintf(
 );
 $this->logBlock($command, 'INFO');
 $this->getFilesystem()->execute($command, $out, $err);
+
+// fix permission for common directories
+$fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
+$fixPerms->setCommandApplication($this->commandApplication);
+$fixPerms->setConfiguration($this->configuration);
+$fixPerms->run();
+
+$this->replaceTokens();
+
+$this->log(null);
+$this->logSection('sympal', sprintf('Sympal was installed successfully...', $application));
+
+$url = 'http://localhost/'.$application.'_dev.php/security/signin';
+$this->logSection('sympal', sprintf('Open your browser to "%s"', $url));
+$this->logSection('sympal', sprintf('You can signin with the username "%s" and password "%s"', $username, $password));
+
+exit;

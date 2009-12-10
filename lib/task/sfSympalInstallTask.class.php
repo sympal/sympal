@@ -5,9 +5,9 @@ class sfSympalInstallTask extends sfTaskExtraBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('email-address', sfCommandArgument::OPTIONAL, 'The e-mail address of the first user to create.'),
-      new sfCommandArgument('username', sfCommandArgument::OPTIONAL, 'The username of the first user to create.'),
-      new sfCommandArgument('password', sfCommandArgument::OPTIONAL, 'The password of the first user to create.'),
+      new sfCommandArgument('email-address', sfCommandArgument::OPTIONAL, 'The e-mail address of the first user to create.', 'admin@sympalphp.org'),
+      new sfCommandArgument('username', sfCommandArgument::OPTIONAL, 'The username of the first user to create.', 'admin'),
+      new sfCommandArgument('password', sfCommandArgument::OPTIONAL, 'The password of the first user to create.', 'admin'),
     ));
 
     $this->addOptions(array(
@@ -78,7 +78,8 @@ EOF;
     $this->log(null);
     $this->logSection('sympal', sprintf('Sympal was installed successfully...', $options['application']));
 
-    $url = 'http://localhost/'.sfConfig::get('sf_app').'_dev.php';
+    $url = 'http://localhost/'.$options['application'].'_dev.php/security/signin';
     $this->logSection('sympal', sprintf('Open your browser to "%s"', $url));
+    $this->logSection('sympal', sprintf('You can signin with the username "%s" and password "%s"', $install->getParam('username'), $install->getParam('password')));
   }
 }
