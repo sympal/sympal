@@ -41,15 +41,20 @@ function setupDatabase($task)
 {
   $db = array();
   $db['driver']    = $task->askAndValidate('What type of database will you be using? (mysql, pgsql, sqlite)', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-  $db['host']      = $task->askAndValidate('Enter the host of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-  $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-  $db['username']  = $task->askAndValidate('Enter your database username:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-  $db['password']  = $task->askAndValidate('Enter your database password:', new sfValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
 
+  $db = array(
+    'username' => null,
+    'password' => null
+  );
   if ($db['driver'] == 'sqlite')
   {
-    $db['dsn'] = 'sqlite:///'.$db['name'];
+    $db['path'] = $task->askAndValidate('Enter the path to your sqlite database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+    $db['dsn']  = 'sqlite:///'.$db['path'];
   } else {
+    $db['host']      = $task->askAndValidate('Enter the host of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+    $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+    $db['username']  = $task->askAndValidate('Enter your database username:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+    $db['password']  = $task->askAndValidate('Enter your database password:', new sfValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
     $db['dsn'] = $db['driver'].'://'.$db['username'].':'.$db['password'].'@'.$db['host'].'/'.$db['name'];
   }
 
