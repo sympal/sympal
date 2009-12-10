@@ -41,11 +41,9 @@ function setupDatabase($task)
 {
   $db = array();
   $db['driver']    = $task->askAndValidate('What type of database will you be using? (mysql, pgsql, sqlite)', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+  $db['username'] = null;
+  $db['password'] = null;
 
-  $db = array(
-    'username' => null,
-    'password' => null
-  );
   if ($db['driver'] == 'sqlite')
   {
     $db['path'] = $task->askAndValidate('Enter the path to your sqlite database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
