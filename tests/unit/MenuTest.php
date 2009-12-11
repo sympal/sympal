@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(45, new lime_output_color());
+$t = new lime_test(52, new lime_output_color());
 
 $configuration->loadHelpers(array('Tag'));
 
@@ -112,17 +112,17 @@ class sfSympalMenuSiteTest extends sfSympalMenuSite
 
 $manager = sfSympalMenuSiteManager::getInstance();
 $primaryMenu = $manager->getMenu('primary', false, 'sfSympalMenuSiteTest');
-$t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-signout">Signout</li><li id="primary-pages">Pages</li><li id="primary-about">About</li><li id="primary-markdown-examples">Markdown Examples</li><li id="primary-readme">README</li><li id="primary-trac" class="last">Trac</li></ul>');
+$t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-home" class="first">Home</li><li id="primary-signout">Signout</li><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list" class="last">Sample Content List</li></ul>');
 
 $split = $manager->split($primaryMenu, 2, true);
 $total = $primaryMenu->count();
 $t->is($split['primary']->count(), 2);
-$t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-signout">Signout</li><li id="primary-pages">Pages</li></ul>');
-$t->is((string) $split['secondary'], '<ul id="secondary-menu"><li id="primary-about">About</li><li id="primary-markdown-examples">Markdown Examples</li><li id="primary-readme">README</li><li id="primary-trac" class="last">Trac</li></ul>');
-$t->is($split['secondary']->count(), 4);
+$t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-home" class="first">Home</li><li id="primary-signout">Signout</li></ul>');
+$t->is((string) $split['secondary'], '<ul id="secondary-menu"><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list" class="last">Sample Content List</li></ul>');
+$t->is($split['secondary']->count(), 2);
 
 $footerMenu = $manager->getMenu('footer', false, 'sfSympalMenuSiteTest');
-$t->is((string) $footerMenu, '<ul id="footer-menu"><li id="footer-about" class="first">About</li><li id="footer-markdown-examples">Markdown Examples</li><li id="footer-readme" class="last">README</li></ul>');
+$t->is((string) $footerMenu, '<ul id="footer-menu"><li id="footer-sample-page" class="first">Sample Page</li><li id="footer-sample-content-list" class="last">Sample Content List</li></ul>');
 
 $menu = new sfSympalMenuTest('Test Menu');
 $root1 = $menu->getChild('Root 1');
@@ -137,3 +137,22 @@ $t->is($middle->isLast(), false);
 $t->is($first->getNum(), 1);
 $t->is($middle->getNum(), 2);
 $t->is($last->getNum(), 3);
+
+$table = Doctrine_Core::getTable('MenuItem');
+
+$menuItems = $table
+  ->createQuery('m')
+  ->execute();
+
+$menuItem = $table
+  ->createQuery('m')
+  ->where('m.slug = ?', 'sample-page')
+  ->fetchOne();
+
+$t->is($menuItem->getIndentedName(), '- Sample Page');
+$t->is((string) $menuItem, '- Sample Page');
+$t->is($menuItem->getMainContent()->getHeaderTitle(), 'Sample Page');
+$t->is($menuItem->getLabel(), 'Sample Page');
+$t->is($menuItem->getItemRoute(), '@sympal_content_view_type_page?slug=sample-page');
+$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page');
+$t->is($menuItem->getLayout(), 'sympal');

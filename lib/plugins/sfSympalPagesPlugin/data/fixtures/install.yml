@@ -9,8 +9,15 @@ MenuItem:
     label: Home
     Site: Site_default
     ContentType: ContentType_Page
-    RelatedContent: Content_Page_home
+    custom_path: @homepage
     children:
+      MenuItem_primary_home:
+        name: Home
+        is_published: true
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+        label: Home
+        Site: Site_default
+        RelatedContent: Content_Page_home
       MenuItem_primary_register:
         name: Register
         is_published: true
@@ -35,67 +42,22 @@ MenuItem:
         route: @sympal_signout
         Site: Site_default
         requires_auth: true
-      MenuItem_primary_pages:
-        name: Pages
+      MenuItem_primary_sample_page:
+        name: Sample Page
         is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: Pages
+        label: Sample Page
         Site: Site_default
-        ContentType: ContentType_ContentList
-        RelatedContent: Content_ContentList_pages
-      MenuItem_primary_about:
-        name: About
-        is_published: true
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: About
-        Site: Site_default
-        RelatedContent: Content_Page_about
+        RelatedContent: Content_Page_sample_page
         ContentType: ContentType_Page
-        children:
-          MenuItem_primary_about_doctrine:
-            name: Doctrine
-            is_published: true
-            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-            label: Doctrine
-            Site: Site_default
-            route: http://www.doctrine-project.org/about
-          MenuItem_primary_about_symfony:
-            name: symfony
-            is_published: true
-            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-            label: symfony
-            Site: Site_default
-            route: http://www.symfony-project.org/about
-          MenuItem_primary_about_sensio_labs:
-            name: Sensio Labs
-            is_published: true
-            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-            label: Sensio Labs
-            Site: Site_default
-            route: http://www.sensiolabs.com
-      MenuItem_primary_markdown_examples:
-        name: Markdown Examples
+      MenuItem_primary_sample_content_list:
+        name: Sample Content List
         is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+        label: Sample Content List
+        Site: Site_default
+        RelatedContent: Content_ContentList_sample_content_list
         ContentType: ContentType_Page
-        Site: Site_default
-        label: Markdown Examples
-        RelatedContent: Content_Page_markdown_examples
-      MenuItem_primary_readme:
-        name: README
-        is_published: true
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        ContentType: ContentType_Page
-        Site: Site_default
-        label: README
-        RelatedContent: Content_Page_readme
-      MenuItem_primary_trac:
-        name: Trac
-        is_published: true
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        Site: Site_default
-        label: Trac
-        route: http://trac.jwage.com/sympal
   MenuItem_footer:
     name: footer
     is_published: true
@@ -105,29 +67,21 @@ MenuItem:
     ContentType: ContentType_Page
     RelatedContent: Content_Page_home
     children:
-      MenuItem_footer_about:
-        name: About
+      MenuItem_footer_sample_page:
+        name: Sample Page
         is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: About
+        label: Sample Page
         Site: Site_default
-        RelatedContent: Content_Page_about
+        RelatedContent: Content_Page_sample_page
         ContentType: ContentType_Page
-      MenuItem_footer_markdown_examples:
-        name: Markdown Examples
+      MenuItem_footer_sample_content_list:
+        name: Sample Content List
         is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: Markdown Examples
+        label: Sample Content List
         Site: Site_default
-        RelatedContent: Content_Page_markdown_examples
-        ContentType: ContentType_Page
-      MenuItem_footer_readme:
-        name: README
-        is_published: true
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: README
-        Site: Site_default
-        RelatedContent: Content_Page_readme
+        RelatedContent: Content_ContentList_sample_content_list
         ContentType: ContentType_Page
 
 Content:
@@ -137,6 +91,7 @@ Content:
     Site: Site_default
     is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+    Template: ContentTemplate_Register
     Slots: [Register_slot_body]
     CreatedBy: admin
 <?php if (sfSympalConfig::isI18nEnabled('Content')): ?> 
@@ -155,145 +110,36 @@ Content:
     custom_path: "/"
     Slots: [Home_slot_body]
     CreatedBy: admin
-  Content_Page_about:
+  Content_Page_sample_page:
     Type: ContentType_Page
-    slug: about
+    slug: sample-page
     Site: Site_default
     is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    Slots: [About_slot_body]
+    Slots: [Sample_page_slot_body]
     CreatedBy: admin
-  Content_ContentList_pages:
+  Content_ContentList_sample_content_list:
     Type: ContentType_ContentList
-    slug: pages
+    slug: sample-content-list
     Site: Site_default
     is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    CreatedBy: admin
-    Slots: [Pages_slot_header]
-  Content_Page_markdown_examples:
-    Type: ContentType_Page
-    slug: markdown-examples
-    Site: Site_default
-    is_published: true
-    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    Slots: [Markdown_examples_slot_body]
-    CreatedBy: admin
-  Content_Page_readme:
-    Type: ContentType_Page
-    slug: readme
-    Site: Site_default
-    is_published: true
-    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    Slots: [Readme_slot_body]
     CreatedBy: admin
 
 ContentSlot:
-  Pages_slot_header:
-    name: header
-    Type: ContentSlotType_Markdown
-    value: View a list of all the available pages below.
-  Readme_slot_body:
-    name: body
-    Type: ContentSlotType_Markdown
-    value: |
-      [?php echo file_get_contents($sf_context->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/README') ?]
-  Register_slot_body:
-    name: body
-    Type: ContentSlotType_Markdown
-    value: |
-      [?php echo get_component('sympal_register', 'form') ?]
   Home_slot_body:
     name: body
     Type: ContentSlotType_Markdown
     value: |
       Welcome to the Sympal content management system.
-  About_slot_body:
+  Sample_page_slot_body:
     name: body
     Type: ContentSlotType_Markdown
-    value: |
-      Sympal was born through the desire to have a solid content management 
-      framework built on top of Symfony. The idea quickly expanded and Sympal
-      became an extension for Symfony that provides lots of new functionality
-      to help with producing content based web applications. Below is a list of
-      some of the features.
-
-      # Features
-
-      * Plug n' Play Architecture
-      * Internationalization
-      * Multiple Sites
-      * Custom Content Types
-      * Custom Content Slot Types
-      * Multiple Menus
-      * Use PHP in your Content
-      * Configurable/Extensible
-      * Page Caching
-      * Database Caching
-  Markdown_examples_slot_body:
+    value: This is a sample Sympal page.
+  Register_slot_body:
     name: body
     Type: ContentSlotType_Markdown
-    value: |
-      Example Table
-      -------------
-
-      | Column 1        | Column 2   |
-      |-------------|--------------|
-      | col 1 value 1  | col 2 value    |
-      | col 1 value 2 | col 2 value2 |
-
-      Example YAML Highlighting
-      -------------------------
-
-          [yml]
-          User:
-            columns:
-              username: string(255)
-              password: string(255)
-
-      Example SQL Highlighting
-      ------------------------
-
-          [sql]
-          SELECT id, name, description FROM table;
-
-      Example PHP Syntax Highlighting
-      -------------------------------
-
-          [php]
-          echo 'test';
-
-      Example Quote Box
-      -----------------
-
-      >**QUOTE**
-      >Some cool cool old quote.
-
-      #Example Sidebar Box
-      --------------------
-
-      >**SIDEBAR**
-      >This is the title of the sidebar
-      >
-      >Testing this out
-
-      Example Tip Box
-      ---------------
-
-      >**TIP**
-      >Tip
-
-      Example Note Box
-      ----------------
-
-      >**NOTE**
-      >Note
-
-      Example Caution Box
-      -------------------
-
-      >**CAUTION**
-      >Testing
+    value: Register a new user below.
 
 Page:
   register:
@@ -304,18 +150,12 @@ Page:
     title: Home
     Content: Content_Page_home
     disable_comments: true
-  about:
-    title: About
-    Content: Content_Page_about
-  markdown_examples:
-    title: Markdown Examples
-    Content: Content_Page_markdown_examples
-  readme:
-    title: README
-    Content: Content_Page_readme
+  sample_page:
+    title: Sample Page
+    Content: Content_Page_sample_page
 
 ContentList:
-  pages:
-    title: Pages
-    Content: Content_ContentList_pages
+  sample_content_list:
+    title: Sample Content List
+    Content: Content_ContentList_sample_content_list
     ContentType: ContentType_Page

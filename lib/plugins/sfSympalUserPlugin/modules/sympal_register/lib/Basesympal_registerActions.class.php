@@ -9,6 +9,7 @@ class Basesympal_registerActions extends sfActions
 
   public function executeSave(sfWebRequest $request)
   {
+    $this->renderer = sfSympalContext::getInstance()->quickRenderContent('Page', 'register');
     $this->form = sfSympalRegisterForm::getInstance();
 
     sfSympalFormToolkit::bindFormRecaptcha($this->form, sfSympalConfig::get('sfSympalRegisterPlugin', 'enable_recaptcha'));
@@ -22,6 +23,5 @@ class Basesympal_registerActions extends sfActions
 
       $this->redirect('@sympal_homepage');
     }
-    $this->setTemplate('index');
   }
 }

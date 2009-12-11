@@ -1,1 +1,1 @@
-<?php echo get_partial('sympal_register/form', array('form' => $form)) ?>
+<?php echo $renderer->render() ?>

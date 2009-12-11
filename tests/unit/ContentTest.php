@@ -129,7 +129,7 @@ $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>Body value</p>
 $t->is($slots[0]->render(), 'Title value');
 
 // test php
-$slots[1]['value'] = "<?php echo 'test'; ?>";
+$slots[1]['value'] = "test";
 $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>test</p>
 </div>');
 

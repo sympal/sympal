@@ -5,7 +5,7 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(5, new lime_output_color());
 
-$menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug('about');
+$menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug('sample-page');
 sfSympalToolkit::setCurrentMenuItem($menuItem);
 
 $t->is(sfSympalToolkit::getCurrentMenuItem(), $menuItem);
