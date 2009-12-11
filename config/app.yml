@@ -37,7 +37,7 @@ all:
     recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX
     recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb
     language_codes: [en, fr]
-    disallow_php_in_content: false
+    disallow_php_in_content: true
     default_layout: sympal
     rows_per_page: 10
     plugin_sources: ["http://svn.symfony-project.com/plugins"]
