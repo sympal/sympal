@@ -48,6 +48,7 @@ generator:
         table_method: getAdminGenQuery
         title: Manage Content
         display: [_title, is_published]
+        sort: [date_published, DESC]
         batch_actions:
           _delete:
           publish:
