@@ -36,9 +36,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     $install = new sfSympalInstall($this, $this->dispatcher, new sfFormatter());
     $install->install();
 
-    $cache = new sfSympalCache(
-      $this->getPluginConfiguration('sfSympalPlugin')
-           ->getSympalConfiguration()
-    );
+    $this->getPluginConfiguration('sfSympalPlugin')
+      ->getSympalConfiguration()->getCache()->primeCache(true);
   }
 }

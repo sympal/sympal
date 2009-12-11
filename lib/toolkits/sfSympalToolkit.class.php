@@ -147,7 +147,8 @@ class sfSympalToolkit
 
   public static function getRoutesYaml()
   {
-    $routeTemplate =
+    try {
+      $routeTemplate =
 '%s:
   url:   %s
   param:
@@ -166,44 +167,45 @@ class sfSympalToolkit
       sf_format:   (%s)
 ';
 
-    $contents = Doctrine::getTable('Content')
-      ->createQuery('c')
-      ->leftJoin('c.Type t')
-      ->where('c.custom_path IS NOT NULL')
-      ->execute();
+      $contents = Doctrine::getTable('Content')
+        ->createQuery('c')
+        ->leftJoin('c.Type t')
+        ->where('c.custom_path IS NOT NULL')
+        ->execute();
 
-    $routes = array();
-    foreach ($contents as $content)
-    {
-      $routes[] = sprintf($routeTemplate,
-        substr($content->getRouteName(), 1),
-        $content->getRoutePath(),
-        'sympal_content_renderer',
-        'index',
-        $content->Type->name,
-        $content->id,
-        implode('|', sfSympalConfig::get('language_codes')),
-        implode('|', sfSympalConfig::get('content_formats'))
-      );
-    }
+      $routes = array();
+      foreach ($contents as $content)
+      {
+        $routes[] = sprintf($routeTemplate,
+          substr($content->getRouteName(), 1),
+          $content->getRoutePath(),
+          'sympal_content_renderer',
+          'index',
+          $content->Type->name,
+          $content->id,
+          implode('|', sfSympalConfig::get('language_codes')),
+          implode('|', sfSympalConfig::get('content_formats'))
+        );
+      }
 
-    $contentTypes = Doctrine::getTable('ContentType')->findAll();
-    foreach ($contentTypes as $contentType)
-    {
-      $routes[] = sprintf($routeTemplate,
-        substr($contentType->getRouteName(), 1),
-        $contentType->getRoutePath(),
-        'sympal_content_renderer',
-        'index',
-        $contentType->name,
-        null,
-        implode('|', sfSympalConfig::get('language_codes')),
-        implode('|', sfSympalConfig::get('content_formats'))
-      );
-    }
+      $contentTypes = Doctrine::getTable('ContentType')->findAll();
+      foreach ($contentTypes as $contentType)
+      {
+        $routes[] = sprintf($routeTemplate,
+          substr($contentType->getRouteName(), 1),
+          $contentType->getRoutePath(),
+          'sympal_content_renderer',
+          'index',
+          $contentType->name,
+          null,
+          implode('|', sfSympalConfig::get('language_codes')),
+          implode('|', sfSympalConfig::get('content_formats'))
+        );
+      }
 
-    $routes = implode("\n", $routes);
-    file_put_contents(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml', $routes);
-    return $routes;
+      $routes = implode("\n", $routes);
+      file_put_contents(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml', $routes);
+      return $routes;
+    } catch (Exception $e) {}
   }
 }

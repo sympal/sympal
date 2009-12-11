@@ -18,9 +18,8 @@ function installPlugin($name, $t)
   $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize($contentTypeName)));
   $t->is($contentType['plugin_name'], $name);
 
-  $short = sfSympalPluginToolkit::getShortPluginName($name);
-  $menuItem = Doctrine_Core::getTable('MenuItem')->findOneByName($short);
-  $t->is($menuItem['name'], $short);
+  $menuItem = Doctrine_Core::getTable('MenuItem')->findOneByName($contentTypeName);
+  $t->is($menuItem['name'], $contentTypeName);
 }
 
 function uninstallPlugin($name, $t)

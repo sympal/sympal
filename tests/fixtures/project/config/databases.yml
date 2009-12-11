@@ -2,11 +2,10 @@ all:
   doctrine:
     class: sfDoctrineDatabase
     param:
-      dsn: 'mysql://root:@localhost/sympaltest'
-      collate: utf8_unicode_ci
+      dsn: 'mysql://root:@localhost/sympal'
       username: root
-      password: null
+
 test:
   doctrine:
     param:
-      dsn: 'sqlite:%SF_DATA_DIR%/test.sqlite'
+      dsn: 'sqlite::memory:'

@@ -66,7 +66,7 @@ $sfUser->signIn($user);
 $sfUser->isEditMode(true);
 
 $q = Doctrine_Core::getTable('Content')
-  ->getTypeQuery('Page')
+  ->getFullTypeQuery('Page')
   ->andWhere('c.slug = ?', 'testing-this-out');
 
 $content = $q->fetchOne();

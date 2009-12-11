@@ -1,3 +1,23 @@
 forward_to_route:
   url: '/forward/to/route/:param1/:param2'
   param: { module: test, action: route_to_forward_to }
+  requirements: { sf_method: [get, post] }
+ask_confirmation:
+  url: /test/ask_confirmation
+  param: { module: test, action: ask_confirmation }
+  requirements: { sf_method: [get, post] }
+forward_to_route2:
+  url: /test/forward_to_route
+  param: { module: test, action: forward_to_route }
+forward_to_route3:
+  url: /test/forward_to_route2
+  param: { module: test, action: forward_to_route2 }
+start_go_back:
+  url: /test/start_go_back
+  param: { module: test, action: start_go_back }
+go_back:
+  url: /test/go_back
+  param: { module: test, action: go_back }
+change_layout:
+  url: /test/change_layout
+  param: { module: test, action: change_layout }

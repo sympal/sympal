@@ -8,6 +8,11 @@ class sfSympalUser extends sfBasicSecurityUser
     $_flash           = false,
     $_openContentLock = null;
 
+  public function isEditMode()
+  {
+    return sfSympalToolkit::isEditMode();
+  }
+
   public function hasAccessToContent($content)
   {
     $access = true;

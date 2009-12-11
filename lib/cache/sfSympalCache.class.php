@@ -25,6 +25,15 @@ class sfSympalCache
     ));
   }
 
+  public function clear()
+  {
+    $this->_contentTypes = null;
+    $this->_helperAutoload = null;
+    $this->_modules = null;
+    $this->_layouts = null;
+    $this->_cacheDriver->set('primed', false);
+  }
+
   public function primeCache($force = false)
   {
     if ($this->_cacheDriver->has('primed') && !$force)
@@ -32,6 +41,7 @@ class sfSympalCache
       return true;
     }
 
+    $this->clear();
     $this->_writeContentTypesCache();
     $this->_writeHelperAutoloadCache();
     $this->_writeModulesCache();

@@ -58,7 +58,7 @@ abstract class PluginUser extends BaseUser
     parent::_set('password', call_user_func_array($algorithm, array($salt.$password)));
   }
 
-  public function setPasswordBis($password)
+  public function setPasswordAgain($password)
   {
   }
 

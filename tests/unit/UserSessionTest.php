@@ -4,7 +4,7 @@ $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 sleep(1);
 
-$t = new lime_test(14, new lime_output_color());
+$t = new lime_test(12, new lime_output_color());
 
 $user = sfContext::getInstance()->getUser();
 $content = Doctrine_Core::getTable('Content')
@@ -21,12 +21,6 @@ $admin = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(1);
 $user->signIn($admin);
 
 $t->is($user->hasAccessToContent($content), true);
-$t->is($user->isEditMode(), true);
-
-$user->toggleEditMode();
-$t->is($user->isEditMode(), false);
-
-$user->toggleEditMode();
 $t->is($user->isEditMode(), true);
 
 $user->obtainContentLock($content);
