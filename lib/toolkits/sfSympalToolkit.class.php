@@ -167,10 +167,20 @@ class sfSympalToolkit
       sf_format:   (%s)
 ';
 
+      $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
+
       $contents = Doctrine::getTable('Content')
         ->createQuery('c')
         ->leftJoin('c.Type t')
         ->where('c.custom_path IS NOT NULL')
+        ->execute();
+
+      $contents = Doctrine::getTable('Content')
+        ->createQuery('c')
+        ->leftJoin('c.Type t')
+        ->innerJoin('c.Site s')
+        ->where('c.custom_path IS NOT NULL')
+        ->andWhere('s.slug = ?', $siteSlug)
         ->execute();
 
       $routes = array();
@@ -188,7 +198,12 @@ class sfSympalToolkit
         );
       }
 
-      $contentTypes = Doctrine::getTable('ContentType')->findAll();
+      $contentTypes = Doctrine::getTable('ContentType')
+        ->createQuery('t')
+        ->innerJoin('t.Site s')
+        ->where('s.slug = ?', $siteSlug)
+        ->execute();
+
       foreach ($contentTypes as $contentType)
       {
         $routes[] = sprintf($routeTemplate,
