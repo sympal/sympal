@@ -45,7 +45,7 @@ class sfSympalExtendClass implements ArrayAccess
     $event = ProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($subject, 'sympal.'.$name.'.method_not_found', array('method' => $method, 'arguments' => $arguments)));
     if (!$event->isProcessed())
     {
-      throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($subject), $method));
+      throw new Doctrine_Record_UnknownPropertyException(sprintf('Call to undefined method %s::%s.', get_class($subject), $method));
     }
 
     return $event->getReturnValue();

@@ -21,7 +21,7 @@ class sfSympalRecord extends Doctrine_Template
 
     if ($this->isI18ned())
     {
-      $this->sympalActAs('sfSympalI18n', array('fields' => $this->getI18nedFields()), 'Doctrine_Template_I18n');
+      $this->sympalActAs('Doctrine_Template_I18n', array('fields' => $this->getI18nedFields()), 'Doctrine_Template_I18n');
     }
 
     if ($this->isContent())
