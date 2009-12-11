@@ -5,6 +5,16 @@
   <?php $editor = get_sympal_editor() ?>
   <?php $flash = get_sympal_flash() ?>
 
+  <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
+  <?php $primaryMenu = (string) $menus['primary'] ?>
+  
+  <?php if (isset($menus['secondary'])): ?>
+    <?php $menus['secondary']->callRecursively('showChildren', true) ?>
+    <?php if ($secondary = (string) $menus['secondary']): ?>
+      <?php slot('sympal_right_sidebar', $secondary.get_slot('sympal_right_sidebar')) ?>
+    <?php endif; ?>
+  <?php endif; ?>
+
   <?php $subMenu = get_sympal_menu(sfSympalToolkit::getCurrentMenuItem(), true) ?>
   <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
     <?php use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
@@ -23,9 +33,6 @@
   <div id="header">
   <div id="logo"><?php echo link_to(image_tag('/sfSympalPlugin/images/spacer.gif'), '@homepage', 'id=logo_spacer') ?></div>
 
-  <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
-  <?php $primaryMenu = (string) $menus['primary'] ?>
-  
   <?php if ($primaryMenu): ?>
     <!-- top navigation -->
     <div id="top_navigation">
@@ -35,13 +42,6 @@
         <?php echo $primaryMenu ?>
      </div>
     </div>
-  <?php endif; ?>
-
-  <?php if (isset($menus['secondary'])): ?>
-    <?php $menus['secondary']->callRecursively('showChildren', true) ?>
-    <?php if ($secondary = (string) $menus['secondary']): ?>
-      <?php slot('sympal_right_sidebar', $secondary.get_slot('sympal_right_sidebar')) ?>
-    <?php endif; ?>
   <?php endif; ?>
 
   <!-- end top navigation -->
