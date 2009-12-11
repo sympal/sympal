@@ -478,10 +478,9 @@ abstract class PluginContent extends BaseContent
   {
     $record = $content->getRecord();
 
-    if (is_callable(array($record, 'slugBuilder')))
-    {
+    try {
       return $record->slugBuilder($text);
-    } else {
+    } catch (Doctrine_Record_UnknownPropertyException $e) {
       return Doctrine_Inflector::urlize($text);
     }
   }
