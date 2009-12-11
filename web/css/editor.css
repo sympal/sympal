@@ -253,15 +253,15 @@ li a.on {
   padding: 5px;
 }
 
-ins {
+.sympal_diff ins {
   background-color: #ddffdd;
 }
 
-del {
+.sympal_diff del {
   background-color: #ffdddd;
 }
 
-body input, body select, body textarea {
+#sf_admin_container input, #sf_admin_container select, #sf_admin_container textarea {
 	padding: 0.40em;
 	border:1px solid #ddd;
 	background:#fafafa;
@@ -272,7 +272,7 @@ body input, body select, body textarea {
   border-radius: 0.4em;
 }
 
-body input:hover, body input:focus, body select:hover, body select:focus, body textarea:hover, body textarea:focus {
+#sf_admin_container input:hover, #sf_admin_container input:focus, #sf_admin_container select:hover, #sf_admin_container select:focus, #sf_admin_container textarea:hover, #sf_admin_container textarea:focus {
 	border-color:#c5c5c5;
 	background:#ffffcc;
 }
