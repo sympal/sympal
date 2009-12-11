@@ -52,7 +52,6 @@ ContentType:
 
   ContentType_ContentList:
     Site: Site_default
-    Template: ContentTemplate_ViewContentList
     plugin_name: sfSympalContentListPlugin
     name: ContentList
     description: The content list content type is the default Sympal content type for displaying lists of content.

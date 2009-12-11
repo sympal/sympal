@@ -42,32 +42,6 @@ class sfSympalConfig
     }
   }
 
-  public static function isVersioningEnabled($name = null)
-  {
-    if ($name)
-    {
-      if (is_object($name))
-      {
-        $name = get_class($name);
-      }
-      $versionedModels = self::get('versioned_models');
-      return self::get('versioning') && isset($versionedModels[$name]);
-    } else {
-      return self::get('versioning');
-    }
-  }
-
-  public static function getVersionedModelOptions($name)
-  {
-    if (self::isVersioningEnabled($name))
-    {
-      $versionedModels = self::get('versioned_models');
-      return $versionedModels[$name];
-    } else {
-      return array();
-    }
-  }
-
   public static function writeSetting($group, $name, $value = null)
   {
     if (is_null($value))

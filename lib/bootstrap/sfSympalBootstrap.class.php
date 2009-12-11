@@ -39,10 +39,6 @@ class sfSympalBootstrap
       sfConfig::set('sf_module_disabled_action', 'disabled');
     }
 
-    $options = array('baseClassName' => 'sfSympalDoctrineRecord');
-    $options = array_merge(sfConfig::get('doctrine_model_builder_options', array()), $options);
-    sfConfig::set('doctrine_model_builder_options', $options);
-
     $manager = Doctrine_Manager::getInstance();
     $manager->setAttribute(Doctrine_Core::ATTR_VALIDATE, Doctrine_Core::VALIDATE_ALL);
 
@@ -86,8 +82,6 @@ class sfSympalBootstrap
       'ContentSlotTranslation',
       'MenuItem',
       'MenuItemTranslation',
-      'Version',
-      'VersionChange',
       'sfSympalContentRenderer',
       'sfSympalMenu',
       'sfParameterHolder'

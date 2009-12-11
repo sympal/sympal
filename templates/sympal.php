@@ -4,6 +4,12 @@
 <head>
   <?php $editor = get_sympal_editor() ?>
   <?php $flash = get_sympal_flash() ?>
+
+  <?php $subMenu = get_sympal_menu(sfSympalToolkit::getCurrentMenuItem(), true) ?>
+  <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
+    <?php use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
+  <?php endif; ?>
+
   <?php include_http_metas() ?>
   <?php include_metas() ?>
   <?php include_title() ?>
@@ -54,9 +60,7 @@
   </div>
   <!-- end left column -->
 
-  <?php $subMenu = get_sympal_menu(sfSympalToolkit::getCurrentMenuItem(), true) ?>
   <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
-    <?php use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
     <!-- right column -->
     <div id="column_right">
      <br />

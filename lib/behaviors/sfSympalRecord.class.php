@@ -19,11 +19,6 @@ class sfSympalRecord extends Doctrine_Template
       $this->sympalActAs('Doctrine_Template_Sluggable', $this->getSluggableOptions());
     }
 
-    if ($this->isVersioned())
-    {
-      $this->sympalActAs('sfSympalVersionable');
-    }
-
     if ($this->isI18ned())
     {
       $this->sympalActAs('sfSympalI18n', array('fields' => $this->getI18nedFields()), 'Doctrine_Template_I18n');
@@ -94,12 +89,6 @@ class sfSympalRecord extends Doctrine_Template
     } else {
       return array();
     }
-  }
-
-  public function isVersioned()
-  {
-    $versionedModels = sfSympalConfig::get('versioned_models', null, array());
-    return isset($versionedModels[$this->_table->getOption('name')]);
   }
 
   public function isContent()

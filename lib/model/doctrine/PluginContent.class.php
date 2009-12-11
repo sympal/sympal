@@ -55,11 +55,11 @@ abstract class PluginContent extends BaseContent
 
   public function hasField($name)
   {
-    $result = parent::hasField($name);
+    $result = $this->_table->hasField($name);
     if (!$result)
     {
       $className = $this->getContentTypeClassName();
-      $table = Doctrine_Core::getTable($className)->getRecordInstance();
+      $table = Doctrine_Core::getTable($className);
       if ($table->hasField($name))
       {
         $result = true;
@@ -405,7 +405,9 @@ abstract class PluginContent extends BaseContent
       } else if ($this->hasField($name)) {
         $values[$name] = $this->$name;
       } else if (is_callable(array($this, $method = 'get'.sfInflector::camelize($name)))) {
-        $values[$name] = $this->$method();
+        try {
+          $values[$name] = $this->$method();
+        } catch (Exception $e) {}
       }
     }
 
