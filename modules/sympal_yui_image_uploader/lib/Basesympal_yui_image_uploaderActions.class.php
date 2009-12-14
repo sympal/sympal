@@ -15,6 +15,7 @@ abstract class Basesympal_yui_image_uploaderActions extends sfActions
     sfConfig::set('sf_web_debug', false);
 
     try {
+      sfSympalYuiImageUploadForm::disableCSRFProtection();
       $form = new sfSympalYuiImageUploadForm();
       $form->bind(array(), $request->getFiles());
 
