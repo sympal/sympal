@@ -1,4 +1,4 @@
-<?php use_stylesheet('/sfSympalPlugin/css/jQuery.treeTable.css', 'last') ?>
+<?php use_stylesheet('/sfSympalPlugin/css/jquery.treeTable.css', 'last') ?>
 <?php use_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js') ?>
 <?php use_javascript('http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js') ?>
 <?php use_javascript('/sfSympalPlugin/js/jquery.treeTable.js') ?>
