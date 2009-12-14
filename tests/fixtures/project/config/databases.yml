@@ -8,4 +8,4 @@ all:
 test:
   doctrine:
     param:
-      dsn: 'sqlite::memory:'
+      dsn: 'sqlite:///%SF_DATA_DIR%/test.sqlite'

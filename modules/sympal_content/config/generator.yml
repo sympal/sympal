@@ -58,7 +58,7 @@ generator:
             action: unpublish
             label: Un-Publish
       filter:
-        display: [content_type_id, content_template_id, created_by, locked_by, last_updated_by, is_published, date_published]
+        class: false
       edit:
         title: "Editing Content #%%id%%"
         actions:

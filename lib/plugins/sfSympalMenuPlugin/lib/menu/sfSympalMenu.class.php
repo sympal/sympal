@@ -1,8 +1,11 @@
 <?php
+
 class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 {
   protected
     $_name             = null,
+    $_ulClass          = null,
+    $_liClass          = null,
     $_route            = null,
     $_level            = null,
     $_num              = null,
@@ -83,6 +86,26 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   public function offsetUnset($name)
   {
     unset($this->_children[$name]);
+  }
+
+  public function getUlClass()
+  {
+    return $this->_ulClass;
+  }
+
+  public function setUlClass($ulClass)
+  {
+    $this->_ulClass = $ulClass;
+  }
+
+  public function getLiClass()
+  {
+    return $this->_liClass;
+  }
+
+  public function setLiClass($liClass)
+  {
+    $this->_liClass = $liClass;
   }
 
   public function getRoute()
@@ -343,7 +366,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     if ($this->checkUserAccess() && $this->hasChildren())
     {
       $id = Doctrine_Inflector::urlize($this->getName().'-menu');
-      $html = '<ul id="'.$id.'">';
+      $html = '<ul'.($this->_ulClass ? ' class="'.$this->_class.'"' : null).' id="'.$id.'">';
       foreach ($this->_children as $child)
       {
         $html .= $child->renderChild();
@@ -369,6 +392,10 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
       if ($this->isLast())
       {
         $class[] = 'last';
+      }
+      if ($this->_liClass)
+      {
+        $class[] = $this->_liClass;
       }
       $id = Doctrine_Inflector::urlize($this->getRoot()->getName().'-'.$this->getName());
       $html = '<li id="'.$id.'"'.(!empty($class) ? ' class="'.implode(' ', $class).'"':null).'>';

@@ -119,7 +119,7 @@ class sfSympalEventHandler
        {
          if ($request->getParameter('module') == 'sympal_content')
          {
-           $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'].' Inline', $content->getRoute());
+           $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' View '.$content['Type']['label'], $content->getRoute());
          } else {
            $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'].' Backend', '@sympal_content_edit?id='.$content['id']);
          }

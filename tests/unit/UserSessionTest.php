@@ -2,7 +2,6 @@
 
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
-sleep(1);
 
 $t = new lime_test(12, new lime_output_color());
 

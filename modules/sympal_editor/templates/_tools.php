@@ -34,11 +34,15 @@
       <span id="toggle"><?php if ($state == 'hidden'): ?><?php echo __('Show') ?><?php else: ?><?php echo __('Hide') ?><?php endif; ?></span>
     </div>
     <div class="bd" id="sympal_edit_panel_contents">
-      <?php if ($sf_request->getParameter('module') == 'sympal_content_renderer'): ?>
-        <?php echo button_to('Go to Admin Dashboard', '@sympal_dashboard', 'class="editor_button"') ?>
-      <?php else: ?>
+      <?php if ($sf_request->getParameter('module') != 'sympal_dashboard'): ?>
+        <?php echo button_to('My Dashboard', '@sympal_dashboard', 'class="editor_button"') ?>
+      <?php endif; ?>
+
+      <?php if ($sf_request->getParameter('module') != 'sympal_dashboard'): ?>
         <?php echo button_to('Go to Site', '@homepage', 'class="editor_button"') ?>
       <?php endif; ?>
+
+      <?php echo button_to('Signout', '@sympal_signout', 'class=editor_button confirm=Are you sure you wish to signout?') ?>
 
       <?php echo $menu ?>
     </div>

@@ -4,5 +4,13 @@
  */
 class PluginPageTable extends Doctrine_Table
 {
-
+  public function getDefaultPagesDataGrid()
+  {
+    return sfSympalDataGrid::create(
+        Doctrine_Core::getTable('Content')->getFullTypeQuery('Page')
+      )
+      ->addColumn('crt.title', 'renderer=sympal_page/data_grid_title')
+      ->addColumn('c.date_published')
+      ->addColumn('u.username', 'label=Created By');
+  }
 }

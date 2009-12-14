@@ -147,6 +147,12 @@ class sfSympalToolkit
 
   public static function getRoutesYaml()
   {
+    $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml';
+    if (file_exists($cachePath))
+    {
+      return file_get_contents($cachePath);
+    }
+
     try {
       $routeTemplate =
 '%s:
@@ -168,12 +174,6 @@ class sfSympalToolkit
 ';
 
       $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
-
-      $contents = Doctrine::getTable('Content')
-        ->createQuery('c')
-        ->leftJoin('c.Type t')
-        ->where('c.custom_path IS NOT NULL')
-        ->execute();
 
       $contents = Doctrine::getTable('Content')
         ->createQuery('c')
@@ -219,7 +219,7 @@ class sfSympalToolkit
       }
 
       $routes = implode("\n", $routes);
-      file_put_contents(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml', $routes);
+      file_put_contents($cachePath, $routes);
       return $routes;
     } catch (Exception $e) {}
   }

@@ -4,7 +4,7 @@
     <tfoot>
       <tr>
         <td colspan="2">
-          <input type="submit" name="register" value="Register" />
+          <input type="submit" name="register" value="<?php echo __('Register') ?>" />
         </td>
       </tr>
     </tfoot>

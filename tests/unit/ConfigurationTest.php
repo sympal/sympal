@@ -19,7 +19,8 @@ $requiredPlugins = array(
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
-  'sfSympalContentListPlugin'
+  'sfSympalContentListPlugin',
+  'sfSympalDataGridPlugin',
 );
 
 $t->is($sympalConfiguration->getRequiredPlugins(), $requiredPlugins);
@@ -34,6 +35,7 @@ $corePlugins = array(
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
   'sfSympalContentListPlugin',
+  'sfSympalDataGridPlugin'
 );
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins);

@@ -3,8 +3,7 @@
 }
 
 #sympal-dashboard #boxes {
-  width: 80%;
-  margin-right: 200px;
+  width: 100%;
 }
 
 #sympal-dashboard #boxes ul {
@@ -16,7 +15,7 @@
   float: left;
   list-style-type: none;
   height: 85px;
-  width: 140px;
+  width: 160px;
   margin-right: 5px;
   border: 1px dotted #ccc;
   text-align: center;
@@ -25,8 +24,6 @@
   padding-top: 10px;
   background: #fff;
   border: 1px solid #ccc;
-  filter: alpha(opacity=50);
-  -moz-opacity: .50;
   font-size: 14px;
   -khtml-border-radius:0.4em;
 	-moz-border-radius: 10px;
@@ -44,18 +41,33 @@
   background-position: center;
 }
 
+#sympal-dashboard #boxes ul li a:hover {
+  color: #fff;
+  font-size: 15px;
+}
+
 #sympal-dashboard #boxes ul li:hover {
-  filter: alpha(opacity=100);
-  -moz-opacity: 1;
+  background: #375fc2;
+  border: 1px solid #333;
+  color: #fff;
+}
+
+#sympal-dashboard #boxes ul li:hover a {
+  color: white;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-create-content a {
-  background: url(../images/content.gif) no-repeat;
+  background: url(../images/create-content.png) no-repeat;
   background-position: center;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-sitemap a {
   background: url(../images/sitemap.png) no-repeat;
+  background-position: center;
+}
+
+#sympal-dashboard #boxes ul li#dashboard-boxes-manage-content a {
+  background: url(../images/manage-content.png) no-repeat;
   background-position: center;
 }
 
@@ -70,17 +82,17 @@
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-plugin-manager a {
-  background: url(../images/plugins.png) no-repeat;
+  background: url(../images/plugin_manager.png) no-repeat;
   background-position: center;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-content-types a {
-  background: url(../images/content_types.gif) no-repeat;
+  background: url(../images/content_types.png) no-repeat;
   background-position: center;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-content-templates a {
-  background: url(../images/templates.png) no-repeat;
+  background: url(../images/content_templates.png) no-repeat;
   background-position: center;
 }
 
@@ -94,8 +106,13 @@
   background-position: center;
 }
 
+#sympal-dashboard #boxes ul li.create_content a {
+  background: url(../images/create_content.png) no-repeat;
+  background-position: center;
+}
+
 #sympal-dashboard #boxes ul li#dashboard-boxes-permissions a {
-  background: url(../images/permissions.gif) no-repeat;
+  background: url(../images/permissions.png) no-repeat;
   background-position: center;
 }
 

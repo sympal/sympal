@@ -12,7 +12,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
       'sfSympalPagesPlugin',
-      'sfSympalContentListPlugin'
+      'sfSympalContentListPlugin',
+      'sfSympalDataGridPlugin'
     );
 
   public

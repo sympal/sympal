@@ -72,7 +72,7 @@ $conn = Doctrine_Manager::connection();
 $conn->addListener($profiler);
 
 // Test base query count for pulling a page is 2
-$browser->get('/pages/about');
+$browser->get('/pages/sample-page');
 
 $count = 0;
 foreach ($profiler as $event)

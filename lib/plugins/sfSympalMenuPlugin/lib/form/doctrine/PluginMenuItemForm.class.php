@@ -19,7 +19,16 @@ abstract class PluginMenuItemForm extends BaseMenuItemForm
 
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
 
-    $q = Doctrine::getTable('Content')->getBaseQuery();
+    if ($this->object->ContentType->name)
+    {
+      $q = Doctrine::getTable('Content')
+        ->getTypeQuery($this->object->ContentType->name);
+    } else {
+      $q = Doctrine::getTable('Content')
+        ->createQuery('c')
+        ->leftJoin('c.Type t');
+    }
+
     $this->widgetSchema['content_id']->setOption('query', $q);
 
     $q = Doctrine_Query::create()

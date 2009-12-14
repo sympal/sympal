@@ -30,9 +30,11 @@ class sfSympalContentListPluginConfiguration extends sfPluginConfiguration
 
       $request = sfContext::getInstance()->getRequest();
       $page = $request->getParameter('page', 1);
-      $pager = $contentList->buildPager($page, $request);
+      $dataGrid = $contentList->buildDataGrid($page, $request);
+      $pager = $dataGrid->getPager();
 
       $variables['pager'] = $pager;
+      $variables['dataGrid'] = $dataGrid;
     }
 
     return $variables;

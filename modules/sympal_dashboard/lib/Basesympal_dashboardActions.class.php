@@ -25,13 +25,19 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setRoute('@sympal_sites')
       ->setCredentials(array('ManageSites'));
 
-    $this->boxes['Create Content']
-      ->setRoute('@sympal_content_new')
-      ->setCredentials(array('ManageContent'));
-
     $this->boxes['Manage Content']
       ->setRoute('@sympal_content')
       ->setCredentials(array('ManageContent'));
+
+    $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
+
+    foreach ($contentTypes as $contentType)
+    {
+      $this->boxes['Create '.$contentType['label']]
+        ->setRoute('@sympal_content_create_type?type='.$contentType['slug'])
+        ->setCredentials(array('ManageContent'))
+        ->setLiClass('create_content');
+    }
 
     $this->boxes['Menu Manager']
       ->setRoute('@sympal_menu_items')
@@ -72,16 +78,6 @@ abstract class Basesympal_dashboardActions extends sfActions
     $this->boxes['Sitemap']
       ->setRoute('@sympal_sitemap')
       ->setCredentials(array('ManageMenus'));
-
-    $installedPlugins = $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getInstalledPlugins();
-    $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
-
-    foreach ($contentTypes as $contentType)
-    {
-      $this->boxes[$contentType['label']]
-        ->setRoute('@sympal_content_create_type?type='.$contentType['slug'])
-        ->setCredentials(array('ManageContent'));
-    }
 
     $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_dashboard_boxes', array('menu' => $this->boxes)));
   }

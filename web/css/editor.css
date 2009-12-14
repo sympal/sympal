@@ -77,7 +77,8 @@
   list-style-type: none;
   font-weight: bold;
   color: #3278B6;
-  font-size: 13px;
+  font-size: 16px;
+  text-indent: 20px;
 }
 
 #sympal_edit_panel ul li img {
@@ -85,14 +86,31 @@
 }
 
 #sympal_edit_panel ul li ul li {
-  font-weight: normal;
+  text-align: left;
+  font-weight: bold;
   color: #000;
-  line-height: 25px;
-  margin-left: 20px;
+  background: #fff;
+  font-size: 13px;
+  border-bottom: 1px solid #eee;
+  text-indent: 0;
 }
 
 #sympal_edit_panel ul li ul li a {
   text-decoration: none;
+  padding: 8px;
+  display: block;
+}
+
+#sympal_edit_panel ul li ul li a:hover {
+  background: #375fc2;
+  color: white;
+  display: block;
+  font-weight: bold;
+}
+
+#sympal_edit_panel ul li ul li a:active {
+  background: #ffc;
+  color: #000;
 }
 
 #sympal_admin_bar {
@@ -114,6 +132,12 @@
   background: #375fc2;
   border: none;
   padding: 4px;
+  border: 1px solid #375fc2;
+}
+
+#sympal_edit_panel_contents input.editor_button:hover {
+  color: #fff;
+  background: #333;
 }
 
 div#sympal-icon {
@@ -259,20 +283,4 @@ li a.on {
 
 .sympal_diff del {
   background-color: #ffdddd;
-}
-
-#sf_admin_container input, #sf_admin_container select, #sf_admin_container textarea {
-	padding: 0.40em;
-	border:1px solid #ddd;
-	background:#fafafa;
-	font:bold 0.95em arial, sans-serif;
-	-khtml-border-radius:0.4em;
-	-moz-border-radius: 0.4em;
-  -webkit-border-radius: 0.4em;
-  border-radius: 0.4em;
-}
-
-#sf_admin_container input:hover, #sf_admin_container input:focus, #sf_admin_container select:hover, #sf_admin_container select:focus, #sf_admin_container textarea:hover, #sf_admin_container textarea:focus {
-	border-color:#c5c5c5;
-	background:#ffffcc;
 }

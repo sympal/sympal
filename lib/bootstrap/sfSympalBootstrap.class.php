@@ -84,7 +84,8 @@ class sfSympalBootstrap
       'MenuItemTranslation',
       'sfSympalContentRenderer',
       'sfSympalMenu',
-      'sfParameterHolder'
+      'sfParameterHolder',
+      'sfSympalDataGrid'
     ));
 
     sfSympalContext::createInstance(

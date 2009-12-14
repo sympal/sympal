@@ -218,15 +218,14 @@ function get_sympal_admin_bar()
  * Get a Sympal pager header <h3>
  *
  * @param sfDoctrinePager $pager
- * @param Content $content 
  * @return string $html
  */
-function get_sympal_pager_header($pager, $content)
+function get_sympal_pager_header($pager)
 {
   use_stylesheet('/sfSympalPlugin/css/pager.css');
 
   $indice = $pager->getFirstIndice();
-  return '<div class="sympal_pager_header"><h3>Showing '.$indice.' to '.($indice + count($content) - 1).' of '.$pager->getNbResults().' total results.</h3></div>';
+  return '<div class="sympal_pager_header"><h3>Showing '.$indice.' to '.($pager->getLastIndice()).' of '.$pager->getNbResults().' total results.</h3></div>';
 }
 
 /**

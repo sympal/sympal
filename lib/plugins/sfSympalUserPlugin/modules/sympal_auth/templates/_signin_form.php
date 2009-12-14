@@ -7,7 +7,7 @@
       <tr>
         <td colspan="2">
           <input type="submit" value="<?php echo __('Signin') ?>" />
-          <?php echo link_to('Forgot Password?', '@sympal_forgot_password') ?>
+          <?php echo link_to(__('Forgot your Password?'), '@sympal_forgot_password') ?>
         </td>
       </tr>
     </tfoot>

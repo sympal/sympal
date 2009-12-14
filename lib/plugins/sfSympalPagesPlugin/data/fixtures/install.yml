@@ -159,3 +159,4 @@ ContentList:
     title: Sample Content List
     Content: Content_ContentList_sample_content_list
     ContentType: ContentType_Page
+    table_method: getDefaultPagesDataGrid

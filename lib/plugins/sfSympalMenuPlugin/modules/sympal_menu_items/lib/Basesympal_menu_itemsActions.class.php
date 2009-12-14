@@ -120,7 +120,14 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $q = Doctrine_Core::getTable('MenuItem')
       ->createQuery('m')
+      ->leftJoin('m.Groups g')
+      ->leftJoin('m.Permissions p')
       ->where('m.id = ?', $request->getParameter('id'));
+
+    if (sfSympalConfig::isI18nEnabled('MenuItem'))
+    {
+      $q->leftJoin('m.Translation mt');
+    }
 
     $menuItem = $q->fetchOne();
     $this->forward404Unless($menuItem);
@@ -168,8 +175,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $menuItem = $this->_getMenuItem($request);
     $publish = $this->_publishMenuItem($menuItem, true);
 
-    $msg = $publish ? 'Menu item published successfully!':'Menu item unpublished successfully!';
-    $this->getUser()->setFlash('notice', $msg);
+    $this->getUser()->setFlash('notice', 'Menu item published successfully!');
     $this->redirect($request->getReferer());
   }
 
@@ -177,6 +183,9 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $menuItem = $this->_getMenuItem($request);
     $this->_publishMenuItem($menuItem, false);
+
+    $this->getUser()->setFlash('notice', 'Menu item unpublished successfully!');
+    $this->redirect($request->getReferer());
   }
 
   public function executeSitemap()
@@ -194,7 +203,9 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    parent::executeEdit($request);
+    $this->menu_item = $this->_getMenuItem($request);
+    $this->form = $this->configuration->getForm($this->menu_item);
+
     sfSympalToolkit::setCurrentMenuItem($this->menu_item);
   }
 
