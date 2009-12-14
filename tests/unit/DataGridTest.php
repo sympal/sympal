@@ -8,8 +8,7 @@ $t = new lime_test(7, new lime_output_color());
 $dataGrid = sfSympalDataGrid::create('User', 'u')
   ->addColumn('u.id', 'renderer=test/data_grid_id')
   ->addColumn('u.username', 'method=getDataGridUsername')
-  ->addColumn('u.name')
-  ->init();
+  ->addColumn('u.name');
 
 $t->is($dataGrid->getRows(), array(
   array(
@@ -24,8 +23,7 @@ $t->is($dataGrid->getPagerHeader(), '<div class="sympal_pager_header"><h3>Showin
 $dataGrid = sfSympalDataGrid::create('ContentType', 'c')
   ->setMaxPerPage(1)
   ->setPage(1)
-  ->configureColumn('c.id', 'renderer=test/data_grid_id')
-  ->init();
+  ->configureColumn('c.id', 'renderer=test/data_grid_id');
 
 $t->is($dataGrid->getRows(), array(
     array(
@@ -44,30 +42,26 @@ $t->is($dataGrid->getRows(), array(
 
 $dataGrid = sfSympalDataGrid::create('ContentType', 'c')
   ->setMaxPerPage(1)
-  ->setRenderingModule('test')
-  ->init();
+  ->setRenderingModule('test');
 
 $t->is($dataGrid->render(), 'Test');
 
 $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->where('t.name = ?', 'Register')
-  ->addColumn('t.name')
-  ->init();
+  ->addColumn('t.name');
 
 $rows = $dataGrid->getRows();
 $t->is($rows[0]['name'], 'Register');
 
 $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->where('t.name = ?', 'Register')
-  ->addColumn('t.name', 'is_sortable=false label=Test')
-  ->init();
+  ->addColumn('t.name', 'is_sortable=false label=Test');
 
 $t->is($dataGrid->getColumnSortLink($dataGrid->getColumn('t.name')), 'Test');
 
 $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->where('t.name = ?', 'Register')
   ->addColumn('t.name')
-  ->isSortable(false)
-  ->init();
+  ->isSortable(false);
 
 $t->is($dataGrid->getColumnSortLink($dataGrid->getColumn('t.name')), 'Name');

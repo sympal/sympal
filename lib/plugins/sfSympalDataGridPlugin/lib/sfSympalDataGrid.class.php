@@ -14,7 +14,8 @@ class sfSympalDataGrid
     $_columns = array(),
     $_parents = array(),
     $_renderingModule = 'sympal_data_grid',
-    $_isSortable = true;
+    $_isSortable = true,
+    $_initialized = false;
 
   public function __construct($modelName, $alias = null)
   {
@@ -223,7 +224,13 @@ class sfSympalDataGrid
     if ($url === null)
     {
       $url = $routing->getCurrentInternalUri();
-      $url = '@'.$routing->getCurrentRouteName().substr($url, strpos($url, '?'));
+
+      if (strpos($url, '?') !== false)
+      {
+        $url = '@'.$routing->getCurrentRouteName().substr($url, strpos($url, '?'));
+      } else {
+        $url = '@'.$routing->getCurrentRouteName();
+      }
     }
     $sep = strpos($url, '?') === false ? '?' : '&';
     return $url.$sep.'sort='.$column['name'].'&order='.((isset($request['order']) && $request['order'] == 'asc') ? 'desc' : 'asc');
@@ -248,6 +255,8 @@ class sfSympalDataGrid
 
   public function getPagerHeader()
   {
+    $this->init();
+
     $params = array(
       'dataGrid' => $this
     );
@@ -257,6 +266,8 @@ class sfSympalDataGrid
 
   public function getPagerNavigation($url)
   {
+    $this->init();
+
     $params = array(
       'dataGrid' => $this,
       'url' => $url
@@ -267,6 +278,8 @@ class sfSympalDataGrid
 
   public function getRows($hydrationMode = null)
   {
+    $this->init();
+
     $rows = array();
 
     $results = $this->_pager->getResults($hydrationMode);
@@ -314,6 +327,8 @@ class sfSympalDataGrid
 
   public function render($hydrationMode = null)
   {
+    $this->init();
+
     $params = array();
     $params['dataGrid'] = $this;
     $params['pager'] = $this->_pager;
@@ -324,11 +339,18 @@ class sfSympalDataGrid
 
   public function init()
   {
+    if ($this->_initialized)
+    {
+      return $this;
+    }
+
     $this->_pager->init();
     if (!$this->_columns)
     {
       $this->_populateDefaultColumns();
     }
+    $this->_initialized = true;
+
     return $this;
   }
 
