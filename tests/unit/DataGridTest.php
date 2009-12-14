@@ -3,17 +3,17 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(7, new lime_output_color());
+$t = new lime_test(10, new lime_output_color());
 
 $dataGrid = sfSympalDataGrid::create('User', 'u')
   ->addColumn('u.id', 'renderer=test/data_grid_id')
   ->addColumn('u.username', 'method=getDataGridUsername')
-  ->addColumn('u.name');
+  ->addColumn('name');
 
 $t->is($dataGrid->getRows(), array(
   array(
-    'id' => 'partial_1',
-    'username' => 'method_admin',
+    'u.id' => 'partial_1',
+    'u.username' => 'method_admin',
     'name' => 'Sympal Admin'
   )
 ));
@@ -27,15 +27,15 @@ $dataGrid = sfSympalDataGrid::create('ContentType', 'c')
 
 $t->is($dataGrid->getRows(), array(
     array(
-      'id' => 'partial_1',
-      'name' => 'Page',
-      'description' => 'The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.',
-      'label' => 'Page',
-      'plugin_name' => 'sfSympalPagesPlugin',
-      'default_path' => '/pages/:slug',
-      'layout' => NULL,
-      'site_id' => '1',
-      'slug' => 'page',
+      'c.id' => 'partial_1',
+      'c.name' => 'Page',
+      'c.description' => 'The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.',
+      'c.label' => 'Page',
+      'c.plugin_name' => 'sfSympalPagesPlugin',
+      'c.default_path' => '/pages/:slug',
+      'c.layout' => NULL,
+      'c.site_id' => '1',
+      'c.slug' => 'page',
     )
   )
 );
@@ -51,7 +51,7 @@ $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->addColumn('t.name');
 
 $rows = $dataGrid->getRows();
-$t->is($rows[0]['name'], 'Register');
+$t->is($rows[0]['t.name'], 'Register');
 
 $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->where('t.name = ?', 'Register')
@@ -65,3 +65,22 @@ $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->isSortable(false);
 
 $t->is($dataGrid->getColumnSortLink($dataGrid->getColumn('t.name')), 'Name');
+
+$dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
+  ->leftJoin('t.ContentType ty')
+  ->leftJoin('ty.Site s')
+  ->setMaxPerPage(1)
+  ->addColumn('t.name')
+  ->addColumn('ty.name')
+  ->addColumn('s.title');
+
+$rows = $dataGrid->getRows();
+$t->is(count($rows[0]), 3);
+$t->is($rows[0]['s.title'], 'Sympal');
+
+$dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
+  ->select('t.id, t.name')
+  ->setSort('t.name', 'DESC')
+  ->init();
+
+$t->is($dataGrid->getDql(), 'SELECT t.id, t.name FROM ContentTemplate t ORDER BY t.name desc LIMIT 10 OFFSET 0');

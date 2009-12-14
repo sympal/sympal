@@ -11,6 +11,7 @@ class PluginPageTable extends Doctrine_Table
       )
       ->addColumn('crt.title', 'renderer=sympal_page/data_grid_title')
       ->addColumn('c.date_published')
-      ->addColumn('u.username', 'label=Created By');
+      ->addColumn('u.username', 'label=Created By')
+      ->setSort('crt.title');
   }
 }

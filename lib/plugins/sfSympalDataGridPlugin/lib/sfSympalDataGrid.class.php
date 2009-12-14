@@ -11,6 +11,8 @@ class sfSympalDataGrid
     $_table,
     $_query,
     $_pager,
+    $_sort,
+    $_order = 'asc',
     $_columns = array(),
     $_parents = array(),
     $_renderingModule = 'sympal_data_grid',
@@ -44,12 +46,6 @@ class sfSympalDataGrid
       throw new Doctrine_Exception('First argument should be either the name of a model or an existing Doctrine_Query object');
     }
     $this->_table = Doctrine_Core::getTable($this->_modelName);
-
-    $request = sfContext::getInstance()->getRequest();
-    if (isset($request['sort']) && $this->_isSortable)
-    {
-      $this->_query->addOrderBy($request['sort'].(isset($request['order']) ? ' '.$request['order'] : null));
-    }
   }
 
   public static function create($modelName, $alias = null)
@@ -66,6 +62,32 @@ class sfSympalDataGrid
       return $this;
     }
     return $this->_isSortable;
+  }
+
+  public function setSort($sort, $order = null)
+  {
+    $this->_sort = $sort;
+    if ($order)
+    {
+      $this->setOrder($order);
+    }
+    return $this;
+  }
+
+  public function getSort()
+  {
+    return $this->_sort;
+  }
+
+  public function setOrder($order)
+  {
+    $this->_order = strtolower($order);
+    return $this;
+  }
+
+  public function getOrder()
+  {
+    return $this->_order;
   }
 
   public function setId($id)
@@ -128,6 +150,8 @@ class sfSympalDataGrid
 
   public function getColumn($name)
   {
+    $this->init();
+
     if (!isset($this->_columns[$name]))
     {
       throw new InvalidArgumentException(sprintf('Column named "%s" does not exist.', $name));
@@ -142,50 +166,7 @@ class sfSympalDataGrid
 
   public function addColumn($name, $options = array())
   {
-    $options = _parse_attributes($options);
-    $e = explode('.', $name);
-    $alias = isset($e[1]) ? $e[0] : $this->_query->getRootAlias();
-    if ($this->_query->hasAliasDeclaration($alias))
-    {
-      $component = $this->_query->getQueryComponent($alias);
-    } else {
-      $component = array('table' => $this->_table);
-    }
-    $fieldName = isset($e[1]) ? $e[1] : $e[0];
-
-    if ($component['table']->hasField($fieldName))
-    {
-      $column = array_merge(array(
-        'dqlAlias' => $alias,
-        'name' => $name,
-        'fieldName' => $fieldName,
-        'is_sortable' => true
-      ), $options, $component['table']->getDefinitionOf($fieldName), $component);
-    } else {
-      $column = array(
-        'name' => $fieldName,
-        'fieldName' => $fieldName,
-        'is_sortable' => false
-      );
-    }
-
-    if ( ! isset($column['label']))
-    {
-      $column['label'] = sfInflector::humanize($column['fieldName']);
-    }
-
-    if (isset($column['parent']) && isset($column['relation']))
-    {
-      $this->_parents[$column['dqlAlias']][] = $column['relation']['alias'];
-    }
-
-    if (isset($column['select']) && $column['select'])
-    {
-      $this->_query->addSelect($name);
-    }
-
-    $this->_columns[$name] = $column;
-
+    $this->_columns[$name] = $options;
     return $this;
   }
 
@@ -233,15 +214,14 @@ class sfSympalDataGrid
       }
     }
     $sep = strpos($url, '?') === false ? '?' : '&';
-    return $url.$sep.'sort='.$column['name'].'&order='.((isset($request['order']) && $request['order'] == 'asc') ? 'desc' : 'asc');
+    return $url.$sep.'sort='.$column['name'].'&order='.(($this->_order == 'asc') ? 'desc' : 'asc');
   }
 
   public function getColumnSortLink(array $column, $url = null)
   {
-    $request = sfContext::getInstance()->getRequest();
-    if ($request['sort'] == $column['name'])
+    if ($this->_sort == $column['name'])
     {
-      $image = image_tag('/sfSympalPlugin/images/'.($request['order'] ? $request['order'] : 'asc').'_sort_icon.png').' ';
+      $image = image_tag('/sfSympalPlugin/images/'.($this->_order ? $this->_order : 'asc').'_sort_icon.png').' ';
     } else {
       $image = null;
     }
@@ -306,9 +286,9 @@ class sfSympalDataGrid
     {
       if (isset($column['method']) && $record instanceof Doctrine_Record)
       {
-        $row[$column['fieldName']] = $record->$column['method']();
+        $row[$column['name']] = $record->$column['method']();
       } else if (isset($column['renderer'])) {
-        $row[$column['fieldName']] = sfSympalToolkit::getSymfonyResource($column['renderer'], array(
+        $row[$column['name']] = sfSympalToolkit::getSymfonyResource($column['renderer'], array(
           'dataGrid' => $this,
           'column' => $column,
           'record' => $record
@@ -319,7 +299,7 @@ class sfSympalDataGrid
         {
           $value = format_date($value);
         }
-        $row[$column['fieldName']] = $value;
+        $row[$column['name']] = $value;
       }
     }
     return $row;
@@ -344,14 +324,86 @@ class sfSympalDataGrid
       return $this;
     }
 
+    $this->_query->getSqlQuery(array(), false);
     $this->_pager->init();
     if (!$this->_columns)
     {
       $this->_populateDefaultColumns();
+    } else {
+      $this->_initializeColumns();
     }
+
+    $request = sfContext::getInstance()->getRequest();
+
+    if ($request['sort'])
+    {
+      $this->_sort = $request['sort'];
+    }
+    if ($request['order'])
+    {
+      $this->_order = $request['order'];
+    }
+
+    if ($this->_sort && $this->_isSortable)
+    {
+      $this->_query->addOrderBy($this->_sort.(isset($this->_order) ? ' '.$this->_order : null));
+    }
+
     $this->_initialized = true;
 
     return $this;
+  }
+
+  private function _initializeColumns()
+  {
+    foreach ($this->_columns as $name => $options)
+    {
+      $options = _parse_attributes($options);
+      $e = explode('.', $name);
+      $alias = isset($e[1]) ? $e[0] : $this->_query->getRootAlias();
+      if ($this->_query->hasAliasDeclaration($alias))
+      {
+        $component = $this->_query->getQueryComponent($alias);
+      } else {
+        $component = array('table' => $this->_table);
+      }
+      $fieldName = isset($e[1]) ? $e[1] : $e[0];
+
+      if ($component['table']->hasField($fieldName))
+      {
+        $column = array_merge(array(
+          'dqlAlias' => $alias,
+          'name' => $name,
+          'fieldName' => $fieldName,
+          'is_sortable' => true
+        ), $options, $component['table']->getDefinitionOf($fieldName), $component);
+      } else {
+        $column = array(
+          'name' => $fieldName,
+          'fieldName' => $fieldName,
+          'is_sortable' => false
+        );
+      }
+
+      if ( ! isset($column['label']))
+      {
+        $column['label'] = sfInflector::humanize($column['fieldName']);
+      }
+
+      if (isset($column['parent']) && isset($column['relation']))
+      {
+        $current = $column;
+        while (isset($current['parent']))
+        {
+          $this->_parents[$column['dqlAlias']][] = $current['relation']['alias'];
+          $current = $this->_query->getQueryComponent($current['parent']);
+          $this->_parents[$column['dqlAlias']] = array_unique($this->_parents[$column['dqlAlias']]);
+          $this->_parents[$column['dqlAlias']] = array_reverse($this->_parents[$column['dqlAlias']]);
+        }
+      }
+
+      $this->_columns[$name] = $column;
+    }
   }
 
   private function _populateDefaultColumns()
@@ -373,6 +425,7 @@ class sfSympalDataGrid
     $current = $record;
     if (isset($column['dqlAlias']) && isset($this->_parents[$column['dqlAlias']]))
     {
+      
       foreach ($this->_parents[$column['dqlAlias']] as $parent)
       {
         if (isset($current[$parent]))
