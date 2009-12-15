@@ -27,18 +27,13 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
 
   public function getUpgradeCommands()
   {
-    $rootDir = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
-
-    $backupDir = sfConfig::get('sf_data_dir').'/sympal_versions';
-    if (!is_dir($backupDir))
-    {
-      mkdir($backupDir, 0777, true);
-    }
+    $pluginDir = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
+    $backupDir = dirname($pluginDir);
 
     $commands = array();
-    $commands['cd'] = sprintf('cd %s', dirname($rootDir));
+    $commands['cd'] = sprintf('cd %s', dirname($pluginDir));
     $commands['backup'] = sprintf('mv sfSympalPlugin %s/sfSympalPlugin_%s', $backupDir, $this->_currentVersion);
-    $commands['download'] = sprintf('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/tags/%s %s', $this->getLatestVersion(), $rootDir);
+    $commands['download'] = sprintf('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/tags/%s %s', $this->getLatestVersion(), $pluginDir);
 
     return $commands;
   }

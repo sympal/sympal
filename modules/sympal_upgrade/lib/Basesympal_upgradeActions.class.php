@@ -24,6 +24,57 @@ abstract class Basesympal_upgradeActions extends sfActions
     $this->hasNewVersion = $this->upgrade->hasNewVersion();
     $this->latestVersion = $this->upgrade->getLatestVersion();
     $this->currentVersion = $this->upgrade->getCurrentVersion();
+
+    $this->redirectIfPermissionsError();
+  }
+
+  public function redirectIfPermissionsError()
+  {
+    if (!$this->checkFilePermissions())
+    {
+      $this->redirect('@sympal_check_for_updates');
+    }
+  }
+
+  public function executeUpgrade(sfWebRequest $request)
+  {
+    if (!$this->hasNewVersion)
+    {
+      $this->setTemplate('check');
+    }
+
+    $this->askConfirmation(
+      sprintf('Upgrade to Sympal %s', $this->latestVersion),
+      'sympal_upgrade/confirm_upgrade',
+      array('upgrade' => $this->upgrade)
+    );
+
+    $this->upgrade->download();
+
+    $this->redirect('@sympal_run_upgrade_tasks');
+  }
+
+  public function executeRun_tasks(sfWebRequest $request)
+  {
+    if ($this->upgrade->hasUpgrades())
+    {
+      $upgrades = array();
+      foreach ($this->upgrade->getUpgrades() as $upgrade)
+      {
+        $upgrades[] = $upgrade['version'].' upgrade #'.$upgrade['number'];
+      }
+
+      $this->askConfirmation(
+        sprintf('Run upgrade tasks for Sympal %s', $this->latestVersion),
+        'sympal_upgrade/confirm_run_tasks',
+        array('upgrades' => $upgrades)
+      );
+
+      $this->upgrade->upgrade();
+    }
+
+    $this->getUser()->setFlash('notice', 'Successfully upgraded to '.$this->latestVersion);
+    $this->redirect('@sympal_check_for_updates');
   }
 
   public function executeCheck(sfWebRequest $request)
