@@ -24,13 +24,5 @@
 
       <?php echo get_partial('sympal_plugin_manager/actions', array('plugin' => $plugin, 'additional' => true)) ?>
     </div>
-
-    <?php if (strip_tags($plugin->getReadme())): ?>
-      <div id="readme">
-        <h3>README</h3>
-
-        <p><?php echo sfSympalMarkdownRenderer::convertToHtml($plugin->getReadme()) ?></p>
-      </div>
-    <?php endif; ?>
   </div>
 </div>

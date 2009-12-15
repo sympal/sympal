@@ -44,7 +44,7 @@ class sfSympalConfig
 
   public static function getCurrentVersion()
   {
-    return sfSympalConfig::get('current_version', null, sfSympal::VERSION);
+    return self::get('current_version', null, sfSympal::VERSION);
   }
 
   public static function writeSetting($group, $name, $value = null)
