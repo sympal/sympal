@@ -25,15 +25,33 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     return sfSympalConfig::get('current_version', null, sfSympal::VERSION);
   }
 
+  protected function _urlExists($url)
+  {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_URL, $url);
+    $result = curl_exec($ch);
+    $info = curl_getinfo($ch);
+    curl_close($ch);
+
+    return ($info['http_code'] == 404 ? false : true);
+  }
+
   public function getUpgradeCommands()
   {
     $pluginDir = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
     $backupDir = dirname($pluginDir);
 
+    $url = sprintf('http://svn.symfony-project.org/plugins/sfSympalPlugin/tags/%s', $this->getLatestVersion());
+    if ($this->_urlExists($url) === false)
+    {
+      $url = 'http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk';
+    }
+
     $commands = array();
     $commands['cd'] = sprintf('cd %s', dirname($pluginDir));
     $commands['backup'] = sprintf('mv sfSympalPlugin %s/sfSympalPlugin_%s', $backupDir, $this->_currentVersion);
-    $commands['download'] = sprintf('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/tags/%s %s', $this->getLatestVersion(), $pluginDir);
+    $commands['download'] = sprintf('svn co %s %s', $url, $pluginDir);
 
     return $commands;
   }
