@@ -7,7 +7,7 @@ class sfSympalEventHandler
     $dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
     $dispatcher->connect('sympal.load_config_form', array($this, 'loadConfig'));
     $dispatcher->connect('sympal.load_tools', array($this, 'loadTools'));
-    $dispatcher->connect('command.post_command', array($this, 'changeBaseFormDoctrine'));
+    $dispatcher->connect('form.post_configure', array($this, 'formPostConfigure'));
   }
 
   public function loadAdminBar(sfEvent $event)
@@ -145,26 +145,17 @@ class sfSympalEventHandler
     }
   }
 
-  public function changeBaseFormDoctrine(sfEvent $event)
+  public function formPostConfigure(sfEvent $event)
   {
-    $subject = $event->getSubject();
-    if ($subject instanceof sfDoctrineBuildFormsTask)
+    $form = $event->getSubject();
+    if ($form instanceof sfFormDoctrine)
     {
-      $find = 'abstract class BaseFormDoctrine extends sfFormDoctrine
-{
-  public function setup()
-  {
-';
+      sfSympalFormToolkit::embedI18n($form->getObject(), $form);
 
-      $replace = 'abstract class BaseFormDoctrine extends BaseFormDoctrineSympal
-{
-  public function setup()
-  {
-    parent::setup();
-';
-
-      $path = sfConfig::get('sf_lib_dir').'/form/doctrine/BaseFormDoctrine.class.php';
-      file_put_contents($path, str_replace($find, $replace, file_get_contents($path)));
+      if (sfSympalConfig::get('remove_timestampable_from_forms', null, true))
+      {
+        unset($form['created_at'], $form['updated_at']);
+      }
     }
   }
 }
