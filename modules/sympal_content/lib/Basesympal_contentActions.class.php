@@ -240,6 +240,10 @@ class Basesympal_contentActions extends autoSympal_contentActions
       {
         $this->redirect($content->getRoute());
       }
+      else if ($request->hasParameter('_save_and_edit_menu'))
+      {
+        $this->redirect('@sympal_content_menu_item?id='.$content->id);
+      }
       else
       {
         if ($new)

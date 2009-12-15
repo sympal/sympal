@@ -202,6 +202,11 @@
   background: url(../images/list.png) no-repeat 0 0;
 }
 
+#sf_admin_container ul li.sf_admin_action_view a
+{
+  background: url(../images/page_white_text.png) no-repeat 0 0;
+}
+
 #sf_admin_container ul li.sf_admin_action_edit a
 {
   background: url(../images/edit.png) no-repeat 0 0;

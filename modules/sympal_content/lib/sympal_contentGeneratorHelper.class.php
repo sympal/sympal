@@ -19,4 +19,9 @@ class sympal_contentGeneratorHelper extends BaseSympal_contentGeneratorHelper
   {
     return '<li class="sf_admin_action_save_and_view"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" name="_save_and_view" /></li>';
   }
+
+  public function linkToSaveAndEditMenu($object, $params)
+  {
+    return '<li class="sf_admin_action_save_and_edit_menu"><input type="submit" value="'.__($params['label'], array(), 'sf_admin').'" name="_save_and_edit_menu" /></li>';
+  }
 }

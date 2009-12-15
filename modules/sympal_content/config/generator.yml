@@ -64,12 +64,13 @@ generator:
         actions:
           _delete:
           _list:
-          _save:
-          save_and_view:
-          _save_and_list:
-          _save_and_add:
           view:
             action: view
+          _save:
+          save_and_view:
+          save_and_edit_menu:
+          _save_and_list:
+          _save_and_add:
       new:
         title: Create New Content
 <?php
