@@ -73,7 +73,7 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
   protected function _doUpgrade()
   {
     $this->_runUpgrades();
-    sfSympalConfig::set('current_version', $this->getLatestVersion());
+    sfSympalConfig::writeSetting('current_version', null, $this->getLatestVersion());
   }
 
   public function getLatestVersion()

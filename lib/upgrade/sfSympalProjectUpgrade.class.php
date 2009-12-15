@@ -64,7 +64,7 @@ class sfSympalProjectUpgrade extends sfSympalUpgrade
     $this->_runUpgrades();
   }
 
-  private function _runUpgrades()
+  protected function _runUpgrades()
   {
     $upgrades = $this->getUpgrades();
     foreach ($upgrades as $upgrade)
