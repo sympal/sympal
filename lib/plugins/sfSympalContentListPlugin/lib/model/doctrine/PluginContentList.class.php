@@ -15,7 +15,7 @@ abstract class PluginContentList extends BaseContentList
       if ($q instanceof sfSympalDataGrid)
       {
         return $q->init();
-      } else if ($q instanceof sfDoctrinePager || $q instanceof Doctrine_Query_Abstrac) {
+      } else if ($q instanceof sfDoctrinePager || $q instanceof Doctrine_Query_Abstract) {
         return sfSympalDataGrid::create($q)->init();
       } else {
         throw new sfException(sprintf('ContentList table_method must return an instance of sfSympalDataGrid, sfDoctrinePager or Doctrine_Query_Abstract. An instance of "%s" was returned.', get_class($q)));
