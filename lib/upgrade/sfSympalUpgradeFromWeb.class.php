@@ -70,6 +70,12 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     $this->logSection('sympal', 'Sympal code updated successfully...');
   }
 
+  public function upgrade()
+  {
+    parent::upgrade();
+    sfSympalConfig::set('current_version', $this->getLatestVersion());
+  }
+
   public function getLatestVersion()
   {
     if (!$this->_latestVersion)
