@@ -1,7 +1,7 @@
 <?php
 final class sfSympal
 {
-  const VERSION = '0.5.8';
+  const VERSION = '0.6.0';
 
   public static function getVersion()
   {
