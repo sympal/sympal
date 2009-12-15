@@ -26,7 +26,7 @@ class sfSympalEventHandler
     $help = $icon->addChild('Help')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('Sympal '.sfSympalConfig::get('current_version', null, sfSympal::VERSION))
+    $help->addChild('Sympal '.sfSympalConfig::getCurrentVersion())
       ->setCredentials(array('ViewDeveloperInformation'));
 
     $help->addChild('symfony '.SYMFONY_VERSION)
@@ -111,7 +111,7 @@ class sfSympalEventHandler
     $user = sfContext::getInstance()->getUser();
     $request = sfContext::getInstance()->getRequest();
 
-    $contentEditor = $menu->addChild($content['Type']['label'] . ' Editor')
+    $contentEditor = $menu->addChild($content['Type']['label'] . ' Actions')
       ->setCredentials(array('ManageContent'));
 
     if ($content['locked_by'])
@@ -136,9 +136,7 @@ class sfSympalEventHandler
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/tick.png').' Publish', '@sympal_publish_content?id='.$content['id']);
     }
 
-    $contentType = $menu->addChild($content['Type']['label'].' Content')
-      ->setCredentials(array('ManageContent'));
-    $contentType->addChild(image_tag('/sf/sf_admin/images/add.png').' Create', '@sympal_content_create_type?type='.$content['Type']['slug']);
+    $contentEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' Create New '.$content['Type']['label'], '@sympal_content_create_type?type='.$content['Type']['slug']);
 
     if (sfSympalConfig::isI18nEnabled())
     {

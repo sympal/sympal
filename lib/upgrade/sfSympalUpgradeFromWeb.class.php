@@ -12,7 +12,7 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     parent::__construct($configuration, $dispatcher, $formatter);
 
     $this->_filesystem = new sfFilesystem($dispatcher, $formatter);
-    $this->_currentVersion = sfSympalConfig::get('current_version', null, sfSympal::VERSION);
+    $this->_currentVersion = sfSympalConfig::getCurrentVersion();;
   }
 
   public function hasNewVersion()
@@ -22,7 +22,7 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
 
   public function getCurrentVersion()
   {
-    return sfSympalConfig::get('current_version', null, sfSympal::VERSION);
+    return sfSympalConfig::getCurrentVersion();
   }
 
   protected function _urlExists($url)

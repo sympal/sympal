@@ -29,7 +29,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 
     if ($menuItem && $menuItem->exists())
     {
-      $menuEditor = $menu->addChild('Menu Editor')
+      $menuEditor = $menu->addChild('Menu Actions')
         ->setCredentials(array('ManageMenus'));
 
       if ($menuItem['is_published'])

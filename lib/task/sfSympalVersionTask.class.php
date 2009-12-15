@@ -31,7 +31,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $version = sfSympalConfig::get('current_version', null, sfSympal::VERSION);
+    $version = sfSympalConfig::getCurrentVersion();
     $formattedVersion = $this->formatter->format($version, 'INFO');
     $dir = $this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
 

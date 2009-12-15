@@ -67,6 +67,7 @@ abstract class PluginContentForm extends BaseContentForm
     if (count($typeForm))
     {
       $this->embedForm($this->object->Type->name, $typeForm);
+      $this->widgetSchema[$this->object->Type->name]->setLabel($this->object->Type->label);
     }
   }
 
