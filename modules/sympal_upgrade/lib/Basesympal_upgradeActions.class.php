@@ -25,7 +25,7 @@ abstract class Basesympal_upgradeActions extends sfActions
     $this->latestVersion = $this->upgrade->getLatestVersion();
     $this->currentVersion = $this->upgrade->getCurrentVersion();
 
-    $this->redirectIfPermissionsError();
+    $this->checkFilePermissions();
   }
 
   public function redirectIfPermissionsError()
@@ -38,6 +38,8 @@ abstract class Basesympal_upgradeActions extends sfActions
 
   public function executeUpgrade(sfWebRequest $request)
   {
+    $this->redirectIfPermissionsError();
+
     if (!$this->hasNewVersion)
     {
       $this->setTemplate('check');
