@@ -17,9 +17,9 @@ class sfSympalUpgradeTask extends sfTaskExtraBaseTask
     $this->briefDescription = 'Upgrade a Sympal project by running any new upgrade tasks.';
 
     $this->detailedDescription = <<<EOF
-The [sympal:upgrade|INFO] task upgrades a Sympal project by running any new upgrade tasks.
+The [symfony sympal:upgrade|INFO] task upgrades a Sympal project by running any new upgrade tasks.
 
-  [./sympal:upgrade|INFO]
+  [./symfony sympal:upgrade|INFO]
 EOF;
   }
 
@@ -28,7 +28,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    if (isset($options['download-new']))
+    if (isset($options['download-new']) && $options['download-new'])
     {
       $upgrade = new sfSympalUpgradeFromWeb($this->configuration, $this->dispatcher, $this->formatter);
       if ($upgrade->hasNewVersion())
@@ -54,6 +54,8 @@ EOF;
     } else {
       $upgrade = new sfSympalProjectUpgrade($this->configuration, $this->dispatcher, $this->formatter);      
     }
+
+    $this->logSection('sympal', 'Checking for upgrade tasks to execute...');
 
     if ($upgrade->hasUpgrades())
     {
@@ -81,10 +83,11 @@ EOF;
       $upgrade->upgrade();
 
       $this->logSection('sympal', 'Successfully executed upgrade tasks');
-    } else {
+      $this->logSection('sympal', 'You have successfully upgraded Sympal');
+    } else if (isset($options['download-new']) && $options['download-new']) {
       $this->logSection('sympal', 'No upgrade tasks required for upgrade');
+    } else { 
+      throw new sfException('Nothing to upgrade.');
     }
-
-    $this->logSection('sympal', 'You have successfully upgraded Sympal');
   }
 }
