@@ -174,11 +174,11 @@ class sfSympalConfigForm extends sfForm
     {
       if (!$form[$field]->isHidden())
       {
-        $html .= '<span class="form_row">';
+        $html .= '<div class="sf_admin_form_row">';
         $html .= $form[$field]->renderLabel();
         $html .= $form[$field];
         $html .= $form[$field]->renderHelp();
-        $html .= '</span>';
+        $html .= '</div>';
       }
     }
     return $html;

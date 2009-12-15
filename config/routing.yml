@@ -49,8 +49,8 @@ sympal_yui_image_uploader:
   param: { module: sympal_yui_image_uploader, action: upload }
 
 sympal_change_language:
-  url:   /change_language
-  param: { module: sympal_default, action: change_language }
+  url:   /change_language/:language
+  param: { module: sympal_default, action: change_language, language: en }
 
 sympal_signout:
   url:   /signout

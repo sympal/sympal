@@ -21,30 +21,37 @@
       [?php echo $form->renderGlobalErrors() ?]
     [?php endif; ?]
 
+    [?php $tabs = array() ?]
+    [?php $tabs = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, '<?php echo $this->getModuleName() ?>.extra_tabs'), $tabs)->getReturnValue() ?]
+
+    [?php $embeddedForms = $form->getEmbeddedForms() ?]
     [?php $fields = $configuration->getFormFields($form, $form->isNew() ? 'new' : 'edit') ?]
+    [?php $num = count($fields) + count($embeddedForms) + count($tabs) ?]
     [?php $currentTab = $sf_user->getAttribute('<?php echo $this->getModuleName() ?>.current_form_tab', null, 'admin_module'); ?]
     <div id="sympal_admin_gen_tab_view" class="yui-navset">
-      <ul class="yui-nav">
-        [?php foreach ($fields as $fieldset => $f): ?]
-          [?php $id = sfInflector::tableize($fieldset); ?]
-          <li[?php if ($id == $currentTab || is_null($currentTab)) echo ' class="selected"'; if (is_null($currentTab)) $currentTab = false; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo __($fieldset == 'NONE' ? (($label = $form->getAdminGenMainTabLabel()) ? $label : sfInflector::humanize(sfInflector::tableize(get_class($form->getObject())))):sfInflector::humanize($fieldset), array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
-        [?php endforeach; ?]
 
-        [?php $embeddedForms = $form->getEmbeddedForms() ?]
-        [?php foreach ($form as $key => $value): ?]
-          [?php if ($value instanceof sfFormFieldSchema): ?]
-            [?php $id = sfInflector::tableize($key) ?]
-            [?php $label = $value->getWidget()->getLabel() ? $value->getWidget()->getLabel():$key ?]
-            <li[?php if ($id == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $key ?]"><em id="[?php echo $id ?]">[?php echo __(((method_exists($embeddedForms[$key], 'getAdminGenMainTabLabel') && $adminGenLabel = $embeddedForms[$key]->getAdminGenMainTabLabel()) ? $adminGenLabel : $label), array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
+        <ul class="yui-nav">
+          [?php if ($num > 1): ?]
+            [?php foreach ($fields as $fieldset => $f): ?]
+              [?php $id = sfInflector::tableize($fieldset); ?]
+              <li[?php if ($id == $currentTab || is_null($currentTab)) echo ' class="selected"'; if (is_null($currentTab)) $currentTab = false; ?]><a href="#[?php echo $fieldset ?]"><em id="[?php echo $id ?]">[?php echo __($fieldset == 'NONE' ? (($label = $form->getAdminGenMainTabLabel()) ? $label : sfInflector::humanize(sfInflector::tableize(get_class($form->getObject())))):sfInflector::humanize($fieldset), array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
+            [?php endforeach; ?]
+
+            [?php foreach ($form as $key => $value): ?]
+              [?php if ($value instanceof sfFormFieldSchema): ?]
+                [?php $id = sfInflector::tableize($key) ?]
+                [?php $label = $value->getWidget()->getLabel() ? $value->getWidget()->getLabel():$key ?]
+                <li[?php if ($id == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $key ?]"><em id="[?php echo $id ?]">[?php echo __(((method_exists($embeddedForms[$key], 'getAdminGenMainTabLabel') && $adminGenLabel = $embeddedForms[$key]->getAdminGenMainTabLabel()) ? $adminGenLabel : $label), array(), '<?php echo $this->getI18nCatalogue() ?>') ?]</em></a></li>
+              [?php endif; ?]
+            [?php endforeach; ?]
+
+            [?php foreach ($tabs as $tab => $resource): ?]
+              <li[?php if ($tab == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $tab ?]"><em id="[?php echo $tab ?]">[?php echo $tab ?]</em></a></li>
+            [?php endforeach; ?]
+          [?php else: ?]
+            <li></li>
           [?php endif; ?]
-        [?php endforeach; ?]
-
-        [?php $tabs = array() ?]
-        [?php $tabs = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, '<?php echo $this->getModuleName() ?>.extra_tabs'), $tabs)->getReturnValue() ?]
-        [?php foreach ($tabs as $tab => $resource): ?]
-          <li[?php if ($tab == $currentTab) echo ' class="selected"'; ?]><a href="#[?php echo $tab ?]"><em id="[?php echo $tab ?]">[?php echo $tab ?]</em></a></li>
-        [?php endforeach; ?]
-      </ul>
+        </ul>
 
       <div class="yui-content">
         [?php foreach ($fields as $fieldset => $fields): ?]

@@ -24,7 +24,7 @@ class Basesympal_defaultActions extends sfActions
 
     $this->getUser()->setFlash('notice', 'Changed language successfully!');
 
-    return $this->redirect(str_replace('/'.$oldCulture.'/', '/'.$newCulture.'/', $request->getReferer()));
+    return $this->redirect(str_replace('/'.$oldCulture.'/', '/'.$newCulture.'/', $this->getUser()->getReferer('@homepage')));
   }
 
   public function executeAsk_confirmation(sfWebRequest $request)

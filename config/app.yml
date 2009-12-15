@@ -36,7 +36,7 @@ all:
     config_form_class: sfSympalConfigForm
     recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX
     recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb
-    language_codes: [en, fr]
+    language_codes: [en, fr, es]
     disallow_php_in_content: true
     default_layout: sympal
     rows_per_page: 10

@@ -1,4 +1,6 @@
-<?php use_stylesheet('/sfSympalPlugin/css/configuration') ?>
+<?php use_stylesheet('/sfSympalPlugin/css/global.css') ?>
+<?php use_stylesheet('/sfSympalPlugin/css/default.css') ?>
+
 <?php use_sympal_yui_css('tabview/assets/skins/sam/tabview') ?>
 
 <?php use_sympal_yui_js('yahoo-dom-event/yahoo-dom-event') ?>

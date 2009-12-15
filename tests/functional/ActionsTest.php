@@ -78,3 +78,14 @@ $browser->
     matches('/Test Layout/')->
   end()
 ;
+
+$browser->
+  call('/change_language/fr')->
+  with('response')->begin()->
+    isRedirected()->
+    followRedirect()->
+  end()->
+  with('user')->begin()->
+    isCulture('fr')->
+  end()
+;
