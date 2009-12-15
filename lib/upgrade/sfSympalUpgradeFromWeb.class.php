@@ -29,10 +29,16 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
   {
     $rootDir = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
 
+    $backupDir = sfConfig::get('sf_data_dir').'/sympal_versions';
+    if (!is_dir($backupDir))
+    {
+      mkdir($backupDir, 0777, true);
+    }
+
     $commands = array();
-    $commands[] = sprintf('cd %s', dirname($rootDir));
-    $commands[] = sprintf('mv sfSympalPlugin sfSympalPlugin_%s', $this->_currentVersion);
-    $commands[] = sprintf('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/tags/%s %s', $this->getLatestVersion(), $rootDir);
+    $commands['cd'] = sprintf('cd %s', dirname($rootDir));
+    $commands['backup'] = sprintf('mv sfSympalPlugin %s/sfSympalPlugin_%s', $backupDir, $this->_currentVersion);
+    $commands['download'] = sprintf('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/tags/%s %s', $this->getLatestVersion(), $rootDir);
 
     return $commands;
   }
@@ -42,7 +48,11 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     $this->logSection('sympal', 'Updating Sympal code...');
 
     $commands = $this->getUpgradeCommands();
-    $this->_filesystem->execute(implode('; ', $commands));
+    try {
+      $result = $this->_filesystem->execute(implode('; ', $commands));
+    } catch (Exception $e) {
+      throw new sfException('A problem occurred updating Sympal code.');
+    }
 
     $this->logSection('sympal', 'Sympal code updated successfully...');
   }
