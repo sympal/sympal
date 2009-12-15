@@ -1,5 +1,3 @@
-<?php echo get_sympal_breadcrumbs(array('Home' => '@homepage', 'Sympal Plugin Manager' => '@sympal_plugin_manager', $plugin->getTitle() => $plugin->getRoute())) ?>
-
 <h1>Sympal Plugin Manager</h1>
 
 <div id="sympal_plugin_manager">
