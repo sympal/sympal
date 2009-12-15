@@ -141,7 +141,7 @@ class sfSympalEventHandler
     if (sfSympalConfig::isI18nEnabled())
     {
       $menu->addChild('Change Language')
-        ->addChild(get_component('sympal_editor', 'language'));
+        ->addChild(get_component('sympal_default', 'language'));
     }
   }
 

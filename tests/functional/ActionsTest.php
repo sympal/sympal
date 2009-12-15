@@ -89,3 +89,14 @@ $browser->
     isCulture('fr')->
   end()
 ;
+
+$browser->
+  post('/change_language', array('language' => 'es'))->
+  with('response')->begin()->
+    isRedirected()->
+    followRedirect()->
+  end()->
+  with('user')->begin()->
+    isCulture('es')->
+  end()
+;
