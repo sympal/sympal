@@ -85,7 +85,8 @@ class sfSympalBootstrap
       'sfSympalContentRenderer',
       'sfSympalMenu',
       'sfParameterHolder',
-      'sfSympalDataGrid'
+      'sfSympalDataGrid',
+      'sfSympalUpgradeFromWeb'
     ));
 
     sfSympalContext::createInstance(

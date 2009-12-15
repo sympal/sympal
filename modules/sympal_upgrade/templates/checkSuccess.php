@@ -4,7 +4,7 @@
 
 <h1>Upgrade to <?php echo $latestVersion ?></h1>
 
-<div id="new_version_box">
+<div class="new_version_box">
   A new version of Sympal was detected! Read below for directions on how to upgrade
   from your current version of <?php echo $currentVersion ?> to <?php echo $latestVersion ?>.
 </div>
@@ -32,7 +32,24 @@ Once we've done that we need to clear our cache and run the `sympal:upgrade` tas
     $ cd ".sfConfig::get('sf_root_dir')."
     $ php symfony cc
     $ php symfony sympal:upgrade
+
+The above executed tasks can be automated by Sympal for you if you wish. We show you
+the individual steps to help you get a better understanding of what Sympal will be
+doing to upgrade your version of Sympal!
+
+To check if a new version exists on the web use the `--download-new` option. It will
+upgrade the Sympal source code to the latest version then run any new available
+upgrade tasks.
+
+    $ php symfony sympal:upgrade --download-new
+
 ") ?>
+
+<p>
+  You can also run the upgrade process directly from this page! Click <?php echo link_to('here', '@sympal_upgrade') ?> to begin
+  the upgrade process!
+</p>
+
 <?php else: ?>
   <h1>No Updates Found</h1>
 

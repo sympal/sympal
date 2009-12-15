@@ -18,6 +18,14 @@ sympal_check_for_updates:
   url:  /upgrade/check
   param: { module: sympal_upgrade, action: check }
 
+sympal_upgrade:
+  url:  /upgrade
+  param: { module: sympal_upgrade, action: upgrade }
+
+sympal_run_upgrade_tasks:
+  url:  /upgrade/tasks
+  param: { module: sympal_upgrade, action: run_tasks }
+
 sympal_content_delete_route:
   url:  /content/delete_route/:id
   param: { module: sympal_content, action: delete_route }

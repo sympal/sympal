@@ -8,7 +8,7 @@ class sfSympalUpgradeTask extends sfTaskExtraBaseTask
       new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application', sfSympalToolkit::getDefaultApplication()),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
-      new sfCommandOption('from-web', null, sfCommandOption::PARAMETER_NONE, 'Check if a new version exists on the web and install it'),
+      new sfCommandOption('download-new', null, sfCommandOption::PARAMETER_NONE, 'Check if a new version exists on the web and download it first before running the upgrade tasks.'),
     ));
 
     $this->aliases = array();
@@ -28,7 +28,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    if (isset($options['from-web']))
+    if (isset($options['download-new']))
     {
       $upgrade = new sfSympalUpgradeFromWeb($this->configuration, $this->dispatcher, $this->formatter);
       if ($upgrade->hasNewVersion())

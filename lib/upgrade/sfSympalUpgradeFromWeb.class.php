@@ -25,10 +25,8 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     return sfSympalConfig::get('current_version', null, sfSympal::VERSION);
   }
 
-  public function download()
+  public function getUpgradeCommands()
   {
-    $this->logSection('sympal', 'Updating Sympal code...');
-
     $rootDir = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
 
     $commands = array();
@@ -36,6 +34,14 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     $commands[] = sprintf('mv sfSympalPlugin sfSympalPlugin_%s', $this->_currentVersion);
     $commands[] = sprintf('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/tags/%s %s', $this->getLatestVersion(), $rootDir);
 
+    return $commands;
+  }
+
+  public function download()
+  {
+    $this->logSection('sympal', 'Updating Sympal code...');
+
+    $commands = $this->getUpgradeCommands();
     $this->_filesystem->execute(implode('; ', $commands));
 
     $this->logSection('sympal', 'Sympal code updated successfully...');
