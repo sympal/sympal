@@ -71,9 +71,11 @@ abstract class Basesympal_upgradeActions extends sfActions
         'sympal_upgrade/confirm_run_tasks',
         array('upgrades' => $upgrades)
       );
-
-      $this->upgrade->upgrade();
     }
+
+    // This needs to be called regardless of whether or not hasUpgrades()
+    // is successful to ensure the app.yml current_version is set properly.
+    $this->upgrade->upgrade();
 
     $this->getUser()->setFlash('notice', 'Successfully upgraded to '.$this->latestVersion);
     $this->redirect('@sympal_check_for_updates');
