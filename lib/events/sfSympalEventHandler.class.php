@@ -19,13 +19,14 @@ class sfSympalEventHandler
     $icon = $menu->getChild('Icon');
     $icon->addChild('Feedback', 'http://sympal.uservoice.com', array('onClick' => 'UserVoice.Popin.show(); return false;'));
     $icon->addChild('Go To Homepage', '@sympal_homepage');
+    $icon->addChild('Check for Updates', '@sympal_check_for_updates');
     $icon->addChild('Signout', '@sympal_signout', 'confirm=Are you sure you wish to signout?');
     $icon->addChild('Logged in as '.$user->getSympalUser()->getUsername());
 
     $help = $icon->addChild('Help')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('Sympal '.sfSympal::VERSION)
+    $help->addChild('Sympal '.sfSympalConfig::get('current_version', null, sfSympal::VERSION))
       ->setCredentials(array('ViewDeveloperInformation'));
 
     $help->addChild('symfony '.SYMFONY_VERSION)

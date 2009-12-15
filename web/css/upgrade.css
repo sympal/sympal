@@ -1,0 +1,13 @@
+#new_version_box {
+  background: #ffc;
+  padding: 8px;
+  border: 1px solid #ccc;
+  -khtml-border-radius: 10px;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  color: green;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

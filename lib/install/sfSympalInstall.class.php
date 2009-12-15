@@ -80,6 +80,7 @@ class sfSympalInstall
 
     sfSympalConfig::writeSetting('installed', true);
     sfSympalConfig::set('installing', false);
+    sfSympalConfig::writeSetting('current_version', sfSympal::VERSION);
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
   }

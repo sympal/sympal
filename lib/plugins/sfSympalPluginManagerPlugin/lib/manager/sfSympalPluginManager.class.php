@@ -52,7 +52,7 @@ abstract class sfSympalPluginManager
 
   public function logSection($section, $message, $size = null, $style = 'INFO')
   {
-    ProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array($this->_formatter->formatSection($section, $message, $size, $style))));
+    $this->_configuration->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array($this->_formatter->formatSection($section, $message, $size, $style))));
   }
 
   protected function _setDoctrineProperties($obj, $properties)

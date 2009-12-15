@@ -14,6 +14,10 @@ sympal_install:
   requirements:
     sf_method: [get]
 
+sympal_check_for_updates:
+  url:  /upgrade/check
+  param: { module: sympal_upgrade, action: check }
+
 sympal_content_delete_route:
   url:  /content/delete_route/:id
   param: { module: sympal_content, action: delete_route }
