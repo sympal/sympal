@@ -207,19 +207,10 @@ class Basesympal_contentActions extends autoSympal_contentActions
     {
       $this->getUser()->setFlash('notice', $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.');
 
-      $new = $form->isNew();
       $content = $form->save();
 
-      if (sfSympalConfig::get('automatic_url_hierarchy') && !$content->custom_path)
-      {
-        $content->custom_path = $content->getAutomaticUrlHierarchy();
-        $content->save();
-      }
-
-      $context = sfContext::getInstance();
-      $configCache = $context->getConfigCache();
-      unlink($configCache->getCacheName('config/routing.yml'));
-      $context->getRouting()->loadConfiguration();
+      $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')
+        ->getSympalConfiguration()->getCache()->resetRouteCache();
 
       $this->getUser()->obtainContentLock($content);
 
@@ -246,12 +237,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
       }
       else
       {
-        if ($new)
-        {
-          $this->redirect($content->getRoute());
-        } else {
-          $this->redirect($content->getEditRoute());
-        }
+        $this->redirect($content->getEditRoute());
       }
     }
     else

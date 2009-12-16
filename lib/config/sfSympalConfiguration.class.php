@@ -52,6 +52,11 @@ class sfSympalConfiguration
     return $this->_bootstrap->getCache();
   }
 
+  public function getSympalContext()
+  {
+    return $this->_bootstrap->getSympalContext();
+  }
+
   public function getContentTypes()
   {
     return $this->getCache()->getContentTypes();

@@ -3,6 +3,7 @@
 class sfSympalBootstrap
 {
   protected
+    $_sympalContext,
     $_sympalConfiguration,
     $_projectConfiguration,
     $_cache;
@@ -89,7 +90,7 @@ class sfSympalBootstrap
       'sfSympalUpgradeFromWeb'
     ));
 
-    sfSympalContext::createInstance(
+    $this->_sympalContext = sfSympalContext::createInstance(
       sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')),
       sfContext::getInstance()
     );
@@ -120,6 +121,11 @@ class sfSympalBootstrap
       $contentTypes = $this->_sympalConfiguration->getContentTypes();
       Doctrine_Core::initializeModels($contentTypes);
     }
+  }
+
+  public function getSympalContext()
+  {
+    return $this->_sympalContext;
   }
 
   protected function _loadAllModules()

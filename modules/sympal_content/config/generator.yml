@@ -73,6 +73,13 @@ generator:
           _save_and_add:
       new:
         title: Create New Content
+        actions:
+          _list:
+          _save:
+          save_and_view:
+          save_and_edit_menu:
+          _save_and_list:
+          _save_and_add:
 <?php
 $yaml = ob_get_contents();
 ob_end_clean();

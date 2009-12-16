@@ -50,6 +50,16 @@ class sfSympalCache
     $this->_cacheDriver->set('primed', true);
   }
 
+  public function resetRouteCache()
+  {
+    $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml';
+    unlink($cachePath);
+    $context = sfContext::getInstance();
+    $configCache = $context->getConfigCache();
+    unlink($configCache->getCacheName('config/routing.yml'));
+    $context->getRouting()->loadConfiguration();
+  }
+
   public function getLayouts()
   {
     if ($this->_layouts === null)

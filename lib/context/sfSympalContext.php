@@ -10,7 +10,7 @@ class sfSympalContext
     $_site,
     $_sympalConfiguration,
     $_symfonyContext;
-  
+
   public function __construct($site, sfSympalConfiguration $sympalConfiguration, sfContext $symfonyContext)
   {
     $this->_site = $site;
