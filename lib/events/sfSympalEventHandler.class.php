@@ -26,16 +26,16 @@ class sfSympalEventHandler
     $help = $icon->addChild('Help')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('Sympal '.sfSympalConfig::getCurrentVersion())
+    $help->addChild('Sympal '.sfSympalConfig::getCurrentVersion(), 'http://www.sympalphp.org', 'target=_BLANK')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('symfony '.SYMFONY_VERSION)
+    $help->addChild('Symfony '.SYMFONY_VERSION, 'http://www.symfony-project.org', 'target=_BLANK')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('Doctrine '.Doctrine_Core::VERSION)
+    $help->addChild('Doctrine '.Doctrine_Core::VERSION, 'http://www.doctrine-project.org', 'target=_BLANK')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('About Sympal', 'http://www.symfony-project.com/plugins/sfSympalPlugin', 'target=_BLANK')
+    $help->addChild('About Sympal', 'http://www.sympalphp.org', 'target=_BLANK')
       ->setCredentials(array('ViewDeveloperInformation'));
 
     $help->addChild('About Symfony', 'http://www.symfony-project.com/about', 'target=_BLANK')
@@ -53,7 +53,10 @@ class sfSympalEventHandler
     $help->addChild('Report Doctrine Bug', 'http://trac.doctrine-project.org', 'target=_BLANK')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    $help->addChild('Report symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK')
+    $help->addChild('Report Symfony Bug', 'http://trac.symfony-project.com', 'target=_BLANK')
+      ->setCredentials(array('ViewDeveloperInformation'));
+
+    $help->addChild('Report Sympal Bug', 'http://trac.sympalphp.org', 'target=_BLANK')
       ->setCredentials(array('ViewDeveloperInformation'));
 
     if (sfSympalToolkit::isEditMode())
