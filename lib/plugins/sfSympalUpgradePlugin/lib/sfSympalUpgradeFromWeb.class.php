@@ -82,7 +82,7 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     {
       $this->logSection('sympal', 'Checking for new version of Sympal!');
 
-      $code = file_get_contents('http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk/lib/sfSympal.class.php');
+      $code = file_get_contents('http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk/config/sfSympalPluginConfiguration.class.php');
       preg_match_all("/const VERSION = '(.*)';/", $code, $matches);
       $this->_latestVersion = $matches[1][0];
     }
