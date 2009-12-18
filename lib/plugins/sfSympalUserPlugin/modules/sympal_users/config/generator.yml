@@ -1,7 +1,7 @@
 generator:
   class: sfDoctrineGenerator
   param:
-    model_class:           User
+    model_class:           sfGuardUser
     theme:                 sympal_admin
     non_verbose_templates: true
     with_show:             false
@@ -18,9 +18,9 @@ generator:
       filter:
         display: [username, is_active, is_super_admin, last_login]
       form:
-        class: sfSympalUserAdminForm
+        class: sfGuardUserAdminForm
         display:
-          "NONE": [username, password, password_again, is_active, is_super_admin]
+          "User": [username, password, password_again, is_active, is_super_admin]
           "Profile": [first_name, last_name, email_address]
           "Security": [groups_list, permissions_list]
       edit:

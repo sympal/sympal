@@ -91,6 +91,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     {
       $this->getUser()->setFlash('notice', $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.');
 
+      $form->getObject()->setSite($this->getSympalContext()->getSite());
+
       $tree = $form->save();
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $tree)));
@@ -206,7 +208,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->menu_item = $this->_getMenuItem($request);
     $this->form = $this->configuration->getForm($this->menu_item);
 
-    sfSympalToolkit::setCurrentMenuItem($this->menu_item);
+    $this->getSympalContext()->setCurrentMenuItem($this->menu_item);
   }
 
   public function executeDelete(sfWebRequest $request)

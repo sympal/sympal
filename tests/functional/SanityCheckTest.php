@@ -46,7 +46,7 @@ $browser->
 
 $browser->
   get('/register')->
-  click('input[type="submit"]', array('user' => array('first_name' => 'Jonathan', 'last_name' => 'Wage', 'email_address' => 'jonathan.wage@sensio.com', 'username' => 'test', 'password' => 'test', 'password_again' => 'test')), array('method' => 'post', '_with_csrf' => true))->
+  click('input[type="submit"]', array('sf_guard_user' => array('first_name' => 'Jonathan', 'last_name' => 'Wage', 'email_address' => 'jonathan.wage@sensio.com', 'username' => 'test', 'password' => 'test', 'password_again' => 'test')), array('method' => 'post', '_with_csrf' => true))->
   with('response')->begin()->
     isRedirected()->
     followRedirect()->
@@ -82,4 +82,4 @@ foreach ($profiler as $event)
     $count++;
   }
 }
-$browser->test()->is($count, 2, 'Make sure we do not have more than 4 queries');
+$browser->test()->is($count, 1, 'Make sure we do not have more than 1 query');

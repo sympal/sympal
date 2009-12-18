@@ -16,6 +16,7 @@ abstract class PluginContentForm extends BaseContentForm
     $this->validatorSchema->setOption('allow_extra_fields', true);
 
     unset(
+      $this['site_id'],
       $this['created_at'],
       $this['updated_at'],
       $this['last_updated_by']
@@ -23,7 +24,6 @@ abstract class PluginContentForm extends BaseContentForm
 
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
 
-    $this->widgetSchema['site_id'] = new sfWidgetFormInputHidden();
     $this->widgetSchema['created_by']->setOption('add_empty', true);
 
     $q = Doctrine_Query::create()
@@ -38,7 +38,6 @@ abstract class PluginContentForm extends BaseContentForm
     $this->widgetSchema['master_menu_item_id']->setOption('query', $q);
     $this->widgetSchema['master_menu_item_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'MenuItem', 'query' => $q, 'add_empty' => true));
     $this->widgetSchema['content_type_id'] = new sfWidgetFormInputHidden();
-    $this->widgetSchema['locked_by'] = new sfWidgetFormInputHidden();
 
     sfSympalFormToolkit::changeThemeWidget($this);
 
@@ -89,10 +88,5 @@ abstract class PluginContentForm extends BaseContentForm
       }
       $this->embedForm('Content Slots', $slotsForm);
     }
-  }
-
-  public function getAdminGenMainTabLabel()
-  {
-    return 'Settings';
   }
 }

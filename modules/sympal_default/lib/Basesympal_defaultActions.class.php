@@ -36,10 +36,6 @@ class Basesympal_defaultActions extends sfActions
     $this->message = $request->getAttribute('message');
   }
 
-  public function executeSecure()
-  {
-  }
-
   public function executeError404()
   {
   }

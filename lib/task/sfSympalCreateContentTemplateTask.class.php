@@ -98,7 +98,6 @@ EOF;
     $name = $arguments['name'];
     $contentTemplate = Doctrine_Core::getTable('ContentTemplate')
       ->createQuery('t')
-      ->where('t.site_id = ?', $site->id)
       ->andWhere('t.name = ?', $name)
       ->fetchOne();
 
@@ -110,7 +109,6 @@ EOF;
     $contentTemplate = new ContentTemplate();
     $contentTemplate->name = $name;
     $form = new ContentTemplateForm($contentTemplate);
-    unset($form['site_id']);
     $this->askForm($form);
   }
 }

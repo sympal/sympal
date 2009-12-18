@@ -9,9 +9,9 @@ class PluginPageTable extends Doctrine_Table
     return sfSympalDataGrid::create(
         Doctrine_Core::getTable('Content')->getFullTypeQuery('Page')
       )
-      ->addColumn('crt.title', 'renderer=sympal_page/data_grid_title')
+      ->addColumn('cr.title', 'renderer=sympal_page/data_grid_title')
       ->addColumn('c.date_published')
       ->addColumn('u.username', 'label=Created By')
-      ->setSort('crt.title');
+      ->setSort('cr.title');
   }
 }

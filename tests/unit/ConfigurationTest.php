@@ -3,39 +3,50 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(12, new lime_output_color());
+$t = new lime_test(11, new lime_output_color());
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
-$t->is(get_class($sympalConfiguration), 'sympalSympalConfiguration');
 
 $requiredPlugins = array(
   'sfSympalPlugin',
+  'sfDoctrineGuardPlugin',
   'sfFormExtraPlugin',
   'sfTaskExtraPlugin',
   'sfFeed2Plugin',
   'sfWebBrowserPlugin',
-  'sfSympalUserPlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
   'sfSympalContentListPlugin',
   'sfSympalDataGridPlugin',
+  'sfSympalUserPlugin',
+  'sfSympalInstallPlugin',
+  'sfSympalUpgradePlugin',
+  'sfSympalRenderingPlugin',
+  'sfSympalAdminPlugin',
+  'sfSympalFrontendEditorPlugin'
 );
 
 $t->is($sympalConfiguration->getRequiredPlugins(), $requiredPlugins);
 
 $corePlugins = array(
+  'sfDoctrineGuardPlugin',
   'sfFormExtraPlugin',
   'sfTaskExtraPlugin',
   'sfFeed2Plugin',
   'sfWebBrowserPlugin',
-  'sfSympalUserPlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
   'sfSympalContentListPlugin',
-  'sfSympalDataGridPlugin'
+  'sfSympalDataGridPlugin',
+  'sfSympalUserPlugin',
+  'sfSympalInstallPlugin',
+  'sfSympalUpgradePlugin',
+  'sfSympalRenderingPlugin',
+  'sfSympalAdminPlugin',
+  'sfSympalFrontendEditorPlugin'
 );
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins);

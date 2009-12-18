@@ -7,46 +7,36 @@ Site:
 ContentSlotType:
   ContentSlotType_Markdown:
     name: Markdown
-    Site: Site_default
   ContentSlotType_MultiLineText:
     name: MultiLineText
-    Site: Site_default
   ContentSlotType_Text:
     name: Text
-    Site: Site_default
   ContentSlotType_RichText:
     name: RichText
-    Site: Site_default
   ContentSlotType_ContentProperty:
     name: ContentProperty
-    Site: Site_default
     is_internal: true
   ContentSlotType_Widget:
     name: Widget
-    Site: Site_default
 
 ContentTemplate:
   ContentTemplate_ViewPage:
     name: View Page
-    partial_path: sympal_page/view
+    path: sympal_page/view
     ContentType: ContentType_Page
-    Site: Site_default
     is_default: true
   ContentTemplate_ViewContentList:
     name: View Content List
-    partial_path: sympal_content_list/view
+    path: sympal_content_list/view
     ContentType: ContentType_ContentList
-    Site: Site_default
     is_default: true
   ContentTemplate_Register:
     name: Register
-    partial_path: sympal_page/register
+    path: sympal_page/register
     ContentType: ContentType_Page
-    Site: Site_default
 
 ContentType:
   ContentType_Page:
-    Site: Site_default
     plugin_name: sfSympalPagesPlugin
     name: Page
     description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
@@ -58,7 +48,6 @@ ContentType:
 <?php endif; ?>
 
   ContentType_ContentList:
-    Site: Site_default
     plugin_name: sfSympalContentListPlugin
     name: ContentList
     description: The content list content type is the default Sympal content type for displaying lists of content.
@@ -69,7 +58,7 @@ ContentType:
     default_path: /lists/:slug
 <?php endif; ?>
 
-User:
+sfGuardUser:
   admin:
     first_name: <?php echo sfSympalConfig::get('sympal_install_admin_first_name', null, 'Sympal') ?> 
     last_name: <?php echo sfSympalConfig::get('sympal_install_admin_last_name', null, 'Admin') ?> 
@@ -79,7 +68,7 @@ User:
     password: <?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?> 
     is_super_admin: true
 
-Group:
+sfGuardGroup:
   AdministratorGroup:
     name: Administrator
     Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
@@ -97,7 +86,7 @@ Group:
     name: Developer
     Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
 
-Permission:
+sfGuardPermission:
   ViewDashboard:
     name: ViewDashboard
   ManageContent:

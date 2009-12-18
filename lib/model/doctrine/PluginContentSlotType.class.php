@@ -5,32 +5,4 @@
  */
 abstract class PluginContentSlotType extends BaseContentSlotType
 {
-  public function preValidate($event)
-  {
-    $invoker = $event->getInvoker();
-
-    if (sfContext::hasInstance() && !$invoker->site_id)
-    {
-      $invoker->site_id = sfSympalContext::getInstance()->getSite()->getId();
-    }
-  }
-
-  public function setName($name)
-  {
-    if ($name)
-    {
-      $result = Doctrine_Query::create()
-        ->from('ContentSlotType t')
-        ->where('t.name = ?', $name)
-        ->fetchArray();
-
-      if ($result)
-      {
-        $this->assignIdentifier($result[0]['id']);
-        $this->hydrate($result[0]);
-      } else {
-        $this->_set('name', $name);
-      }
-    }
-  }
 }

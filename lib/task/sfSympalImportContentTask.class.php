@@ -46,7 +46,7 @@ EOF;
       if ($isContentType)
       {
         $record = Content::createNew($model);
-        $record->CreatedBy = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(true);
+        $record->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(true);
         $record->getRecord()->fromArray($row);
         $record->is_published = true;
         $record->slug = (string) $record;

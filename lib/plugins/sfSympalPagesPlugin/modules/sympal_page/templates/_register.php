@@ -7,5 +7,5 @@
 
   <?php echo get_sympal_content_slot($content, 'body') ?>
 
-  <?php echo get_component('sympal_register', 'form') ?>
+  <?php echo get_component('sfGuardRegister', 'form') ?>
 <?php endif; ?>

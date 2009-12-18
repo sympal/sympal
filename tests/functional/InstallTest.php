@@ -44,4 +44,4 @@ $browser->
   end()
 ;
 
-sfSympalConfig::writeSetting('installed', false);
+sfSympalConfig::writeSetting('installed', true);

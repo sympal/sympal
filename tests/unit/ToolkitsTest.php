@@ -5,11 +5,13 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(5, new lime_output_color());
 
-$menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug('sample-page');
-sfSympalToolkit::setCurrentMenuItem($menuItem);
+$sympalContext = sfSympalContext::getInstance();
 
-$t->is(sfSympalToolkit::getCurrentMenuItem(), $menuItem);
-$t->is(sfSympalToolkit::getCurrentSite()->getSlug(), $app);
+$menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug('sample-page');
+$sympalContext->setCurrentMenuItem($menuItem);
+
+$t->is($sympalContext->getCurrentMenuItem(), $menuItem);
+$t->is($sympalContext->getSite()->getSlug(), $app);
 
 $resource = sfSympalToolkit::getSymfonyResource('test', 'test', array('var' => 'Test'));
 $t->is($resource, 'Test');

@@ -14,6 +14,6 @@ abstract class PluginContentTypeForm extends BaseContentTypeForm
     parent::setup();
 
     sfSympalFormToolkit::changeThemeWidget($this);
-    unset($this['site_id'], $this['name']);
+    unset($this['name']);
   }
 }

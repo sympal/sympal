@@ -36,9 +36,9 @@ sympal_save_form_tab_view_current_tab:
   url:  /form/save_current_tab/:name/:id
   param: { module: sympal_editor, action: save_form_current_tab }
 
-sympal_tools_save_state:
-  url:  /save_sympal_tools_state/:state
-  param: { module: sympal_editor, action: save_tools_state }
+sympal_editor_save_state:
+  url:  /save_sympal_editor_state/:state
+  param: { module: sympal_editor, action: save_editor_state }
 
 sympal_dashboard:
   url:  /admin/dashboard
@@ -57,14 +57,6 @@ sympal_change_language_form:
 sympal_change_language:
   url:   /change_language/:language
   param: { module: sympal_default, action: change_language, language: en }
-
-sympal_signout:
-  url:   /signout
-  param: { module: sympal_auth, action: signout }
-
-sympal_signin:
-  url:   /signin
-  param: { module: sympal_auth, action: signin }
 
 sympal_edit_column_content_slot:
   url:   /edit_column_content_slot/:id/:name
@@ -120,8 +112,8 @@ sympal_change_content_slot_type:
     model: ContentSlot
     type: object
 
-sympal_save_editor_panel_position:
-  url:   /save_editor_panel_position
+sympal_save_editor_position:
+  url:   /save_editor_position
   param: { module: sympal_editor, action: save_panel_position }
 
 sympal_publish_content:

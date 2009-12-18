@@ -79,7 +79,6 @@ abstract class sfSympalPluginManager
     $contentTemplate = new ContentTemplate();
     $contentTemplate->name = $name;
     $contentTemplate->ContentType = $contentType;
-    $contentTemplate->Site = Doctrine_Core::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
 
     $this->_setDoctrineProperties($contentTemplate, $properties);
 
@@ -95,7 +94,7 @@ abstract class sfSympalPluginManager
 
     $content = new Content();
     $content->Type = $contentType;
-    $content->CreatedBy = Doctrine_Core::getTable('User')->findOneByIsSuperAdmin(1);
+    $content->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);
     $content->Site = Doctrine_Core::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $content->is_published = true;
 
@@ -114,7 +113,6 @@ abstract class sfSympalPluginManager
     $contentType = new ContentType();
     $contentType->name = $name;
     $contentType->label = sfInflector::humanize(sfInflector::tableize($name));
-    $contentType->Site = Doctrine_Core::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
 
     $this->_setDoctrineProperties($contentType, $properties);
 

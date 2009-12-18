@@ -36,13 +36,13 @@ MenuItem:
       foreignAlias: MenuItems
       onDelete: CASCADE
     Groups:
-      class: Group
+      class: sfGuardGroup
       local: menu_item_id
       foreign: group_id
       refClass: MenuItemGroup
       foreignAlias: MenuItems
     Permissions:
-      class: Permission
+      class: sfGuardPermission
       local: menu_item_id
       foreign: permission_id
       refClass: MenuItemPermission
@@ -62,7 +62,7 @@ MenuItemGroup:
       foreignAlias: MenuItemGroups
       onDelete: CASCADE
     Group:
-      class: Group
+      class: sfGuardGroup
       local: group_id
       foreignAlias: MenuItemGroups
       onDelete: CASCADE
@@ -81,7 +81,7 @@ MenuItemPermission:
       foreignAlias: MenuItemPermissions
       onDelete: CASCADE
     Permission:
-      class: Permission
+      class: sfGuardPermission
       local: permission_id
       foreignAlias: MenuItemPermissions
       onDelete: CASCADE

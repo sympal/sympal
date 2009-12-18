@@ -15,7 +15,7 @@
     <?php endif; ?>
   <?php endif; ?>
 
-  <?php $subMenu = get_sympal_menu(sfSympalToolkit::getCurrentMenuItem(), true) ?>
+  <?php $subMenu = get_sympal_menu(sfSympalContext::getInstance()->getCurrentMenuItem(), true) ?>
   <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
     <?php use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
   <?php endif; ?>

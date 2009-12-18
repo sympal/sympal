@@ -1,5 +1,5 @@
-<?php echo get_sympal_breadcrumbs(array('Home' => '@homepage', 'Signin' => null)) ?>
+<?php use_helper('I18N') ?>
 
-<h1><?php echo __('Signin') ?></h1>
+<h1>Signin</h1>
 
-<?php echo get_partial('sympal_auth/signin_form', array('form' => $form)) ?>
+<?php echo get_partial('sfGuardAuth/signin_form', array('form' => $form)) ?>

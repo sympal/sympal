@@ -82,7 +82,7 @@ class sfSympalMenuSite extends sfSympalMenu
     $this->requiresNoAuth($menuItem->requires_no_auth);
     $this->setCredentials($menuItem->getAllPermissions());
 
-    $currentMenuItem = sfSympalToolkit::getCurrentMenuItem();
+    $currentMenuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
 
     if ($currentMenuItem && $currentMenuItem->exists())
     {
@@ -117,7 +117,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
   public function isCurrentAncestor()
   {
-    $menuItem = sfSympalToolkit::getCurrentMenuItem();
+    $menuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
     if ($menuItem) {
 
       $current = $this;

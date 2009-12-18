@@ -10,22 +10,6 @@ abstract class PluginContentType extends BaseContentType
     return (string) $this->getLabel();
   }
 
-  public function setName($name)
-  {
-    $result = Doctrine_Query::create()
-      ->from('ContentType t')
-      ->where('t.name = ?', $name)
-      ->fetchArray();
-
-    if ($result)
-    {
-      $this->assignIdentifier($result[0]['id']);
-      $this->hydrate($result[0]);
-    } else {
-      $this->_set('name', $name);
-    }
-  }
-
   public function getTemplate()
   {
     if ($this->hasReference('ContentTemplates'))
@@ -83,15 +67,5 @@ abstract class PluginContentType extends BaseContentType
       $path .= '.:sf_format';
     }
     return $path;
-  }
-
-  public function preValidate($event)
-  {
-    $invoker = $event->getInvoker();
-
-    if (!$invoker->site_id)
-    {
-      $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
-    }
   }
 }

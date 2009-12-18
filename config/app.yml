@@ -1,6 +1,7 @@
 all:
   sympal_config:
-    load_all_modules: true
+    auto_enable_sf_guard: true
+    enable_all_modules: true
     get_cache_driver_callback: [sfSympalCache, getCacheDriver]
     menu_manager_class: sfSympalMenuSiteManager
     menu_class: sfSympalMenuSite
@@ -13,10 +14,10 @@ all:
       username: 
       password: 
     slot_widgets:
-      Signin Form: sympal_auth/signin_form
+      Signin Form: sfGuardAuth/signin_form
     content_formats: [html, atom, feed, atom1, rss, rss10, rss091, rss201, xml, yml, json]
     breadcrumbs_separator: ' / '
-    i18n: true
+    i18n: false
     internationalized_models:
       Content: [i18n_slug, page_title, meta_keywords, meta_description]
       ContentSlot: [value]

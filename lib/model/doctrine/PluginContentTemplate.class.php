@@ -5,29 +5,4 @@
  */
 abstract class PluginContentTemplate extends BaseContentTemplate
 {
-  public function preValidate($event)
-  {
-    $invoker = $event->getInvoker();
-
-    if (!$invoker->site_id)
-    {
-      $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
-    }
-  }
-
-  public function setName($name)
-  {
-    $result = Doctrine_Query::create()
-      ->from('ContentTemplate t')
-      ->where('t.name = ?', $name)
-      ->fetchArray();
-
-    if ($result)
-    {
-      $this->assignIdentifier($result[0]['id']);
-      $this->hydrate($result[0]);
-    } else {
-      $this->_set('name', $name);
-    }
-  }
 }

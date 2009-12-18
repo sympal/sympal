@@ -9,7 +9,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 
   public function initialize()
   {
-    $this->dispatcher->connect('sympal.load_tools', array($this, 'loadTools'));
+    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadTools'));
     $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
   }
 

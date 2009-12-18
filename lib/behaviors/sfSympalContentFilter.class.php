@@ -2,20 +2,26 @@
 
 class sfSympalContentFilter extends Doctrine_Record_Filter
 {
-  protected $_i18nFilter;
+  protected $_i18nFilter = false;
 
   public function init()
   {
-    $this->_i18nFilter = new sfDoctrineRecordI18nFilter();
-    $this->_i18nFilter->setTable($this->getTable());
-    $this->_i18nFilter->init();
+    if (sfSympalConfig::isI18nEnabled('Content'))
+    {
+      $this->_i18nFilter = new sfDoctrineRecordI18nFilter();
+      $this->_i18nFilter->setTable($this->getTable());
+      $this->_i18nFilter->init();
+    }
   }
 
   public function filterSet(Doctrine_Record $record, $name, $value)
   {
-    try {
-      return $this->_i18nFilter->filterSet($record, $name, $value);
-    } catch (Exception $e) {}
+    if ($this->_i18nFilter)
+    {
+      try {
+        return $this->_i18nFilter->filterSet($record, $name, $value);
+      } catch (Doctrine_Record_UnknownPropertyException $e) {}
+    }
 
     try {
       if ($record->getRecord())
@@ -30,9 +36,12 @@ class sfSympalContentFilter extends Doctrine_Record_Filter
 
   public function filterGet(Doctrine_Record $record, $name)
   {
-    try {
-      return $this->_i18nFilter->filterGet($record, $name);
-    } catch (Exception $e) {}
+    if ($this->_i18nFilter)
+    {
+      try {
+        return $this->_i18nFilter->filterGet($record, $name);
+      } catch (Doctrine_Record_UnknownPropertyException $e) {}
+    }
 
     try {
       if ($record->getRecord())

@@ -9,34 +9,6 @@ abstract class PluginContent extends BaseContent
     $_allPermissions,
     $_route;
 
-  public function preValidate($event)
-  {
-    $invoker = $event->getInvoker();
-    $modified = $invoker->getModified();
-    if (isset($modified['is_published']) && $modified['is_published'] && !isset($modified['date_published']) && !$invoker->date_published)
-    {
-      $invoker->date_published = new Doctrine_Expression('NOW()');
-    }
-
-    if (sfContext::hasInstance())
-    {
-      $user = sfContext::getInstance()->getUser();
-      if ($user->isAuthenticated())
-      {
-        $invoker->last_updated_by = $user->getSympalUser()->getId();
-        if (!$invoker->exists() || !$invoker->created_by)
-        {
-          $invoker->created_by = $user->getSympalUser()->getId();
-        }
-      }
-    }
-
-    if (!$invoker->site_id)
-    {
-      $invoker->site_id = sfSympalToolkit::getCurrentSiteId();
-    }
-  }
-
   public static function createNew($type)
   {
     if (is_string($type))
@@ -176,67 +148,6 @@ abstract class PluginContent extends BaseContent
     }
   }
 
-  public function releaseLock()
-  {
-    if ($this->isLocked())
-    {
-      $this->locked_by = null;
-      $this->save();
-    }
-  }
-
-  public function obtainLock(sfUser $sfUser)
-  {
-    $lock = $sfUser->getOpenContentLock();
-    if ($lock['id'] != $this['id'])
-    {
-      $sfUser->releaseOpenLock();
-    }
-
-    if ($this->userHasLock($sfUser))
-    {
-      return null;
-    }
-
-    if ($this->canLock($sfUser))
-    {
-      $user = $sfUser->getSympalUser();
-      $this->LockedBy = $user;
-      $this->save();
-
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public function canLock(sfUser $sfUser)
-  {
-    return $sfUser->isAuthenticated() && !$this->isLocked();
-  }
-
-  public function isLocked()
-  {
-    return $this->locked_by ? true:false;
-  }
-
-  public function userHasLock(sfUser $sfUser = null)
-  {
-    if (is_null($sfUser))
-    {
-      $sfUser = sfContext::getInstance()->getUser();
-    }
-
-    if (!$sfUser->isAuthenticated())
-    {
-      return null;
-    }
-
-    $user = $sfUser->getSympalUser();
-
-    return $user && $this['locked_by'] == $user['id'];
-  }
-
   public function publish()
   {
     $this->is_published = true;
@@ -288,7 +199,7 @@ abstract class PluginContent extends BaseContent
   public function getFeedDescription()
   {
     return sfSympalContext::getInstance()
-      ->getRenderer($this->getMainMenuItem(), $this)
+      ->getRenderer($this)
       ->render();
   }
 
@@ -476,11 +387,14 @@ abstract class PluginContent extends BaseContent
 
   public static function slugBuilder($text, $content)
   {
-    $record = $content->getRecord();
-
-    try {
-      return $record->slugBuilder($text);
-    } catch (Doctrine_Record_UnknownPropertyException $e) {
+    if ($record = $content->getRecord())
+    {
+      try {
+        return $record->slugBuilder($text);
+      } catch (Doctrine_Record_UnknownPropertyException $e) {
+        return Doctrine_Inflector::urlize($text);
+      }
+    } else {
       return Doctrine_Inflector::urlize($text);
     }
   }

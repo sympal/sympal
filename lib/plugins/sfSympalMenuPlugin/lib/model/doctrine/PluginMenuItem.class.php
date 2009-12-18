@@ -65,21 +65,6 @@ abstract class PluginMenuItem extends BaseMenuItem
     return str_repeat('-', $this->getLevel()) . ' ' . $this->getLabel().($this->getLevel() == 0 ? ' ('.$this->getSlug().')':null);
   }
 
-  public function preValidate($event)
-  {
-    $invoker = $event->getInvoker();
-    $modified = $invoker->getModified();
-    if (isset($modified['is_published']) && $modified['is_published'] && !isset($modified['date_published']))
-    {
-      $invoker->date_published = new Doctrine_Expression('NOW()');
-    }
-
-    if (sfContext::hasInstance())
-    {
-      $invoker->site_id = sfSympalContext::getInstance()->getSite()->getId();
-    }
-  }
-
   public function __toString()
   {
     return $this->getIndentedName();

@@ -184,14 +184,15 @@ function get_sympal_split_menus($name, $showChildren = true, $max = null, $split
  */
 function get_sympal_editor($menuItem = null, $content = null)
 {
-  $menuItem = $menuItem ? $menuItem:sfSympalToolkit::getCurrentMenuItem();
-  $content = $content ? $content:sfSympalToolkit::getCurrentContent();
+  $sympalContext = sfSympalContext::getInstance();
+  $menuItem = $menuItem ? $menuItem : $sympalContext->getCurrentMenuItem();
+  $content = $content ? $content : $sympalContext->getCurrentContent();
 
   $editor = '';
 
   if (sfSympalToolkit::isEditMode() && $content && $menuItem)
   {
-    $editor .= get_component('sympal_editor', 'tools', array('content' => $content, 'menuItem' => $menuItem));
+    $editor .= get_component('sympal_editor', 'editor', array('content' => $content, 'menuItem' => $menuItem));
   }
 
   $editor .= get_slot('sympal_editors');
@@ -210,7 +211,7 @@ function get_sympal_admin_bar()
 {
   if (sfContext::getInstance()->getUser()->isAuthenticated())
   {
-    return get_component('sympal_editor', 'admin_bar');
+    return get_component('sympal_admin', 'admin_bar');
   }
 }
 

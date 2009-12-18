@@ -15,6 +15,8 @@ class <?php echo $this->getGeneratedModuleName() ?>Actions extends sfActions
 {
   public function preExecute()
   {
+    $this->useAdminLayout();
+
     $this->configuration = new <?php echo $this->getModuleName() ?>GeneratorConfiguration();
 
     if (!$this->getUser()->hasCredential($this->configuration->getCredentials($this->getActionName())))

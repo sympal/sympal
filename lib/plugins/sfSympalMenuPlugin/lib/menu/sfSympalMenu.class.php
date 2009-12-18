@@ -451,7 +451,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   public function isCurrentAncestor()
   {
-    $menuItem = sfSympalToolkit::getCurrentMenuItem();
+    $menuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
     if ($menuItem){
       while ($menuItem->getLevel() != 0)
       {

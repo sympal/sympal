@@ -3,9 +3,9 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(10, new lime_output_color());
+$t = new lime_test(8, new lime_output_color());
 
-$dataGrid = sfSympalDataGrid::create('User', 'u')
+$dataGrid = sfSympalDataGrid::create('sfGuardUser', 'u')
   ->addColumn('u.id', 'renderer=test/data_grid_id')
   ->addColumn('u.username', 'method=getDataGridUsername')
   ->addColumn('name');
@@ -34,7 +34,6 @@ $t->is($dataGrid->getRows(), array(
       'c.plugin_name' => 'sfSympalPagesPlugin',
       'c.default_path' => '/pages/:slug',
       'c.layout' => NULL,
-      'c.site_id' => '1',
       'c.slug' => 'page',
     )
   )
@@ -65,18 +64,6 @@ $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->isSortable(false);
 
 $t->is($dataGrid->getColumnSortLink($dataGrid->getColumn('t.name')), 'Name');
-
-$dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
-  ->leftJoin('t.ContentType ty')
-  ->leftJoin('ty.Site s')
-  ->setMaxPerPage(1)
-  ->addColumn('t.name')
-  ->addColumn('ty.name')
-  ->addColumn('s.title');
-
-$rows = $dataGrid->getRows();
-$t->is(count($rows[0]), 3);
-$t->is($rows[0]['s.title'], 'Sympal');
 
 $dataGrid = sfSympalDataGrid::create('ContentTemplate', 't')
   ->select('t.id, t.name')

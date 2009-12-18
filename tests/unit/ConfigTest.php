@@ -21,5 +21,5 @@ $path = sfConfig::get('sf_config_dir').'/app.yml';
 $array = (array) sfYaml::load(file_get_contents($path));
 $t->is(isset($array['all']['sympal_config']['test_write_value']), true);
 
-$t->is(sfSympalConfig::isI18nEnabled(), true);
-$t->is(sfSympalConfig::isI18nEnabled('Content'), true);
+$t->is(sfSympalConfig::isI18nEnabled(), false);
+$t->is(sfSympalConfig::isI18nEnabled('Content'), false);

@@ -3,9 +3,9 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(33, new lime_output_color());
+$t = new lime_test(30, new lime_output_color());
 
-$user = new User();
+$user = new sfGuardUser();
 $user->first_name = 'test';
 $user->last_name = 'test';
 $user->email_address = 'test@gmail.com';
@@ -21,6 +21,8 @@ $content->slug = 'testing-this-out';
 $content->is_published = true;
 $content->date_published = date('Y-m-d', time() - 3600);
 $content->CreatedBy = $user;
+$content->Site = Doctrine_Core::getTable('Site')->findOneBySlug('sympal');
+$content->title = 'Testing this out';
 $content->save();
 
 $page->Content = $content;
@@ -30,6 +32,7 @@ $menuItem = new MenuItem();
 $menuItem->name = 'test';
 $menuItem->RelatedContent = $page->Content;
 $menuItem->is_published = true;
+$menuItem->Site = Doctrine_Core::getTable('Site')->findOneBySlug('sympal');
 $menuItem->save();
 
 $page->Content->MasterMenuItem = $menuItem;
@@ -71,14 +74,6 @@ $q = Doctrine_Core::getTable('Content')
 
 $content = $q->fetchOne();
 
-$t->is($content->userHasLock($sfUser), false);
-
-$content->obtainLock($sfUser);
-$t->is($content->userHasLock($sfUser), true);
-
-$content->releaseLock();
-$t->is($content->userHasLock($sfUser), false);
-
 $content->publish();
 $t->is($content->is_published, true);
 $t->is(strtotime($content->date_published) > 0, true);
@@ -88,8 +83,10 @@ $t->is($content->is_published, false);
 $t->is(strtotime($content->date_published) > 0, false);
 
 $content->is_published = 1;
+$content->date_published = new Doctrine_Expression('NOW()');
 $content->save();
 $content->refresh();
+
 $t->is($content->is_published, true);
 $t->is(strtotime($content->date_published) > 0, true);
 

@@ -27,7 +27,6 @@ Content:
     created_by:
       type: integer
       notnull: true
-    locked_by: integer
     is_published: boolean
     date_published: timestamp
     custom_path: string(255)
@@ -49,20 +48,15 @@ Content:
       foreignAlias: MasterContent
       foreignType: one
     LastUpdatedBy:
-      class: User
+      class: sfGuardUser
       local: last_updated_by
       foreignAlias: LastUpdatedContent
       onDelete: SET NULL
     CreatedBy:
-      class: User
+      class: sfGuardUser
       local: created_by
       foreignAlias: CreatedContent
       onDelete: CASCADE
-    LockedBy:
-      class: User
-      local: locked_by
-      foreignAlias: LockedContent
-      onDelete: SET NULL
     Site:
       onDelete: CASCADE
     Type:
@@ -72,12 +66,12 @@ Content:
       class: ContentTemplate
       onDelete: SET NULL
     Groups:
-      class: Group
+      class: sfGuardGroup
       local: content_id
       foreign: group_id
       refClass: ContentGroup
     Permissions:
-      class: Permission
+      class: sfGuardPermission
       local: content_id
       foreign: permission_id
       refClass: ContentPermission
@@ -96,13 +90,6 @@ ContentType:
     plugin_name: string(255)
     default_path: string(255)
     layout: string(255)
-    site_id:
-      type: integer
-      notnull: true
-  relations:
-    Site:
-      onDelete: CASCADE
-      foreignAlias: ContentTypes
   indexes:
     content_type_name:
       fields: [name]
@@ -113,8 +100,7 @@ ContentTemplate:
     name:
       type: string(255)
       notnull: true
-    partial_path: string(255)
-    component_path: string(255)
+    path: string(255)
     body: clob
     is_default:
       type: boolean
@@ -122,13 +108,7 @@ ContentTemplate:
     content_type_id:
       type: integer
       notnull: true
-    site_id:
-      type: integer
-      notnull: true
   relations:
-    Site:
-      onDelete: CASCADE
-      foreignAlias: ContentTemplates
     ContentType:
       onDelete: CASCADE
       foreignAlias: ContentTemplates
@@ -174,13 +154,6 @@ ContentSlotType:
     is_internal:
       type: boolean
       default: 0
-    site_id:
-      type: integer
-      notnull: true
-  relations:
-    Site:
-      onDelete: CASCADE
-      foreignAlias: ContentSlotTypes
 
 ContentGroup:
   actAs: [sfSympalRecord]
@@ -196,7 +169,7 @@ ContentGroup:
       foreignAlias: ContentGroups
       onDelete: CASCADE
     Group:
-      class: Group
+      class: sfGuardGroup
       local: group_id
       foreignAlias: ContentGroups
       onDelete: CASCADE
@@ -215,7 +188,7 @@ ContentPermission:
       foreignAlias: ContentGroups
       onDelete: CASCADE
     Permission:
-      class: Permission
+      class: sfGuardPermission
       local: permission_id
       foreignAlias: ContentPermissions
       onDelete: CASCADE
