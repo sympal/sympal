@@ -1,0 +1,1 @@
+<?php echo $contentSlot->render() ?>

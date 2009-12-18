@@ -1,0 +1,92 @@
+<?php ob_start() ?>
+generator:
+  class:                   sfDoctrineGenerator
+  param:
+    model_class:           Content
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_content
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields: ~
+      form:
+        display:
+          "Settings": [created_by, is_published, date_published, page_title, meta_keywords, meta_description, master_menu_item_id, custom_path, content_template_id, layout, groups_list, permissions_list, slug]
+        fields:
+          content_type_id:
+            label: Content Type
+          master_menu_item_id:
+            label: Under Menu Item
+            help: Select the menu item this content record is associated with.
+          custom_path:
+            help: Custom path to be used to generate content record url.
+          content_template_id:
+            label: Content Template
+            help: Choose the content template used to render this content record.
+          layout:
+            help: Choose the layout template used to render this content record.
+          groups_list:
+            label: Groups
+            help: Choose the groups this content record is restricted to.
+          permissions_list:
+            label: Permissions
+            help: Choose the permissions this content record is restricted to.
+          created_by:
+            help: Choose the user that created this record. It will default to the logged in user who created the record.
+          is_published:
+            help: Check to publish this content record. Checking this will automatically set the date published value to the current date. A content record will not be accessible to the public until the published date has been reached.
+          date_published:
+            help: Select the date this content record is to be published. This can be a date in the future and the content record will not be available until that date.
+          slug:
+            help: Enter the unique slug for this content record. This is a human readable string used to identify a content record and can be used in the routing custom path.
+      list:
+        table_method: getAdminGenQuery
+        title: Manage Content
+        display: [_title, is_published]
+        sort: [date_published, DESC]
+        batch_actions:
+          _delete:
+          publish:
+            action: publish
+            label: Publish
+          unpublish:
+            action: unpublish
+            label: Un-Publish
+      filter:
+        class: false
+      edit:
+        title: "Editing Content #%%id%%"
+        actions:
+          _delete:
+          _list:
+          view:
+            action: view
+          _save:
+          save_and_view:
+          save_and_edit_menu:
+          _save_and_list:
+          _save_and_add:
+      new:
+        title: "Create New %%type%%"
+        actions:
+          _list:
+          _save:
+          save_and_view:
+          save_and_edit_menu:
+          _save_and_list:
+          _save_and_add:
+<?php
+$yaml = ob_get_contents();
+ob_end_clean();
+
+$array = sfYaml::load($yaml);
+$array = ProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($array, 'sympal_content.filter_generator_yaml'), $array)->getReturnValue();
+
+$yaml = sfYaml::dump($array);
+
+echo $yaml;
