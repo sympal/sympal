@@ -66,13 +66,6 @@ class sfSympalToolkit
     throw new sfException('Could not find component or partial for the module "'.$module.'" and action "'.$action.'"');
   }
 
-  public static function isEditMode()
-  {
-    $user = sfContext::getInstance()->getUser();
-
-    return $user->isAuthenticated()  && $user->hasCredential('ManageContent');
-  }
-
   protected static $_helperAutoloadCache = null;
 
   public static function autoloadHelper($functionName)

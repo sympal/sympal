@@ -184,13 +184,14 @@ function get_sympal_split_menus($name, $showChildren = true, $max = null, $split
  */
 function get_sympal_editor($menuItem = null, $content = null)
 {
+  $user = sfContext::getInstance()->getUser();
   $sympalContext = sfSympalContext::getInstance();
   $menuItem = $menuItem ? $menuItem : $sympalContext->getCurrentMenuItem();
   $content = $content ? $content : $sympalContext->getCurrentContent();
 
   $editor = '';
 
-  if (sfSympalToolkit::isEditMode() && $content && $menuItem)
+  if ($user->isEditMode() && $content && $menuItem)
   {
     $editor .= get_component('sympal_editor', 'editor', array('content' => $content, 'menuItem' => $menuItem));
   }
@@ -361,13 +362,15 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
     }
   }
 
-  if (sfSympalToolkit::isEditMode() && !$slot->hasValue()) {
+  $user = sfContext::getInstance()->getUser();
+
+  if ($user->isEditMode() && !$slot->hasValue()) {
     $renderedValue = $defaultValue;
   } else {
     $renderedValue = $slot->render();
   }
 
-  if (sfSympalToolkit::isEditMode() && $content->userHasLock($user))
+  if ($user->isEditMode())
   {
     $html  = '<span class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
     $html .= $renderedValue;

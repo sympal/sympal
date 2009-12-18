@@ -2,117 +2,66 @@
 
 class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 {
-  public function uninstall($delete = false)
+  protected $_options = array(
+    'build_all_classes' => true,
+    'delete_related_data' => true,
+    'delete_other_data' => true,
+    'drop_database_tables' => true,
+    'publish_assets' => true,
+    'delete_plugin_files' => false,
+    'run_custom_install' => true,
+  );
+
+  public function uninstall($delete = null)
   {
-    $this->logSection('sympal', 'Uninstall sympal plugin named '.$this->_pluginName);
-
-    $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
-    $schema = $pluginPath.'/config/doctrine/schema.yml';
-
-    if (file_exists($schema))
+    if ($delete !== null)
     {
-      $this->rebuildFilesFromSchema();
+      $this->setOption('delete_plugin_files', $delete);
+    }
 
-      $models = array_keys(sfYaml::load($schema));
-      sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
+    $this->logSection('sympal', sprintf('Uninstalling Sympal plugin named "%s"', $this->_pluginName));
 
-      if ($this->_contentTypeName)
+    if ($this->hasModels())
+    {
+      if ($this->getOption('build_all_classes'))
       {
-        $this->deleteRelatedRecords();
+        $this->_buildAllClasses();
       }
-
-      $this->logSection('sympal', 'Clear database tables of data');
-
-      $models = Doctrine_Manager::connection()->unitOfWork->buildFlushTree($models);
-      $models = array_reverse($models);
-
-      // Delete all data from models included in plugin
-      foreach ($models as $model)
+      if ($this->getOption('delete_related_data'))
       {
-        try {
-          if (class_exists($model))
-          {
-            Doctrine_Core::getTable($model)
-              ->createQuery()
-              ->delete()
-              ->execute();
-          }
-        } catch (Exception $e) {
-          $this->logSection('sympal', 'Could not truncate table for model "'.$model.'": "'.$e->getMessage().'"');
-        }
+        $this->_deleteRelatedData();
       }
-
-      $this->logSection('sympal', 'Drop database tables');
-
-      // Drop all tables
-      foreach ($models as $model)
+      if ($this->getOption('delete_other_data'))
       {
-        try {
-          if (class_exists($model))
-          {
-            $table = Doctrine_Core::getTable($model);
-            $this->logSection('sympal', $table->getConnection()->export->dropTableSql($table->getTableName()));
-            $table->getConnection()->export->dropTable($table->getTableName());
-          }
-        } catch (Exception $e) {
-          $this->logSection('sympal', 'Could not drop table for model "'.$model.'": "'.$e->getMessage().'"');
-        }
+        $this->_deleteOtherData();
+      }
+      if ($this->getOption('drop_database_tables'))
+      {
+        $this->_dropDatabaseTables();
       }
     }
 
-    if (method_exists($this, 'customUninstall'))
+    if ($this->getOption('run_custom_install'))
     {
-      $this->logSection('sympal', 'Calling '.get_class($this).'::customUninstall()');
-
-      $this->customUninstall();
-    } else if (method_exists($this->_pluginConfig, 'customUninstall')) {
-      $this->logSection('sympal', 'Calling '.get_class($this->_pluginConfig).'::customUninstall()');
-
-      $this->_pluginConfig->customUninstall($this->_dispatcher, $this->_formatter);
+      $this->_runCustomUninstall();
     }
 
-    if ($delete)
+    if ($this->getOption('delete_plugin_files'))
     {
-      $this->logSection('sympal', 'Removing plugin files');
-
-      Doctrine_Lib::removeDirectories($pluginPath);
-
-      if ($this->_contentTypeName)
-      {
-        chdir(sfConfig::get('sf_root_dir'));
-        $task = new sfDoctrineDeleteModelFilesTask($this->_dispatcher, $this->_formatter);
-        foreach ($models as $model)
-        {
-          $task->run(array($model), array('--no-confirmation'));
-        }
-      }
-
-      $path = sfConfig::get('sf_lib_dir').'/*/doctrine/'.$this->_pluginName;
-      $dirs = glob($path);
-      sfToolkit::clearGlob($path);
-      foreach ($dirs as $dir)
-      {
-        Doctrine_Lib::removeDirectories($dir);
-      }
+      $this->_deletePluginFiles();
     }
 
-    $this->logSection('sympal', 'Clear cache');
-
-    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
-
-    if (is_dir($pluginPath.'/web'))
+    if ($this->getOption('publish_assets'))
     {
-      chdir(sfConfig::get('sf_root_dir'));
-      $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
-      $ret = @$assets->run(array(), array());
+      $this->_publishAssets();
     }
 
     sfSympalConfig::writeSetting($this->_pluginName, 'installed', false);
   }
 
-  public function deleteRelatedRecords()
+  private function _deleteRelatedData()
   {
-    $this->logSection('sympal', 'Delete content from database');
+    $this->logSection('sympal', sprintf('Deleting data related to Sympal plugin ContentType "%s"', $this->_contentTypeName));
 
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_contentTypeName));
     $slug = 'sample-'.$lowerName;
@@ -120,7 +69,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($this->_contentTypeName);
 
     // Delete content templates related to this content type
-    Doctrine_Core::getTable('ContentTemplate')
+    $count = Doctrine_Core::getTable('ContentTemplate')
       ->createQuery('t')
       ->delete()
       ->where('t.content_type_id = ?', $contentType['id'])
@@ -157,5 +106,98 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       ->delete()
       ->where('t.id = ?', $contentType['id'])
       ->execute();
+  }
+
+  private function _deleteOtherData()
+  {
+    $this->logSection('sympal', 'Deleting data for all other models included in plugin');
+
+    $models = Doctrine_Manager::connection()->unitOfWork->buildFlushTree($this->getPluginModels());
+    $models = array_reverse($models);
+
+    // Delete all data from models included in plugin
+    foreach ($models as $model)
+    {
+      try {
+        if (class_exists($model))
+        {
+          Doctrine_Core::getTable($model)
+            ->createQuery()
+            ->delete()
+            ->execute();
+
+          $this->logSection('sympal', sprintf('Succcessfully truncated table for model named "%s"', $model));
+        }
+      } catch (Exception $e) {
+        $this->logSection('sympal', 'Could not truncate table for model "'.$model.'": "'.$e->getMessage().'"');
+      }
+    }
+  }
+
+  private function _dropDatabaseTables()
+  {
+    $this->logSection('sympal', 'Dropping database tables for all plugin models');
+
+    // Drop all tables
+    foreach ($this->getPluginModels() as $model)
+    {
+      try {
+        if (class_exists($model))
+        {
+          $table = Doctrine_Core::getTable($model);
+
+          $this->logSection('sympal', sprintf('Dropping table named "%s"', $table->getTableName()));
+          $this->logSection('sympal', $table->getConnection()->export->dropTableSql($table->getTableName()));
+
+          $table->getConnection()->export->dropTable($table->getTableName());
+        }
+      } catch (Exception $e) {
+        $this->logSection('sympal', sprintf('Could not drop table named "%s": ', $table->getTableName()).$e->getMessage().'"');
+      }
+    }
+  }
+
+  private function _runCustomUninstall()
+  {
+    if (method_exists($this, 'customUninstall'))
+    {
+      $this->logSection('sympal', 'Calling '.get_class($this).'::customUninstall()');
+
+      $this->customUninstall();
+    } else if (method_exists($this->_pluginConfig, 'customUninstall')) {
+      $this->logSection('sympal', 'Calling '.get_class($this->_pluginConfig).'::customUninstall()');
+
+      $this->_pluginConfig->customUninstall($this->_dispatcher, $this->_formatter);
+    }
+  }
+
+  private function _deletePluginFiles()
+  {
+    $this->logSection('sympal', 'Removing plugin files');
+
+    Doctrine_Lib::removeDirectories($this->_pluginPath);
+
+    if ($this->_contentTypeName)
+    {
+      chdir(sfConfig::get('sf_root_dir'));
+      $task = new sfDoctrineDeleteModelFilesTask($this->_dispatcher, $this->_formatter);
+      foreach ($this->getPluginModels() as $model)
+      {
+        $task->run(array($model), array('--no-confirmation'));
+      }
+    }
+
+    $path = sfConfig::get('sf_lib_dir').'/*/doctrine/'.$this->_pluginName;
+    $dirs = glob($path);
+    sfToolkit::clearGlob($path);
+    foreach ($dirs as $dir)
+    {
+      Doctrine_Lib::removeDirectories($dir);
+    }
+
+    if ($this->hasWebDirectory())
+    {
+      unlink(sfConfig::get('sf_web_dir').'/'.$this->_pluginName);
+    }
   }
 }

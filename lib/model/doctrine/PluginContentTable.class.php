@@ -99,7 +99,9 @@ class PluginContentTable extends Doctrine_Table
       ->innerJoin($alias.'.Site csi')
       ->andWhere('csi.slug = ?', $sympalContext->getSiteSlug());
 
-    if (!sfSympalToolkit::isEditMode())
+    $user = sfContext::getInstance()->getUser();
+
+    if (!$user->isEditMode())
     {
       $expr = new Doctrine_Expression('NOW()');
       $q->andWhere($alias.'.is_published = ?', true)

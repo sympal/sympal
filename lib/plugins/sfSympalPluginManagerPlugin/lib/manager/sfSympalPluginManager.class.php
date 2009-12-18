@@ -5,12 +5,15 @@ abstract class sfSympalPluginManager
   protected
     $_name,
     $_pluginName,
+    $_pluginPath,
     $_contentTypeName,
     $_configuration,
     $_dispatcher,
     $_formatter,
     $_filesystem,
-    $_pluginConfig;
+    $_pluginConfig,
+    $_pluginModels = array(),
+    $_options = array();
 
   protected static
     $_lockFile = null;
@@ -19,8 +22,16 @@ abstract class sfSympalPluginManager
   {
     $this->_name = sfSympalPluginToolkit::getShortPluginName($name);
     $this->_pluginName = sfSympalPluginToolkit::getLongPluginName($this->_name);
-    $this->_contentTypeName = $this->getContentTypeForPlugin($this->_pluginName);
+    $this->_pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
 
+    $schema = sfFinder::type('file')->name('*.yml')->in($this->_pluginPath.'/config/doctrine');
+    $this->_pluginModels = array();
+    foreach ($schema as $file)
+    {
+      $this->_pluginModels = array_merge($this->_pluginModels, array_keys(sfYaml::load($file)));
+    }
+
+    $this->_contentTypeName = $this->getContentTypeForPlugin($this->_pluginName);
     $this->_configuration = is_null($configuration) ? ProjectConfiguration::getActive():$configuration;
     $this->_dispatcher = $this->_configuration->getEventDispatcher();
     $this->_formatter = is_null($formatter) ? new sfFormatter():$formatter;
@@ -48,6 +59,46 @@ abstract class sfSympalPluginManager
       $class = 'sfSympalPluginManager'.ucfirst($action);
     }
     return new $class($pluginName, $configuration, $formatter);
+  }
+
+  public function hasWebDirectory()
+  {
+    return is_dir($this->_pluginPath.'/web');
+  }
+
+  public function hasModels()
+  {
+    return !empty($this->_pluginModels);
+  }
+
+  public function getPluginModels()
+  {
+    return $this->_pluginModels;
+  }
+
+  public function getPluginPath()
+  {
+    return $this->_pluginPath;
+  }
+
+  public function getOption($key)
+  {
+    return $this->_options[$key];
+  }
+
+  public function getOptions()
+  {
+    return $this->_options;
+  }
+
+  public function setOption($key, $value)
+  {
+    $this->_options[$key] = $value;
+  }
+
+  public function setOptions(array $options)
+  {
+    $this->_options = $options;
   }
 
   public function logSection($section, $message, $size = null, $style = 'INFO')
@@ -173,12 +224,22 @@ abstract class sfSympalPluginManager
     return false;
   }
 
-  public function rebuildFilesFromSchema()
+  protected function _buildAllClasses()
   {
-    $this->logSection('sympal', 'Re-build all classes and generate sql');
+    $this->logSection('sympal', 'Building all classes');
 
     chdir(sfConfig::get('sf_root_dir'));
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
-    $task->run(array(), array('all-classes', 'sql'));
+    $task->run(array(), array('all-classes'));
+  }
+
+  protected function _publishAssets()
+  {
+    if ($this->hasWebDirectory())
+    {
+      chdir(sfConfig::get('sf_root_dir'));
+      $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
+      $ret = $assets->run(array($this->_pluginName), array());
+    }
   }
 }

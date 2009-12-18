@@ -117,7 +117,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $help->addChild('Report Sympal Bug', 'http://trac.sympalphp.org', 'target=_BLANK')
       ->setCredentials(array('ViewDeveloperInformation'));
 
-    if (sfSympalToolkit::isEditMode())
+    if ($user->isEditMode())
     {
       $content = $menu->addChild('Content', '@sympal_content')
         ->setCredentials(array('ManageContent'));

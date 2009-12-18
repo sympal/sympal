@@ -27,9 +27,15 @@ class sfSympalInstallTask extends sfTaskExtraBaseTask
     $this->briefDescription = 'Install the Sympal CMS into a blank Symfony project';
 
     $this->detailedDescription = <<<EOF
-The [sympal:install|INFO] task installs the Sympal CMS into a blank Symfony project:
+The [./symfony sympal:install|INFO] task installs the Sympal CMS into a blank Symfony project:
 
-  [./sympal:install|INFO]
+  [./symfony sympal:install|INFO]
+
+By default the task will find the first application in the apps folder and install 
+Sympal for that application. You can specify the application with the --application
+option:
+
+  [./symfony sympal:install --application=my_app|INFO]
 EOF;
   }
 

@@ -145,6 +145,8 @@ class sfSympalInstall
     foreach ($plugins as $plugin)
     {
       $manager = sfSympalPluginManager::getActionInstance($plugin, 'install', $this->_configuration, $this->_formatter);
+      $manager->setOption('publish_assets', false);
+      $manager->setOption('uninstall_first', false);
       $manager->install();
     }
   }
@@ -196,6 +198,8 @@ class sfSympalInstall
   {
     if (method_exists($this->_configuration, 'install'))
     {
+      $this->logSection('sympal', sprintf('Calling %s::install() method', get_class($this->_configuration)));
+
       $this->_configuration->install();
     }
   }

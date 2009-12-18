@@ -12,7 +12,8 @@ class PluginMenuItemTable extends Doctrine_Table
       ->andWhere('t.name = ? OR t.slug = ?', array($contentType, $contentType))
       ->limit(1);
 
-    if (!sfSympalToolkit::isEditMode())
+    $user = sfContext::getInstance()->getUser();
+    if (!$user->isEditMode())
     {
       $q->andWhere('m.is_published = 1');
     }

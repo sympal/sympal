@@ -181,7 +181,8 @@ class sfSympalMenuSiteManager
         $q->leftJoin('m.Translation t');
       }
 
-      if (!sfSympalToolkit::isEditMode())
+      $user = sfContext::getInstance()->getUser();
+      if (!$user->isEditMode())
       {
         $expr = new Doctrine_Expression('NOW()');
         $q->andWhere('m.is_published = ?', 1)

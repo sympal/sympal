@@ -2,35 +2,64 @@
 
 class sfSympalPluginManagerInstall extends sfSympalPluginManager
 {
-  protected
-    $_createTables = true,
-    $_loadData = true,
-    $_publishAssets = true,
-    $_uninstallFirst = true;
+  protected $_options = array(
+    'create_tables' => true,
+    'load_data' => true,
+    'publish_assets' => true,
+    'uninstall_first' => true
+  );
 
-  public function setOption($key, $value)
+  public function install()
   {
-    $name = '_'.$key;
-    $this->$name = $value;
+    if ($this->getOption('uninstall_first'))
+    {
+      $this->logSection('sympal', sprintf('Uninstalling Sympal plugin named "%s" before installing to ensure a fresh environment to install to.', $this->_pluginName));
+
+      $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
+      $uninstall->setOption('publish_assets', false);
+      $uninstall->uninstall();
+    }
+
+    $this->logSection('sympal', sprintf('Installing Sympal plugin named "%s"', $this->_pluginName));
+
+    try {
+      if ($this->getOption('create_tables'))
+      {
+        $this->_createDatabaseTables();
+      }
+
+      if ($this->getOption('load_data'))
+      {
+        $this->_loadData();
+      }
+
+      if ($this->getOption('publish_assets'))
+      {
+        $this->_publishAssets();
+      }
+
+      sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);
+    } catch (Exception $e) {
+      $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName);
+      $uninstall->uninstall();
+
+      throw $e;
+    }
   }
 
   protected function _createDatabaseTables()
   {
-    $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
-    $schema = sfFinder::type('file')->name('*.yml')->in($pluginPath.'/config/doctrine');
-
-    if (!empty($schema))
+    if ($this->hasModels())
     {
-      $dataFixtures = sfFinder::type('file')->in($pluginPath.'/data/fixtures/install.yml');
-      $models = array();
-      foreach ($schema as $file)
+      $this->_buildAllClasses();
+
+      $this->logSection('sympal', 'Creating database tables for all plugin models:');
+
+      $models = $this->getPluginModels();
+      foreach ($models as $model)
       {
-        $models = array_merge($models, array_keys(sfYaml::load($file)));
+        $this->logSection('sympal', $model);
       }
-
-      $this->rebuildFilesFromSchema();
-
-      $this->logSection('sympal', 'Create the tables for the models');
 
       Doctrine_Core::createTablesFromArray($models);
     }
@@ -41,6 +70,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installFixtures = $this->_pluginConfig->getRootDir().'/data/fixtures/install';
     if (is_dir($installFixtures))
     {
+      $this->logSection('sympal', sprintf('Loading plugin installation data fixtures from: "%s"', $installFixtures));
       $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
       $task->run(array($installFixtures), array());
     }
@@ -54,11 +84,11 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     if (method_exists($this, 'customInstall'))
     {
-      $this->logSection('sympal', 'Calling '.get_class($this).'::customInstall()');
+      $this->logSection('sympal', sprintf('Executing %s::customInstall() method instead of default installation', get_class($this)));
 
       $this->customInstall($installVars);
     } else if (method_exists($this->_pluginConfig, 'customInstall')) {
-        $this->logSection('sympal', 'Calling '.get_class($this->_pluginConfig).'::customInstall()');
+        $this->logSection('sympal', sprintf('Executing %s::customInstall() method instead of default installation', get_class($this->_pluginConfig)));
 
         $this->_pluginConfig->customInstall($installVars, $this->_dispatcher, $this->_formatter);
     } else {
@@ -69,60 +99,9 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     }
   }
 
-  protected function _publishAssets()
-  {
-    $pluginPath = sfSympalPluginToolkit::getPluginPath($this->_pluginName);
-    if (is_dir($pluginPath.'/web'))
-    {
-      chdir(sfConfig::get('sf_root_dir'));
-      $assets = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
-      $ret = $assets->run(array($this->_pluginName), array());
-    }
-  }
-
-  protected function _install()
-  {
-    if ($this->_createTables)
-    {
-      $this->_createDatabaseTables();
-    }
-
-    if ($this->_loadData)
-    {
-      $this->_loadData();
-    }
-
-    if ($this->_publishAssets)
-    {
-      $this->_publishAssets();
-    }
-  }
-
-  public function install()
-  {
-    if ($this->_uninstallFirst)
-    {
-      $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
-      $uninstall->uninstall();
-    }
-
-    $this->logSection('sympal', 'Install sympal plugin named '.$this->_pluginName);
-
-    try {
-      $this->_install();
-
-      sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);
-    } catch (Exception $e) {
-      $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName);
-      $uninstall->uninstall();
-
-      throw $e;
-    }
-  }
-
   protected function _createDefaultContentTypeRecords(&$installVars)
   {
-    $this->logSection('sympal', 'Create default content type records');
+    $this->logSection('sympal', 'Creating default Sympal ContentType records');
 
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_contentTypeName));
     $slug = 'sample_'.$lowerName;
@@ -174,10 +153,16 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   protected function _defaultInstallation($installVars)
   {
+    $this->logSection('sympal', 'Executing default installation');
+
     if (method_exists($this->_pluginConfig, 'filterInstallVars'))
     {
+      $this->logSection('sympal', sprintf('Executing %s::filterInstallVars() method', get_class($this->_pluginConfig)));
+
       $this->_pluginConfig->filterInstallVars($installVars);
     } else {
+      $this->logSection('sympal', sprintf('Executing %s::filterInstallVars() method', get_class($this)));
+
       $this->filterInstallVars($installVars);
     }
 
@@ -201,7 +186,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     }
   }
 
-  public function filterInstallVars(array &$content)
+  public function filterInstallVars(array &$installVars)
   {
   }
 }
