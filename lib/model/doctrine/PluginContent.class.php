@@ -273,7 +273,7 @@ abstract class PluginContent extends BaseContent
         return false;
       }
 
-      if (method_exists($this->getRecord(), 'getRoute'))
+      if (method_exists($this->getContentTypeClassName(), 'getRoute'))
       {
         return $this->getRecord()->getRoute();
       }
@@ -315,10 +315,8 @@ abstract class PluginContent extends BaseContent
         $values[$name] = $i18nSlug;
       } else if ($this->hasField($name)) {
         $values[$name] = $this->$name;
-      } else if (is_callable(array($this, $method = 'get'.sfInflector::camelize($name)))) {
-        try {
-          $values[$name] = $this->$method();
-        } catch (Exception $e) {}
+      } else if (method_exists($this, $method = 'get'.sfInflector::camelize($name))) {
+        $values[$name] = $this->$method();
       }
     }
 
