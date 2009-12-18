@@ -7,13 +7,13 @@ $t = new lime_test(8, new lime_output_color());
 
 $dataGrid = sfSympalDataGrid::create('sfGuardUser', 'u')
   ->addColumn('u.id', 'renderer=test/data_grid_id')
-  ->addColumn('u.username', 'method=getDataGridUsername')
+  ->addColumn('u.username', 'method=__toString')
   ->addColumn('name');
 
 $t->is($dataGrid->getRows(), array(
   array(
     'u.id' => 'partial_1',
-    'u.username' => 'method_admin',
+    'u.username' => 'Sympal Admin (admin)',
     'name' => 'Sympal Admin'
   )
 ));
