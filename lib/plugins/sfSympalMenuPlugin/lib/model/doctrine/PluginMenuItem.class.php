@@ -165,4 +165,94 @@ abstract class PluginMenuItem extends BaseMenuItem
       return sfSympalConfig::get('default_layout', null, $this->getSite()->getSlug());
     }
   }
+
+  public function getName()
+  {
+    return $this->_get('name');
+  }
+
+  public function getIsPrimary()
+  {
+    return $this->_get('is_primary');
+  }
+
+  public function getIsPublished()
+  {
+    return $this->_get('is_published');
+  }
+
+  public function getDatePublished()
+  {
+    return $this->_get('date_published');
+  }
+
+  public function getCustomPath()
+  {
+    return $this->_get('custom_path');
+  }
+
+  public function getRequiresAuth()
+  {
+    return $this->_get('requires_auth');
+  }
+
+  public function getRequiresNoAuth()
+  {
+    return $this->_get('requires_no_auth');
+  }
+
+  public function getSiteId()
+  {
+    return $this->_get('site_id');
+  }
+
+  public function getContentTypeId()
+  {
+    return $this->_get('content_type_id');
+  }
+
+  public function getContentId()
+  {
+    return $this->_get('content_id');
+  }
+
+  public function getRelatedContent()
+  {
+    return $this->_get('RelatedContent');
+  }
+
+  public function getSite()
+  {
+    return $this->_get('Site');
+  }
+
+  public function getContentType()
+  {
+    return $this->_get('ContentType');
+  }
+
+  public function getGroups()
+  {
+    return $this->_get('Groups');
+  }
+
+  public function getPermissions()
+  {
+    return $this->_get('Permissions');
+  }
+
+  public function getMenuItemGroups()
+  {
+    return $this->_get('MenuItemGroups');
+  }
+
+  public function getMenuItemPermissions()
+  {
+    return $this->_get('MenuItemPermissions');
+  }
+
+  public function getMasterContent()
+  {
+    return $this->_get('MasterContent');
+  }
 }

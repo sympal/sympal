@@ -19,12 +19,12 @@ abstract class PluginContentForm extends BaseContentForm
       $this['site_id'],
       $this['created_at'],
       $this['updated_at'],
-      $this['last_updated_by']
+      $this['last_updated_by_id']
     );
 
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
 
-    $this->widgetSchema['created_by']->setOption('add_empty', true);
+    $this->widgetSchema['created_by_id']->setOption('add_empty', true);
 
     $q = Doctrine_Query::create()
       ->from('MenuItem m')

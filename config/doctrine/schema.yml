@@ -23,8 +23,8 @@ Content:
       notnull: true
     content_template_id: integer
     master_menu_item_id: integer
-    last_updated_by: integer
-    created_by:
+    last_updated_by_id: integer
+    created_by_id:
       type: integer
       notnull: true
     is_published: boolean
@@ -49,12 +49,12 @@ Content:
       foreignType: one
     LastUpdatedBy:
       class: sfGuardUser
-      local: last_updated_by
+      local: last_updated_by_id
       foreignAlias: LastUpdatedContent
       onDelete: SET NULL
     CreatedBy:
       class: sfGuardUser
-      local: created_by
+      local: created_by_id
       foreignAlias: CreatedContent
       onDelete: CASCADE
     Site:

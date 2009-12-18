@@ -396,4 +396,119 @@ abstract class PluginContent extends BaseContent
       return Doctrine_Inflector::urlize($text);
     }
   }
+
+  public function getSiteId()
+  {
+    return $this->_get('site_id');
+  }
+
+  public function getContentTypeId()
+  {
+    return $this->_get('content_type_id');
+  }
+
+  public function getContentTemplateId()
+  {
+    return $this->_get('content_template_id');
+  }
+
+  public function getMasterMenuItemId()
+  {
+    return $this->_get('master_menu_item_id');
+  }
+
+  public function getLastUpdatedBy()
+  {
+    return $this->_get('LastUpdatedBy');
+  }
+
+  public function getLastUpdatedById()
+  {
+    return $this->_get('last_updated_by_id');
+  }
+
+  public function getCreatedBy()
+  {
+    return $this->_get('CreatedBy');
+  }
+
+  public function getCreatedById()
+  {
+    return $this->_get('created_by_id');
+  }
+
+  public function getIsPublished()
+  {
+    return $this->_get('is_published');
+  }
+
+  public function getDatePublished()
+  {
+    return $this->_get('date_published');
+  }
+
+  public function getCustomPath()
+  {
+    return $this->_get('custom_path');
+  }
+
+  public function getPageTitle()
+  {
+    return $this->_get('page_title');
+  }
+
+  public function getMetaKeywords()
+  {
+    return $this->_get('meta_keywords');
+  }
+
+  public function getMetaDescription()
+  {
+    return $this->_get('meta_description');
+  }
+
+  public function getI18nSlug()
+  {
+    return $this->_get('i18n_slug');
+  }
+
+  public function getMasterMenuItem()
+  {
+    return $this->_get('MasterMenuItem');
+  }
+
+  public function getSite()
+  {
+    return $this->_get('Site');
+  }
+
+  public function getType()
+  {
+    return $this->_get('Type');
+  }
+
+  public function getGroups()
+  {
+    return $this->_get('Groups');
+  }
+
+  public function getPermissions()
+  {
+    return $this->_get('Permissions');
+  }
+
+  public function getMenuItem()
+  {
+    return $this->_get('MenuItem');
+  }
+
+  public function getSlots()
+  {
+    return $this->_get('Slots');
+  }
+
+  public function getContentGroups()
+  {
+    return $this->_get('ContentGroups');
+  }
 }
