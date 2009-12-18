@@ -11,7 +11,7 @@ $dir = $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
 $theme = new sfSympalTheme('sympal');
 
 $t->is($theme->getLayoutPath(), $dir.'/templates/sympal.php');
-$t->is($theme->getCssPath(), '/sfSympalPlugin/css/sympal');
+$t->is($theme->getCssPath(), '/sfSympalPlugin/css/sympal.css');
 
 // Theme from another plugin
 $theme = new sfSympalTheme('test_theme');

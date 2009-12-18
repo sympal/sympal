@@ -83,7 +83,7 @@ class sfSympalTheme
   {
     if (strpos($this->_layoutPath, 'sfSympalPlugin/templates') !== false)
     {
-      return '/sfSympalPlugin/css/' . $name;
+      return '/sfSympalPlugin/css/' . $name . '.css';
     } else {
       if (is_readable(sfConfig::get('sf_web_dir').'/css/'.$name.'.css'))
       {
