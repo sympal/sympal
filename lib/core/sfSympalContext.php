@@ -27,7 +27,7 @@ class sfSympalContext
     return $this->_currentMenuItem;
   }
 
-  public function setCurrentMenuItem(MenuItem $menuItem)
+  public function setCurrentMenuItem(sfSympalMenuItem $menuItem)
   {
     $this->_currentMenuItem = $menuItem;
   }
@@ -37,7 +37,7 @@ class sfSympalContext
     return $this->_currentContent;
   }
 
-  public function setCurrentContent(Content $content)
+  public function setCurrentContent(sfSympalContent $content)
   {
     $this->_currentContent = $content;
   }
@@ -46,7 +46,7 @@ class sfSympalContext
   {
     if (!$this->_site)
     {
-      $this->_site =  Doctrine_Core::getTable('Site')
+      $this->_site =  Doctrine_Core::getTable('sfSympalSite')
         ->createQuery('s')
         ->where('s.slug = ?', $this->_siteSlug)
         ->fetchOne();
@@ -69,7 +69,7 @@ class sfSympalContext
     return $this->_symfonyContext;
   }
 
-  public function getContentRenderer(Content $content, $format = null)
+  public function getContentRenderer(sfSympalContent $content, $format = null)
   {
     return new sfSympalContentRenderer($this, $content, $format);
   }

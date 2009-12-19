@@ -1,10 +1,10 @@
 ---
-Site:
+sfSympalSite:
   Site_default:
     title: <?php echo sfInflector::humanize(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'))) ?> 
     description: Flexible content management framework built on top of symfony.
 
-ContentSlotType:
+sfSympalContentSlotType:
   ContentSlotType_Markdown:
     name: Markdown
   ContentSlotType_MultiLineText:
@@ -19,7 +19,7 @@ ContentSlotType:
   ContentSlotType_Widget:
     name: Widget
 
-ContentTemplate:
+sfSympalContentTemplate:
   ContentTemplate_ViewPage:
     name: View Page
     path: sympal_page/view
@@ -35,10 +35,11 @@ ContentTemplate:
     path: sympal_page/register
     ContentType: ContentType_Page
 
-ContentType:
+sfSympalContentType:
   ContentType_Page:
     plugin_name: sfSympalPagesPlugin
-    name: Page
+    name: sfSympalPage
+    slug: page
     description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
     label: Page
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
@@ -49,7 +50,8 @@ ContentType:
 
   ContentType_ContentList:
     plugin_name: sfSympalContentListPlugin
-    name: ContentList
+    name: sfSympalContentList
+    slug: content-list
     description: The content list content type is the default Sympal content type for displaying lists of content.
     label: Content List
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 

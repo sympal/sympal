@@ -1,5 +1,5 @@
-Site:
-  actAs: [sfSympalRecord]
+sfSympalSite:
+  actAs: [sfSympalRecordTemplate]
   columns:
     layout: string(255)
     title:
@@ -12,8 +12,8 @@ Site:
     meta_keywords: string(500)
     meta_description: string(500)
 
-Content:
-  actAs: [Timestampable, sfSympalRecord]
+sfSympalContent:
+  actAs: [Timestampable, sfSympalRecordTemplate]
   columns:
     site_id:
       type: integer
@@ -42,7 +42,7 @@ Content:
       fields: [date_published]
   relations:
     MasterMenuItem:
-      class: MenuItem
+      class: sfSympalMenuItem
       local: master_menu_item_id
       onDelete: SET NULL
       foreignAlias: MasterContent
@@ -58,26 +58,30 @@ Content:
       foreignAlias: CreatedContent
       onDelete: CASCADE
     Site:
+      local: site_id
+      class: sfSympalSite
       onDelete: CASCADE
     Type:
-      class: ContentType
+      local: content_type_id
+      class: sfSympalContentType
       onDelete: CASCADE
     Template:
-      class: ContentTemplate
+      local: content_template_id
+      class: sfSympalContentTemplate
       onDelete: SET NULL
     Groups:
       class: sfGuardGroup
       local: content_id
       foreign: group_id
-      refClass: ContentGroup
+      refClass: sfSympalContentGroup
     Permissions:
       class: sfGuardPermission
       local: content_id
       foreign: permission_id
-      refClass: ContentPermission
+      refClass: sfSympalContentPermission
 
-ContentType:
-  actAs: [sfSympalRecord]
+sfSympalContentType:
+  actAs: [sfSympalRecordTemplate]
   columns:
     name:
       type: string(255)
@@ -94,8 +98,8 @@ ContentType:
     content_type_name:
       fields: [name]
 
-ContentTemplate:
-  actAs: [sfSympalRecord]
+sfSympalContentTemplate:
+  actAs: [sfSympalRecordTemplate]
   columns:
     name:
       type: string(255)
@@ -110,12 +114,13 @@ ContentTemplate:
       notnull: true
   relations:
     ContentType:
+      local: content_type_id
+      class: sfSympalContentType
       onDelete: CASCADE
       foreignAlias: ContentTemplates
 
-ContentSlot:
-  actAs:
-    sfSympalRecord:
+sfSympalContentSlot:
+  actAs: [sfSympalRecordTemplate]
   columns:
     content_id:
       type: integer
@@ -136,16 +141,18 @@ ContentSlot:
       fields: [name]
   relations:
     RelatedContent:
-      class: Content
+      local: content_id
+      class: sfSympalContent
       foreignAlias: Slots
       onDelete: CASCADE
     Type:
-      class: ContentSlotType
+      local: content_slot_type_id
+      class: sfSympalContentSlotType
       foreignAlias: Slots
       onDelete: CASCADE
 
-ContentSlotType:
-  actAs: [sfSympalRecord]
+sfSympalContentSlotType:
+  actAs: [sfSympalRecordTemplate]
   columns:
     name:
       type: string(255)
@@ -155,8 +162,8 @@ ContentSlotType:
       type: boolean
       default: 0
 
-ContentGroup:
-  actAs: [sfSympalRecord]
+sfSympalContentGroup:
+  actAs: [sfSympalRecordTemplate]
   columns:
     content_id:
       primary: true
@@ -166,6 +173,8 @@ ContentGroup:
       type: integer
   relations:
     Content:
+      local: content_id
+      class: sfSympalContent
       foreignAlias: ContentGroups
       onDelete: CASCADE
     Group:
@@ -174,8 +183,8 @@ ContentGroup:
       foreignAlias: ContentGroups
       onDelete: CASCADE
 
-ContentPermission:
-  actAs: [sfSympalRecord]
+sfSympalContentPermission:
+  actAs: [sfSympalRecordTemplate]
   columns:
     content_id:
       primary: true
@@ -185,6 +194,8 @@ ContentPermission:
       type: integer
   relations:
     Content:
+      class: sfSympalContent
+      local: content_id
       foreignAlias: ContentGroups
       onDelete: CASCADE
     Permission:

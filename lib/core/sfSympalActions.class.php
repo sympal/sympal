@@ -105,7 +105,7 @@ class sfSympalActions extends sfSympalExtendClass
         throw new sfException($message);
       } else {
         $q = Doctrine_Query::create()
-          ->from('Content c')
+          ->from('sfSympalContent c')
           ->andWhere('c.site_id = ?', $site->getId());
         $count = $q->count();
         if (!$count)
@@ -125,7 +125,7 @@ class sfSympalActions extends sfSympalExtendClass
 
   public function quickRenderContent($type, $slug, $format = 'html')
   {
-    $content = Doctrine_Core::getTable('Content')
+    $content = Doctrine_Core::getTable('sfSympalContent')
       ->getFullTypeQuery($type)
       ->andWhere('c.slug = ?', $slug)
       ->fetchOne();

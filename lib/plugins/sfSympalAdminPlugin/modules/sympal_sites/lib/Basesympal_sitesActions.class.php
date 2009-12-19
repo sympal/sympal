@@ -26,7 +26,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
         $task = new sfSympalCreateSiteTask($this->getContext()->getEventDispatcher(), new sfFormatter());
         $task->run(array($site->title, $site->description));
 
-        $site = Doctrine_Core::getTable('Site')->findOneByTitle($site->title);
+        $site = Doctrine_Core::getTable('sfSympalSite')->findOneByTitle($site->title);
       }
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $site)));
@@ -71,7 +71,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
     $ids = $request->getParameter('ids');
 
     $sites = Doctrine_Query::create()
-      ->from('Site')
+      ->from('sfSympalSite')
       ->whereIn('id', $ids)
       ->execute();
 
@@ -91,7 +91,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
     $this->redirect('@sympal_sites');
   }
 
-  protected function _deleteSite(Site $site)
+  protected function _deleteSite(sfSympalSite $site)
   {
     if ($site === $this->getSympalContext()->getSite())
     {

@@ -46,7 +46,7 @@ EOF;
 
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    $site = Doctrine_Core::getTable('Site')->findOneBySlug($arguments['application']);
+    $site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug($arguments['application']);
     if ($site) {
       $this->logSection('sympal', sprintf('Deleting site named "%s" from database...', $site->title));
 

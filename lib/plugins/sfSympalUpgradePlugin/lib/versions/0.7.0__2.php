@@ -13,7 +13,7 @@ class sfSympalUpgrade0_7_0__2 extends sfSympalVersionUpgrade
         $contents = file_get_contents($file);
         $changed = false;
 
-        $contents = str_replace("::getTable('User')", "::getTable('sfGuardUser')", $contents, $count);
+        $contents = str_replace("::getTable('sfSympalUser')", "::getTable('sfGuardUser')", $contents, $count);
         $changed = $count || $changed;
 
         $contents = str_replace('::getTable("User")', "::getTable('sfGuardUser')", $contents, $count);

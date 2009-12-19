@@ -1,6 +1,6 @@
 ---
-ContentList:
-  actAs: [sfSympalContentType]
+sfSympalContentList:
+  actAs: [sfSympalContentTypeTemplate]
   columns:
     title:
       type: string(255)
@@ -17,5 +17,7 @@ ContentList:
     dql_query: clob
   relations:
     ContentType:
+      class: sfSympalContentType
+      local: content_type_id
       onDelete: CASCADE
       foreignAlias: Lists

@@ -1,4 +1,4 @@
-<?php $contentTypes = Doctrine_Core::getTable('ContentType')->findAll() ?>
+<?php $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll() ?>
 <div id="top_menu">
   <ul>
     <li>Content Types: </li>

@@ -1,7 +1,7 @@
 generator:
   class: sfDoctrineGenerator
   param:
-    model_class:           ContentType
+    model_class:           sfSympalContentType
     theme:                 sympal_admin
     non_verbose_templates: true
     with_show:             false

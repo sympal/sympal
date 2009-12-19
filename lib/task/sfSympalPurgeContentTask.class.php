@@ -32,14 +32,14 @@ EOF;
   {
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($arguments['content-type']);
+    $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($arguments['content-type']);
 
     if (!$contentType)
     {
       throw new InvalidArgumentException('Invalid content-type specified...');
     }
 
-    Doctrine_Core::getTable('Content')
+    Doctrine_Core::getTable('sfSympalContent')
       ->createQuery('c')
       ->where('c.content_type_id = ?', $contentType->id)
       ->delete()

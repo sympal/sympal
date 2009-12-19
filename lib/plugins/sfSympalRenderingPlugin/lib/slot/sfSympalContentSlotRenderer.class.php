@@ -6,7 +6,7 @@ class sfSympalContentSlotRenderer
     $_contentSlot,
     $_rawValue;
 
-  public function __construct(ContentSlot $contentSlot)
+  public function __construct(sfSympalContentSlot $contentSlot)
   {
     $this->_contentSlot = $contentSlot;
   }

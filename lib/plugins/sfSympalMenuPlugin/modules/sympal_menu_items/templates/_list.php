@@ -41,15 +41,15 @@
             echo " child-of-node-".$node->getParent()->getId();
           }
           ?>">
-            <?php include_partial('sympal_menu_items/list_td_batch_actions', array('menu_item' => $menu_item, 'helper' => $helper)) ?>
-            <?php include_partial('sympal_menu_items/list_td_tabular', array('menu_item' => $menu_item)) ?>
+            <?php include_partial('sympal_menu_items/list_td_batch_actions', array('sf_sympal_menu_item' => $menu_item, 'helper' => $helper)) ?>
+            <?php include_partial('sympal_menu_items/list_td_tabular', array('sf_sympal_menu_item' => $menu_item)) ?>
             <td>
               <?php if (!$node->isRoot()): ?>
                 <?php echo button_to('Up', '@sympal_menu_items_move?direction=up&id='.$menu_item['id']) ?>
                 <?php echo button_to('Down', '@sympal_menu_items_move?direction=down&id='.$menu_item['id']) ?>
               <?php endif; ?>
             </td>
-            <?php include_partial('sympal_menu_items/list_td_actions', array('menu_item' => $menu_item, 'helper' => $helper)) ?>
+            <?php include_partial('sympal_menu_items/list_td_actions', array('sf_sympal_menu_item' => $menu_item, 'helper' => $helper)) ?>
           </tr>
         <?php endforeach; ?>
       </tbody>

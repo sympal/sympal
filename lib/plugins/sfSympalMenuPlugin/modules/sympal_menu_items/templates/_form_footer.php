@@ -1,1 +1,1 @@
-<?php echo get_sympal_editor($menu_item, ($menu_item->getMainContent() && $menu_item->getMainContent()->exists() ? $menu_item->getMainContent():null)) ?>
+<?php echo get_sympal_editor($sf_sympal_menu_item, ($sf_sympal_menu_item->getMainContent() && $sf_sympal_menu_item->getMainContent()->exists() ? $sf_sympal_menu_item->getMainContent():null)) ?>

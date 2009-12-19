@@ -10,12 +10,12 @@ sympal_menu_items_move:
   url:     /admin/menus/:id/move/:direction
   param:   { module: sympal_menu_items, action: move }
   class:   sfDoctrineRoute
-  options: { model: MenuItem, type: object }
+  options: { model: sfSympalMenuItem, type: object }
 
 sympal_menu_items:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                MenuItem
+    model:                sfSympalMenuItem
     module:               sympal_menu_items
     prefix_path:          admin/menus
     with_wildcard_routes: true

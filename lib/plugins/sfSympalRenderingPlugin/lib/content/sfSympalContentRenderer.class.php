@@ -11,7 +11,7 @@ class sfSympalContentRenderer
     $_content,
     $_format = 'html';
 
-  public function __construct(sfSympalContext $sympalContext, Content $content, $format = null)
+  public function __construct(sfSympalContext $sympalContext, sfSympalContent $content, $format = null)
   {
     $this->_symfonyContext = $sympalContext->getSymfonyContext();
     $this->_sympalContext = $sympalContext;
@@ -100,7 +100,7 @@ class sfSympalContentRenderer
     return $return;
   }
 
-  protected function _getContentViewHtml(Content $content, $variables = array())
+  protected function _getContentViewHtml(sfSympalContent $content, $variables = array())
   {
     if ($content->content_template_id)
     {

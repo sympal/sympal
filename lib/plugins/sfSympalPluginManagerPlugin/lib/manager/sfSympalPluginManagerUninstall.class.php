@@ -66,27 +66,27 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_contentTypeName));
     $slug = 'sample-'.$lowerName;
 
-    $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($this->_contentTypeName);
+    $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($this->_contentTypeName);
 
     // Delete content templates related to this content type
-    $count = Doctrine_Core::getTable('ContentTemplate')
+    $count = Doctrine_Core::getTable('sfSympalContentTemplate')
       ->createQuery('t')
       ->delete()
       ->where('t.content_type_id = ?', $contentType['id'])
       ->execute();
 
     // Find content lists related to this conten type
-    $q = Doctrine_Core::getTable('ContentList')
+    $q = Doctrine_Core::getTable('sfSympalContentList')
       ->createQuery('c')
       ->select('c.id, c.content_id')
-      ->from('ContentList c INDEXBY c.content_id')
+      ->from('sfSympalContentList c INDEXBY c.content_id')
       ->where('c.content_type_id = ?', $contentType['id']);
 
     $contentTypes = $q->fetchArray();
     $contentIds = array_keys($contentTypes);
 
     // Delete content records related to this content type
-    Doctrine_Core::getTable('Content')
+    Doctrine_Core::getTable('sfSympalContent')
       ->createQuery('c')
       ->delete()
       ->where('c.content_type_id = ?', $contentType['id'])
@@ -94,14 +94,14 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       ->execute();
 
     // Delete menu items related to this content type
-    Doctrine_Core::getTable('MenuItem')
+    Doctrine_Core::getTable('sfSympalMenuItem')
       ->createQuery('m')
       ->delete()
       ->where('m.name = ? OR m.content_type_id = ?', array($this->_contentTypeName, $contentType['id']))
       ->execute();
 
     // Delete the content type record
-    Doctrine_Core::getTable('ContentType')
+    Doctrine_Core::getTable('sfSympalContentType')
       ->createQuery('t')
       ->delete()
       ->where('t.id = ?', $contentType['id'])

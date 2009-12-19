@@ -74,7 +74,7 @@ class sfSympalMenuSite extends sfSympalMenu
     return $this->_menuItem;
   }
 
-  public function setMenuItem(MenuItem $menuItem)
+  public function setMenuItem(sfSympalMenuItem $menuItem)
   {
     $this->_menuItem = $menuItem;
 
@@ -92,7 +92,7 @@ class sfSympalMenuSite extends sfSympalMenu
     $this->setLevel($menuItem->level);
   }
 
-  public function getMenuItemSubMenu(MenuItem $menuItem)
+  public function getMenuItemSubMenu(sfSympalMenuItem $menuItem)
   {
     foreach ($this->_children as $child)
     {

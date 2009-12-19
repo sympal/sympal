@@ -31,7 +31,7 @@ EOF;
 
   protected function _getOrCreateSite($arguments, $options)
   {
-    $site = Doctrine_Core::getTable('Site')->findOneBySlug($arguments['application']);
+    $site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug($arguments['application']);
     if (!$site)
     {
       $this->logSection('sympal', 'Creating new site record in database...');
@@ -55,7 +55,7 @@ EOF;
     return $site;
   }
 
-  protected function _prepareApplication(Site $site)
+  protected function _prepareApplication(sfSympalSite $site)
   {
     $task = new sfSympalPrepareApplicationTask($this->dispatcher, $this->formatter);
     $task->run(array($site->slug), array());

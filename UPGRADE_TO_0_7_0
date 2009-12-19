@@ -62,7 +62,7 @@ models you will need to update your code to reference the new model names.
 For example if you referenced `User` before, you should now reference `sfGuardUser`:
 
     [php]
-    $user = Doctrine_Core::getTable('User')->find(1);
+    $user = Doctrine_Core::getTable('sfSympalUser')->find(1);
 
 The above should be changed to:
 

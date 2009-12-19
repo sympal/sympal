@@ -3,7 +3,7 @@
 sympal_plugin_manager:
   class: sfDoctrineRouteCollection
   options:
-    model:                Plugin
+    model:                sfSympalPlugin
     module:               sympal_plugin_manager
     prefix_path:          /admin/plugins
     column:               id

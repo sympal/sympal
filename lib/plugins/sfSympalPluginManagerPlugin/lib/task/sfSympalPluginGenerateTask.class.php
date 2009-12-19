@@ -87,7 +87,7 @@ EOF;
       $pluginYamlSchema = <<<EOF
 ---
 $contentType:
-  actAs: [sfSympalContentType]
+  actAs: [sfSympalContentTypeTemplate]
   columns:
     title: string(255)
     body: clob

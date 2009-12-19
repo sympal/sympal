@@ -130,7 +130,7 @@ class sfSympalCache
   {
     try {
       $typesArray = array();
-      $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
+      $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
       foreach ($contentTypes as $contentType)
       {
         $typesArray[$contentType['id']] = $contentType['name'];

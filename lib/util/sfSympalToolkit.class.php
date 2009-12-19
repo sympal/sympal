@@ -116,7 +116,7 @@ class sfSympalToolkit
     sympal_content_id: %s
   class: sfDoctrineRoute
   options:
-    model: Content
+    model: sfSympalContent
     type: object
     method: getContent
     requirements:
@@ -126,7 +126,7 @@ class sfSympalToolkit
 
       $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
 
-      $contents = Doctrine::getTable('Content')
+      $contents = Doctrine::getTable('sfSympalContent')
         ->createQuery('c')
         ->leftJoin('c.Type t')
         ->innerJoin('c.Site s')
@@ -149,7 +149,7 @@ class sfSympalToolkit
         );
       }
 
-      $contentTypes = Doctrine::getTable('ContentType')
+      $contentTypes = Doctrine::getTable('sfSympalContentType')
         ->createQuery('t')
         ->execute();
 

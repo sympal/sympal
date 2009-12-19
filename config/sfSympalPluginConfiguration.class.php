@@ -121,7 +121,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     {
       $content = $menu->addChild('Content', '@sympal_content')
         ->setCredentials(array('ManageContent'));
-      $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
+      $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
       $content->addChild('Create New Content', '@sympal_content_new');
       foreach ($contentTypes as $contentType)
       {

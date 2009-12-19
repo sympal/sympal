@@ -52,8 +52,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
       {
         if (!empty($parentId))
         {
-          $node = Doctrine::getTable('MenuItem')->find($id);
-          $parent = Doctrine::getTable('MenuItem')->find($parentId);
+          $node = Doctrine::getTable('sfSympalMenuItem')->find($id);
+          $parent = Doctrine::getTable('sfSympalMenuItem')->find($parentId);
           
           if (!$parent->getNode()->isDescendantOfOrEqualTo($node))
           {
@@ -120,7 +120,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   protected function _getMenuItem(sfWebRequest $request)
   {
-    $q = Doctrine_Core::getTable('MenuItem')
+    $q = Doctrine_Core::getTable('sfSympalMenuItem')
       ->createQuery('m')
       ->leftJoin('m.Groups g')
       ->leftJoin('m.Permissions p')
@@ -136,7 +136,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     return $menuItem;
   }
 
-  protected function _publishMenuItem(MenuItem $menuItem, $publish = true)
+  protected function _publishMenuItem(sfSympalMenuItem $menuItem, $publish = true)
   {
     $func = $publish ? 'publish':'unpublish';
     return $menuItem->$func();
@@ -146,7 +146,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $ids = $request->getParameter('ids');
 
-    $menuItems = Doctrine_Core::getTable('MenuItem')
+    $menuItems = Doctrine_Core::getTable('sfSympalMenuItem')
       ->createQuery('m')
       ->whereIn('m.id', $ids)
       ->execute();
@@ -161,7 +161,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $ids = $request->getParameter('ids');
 
-    $menuItems = Doctrine_Core::getTable('MenuItem')
+    $menuItems = Doctrine_Core::getTable('sfSympalMenuItem')
       ->createQuery('m')
       ->whereIn('m.id', $ids)
       ->execute();
@@ -192,7 +192,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeSitemap()
   {
-    $table = Doctrine_Core::getTable('MenuItem');
+    $table = Doctrine_Core::getTable('sfSympalMenuItem');
     $this->menuItem = $table->getForSlug('sitemap');
     $this->roots = $table->getTree()->fetchRoots();
   }
@@ -205,10 +205,10 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeEdit(sfWebRequest $request)
   {
-    $this->menu_item = $this->_getMenuItem($request);
-    $this->form = $this->configuration->getForm($this->menu_item);
+    $this->sf_sympal_menu_item = $this->_getMenuItem($request);
+    $this->form = $this->configuration->getForm($this->sf_sympal_menu_item);
 
-    $this->getSympalContext()->setCurrentMenuItem($this->menu_item);
+    $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_menu_item);
   }
 
   public function executeDelete(sfWebRequest $request)

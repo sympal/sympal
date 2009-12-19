@@ -1,6 +1,6 @@
-MenuItem:
+sfSympalMenuItem:
   actAs:
-    sfSympalRecord:
+    sfSympalRecordTemplate:
     Sluggable:
       fields: [name]
       unique: false
@@ -25,31 +25,36 @@ MenuItem:
     content_id: integer
   relations:
     RelatedContent:
-      class: Content
+      local: content_id
+      class: sfSympalContent
       foreignAlias: MenuItem
       foreignType: one
       onDelete: CASCADE
     Site:
+      class: sfSympalSite
+      local: site_id
       foreignAlias: MenuItems
       onDelete: CASCADE
     ContentType:
+      class: sfSympalContentType
+      local: content_type_id
       foreignAlias: MenuItems
       onDelete: CASCADE
     Groups:
       class: sfGuardGroup
       local: menu_item_id
       foreign: group_id
-      refClass: MenuItemGroup
+      refClass: sfSympalMenuItemGroup
       foreignAlias: MenuItems
     Permissions:
       class: sfGuardPermission
       local: menu_item_id
       foreign: permission_id
-      refClass: MenuItemPermission
+      refClass: sfSympalMenuItemPermission
       foreignAlias: MenuItems
 
-MenuItemGroup:
-  actAs: [sfSympalRecord]
+sfSympalMenuItemGroup:
+  actAs: [sfSympalRecordTemplate]
   columns:
     menu_item_id:
       primary: true
@@ -59,6 +64,8 @@ MenuItemGroup:
       type: integer
   relations:
     MenuItem:
+      class: sfSympalMenuItem
+      local: menu_item_id
       foreignAlias: MenuItemGroups
       onDelete: CASCADE
     Group:
@@ -67,8 +74,8 @@ MenuItemGroup:
       foreignAlias: MenuItemGroups
       onDelete: CASCADE
 
-MenuItemPermission:
-  actAs: [sfSympalRecord]
+sfSympalMenuItemPermission:
+  actAs: [sfSympalRecordTemplate]
   columns:
     menu_item_id:
       primary: true
@@ -78,6 +85,8 @@ MenuItemPermission:
       type: integer
   relations:
     MenuItem:
+      class: sfSympalMenuItem
+      local: menu_item_id
       foreignAlias: MenuItemPermissions
       onDelete: CASCADE
     Permission:

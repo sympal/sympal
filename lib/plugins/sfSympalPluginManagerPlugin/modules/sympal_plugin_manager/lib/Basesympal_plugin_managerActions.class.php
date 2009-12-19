@@ -43,7 +43,7 @@ abstract class Basesympal_plugin_managerActions extends autoSympal_plugin_manage
   public function executeView(sfWebRequest $request)
   {
     $name = $request->getParameter('plugin');
-    $this->plugin = Doctrine_Core::getTable('Plugin')->findOneByName($name);
+    $this->sf_sympal_plugin = Doctrine_Core::getTable('sfSympalPlugin')->findOneByName($name);
   }
 
   public function executeUninstall(sfWebRequest $request)

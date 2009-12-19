@@ -45,7 +45,7 @@ EOF;
     {
       if ($isContentType)
       {
-        $record = Content::createNew($model);
+        $record = sfSympalContent::createNew($model);
         $record->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(true);
         $record->getRecord()->fromArray($row);
         $record->is_published = true;

@@ -6,8 +6,8 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 $t = new lime_test(9, new lime_output_color());
 
 $user = sfContext::getInstance()->getUser();
-$content = Doctrine_Core::getTable('Content')
-  ->getTypeQuery('Page')
+$content = Doctrine_Core::getTable('sfSympalContent')
+  ->getTypeQuery('sfSympalPage')
   ->andWhere('c.slug = ?', 'home')
   ->fetchOne();
 

@@ -2,7 +2,7 @@
 generator:
   class:                   sfDoctrineGenerator
   param:
-    model_class:           Content
+    model_class:           sfSympalContent
     theme:                 sympal_admin
     non_verbose_templates: true
     with_show:             false
@@ -16,7 +16,7 @@ generator:
       fields: ~
       form:
         display:
-          "Settings": [created_by, is_published, date_published, page_title, meta_keywords, meta_description, master_menu_item_id, custom_path, content_template_id, layout, groups_list, permissions_list, slug]
+          "Settings": [created_by_id, is_published, date_published, page_title, meta_keywords, meta_description, master_menu_item_id, custom_path, content_template_id, layout, groups_list, permissions_list, slug]
         fields:
           content_type_id:
             label: Content Type

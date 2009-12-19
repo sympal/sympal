@@ -1,6 +1,5 @@
-Page: 
-  actAs:
-    sfSympalContentType:
+sfSympalPage: 
+  actAs: [sfSympalContentTypeTemplate]
   columns: 
     title:
       type: string(255)

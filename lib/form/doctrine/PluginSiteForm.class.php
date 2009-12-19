@@ -4,10 +4,10 @@
  * PluginSite form.
  *
  * @package    form
- * @subpackage Site
+ * @subpackage sfSympalSite
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z jwage $
  */
-abstract class PluginSiteForm extends BaseSiteForm
+abstract class PluginsfSympalSiteForm extends BasesfSympalSiteForm
 {
   public function setup()
   {

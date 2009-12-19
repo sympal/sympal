@@ -89,14 +89,14 @@ EOF;
 
     $databaseManager = new sfDatabaseManager($this->configuration);
 
-    $site = Doctrine_Core::getTable('Site')->findOneBySlug($arguments['application']);
+    $site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug($arguments['application']);
     if (!$site)
     {
       throw new InvalidArgumentException(sprintf('Could not find site "%s"', $arguments['application']));
     }
 
     $name = $arguments['name'];
-    $contentTemplate = Doctrine_Core::getTable('ContentTemplate')
+    $contentTemplate = Doctrine_Core::getTable('sfSympalContentTemplate')
       ->createQuery('t')
       ->andWhere('t.name = ?', $name)
       ->fetchOne();
@@ -106,9 +106,9 @@ EOF;
       throw new InvalidArgumentException(sprintf('Content template named "%s" already exists', $name));
     }
 
-    $contentTemplate = new ContentTemplate();
+    $contentTemplate = new sfSympalContentTemplate();
     $contentTemplate->name = $name;
-    $form = new ContentTemplateForm($contentTemplate);
+    $form = new sfSympalContentTemplateForm($contentTemplate);
     $this->askForm($form);
   }
 }

@@ -24,14 +24,14 @@ class sfSympalPluginInfo
 
   public function synchronizeWithDatabase()
   {
-    $q = Doctrine_Core::getTable('Plugin')
+    $q = Doctrine_Core::getTable('sfSympalPlugin')
       ->createQuery('p')
       ->where('p.name = ?', $this->getName());
 
     $plugin = $q->fetchOne();
     if (!$plugin)
     {
-      $plugin = new Plugin();
+      $plugin = new sfSympalPlugin();
     }
 
     foreach ($plugin as $k => $v)

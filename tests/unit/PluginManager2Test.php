@@ -13,12 +13,12 @@ function installPlugin($name, $t)
   $manager->install();
 
   $contentTypeName = $manager->getContentTypeForPlugin($name);
-  $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($contentTypeName);
+  $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentTypeName);
   $t->is($contentType['name'], $contentTypeName);
   $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize($contentTypeName)));
   $t->is($contentType['plugin_name'], $name);
 
-  $menuItem = Doctrine_Core::getTable('MenuItem')->findOneByName($contentTypeName);
+  $menuItem = Doctrine_Core::getTable('sfSympalMenuItem')->findOneByName($contentTypeName);
   $t->is($menuItem['name'], $contentTypeName);
 }
 

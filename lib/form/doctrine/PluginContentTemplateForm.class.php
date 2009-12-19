@@ -4,10 +4,10 @@
  * PluginContentTemplate form.
  *
  * @package    form
- * @subpackage ContentTemplate
+ * @subpackage sfSympalContentTemplate
  * @version    SVN: $Id: sfDoctrineFormTemplate.php 6174 2007-11-27 06:22:40Z jwage $
  */
-abstract class PluginContentTemplateForm extends BaseContentTemplateForm
+abstract class PluginsfSympalContentTemplateForm extends BasesfSympalContentTemplateForm
 {
   public function setup()
   {

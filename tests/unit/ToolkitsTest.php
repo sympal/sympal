@@ -7,7 +7,7 @@ $t = new lime_test(5, new lime_output_color());
 
 $sympalContext = sfSympalContext::getInstance();
 
-$menuItem = Doctrine_Core::getTable('MenuItem')->findOneBySlug('sample-page');
+$menuItem = Doctrine_Core::getTable('sfSympalMenuItem')->findOneBySlug('sample-page');
 $sympalContext->setCurrentMenuItem($menuItem);
 
 $t->is($sympalContext->getCurrentMenuItem(), $menuItem);

@@ -28,15 +28,15 @@ abstract class Basesympal_edit_slotActions extends sfActions
     $contentTable = $content->getTable();;
 
     if ($contentTable->hasField($this->contentSlot->name)) {
-      $form = new InlineEditContentForm($content);
+      $form = new sfSympalInlineEditContentForm($content);
       $form->useFields(array($this->contentSlot->name));
     }
 
     if (sfSympalConfig::isI18nEnabled('Content'))
     {
-      $contentTranslationTable = Doctrine::getTable('ContentTranslation');
+      $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
       if ($contentTranslationTable->hasField($this->contentSlot->name)) {
-        $form = new InlineEditContentForm($content);
+        $form = new sfSympalInlineEditContentForm($content);
         $form->useFields(array($this->getUser()->getCulture()));
       }      
     }
@@ -74,7 +74,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
     {
       $this->form = $this->_getContentSlotColumnForm($request);
     } else {
-      $this->form = new ContentSlotForm($this->contentSlot);
+      $this->form = new sfSympalContentSlotForm($this->contentSlot);
     }
 
     return $this->form;

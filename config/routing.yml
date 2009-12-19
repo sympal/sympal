@@ -26,12 +26,6 @@ sympal_run_upgrade_tasks:
   url:  /admin/upgrade/tasks
   param: { module: sympal_upgrade, action: run_tasks }
 
-sympal_content_delete_route:
-  url:  /content/delete_route/:id
-  param: { module: sympal_content, action: delete_route }
-  class: sfDoctrineRoute
-  options: { model: Route, type: object }
-
 sympal_save_form_tab_view_current_tab:
   url:  /form/save_current_tab/:name/:id
   param: { module: sympal_editor, action: save_form_current_tab }
@@ -63,7 +57,7 @@ sympal_edit_column_content_slot:
   param: { module: sympal_edit_slot, action: edit_slot, is_column: true }
   class: sfDoctrineRoute
   options:
-    model: ContentSlot
+    model: sfSympalContentSlot
     type: object
 
 sympal_edit_content_slot:
@@ -71,7 +65,7 @@ sympal_edit_content_slot:
   param: { module: sympal_edit_slot, action: edit_slot }
   class: sfDoctrineRoute
   options:
-    model: ContentSlot
+    model: sfSympalContentSlot
     type: object
 
 sympal_save_content_slot:
@@ -79,7 +73,7 @@ sympal_save_content_slot:
   param: { module: sympal_edit_slot, action: save_slot }
   class: sfDoctrineRoute
   options:
-    model: ContentSlot
+    model: sfSympalContentSlot
     type: object
   requirements:
     id: \d+
@@ -90,7 +84,7 @@ sympal_preview_content_slot:
   param: { module: sympal_edit_slot, action: preview_slot }
   class: sfDoctrineRoute
   options:
-    model: ContentSlot
+    model: sfSympalContentSlot
     type: object
   requirements:
     id: \d+
@@ -101,7 +95,7 @@ sympal_change_column_content_slot_type:
   param: { module: sympal_edit_slot, action: change_content_slot_type, is_column: true }
   class: sfDoctrineRoute
   options:
-    model: ContentSlot
+    model: sfSympalContentSlot
     type: object
 
 sympal_change_content_slot_type:
@@ -109,7 +103,7 @@ sympal_change_content_slot_type:
   param: { module: sympal_edit_slot, action: change_content_slot_type }
   class: sfDoctrineRoute
   options:
-    model: ContentSlot
+    model: sfSympalContentSlot
     type: object
 
 sympal_save_editor_position:
@@ -120,13 +114,13 @@ sympal_publish_content:
   url:   /publish_content/:id
   param: { module: sympal_editor, action: publish_content }
   class: sfDoctrineRoute
-  options: { model: Content, type: object }
+  options: { model: sfSympalContent, type: object }
 
 sympal_unpublish_content:
   url:   /unpublish_content/:id
   param: { module: sympal_editor, action: unpublish_content }
   class: sfDoctrineRoute
-  options: { model: Content, type: object }
+  options: { model: sfSympalContent, type: object }
 
 sympal_config:
   url:   /admin/configuration
@@ -139,7 +133,7 @@ sympal_config_save:
 sympal_content_slot_types:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                ContentSlotType
+    model:                sfSympalContentSlotType
     module:               sympal_content_slot_types
     prefix_path:          admin/content/slot_types
     with_wildcard_routes: true
@@ -147,7 +141,7 @@ sympal_content_slot_types:
 sympal_content_templates:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                ContentTemplate
+    model:                sfSympalContentTemplate
     module:               sympal_content_templates
     prefix_path:          admin/content/templates
     with_wildcard_routes: true
@@ -155,7 +149,7 @@ sympal_content_templates:
 sympal_content_types:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                ContentType
+    model:                sfSympalContentType
     module:               sympal_content_types
     prefix_path:          admin/content/types
     with_wildcard_routes: true
@@ -163,7 +157,7 @@ sympal_content_types:
 sympal_sites:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                Site
+    model:                sfSympalSite
     module:               sympal_sites
     prefix_path:          admin/sites
     with_wildcard_routes: true
@@ -173,7 +167,7 @@ sympal_content_menu_item:
   param: { module: sympal_content_menu_item, action: index }
   class: sfDoctrineRoute
   options:
-    model:  Content
+    model:  sfSympalContent
     type:   object
   requirements:
     sf_method: [get, post]
@@ -181,17 +175,17 @@ sympal_content_menu_item:
 sympal_content:
   class:                  sfDoctrineRouteCollection
   options:
-    model:                Content
+    model:                sfSympalContent
     module:               sympal_content
     prefix_path:          admin/content
     with_wildcard_routes: true
 
 sympal_content_view:
   url: /content/:slug
-  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page }
+  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: sfSympalPage }
   class: sfDoctrineRoute
   options:
-    model:  Content
+    model:  sfSympalContent
     type:   object
     method: getContent
 
@@ -207,18 +201,18 @@ sympal_content_list_type:
 
 homepage:
   url:   /
-  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page, sympal_content_slug: home }
+  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
   class: sfDoctrineRoute
   options:
-    model:  Content
+    model:  sfSympalContent
     type:   object
     method: getContent
 
 sympal_homepage:
   url:   /
-  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: Page, sympal_content_slug: home }
+  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
   class: sfDoctrineRoute
   options:
-    model:  Content
+    model:  sfSympalContent
     type:   object
     method: getContent

@@ -1,4 +1,4 @@
-Plugin:
+sfSympalPlugin:
   columns:
     plugin_author_id: integer
     title:
@@ -26,11 +26,12 @@ Plugin:
       default: 0
   relations:
     Author:
-      class: PluginAuthor
+      class: sfSympalPluginAuthor
+      local: plugin_author_id
       foreignAlias: Plugins
       onDelete: CASCADE
 
-PluginAuthor:
+sfSympalPluginAuthor:
   columns:
     name: string(255)
     email: string(255)

@@ -328,14 +328,14 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
     $slots[$slot['name']] = $slot;
   }
 
-  if ($name instanceof ContentSlot)
+  if ($name instanceof sfSympalContentSlot)
   {
     $slot = $name;
     $type = $slot['Type'];
   } else {
     if (!isset($slots[$name]))
     {
-      $slot = new ContentSlot();
+      $slot = new sfSympalContentSlot();
       $slot->content_id = $content->id;
       $slot->render_function = $renderFunction;
       if ($isColumn)
@@ -347,9 +347,9 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
       {
         if ($isColumn)
         {
-          $type = Doctrine_Core::getTable('ContentSlotType')->findOneByName('ContentProperty');
+          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName('ContentProperty');
         } else {
-          $type = Doctrine_Core::getTable('ContentSlotType')->findOneByName($type);
+          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName($type);
         }
 
         $slot->setType($type);

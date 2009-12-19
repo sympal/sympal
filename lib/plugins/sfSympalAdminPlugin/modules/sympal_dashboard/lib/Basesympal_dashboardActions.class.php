@@ -37,7 +37,7 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setRoute('@sympal_content')
       ->setCredentials(array('ManageContent'));
 
-    $contentTypes = Doctrine_Core::getTable('ContentType')->findAll();
+    $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
 
     foreach ($contentTypes as $contentType)
     {

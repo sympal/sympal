@@ -1,2 +1,2 @@
-<?php echo link_to($content, $content->getRoute()) ?><br/>
-<small><?php echo $content->getEvaluatedRoutePath() ?></small>
+<?php echo link_to($sf_sympal_content, $sf_sympal_content->getRoute()) ?><br/>
+<small><?php echo $sf_sympal_content->getEvaluatedRoutePath() ?></small>

@@ -13,46 +13,42 @@ $user->username = rand();
 $user->password = 'test';
 $user->save();
 
-$page = new Page();
-$page->title = 'Testing this out';
-
-$content = Content::createNew('Page');
+$content = sfSympalContent::createNew('sfSympalPage');
 $content->slug = 'testing-this-out';
 $content->is_published = true;
 $content->date_published = date('Y-m-d', time() - 3600);
 $content->CreatedBy = $user;
-$content->Site = Doctrine_Core::getTable('Site')->findOneBySlug('sympal');
+$content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal');
 $content->title = 'Testing this out';
 $content->save();
 
-$page->Content = $content;
-$page->save();
+$page = $content->sfSympalPage;
 
-$menuItem = new MenuItem();
+$menuItem = new sfSympalMenuItem();
 $menuItem->name = 'test';
 $menuItem->RelatedContent = $page->Content;
 $menuItem->is_published = true;
-$menuItem->Site = Doctrine_Core::getTable('Site')->findOneBySlug('sympal');
+$menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal');
 $menuItem->save();
 
 $page->Content->MasterMenuItem = $menuItem;
 $page->save();
 
-$content = Doctrine_Core::getTable('Content')
+$content = Doctrine_Core::getTable('sfSympalContent')
   ->createQuery('c')
   ->leftJoin('c.Site s')
   ->leftJoin('c.Type t')
-  ->leftJoin('c.Page p')
+  ->leftJoin('c.sfSympalPage p')
   ->andWhere('c.slug = ?', 'testing-this-out')
   ->fetchArray();
 
 $t->is(isset($content[0]['Type']), true);
-$t->is($content[0]['Type']['name'], 'Page');
+$t->is($content[0]['Type']['name'], 'sfSympalPage');
 $t->is($content[0]['Type']['label'], 'Page');
 $t->is(isset($content[0]['Site']), true);
 $t->is($content[0]['Site']['title'], 'Sympal');
 $t->is($content[0]['Site']['slug'], 'sympal');
-$t->is(isset($content[0]['Page']), true);
+$t->is(isset($content[0]['sfSympalPage']), true);
 $t->is($content[0]['slug'], 'testing-this-out');
 
 class testMyUser extends myUser
@@ -68,8 +64,8 @@ $sfUser = sfContext::getInstance()->getUser();
 $sfUser->signIn($user);
 $sfUser->isEditMode(true);
 
-$q = Doctrine_Core::getTable('Content')
-  ->getFullTypeQuery('Page')
+$q = Doctrine_Core::getTable('sfSympalContent')
+  ->getFullTypeQuery('sfSympalPage')
   ->andWhere('c.slug = ?', 'testing-this-out');
 
 $content = $q->fetchOne();
@@ -95,17 +91,17 @@ $menuItem = $content->getMainMenuItem();
 $t->is($menuItem->name, 'test');
 
 $page = $content->getRecord();
-$t->is($page instanceof Page, true);
+$t->is($page instanceof sfSympalPage, true);
 $t->is($page->title, 'Testing this out');
 
 $template = $content->getTemplate();
-$t->is($template instanceof ContentTemplate, true);
+$t->is($template instanceof sfSympalContentTemplate, true);
 
 $t->is($content->getTitle(), 'Testing this out');
 $t->is($content->getHeaderTitle(), 'Testing this out');
 
 $t->is($content->getLayout(), 'sympal');
-$t->is($content->getRoute(), '@sympal_content_view_type_page?slug=testing-this-out');
+$t->is($content->getRoute(), '@sf_sympal_page?slug=testing-this-out');
 
 get_sympal_content_slot($content, 'title', 'Text');
 get_sympal_content_slot($content, 'body', 'Markdown');
@@ -132,14 +128,14 @@ $t->is($slots[1]->render(), '<div class="sympal_markdown"><p>test</p>
 
 $slots->save();
 
-$slots[2]->Type = Doctrine_Core::getTable('ContentSlotType')->findOneByName('MultiLineText');
+$slots[2]->Type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName('MultiLineText');
 $t->is($slots[2]->render(), 'Body value<br />
 Testing');
 
-$content = Content::createNew('Page');
+$content = sfSympalContent::createNew('sfSympalPage');
 
-$t->is($content->Type->name, 'Page');
-$t->is(get_class($content->getRecord()), 'Page');
+$t->is($content->Type->name, 'sfSympalPage');
+$t->is(get_class($content->getRecord()), 'sfSympalPage');
 
 $content->title = 'test';
 $t->is($content->getRecord()->title, 'test');

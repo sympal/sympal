@@ -125,7 +125,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     $properties = array(
       'slug' => $lowerName,
-      'ContentType' => Doctrine_Core::getTable('ContentType')->findOneByName('ContentList')
+      'ContentType' => Doctrine_Core::getTable('sfSympalContentType')->findOneByName('ContentList')
     );
 
     $contentList = $this->newContent('ContentList', $properties);

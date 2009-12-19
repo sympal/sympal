@@ -23,10 +23,10 @@ class sfSympalContentListPluginConfiguration extends sfPluginConfiguration
 
   public function listenForFilterVariables(sfEvent $event, $variables)
   {
-    if (isset($variables['contentList']))
+    if (isset($variables['sfSympalContentList']))
     {
       $content = $variables['content'];
-      $contentList = $variables['contentList'];
+      $contentList = $variables['sfSympalContentList'];
 
       $request = sfContext::getInstance()->getRequest();
       $page = $request->getParameter('page', 1);

@@ -1,6 +1,6 @@
 # sfSympalPagesPlugin install data fixtures
 
-MenuItem:
+sfSympalMenuItem:
   MenuItem_primary:
     name: primary
     is_primary: true
@@ -84,7 +84,7 @@ MenuItem:
         RelatedContent: Content_ContentList_sample_content_list
         ContentType: ContentType_Page
 
-Content:
+sfSympalContent:
   Content_Page_register:
     Type: ContentType_Page
     slug: register
@@ -126,7 +126,7 @@ Content:
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     CreatedBy: admin
 
-ContentSlot:
+sfSympalContentSlot:
   Home_slot_body:
     name: body
     Type: ContentSlotType_Markdown
@@ -141,7 +141,7 @@ ContentSlot:
     Type: ContentSlotType_Markdown
     value: Register a new user below.
 
-Page:
+sfSympalPage:
   register:
     title: Register
     Content: Content_Page_register
@@ -154,7 +154,7 @@ Page:
     title: Sample Page
     Content: Content_Page_sample_page
 
-ContentList:
+sfSympalContentList:
   sample_content_list:
     title: Sample Content List
     Content: Content_ContentList_sample_content_list

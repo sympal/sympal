@@ -138,7 +138,7 @@ $t->is($first->getNum(), 1);
 $t->is($middle->getNum(), 2);
 $t->is($last->getNum(), 3);
 
-$table = Doctrine_Core::getTable('MenuItem');
+$table = Doctrine_Core::getTable('sfSympalMenuItem');
 
 $menuItems = $table
   ->createQuery('m')
@@ -153,6 +153,6 @@ $t->is($menuItem->getIndentedName(), '- Sample Page');
 $t->is((string) $menuItem, '- Sample Page');
 $t->is($menuItem->getMainContent()->getHeaderTitle(), 'Sample Page');
 $t->is($menuItem->getLabel(), 'Sample Page');
-$t->is($menuItem->getItemRoute(), '@sympal_content_view_type_page?slug=sample-page');
+$t->is($menuItem->getItemRoute(), '@sf_sympal_page?slug=sample-page');
 $t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page');
 $t->is($menuItem->getLayout(), 'sympal');

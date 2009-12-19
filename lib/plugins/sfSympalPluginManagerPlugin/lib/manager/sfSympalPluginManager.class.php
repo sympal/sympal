@@ -124,10 +124,10 @@ abstract class sfSympalPluginManager
   {
     if (is_string($contentType))
     {
-      $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($contentType);
+      $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentType);
     }
 
-    $contentTemplate = new ContentTemplate();
+    $contentTemplate = new sfSympalContentTemplate();
     $contentTemplate->name = $name;
     $contentTemplate->ContentType = $contentType;
 
@@ -140,13 +140,13 @@ abstract class sfSympalPluginManager
   {
     if (is_string($contentType))
     {
-      $contentType = Doctrine_Core::getTable('ContentType')->findOneByName($contentType);
+      $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentType);
     }
 
-    $content = new Content();
+    $content = new sfSympalContent();
     $content->Type = $contentType;
     $content->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);
-    $content->Site = Doctrine_Core::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
+    $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $content->is_published = true;
 
     $name = $contentType['name'];
@@ -161,7 +161,7 @@ abstract class sfSympalPluginManager
 
   public function newContentType($name, $properties = array())
   {
-    $contentType = new ContentType();
+    $contentType = new sfSympalContentType();
     $contentType->name = $name;
     $contentType->label = sfInflector::humanize(sfInflector::tableize($name));
 
@@ -174,7 +174,7 @@ abstract class sfSympalPluginManager
   {
     $menuItem = new MenuItem();
     $menuItem->name = $name;
-    $menuItem->Site = Doctrine_Core::getTable('Site')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
+    $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $menuItem->is_published = true;
 
     $this->_setDoctrineProperties($menuItem, $properties);
@@ -182,9 +182,9 @@ abstract class sfSympalPluginManager
     return $menuItem;
   }
 
-  public function saveMenuItem(MenuItem $menuItem)
+  public function saveMenuItem(sfSympalMenuItem $menuItem)
   {
-    $roots = Doctrine_Core::getTable('MenuItem')->getTree()->fetchRoots();
+    $roots = Doctrine_Core::getTable('sfSympalMenuItem')->getTree()->fetchRoots();
     $root = $roots[0];
     $menuItem->getNode()->insertAsLastChildOf($root);
   }

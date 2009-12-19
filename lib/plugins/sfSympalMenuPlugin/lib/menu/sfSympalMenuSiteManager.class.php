@@ -161,7 +161,7 @@ class sfSympalMenuSiteManager
     {
       // Query for the all menu items
       $q = Doctrine_Query::create()
-        ->from('MenuItem m INDEXBY m.id')
+        ->from('sfSympalMenuItem m INDEXBY m.id')
         ->leftJoin('m.Groups g')
         ->leftJoin('g.Permissions gp')
         ->leftJoin('m.Permissions mp')
