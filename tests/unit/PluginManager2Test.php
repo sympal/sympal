@@ -15,7 +15,7 @@ function installPlugin($name, $t)
   $contentTypeName = $manager->getContentTypeForPlugin($name);
   $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentTypeName);
   $t->is($contentType['name'], $contentTypeName);
-  $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize($contentTypeName)));
+  $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize(str_replace('sfSympal', null, $contentTypeName))));
   $t->is($contentType['plugin_name'], $name);
 
   $menuItem = Doctrine_Core::getTable('sfSympalMenuItem')->findOneByName($contentTypeName);
