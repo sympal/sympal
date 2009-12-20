@@ -78,3 +78,16 @@ The models which need be prefixed with `sfGuard` are:
  * User => sfGuardUser
  * UserGroup => sfGuardUserGroup
  * UserPermission => sfGuardUserPermission
+
+# All Model, Form and Filter classes prefixed with sfForm
+
+This change should be an easy upgrade. You just need to rename any usage of model,
+form and filter classes to include the sfSympal prefix.
+
+For example, the following:
+
+    $content = new Content::createNew('Page');
+
+Should be changed to:
+
+    $content = new sfSympalContent::createNew('sfSympalPage');
