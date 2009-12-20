@@ -24,7 +24,7 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
     $this->menuItem->Site = $this->content->Site;
     $this->form = new sfSympalMenuItemForm($this->menuItem);
     $widgetSchema = $this->form->getWidgetSchema();
-    $widgetSchema['parent_id']->setOption('add_empty', false);
+    $widgetSchema['parent_id']->setOption('add_empty', '');
     unset(
       $this->form['id'],
       $this->form['is_primary'],

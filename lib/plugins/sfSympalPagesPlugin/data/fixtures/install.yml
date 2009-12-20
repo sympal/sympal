@@ -94,7 +94,7 @@ sfSympalContent:
     Template: ContentTemplate_Register
     Slots: [Register_slot_body]
     CreatedBy: admin
-<?php if (sfSympalConfig::isI18nEnabled('Content')): ?> 
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
     Translation:
       en:
         i18n_slug: register

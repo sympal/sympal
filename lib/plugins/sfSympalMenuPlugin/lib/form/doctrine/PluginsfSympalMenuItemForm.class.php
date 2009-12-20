@@ -39,13 +39,13 @@ abstract class PluginsfSympalMenuItemForm extends BasesfSympalMenuItemForm
       $q->andWhere('m.id != ?', $this->object->id);
     }
 
-    if (sfSympalConfig::isI18nEnabled('MenuItem'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
     {
       $q->leftJoin('m.Translation mt');
     }
 
     $this->widgetSchema['parent_id'] = new sfWidgetFormDoctrineChoice(array(
-      'model' => 'MenuItem',
+      'model' => 'sfSympalMenuItem',
       'add_empty' => '~ (object is at root level)',
       'order_by' => array('root_id, lft', ''),
       'query' => $q,
@@ -53,37 +53,35 @@ abstract class PluginsfSympalMenuItemForm extends BasesfSympalMenuItemForm
       ));
     $this->validatorSchema['parent_id'] = new sfValidatorDoctrineChoice(array(
       'required' => false,
-      'model' => 'MenuItem'
+      'model' => 'sfSympalMenuItem'
       ));
     $this->setDefault('parent_id', $this->object->getParentId());
     $this->widgetSchema->setLabel('parent_id', 'Child of');
 
-    if ($this->object->exists())
-    {
-      $this->widgetSchema['move'] = new sfWidgetFormDoctrineChoice(array(
-        'model' => 'MenuItem',
-        'add_empty' => true,
-        'order_by' => array('root_id, lft', ''),
-        'query' => $q,
-        'method' => 'getIndentedName'
-        ));
-      $this->validatorSchema['move'] = new sfValidatorDoctrineChoice(array(
-        'required' => false,
-        'model' => 'MenuItem'
-        ));
-      $this->widgetSchema->setLabel('move', 'Move to?');
-
-      $choices = array(
-        'Prev' => 'Before',
-        'Next' => 'After'
-      );
-      $this->widgetSchema['where_to_move'] = new sfWidgetFormChoice(array('choices' => $choices));
-      $this->validatorSchema['where_to_move'] = new sfValidatorChoice(array(
-        'required' => false,
-        'choices' => array_keys($choices)
+    $this->widgetSchema['move'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => 'sfSympalMenuItem',
+      'add_empty' => true,
+      'order_by' => array('root_id, lft', ''),
+      'query' => $q,
+      'method' => 'getIndentedName'
       ));
-      $this->widgetSchema->setLabel('where_to_move', 'Before or after?');
-    }
+    $this->validatorSchema['move'] = new sfValidatorDoctrineChoice(array(
+      'required' => false,
+      'model' => 'sfSympalMenuItem'
+      ));
+    $this->widgetSchema->setLabel('move', 'Position menu item');
+
+    $choices = array(
+      '' => '',
+      'Prev' => 'Before',
+      'Next' => 'After'
+    );
+    $this->widgetSchema['where_to_move'] = new sfWidgetFormChoice(array('choices' => $choices));
+    $this->validatorSchema['where_to_move'] = new sfValidatorChoice(array(
+      'required' => false,
+      'choices' => array_keys($choices)
+    ));
+    $this->widgetSchema->setLabel('where_to_move', 'Position before or after?');
 
     unset($this['site_id'], $this['Content'], $this['root_id'], $this['lft'], $this['rgt'], $this['level'], $this['slug']);
   }

@@ -38,7 +38,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $ids = array_keys($ids);
     
     //validate if all id's exist
-    $validator = new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'MenuItem'));
+    $validator = new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalMenuItem'));
     try
     {
       // validate ids
@@ -126,7 +126,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
       ->leftJoin('m.Permissions p')
       ->where('m.id = ?', $request->getParameter('id'));
 
-    if (sfSympalConfig::isI18nEnabled('MenuItem'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
     {
       $q->leftJoin('m.Translation mt');
     }

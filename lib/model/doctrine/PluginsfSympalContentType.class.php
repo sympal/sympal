@@ -10,8 +10,19 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     return (string) $this->getLabel();
   }
 
+  public function getTypeTemplate()
+  {
+    return $this->_get('Template');
+  }
+
   public function getTemplate()
   {
+    $template = $this->getTypeTemplate();
+    if ($template && $template->exists())
+    {
+      return $template;
+    }
+
     if ($this->hasReference('ContentTemplates'))
     {
       foreach ($this->ContentTemplates as $template)
@@ -56,7 +67,7 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
 
   public function getRouteName()
   {
-    return '@'.$this->getSingularLower();
+    return '@'.str_replace('-', '_', $this->getSlug());
   }
 
   public function getRoutePath()

@@ -181,6 +181,13 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'], $content->getEditRoute());      
     }
 
+    if ($content->getTemplate() && $content->getTemplate()->getId())
+    {
+      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Template', '@sympal_content_templates_edit?id='.$content->getTemplate()->getId());      
+    }
+
+    $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Type', '@sympal_content_types_edit?id='.$content->getType()->getId());      
+
     if ($content['is_published'])
     {
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/cancel.png').' Un-Publish', '@sympal_unpublish_content?id='.$content['id']);

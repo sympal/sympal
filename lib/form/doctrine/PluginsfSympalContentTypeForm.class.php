@@ -13,7 +13,28 @@ abstract class PluginsfSympalContentTypeForm extends BasesfSympalContentTypeForm
   {
     parent::setup();
 
+    $plugins = sfSympalContext::getInstance()->getSympalConfiguration()->getContentTypePlugins();
+    $plugins = array_merge(array('' => ''), $plugins);
+
+    $this->widgetSchema['plugin_name'] = new sfWidgetFormChoice(array('choices' => $plugins));
+    $this->widgetSchema['plugin_name']->setLabel('Plugin');
+
+    $this->widgetSchema['name']->setLabel('Model name');
+
+    $models = Doctrine_Core::loadModels(sfConfig::get('sf_lib_dir').'/model/doctrine');
+
+    foreach ($models as $model)
+    {
+      $table = Doctrine_Core::getTable($model);
+      if (!$table->hasTemplate('sfSympalContentTypeTemplate'))
+      {
+        unset($models[$model]);
+      }
+    }
+
+    $models = array_merge(array('' => ''), $models);
+    $this->widgetSchema['name'] = new sfWidgetFormChoice(array('choices' => $models));
+
     sfSympalFormToolkit::changeThemeWidget($this);
-    unset($this['name']);
   }
 }

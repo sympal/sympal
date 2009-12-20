@@ -92,14 +92,22 @@ sfSympalContentType:
     name:
       type: string(255)
       notnull: true
-      unique: true
     description: clob
     label:
       type: string(255)
       notnull: true
-    plugin_name: string(255)
+    plugin_name:
+      type: string(255)
+      notnull: true
     default_path: string(255)
     layout: string(255)
+    content_template_id: integer
+  relations:
+    Template:
+      class: sfSympalContentTemplate
+      local: content_template_id
+      foreignAlias: ContentTypes
+      onDelete: CASCADE
   indexes:
     content_type_name:
       fields: [name]

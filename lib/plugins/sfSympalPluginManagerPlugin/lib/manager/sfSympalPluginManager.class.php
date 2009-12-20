@@ -1,6 +1,6 @@
 <?php
 
-abstract class sfSympalPluginManager
+class sfSympalPluginManager
 {
   protected
     $_name,
@@ -196,16 +196,22 @@ abstract class sfSympalPluginManager
     $menuItem->getNode()->insertAsLastChildOf($root);
   }
 
-  public function getContentTypeForPlugin($name)
+  public function getContentTypeForPlugin($name = null)
   {
+    $name = $this->_pluginName;
     try {
       $pluginName = sfSympalPluginToolkit::getLongPluginName($name);
       $path = ProjectConfiguration::getActive()->getPluginConfiguration($pluginName)->getRootDir();
-      $schema = $path.'/config/doctrine/schema.yml';
+      $files = glob($path.'/config/doctrine/*.yml');
 
-      if (file_exists($schema))
+      if (!empty($files))
       {
-        $array = (array) sfYaml::load($schema);
+        $array = array();
+        foreach ($files as $file)
+        {
+          $array = array_merge($array, (array) sfYaml::load($file));
+        }
+
         foreach ($array as $modelName => $model)
         {
           if (isset($model['actAs']) && !empty($model['actAs']))

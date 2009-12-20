@@ -69,13 +69,14 @@ class sfSympalMenuSiteManager
 
     $this->initialize();
 
-    if ($name instanceof MenuItem)
+    if ($name instanceof sfSympalMenuItem)
     {
       $menuItem = $name;
       $name = $this->_rootSlugs[$name['root_id']];
     }
 
     $rootId = array_search($name, $this->_rootSlugs);
+
     if (!$rootId)
     {
       return false;
@@ -95,7 +96,7 @@ class sfSympalMenuSiteManager
 
     if (isset($menuItem))
     {
-      $return = $menu->getMenuItemSubMenu($menuItem);
+      $return = $menu->getMenuItemSubMenu($menu->findMenuItem($menuItem)->getTopLevelParent()->getMenuItem());
     } else {
       $return = $menu;
     }
@@ -175,12 +176,12 @@ class sfSympalMenuSiteManager
         ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
         ->orderBy('m.root_id, m.lft ASC');
 
-      if (sfSympalConfig::isI18nEnabled('Content'))
+      if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
       {
         $q->leftJoin('c.Translation ctr');
       }
 
-      if (sfSympalConfig::isI18nEnabled('MenuItem'))
+      if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
       {
         $q->leftJoin('m.Translation t');
       }

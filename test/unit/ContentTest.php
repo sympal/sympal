@@ -88,7 +88,7 @@ $t->is($content->getTitle(), 'Testing this out');
 $t->is($content->getHeaderTitle(), 'Testing this out');
 
 $t->is($content->getLayout(), 'sympal');
-$t->is($content->getRoute(), '@sf_sympal_page?slug=testing-this-out');
+$t->is($content->getRoute(), '@page?slug=testing-this-out');
 
 get_sympal_content_slot($content, 'title', 'Text');
 get_sympal_content_slot($content, 'body', 'Markdown');

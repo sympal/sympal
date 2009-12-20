@@ -6,7 +6,7 @@ class sfSympalContentFilter extends Doctrine_Record_Filter
 
   public function init()
   {
-    if (sfSympalConfig::isI18nEnabled('Content'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
     {
       $this->_i18nFilter = new sfDoctrineRecordI18nFilter();
       $this->_i18nFilter->setTable($this->getTable());

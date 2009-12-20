@@ -127,9 +127,9 @@ class Basesympal_contentActions extends autoSympal_contentActions
    */
   public function executeView()
   {
-    $this->content = $this->getRoute()->getObject();
-    $this->getUser()->checkContentSecurity($this->content);
-    $this->redirect($this->content->getRoute());
+    $this->sf_sympal_content = $this->getRoute()->getObject();
+    $this->getUser()->checkContentSecurity($this->sf_sympal_content);
+    $this->redirect($this->sf_sympal_content->getRoute());
   }
 
   public function executeNew(sfWebRequest $request)
@@ -167,15 +167,15 @@ class Basesympal_contentActions extends autoSympal_contentActions
       ->where('c.id = ?', $request->getParameter('id'))
       ->execute(array(), Doctrine_Core::HYDRATE_NONE);
 
-    $this->content = Doctrine_Core::getTable('sfSympalContent')
+    $this->sf_sympal_content = Doctrine_Core::getTable('sfSympalContent')
       ->getFullTypeQuery($contentType[0][0])
       ->where('c.id = ?', $request->getParameter('id'))
       ->fetchOne();
 
     $user = $this->getUser();
-    $user->checkContentSecurity($this->content);
+    $user->checkContentSecurity($this->sf_sympal_content);
 
-    $this->form = $this->configuration->getForm($this->content);
+    $this->form = $this->configuration->getForm($this->sf_sympal_content);
   }
 
   public function executeCreate(sfWebRequest $request)

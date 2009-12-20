@@ -16,18 +16,25 @@ class sfSympalInstallForm extends BaseForm
   }  
 }
 
-class sfSympalSetupInstallForm extends sfForm
+class sfSympalSetupInstallForm extends BaseForm
 {
   public function formatPluginName($name)
   {
     return sfInflector::humanize(sfInflector::underscore(sfSympalPluginToolkit::getShortPluginName($name)));
   }
 
-  public function setup()
+  public function getWidgetPluginChoices()
   {
     $plugins = sfSympalContext::getInstance()->getSympalConfiguration()->getAddonPlugins();
     $plugins = array_combine($plugins, $plugins);
     $plugins = array_map(array($this, 'formatPluginName'), $plugins);
+
+    return $plugins;
+  }
+
+  public function setup()
+  {
+    $plugins = $this->getWidgetPluginChoices();
 
     $this->setWidgets(array(
       'plugins'           => new sfSympalInstallPluginsChoiceWidget(array('multiple' => true, 'expanded' => true, 'choices' => $plugins)),

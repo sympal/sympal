@@ -30,13 +30,13 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       ->from('sfSympalMenuItem m')
       ->orderBy('m.root_id, m.lft ASC');
 
-    if (sfSympalConfig::isI18nEnabled('MenuItem'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
     {
       $q->leftJoin('m.Translation mt'); 
     }
 
     $this->widgetSchema['master_menu_item_id']->setOption('query', $q);
-    $this->widgetSchema['master_menu_item_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'MenuItem', 'query' => $q, 'add_empty' => true));
+    $this->widgetSchema['master_menu_item_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'sfSympalMenuItem', 'query' => $q, 'add_empty' => true));
     $this->widgetSchema['content_type_id'] = new sfWidgetFormInputHidden();
 
     sfSympalFormToolkit::changeThemeWidget($this);

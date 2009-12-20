@@ -92,6 +92,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       ->leftJoin($alias.'.Slots sl INDEXBY sl.name')
       ->leftJoin('sl.Type sty')
       ->leftJoin($alias.'.Type ty')
+      ->leftJoin('ty.Template tyt')
       ->leftJoin('ty.ContentTemplates t')
       ->leftJoin($alias.'.MasterMenuItem m')
       ->leftJoin($alias.'.MenuItem mm')
@@ -108,17 +109,17 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
         ->andWhere($alias.'.date_published <= '.$expr);
     }
 
-    if (sfSympalConfig::isI18nEnabled('ContentSlot'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot'))
     {
       $q->leftJoin('sl.Translation slt');
     }
 
-    if (sfSympalConfig::isI18nEnabled('Content'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
     {
       $q->leftJoin($alias.'.Translation ct');
     }
 
-    if (sfSympalConfig::isI18nEnabled('MenuItem'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
     {
       $q->leftJoin('m.Translation mt');
     }

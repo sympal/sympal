@@ -153,7 +153,7 @@ $t->is($menuItem->getIndentedName(), '- Sample Page', 'Test sfSympalMenuItem::ge
 $t->is((string) $menuItem, '- Sample Page', 'Test sfSympalMenuItem::__toString()');
 $t->is($menuItem->getMainContent()->getHeaderTitle(), 'Sample Page', 'Test sfSympalMenuItem::getHeaderTitle()');
 $t->is($menuItem->getLabel(), 'Sample Page', 'Test sfSympalMenuItem::getLabel()');
-$t->is($menuItem->getItemRoute(), '@sf_sympal_page?slug=sample-page', 'Test sfSympalMenuItem::getItemRoute()');
+$t->is($menuItem->getItemRoute(), '@page?slug=sample-page', 'Test sfSympalMenuItem::getItemRoute()');
 $t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page', 'Test sfSympalBreadcrumbs::getPathAsString()');
 $t->is($menuItem->getLayout(), 'sympal', 'Test getLayout()');
 

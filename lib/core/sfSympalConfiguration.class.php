@@ -119,6 +119,22 @@ class sfSympalConfiguration
     return sfSympalPluginConfiguration::$dependencies;
   }
 
+  public function getContentTypePlugins()
+  {
+    $contentTypePlugins = array();
+    $plugins = $this->getPluginPaths();
+
+    foreach ($plugins as $plugin => $path)
+    {
+      $manager = new sfSympalPluginManager($plugin, $this->_projectConfiguration, new sfFormatter());
+      if ($contentType = $manager->getContentTypeForPlugin())
+      {
+        $contentTypePlugins[$plugin] = $plugin;
+      }
+    }
+    return $contentTypePlugins;
+  }
+
   public function getInstalledPlugins()
   {
     return $this->getOtherPlugins();

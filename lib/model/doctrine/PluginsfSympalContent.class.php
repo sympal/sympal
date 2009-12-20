@@ -7,7 +7,8 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 {
   protected
     $_allPermissions,
-    $_route;
+    $_route,
+    $_mainMenuItem;
 
   public static function createNew($type)
   {
@@ -177,24 +178,21 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   {
     if ($this->get('master_menu_item_id', false))
     {
-      return $this->MasterMenuItem;
+      $this->_mainMenuItem = $this->MasterMenuItem;
     } else {
       $menuItem = $this->_get('MenuItem');
       if ($menuItem && $menuItem->exists())
       {
-        return $menuItem;
-      } else {
-        return false;
+        $this->_mainMenuItem = $menuItem;
       }
     }
+    return $this->_mainMenuItem;
   }
 
   public function getMainMenuItem()
   {
-    if ($menuItem = $this->getRelatedMenuItem())
+    if (!$this->_mainMenuItem = $this->getRelatedMenuItem())
     {
-      return $menuItem;
-    } else {
       $q = Doctrine_Core::getTable('sfSympalMenuItem')
         ->createQuery('m')
         ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
@@ -203,8 +201,9 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
         ->orderBy('m.is_primary DESC')
         ->limit(1);
 
-      return $q->fetchOne();
+      $this->_mainMenuItem = $q->fetchOne();
     }
+    return $this->_mainMenuItem;
   }
 
   public function getRecord()

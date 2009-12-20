@@ -1,10 +1,11 @@
 <?php
+
 class sfSympalMenuSite extends sfSympalMenu
 {
   protected 
     $_menuItem = null;
 
-  public function findMenuItem($menuItem)
+  public function findMenuItem(sfSympalMenuItem $menuItem)
   {
     if ($this->_menuItem->id == $menuItem->id)
     {
@@ -90,6 +91,20 @@ class sfSympalMenuSite extends sfSympalMenu
     }
 
     $this->setLevel($menuItem->level);
+  }
+
+  public function getTopLevelParent()
+  {
+    $obj = $this;
+
+    do {
+    	if ($obj->getMenuItem()->getLevel() == 1)
+    	{
+    	  return $obj;
+    	}
+    } while ($obj = $obj->getParent());
+
+    return $this;
   }
 
   public function getMenuItemSubMenu(sfSympalMenuItem $menuItem)

@@ -32,7 +32,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
       $form->useFields(array($this->contentSlot->name));
     }
 
-    if (sfSympalConfig::isI18nEnabled('Content'))
+    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
     {
       $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
       if ($contentTranslationTable->hasField($this->contentSlot->name)) {
