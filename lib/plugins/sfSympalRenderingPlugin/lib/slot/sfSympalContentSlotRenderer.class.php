@@ -25,13 +25,13 @@ class sfSympalContentSlotRenderer
       if (!sfSympalConfig::get('disallow_php_in_content'))
       {
         $variables = array(
-          'content' => $this->_contentSlot->RelatedContent,
-          'menuItem' => $this->_contentSlot->RelatedContent->MenuItem
+          'content' => $this->_contentSlot->getContentRenderedFor(),
+          'menuItem' => $this->_contentSlot->getContentRenderedFor()->getMenuItem()
         );
         $value = sfSympalTemplate::process($value, $variables);
       }
 
-      $event = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_content_slot_raw_value', array('contentSlot' => $this->_contentSlot, 'content' => $this->_contentSlot->RelatedContent)), $value);
+      $event = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_content_slot_raw_value', array('contentSlot' => $this->_contentSlot, 'content' => $this->_contentSlot->getContentRenderedFor())), $value);
       $value = $event->getReturnValue();
 
       $this->_rawValue = $value;

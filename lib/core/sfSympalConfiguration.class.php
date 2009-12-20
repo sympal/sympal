@@ -36,6 +36,10 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
     $this->_dispatcher->connect('controller.change_action', array($this, 'initializeTheme'));
     $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
+
+    Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
+    Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
+    Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
   }
 
   /**

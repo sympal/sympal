@@ -167,7 +167,6 @@ class sfSympalMenuSiteManager
         ->leftJoin('m.Permissions mp')
         ->leftJoin('m.RelatedContent c')
         ->leftJoin('c.Type ct')
-        ->leftJoin('m.ContentType ct2')
         ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
         ->orderBy('m.root_id, m.lft ASC');
 

@@ -13,7 +13,7 @@ abstract class PluginsfSympalContentSlotForm extends BasesfSympalContentSlotForm
   {
     parent::setup();
 
-    unset($this['content_id'], $this['name'], $this['is_column'], $this['render_function']);
+    $this->useFields(array('content_slot_type_id', 'value'));
 
     $this->widgetSchema['content_slot_type_id']->setLabel('Slot Type');
     $this->widgetSchema['content_slot_type_id']->setAttribute('onChange', "change_content_slot_type('".$this->object['id']."', this.value)");

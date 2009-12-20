@@ -16,11 +16,11 @@ $t->is($theme->getCssPath(), '/sfSympalPlugin/css/sympal.css');
 // Theme from another plugin
 $theme = new sfSympalTheme('test_theme');
 
-$t->is($theme->getLayoutPath(), $dir.'/tests/fixtures/project/plugins/sfSympalThemeTestPlugin/templates/test_theme.php');
+$t->is($theme->getLayoutPath(), $dir.'/test/fixtures/project/plugins/sfSympalThemeTestPlugin/templates/test_theme.php');
 $t->is($theme->getCssPath(), '/sfSympalThemeTestPlugin/css/test_theme.css');
 
 // Theme from application
 $theme = new sfSympalTheme('test');
 
-$t->is($theme->getLayoutPath(), $dir.'/tests/fixtures/project/apps/sympal/templates/test.php');
+$t->is($theme->getLayoutPath(), $dir.'/test/fixtures/project/apps/sympal/templates/test.php');
 $t->is($theme->getCssPath(), 'test');

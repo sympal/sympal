@@ -79,6 +79,12 @@ sfSympalContent:
       local: content_id
       foreign: permission_id
       refClass: sfSympalContentPermission
+    Slots:
+      class: sfSympalContentSlot
+      refClass: sfSympalContentSlotRef
+      local: content_id
+      foreign: content_slot_id
+      foreignAlias: RelatedContent
 
 sfSympalContentType:
   actAs: [sfSympalRecordTemplate]
@@ -121,10 +127,10 @@ sfSympalContentTemplate:
 
 sfSympalContentSlot:
   actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      filter: false
   columns:
-    content_id:
-      type: integer
-      notnull: true
     content_slot_type_id:
       type: integer
       notnull: true
@@ -140,16 +146,34 @@ sfSympalContentSlot:
     name:
       fields: [name]
   relations:
-    RelatedContent:
-      local: content_id
-      class: sfSympalContent
-      foreignAlias: Slots
-      onDelete: CASCADE
     Type:
       local: content_slot_type_id
       class: sfSympalContentSlotType
       foreignAlias: Slots
       onDelete: CASCADE
+
+sfSympalContentSlotRef:
+  actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    content_slot_id:
+      type: integer
+      primary: true
+    content_id:
+      type: integer
+      primary: true
+  relations:
+    Slot:
+      class: sfSympalContentSlot
+      local: content_slot_id
+      foreignAlias: ContentSlotRefs
+    Content:
+      class: sfSympalContent
+      local: content_id
+      foreignAlias: ContentSlotRefs
 
 sfSympalContentSlotType:
   actAs: [sfSympalRecordTemplate]
@@ -164,6 +188,10 @@ sfSympalContentSlotType:
 
 sfSympalContentGroup:
   actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     content_id:
       primary: true
@@ -185,6 +213,10 @@ sfSympalContentGroup:
 
 sfSympalContentPermission:
   actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      form: false
+      filter: false
   columns:
     content_id:
       primary: true

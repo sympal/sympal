@@ -318,49 +318,29 @@ function get_sympal_column_content_slot($content, $name, $renderFunction = null,
  */
 function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
 {
-  $user = sfContext::getInstance()->getUser();
-
-  $defaultValue = '[Double click to edit slot content]';
-  $slotsCollection = $content->getSlots();
-  $slots = array();
-  foreach ($slotsCollection as $slot)
-  {
-    $slots[$slot['name']] = $slot;
-  }
+  $slots = $content->getSlots();
 
   if ($name instanceof sfSympalContentSlot)
   {
     $slot = $name;
-    $type = $slot['Type'];
   } else {
-    if (!isset($slots[$name]))
-    {
-      $slot = new sfSympalContentSlot();
-      $slot->content_id = $content->id;
-      $slot->render_function = $renderFunction;
-      if ($isColumn)
-      {
-        $slot->is_column = true;
-      }
-
-      if (!$slot->exists())
-      {
-        if ($isColumn)
-        {
-          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName('ContentProperty');
-        } else {
-          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName($type);
-        }
-
-        $slot->setType($type);
-        $slot->setName($name);
-      }
-
-      $slot->save();
-    } else {
-      $slot = $slots[$name];
-    }
+    $slot = $content->getOrCreateSlot($name, $type, $isColumn, $renderFunction);
   }
+
+  $user = sfContext::getInstance()->getUser();
+  if ($user->isEditMode())
+  {
+    return get_sympal_content_slot_editor($slot);
+  } else {
+    return $slot->render();
+  }
+}
+
+function get_sympal_content_slot_editor(sfSympalContentSlot $slot)
+{
+  $name = $slot->getName();
+  $isColumn = $slot->getIsColumn();
+  $defaultValue = '[Double click to edit slot content]';
 
   $user = sfContext::getInstance()->getUser();
 
@@ -370,34 +350,32 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
     $renderedValue = $slot->render();
   }
 
-  if ($user->isEditMode())
+  $html  = '<span class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
+  $html .= $renderedValue;
+  $html .= '</span>';
+
+  if ($isColumn)
   {
-    $html  = '<span class="sympal_editable_content_slot" onMouseOver="javascript: highlight_sympal_content_slot(\''.$slot['id'].'\');" onMouseOut="javascript: unhighlight_sympal_content_slot(\''.$slot['id'].'\');" title="Double click to edit this slot named `'.$name.'`" id="edit_content_slot_button_'.$slot['id'].'" style="cursor: pointer;" onClick="javascript: edit_sympal_content_slot(\''.$slot['id'].'\');">';
-    $html .= $renderedValue;
-    $html .= '</span>';
+    $html .= '<input type="hidden" id="content_slot_'.$slot['id'].'_is_column" value="'.$slot['name'].'" />';
+  }
 
-    if ($isColumn)
-    {
-      $html .= '<input type="hidden" id="content_slot_'.$slot['id'].'_is_column" value="'.$slot['name'].'" />';
-    }
+  $editor  = '<div class="sympal_edit_slot_box yui-skin-sam">';
+  $editor .= '<div id="edit_content_slot_'.$slot['id'].'">';
+  $editor .= '<div class="hd">Edit Slot: '.$slot['name'].'</div>';
+  $editor .= '<div class="bd" id="edit_content_slot_content_'.$slot['id'].'"></div>';
+  $editor .= '</div>';
+  $editor .= '</div>';
 
-    $editor  = '<div class="sympal_edit_slot_box yui-skin-sam">';
-    $editor .= '<div id="edit_content_slot_'.$slot['id'].'">';
-    $editor .= '<div class="hd">Edit Slot: '.$slot['name'].'</div>';
-    $editor .= '<div class="bd" id="edit_content_slot_content_'.$slot['id'].'"></div>';
-    $editor .= '</div>';
-    $editor .= '</div>';
-
-    $editor .= sprintf(<<<EOF
+  $editor .= sprintf(<<<EOF
 <script type="text/javascript">
 myPanel = new YAHOO.widget.Panel('edit_content_slot_%s', {
-	underlay:"shadow",
-	close:true,
-	visible:true,
-	context:['edit_content_slot_button_%s', 'tl', 'tl'],
-  autofillheight: "body",
-  constraintoviewport: false,
-	draggable:true} );
+underlay:"shadow",
+close:true,
+visible:true,
+context:['edit_content_slot_button_%s', 'tl', 'tl'],
+autofillheight: "body",
+constraintoviewport: false,
+draggable:true} );
 
 myPanel.cfg.setProperty("underlay", "matte");
 myPanel.render();
@@ -407,25 +385,30 @@ YAHOO.util.Event.addListener("edit_content_slot_button_%s", "dblclick", myPanel.
 YAHOO.util.Event.addListener("edit_content_slot_editor_panel_button_%s", "click", myPanel.show, myPanel, true);
 </script>
 EOF
-    ,
-      $slot['id'],
-      $slot['id'],
-      $slot['id'],
-      $slot['id'],
-      $slot['id'],
-      $slot['id']
-    );
+  ,
+    $slot['id'],
+    $slot['id'],
+    $slot['id'],
+    $slot['id'],
+    $slot['id'],
+    $slot['id']
+  );
 
-    $editor = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($slot, 'sympal.filter_content_slot_editor'), $editor)->getReturnValue();
+  $editor = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($slot, 'sympal.filter_content_slot_editor'), $editor)->getReturnValue();
 
-    slot('sympal_editors', get_slot('sympal_editors').$editor);
-
-    $html = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($slot, 'sympal.filter_content_slot_html'), $html)->getReturnValue();
-
-    return $html;
+  $response = sfContext::getInstance()->getResponse();
+  $slots = $response->getSlots();
+  if (isset($slots['sympal_editors']))
+  {
+    $slots['sympal_editors'] = $slots['sympal_editors'].$editor;
   } else {
-    return $renderedValue;
+    $slots['sympal_editors'] = $editor;
   }
+  $response->setSlot('sympal_editors', $slots['sympal_editors']);
+
+  $html = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($slot, 'sympal.filter_content_slot_html'), $html)->getReturnValue();
+
+  return $html;
 }
 
 /**

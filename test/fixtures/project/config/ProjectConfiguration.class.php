@@ -23,6 +23,12 @@ class ProjectConfiguration extends sfProjectConfiguration
     $this->enableAllPluginsExcept('sfPropelPlugin');
   }
 
+  public function setupPlugins()
+  {
+    $this->pluginConfigurations['sfSympalPlugin']->connectTests();
+    $this->pluginConfigurations['sfDoctrineGuardPlugin']->connectTests();
+  }
+
   public function configureDoctrineConnection(Doctrine_Connection $conn)
   {
       $conn->setCollate('utf8_unicode_ci');

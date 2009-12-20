@@ -12,7 +12,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
 {
   public function executeChange_content_slot_type(sfWebRequest $request)
   {
-    $this->contentSlot = $this->getRoute()->getObject();
+    $this->contentSlot = $this->_getContentSlot($request);
     $this->contentSlot->content_slot_type_id = $request->getParameter('type');
     $this->contentSlot->save();
 
@@ -24,8 +24,8 @@ abstract class Basesympal_edit_slotActions extends sfActions
 
   protected function _getContentSlotColumnForm(sfWebRequest $request)
   {
-    $content = $this->contentSlot->RelatedContent;
-    $contentTable = $content->getTable();;
+    $content = $this->contentSlot->getContentRenderedFor();
+    $contentTable = $content->getTable();
 
     if ($contentTable->hasField($this->contentSlot->name)) {
       $form = new sfSympalInlineEditContentForm($content);
@@ -68,8 +68,19 @@ abstract class Basesympal_edit_slotActions extends sfActions
     return $form;
   }
 
+  protected function _getContentSlot(sfWebRequest $request)
+  {
+    $this->contentSlot = $this->getRoute()->getObject();
+    $this->content = Doctrine_Core::getTable('sfSympalContent')->find($request['content_id']);
+    $this->contentSlot->setContentRenderedFor($this->content);
+
+    return $this->contentSlot;
+  }
+
   protected function _getContentSlotForm(sfWebRequest $request)
   {
+    $this->contentSlot = $this->_getContentSlot($request);
+
     if ($request->getParameter('is_column'))
     {
       $this->form = $this->_getContentSlotColumnForm($request);
@@ -84,13 +95,12 @@ abstract class Basesympal_edit_slotActions extends sfActions
   {
     $this->setLayout(false);
 
-    $this->contentSlot = $this->getRoute()->getObject();
+    $this->contentSlot = $this->_getContentSlot($request);
     $this->form = $this->_getContentSlotForm($request);
   }
 
   public function executeSave_slot(sfWebrequest $request)
   {
-    $this->contentSlot = $this->getRoute()->getObject();
     $this->form = $this->_getContentSlotForm($request);
 
     $values = $request->getParameter($this->form->getName());
@@ -112,7 +122,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
   {
     $this->setLayout(false);
 
-    $this->contentSlot = $this->getRoute()->getObject();
+    $this->contentSlot = $this->_getContentSlot($request);
     $this->contentSlot->setValue($request->getParameter('value'));
   }
 }

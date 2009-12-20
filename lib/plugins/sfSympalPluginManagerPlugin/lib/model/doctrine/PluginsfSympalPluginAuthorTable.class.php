@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class PluginsfSympalPluginAuthorTable extends Doctrine_Table
+class PluginsfSympalPluginAuthorTable extends sfSympalDoctrineTable
 {
 
 }

@@ -35,6 +35,78 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $content;
   }
 
+  public function hasSlot($name)
+  {
+    return isset($this->Slots[$name]) ? true : false;
+  }
+
+  public function getSlot($name)
+  {
+    if ($this->hasSlot($name))
+    {
+      return $this->Slots[$name];
+    }
+    return null;
+  }
+
+  public function removeSlot(sfSympalContentSlot $slot)
+  {
+    return Doctrine_Core::getTable('sfSympalContentSlotRef')
+      ->createQuery()
+      ->delete()
+      ->where('content_slot_id = ?', $slot->id)
+      ->andWhere('content_id = ?', $this->id)
+      ->execute();
+  }
+
+  public function addSlot(sfSympalContentSlot $slot)
+  {
+    $this->removeSlot($slot);
+
+    $contentSlotRef = new sfSympalContentSlotRef();
+    $contentSlotRef->content_slot_id = $slot->id;
+    $contentSlotRef->content_id = $this->id;
+    $contentSlotRef->save();
+
+    return $contentSlotRef;
+  }
+
+  public function getOrCreateSlot($name, $type = 'Text', $isColumn = false, $renderFunction = null)
+  {
+    if (!$this->hasSlot($name))
+    {
+      $slot = new sfSympalContentSlot();
+      $slot->render_function = $renderFunction;
+      if ($isColumn)
+      {
+        $slot->is_column = true;
+      }
+
+      if (!$slot->exists())
+      {
+        if ($isColumn)
+        {
+          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName('ContentProperty');
+        } else {
+          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName($type);
+        }
+
+        $slot->setType($type);
+        $slot->setName($name);
+      }
+
+      $slot->save();
+
+      $this->addSlot($slot);
+    } else {
+      $slot = $this->getSlot($name);
+    }
+
+    $slot->setContentRenderedFor($this);
+
+    return $slot;
+  }
+
   public function hasField($name)
   {
     $result = $this->_table->hasField($name);

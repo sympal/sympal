@@ -77,14 +77,15 @@ function edit_sympal_content_slot(id)
   if (hiddenName)
   {
     var name = hiddenName.value
-    var url = "<?php echo url_for('@sympal_edit_column_content_slot?id=ID&name=NAME', 'absolute=true') ?>";
+    var url = "<?php echo url_for('@sympal_edit_column_content_slot?content_id=CONTENT_ID&id=ID&name=NAME', 'absolute=true') ?>";
     url = url.replace('NAME', name);
   } else {
-  	var url = "<?php echo url_for('@sympal_edit_content_slot?id=ID', 'absolute=true') ?>";
+  	var url = "<?php echo url_for('@sympal_edit_content_slot?content_id=CONTENT_ID&id=ID', 'absolute=true') ?>";
   }
 
   interval = setInterval(function() { preview_sympal_content_slot(id) }, 500);
 
+  url = url.replace('CONTENT_ID', <?php echo $content->getId() ?>);
   url = url.replace('ID', id);
   YAHOO.plugin.Dispatcher.fetch('edit_content_slot_content_' + id, url);    
 }
@@ -98,7 +99,8 @@ function preview_sympal_content_slot(id)
   changed = false;
   clearInterval(interval);
 
-	var url = "<?php echo url_for('@sympal_preview_content_slot?id=ID', 'absolute=true') ?>";
+	var url = "<?php echo url_for('@sympal_preview_content_slot?content_id=CONTENT_ID&id=ID', 'absolute=true') ?>";
+  url = url.replace('CONTENT_ID', <?php echo $content->getId() ?>);
 	url = url.replace('ID', id);
 
 	var callback = {
@@ -116,7 +118,8 @@ function save_sympal_content_slot(id)
   document.getElementById('loading').style.display = '';
   document.getElementById('loading').innerHTML = 'Loading...';
 
-	var url = "<?php echo url_for('@sympal_save_content_slot?id=ID', 'absolute=true') ?>";
+	var url = "<?php echo url_for('@sympal_save_content_slot?content_id=CONTENT_ID&id=ID', 'absolute=true') ?>";
+  url = url.replace('CONTENT_ID', <?php echo $content->getId() ?>);
 	url = url.replace('ID', id);
 
 	var callback = {
@@ -139,12 +142,13 @@ function change_content_slot_type(id, slotTypeId)
   if (hiddenName)
   {
     var name = hiddenName.value
-    var url = "<?php echo url_for('@sympal_change_column_content_slot_type?name=NAME&id=ID&type=TYPE', 'absolute=true') ?>";
+    var url = "<?php echo url_for('@sympal_change_column_content_slot_type?name=NAME&content_id=CONTENT_ID&id=ID&type=TYPE', 'absolute=true') ?>";
     url = url.replace('NAME', name);
   } else {
-	  var url = "<?php echo url_for('@sympal_change_content_slot_type?id=ID&type=TYPE', 'absolute=true') ?>";
+	  var url = "<?php echo url_for('@sympal_change_content_slot_type?content_id=CONTENT_ID&id=ID&type=TYPE', 'absolute=true') ?>";
   }
-	
+
+	url = url.replace('CONTENT_ID', <?php echo $content->getId() ?>);
 	url = url.replace('ID', id);
   url = url.replace('TYPE', slotTypeId);
 

@@ -5,7 +5,19 @@
  */
 abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 {
-  protected $_rendered;
+  protected
+    $_contentRenderedFor,
+    $_rendered;
+
+  public function setContentRenderedFor(sfSympalContent $content)
+  {
+    $this->_contentRenderedFor = $content;
+  }
+
+  public function getContentRenderedFor()
+  {
+    return $this->_contentRenderedFor;
+  }
 
   public function render()
   {
@@ -14,12 +26,12 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       if ($this->render_function)
       {
         $renderFunction = $this->render_function;
-        if (method_exists($this->RelatedContent, $renderFunction))
+        if (method_exists($this->_contentRenderedFor, $renderFunction))
         {
-          $this->_rendered = $this->RelatedContent->$renderFunction($this);
+          $this->_rendered = $this->_contentRenderedFor->$renderFunction($this);
         } else {
           sfSympalToolkit::autoloadHelper($renderFunction);
-          $this->_rendered = $renderFunction($this->RelatedContent, $this->name);
+          $this->_rendered = $renderFunction($this->_contentRenderedFor, $this->name);
         }
       } else {
         $class = 'sfSympalContentSlot'.$this->Type->name.'Renderer';
@@ -47,7 +59,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     if ($this->is_column)
     {
       $name = $this->name;
-      return $this->RelatedContent->$name;
+      return $this->_contentRenderedFor->$name;
     } else {
       return $this->_get('value');
     }
