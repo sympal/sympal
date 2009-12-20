@@ -297,11 +297,6 @@ function get_sympal_content_property($content, $name)
  */
 function get_sympal_column_content_slot($content, $name, $renderFunction = null, $type = 'ContentProperty')
 {
-  if (is_null($renderFunction))
-  {
-    $renderFunction = 'get_sympal_content_property';
-  }
-
   return get_sympal_content_slot($content, $name, $type, true, $renderFunction);
 }
 
@@ -321,6 +316,11 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
   if ($content->hasField($name))
   {
     $isColumn = true;
+  }
+
+  if ($isColumn && is_null($renderFunction))
+  {
+    $renderFunction = 'get_sympal_content_property';
   }
 
   $slots = $content->getSlots();

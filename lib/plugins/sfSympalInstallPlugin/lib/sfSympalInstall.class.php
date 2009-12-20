@@ -53,6 +53,11 @@ class sfSympalInstall
     $this->_params = $params;
   }
 
+  public function logSection($section, $message, $size = null, $style = 'INFO')
+  {
+    $this->_configuration->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array($this->_formatter->formatSection($section, $message, $size, $style))));
+  }
+
   public function install()
   {
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
@@ -141,6 +146,8 @@ class sfSympalInstall
 
   protected function _installAddonPlugins()
   {
+    $this->logSection('sympal', '...installing addon plugins', null, 'COMMENT');
+
     $plugins = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getOtherPlugins();
     foreach ($plugins as $plugin)
     {
@@ -152,6 +159,8 @@ class sfSympalInstall
 
   protected function _executePostInstallSql()
   {
+    $this->logSection('sympal', '...executing post install sql', null, 'COMMENT');
+
     $dir = sfConfig::get('sf_data_dir').'/sql/sympal_install';
     if (is_dir($dir))
     {
@@ -187,7 +196,6 @@ class sfSympalInstall
       foreach ($sqls as $sql)
       {
         $sql = trim($sql);
-        $this->logSection('sympal', $sql);
         $conn->exec($sql);
       }
     }
@@ -197,7 +205,7 @@ class sfSympalInstall
   {
     if (method_exists($this->_configuration, 'install'))
     {
-      $this->logSection('sympal', sprintf('Calling %s::install() method', get_class($this->_configuration)));
+      $this->logSection('sympal', sprintf('...calling post install hook "%s::install()"', get_class($this->_configuration)), null, 'COMMENT');
 
       $this->_configuration->install();
     }

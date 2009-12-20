@@ -13,8 +13,6 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
   {
     if ($this->getOption('uninstall_first'))
     {
-      $this->logSection('sympal', sprintf('Uninstalling Sympal plugin named "%s" before installing to ensure a fresh environment to install to.', $this->_pluginName));
-
       $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration, $this->_formatter);
       $uninstall->setOption('publish_assets', false);
       $uninstall->uninstall();
@@ -53,15 +51,25 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     {
       $this->_buildAllClasses();
 
-      $this->logSection('sympal', 'Creating database tables for all plugin models:');
-
-      $models = $this->getPluginModels();
-      foreach ($models as $model)
+      // Create all tables
+      foreach ($this->getPluginModelsInInsertOrder() as $model)
       {
-        $this->logSection('sympal', $model);
-      }
+        $this->logSection('sympal', sprintf('...creating database table for: "%s"', $model), null, 'COMMENT');
 
-      Doctrine_Core::createTablesFromArray($models);
+        try {
+          $table = Doctrine_Core::getTable($model);
+          $conn = $table->getConnection();
+          $sql = $conn->export->createTableSql($table->getTableName(), $table->getColumns());
+          foreach ($sql as $key => $value)
+          {
+            $this->logSection('sympal', '...'.$value, null, 'COMMENT');
+          }
+
+          $conn->export->createTable($table->getTableName(), $table->getColumns());
+        } catch (Exception $e) {
+          $this->logSection('sympal', sprintf('...failed creating table for "%s": '.$e->getMessage(), $model), null, 'ERROR');
+        }
+      }
     }
   }
 
@@ -70,7 +78,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installFixtures = $this->_pluginConfig->getRootDir().'/data/fixtures/install';
     if (is_dir($installFixtures))
     {
-      $this->logSection('sympal', sprintf('Loading plugin installation data fixtures from: "%s"', $installFixtures));
+      $this->logSection('sympal', sprintf('...loading plugin installation data fixtures from: "%s"', $installFixtures), null, 'COMMENT');
+
       $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
       $task->run(array($installFixtures), array());
     }
@@ -84,11 +93,11 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
     if (method_exists($this, 'customInstall'))
     {
-      $this->logSection('sympal', sprintf('Executing %s::customInstall() method instead of default installation', get_class($this)));
+      $this->logSection('sympal', sprintf('...executing %s::customInstall() method instead of default installation', get_class($this)), null, 'COMMENT');
 
       $this->customInstall($installVars);
     } else if (method_exists($this->_pluginConfig, 'customInstall')) {
-        $this->logSection('sympal', sprintf('Executing %s::customInstall() method instead of default installation', get_class($this->_pluginConfig)));
+        $this->logSection('sympal', sprintf('...executing %s::customInstall() method instead of default installation', get_class($this->_pluginConfig)), null, 'COMMENT');
 
         $this->_pluginConfig->customInstall($installVars, $this->_dispatcher, $this->_formatter);
     } else {
@@ -101,7 +110,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   protected function _createDefaultContentTypeRecords(&$installVars)
   {
-    $this->logSection('sympal', 'Creating default Sympal ContentType records');
+    $this->logSection('sympal', '...creating default Sympal ContentType records', null, 'COMMENT');
 
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize(str_replace('sfSympal', null, $this->_contentTypeName)));
     $slug = 'sample_'.$lowerName;
@@ -152,15 +161,15 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   protected function _defaultInstallation($installVars)
   {
-    $this->logSection('sympal', 'Executing default installation');
+    $this->logSection('sympal', '...executing default installation', null, 'COMMENT');
 
     if (method_exists($this->_pluginConfig, 'filterInstallVars'))
     {
-      $this->logSection('sympal', sprintf('Executing %s::filterInstallVars() method', get_class($this->_pluginConfig)));
+      $this->logSection('sympal', sprintf('...executing %s::filterInstallVars() method', get_class($this->_pluginConfig)), null, 'COMMENT');
 
       $this->_pluginConfig->filterInstallVars($installVars);
     } else {
-      $this->logSection('sympal', sprintf('Executing %s::filterInstallVars() method', get_class($this)));
+      $this->logSection('sympal', sprintf('...executing %s::filterInstallVars() method', get_class($this)), null, 'COMMENT');
 
       $this->filterInstallVars($installVars);
     }

@@ -459,11 +459,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
-  public function postSave($event)
-  {
-    @unlink(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/config/config_routing.yml.php');
-  }
-
   public static function slugBuilder($text, $content)
   {
     if ($record = $content->getRecord())

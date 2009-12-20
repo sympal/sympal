@@ -61,7 +61,12 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
   private function _deleteRelatedData()
   {
-    $this->logSection('sympal', sprintf('Deleting data related to Sympal plugin ContentType "%s"', $this->_contentTypeName));
+    if (!$this->_contentTypeName)
+    {
+      return;
+    }
+
+    $this->logSection('sympal', sprintf('...deleting data related to Sympal plugin ContentType "%s"', $this->_contentTypeName), null, 'COMMENT');
 
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_contentTypeName));
     $slug = 'sample-'.$lowerName;
@@ -110,13 +115,10 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
   private function _deleteOtherData()
   {
-    $this->logSection('sympal', 'Deleting data for all other models included in plugin');
-
-    $models = Doctrine_Manager::connection()->unitOfWork->buildFlushTree($this->getPluginModels());
-    $models = array_reverse($models);
+    $this->logSection('sympal', '...deleting data for all models included in plugin', null, 'COMMENT');
 
     // Delete all data from models included in plugin
-    foreach ($models as $model)
+    foreach ($this->getPluginModelsInDeleteOrder() as $model)
     {
       try {
         if (class_exists($model))
@@ -139,20 +141,19 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     $this->logSection('sympal', 'Dropping database tables for all plugin models');
 
     // Drop all tables
-    foreach ($this->getPluginModels() as $model)
+    foreach ($this->getPluginModelsInDeleteOrder() as $model)
     {
       try {
         if (class_exists($model))
         {
           $table = Doctrine_Core::getTable($model);
 
-          $this->logSection('sympal', sprintf('Dropping table named "%s"', $table->getTableName()));
-          $this->logSection('sympal', $table->getConnection()->export->dropTableSql($table->getTableName()));
+          $this->logSection('sympal', '...'.$table->getConnection()->export->dropTableSql($table->getTableName()), null, 'COMMENT');
 
           $table->getConnection()->export->dropTable($table->getTableName());
         }
       } catch (Exception $e) {
-        $this->logSection('sympal', sprintf('Could not drop table named "%s": ', $table->getTableName()).$e->getMessage().'"');
+        $this->logSection('sympal', sprintf('...could not drop table named "%s": ', $table->getTableName()).$e->getMessage().'"', null, 'ERROR');
       }
     }
   }

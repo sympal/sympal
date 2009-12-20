@@ -76,6 +76,16 @@ class sfSympalPluginManager
     return $this->_pluginModels;
   }
 
+  public function getPluginModelsInInsertOrder()
+  {
+    return Doctrine_Manager::connection()->unitOfWork->buildFlushTree($this->_pluginModels);
+  }
+
+  public function getPluginModelsInDeleteOrder()
+  {
+    return array_reverse($this->getPluginModelsInInsertOrder());
+  }
+
   public function getPluginPath()
   {
     return $this->_pluginPath;
@@ -112,6 +122,8 @@ class sfSympalPluginManager
     {
       if ($value instanceof Doctrine_Record)
       {
+        $this->logSection('sympal', sprintf('...setting "%s"', get_class($obj).'->'.$key.'='.$value), null, 'COMMENT');
+
         $obj->$key = $value;
         unset($properties[$key]);
       }
@@ -133,6 +145,8 @@ class sfSympalPluginManager
 
     $this->_setDoctrineProperties($contentTemplate, $properties);
 
+    $this->logSection('sympal', sprintf('...instantiating new content template "%s"', $contentTemplate), null, 'COMMENT');
+
     return $contentTemplate;
   }
 
@@ -153,6 +167,7 @@ class sfSympalPluginManager
     $content->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);
     $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $content->is_published = true;
+    $content->date_published = new Doctrine_Expression('NOW()');
 
     $name = $contentType['name'];
     $content->$name = new $name();
@@ -160,6 +175,8 @@ class sfSympalPluginManager
     $content->trySettingTitleProperty('Sample '.$contentType['label']);
 
     $this->_setDoctrineProperties($content, $properties);
+    
+    $this->logSection('sympal', sprintf('...instantiating new %s "%s"', $contentType->getLabel(), $content), null, 'COMMENT');
 
     return $content;
   }
@@ -174,6 +191,8 @@ class sfSympalPluginManager
 
     $this->_setDoctrineProperties($contentType, $properties);
 
+    $this->logSection('sympal', sprintf('...instantiating new content type "%s"', $contentType), null, 'COMMENT');
+
     return $contentType;
   }
 
@@ -183,14 +202,19 @@ class sfSympalPluginManager
     $menuItem->name = $name;
     $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $menuItem->is_published = true;
+    $menuItem->date_published = new Doctrine_Expression('NOW()');
 
     $this->_setDoctrineProperties($menuItem, $properties);
+
+    $this->logSection('sympal', sprintf('...instantiating new menu item "%s"', $menuItem->getLabel()), null, 'COMMENT');
 
     return $menuItem;
   }
 
   public function saveMenuItem(sfSympalMenuItem $menuItem)
   {
+    $this->logSection('sympal', sprintf('...saving menu item "%s"', $menuItem));
+
     $roots = Doctrine_Core::getTable('sfSympalMenuItem')->getTree()->fetchRoots();
     $root = $roots[0];
     $menuItem->getNode()->insertAsLastChildOf($root);
@@ -239,7 +263,7 @@ class sfSympalPluginManager
 
   protected function _buildAllClasses()
   {
-    $this->logSection('sympal', 'Building all classes');
+    $this->logSection('sympal', '...building all classes', null, 'COMMENT');
 
     chdir(sfConfig::get('sf_root_dir'));
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);

@@ -82,10 +82,10 @@ EOF;
     $install->install();
 
     $this->log(null);
-    $this->logSection('sympal', sprintf('Sympal was installed successfully...', $options['application']));
+    $this->logSection('sympal', sprintf('Sympal was installed successfully...', $options['application']), null, 'COMMENT');
 
     $url = 'http://localhost/'.$options['application'].'_dev.php/security/signin';
-    $this->logSection('sympal', sprintf('Open your browser to "%s"', $url));
-    $this->logSection('sympal', sprintf('You can signin with the username "%s" and password "%s"', $install->getParam('username'), $install->getParam('password')));
+    $this->logSection('sympal', sprintf('Open your browser to "%s"', $url), null, 'COMMENT');
+    $this->logSection('sympal', sprintf('You can signin with the username "%s" and password "%s"', $install->getParam('username'), $install->getParam('password')), null, 'COMMENT');
   }
 }
