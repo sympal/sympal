@@ -79,9 +79,4 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     }
     return $path;
   }
-
-  public function postInsert($event)
-  {
-    sfSympalContext::getInstance()->getSympalConfiguration()->getCache()->primeCache(true);
-  }
 }
