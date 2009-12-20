@@ -447,3 +447,11 @@ function get_change_language_icons()
   }
   return implode(' ', $icons);
 }
+
+function get_gravatar_url($emailAddress, $size = 40)
+{
+  $default = "http://www.somewhere.com/homestar.jpg";
+
+  $url = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(strtolower($emailAddress)).'&default='.urlencode($default).'&size='.$size;
+  return $url;
+}

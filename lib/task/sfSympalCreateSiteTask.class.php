@@ -35,7 +35,7 @@ EOF;
     if (!$site)
     {
       $this->logSection('sympal', 'Creating new site record in database...');
-      $site = new Site();
+      $site = new sfSympalSite();
       $site->title = $arguments['application'];
       $site->slug = $arguments['application'];
     }

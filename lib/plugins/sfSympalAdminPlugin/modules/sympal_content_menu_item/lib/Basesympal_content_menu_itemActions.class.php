@@ -22,7 +22,7 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
     $this->content = $this->getRoute()->getObject();
     $this->menuItem = $this->content->getMenuItem();
     $this->menuItem->Site = $this->content->Site;
-    $this->form = new MenuItemForm($this->menuItem);
+    $this->form = new sfSympalMenuItemForm($this->menuItem);
     $widgetSchema = $this->form->getWidgetSchema();
     $widgetSchema['parent_id']->setOption('add_empty', false);
     unset(

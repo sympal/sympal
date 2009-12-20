@@ -103,12 +103,10 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
   {
     $this->logSection('sympal', 'Creating default Sympal ContentType records');
 
-    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($this->_contentTypeName));
+    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize(str_replace('sfSympal', null, $this->_contentTypeName)));
     $slug = 'sample_'.$lowerName;
 
     $properties = array(
-      'default_path' => "/$lowerName/:slug",
-      'slug' => $lowerName,
       'plugin_name' => $this->_pluginName,
     );
 
@@ -128,14 +126,15 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       'ContentType' => Doctrine_Core::getTable('sfSympalContentType')->findOneByName('ContentList')
     );
 
-    $contentList = $this->newContent('ContentList', $properties);
+    $contentList = $this->newContent('sfSympalContentList', $properties);
     $contentList->trySettingTitleProperty('Sample '.$contentType['label'].' List');
     $contentList->getRecord()->setContentType($contentType);
     $installVars['contentList'] = $contentList;
 
     $properties = array(
       'is_published' => true,
-      'label' => $this->_contentTypeName,
+      'date_published' => new Doctrine_Expression('NOW()'),
+      'label' => str_replace('sfSympal', null, $this->_contentTypeName),
       'ContentType' => $contentType,
       'RelatedContent' => $contentList
     );

@@ -143,6 +143,11 @@ abstract class sfSympalPluginManager
       $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentType);
     }
 
+    if (!$contentType instanceof sfSympalContentType)
+    {
+      throw new InvalidArgumentException('Invalid ContentType');
+    }
+
     $content = new sfSympalContent();
     $content->Type = $contentType;
     $content->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);
@@ -163,7 +168,9 @@ abstract class sfSympalPluginManager
   {
     $contentType = new sfSympalContentType();
     $contentType->name = $name;
-    $contentType->label = sfInflector::humanize(sfInflector::tableize($name));
+    $contentType->label = sfInflector::humanize(sfInflector::tableize(str_replace('sfSympal', null, $name)));
+    $contentType->slug = Doctrine_Inflector::urlize($contentType->label);
+    $contentType->default_path = '/'.$contentType->slug.'/:slug';
 
     $this->_setDoctrineProperties($contentType, $properties);
 
@@ -172,7 +179,7 @@ abstract class sfSympalPluginManager
 
   public function newMenuItem($name, $properties = array())
   {
-    $menuItem = new MenuItem();
+    $menuItem = new sfSympalMenuItem();
     $menuItem->name = $name;
     $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $menuItem->is_published = true;
@@ -211,7 +218,7 @@ abstract class sfSympalPluginManager
               } else {
                 $name = $key;
               }
-              if ($name == 'sfSympalContentType')
+              if ($name == 'sfSympalContentTypeTemplate')
               {
                 return $modelName;
               }

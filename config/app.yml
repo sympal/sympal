@@ -30,7 +30,7 @@ all:
         fields: [title]
         indexName: site_sluggable
       sfSympalContentType:
-        fields: [name]
+        fields: [label]
         indexName: content_type_sluggable
     default_from_email_address: noreply@sympalphp.org
     config_form_class: sfSympalConfigForm
