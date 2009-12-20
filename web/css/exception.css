@@ -1,0 +1,14 @@
+.sympal_exception {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+.sympal_exception h2 {
+  color: red;
+}
+
+.sympal_exception ul li {
+  padding: 4px;
+  font-weight: bold;
+}

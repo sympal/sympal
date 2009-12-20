@@ -2,6 +2,11 @@
 
 class sfSympalToolkit
 {
+  public static function renderException(Exception $e)
+  {
+    return get_partial('sympal_default/exception', array('e' => $e));
+  }
+
   public static function getDefaultApplication()
   {
     $apps = glob(sfConfig::get('sf_root_dir').'/apps/*');
