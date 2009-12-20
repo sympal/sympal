@@ -146,7 +146,6 @@ class sfSympalInstall
     {
       $manager = sfSympalPluginManager::getActionInstance($plugin, 'install', $this->_configuration, $this->_formatter);
       $manager->setOption('publish_assets', false);
-      $manager->setOption('uninstall_first', false);
       $manager->install();
     }
   }
