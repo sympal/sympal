@@ -8,16 +8,8 @@
 <?php echo $form->renderFormTag(url_for('@sympal_install_run'), array('sf_method' => 'post')) ?>
   <?php echo $form->renderHiddenFields() ?>
 
-  <div id="plugins">
-    <h2>Sympal Setup</h2>
-
-    <table>
-      <?php echo $form['setup'] ?>
-    </table>
-  </div>
-
   <div id="user">
-    <h2>User Configuration</h2>
+    <h2>Setup your First User</h2>
 
     <table>
       <?php echo $form['user'] ?>
@@ -25,10 +17,18 @@
   </div>
 
   <div id="database">
-    <h2>Database Configuration</h2>
+    <h2>Configure your Database</h2>
 
     <table>
       <?php echo $form['database'] ?>
+    </table>
+  </div>
+
+  <div id="plugins">
+    <h2>Choose Additional Plugins to Install</h2>
+
+    <table>
+      <?php echo $form['setup']['plugins'] ?>
     </table>
   </div>
 

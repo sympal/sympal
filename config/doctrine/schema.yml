@@ -170,10 +170,12 @@ sfSympalContentSlotRef:
       class: sfSympalContentSlot
       local: content_slot_id
       foreignAlias: ContentSlotRefs
+      onDelete: CASCADE
     Content:
       class: sfSympalContent
       local: content_id
       foreignAlias: ContentSlotRefs
+      onDelete: CASCADE
 
 sfSympalContentSlotType:
   actAs: [sfSympalRecordTemplate]

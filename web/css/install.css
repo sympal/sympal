@@ -16,3 +16,7 @@
   float: right;
   width: 300px;
 }
+
+#content #plugins {
+  clear: both;
+}

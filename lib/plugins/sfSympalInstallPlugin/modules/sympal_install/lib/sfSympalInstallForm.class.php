@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalInstallForm extends sfForm
+class sfSympalInstallForm extends BaseForm
 {
   public function setup()
   {
@@ -30,7 +30,7 @@ class sfSympalSetupInstallForm extends sfForm
     $plugins = array_map(array($this, 'formatPluginName'), $plugins);
 
     $this->setWidgets(array(
-      'plugins'           => new sfWidgetFormSelectMany(array('choices' => $plugins)),
+      'plugins'           => new sfSympalInstallPluginsChoiceWidget(array('multiple' => true, 'expanded' => true, 'choices' => $plugins)),
     ));
 
     $this->setValidators(array(
@@ -44,6 +44,40 @@ class sfSympalSetupInstallForm extends sfForm
     $this->mergePostValidator(new sfValidatorSchemaCompare('password', sfValidatorSchemaCompare::EQUAL, 'password_again', array(), array('invalid' => 'The two passwords must be the same.')));
 
     parent::setup();
+  }
+}
+
+class sfSympalInstallPluginsChoiceWidget extends sfWidgetFormChoice
+{
+  public function render($name, $value = null, $attributes = array(), $errors = array())
+  {
+    if ($this->getOption('multiple'))
+    {
+      $attributes['multiple'] = 'multiple';
+  
+      if ('[]' != substr($name, -2))
+      {
+        $name .= '[]';
+      }
+    }
+
+    $choices = $this->getOption('choices');
+    if ($choices instanceof sfCallable)
+    {
+      $choices = $choices->call();
+    }
+
+    $html = '<table>';
+    $html .= '<thead><tr><th></th><th>Plugin</th><th>Author</th></tr>';
+    $html .= '<tbody>';
+    foreach ($choices as $pluginName => $title)
+    {
+      $info = new sfSympalPluginInfo($pluginName);
+      $html .= '<tr><td><input type="checkbox" name="'.$name.'" value="'.$pluginName.'" '.(in_array($pluginName, (array) $value) ? 'checked="checked"' : null).' /></td><td><strong>'.link_to($info->getTitle(), $info->getUrl(), 'target=_BLANK').'</strong><br/><small>'.$info->getDescription().'</small></td><td>'.$info->getAuthor().'</td></tr?>';
+    }
+    $html .= '</tbody>';
+    $html .= '</table>';
+    return $html;
   }
 }
 

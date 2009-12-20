@@ -5,6 +5,7 @@ class sfSympalConfiguration
   protected
     $_dispatcher,
     $_projectConfiguration,
+    $_sympalContext,
     $_bootstrap,
     $_plugins = array(),
     $_modules = array(),

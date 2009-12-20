@@ -197,6 +197,16 @@ class sfSympalPluginInfo
     }
   }
 
+  public function getName()
+  {
+    return $this->_name;
+  }
+
+  public function getUrl()
+  {
+    return 'http://www.symfony-project.org/plugins/'.$this->_name;
+  }
+
   public function __call($method, $arguments)
   {
     if (substr($method, 0, 3) == 'get')
