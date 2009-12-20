@@ -4,6 +4,3 @@ sfSympalPage:
     title:
       type: string(255)
       notnull: true
-    disable_comments:
-      type: boolean
-      default: 0

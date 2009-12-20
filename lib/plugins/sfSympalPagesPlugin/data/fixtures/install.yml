@@ -145,11 +145,9 @@ sfSympalPage:
   register:
     title: Register
     Content: Content_Page_register
-    disable_comments: true
   home:
     title: Home
     Content: Content_Page_home
-    disable_comments: true
   sample_page:
     title: Sample Page
     Content: Content_Page_sample_page
