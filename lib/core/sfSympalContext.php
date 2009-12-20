@@ -40,6 +40,15 @@ class sfSympalContext
   public function setCurrentContent(sfSympalContent $content)
   {
     $this->_currentContent = $content;
+    if (!$this->_site)
+    {
+      $this->_site = $content->getSite();
+    }
+  }
+
+  public function setSite(sfSympalSite $site)
+  {
+    $this->_site = $site;
   }
 
   public function getSite()
