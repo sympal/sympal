@@ -56,7 +56,12 @@ class sfSympalCache
     unlink($cachePath);
     $context = sfContext::getInstance();
     $configCache = $context->getConfigCache();
-    unlink($configCache->getCacheName('config/routing.yml'));
+
+    if (file_exists($cachePath = $configCache->getCacheName('config/routing.yml')))
+    {
+      unlink($cachePath);
+    }
+
     $context->getRouting()->loadConfiguration();
   }
 
