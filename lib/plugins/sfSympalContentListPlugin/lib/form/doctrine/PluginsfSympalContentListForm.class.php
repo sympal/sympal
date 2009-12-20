@@ -35,6 +35,7 @@ abstract class PluginsfSympalContentListForm extends BasesfSympalContentListForm
     $this->widgetSchema['sort_order'] = new sfWidgetFormChoice(array('choices' => array('' => '', 'ASC' => 'ASC', 'DESC' => 'DESC')));
 
     $tableMethods = $this->_getTableMethods(array($type.'Table', 'Plugin'.$type.'Table'));
+    $tableMethods = array_merge(array('' => ''), $tableMethods);
 
     $this->widgetSchema['table_method'] = new sfWidgetFormChoice(array('choices' => $tableMethods));
   }
@@ -57,6 +58,10 @@ abstract class PluginsfSympalContentListForm extends BasesfSympalContentListForm
         $array3 = array_diff($array1, $array2);
       } else {
         $array3 = $array1;
+      }
+      foreach ($array3 as $key => $value)
+      {
+        $array3[$key] = sfInflector::humanize(sfInflector::tableize($value)).': '.$class.'::'.$value.'()';
       }
       return $array3;
     }
