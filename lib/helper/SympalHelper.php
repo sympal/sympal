@@ -318,6 +318,11 @@ function get_sympal_column_content_slot($content, $name, $renderFunction = null,
  */
 function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
 {
+  if ($content->hasField($name))
+  {
+    $isColumn = true;
+  }
+
   $slots = $content->getSlots();
 
   if ($name instanceof sfSympalContentSlot)

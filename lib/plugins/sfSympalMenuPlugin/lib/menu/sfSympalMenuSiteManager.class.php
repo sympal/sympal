@@ -14,7 +14,7 @@ class sfSympalMenuSiteManager
 
   public function __construct()
   {
-    $this->initializeMenus();
+    $this->initialize();
   }
 
   public static function getInstance()
@@ -29,19 +29,24 @@ class sfSympalMenuSiteManager
 
   public function getHierarchies()
   {
-    $this->initializeMenus();
+    $this->initialize();
 
     return $this->_hierarchies;
   }
 
-  public function refresh()
+  public function clear()
   {
     $this->_menuItems = array();
     $this->_rootSlugs = array();
     $this->_rootMenuItems = array();
     $this->_hierarchies = array();
     $this->_initialized = false;
-    $this->initializeMenus();
+  }
+
+  public function refresh()
+  {
+    $this->clear();
+    $this->initialize();
   }
 
   public static function getMenu($name, $showChildren = true, $class = null)
@@ -62,7 +67,7 @@ class sfSympalMenuSiteManager
       return false;
     }
 
-    $this->initializeMenus();
+    $this->initialize();
 
     if ($name instanceof MenuItem)
     {
@@ -155,7 +160,7 @@ class sfSympalMenuSiteManager
     }
   }
 
-  public function initializeMenus()
+  public function initialize()
   {
     if (!$this->_initialized)
     {

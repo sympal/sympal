@@ -50,6 +50,12 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
   public function setValue($value)
   {
+    if ($this->is_column)
+    {
+      $name = $this->name;
+      $this->_contentRenderedFor->$name = $value;
+    }
+
     $this->_rendered = null;
     return $this->_set('value', $value);
   }

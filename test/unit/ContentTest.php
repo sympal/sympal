@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(30, new lime_output_color());
+$t = new lime_test(40, new lime_output_color());
 
 $user = new sfGuardUser();
 $user->first_name = 'test';
@@ -22,51 +22,37 @@ $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal'
 $content->title = 'Testing this out';
 $content->save();
 
-$page = $content->sfSympalPage;
+$t->is($content->sfSympalPage instanceof sfSympalPage, true);
+$t->is($content->sfSympalPage->title, 'Testing this out');
 
 $menuItem = new sfSympalMenuItem();
 $menuItem->name = 'test';
-$menuItem->RelatedContent = $page->Content;
+$menuItem->RelatedContent = $content;
 $menuItem->is_published = true;
 $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal');
 $menuItem->save();
 
-$page->Content->MasterMenuItem = $menuItem;
-$page->save();
-
-$content = Doctrine_Core::getTable('sfSympalContent')
-  ->createQuery('c')
-  ->leftJoin('c.Site s')
-  ->leftJoin('c.Type t')
-  ->leftJoin('c.sfSympalPage p')
-  ->andWhere('c.slug = ?', 'testing-this-out')
-  ->fetchArray();
-
-$t->is(isset($content[0]['Type']), true);
-$t->is($content[0]['Type']['name'], 'sfSympalPage');
-$t->is($content[0]['Type']['label'], 'Page');
-$t->is(isset($content[0]['Site']), true);
-$t->is($content[0]['Site']['title'], 'Sympal');
-$t->is($content[0]['Site']['slug'], 'sympal');
-$t->is(isset($content[0]['sfSympalPage']), true);
-$t->is($content[0]['slug'], 'testing-this-out');
-
-class testMyUser extends myUser
-{
-  public function getSympalUser()
-  {
-    global $user;
-    return $user;
-  }
-}
-
-$sfUser = sfContext::getInstance()->getUser();
-$sfUser->signIn($user);
-$sfUser->isEditMode(true);
+$content->MasterMenuItem = $menuItem;
+$content->save();
 
 $q = Doctrine_Core::getTable('sfSympalContent')
   ->getFullTypeQuery('sfSympalPage')
   ->andWhere('c.slug = ?', 'testing-this-out');
+
+$content = $q->fetchOne();
+
+$t->is(isset($content['Type']), true);
+$t->is($content['Type']['name'], 'sfSympalPage');
+$t->is($content['Type']['label'], 'Page');
+$t->is(isset($content['Site']), true);
+$t->is($content['Site']['title'], 'Sympal');
+$t->is($content['Site']['slug'], 'sympal');
+$t->is(isset($content['sfSympalPage']), true);
+$t->is($content['slug'], 'testing-this-out');
+
+$sfUser = sfContext::getInstance()->getUser();
+$sfUser->signIn($user);
+$sfUser->isEditMode(true);
 
 $content = $q->fetchOne();
 
@@ -81,7 +67,8 @@ $t->is(strtotime($content->date_published) > 0, false);
 $content->is_published = 1;
 $content->date_published = new Doctrine_Expression('NOW()');
 $content->save();
-$content->refresh();
+
+$content = $q->fetchOne();
 
 $t->is($content->is_published, true);
 $t->is(strtotime($content->date_published) > 0, true);
@@ -107,29 +94,44 @@ get_sympal_content_slot($content, 'title', 'Text');
 get_sympal_content_slot($content, 'body', 'Markdown');
 get_sympal_content_slot($content, 'teaser', 'MultiLineText');
 
-$content->refresh(true);
+$content = $q->fetchOne();
 
 $slots = $content->getSlots();
-$slots[0]['value'] = 'Title value';
-$slots[1]['value'] = 'Body value';
-$slots[2]['value'] = "Body value\nTesting";
+$slots['title']['value'] = 'Title value';
+$slots['body']['value'] = 'Body value';
+$slots['teaser']['value'] = "Body value\nTesting";
 $slots->save();
+$content->save();
 
-$t->is($slots[0]->render(), 'Title value');
-$t->is($slots[1]->render(), '<div class="sympal_markdown"><p>Body value</p>
+$countBefore = count($slots);
+$slot = $content->getOrCreateSlot('title');
+$t->is($slot->name, 'title');
+$slot = $content->getOrCreateSlot('new');
+$t->is($slot->name, 'new');
+$t->is($slot->Type->name, 'Text');
+
+$content = $q->fetchOne();
+
+$t->is(count($content->getSlots()), $countBefore + 1);
+
+$t->is($content->title, 'Title value');
+$t->is($slots['title']['value'], 'Title value');
+$t->is($slots['title']['Type']['name'], 'ContentProperty');
+$t->is($slots['body']['Type']['name'], 'Markdown');
+$t->is($slots['teaser']['Type']['name'], 'MultiLineText');
+
+$t->is($slots['title']->render(), 'Title value');
+$t->is($slots['body']->render(), '<div class="sympal_markdown"><p>Body value</p>
 </div>');
 
-$t->is($slots[0]->render(), 'Title value');
-
-// test php
-$slots[1]['value'] = "test";
-$t->is($slots[1]->render(), '<div class="sympal_markdown"><p>test</p>
+$slots['body']['value'] = "test";
+$t->is($slots['body']->render(), '<div class="sympal_markdown"><p>test</p>
 </div>');
 
 $slots->save();
 
 $slots[2]->Type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName('MultiLineText');
-$t->is($slots[2]->render(), 'Body value<br />
+$t->is($slots['teaser']->render(), 'Body value<br />
 Testing');
 
 $content = sfSympalContent::createNew('sfSympalPage');
