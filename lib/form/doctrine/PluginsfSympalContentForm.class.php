@@ -49,7 +49,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     }
 
     $this->_embedTypeForm();
-    $this->_embedContentSlotForms();
   }
 
   protected function _embedTypeForm()
@@ -67,26 +66,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     {
       $this->embedForm($this->object->Type->name, $typeForm);
       $this->widgetSchema[$this->object->Type->name]->setLabel($this->object->Type->label);
-    }
-  }
-
-  protected function _embedContentSlotForms()
-  {
-    if (count($this->object->Slots))
-    {
-      $slotsForm = new BaseForm();
-      foreach ($this->object->Slots as $key => $slot)
-      {
-        if ($slot->is_column)
-        {
-          continue;
-        }
-        $slotForm = new sfSympalContentSlotForm($slot);
-        unset($slotForm['id'], $slotForm['slot_type_id']);
-        $slotsForm->embedForm($key, $slotForm);
-        $slotsForm->widgetSchema[$key]->setLabel(sfInflector::humanize($slot['name']));
-      }
-      $this->embedForm('Content Slots', $slotsForm);
     }
   }
 }
