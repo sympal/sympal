@@ -38,7 +38,7 @@
         <?php echo button_to('My Dashboard', '@sympal_dashboard', 'class="editor_button"') ?>
       <?php endif; ?>
 
-      <?php if ($sf_request->getParameter('module') != 'sympal_dashboard'): ?>
+      <?php if ($sf_request->getParameter('module') != 'sympal_content_renderer'): ?>
         <?php echo button_to('Go to Site', '@homepage', 'class="editor_button"') ?>
       <?php endif; ?>
 

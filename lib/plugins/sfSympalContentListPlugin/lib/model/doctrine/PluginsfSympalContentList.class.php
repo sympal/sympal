@@ -14,9 +14,9 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       $q = $typeTable->$method($this, $request);
       if ($q instanceof sfSympalDataGrid)
       {
-        return $q->init();
+        $dataGrid = $q;
       } else if ($q instanceof sfDoctrinePager || $q instanceof Doctrine_Query_Abstract) {
-        return sfSympalDataGrid::create($q)->init();
+        $dataGrid = sfSympalDataGrid::create($q)->init();
       } else {
         throw new sfException(sprintf('ContentList table_method must return an instance of sfSympalDataGrid, sfDoctrinePager or Doctrine_Query_Abstract. An instance of "%s" was returned.', get_class($q)));
       }
@@ -25,8 +25,17 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       $pager->setQuery($this->_buildQuery($request));
       $pager->setPage($page);
 
-      return sfSympalDataGrid::create($pager)->init();
+      $dataGrid = sfSympalDataGrid::create($pager)->init();
     }
+    if ($this->sort_column) 
+    { 
+      $dataGrid->setSort($this->sort_column);
+      if ($this->sort_order)
+      {
+        $dataGrid->setOrder($this->sort_order);
+      }
+    }
+    return $dataGrid;
   }
 
   private function _buildQuery(sfWebRequest $request)
@@ -37,11 +46,6 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       $q = $table->createQuery()->query($this->dql_query);
     } else {
       $q = $table->getFullTypeQuery($this->ContentType->name);
-    }
-
-    if ($table->hasColumn($this->sort_column) && $this->sort_order) 
-    { 
-      $q->addOrderBy('c.'.$this->sort_column.' '.$this->sort_order); 
     }
 
     return $q;
