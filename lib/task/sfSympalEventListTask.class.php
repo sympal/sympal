@@ -28,7 +28,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    if (isset($options['all']))
+    if (isset($options['all']) && $options['all'])
     {
       $dirs = $this->configuration->getPluginPaths();
       $dirs[] = sfConfig::get('sf_symfony_lib_dir');
