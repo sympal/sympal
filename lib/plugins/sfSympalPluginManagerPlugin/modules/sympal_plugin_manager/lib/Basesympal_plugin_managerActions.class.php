@@ -93,12 +93,26 @@ abstract class Basesympal_plugin_managerActions extends autoSympal_plugin_manage
     $request = $this->getRequest();
     $pluginName = $request->getParameter('plugin');
 
-    $title = ucfirst($action).' '.$pluginName;
-    $message = 'Are you sure you wish to run the action "'.$action.'" on the plugin named '.$pluginName.'?';
-    $this->askConfirmation($title, $message);
+    if (!$request->getParameter('no_confirmation'))
+    {
+      $title = ucfirst($action).' '.$pluginName;
+      $message = 'Are you sure you wish to run the action "'.$action.'" on the plugin named '.$pluginName.'?';
+      $this->askConfirmation($title, $message);
+    }
 
     $this->_executeAction($action, $pluginName);
 
-    $this->redirect($request->getParameter('redirect_url').'#'.$pluginName);
+    if ($action == 'download')
+    {
+      $this->redirect('@sympal_plugin_manager_install?plugin='.$pluginName.'&no_confirmation=1');
+    }
+    else if ($action == 'install')
+    {
+      $this->redirect($this->generateUrl('sympal_plugin_manager').'#'.$pluginName);
+    }
+    else
+    {
+      $this->redirect($request->getParameter('redirect_url').'#'.$pluginName);
+    }
   }
 }
