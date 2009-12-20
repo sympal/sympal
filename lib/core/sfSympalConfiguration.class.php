@@ -35,6 +35,7 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
     $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
     $this->_dispatcher->connect('controller.change_action', array($this, 'initializeTheme'));
+    $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
   }
 
   /**
@@ -67,6 +68,12 @@ class sfSympalConfiguration
     $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
   }
 
+  public function filterTemplateParameters(sfEvent $event, $parameters)
+  {
+    $parameters['sf_sympal_context'] = $this->_sympalContext;
+    return $parameters;
+  }
+
   public function getCache()
   {
     return $this->_cache;
@@ -74,7 +81,7 @@ class sfSympalConfiguration
 
   public function getSympalContext()
   {
-    return $this->_context;
+    return $this->_sympalContext;
   }
 
   public function getContentTypes()

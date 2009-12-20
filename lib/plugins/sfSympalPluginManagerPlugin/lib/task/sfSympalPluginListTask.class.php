@@ -40,7 +40,8 @@ EOF;
       {
         $name = sfSympalPluginToolkit::getShortPluginName($plugin);
         $this->logSection('sympal', $plugin);
-        $this->logSection('sympal', "\$ php symfony sympal:plugin-download ".$name." --install");
+        $this->logSection('sympal', "\$ php symfony sympal:plugin-download ".$name);
+        $this->logSection('sympal', "\$ php symfony sympal:plugin-install ".$name);
         $this->logSection('sympal', null);
       }
     } else {
