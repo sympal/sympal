@@ -11,6 +11,7 @@ sfSympalMenuItem:
     name:
       type: string(255)
       notnull: true
+    root_id: integer
     is_primary: boolean
     is_published: boolean
     date_published: timestamp
@@ -24,6 +25,11 @@ sfSympalMenuItem:
     content_type_id: integer
     content_id: integer
   relations:
+    RootMenuItem:
+      local: root_id
+      class: sfSympalMenuItem
+      onDelete: CASCADE
+      autoComplete: false
     RelatedContent:
       local: content_id
       class: sfSympalContent
