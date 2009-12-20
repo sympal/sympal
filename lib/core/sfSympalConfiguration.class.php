@@ -19,12 +19,12 @@ class sfSympalConfiguration
     $this->_loadGuardRouting();
 
     sfOutputEscaper::markClassesAsSafe(array(
-      'Content',
-      'ContentTranslation',
-      'ContentSlot',
-      'ContentSlotTranslation',
-      'MenuItem',
-      'MenuItemTranslation',
+      'sfSympalContent',
+      'sfSympalContentTranslation',
+      'sfSympalContentSlot',
+      'sfSympalContentSlotTranslation',
+      'sfSympalMenuItem',
+      'sfSympalMenuItemTranslation',
       'sfSympalContentRenderer',
       'sfSympalMenu',
       'sfParameterHolder',
