@@ -43,8 +43,12 @@ EOF;
 
       if ($group)
       {
+        $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s" under the "%s" group.', $key, $value, $group));
+
         sfSympalConfig::writeSetting($group, $key, $value);
       } else {
+        $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s".', $key, $value, $group));
+
         sfSympalConfig::writeSetting($key, $value);
       }
     }
