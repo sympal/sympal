@@ -1,10 +1,10 @@
-.notice {
+.sympal_notice {
   margin: 4px 0;
   padding: 4px 4px 4px 30px;
   background: url(../images/tick.png) no-repeat 10px 4px;
 }
 
-.error {
+.sympal_error {
   margin: 4px 0;
   padding: 4px 4px 4px 30px;
   background: url(../images/error.png) no-repeat 10px 4px;
@@ -12,7 +12,7 @@
   color: red;
 }
 
-.notice, .error {
+.sympal_notice, .sympal_error {
   background-color: #ffc;
   margin-bottom: 10px;
   border: 1px solid #ddd;

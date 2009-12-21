@@ -4,7 +4,7 @@
 
 <h1>Upgrade to <?php echo $latestVersion ?></h1>
 
-<div class="new_version_box">
+<div class="sympal_new_version_box">
   A new version of Sympal was detected! Read below for directions on how to upgrade
   from your current version of <?php echo $currentVersion ?> to <?php echo $latestVersion ?>.
 </div>

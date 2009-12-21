@@ -77,11 +77,12 @@
   white-space: nowrap;
 }
 
-.sympal_plugin_actions li a {
-  padding-left: 0 !important;
+#sf_admin_container .sympal_plugin_actions li a {
+  padding-left: 0;
   margin-right: 5px;
+  background: none;
+  font-weight: bold;
 }
 
 .sf_admin_list table {
-  width: 100%;
 }

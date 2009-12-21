@@ -2,7 +2,7 @@ generator:
   class: sfDoctrineGenerator
   param:
     model_class:           sfSympalSite
-    theme:                 sympal_admin
+    theme:                 admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -12,23 +12,26 @@ generator:
 
     config:
       actions: ~
-      fields:
-        layout:
-          help: |
-            Choose layout to render site with. The default sets the layout 
-            based on the site slug. You can also override the template used 
-            to render in the content and content type records.
-        title:
-          help: Title of the site
-        description:
-          help: Description of the site
-        slug:
-          help: Unique slug string. Used for search engine friendly urls.
+      fields: ~
       list:
         display: [=title, description, _go_to]
+      filter:
+        class: false
       form:
         display:
           "Site": [title, description, layout, slug]
           "Meta": [page_title, meta_keywords, meta_description]
+        fields:
+          layout:
+            help: |
+              Choose layout to render site with. The default sets the layout 
+              based on the site slug. You can also override the template used 
+              to render in the content and content type records.
+          title:
+            help: Title of the site
+          description:
+            help: Description of the site
+          slug:
+            help: Unique slug string. Used for search engine friendly urls.
       edit:    ~
       new:     ~

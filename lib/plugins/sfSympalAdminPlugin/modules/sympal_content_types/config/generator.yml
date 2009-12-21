@@ -2,7 +2,7 @@ generator:
   class: sfDoctrineGenerator
   param:
     model_class:           sfSympalContentType
-    theme:                 sympal_admin
+    theme:                 admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -16,7 +16,7 @@ generator:
       list:
         display: [=label]
       filter:
-        display: [name]
+        class: false
       form:
         display: [plugin_name, name, label, description, default_path, layout, content_template_id, slug]
         fields:

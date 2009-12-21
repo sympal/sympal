@@ -258,6 +258,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
       }
     }
 
-    $this->redirect($this->generateUrl('sympal_menu_items').'#list_top');
+    $this->setLayout(false);
+    $this->executeIndex($request);
+    $this->setTemplate('index');
   }
 }

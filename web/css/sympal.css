@@ -510,7 +510,7 @@ ul.error_list li
   border-bottom: 1px solid #eee;
 }
 
-#content input, #content select, #content textarea {
+.sympal_form input, .sympal_form select, .sympal_form textarea {
 	padding: 0.40em;
 	border:1px solid #ddd;
 	background: #fafafa;
@@ -521,7 +521,7 @@ ul.error_list li
   border-radius: 0.4em;
 }
 
-#content input:hover, #content input:focus, #content select:hover, #content select:focus, #content textarea:hover, #content textarea:focus {
+.sympal_form input:hover, .sympal_form input:focus, .sympal_form select:hover, .sympal_form select:focus, .sympal_form textarea:hover, .sympal_form textarea:focus {
 	border-color:#c5c5c5;
 	background:#ffffcc;
 }

@@ -13,17 +13,7 @@ abstract class PluginsfSympalContentSlotForm extends BasesfSympalContentSlotForm
   {
     parent::setup();
 
-    $this->useFields(array('content_slot_type_id', 'value'));
-
-    $this->widgetSchema['content_slot_type_id']->setLabel('Slot Type');
-    $this->widgetSchema['content_slot_type_id']->setAttribute('onChange', "change_content_slot_type('".$this->object['id']."', this.value)");
-
-    $q = Doctrine_Core::getTable('sfSympalContentSlotType')
-      ->createQuery('t')
-      ->where('t.is_internal = ?', 0)
-      ->orderBy('t.name ASC');
-
-    $this->widgetSchema['content_slot_type_id']->setOption('query', $q);
+    $this->useFields(array('value'));
 
     if (isset($this['value']))
     {

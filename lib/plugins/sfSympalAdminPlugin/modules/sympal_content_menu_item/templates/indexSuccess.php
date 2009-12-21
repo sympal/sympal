@@ -1,6 +1,3 @@
-<?php use_stylesheet('/sfSympalPlugin/css/global.css', 'first') ?> 
-<?php use_stylesheet('/sfSympalPlugin/css/default.css', 'first') ?> 
-
 <div id="sf_admin_container">
   <?php if ($form->isNew()): ?>
     <h1>Add the "<?php echo $content ?>" <?php echo $content['Type']['label'] ?> to your Menu</h1>

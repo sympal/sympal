@@ -3,7 +3,7 @@
 <?php use_stylesheet('/sfSympalPlugin/css/upgrade') ?>
 
 <?php if ($hasNewVersion): ?>
-  <div class="new_version_box">
+  <div class="sympal_new_version_box">
     Sympal <?php echo $upgrade->getLatestVersion() ?> is available! Click <?php echo link_to('here', '@sympal_upgrade') ?> for information on upgrading!
   </div>
 <?php endif; ?>

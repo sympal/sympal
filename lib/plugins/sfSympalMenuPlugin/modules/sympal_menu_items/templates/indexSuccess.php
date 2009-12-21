@@ -1,7 +1,10 @@
 <?php use_helper('I18N', 'Date') ?>
 <?php include_partial('sympal_menu_items/assets') ?>
 
+<?php if (!$sf_request->isXmlHttpRequest()): ?>
 <div id="sf_admin_container">
+<?php endif; ?>
+
   <h2><?php echo $title = __('Sympal menu items List', array(), 'messages'); set_sympal_title($title); ?></h2>
 
   <div id="sf_admin_header">
@@ -22,4 +25,7 @@
   <div id="sf_admin_footer">
     <?php include_partial('sympal_menu_items/list_footer', array('pager' => $pager)) ?>
   </div>
+
+<?php if (!$sf_request->isXmlHttpRequest()): ?>
 </div>
+<?php endif; ?>

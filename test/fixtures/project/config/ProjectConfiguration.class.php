@@ -26,7 +26,6 @@ class ProjectConfiguration extends sfProjectConfiguration
   public function setupPlugins()
   {
     $this->pluginConfigurations['sfSympalPlugin']->connectTests();
-    $this->pluginConfigurations['sfDoctrineGuardPlugin']->connectTests();
   }
 
   public function configureDoctrineConnection(Doctrine_Connection $conn)

@@ -25,7 +25,7 @@
 /* jquery.treeTable.sortable
  * ------------------------------------------------------------------------- */
 .treeTable tr.selected, .treeTable tr.accept {
-  background-color: #3875d7;
+  background-color: #3875d7 !important;
   color: #fff;
 }
 
@@ -54,8 +54,10 @@ table span {
 
 table span.file {
 	background-image: url(../images/page_white_text.png);
+	cursor: pointer;
 }
 
 table span.folder {
 	background-image: url(../images/folder.png);
+	cursor: pointer;
 }

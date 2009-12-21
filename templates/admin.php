@@ -5,25 +5,37 @@
   <?php $ui = get_sympal_ui() ?>
   <?php $editor = get_sympal_editor() ?>
   <?php $flash = get_sympal_flash() ?>
+  <?php $admin_menu = get_sympal_admin_menu() ?>
   <?php include_http_metas() ?>
   <?php include_metas() ?>
   <?php include_title() ?>
   <?php include_stylesheets() ?>
   <?php include_javascripts() ?>
 </head>
-<body class="yui-skin-sam">
+<body>
 
   <?php echo $ui ?>
+
+  <div id="sympal_ajax_loading">
+    Loading...
+  </div>
 
   <div id="container">
 
   <!-- content -->
   <div id="content">
 
-  <?php echo $flash ?>
+  <div id="header">
+    <h1>Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
+  </div>
 
-  <!-- left column -->
   <div id="column_left">
+    <?php echo $admin_menu ?>
+  </div>
+
+  <!-- right column -->
+  <div id="column_right">
+    <?php echo $flash ?>
     <?php echo $sf_content ?>
   </div>
   <!-- end left column -->
@@ -32,23 +44,6 @@
   <!-- end content -->
   <br style="clear: both;" />
   </div>
-
-  <script type="text/javascript">
-   var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
-   document.write(unescape("%3Cscript src='" + uservoiceJsHost + "/javascripts/widgets/tab.js' type='text/javascript'%3E%3C/script%3E"))
-  </script>
-  <script type="text/javascript">
-  UserVoice.Tab.show({ 
-   key: 'sympal',
-   host: 'sympal.uservoice.com', 
-   forum: 'general', 
-   alignment: 'left',
-   background_color:'#f00', 
-   text_color: 'white',
-   hover_color: '#06C',
-   lang: '<?php echo $sf_user->getCulture() ?>'
-  })
-  </script>
 
   <?php echo $editor ?>
 </body>

@@ -1,21 +1,32 @@
-<div id="edit_slot" class="sf_admin_form sympal_form">
-  <?php echo get_sympal_flash() ?>
+<?php use_helper('jQuery') ?>
 
-  <div id="sf_admin_container">
-    <?php echo $form->renderFormTag(url_for('@sympal_save_content_slot?content_id='.$sf_request['content_id'].'&id='.$sf_request['id']), array('onSubmit' => "javascript: save_sympal_content_slot('".$sf_request['id']."'); return false;", 'id' => 'edit_content_slot_form_'.$sf_request['id'], 'method' => 'post')) ?>
-    <input type="hidden" name="is_column" value="<?php echo $sf_request['is_column'] ?>" />
-    <input type="hidden" name="name" value="<?php echo $sf_request['name'] ?>" />
+<div class="sympal_content_slot_editor sympal_form">
+  <form>
+    <?php echo $form->renderHiddenFields() ?>
 
-    <table>
-      <?php echo $form ?>
-    </table>
+    <?php if ($contentSlot->getIsColumn()): ?>
+      <?php echo $form[$contentSlot->getName()] ?>
+    <?php else: ?>
+      <?php echo $form['value'] ?>
+    <?php endif; ?>
 
-    <div class="black_bar">
-      <input type="button" id="save_button" name="save" value="<?php echo __('Save') ?>" onClick="javascript: save_sympal_content_slot('<?php echo $sf_request['id'] ?>');" />
-    </div>
+    <input type="button" name="cancel" class="cancel" value="Cancel" />
 
-    <div id="loading"></div>
-    <br style="clear: both;" />
-    </form>
-  </div>
+    <?php echo jq_submit_to_remote('save', 'Save', array(
+      'url' => url_for('@sympal_save_content_slot?content_id='.$sf_request['content_id'].'&id='.$sf_request['id']),
+      'complete' => "$('#sympal_content_slot_".$contentSlot->getId()."').find('.editor').hide(); $('#sympal_content_slot_".$contentSlot->getId()."').find('.value').show()",
+      'update' => "#sympal_content_slot_".$contentSlot->getId()." .value"
+    )) ?>
+  </form>
 </div>
+
+<script type="text/javascript">
+  $(function()
+  {
+    $('.sympal_content_slot_editor .cancel').click(function()
+    {
+      $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>').find('.editor').hide();
+      $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>').find('.value').show()
+    });
+  });
+</script>

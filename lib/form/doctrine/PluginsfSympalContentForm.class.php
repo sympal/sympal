@@ -64,8 +64,8 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
 
     if (count($typeForm))
     {
-      $this->embedForm($this->object->Type->name, $typeForm);
-      $this->widgetSchema[$this->object->Type->name]->setLabel($this->object->Type->label);
+      $this->embedForm('TypeForm', $typeForm);
+      $this->widgetSchema['TypeForm']->setLabel($this->object->Type->label);
     }
   }
 }

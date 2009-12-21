@@ -3,11 +3,11 @@
 <?php if ($sf_user->hasFlash('notice') || $sf_user->hasFlash('error')): ?>
   <div id="sympal_flash">
     <?php if ($sf_user->hasFlash('notice')): ?>
-      <div class="notice"><?php echo $sf_user->getFlash('notice') ?></div>
+      <div class="sympal_notice"><?php echo $sf_user->getFlash('notice') ?></div>
     <?php endif; ?>
 
     <?php if ($sf_user->hasFlash('error')): ?>
-      <div class="error"><?php echo $sf_user->getFlash('error') ?></div>
+      <div class="sympal_error"><?php echo $sf_user->getFlash('error') ?></div>
     <?php endif; ?>
   </div>
 

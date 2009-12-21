@@ -4,7 +4,7 @@
 
 <h2><?php echo get_sympal_column_content_slot($content, 'title') ?></h2>
 
-<?php echo get_sympal_content_slot($content, 'header') ?>
+<?php echo get_sympal_content_slot($content, 'header', 'Markdown') ?>
 
 <?php $pagerNav = $dataGrid->getPagerNavigation($content->getRoute()) ?>
 
@@ -16,4 +16,4 @@
 
 <?php echo $pagerNav ?>
 
-<?php echo get_sympal_content_slot($content, 'footer') ?>
+<?php echo get_sympal_content_slot($content, 'footer', 'Markdown') ?>

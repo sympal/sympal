@@ -2,7 +2,7 @@ generator:
   class: sfDoctrineGenerator
   param:
     model_class:           sfGuardGroup
-    theme:                 sympal_admin
+    theme:                 admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~

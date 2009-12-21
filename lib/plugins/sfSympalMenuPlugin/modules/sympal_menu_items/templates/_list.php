@@ -1,6 +1,8 @@
-<?php use_stylesheet('/sfSympalPlugin/css/jquery.treeTable.css', 'last') ?>
-<?php use_javascript('http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js') ?>
-<?php use_javascript('http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js') ?>
+<?php use_helper('jQuery') ?>
+
+<?php use_stylesheet('/sfSympalPlugin/css/jquery.treeTable.css') ?>
+
+<?php use_javascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js') ?>
 <?php use_javascript('/sfSympalPlugin/js/jquery.treeTable.js') ?>
 
 <div class="sf_admin_list">
@@ -8,7 +10,7 @@
     <p><?php echo __('No result', array(), 'sf_admin') ?></p>
   <?php else: ?>
     <a name="list_top"></a>
-    <table id="main_list" cellspacing="0">
+    <table class="treeTable" id="main_list" cellspacing="0">
       <thead>
         <tr>
           <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>
@@ -45,8 +47,21 @@
             <?php include_partial('sympal_menu_items/list_td_tabular', array('sf_sympal_menu_item' => $menu_item)) ?>
             <td>
               <?php if (!$node->isRoot()): ?>
-                <?php echo button_to('Up', '@sympal_menu_items_move?direction=up&id='.$menu_item['id']) ?>
-                <?php echo button_to('Down', '@sympal_menu_items_move?direction=down&id='.$menu_item['id']) ?>
+                <?php echo jq_button_to_remote('Up', array(
+                  'method' => 'get',
+                  'update' => 'sf_admin_container',
+                  'url' => '@sympal_menu_items_move?direction=up&id='.$menu_item['id'],
+                  'loading' => "$('#sympal_ajax_loading').show();",
+                  'complete' => "$('#sympal_ajax_loading').hide();",
+                )) ?>
+
+                <?php echo jq_button_to_remote('Down', array(
+                  'method' => 'get',
+                  'update' => 'sf_admin_container',
+                  'url' => '@sympal_menu_items_move?direction=down&id='.$menu_item['id'],
+                  'loading' => "$('#sympal_ajax_loading').show();",
+                  'complete' => "$('#sympal_ajax_loading').hide();",
+                )) ?>
               <?php endif; ?>
             </td>
             <?php include_partial('sympal_menu_items/list_td_actions', array('sf_sympal_menu_item' => $menu_item, 'helper' => $helper)) ?>
