@@ -81,8 +81,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       foreach ($contentTypes as $contentType)
       {
         $node = $menu->addChild('Manage '.$contentType->getLabel().' Content', '@sympal_content_list_type?type='.$contentType->getId());
-        $node->setOption('class', 'manage-'.$contentType->getSlug().'-content-menu');
-
         $node->addChild('Create', '@sympal_content_create_type?type='.$contentType->getId());
         $node->addChild('List', '@sympal_content_list_type?type='.$contentType->getId());
       }
@@ -97,8 +95,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       ->setCredentials(array('ManageConfiguration'));
 
     $content = $menu->addChild('Content Setup', sfContext::getInstance()->getRequest()->getUri())
-      ->setCredentials(array('ManageContentSetup'))
-      ->setOption('class', 'content-setup-menu');
+      ->setCredentials(array('ManageContentSetup'));
 
     $content->addChild('Types', '@sympal_content_types');
     $content->addChild('Templates', '@sympal_content_templates');

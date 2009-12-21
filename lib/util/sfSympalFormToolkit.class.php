@@ -21,11 +21,11 @@ class sfSympalFormToolkit
 
   public static function embedRichDateWidget($name, sfFormDoctrine $form)
   {
+    sfApplicationConfiguration::getActive()->loadHelpers('jQuery');
+
     $response = sfContext::getInstance()->getResponse();
     $response->addStylesheet('/sfSympalPlugin/jquery/css/jquery-ui.css');
     $response->addStylesheet('/sfSympalPlugin/jquery/css/ui.theme.css');
-
-    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery.min.js');
     $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js');
     $response->addJavascript('/sfSympalPlugin/jquery/js/jquery.bgiframe.min.js');
     $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui-i18n.min.js');
