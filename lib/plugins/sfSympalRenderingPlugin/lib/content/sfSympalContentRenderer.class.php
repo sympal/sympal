@@ -109,10 +109,6 @@ class sfSympalContentRenderer
       $template = $content->getType()->getTemplate();
     }
 
-    $contentType = sfInflector::tableize($content->getType()->getName());
-
-    $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_render_'.$contentType.'_content', array('content' => $content, 'template' => $template)));
-
     if ($template && $templatePath = $template->getPath())
     {
       $return = sfSympalToolkit::getSymfonyResource($templatePath, $variables);
@@ -123,14 +119,6 @@ class sfSympalContentRenderer
     } else {
       $return = get_sympal_breadcrumbs($this->_menuItem, $content).$this->_renderDoctrineData($content);
     }
-
-    $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_render_'.$contentType.'_content', array('content' => $content, 'template' => $template)));
-
-    $event = $this->_dispatcher->filter(new sfEvent($this, 'sympal.filter_content'), $return);
-    $return = $event->getReturnValue();
-
-    $event = $this->_dispatcher->filter(new sfEvent($this, 'sympal.filter_'.$contentType.'_content'), $return);
-    $return = $event->getReturnValue();
 
     return $return;
   }

@@ -8,8 +8,6 @@ class sfSympalConfigForm extends sfForm
 
   public function setup()
   {
-    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_config_form'));
-
     $otherSettings = array();
     foreach ($this->_settings as $group => $settings)
     {
@@ -97,15 +95,11 @@ class sfSympalConfigForm extends sfForm
 
   public function save()
   {
-    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.config_form.pre_save'));
-
     $array = $this->_buildArrayToWrite();
 
     $this->_path = sfConfig::get('sf_config_dir').'/app.yml';
 
     file_put_contents($this->_path, sfYaml::dump($array, 4));
-
-    sfContext::getInstance()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.config_form.post_save'));
 
     // Clear cache for app.yml
     $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/config/config_app.yml.php';

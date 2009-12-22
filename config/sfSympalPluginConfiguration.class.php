@@ -30,8 +30,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
   public static function enableSympalPlugins(ProjectConfiguration $configuration, $plugins = array())
   {
-    $plugins[] = 'sfSympalPlugin';
-
     if ($application = sfConfig::get('sf_app'))
     {
       $reflection = new ReflectionClass($application.'Configuration');
@@ -41,14 +39,16 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       }
     }
 
-    $dependencies = self::$dependencies;
-    $configuration->enablePlugins(array_merge($dependencies, $plugins));
+    $configuration->enablePlugins('sfDoctrinePlugin');
+    $configuration->enablePlugins('sfSympalPlugin');
+    $configuration->enablePlugins(self::$dependencies);
+    $configuration->enablePlugins($plugins);
 
     $sympalPluginPath = dirname(dirname(__FILE__));
     $configuration->setPluginPath('sfSympalPlugin', $sympalPluginPath);
     
     $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
-    foreach ($dependencies as $plugin)
+    foreach (self::$dependencies as $plugin)
     {
       $configuration->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
     }
@@ -60,7 +60,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfig'));
-    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
+    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadTools'));
     $this->dispatcher->connect('form.post_configure', array($this, 'formPostConfigure'));
   }
 
@@ -120,7 +120,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form->addSetting('plugin_api', 'password');
   }
 
-  public function loadEditor(sfEvent $event)
+  public function loadTools(sfEvent $event)
   {
     $menu = $event->getSubject();
     $content = $event['content'];

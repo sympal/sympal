@@ -24,8 +24,6 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       $q->leftJoin('cr.Translation crt');
     }
 
-    $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.load_'.sfInflector::tableize($typeName).'_query'), $q)->getReturnValue();
-
     if (method_exists($table, 'getContentQuery'))
     {
       $table->getContentQuery($q);
@@ -72,11 +70,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       }
     }
 
-    $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_get_content_query'), $q)->getReturnValue();
-
     $content = $q->fetchOne();
-
-    $content = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_get_content'), $content)->getReturnValue();
 
     return $content;
   }
@@ -123,8 +117,6 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
     {
       $q->leftJoin('m.Translation mt');
     }
-
-    $q = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_content_base_query'), $q)->getReturnValue();
 
     return $q;
   }

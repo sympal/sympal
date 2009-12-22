@@ -8,7 +8,5 @@ class Basesympal_defaultComponents extends sfComponents
     unset($this->form[$this->form->getCSRFFieldName()]);
     $widgetSchema = $this->form->getWidgetSchema();
     $widgetSchema->setLabel('language', 'Select Language');
-
-    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_change_language_form', array('form' => $this->form)));
   }
 }

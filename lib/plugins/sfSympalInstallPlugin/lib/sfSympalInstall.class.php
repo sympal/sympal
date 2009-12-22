@@ -132,7 +132,8 @@ class sfSympalInstall
     $options = array(
       'all' => true,
       'no-confirmation' => true,
-      'and-load' => $fixtures
+      'and-load' => $fixtures,
+      'application' => $this->_application
     );
 
     $task->run(array(), $options);

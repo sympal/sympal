@@ -267,7 +267,7 @@ class sfSympalPluginManager
 
     chdir(sfConfig::get('sf_root_dir'));
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
-    $task->run(array(), array('all-classes'));
+    $task->run(array(), array('all-classes', '--application='.sfConfig::get('sf_app')));
   }
 
   protected function _publishAssets()

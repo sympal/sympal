@@ -45,8 +45,6 @@ function get_sympal_breadcrumbs($menuItem, $subItem = null)
     $breadcrumbs = $menuItem->getBreadcrumbs($subItem);
   }
 
-  sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($breadcrumbs, 'sympal.load_breadcrumbs', array('menuItem' => $menuItem, 'subItem' => $subItem)));
-
   $title = $breadcrumbs->getPathAsString();
   set_sympal_title($title);
 
@@ -119,18 +117,10 @@ function get_sympal_editor($menuItem = null, $content = null)
   $menuItem = $menuItem ? $menuItem : $sympalContext->getCurrentMenuItem();
   $content = $content ? $content : $sympalContext->getCurrentContent();
 
-  $editor = '';
-
   if ($user->isEditMode() && $content && $menuItem)
   {
-    $editor .= get_component('sympal_editor', 'editor', array('content' => $content, 'menuItem' => $menuItem));
+    return get_component('sympal_editor', 'editor', array('content' => $content, 'menuItem' => $menuItem));
   }
-
-  $editor .= get_slot('sympal_editors');
-
-  $editor = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($content, 'sympal.filter_content_slot_editors'), $editor)->getReturnValue();
-
-  return $editor;
 }
 
 /**

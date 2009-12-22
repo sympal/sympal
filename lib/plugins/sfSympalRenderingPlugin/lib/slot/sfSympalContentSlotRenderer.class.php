@@ -31,9 +31,6 @@ class sfSympalContentSlotRenderer
         $value = sfSympalTemplate::process($value, $variables);
       }
 
-      $event = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_content_slot_raw_value', array('contentSlot' => $this->_contentSlot, 'content' => $this->_contentSlot->getContentRenderedFor())), $value);
-      $value = $event->getReturnValue();
-
       $this->_rawValue = $value;
     }
     return $this->_rawValue;

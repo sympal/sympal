@@ -33,3 +33,15 @@ sympal_permissions:
     module:               sympal_permissions
     prefix_path:          admin/security/permission
     with_wildcard_routes: true
+
+sf_guard_register:
+  url:   /register
+  param: { module: sfGuardRegister, action: index }
+
+sf_guard_signin:
+  url:   /guard/login
+  param: { module: sfGuardAuth, action: signin }
+
+sf_guard_forgot_password:
+  url:   /security/forgot_password
+  param: { module: sfGuardForgotPassword, action: index }

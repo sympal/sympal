@@ -10,13 +10,17 @@ class sfSympalToolkit
   public static function getDefaultApplication()
   {
     $apps = glob(sfConfig::get('sf_root_dir').'/apps/*');
-    if (empty($apps))
+    foreach ($apps as $app)
     {
-      return 'sympal';
+      $info = pathinfo($app);
+      require_once sfConfig::get('sf_apps_dir').'/'.$info['filename'].'/config/'.$info['filename'].'Configuration.class.php';
+      $reflection = new ReflectionClass($info['filename'].'Configuration');
+      if (!$reflection->getConstant('disableSympal'))
+      {
+        return $info['filename'];
+      }
     }
-    $app = current($apps);
-    $info = pathinfo($app);
-    return $info['filename'];
+    return 'sympal';
   }
 
   public static function checkRequirements()

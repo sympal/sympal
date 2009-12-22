@@ -205,7 +205,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
         ->getSympalConfiguration()->getCache()->resetRouteCache();
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));
-      $this->dispatcher->notify(new sfEvent($this, 'sympal.save_content', array('content' => $content)));
 
       if ($request->hasParameter('_save_and_add'))
       {

@@ -81,7 +81,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
       $this->logSection('sympal', sprintf('...loading plugin installation data fixtures from: "%s"', $installFixtures), null, 'COMMENT');
 
       $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
-      $task->run(array($installFixtures), array());
+      $task->run(array($installFixtures), array('application' => sfConfig::get('sf_app')));
     }
 
     $installVars = array();

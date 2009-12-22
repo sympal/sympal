@@ -17,7 +17,6 @@ class sfSympalConfiguration
     $this->_projectConfiguration = $projectConfiguration;
 
     $this->_initializeSymfonyConfig();
-    $this->_loadGuardRouting();
 
     sfOutputEscaper::markClassesAsSafe(array(
       'sfSympalContent',
@@ -64,11 +63,6 @@ class sfSympalConfiguration
     $this->_redirectIfNotInstalled();
 
     $this->initializeTheme();
-
-    if (sfConfig::get('sf_debug'))
-    {
-      $this->_checkPluginDependencies();
-    }
 
     $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
   }
@@ -207,6 +201,18 @@ class sfSympalConfiguration
     }
   }
 
+  public function checkPluginDependencies()
+  {
+    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
+    {
+      if (strpos($pluginName, 'sfSympal') !== false)
+      {
+        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
+        sfSympalPluginToolkit::checkPluginDependencies($pluginName, $dependencies);
+      }
+    }
+  }
+
   private function _enableModules()
   {
     if (sfSympalConfig::get('enable_all_modules', null, true))
@@ -234,18 +240,6 @@ class sfSympalConfiguration
     if (sfConfig::get('sf_environment') != 'test' && !sfSympalConfig::get('installed') && $request->getParameter('module') != 'sympal_install')
     {
       $sfContext->getController()->redirect('@sympal_install');
-    }
-  }
-
-  private function _checkPluginDependencies()
-  {
-    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
-    {
-      if (strpos($pluginName, 'sfSympal') !== false)
-      {
-        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
-        sfSympalPluginToolkit::checkPluginDependencies($pluginName, $dependencies);
-      }
     }
   }
 
@@ -277,19 +271,6 @@ class sfSympalConfiguration
     {
       sfConfig::set('sf_module_disabled_module', 'sympal_default');
       sfConfig::set('sf_module_disabled_action', 'disabled');
-    }
-  }
-
-  private function _loadGuardRouting()
-  {
-    if (sfSympalConfig::get('auto_enable_sf_guard', null, true))
-    {
-      $this->_dispatcher->connect('routing.load_configuration', array('sfGuardRouting', 'listenToRoutingLoadConfigurationEvent'));
-
-      foreach (array('sfGuardUser', 'sfGuardGroup', 'sfGuardPermission', 'sfGuardRegister', 'sfGuardForgotPassword') as $module)
-      {
-        $this->_dispatcher->connect('routing.load_configuration', array('sfGuardRouting', 'addRouteFor'.str_replace('sfGuard', '', $module)));
-      }
     }
   }
 }
