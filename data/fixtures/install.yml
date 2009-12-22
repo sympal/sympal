@@ -19,22 +19,6 @@ sfSympalContentSlotType:
   ContentSlotType_Widget:
     name: Widget
 
-sfSympalContentTemplate:
-  ContentTemplate_ViewPage:
-    name: View Page
-    path: sympal_page/view
-    ContentType: ContentType_Page
-    is_default: true
-  ContentTemplate_ViewContentList:
-    name: View Content List
-    path: sympal_content_list/view
-    ContentType: ContentType_ContentList
-    is_default: true
-  ContentTemplate_Register:
-    name: Register
-    path: sympal_page/register
-    ContentType: ContentType_Page
-
 sfSympalContentType:
   ContentType_Page:
     plugin_name: sfSympalPagesPlugin
@@ -42,6 +26,7 @@ sfSympalContentType:
     slug: page
     description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
     label: Page
+    template: sympal_page/view
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
     default_path: /pages/:sf_culture/:slug
 <?php else: ?>
@@ -54,6 +39,7 @@ sfSympalContentType:
     slug: content-list
     description: The content list content type is the default Sympal content type for displaying lists of content.
     label: Content List
+    template: sympal_content_list/view
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
     default_path: /lists/:sf_culture/:slug
 <?php else: ?>

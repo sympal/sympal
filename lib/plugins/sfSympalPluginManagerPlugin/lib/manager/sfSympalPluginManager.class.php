@@ -132,24 +132,6 @@ class sfSympalPluginManager
     $obj->fromArray($properties, true);
   }
 
-  public function newContentTemplate($name, $contentType, $properties = array())
-  {
-    if (is_string($contentType))
-    {
-      $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentType);
-    }
-
-    $contentTemplate = new sfSympalContentTemplate();
-    $contentTemplate->name = $name;
-    $contentTemplate->ContentType = $contentType;
-
-    $this->_setDoctrineProperties($contentTemplate, $properties);
-
-    $this->logSection('sympal', sprintf('...instantiating new content template "%s"', $contentTemplate), null, 'COMMENT');
-
-    return $contentTemplate;
-  }
-
   public function newContent($contentType, $properties = array())
   {
     if (is_string($contentType))

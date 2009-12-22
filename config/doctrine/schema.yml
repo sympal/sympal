@@ -21,7 +21,6 @@ sfSympalContent:
     content_type_id:
       type: integer
       notnull: true
-    content_template_id: integer
     master_menu_item_id: integer
     last_updated_by_id: integer
     created_by_id:
@@ -31,6 +30,7 @@ sfSympalContent:
     date_published: timestamp
     custom_path: string(255)
     layout: string(255)
+    template: string(255)
     page_title: string(255)
     meta_keywords: string(500)
     meta_description: string(500)
@@ -67,11 +67,6 @@ sfSympalContent:
       class: sfSympalContentType
       onDelete: CASCADE
       foreignAlias: Content
-    Template:
-      local: content_template_id
-      class: sfSympalContentTemplate
-      onDelete: SET NULL
-      foreignAlias: Content
     Groups:
       class: sfGuardGroup
       local: content_id
@@ -106,37 +101,10 @@ sfSympalContentType:
       notnull: true
     default_path: string(255)
     layout: string(255)
-    content_template_id: integer
-  relations:
-    Template:
-      class: sfSympalContentTemplate
-      local: content_template_id
-      foreignAlias: ContentTypes
-      onDelete: CASCADE
+    template: string(255)
   indexes:
     content_type_name:
       fields: [name]
-
-sfSympalContentTemplate:
-  actAs: [sfSympalRecordTemplate]
-  columns:
-    name:
-      type: string(255)
-      notnull: true
-    path: string(255)
-    body: clob
-    is_default:
-      type: boolean
-      default: false
-    content_type_id:
-      type: integer
-      notnull: true
-  relations:
-    ContentType:
-      local: content_type_id
-      class: sfSympalContentType
-      onDelete: CASCADE
-      foreignAlias: ContentTemplates
 
 sfSympalContentSlot:
   actAs: [sfSympalRecordTemplate]

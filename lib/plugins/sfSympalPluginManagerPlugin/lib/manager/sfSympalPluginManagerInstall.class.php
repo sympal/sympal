@@ -154,9 +154,6 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $properties = array(
       'body' => '<?php echo get_sympal_breadcrumbs($menuItem, $content) ?><h2><?php echo get_sympal_column_content_slot($content, \'title\') ?></h2><p><strong>Posted by <?php echo $content->CreatedBy->username ?> on <?php echo get_sympal_column_content_slot($content, \'date_published\') ?></strong></p><p><?php echo get_sympal_column_content_slot($content, \'body\') ?></p>',
     );
-
-    $contentTemplate = $this->newContentTemplate('View '.$this->_contentTypeName, $contentType, $properties);
-    $installVars['contentTemplate'] = $contentTemplate;
   }
 
   protected function _defaultInstallation($installVars)
@@ -179,10 +176,6 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     if (isset($installVars['contentType']))
     {
       $installVars['contentType']->save();
-    }
-    if (isset($installVars['contentTemplate']))
-    {
-      $installVars['contentTemplate']->save();
     }
     if (isset($installVars['contentList']))
     {

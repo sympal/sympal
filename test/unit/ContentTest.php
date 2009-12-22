@@ -1,4 +1,4 @@
-<?php
+8<?php
 
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
@@ -81,8 +81,8 @@ $page = $content->getRecord();
 $t->is($page instanceof sfSympalPage, true);
 $t->is($page->title, 'Testing this out');
 
-$template = $content->getTemplate();
-$t->is($template instanceof sfSympalContentTemplate, true);
+$template = $content->getTemplateToRenderWith();
+$t->is($template, 'sympal_page/view');
 
 $t->is($content->getTitle(), 'Testing this out');
 $t->is($content->getHeaderTitle(), 'Testing this out');

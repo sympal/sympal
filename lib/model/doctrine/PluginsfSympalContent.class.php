@@ -217,18 +217,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
-  public function getTemplate()
-  {
-    if ($this->get('content_template_id', false))
-    {
-      return $this->_get('Template');
-    }
-    if ($this->hasReference('Type'))
-    {
-      return $this->Type->getTemplate();
-    }
-  }
-
   public function publish()
   {
     $this->is_published = true;
@@ -473,6 +461,16 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
+  public function getTemplateToRenderWith()
+  {
+    if (!$template = $this->getTemplate())
+    {
+      $template = $this->getType()->getTemplate();
+    }
+    $template = $template ? $template : 'sympal_default/default_content_template';
+    return $template;
+  }
+
   public function getSiteId()
   {
     return $this->_get('site_id');
@@ -481,11 +479,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   public function getContentTypeId()
   {
     return $this->_get('content_type_id');
-  }
-
-  public function getContentTemplateId()
-  {
-    return $this->_get('content_template_id');
   }
 
   public function getMasterMenuItemId()

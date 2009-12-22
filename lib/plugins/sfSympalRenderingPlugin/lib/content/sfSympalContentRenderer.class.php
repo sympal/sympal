@@ -73,7 +73,7 @@ class sfSympalContentRenderer
 
     if ($format == 'html')
     {
-      $return = $this->_getContentViewHtml($content, $variables);
+      $return = sfSympalToolkit::getSymfonyResource($content->getTemplateToRenderWith(), $variables);
     } else {
       switch ($format)
       {
@@ -95,29 +95,6 @@ class sfSympalContentRenderer
     if (!$return)
     {
       $this->_throwUnknownFormat404($this->_format);
-    }
-
-    return $return;
-  }
-
-  protected function _getContentViewHtml(sfSympalContent $content, $variables = array())
-  {
-    if ($content->content_template_id)
-    {
-      $template = $content->getTemplate();
-    } else {
-      $template = $content->getType()->getTemplate();
-    }
-
-    if ($template && $templatePath = $template->getPath())
-    {
-      $return = sfSympalToolkit::getSymfonyResource($templatePath, $variables);
-    }
-    else if ($template && $body = $template->getBody())
-    {
-      $return = sfSympalTemplate::process($body, $variables);;
-    } else {
-      $return = get_sympal_breadcrumbs($this->_menuItem, $content).$this->_renderDoctrineData($content);
     }
 
     return $return;

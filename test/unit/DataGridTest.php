@@ -34,7 +34,7 @@ $t->is($dataGrid->getRows(), array(
       'c.plugin_name' => 'sfSympalPagesPlugin',
       'c.default_path' => '/pages/:slug',
       'c.layout' => NULL,
-      'c.content_template_id' => null,
+      'c.template' => 'sympal_page/view',
       'c.slug' => 'page',
     )
   )
@@ -46,29 +46,29 @@ $dataGrid = sfSympalDataGrid::create('sfSympalContentType', 'c')
 
 $t->is($dataGrid->render(), 'Test');
 
-$dataGrid = sfSympalDataGrid::create('sfSympalContentTemplate', 't')
-  ->where('t.name = ?', 'Register')
+$dataGrid = sfSympalDataGrid::create('sfSympalContentType', 't')
+  ->where('t.name = ?', 'sfSympalPage')
   ->addColumn('t.name');
 
 $rows = $dataGrid->getRows();
-$t->is($rows[0]['t.name'], 'Register');
+$t->is($rows[0]['t.name'], 'sfSympalPage');
 
-$dataGrid = sfSympalDataGrid::create('sfSympalContentTemplate', 't')
-  ->where('t.name = ?', 'Register')
+$dataGrid = sfSympalDataGrid::create('sfSympalContentType', 't')
+  ->where('t.name = ?', 'sfSympalPage')
   ->addColumn('t.name', 'is_sortable=false label=Test');
 
 $t->is($dataGrid->getColumnSortLink($dataGrid->getColumn('t.name')), 'Test');
 
-$dataGrid = sfSympalDataGrid::create('sfSympalContentTemplate', 't')
+$dataGrid = sfSympalDataGrid::create('sfSympalContentType', 't')
   ->where('t.name = ?', 'Register')
   ->addColumn('t.name')
   ->isSortable(false);
 
 $t->is($dataGrid->getColumnSortLink($dataGrid->getColumn('t.name')), 'Name');
 
-$dataGrid = sfSympalDataGrid::create('sfSympalContentTemplate', 't')
+$dataGrid = sfSympalDataGrid::create('sfSympalContentType', 't')
   ->select('t.id, t.name')
   ->setSort('t.name', 'DESC')
   ->init();
 
-$t->is($dataGrid->getDql(), 'SELECT t.id, t.name FROM sfSympalContentTemplate t ORDER BY t.name desc LIMIT 10 OFFSET 0');
+$t->is($dataGrid->getDql(), 'SELECT t.id, t.name FROM sfSympalContentType t ORDER BY t.name desc LIMIT 10 OFFSET 0');

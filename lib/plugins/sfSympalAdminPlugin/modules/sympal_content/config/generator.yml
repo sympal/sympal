@@ -16,7 +16,7 @@ generator:
       fields: ~
       form:
         display:
-          "Settings": [created_by_id, is_published, date_published, page_title, meta_keywords, meta_description, master_menu_item_id, custom_path, content_template_id, layout, groups_list, permissions_list, slug]
+          "Settings": [created_by_id, is_published, date_published, page_title, meta_keywords, meta_description, master_menu_item_id, custom_path, layout, template, groups_list, permissions_list, slug]
           "Content Type Form": [TypeForm]
         fields:
           content_type_id:
@@ -26,9 +26,6 @@ generator:
             help: Select the menu item this content record is associated with.
           custom_path:
             help: Custom path to be used to generate content record url.
-          content_template_id:
-            label: Content Template
-            help: Choose the content template used to render this content record.
           layout:
             help: Choose the layout template used to render this content record.
           groups_list:

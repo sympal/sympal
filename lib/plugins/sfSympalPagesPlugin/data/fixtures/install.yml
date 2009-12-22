@@ -91,7 +91,6 @@ sfSympalContent:
     Site: Site_default
     is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    Template: ContentTemplate_Register
     Slots: [Register_slot_body]
     CreatedBy: admin
 <?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 

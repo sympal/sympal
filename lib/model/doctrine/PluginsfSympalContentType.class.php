@@ -10,41 +10,6 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     return (string) $this->getLabel();
   }
 
-  public function getTypeTemplate()
-  {
-    return $this->_get('Template');
-  }
-
-  public function getTemplate()
-  {
-    $template = $this->getTypeTemplate();
-    if ($template && $template->exists())
-    {
-      return $template;
-    }
-
-    if ($this->hasReference('ContentTemplates'))
-    {
-      foreach ($this->ContentTemplates as $template)
-      {
-        if ($template->is_default)
-        {
-          return $template;
-        }
-      }
-
-      foreach ($this->ContentTemplates as $template)
-      {
-        if (!$template->is_default && $template->content_type_id == $this->getId())
-        {
-          return $template;
-        }
-      }
-
-      return $this->ContentTemplates->getFirst();
-    }
-  }
-
   public function getSingularUpper()
   {
     return Doctrine_Core::getTable($this->getName())->getOption('name');

@@ -122,14 +122,6 @@ sympal_content_slot_types:
     prefix_path:          admin/content/slot_types
     with_wildcard_routes: true
 
-sympal_content_templates:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalContentTemplate
-    module:               sympal_content_templates
-    prefix_path:          admin/content/templates
-    with_wildcard_routes: true
-
 sympal_content_types:
   class:                  sfDoctrineRouteCollection
   options:

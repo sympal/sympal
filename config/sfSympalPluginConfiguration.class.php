@@ -98,7 +98,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       ->setCredentials(array('ManageContentSetup'));
 
     $content->addChild('Types', '@sympal_content_types');
-    $content->addChild('Templates', '@sympal_content_templates');
     $content->addChild('Slot Types', '@sympal_content_slot_types');
   }
 
@@ -135,11 +134,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' View '.$content['Type']['label'], $content->getRoute());
     } else {
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'], $content->getEditRoute());      
-    }
-
-    if ($content->getTemplate() && $content->getTemplate()->getId())
-    {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Template', '@sympal_content_templates_edit?id='.$content->getTemplate()->getId());      
     }
 
     $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Type', '@sympal_content_types_edit?id='.$content->getType()->getId());      

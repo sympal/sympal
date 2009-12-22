@@ -73,13 +73,6 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
 
     $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($this->_contentTypeName);
 
-    // Delete content templates related to this content type
-    $count = Doctrine_Core::getTable('sfSympalContentTemplate')
-      ->createQuery('t')
-      ->delete()
-      ->where('t.content_type_id = ?', $contentType['id'])
-      ->execute();
-
     // Find content lists related to this conten type
     $q = Doctrine_Core::getTable('sfSympalContentList')
       ->createQuery('c')
