@@ -107,7 +107,7 @@ class sfSympalFormToolkit
     $validatorSchema['value'] = $validator;
   }
 
-  public static function changeThemeWidget($form)
+  public static function changeLayoutWidget($form)
   {
     $array = self::getLayoutWidgetAndValidator();
 
