@@ -259,24 +259,25 @@ ul#sympal-admin-bar-menu li {
 }
 
 ul#sympal-admin-bar-menu li a {
-  background: #333;
+  background: #375fc2;
   color: #fff;	
   padding: 0.5em;
+  font-weight: bold;
 }
 
 ul#sympal-admin-bar-menu li a:hover {
-  background: #000;
+  text-shadow: #fff 0px 0px 3px;
 }
 
 ul#sympal-admin-bar-menu li ul li a {
-  background: #ccc;
+  background: #eee;
   color: #000;
   padding-left: 20px;
 }
 
 ul#sympal-admin-bar-menu li ul li a:hover {
-  background: #aaa;
-  border-left: 5px #000 solid;
+  background: #ccc;
+  border-left: 5px #375fc2 solid;
   padding-left: 20px;
 }
 

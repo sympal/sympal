@@ -123,9 +123,16 @@
   cursor: pointer;
 }
 
-.sympal_content_slot_button {
-  border: 1px solid #333;
-  font-size: 14px;
-  font-weight: bold;
-  padding: 2px;
+.sympal_content_slot {
+}
+
+.sympal_content_slot:hover {
+}
+
+.sympal_content_slot_editor {
+  display: inline;
+}
+
+.sympal_content_slot_editor form {
+  display: inline;
 }

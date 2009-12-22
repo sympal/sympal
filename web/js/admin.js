@@ -7,7 +7,7 @@ $(function()
     var clicked = $(this).parent('fieldset').attr('id');
     var h2 = $(this);
 
-    if (current && current !== clicked)
+    if (current && current !== clicked && $('#' + current).length)
     {
       $('#' + current + ' h2').css('background-image', $('#' + current + ' h2').css('background-image').replace('collapse', 'expand'));
       $('#' + current + ' .sf_admin_form_row').slideUp('fast');
@@ -41,7 +41,7 @@ $(function()
       $.cookie($('.sf_admin_form').parent('div').attr('id'), current);
     }
 
-    if (current)
+    if (current && $('#' + current).length)
     {
       $('#' + current + ' h2').css('background-image', $('#' + current + ' h2').css('background-image').replace('expand', 'collapse'));
       $('#' + current + ' .sf_admin_form_row').show();
@@ -52,7 +52,7 @@ $(function()
   {
     $('.sf_admin_filter').hide();
 
-    var append = '<span style="float: left;">Actions</span><span id="sympal_filters_button">Filters</span>';
+    var append = '<span style="float: left;">' + $('.sf_admin_list table thead tr th:last-child').html() + '</span><span id="sympal_filters_button">Filters</span>';
     $('.sf_admin_list table thead tr th:last-child').html(append);
 
     $('#sympal_filters_button').click(function() {

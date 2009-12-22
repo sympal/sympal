@@ -17,9 +17,18 @@
   margin-bottom: 20px;
 }
 
+#sf_admin_container .sf_admin_list table
+{
+  background-color: #375fc2;
+}
+
 #sf_admin_container table
 {
-  background-color: #e7eef6;
+  background: #eee;
+}
+
+#sf_admin_container table
+{
   border: none;
   -khtml-border-radius:0.4em;
 	-moz-border-radius: 10px;
@@ -29,7 +38,20 @@
 
 #sf_admin_container table thead th
 {
+  color: #fff;
   text-align: left;
+}
+
+#sf_admin_container table thead th a
+{
+  text-shadow: #4E89D5 1px 1px 1px;
+  color: #fff;
+}
+
+#sf_admin_container table thead th a:hover
+{
+  text-shadow: #fff 0px 0px 3px;
+  color: #fff;
 }
 
 #sf_admin_container table td, #sf_admin_container table th
@@ -41,6 +63,11 @@
 {
   background-color: #ffffff;
   border-bottom: 1px solid #eee;
+}
+
+#sf_admin_container table tfoot tr th
+{
+  color: #fff;
 }
 
 #sf_admin_container ul.error_list
@@ -196,11 +223,11 @@
 
 #sf_admin_container fieldset h2
 {
+  text-shadow: #4E89D5 1px 1px 1px;
   padding: 3px;
-  color: #333;
   font-size: 11px;
   margin: 0;
-  color: #333;
+  color: #fff;
   padding: 2px;
   padding-left: 30px;
   font-size: 16px;
@@ -210,12 +237,16 @@
   background: url(../images/expand.gif) no-repeat 10px 8px;
 }
 
+#sf_admin_container fieldset h2:hover {
+  text-shadow: #fff 0px 0px 3px;
+}
+
 #sf_admin_container fieldset
 {
   border: 1px solid #ddd;
   border-bottom: 0px;
-  background-color: #c1dbff;
-  border-top: 10px solid #c1dbff;
+  background-color: #375fc2;
+  border-top: 10px solid #375fc2;
   -khtml-border-radius:0.4em;
 	-moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -236,8 +267,9 @@
   padding: 0 1em 3px 0;
   float: left;
   text-align: left;
-  width: 8em;
-  color: #666;
+  width: 12em;
+  color: #000;
+  font-weight: bold;
   font-weight: normal !important;
 }
 
