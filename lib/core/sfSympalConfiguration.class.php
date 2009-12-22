@@ -251,6 +251,8 @@ class sfSympalConfiguration
 
   private function _initializeSymfonyConfig()
   {
+    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalPlugin'));
+
     sfConfig::set('app_sf_guard_plugin_success_signin_url', '@homepage');
 
     if (sfConfig::get('sf_login_module') == 'default')

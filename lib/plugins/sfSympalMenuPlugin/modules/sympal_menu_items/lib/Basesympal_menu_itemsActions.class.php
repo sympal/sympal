@@ -103,10 +103,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
         $this->redirect('@sympal_menu_items_new');
       }
-      else if ($request->hasParameter('_save_and_list'))
-      {
-        $this->redirect('@sympal_menu_items');
-      }
       else
       {
         $this->redirect('@sympal_menu_items_edit?id='.$tree['id']);

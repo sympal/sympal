@@ -277,7 +277,7 @@ ul#sympal-admin-bar-menu li ul li a {
 ul#sympal-admin-bar-menu li ul li a:hover {
   background: #aaa;
   border-left: 5px #000 solid;
-  padding-left: 15px;
+  padding-left: 20px;
 }
 
 #sf_admin_container .ui-widget-header {
@@ -293,4 +293,12 @@ ul#sympal-admin-bar-menu li ul li a:hover {
   position: fixed;
   top: 0;
   left: 0;
+}
+
+#sympal_filters_button {
+  float: right;
+  width: 15px;
+  text-indent: -999999999999px;
+  background-image: url(../images/search_icon.gif);
+  cursor: pointer;
 }

@@ -218,10 +218,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
         $this->redirect('@sympal_content_new');
       }
-      else if ($request->hasParameter('_save_and_list'))
-      {
-        $this->redirect('@sympal_content_list_type?type='.$content->content_type_id);
-      }
       else if ($request->hasParameter('_save_and_view'))
       {
         $this->redirect($content->getRoute());
