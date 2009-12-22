@@ -59,7 +59,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $this->sympalConfiguration = new sfSympalConfiguration($this->dispatcher, $this->configuration);
     
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
-    $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfig'));
+    $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
     $this->dispatcher->connect('sympal.load_editor', array($this, 'loadTools'));
     $this->dispatcher->connect('form.post_configure', array($this, 'formPostConfigure'));
   }
@@ -102,7 +102,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $content->addChild('Slot Types', '@sympal_content_slot_types');
   }
 
-  public function loadConfig(sfEvent $event)
+  public function loadConfigForm(sfEvent $event)
   {
     $form = $event->getSubject();
 

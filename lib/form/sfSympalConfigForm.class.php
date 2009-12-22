@@ -8,6 +8,8 @@ class sfSympalConfigForm extends sfForm
 
   public function setup()
   {
+    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_config_form'));
+
     $otherSettings = array();
     foreach ($this->_settings as $group => $settings)
     {
