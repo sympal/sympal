@@ -42,6 +42,8 @@ class ProjectConfiguration extends sfProjectConfiguration
 
   public function initializeSympal()
   {
+    copy(sfConfig::get('sf_data_dir').'/fresh_test_db.sqlite', sfConfig::get('sf_data_dir').'/test.sqlite');
+
     if (isset($this->pluginConfigurations['sfSympalPlugin']))
     {
       $this->pluginConfigurations['sfSympalPlugin']
