@@ -67,6 +67,7 @@ $t->is(strtotime($content->date_published) > 0, false);
 $content->is_published = 1;
 $content->date_published = new Doctrine_Expression('NOW()');
 $content->save();
+$content->free();
 
 $content = $q->fetchOne();
 

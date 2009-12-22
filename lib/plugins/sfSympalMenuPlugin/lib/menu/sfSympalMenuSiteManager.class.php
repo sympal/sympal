@@ -166,22 +166,30 @@ class sfSympalMenuSiteManager
       // Query for the all menu items
       $q = Doctrine_Query::create()
         ->from('sfSympalMenuItem m INDEXBY m.id')
+        ->addSelect('m.*')
         ->leftJoin('m.Groups g')
+        ->addSelect('g.id, g.name')
         ->leftJoin('g.Permissions gp')
+        ->addSelect('gp.id, gp.name')
         ->leftJoin('m.Permissions mp')
+        ->addSelect('mp.id, mp.name')
         ->leftJoin('m.RelatedContent c')
+        ->addSelect('c.id, c.custom_path, c.slug')
         ->leftJoin('c.Type ct')
+        ->addSelect('ct.id, ct.name, ct.default_path, ct.slug')
         ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
         ->orderBy('m.root_id, m.lft ASC');
 
       if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
       {
         $q->leftJoin('c.Translation ctr');
+        $q->addSelect('ctr.*');
       }
 
       if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
       {
         $q->leftJoin('m.Translation t');
+        $q->addSelect('t.*');
       }
 
       $user = sfContext::getInstance()->getUser();

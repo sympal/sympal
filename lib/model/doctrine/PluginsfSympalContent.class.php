@@ -376,10 +376,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   protected function _fillRoute($route, $variables)
   {
+    $isI18nEnabled = sfSympalConfig::isI18nEnabled();
+
     $values = array();
     foreach (array_keys($variables) as $name)
     {
-      if ($name == 'slug' && $this->hasField('i18n_slug') && $i18nSlug = $this->i18n_slug)
+      if ($isI18nEnabled && $name == 'slug' && $this->hasField('i18n_slug') && $i18nSlug = $this->i18n_slug)
       {
         $values[$name] = $i18nSlug;
       } else if ($this->hasField($name)) {

@@ -35,7 +35,7 @@ class sfSympalContentRenderer
     if (!$response->getTitle())
     {
       $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
-      $title = $title ? $this->_menuItem->Site->title.sfSympalConfig::get('breadcrumbs_separator', null, ' / ').$title:$this->_menuItem->Site->title;
+      $title = $title ? $this->_content->Site->title.sfSympalConfig::get('breadcrumbs_separator', null, ' / ').$title:$this->_content->Site->title;
       $response->setTitle($title);
     }
   }
