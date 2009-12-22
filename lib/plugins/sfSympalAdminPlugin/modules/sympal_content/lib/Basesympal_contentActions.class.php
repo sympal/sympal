@@ -180,7 +180,9 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeCreate(sfWebRequest $request)
   {
-    $type = Doctrine_Core::getTable('sfSympalContentType')->find($request['sf_sympal_content']['content_type_id']);
+    $content = $request->getParameter('sf_sympal_content');
+    $contentTypeId = $content['content_type_id'];
+    $type = Doctrine_Core::getTable('sfSympalContentType')->find($contentTypeId);
     $this->sf_sympal_content = sfSympalContent::createNew($type);
     $this->sf_sympal_content->Site = $this->getSympalContext()->getSite();
 

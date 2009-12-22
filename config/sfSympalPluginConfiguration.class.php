@@ -130,7 +130,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $contentEditor = $menu->addChild($content['Type']['label'] . ' Actions')
       ->setCredentials(array('ManageContent'));
 
-    if ($request['module'] == 'sympal_content')
+    if ($request->getParameter('module') == 'sympal_content')
     {
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' View '.$content['Type']['label'], $content->getRoute());
     } else {

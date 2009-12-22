@@ -335,13 +335,13 @@ class sfSympalDataGrid
 
     $request = sfContext::getInstance()->getRequest();
 
-    if ($request['sort'])
+    if ($sort = $request->getParameter('sort'))
     {
-      $this->_sort = $request['sort'];
+      $this->_sort = $sort;
     }
-    if ($request['order'])
+    if ($order = $request->getParameter('order'))
     {
-      $this->_order = $request['order'];
+      $this->_order = $order;
     }
 
     if ($this->_sort && $this->_isSortable)

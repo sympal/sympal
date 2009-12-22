@@ -75,7 +75,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
   protected function _getContentSlot(sfWebRequest $request)
   {
     $this->contentSlot = $this->getRoute()->getObject();
-    $this->content = Doctrine_Core::getTable('sfSympalContent')->find($request['content_id']);
+    $this->content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
     $this->contentSlot->setContentRenderedFor($this->content);
 
     return $this->contentSlot;

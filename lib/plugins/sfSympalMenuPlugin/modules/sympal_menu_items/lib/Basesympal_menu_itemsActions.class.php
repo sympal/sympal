@@ -239,7 +239,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     $menuItem = $this->getRoute()->getObject();
     $node = $menuItem->getNode();
-    $direction = $request['direction'];
+    $direction = $request->getParameter('direction');
 
     $name = $direction == 'up' ? 'Prev':'Next';
     $getMethod = 'get'.$name.'Sibling';
