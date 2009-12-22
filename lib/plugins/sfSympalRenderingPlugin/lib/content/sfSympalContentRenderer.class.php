@@ -92,69 +92,11 @@ class sfSympalContentRenderer
       }
     }
     
-    if (!$return)
+    if ($return === null)
     {
-      $this->_throwUnknownFormat404($this->_format);
+      sfContext::getInstance()->getController()->getActionStack()->getLastEntry()->getActionInstance()->forward404();
     }
 
     return $return;
-  }
-
-  protected function _renderDoctrineData($content)
-  {
-    $html  = '<h1>Content Data</h1>';
-    $html .= $this->_renderData($content->toArray(), false);
-
-    $html .= '<h1>'.get_class($content->getRecord()).' Data</h1>';
-    $html .= $this->_renderData($content->getRecord()->toArray(), false);
-
-    $html .= '<h1>Slots</h1>';
-    $html .= '<table>';
-    foreach ($content->getSlots() as $key => $slot)
-    {
-      $html .= '<tr><th>'.$key.'</th><td>'.get_sympal_content_slot($content, $slot['name']).'</td></tr>';
-    }
-    $html .= '</table>';
-
-    return $html;
-  }
-
-  protected function _renderData(array $content, $deep = true)
-  {
-    $html  = '';
-    $html .= '<table>';  
-    foreach ($content as $key => $value)
-    {
-      if (strstr($key, '_id'))
-      {
-        continue;
-      }
-      $val = null;
-      if (is_array($value) && $deep)
-      {
-        $val = '<td>' . $this->_renderData($value) . '</td>';
-      } else if (!is_array($value)) {
-        $val = '<td>' . $value . '</td>';
-      }
-      if (isset($val) && $val)
-      {
-        $html .= '<tr>';
-        $html .= '<th>' . Doctrine_Inflector::classify(str_replace('_id', '', $key)) . '</th>';
-        $html .= $val;
-        $html .= '</tr>';
-      }
-    }
-    $html .= '</table>';
-    return $html;
-  }
-
-  protected function _throwUnknownFormat404($format)
-  {
-    sfContext::getInstance()->getController()->getActionStack()->getLastEntry()->getActionInstance()->forward404();
-  }
-
-  public function __call($method, $arguments)
-  {
-    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
   }
 }
