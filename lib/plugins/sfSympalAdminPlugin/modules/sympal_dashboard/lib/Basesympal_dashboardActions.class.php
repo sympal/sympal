@@ -19,13 +19,18 @@ abstract class Basesympal_dashboardActions extends sfActions
 
   public function executeIndex()
   {
-    $this->upgrade = new sfSympalUpgradeFromWeb(
-      $this->getContext()->getConfiguration(),
-      $this->getContext()->getEventDispatcher(),
-      new sfFormatter()
-    );
+    if (sfSympalConfig::get('check_for_upgrades_on_dashboard', null, false))
+    {
+      $this->upgrade = new sfSympalUpgradeFromWeb(
+        $this->getContext()->getConfiguration(),
+        $this->getContext()->getEventDispatcher(),
+        new sfFormatter()
+      );
 
-    $this->hasNewVersion = $this->upgrade->hasNewVersion();
+      $this->hasNewVersion = $this->upgrade->hasNewVersion();
+    } else {
+      $this->hasNewVersion = false;
+    }
 
     $this->boxes = new sfSympalMenu('Dashboard Boxes');
 
