@@ -2,9 +2,11 @@
 
 require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new sfSympalTestFunctional(new sfBrowser());
+
 $browser->get('/');
 
+// Make sure we can click each menu item in the menu
 $menuItems = Doctrine_Core::getTable('sfSympalMenuItem')->findAll();
 foreach ($menuItems as $menuItem)
 {
@@ -34,16 +36,15 @@ $browser->
   end()->
   with('user')->begin()->
     isAuthenticated()->
+  end()->
+  get('/admin/dashboard')->
+  with('request')->begin()->
+    isParameter('module', 'sympal_dashboard')->
+    isParameter('action', 'index')->
   end()
 ;
 
-$browser->
-  get('/security/signout')->
-  with('response')->begin()->
-    isRedirected()->
-    followRedirect()->
-  end()
-;
+$browser->signOut();
 
 $browser->
   get('/register')->
@@ -55,17 +56,13 @@ $browser->
 ;
 
 $browser->
-  click('Signout')->
-  with('response')->begin()->
-    isRedirected()->
-    followRedirect()->
-  end()->
+  signOut()->
   click('Signin')->
   click('input[type="submit"]', array('signin' => array('username' => 'test', 'password' => 'test')), array('method' => 'post', '_with_csrf' => true))->
   with('user')->begin()->
     isAuthenticated()->
   end()->
-  get('/security/signout')
+  signOut()
 ;
 
 $profiler = new Doctrine_Connection_Profiler();

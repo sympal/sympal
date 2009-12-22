@@ -14,7 +14,7 @@ sfSympalConfig::writeSetting('installed', false);
 
 sfContext::createInstance($configuration);
 
-$browser = new sfTestFunctional(new sfBrowser());
+$browser = new sfSympalTestFunctional(new sfBrowser());
 $browser->get('/install');
 
 $install = array(

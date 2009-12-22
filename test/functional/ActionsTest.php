@@ -2,14 +2,8 @@
 
 require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 
-$browser = new sfTestFunctional(new sfBrowser());
-
-$browser->post('/security/signin', array(
-  'signin' => array(
-    'username' => 'admin',
-    'password' => 'admin'
-  )
-));
+$browser = new sfSympalTestFunctional(new sfBrowser());
+$browser->signInAsAdmin();
 
 $browser->
   get('/test/ask_confirmation')->
