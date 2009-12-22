@@ -33,7 +33,7 @@ class ProjectConfiguration extends sfProjectConfiguration
 
   public function configureDoctrineConnection(Doctrine_Connection $conn)
   {
-      $conn->setCollate('utf8_unicode_ci');
+    $conn->setCollate('utf8_unicode_ci');
   }
 
   /**
@@ -42,9 +42,10 @@ class ProjectConfiguration extends sfProjectConfiguration
 
   public function initializeSympal()
   {
-    chdir(sfConfig::get('sf_root_dir'));
-
-    $this->getPluginConfiguration('sfSympalPlugin')
-      ->getSympalConfiguration()->getCache()->primeCache(true);
+    if (isset($this->pluginConfigurations['sfSympalPlugin']))
+    {
+      $this->pluginConfigurations['sfSympalPlugin']
+        ->getSympalConfiguration()->getCache()->primeCache(true);
+    }
   }
 }
