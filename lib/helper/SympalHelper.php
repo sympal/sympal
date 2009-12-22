@@ -10,7 +10,18 @@ function sympal_link_to_site($site, $name, $path = null)
 
 function get_sympal_admin_menu()
 {
-  return get_component('sympal_admin', 'menu');
+  $menu = new sfSympalMenuAdminBar('Sympal Admin');
+  $menu->setCredentials(array('ViewAdminBar'));
+
+  $request = sfContext::getInstance()->getRequest();
+  $menu->addChild('Go to Site', '@homepage');
+  $menu->addChild('My Dashboard', '@sympal_dashboard');
+  $menu->addChild('Administration', $request->getUri());
+  $menu->addChild('Security', $request->getUri());
+
+  sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_admin_menu'));
+
+  return get_partial('sympal_admin/menu', array('menu' => $menu));
 }
 
 /**
@@ -119,7 +130,11 @@ function get_sympal_editor($menuItem = null, $content = null)
 
   if ($user->isEditMode() && $content && $menuItem)
   {
-    return get_component('sympal_editor', 'editor', array('content' => $content, 'menuItem' => $menuItem));
+    $menu = new sfSympalMenuTools('Sympal Editor');
+
+    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_editor', array('content' => $content, 'menuItem' => $menuItem)));
+
+    return get_partial('sympal_editor/editor', array('menu' => $menu, 'content' => $content, 'menuItem' => $menuItem));
   }
 }
 

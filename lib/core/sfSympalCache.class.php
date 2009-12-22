@@ -20,9 +20,14 @@ class sfSympalCache
 
   public static function getCacheDriver(sfSympalCache $cache)
   {
-    return new sfFileCache(
-      array('cache_dir' => sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment')
-    ));
+    if (extension_loaded('apc'))
+    {
+      return new sfApcCache();
+    } else {
+      return new sfFileCache(
+        array('cache_dir' => sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment')
+      ));
+    }
   }
 
   public function clear()

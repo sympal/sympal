@@ -10,16 +10,4 @@
  */
 abstract class Basesympal_adminComponents extends sfComponents
 {
-  public function executeMenu()
-  {
-    $this->menu = new sfSympalMenuAdminBar('Sympal Admin');
-    $this->menu->setCredentials(array('ViewAdminBar'));
-
-    $this->menu->addChild('Go to Site', '@homepage');
-    $this->menu->addChild('My Dashboard', '@sympal_dashboard');
-    $this->menu->addChild('Administration', $this->getRequest()->getUri());
-    $this->menu->addChild('Security', $this->getRequest()->getUri());
-
-    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this->menu, 'sympal.load_admin_menu'));
-  }
 }
