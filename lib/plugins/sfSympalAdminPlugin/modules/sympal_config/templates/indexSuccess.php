@@ -9,6 +9,7 @@
       <?php $groups = $form->getGroups() ?>
 
       <?php echo $form->renderFormTag(url_for('@sympal_config_save')) ?>
+        <?php echo $form->renderHiddenFields() ?>
         <?php foreach ($groups as $group): ?>
           <fieldset id="sf_fieldset_config_<?php echo strtolower($group) ?>">
             <h2><?php echo ucwords(sfInflector::humanize($group)) ?></h2>

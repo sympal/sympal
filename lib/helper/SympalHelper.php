@@ -8,22 +8,9 @@ function sympal_link_to_site($site, $name, $path = null)
   return '<a href="'.$request->getRelativeUrlRoot().'/'.$file.($path ? '/'.$path:null).'">'.$name.'</a>';
 }
 
-/**
- * Get the Sympal User Interface
- *
- *  - The top admin bar menu
- *  - The extra sidebar
- *
- * @return string $html
- */
-function get_sympal_ui()
-{
-  //return get_sympal_admin_bar();
-}
-
 function get_sympal_admin_menu()
 {
-  return get_sympal_admin_bar();
+  return get_component('sympal_admin', 'menu');
 }
 
 /**
@@ -144,19 +131,6 @@ function get_sympal_editor($menuItem = null, $content = null)
   $editor = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($content, 'sympal.filter_content_slot_editors'), $editor)->getReturnValue();
 
   return $editor;
-}
-
-/**
- * Get the Sympal admin bar at top of screen
- *
- * @return string $html
- */
-function get_sympal_admin_bar()
-{
-  if (sfContext::getInstance()->getUser()->isAuthenticated())
-  {
-    return get_component('sympal_admin', 'admin_bar');
-  }
 }
 
 /**

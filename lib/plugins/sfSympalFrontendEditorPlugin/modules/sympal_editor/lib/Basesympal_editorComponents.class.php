@@ -8,6 +8,6 @@ class Basesympal_editorComponents extends sfComponents
 
     $this->menu = new sfSympalMenuTools('Sympal Editor');
 
-    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_editor', array('menu' => $this->menu, 'content' => $this->content, 'menuItem' => $this->menuItem, 'lock' => $this->lock)));
+    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this->menu, 'sympal.load_editor', array('content' => $this->content, 'menuItem' => $this->menuItem)));
   }
 }

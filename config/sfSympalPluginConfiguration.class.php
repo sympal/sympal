@@ -58,9 +58,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   {
     $this->sympalConfiguration = new sfSympalConfiguration($this->dispatcher, $this->configuration);
     
-    $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
+    $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfig'));
-    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadTools'));
+    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
     $this->dispatcher->connect('form.post_configure', array($this, 'formPostConfigure'));
   }
 
@@ -69,9 +69,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     return $this->sympalConfiguration;
   }
 
-  public function loadAdminBar(sfEvent $event)
+  public function loadAdminMenu(sfEvent $event)
   {
-    $menu = $event['menu'];
+    $menu = $event->getSubject();
 
     $user = sfContext::getInstance()->getUser();
 
@@ -120,9 +120,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $form->addSetting('plugin_api', 'password');
   }
 
-  public function loadTools(sfEvent $event)
+  public function loadEditor(sfEvent $event)
   {
-    $menu = $event['menu'];
+    $menu = $event->getSubject();
     $content = $event['content'];
     $user = sfContext::getInstance()->getUser();
     $request = sfContext::getInstance()->getRequest();

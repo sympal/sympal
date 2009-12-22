@@ -8,12 +8,12 @@ class sfSympalPluginManagerPluginConfiguration extends sfPluginConfiguration
 
   public function initialize()
   {
-    $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
+    $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
   }
 
-  public function loadAdminBar(sfEvent $event)
+  public function loadAdminMenu(sfEvent $event)
   {
-    $menu = $event['menu'];
+    $menu = $event->getSubject();
 
     $administration = $menu->getChild('Administration');
     $administration->addChild('Plugin Manager', '@sympal_plugin_manager')

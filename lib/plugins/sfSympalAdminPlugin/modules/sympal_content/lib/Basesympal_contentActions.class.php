@@ -195,11 +195,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
 
-    if ( ! $request->getParameter('save'))
-    {
-      return sfView::SUCCESS;
-    }
-
     if ($form->isValid())
     {
       $this->getUser()->setFlash('notice', $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.');

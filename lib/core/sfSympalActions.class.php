@@ -153,6 +153,9 @@ class sfSympalActions extends sfSympalExtendClass
   {
     $this->getResponse()->addJavascript('/sfSympalPlugin/js/admin.js');
     $this->getResponse()->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
+    $this->getResponse()->addStylesheet('/sfSympalPlugin/css/global.css');
+    $this->getResponse()->addStylesheet('/sfSympalPlugin/css/default.css');
+
     $this->getContext()->getConfiguration()->loadHelpers('jQuery');
 
     $this->changeTheme(sfSympalConfig::get('admin_layout', null, 'admin'));

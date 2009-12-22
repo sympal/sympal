@@ -61,30 +61,35 @@ sfSympalContent:
       local: site_id
       class: sfSympalSite
       onDelete: CASCADE
+      foreignAlias: Content
     Type:
       local: content_type_id
       class: sfSympalContentType
       onDelete: CASCADE
+      foreignAlias: Content
     Template:
       local: content_template_id
       class: sfSympalContentTemplate
       onDelete: SET NULL
+      foreignAlias: Content
     Groups:
       class: sfGuardGroup
       local: content_id
       foreign: group_id
       refClass: sfSympalContentGroup
+      foreignAlias: Content
     Permissions:
       class: sfGuardPermission
       local: content_id
       foreign: permission_id
       refClass: sfSympalContentPermission
+      foreignAlias: Content
     Slots:
       class: sfSympalContentSlot
       refClass: sfSympalContentSlotRef
       local: content_id
       foreign: content_slot_id
-      foreignAlias: RelatedContent
+      foreignAlias: Content
 
 sfSympalContentType:
   actAs: [sfSympalRecordTemplate]

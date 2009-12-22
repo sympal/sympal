@@ -9,23 +9,23 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 
   public function initialize()
   {
-    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadTools'));
-    $this->dispatcher->connect('sympal.load_admin_bar', array($this, 'loadAdminBar'));
+    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
+    $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
   }
 
-  public function loadAdminBar(sfEvent $event)
+  public function loadAdminMenu(sfEvent $event)
   {
-    $menu = $event['menu'];
+    $menu = $event->getSubject();
 
     $administration = $menu->getChild('Administration');
     $menus = $administration->addChild('Menu Manager', '@sympal_menu_items')
       ->setCredentials(array('ManageMenus'));
   }
 
-  public function loadTools(sfEvent $event)
+  public function loadEditor(sfEvent $event)
   {
     $menuItem = $event['menuItem'];
-    $menu = $event['menu'];
+    $menu = $event->getSubject();
     $content = $event['content'];
 
     if ($menuItem && $menuItem->exists())

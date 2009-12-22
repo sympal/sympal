@@ -83,7 +83,6 @@ h3 {
 }
 
 #content #header h1 {
-  float: right;
   color: #333;
   font-weight: bold;
   font-size: 25px;
@@ -242,40 +241,40 @@ p {
   line-height: 1.5em;
 }
 
-ul#sympal-admin-bar-menu, ul#sympal-admin-bar-menu ul {
+ul#sympal-admin-menu, ul#sympal-admin-menu ul {
   list-style-type:none;
   margin: 0;
   padding: 0;
   width: 15em;
 }
 
-ul#sympal-admin-bar-menu a {
+ul#sympal-admin-menu a {
   display: block;
   text-decoration: none;	
 }
 
-ul#sympal-admin-bar-menu li {
+ul#sympal-admin-menu li {
   margin-top: 1px;
 }
 
-ul#sympal-admin-bar-menu li a {
+ul#sympal-admin-menu li a {
   background: #375fc2;
   color: #fff;	
   padding: 0.5em;
   font-weight: bold;
 }
 
-ul#sympal-admin-bar-menu li a:hover {
+ul#sympal-admin-menu li a:hover {
   text-shadow: #fff 0px 0px 3px;
 }
 
-ul#sympal-admin-bar-menu li ul li a {
+ul#sympal-admin-menu li ul li a {
   background: #eee;
   color: #000;
   padding-left: 20px;
 }
 
-ul#sympal-admin-bar-menu li ul li a:hover {
+ul#sympal-admin-menu li ul li a:hover {
   background: #ccc;
   border-left: 5px #375fc2 solid;
   padding-left: 20px;
@@ -302,4 +301,13 @@ ul#sympal-admin-bar-menu li ul li a:hover {
   text-indent: -999999999999px;
   background-image: url(../images/search_icon.gif);
   cursor: pointer;
+}
+
+.black_bar {
+  background: #333;
+  padding: 8px;
+  -khtml-border-radius:0.4em;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
 }

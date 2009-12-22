@@ -2,10 +2,10 @@
  "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <?php $ui = get_sympal_ui() ?>
   <?php $editor = get_sympal_editor() ?>
   <?php $flash = get_sympal_flash() ?>
   <?php $admin_menu = get_sympal_admin_menu() ?>
+
   <?php include_http_metas() ?>
   <?php include_metas() ?>
   <?php include_title() ?>
@@ -13,8 +13,6 @@
   <?php include_javascripts() ?>
 </head>
 <body>
-
-  <?php echo $ui ?>
 
   <div id="sympal_ajax_loading">
     Loading...
