@@ -28,6 +28,8 @@ generator:
             help: Custom path to be used to generate content record url.
           layout:
             help: Choose the layout template used to render this content record.
+          template:
+            help: Enter the path to a partial or component to render the content type of this content record.
           groups_list:
             label: Groups
             help: Choose the groups this content record is restricted to.

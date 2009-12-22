@@ -22,6 +22,8 @@ generator:
         fields:
           layout:
             help: Choose the layout template used to render this content type.
+          template:
+            help: Enter the path to a partial or component to render content records of this content type.
           name:
             help: Enter the name of this content type. This is required to be the same name as the content model name.
           label:
