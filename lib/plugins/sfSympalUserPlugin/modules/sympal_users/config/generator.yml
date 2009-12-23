@@ -2,7 +2,7 @@ generator:
   class: sfDoctrineGenerator
   param:
     model_class:           sfGuardUser
-    theme:                 admin
+    theme:                 sympal_admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -20,8 +20,8 @@ generator:
       form:
         class: sfGuardUserAdminForm
         display:
-          "User": [username, password, password_again, is_active, is_super_admin]
-          "Profile": [first_name, last_name, email_address]
-          "Security": [groups_list, permissions_list]
+          "User Information": [username, password, password_again, is_active, is_super_admin]
+          "Profile Information": [first_name, last_name, email_address]
+          "Security Credentials": [groups_list, permissions_list]
       edit:
       new:     ~

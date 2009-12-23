@@ -88,7 +88,7 @@ class sfSympalInstallPluginsChoiceWidget extends sfWidgetFormChoice
   }
 }
 
-class sfSympalUserInstallForm extends sfForm
+class sfSympalUserInstallForm extends BaseForm
 {
   public function setup()
   {
@@ -124,7 +124,7 @@ class sfSympalUserInstallForm extends sfForm
   }
 }
 
-class sfSympalDatabaseInstallForm extends sfForm
+class sfSympalDatabaseInstallForm extends BaseForm
 {
   public function setup()
   {

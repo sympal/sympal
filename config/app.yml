@@ -22,6 +22,7 @@ all:
       sfSympalContentSlot: [value]
       sfSympalMenuItem: [label]
       sfSympalPage: [title]
+      sfSympalSite: [page_title, meta_keywords, meta_description]
     sluggable_models:
       sfSympalContent:
         builder: [sfSympalContent, slugBuilder]

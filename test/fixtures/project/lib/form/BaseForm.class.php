@@ -1,5 +1,5 @@
 <?php
 
-class BaseForm extends sfForm
+class BaseForm extends sfFormSymfony
 {
 }

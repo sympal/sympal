@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalConfigForm extends sfForm
+class sfSympalConfigForm extends BaseForm
 {
   protected
     $_settings = array(),

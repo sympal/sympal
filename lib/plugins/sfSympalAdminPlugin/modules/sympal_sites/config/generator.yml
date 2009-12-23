@@ -2,7 +2,7 @@ generator:
   class: sfDoctrineGenerator
   param:
     model_class:           sfSympalSite
-    theme:                 admin
+    theme:                 sympal_admin
     non_verbose_templates: true
     with_show:             false
     singular:              ~
@@ -19,8 +19,8 @@ generator:
         class: false
       form:
         display:
-          "Site": [title, description, layout, slug]
-          "Meta": [page_title, meta_keywords, meta_description]
+          "Site Information": [title, description, layout, slug]
+          "Search Engine Optimization": [page_title, meta_keywords, meta_description]
         fields:
           layout:
             help: |

@@ -174,9 +174,35 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->getHeaderTitle();
   }
 
+  public function hasMasterMenuItem()
+  {
+      $newReference = false;
+      if ( ! $this->hasReference('MasterMenuItem')) {
+          $newReference = true;
+      }
+
+      $reference = $this->MasterMenuItem;
+      if ($reference && ! $reference instanceof Doctrine_Record) {
+          throw new Doctrine_Record_Exception(
+              'You can only call relatedExists() on a relationship that '.
+              'returns an instance of Doctrine_Record'
+          );
+      }
+      if ( ! $reference) {
+        return false;
+      }
+      $exists = $reference->exists();
+
+      if ($newReference) {
+          $this->clearRelated('MasterMenuItem');
+      }
+
+      return $exists;
+  }
+
   public function getRelatedMenuItem()
   {
-    if ($this->get('master_menu_item_id', false))
+    if ($this->hasMasterMenuItem())
     {
       $this->_mainMenuItem = $this->MasterMenuItem;
     } else {
