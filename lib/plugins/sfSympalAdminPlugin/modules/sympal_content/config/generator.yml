@@ -60,7 +60,7 @@ generator:
             action: unpublish
             label: Un-Publish
       filter:
-        class: false
+        class: sfSympalAdminGenSearchForm
       edit:
         title: "Editing Content #%%id%%"
         actions:

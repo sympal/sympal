@@ -15,11 +15,13 @@
   margin: 0;
   padding: 0;
   margin-bottom: 20px;
+  height: 20px;
 }
 
 #sf_admin_container .sf_admin_list table
 {
   background-color: #375fc2;
+  width: 100%;
 }
 
 #sf_admin_container table
@@ -126,10 +128,12 @@
   vertical-align: middle;
 }
 
+#sf_admin_container
+{
+}
+
 #sf_admin_bar
 {
-  float: right;
-  margin-left: 20px;
 }
 
 .sf_admin_pagination

@@ -41,6 +41,16 @@ abstract class Base<?php echo ucfirst($this->getModuleName()) ?>GeneratorConfigu
 <?php unset($this->config['filter']['class']) ?>
   }
 
+  public function getFilterForm($filters)
+  {
+    $form = parent::getFilterForm($filters);
+    if (method_exists($form, 'setModelName'))
+    {
+      $form->setModelName('<?php echo $this->getModelClass() ?>');
+    }
+    return $form;
+  }
+
 <?php include dirname(__FILE__).'/paginationConfiguration.php' ?>
 
 <?php include dirname(__FILE__).'/sortingConfiguration.php' ?>

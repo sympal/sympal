@@ -16,7 +16,7 @@ generator:
       list:
         display: [=username, last_login]
       filter:
-        display: [username, is_active, is_super_admin, last_login]
+        class: sfSympalAdminGenSearchForm
       form:
         class: sfGuardUserAdminForm
         display:

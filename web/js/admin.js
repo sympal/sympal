@@ -52,11 +52,15 @@ $(function()
   {
     $('.sf_admin_filter').hide();
 
-    var append = '<span style="float: left;">' + $('.sf_admin_list table thead tr th:last-child').html() + '</span><span id="sympal_filters_button">Filters</span>';
-    $('.sf_admin_list table thead tr th:last-child').html(append);
+    var append = '<span style="float: left;">' + $('#sf_admin_container h1').html() + '</span><div id="sympal_filters_button"></div>';
+    $('#sf_admin_container h1').html(append);
 
     $('#sympal_filters_button').click(function() {
       $('.sf_admin_filter').slideToggle();
+      
+      var pos = $('.sf_admin_list').offset();  
+      var width = $('.sf_admin_list').width();
+      $("#sf_admin_bar").css( { "position": "absolute", "left": (pos.right + width) + "px", "top":pos.top + 22 + "px" } );
     });
   }
 });
