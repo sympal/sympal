@@ -5,9 +5,18 @@
     <?php echo $form->renderHiddenFields() ?>
 
     <?php if ($contentSlot->getIsColumn()): ?>
-      <?php echo $form[$contentSlot->getName()] ?>
+      <?php if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot') && isset($form[$sf_user->getCulture()][$contentSlot->getName()])): ?>
+        <?php echo $form[$sf_user->getCulture()][$contentSlot->getName()] ?>
+      <?php else: ?>
+        <?php echo $form[$contentSlot->getName()] ?>
+      <?php endif; ?>
     <?php else: ?>
-      <?php echo $form['value'] ?>
+      <?php if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot')): ?>
+        <?php echo $form[$sf_user->getCulture()]['value'] ?>
+      <?php else: ?>
+        <?php echo $form['value'] ?>
+      <?php endif; ?>
+    
     <?php endif; ?>
 
     <input type="button" name="cancel" class="cancel" value="Cancel" />
