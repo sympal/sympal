@@ -19,6 +19,66 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     return $this->_contentRenderedFor;
   }
 
+  public function getEditForm()
+  {
+    if ($this->is_column)
+    {
+      return $this->_getContentSlotColumnForm();
+    } else {
+      return new sfSympalContentSlotForm($this);
+    }
+  }
+
+  protected function _getContentSlotColumnForm()
+  {
+    $content = $this->getContentRenderedFor();
+    $contentTable = $content->getTable();
+
+    if ($contentTable->hasField($this->name))
+    {
+      $form = new sfSympalInlineEditContentForm($content);
+      $form->useFields(array($this->name));
+    }
+
+    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
+    {
+      $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
+      if ($contentTranslationTable->hasField($this->name))
+      {
+        $form = new sfSympalInlineEditContentForm($content);
+        $form->useFields(array($this->getUser()->getCulture()));
+      }      
+    }
+
+    $contentTypeClassName = $content->getContentTypeClassName();
+    $contentTypeFormClassName = $contentTypeClassName.'Form';
+    $contentTypeTable = Doctrine_Core::getTable($contentTypeClassName);
+    if ($contentTypeTable->hasField($this->name))
+    {
+      $form = new $contentTypeFormClassName($content->getRecord());
+      $form->useFields(array($this->name));
+    }
+
+    if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
+    {
+      $contentTypeTranslationClassName = $contentTypeClassName.'Translation';
+      $contentTypeTranslationFormClassName = $contentTypeTranslationClassName.'Form';
+      $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
+      if ($contentTypeTranslationTable->hasField($this->name))
+      {
+        $form = new $contentTypeFormClassName($content->getRecord());
+        $form->useFields(array($this->getUser()->getCulture()));
+      }
+    }
+
+    if (!$form)
+    {
+      throw new InvalidArgumentException('Invalid content slot');
+    }
+
+    return $form;
+  }
+
   public function render()
   {
     if (!$this->_rendered)

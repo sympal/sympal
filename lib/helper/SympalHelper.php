@@ -10,14 +10,14 @@ function sympal_link_to_site($site, $name, $path = null)
 
 function get_sympal_admin_menu()
 {
-  $menu = new sfSympalMenuAdminBar('Sympal Admin');
+  $menu = new sfSympalMenuAdminMenu('Sympal Admin');
   $menu->setCredentials(array('ViewAdminBar'));
 
   $request = sfContext::getInstance()->getRequest();
   $menu->addChild('Go to Site', '@homepage');
   $menu->addChild('My Dashboard', '@sympal_dashboard');
-  $menu->addChild('Administration', $request->getUri());
-  $menu->addChild('Security', $request->getUri());
+  $menu->addChild('Administration');
+  $menu->addChild('Security');
 
   sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_admin_menu'));
 
@@ -278,11 +278,13 @@ function get_sympal_content_slot_editor(sfSympalContentSlot $slot)
     $renderedValue = $slot->render();
   }
 
+  $form = $slot->getEditForm();
+
   return '
 <span title="Double click to edit the '.$name.' slot" id="sympal_content_slot_'.$slot->getId().'" class="sympal_content_slot">
   <input type="hidden" class="content_slot_id" value="'.$slot->getId().'" />
   <input type="hidden" class="content_id" value="'.$slot->getContentRenderedFor()->getId().'" />
-  <span class="editor"></span>
+  <span class="editor">'.get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot)).'</span>
   <span class="value">'.$renderedValue.'</span>
 </span>';
 }

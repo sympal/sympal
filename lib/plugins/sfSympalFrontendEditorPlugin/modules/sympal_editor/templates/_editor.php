@@ -29,29 +29,7 @@
   {
     $('span.sympal_content_slot').dblclick(function()
     {
-      // get the content_id and slot_id
-      var content_id = $(this).find('.content_id').attr('value');
-      var id = $(this).find('.content_slot_id').attr('value');
-
-      // build the url
-      var url = '<?php echo url_for('@sympal_edit_content_slot?content_id=CONTENT_ID&id=ID') ?>';
-      url = url.replace('CONTENT_ID', content_id);
-      url = url.replace('ID', id);
-
-      var value = $(this).find('.value');
-      var editor = $(this).find('.editor');
-      var check = editor.find('.sympal_content_slot_editor');
-      if (check.length == 0)
-      {
-        editor.load(url, null, function() {
-          value.hide();
-          editor.find('input').focus();
-          editor.show();
-        });
-      } else {
-        value.hide();
-        editor.show();
-      }
+      $('#toggle_edit_mode').click();
     });
   });
 </script>

@@ -136,3 +136,25 @@
 .sympal_content_slot_editor form {
   display: inline;
 }
+
+#sympal_inline_edit_bar {
+  -khtml-border-radius:10px;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: #333333;
+  padding: 12px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#sympal_inline_edit_bar a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #ffffff !important;
+}
+
+#sympal_inline_edit_bar a:hover {
+  text-decoration: underline;
+}

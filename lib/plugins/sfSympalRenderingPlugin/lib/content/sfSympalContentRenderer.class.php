@@ -66,14 +66,14 @@ class sfSympalContentRenderer
       'contentRecord' => $content->getRecord()
     );
 
-    $event = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_variables'), $variables);
-    $variables = $event->getReturnValue();
+    $variables = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_variables'), $variables)->getReturnValue();
 
     $return = null;
 
     if ($format == 'html')
     {
       $return = sfSympalToolkit::getSymfonyResource($content->getTemplateToRenderWith(), $variables);
+      $return = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_content', $variables), $return)->getReturnValue();
     } else {
       switch ($format)
       {

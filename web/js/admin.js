@@ -63,4 +63,19 @@ $(function()
       $("#sf_admin_bar").css( { "position": "absolute", "left": (pos.right + width) + "px", "top":pos.top + 22 + "px" } );
     });
   }
+
+  var current = $.cookie('sympal_admin_menu');
+  if (!current)
+  {
+    current = $('#sympal_admin_menu ul li .clickable:first-child').parents('li').attr('id');
+  }
+  $('#sympal_admin_menu ul li .clickable').click(function() {
+    $(this).parents('li').find('ul li').slideToggle();
+    $('#' + current + ' li').hide();
+    current = $(this).parents('li').attr('id');
+    $.cookie('sympal_admin_menu', current);
+  });
+
+  $('#sympal_admin_menu ul li ul li').hide();
+  $('#' + current + ' li').show();
 });

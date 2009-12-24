@@ -80,7 +80,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
       foreach ($contentTypes as $contentType)
       {
-        $node = $menu->addChild('Manage '.$contentType->getLabel().' Content', '@sympal_content_list_type?type='.$contentType->getId());
+        $node = $menu->addChild('Manage '.$contentType->getLabel().' Content');
         $node->addChild('Create', '@sympal_content_create_type?type='.$contentType->getId());
         $node->addChild('List', '@sympal_content_list_type?type='.$contentType->getId());
       }
@@ -94,7 +94,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $administration->addChild('Configuration', '@sympal_config')
       ->setCredentials(array('ManageConfiguration'));
 
-    $content = $menu->addChild('Content Setup', sfContext::getInstance()->getRequest()->getUri())
+    $content = $menu->addChild('Content Setup')
       ->setCredentials(array('ManageContentSetup'));
 
     $content->addChild('Types', '@sympal_content_types');
@@ -133,7 +133,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     {
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' View '.$content['Type']['label'], $content->getRoute());
     } else {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'], $content->getEditRoute());      
+      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'].' in Backend', $content->getEditRoute());      
     }
 
     $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Type', '@sympal_content_types_edit?id='.$content->getType()->getId());      

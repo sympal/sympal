@@ -241,16 +241,40 @@ p {
   line-height: 1.5em;
 }
 
+
+#sympal_admin_menu {
+  background: #375fc2;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  -khtml-border-radius:0.4em;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
 ul#sympal-admin-menu, ul#sympal-admin-menu ul {
+  background: #fff;
   list-style-type:none;
   margin: 0;
   padding: 0;
-  width: 15em;
 }
 
 ul#sympal-admin-menu a {
   display: block;
-  text-decoration: none;	
+  text-decoration: none;
+}
+
+ul#sympal-admin-menu li .clickable {
+  background: #375fc2;
+  color: #fff;	
+  padding: 0.7em;
+  padding-left: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+ul#sympal-admin-menu li .clickable:hover {
+  text-shadow: #fff 0px 0px 3px;
 }
 
 ul#sympal-admin-menu li {

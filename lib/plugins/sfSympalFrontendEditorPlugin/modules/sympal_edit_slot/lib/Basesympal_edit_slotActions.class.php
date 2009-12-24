@@ -22,56 +22,6 @@ abstract class Basesympal_edit_slotActions extends sfActions
     $this->setTemplate('edit_slot');
   }
 
-  protected function _getContentSlotColumnForm(sfWebRequest $request)
-  {
-    $content = $this->contentSlot->getContentRenderedFor();
-    $contentTable = $content->getTable();
-
-    if ($contentTable->hasField($this->contentSlot->name))
-    {
-      $form = new sfSympalInlineEditContentForm($content);
-      $form->useFields(array($this->contentSlot->name));
-    }
-
-    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
-    {
-      $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
-      if ($contentTranslationTable->hasField($this->contentSlot->name))
-      {
-        $form = new sfSympalInlineEditContentForm($content);
-        $form->useFields(array($this->getUser()->getCulture()));
-      }      
-    }
-
-    $contentTypeClassName = $content->getContentTypeClassName();
-    $contentTypeFormClassName = $contentTypeClassName.'Form';
-    $contentTypeTable = Doctrine_Core::getTable($contentTypeClassName);
-    if ($contentTypeTable->hasField($this->contentSlot->name))
-    {
-      $form = new $contentTypeFormClassName($content->getRecord());
-      $form->useFields(array($this->contentSlot->name));
-    }
-
-    if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
-    {
-      $contentTypeTranslationClassName = $contentTypeClassName.'Translation';
-      $contentTypeTranslationFormClassName = $contentTypeTranslationClassName.'Form';
-      $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
-      if ($contentTypeTranslationTable->hasField($this->contentSlot->name))
-      {
-        $form = new $contentTypeFormClassName($content->getRecord());
-        $form->useFields(array($this->getUser()->getCulture()));
-      }
-    }
-
-    if (!$form)
-    {
-      throw new InvalidArgumentException('Invalid content slot');
-    }
-
-    return $form;
-  }
-
   protected function _getContentSlot(sfWebRequest $request)
   {
     $this->contentSlot = $this->getRoute()->getObject();
@@ -83,16 +33,9 @@ abstract class Basesympal_edit_slotActions extends sfActions
 
   protected function _getContentSlotForm(sfWebRequest $request)
   {
-    sfSympalContentSlotForm::disableCSRFProtection();
-
     $this->contentSlot = $this->_getContentSlot($request);
 
-    if ($this->contentSlot->is_column)
-    {
-      $this->form = $this->_getContentSlotColumnForm($request);
-    } else {
-      $this->form = new sfSympalContentSlotForm($this->contentSlot);
-    }
+    $this->form = $this->contentSlot->getEditForm();
 
     return $this->form;
   }
