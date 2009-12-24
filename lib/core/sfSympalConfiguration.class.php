@@ -65,7 +65,9 @@ class sfSympalConfiguration
 
     $this->initializeTheme();
 
-    $this->_projectConfiguration->loadHelpers(array('Sympal', 'I18N'));
+    $this->_projectConfiguration->loadHelpers(array(
+      'Sympal', 'SympalContentSlot', 'SympalMenu', 'SympalPager', 'I18N'
+    ));
   }
 
   public function filterTemplateParameters(sfEvent $event, $parameters)

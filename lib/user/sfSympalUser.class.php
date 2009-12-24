@@ -3,7 +3,7 @@
 class sfSympalUser extends sfGuardSecurityUser
 {
   protected
-    $_forwarded       = false;
+    $_forwarded = false;
 
   public function isEditMode()
   {
@@ -40,36 +40,5 @@ class sfSympalUser extends sfGuardSecurityUser
       throw new sfStopException();
     }
     return $access;
-  }
-
-  public function signIn($user, $remember = false, $con = null)
-  {
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.user.pre_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
-
-    parent::signIn($user, $remember, $con);
-
-    sfProjectConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.user.post_signin', array('user' => $user, 'remember' => $remember, 'con' => $con)));
-  }
-
-  protected function generateRandomKey($len = 20)
-  {
-    $string = '';
-    $pool   = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    for ($i = 1; $i <= $len; $i++)
-    {
-      $string .= substr($pool, rand(0, 61), 1);
-    }
-
-    return md5($string);
-  }
-
-  public function getSympalUser()
-  {
-    return $this->getGuardUser();
-  }
-
-  public function __call($method, $arguments)
-  {
-    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
   }
 }

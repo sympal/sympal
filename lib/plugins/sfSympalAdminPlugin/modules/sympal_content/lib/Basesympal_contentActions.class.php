@@ -150,7 +150,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $this->sf_sympal_content = new sfSympalContent();
     $this->sf_sympal_content->setType($type);
-    $this->sf_sympal_content->CreatedBy = $this->getUser()->getSympalUser();
+    $this->sf_sympal_content->CreatedBy = $this->getUser()->getGuardUser();
 
     Doctrine_Core::initializeModels(array($type['name']));
 

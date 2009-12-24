@@ -8,22 +8,6 @@ function sympal_link_to_site($site, $name, $path = null)
   return '<a href="'.$request->getRelativeUrlRoot().'/'.$file.($path ? '/'.$path:null).'">'.$name.'</a>';
 }
 
-function get_sympal_admin_menu()
-{
-  $menu = new sfSympalMenuAdminMenu('Sympal Admin');
-  $menu->setCredentials(array('ViewAdminBar'));
-
-  $request = sfContext::getInstance()->getRequest();
-  $menu->addChild('Go to Site', '@homepage');
-  $menu->addChild('My Dashboard', '@sympal_dashboard');
-  $menu->addChild('Administration');
-  $menu->addChild('Security');
-
-  sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_admin_menu'));
-
-  return get_partial('sympal_admin/menu', array('menu' => $menu));
-}
-
 /**
  * Get the Sympal flash boxes
  *
@@ -83,38 +67,6 @@ function set_sympal_title($title = null)
 }
 
 /**
- * Get a sfSympalMenu instance for the given menu root
- *
- * @param string $name  The slug of the root menu item you wish to retrieve
- * @param bool $showChildren Whether or not it should show the children when rendering
- * @param string $class The menu class to return an instance of
- */
-function get_sympal_menu($name, $showChildren = true, $class = null)
-{
-  return sfSympalMenuSiteManager::getMenu($name, $showChildren, $class);
-}
-
-/**
- * Get a menu split into 2 instances, a primary and submenu
- *
- * @param string $name  The slug of the root menu item you wish to retrieve
- * @param string $showChildren  Whether or not it should show the children when rendering
- * @param string $max The max menu items to include in the first menu
- * @param string $split Whether to return a 2nd menu item with the remaining menu items in it
- * @return mixed Either one sfSympalMenu instance of an array with 2 sfSympalMenu instances
- */
-function get_sympal_split_menus($name, $showChildren = true, $max = null, $split = false)
-{
-  $menu = sfSympalMenuSiteManager::getMenu($name, $showChildren);
-  if ($menu)
-  {
-    return sfSympalMenuSiteManager::split($menu, $max, $split);
-  } else {
-    return false;
-  }
-}
-
-/**
  * Get the floating sympal editor for the given MenuItem and Content instances
  *
  * @param MenuItem $menuItem 
@@ -136,147 +88,6 @@ function get_sympal_editor($menuItem = null, $content = null)
 
     return get_partial('sympal_editor/editor', array('menu' => $menu, 'content' => $content, 'menuItem' => $menuItem));
   }
-}
-
-/**
- * Get a Sympal pager header <h3>
- *
- * @param sfDoctrinePager $pager
- * @return string $html
- */
-function get_sympal_pager_header($pager)
-{
-  use_stylesheet('/sfSympalPlugin/css/pager.css');
-
-  $indice = $pager->getFirstIndice();
-  return '<div class="sympal_pager_header"><h3>Showing '.$indice.' to '.($pager->getLastIndice()).' of '.$pager->getNbResults().' total results.</h3></div>';
-}
-
-/**
- * Get the navigation links for given sfDoctrinePager instance
- *
- * @param sfDoctrinePager $pager
- * @param string $uri  The uri to prefix to the links
- * @return string $html
- */
-function get_sympal_pager_navigation($pager, $uri)
-{
-  use_stylesheet('/sfSympalPlugin/css/pager.css');
-
-  $navigation = '<div class="sympal_pager_navigation">';
- 
-  if ($pager->haveToPaginate())
-  {  
-    $uri .= (preg_match('/\?/', $uri) ? '&' : '?').'page=';
- 
-    // First and previous page
-    if ($pager->getPage() != 1)
-    {
-      $navigation .= link_to(image_tag('/sf/sf_admin/images/first.png', 'align=absmiddle'), $uri.'1');
-      $navigation .= link_to(image_tag('/sf/sf_admin/images/previous.png', 'align=absmiddle'), $uri.$pager->getPreviousPage()).' ';
-    }
- 
-    // Pages one by one
-    $links = array();
-    foreach ($pager->getLinks() as $page)
-    {
-      $links[] = '<span>'.link_to_unless($page == $pager->getPage(), $page, $uri.$page).'</span>';
-    }
-    $navigation .= join('  ', $links);
- 
-    // Next and last page
-    if ($pager->getPage() != $pager->getLastPage())
-    {
-      $navigation .= ' '.link_to(image_tag('/sf/sf_admin/images/next.png', 'align=absmiddle'), $uri.$pager->getNextPage());
-      $navigation .= link_to(image_tag('/sf/sf_admin/images/last.png', 'align=absmiddle'), $uri.$pager->getLastPage());
-    }
-  }
-  $navigation .= '</div>';
-
-  return $navigation;
-}
-
-/**
- * Get a Sympal Content instance property
- *
- * @param Content $content 
- * @param string $name 
- * @return mixed $value
- */
-function get_sympal_content_property($content, $name)
-{
-  return $content->$name;
-}
-
-/**
- * Get Sympal content slot value which is just a column value on the Content
- *
- * @param Content $content  The Content instance
- * @param string $name The name of the slot
- * @param string $renderFunction The function to use to render
- * @param string $type The type of slot
- * @return string $value
- */
-function get_sympal_column_content_slot($content, $name, $renderFunction = null, $type = 'ContentProperty')
-{
-  return get_sympal_content_slot($content, $name, $type, true, $renderFunction);
-}
-
-/**
- * Get Sympal content slot value
- *
- * @param Content $content  The Content instance
- * @param string $name The name of the slot
- * @param string $type The type of slot
- * @param string $isColumn  Whether it is a column property
- * @param string $renderFunction The function to use to render the value
- * @return void
- * @author Jonathan Wage
- */
-function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
-{
-  if ($content->hasField($name))
-  {
-    $isColumn = true;
-  }
-
-  if ($isColumn && is_null($renderFunction))
-  {
-    $renderFunction = 'get_sympal_content_property';
-  }
-
-  $slots = $content->getSlots();
-
-  if ($name instanceof sfSympalContentSlot)
-  {
-    $slot = $name;
-  } else {
-    $slot = $content->getOrCreateSlot($name, $type, $isColumn, $renderFunction);
-  }
-
-  $user = sfContext::getInstance()->getUser();
-  if ($user->isEditMode())
-  {
-    return get_sympal_content_slot_editor($slot);
-  } else {
-    return $slot->render();
-  }
-}
-
-function get_sympal_content_slot_editor(sfSympalContentSlot $slot)
-{
-  $name = $slot->getName();
-  $isColumn = $slot->getIsColumn();
-
-  $form = $slot->getEditForm();
-
-  return '
-<span title="Double click to edit the '.$name.' slot" id="sympal_content_slot_'.$slot->getId().'" class="sympal_content_slot">
-  <input type="hidden" class="content_slot_id" value="'.$slot->getId().'" />
-  <input type="hidden" class="content_id" value="'.$slot->getContentRenderedFor()->getId().'" />
-  <span class="editor">'.get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot)).'</span>
-  <span class="value">'.$slot->render().'</span>
-</span>';
 }
 
 /**

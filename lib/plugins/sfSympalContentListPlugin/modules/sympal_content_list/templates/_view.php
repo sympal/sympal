@@ -2,7 +2,7 @@
 
 <?php echo get_sympal_breadcrumbs($menuItem) ?>
 
-<h2><?php echo get_sympal_column_content_slot($content, 'title') ?></h2>
+<h2><?php echo get_sympal_content_slot($content, 'title') ?></h2>
 
 <?php echo get_sympal_content_slot($content, 'header', 'Markdown') ?>
 
