@@ -1,8 +1,8 @@
 all:
   sympal_config:
     page_cache:
-      enabled: true
-      with_layout: true
+      enabled: false
+      with_layout: false
       lifetime: 3600
     check_for_upgrades_on_dashboard: false
     enable_all_modules: true
