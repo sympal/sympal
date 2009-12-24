@@ -92,6 +92,7 @@ sfSympalContent:
     is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [Register_slot_body]
+    template: sympal_register/page_template
     CreatedBy: admin
 <?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
     Translation:

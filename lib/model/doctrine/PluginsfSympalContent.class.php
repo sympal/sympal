@@ -41,6 +41,11 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return isset($this->Slots[$name]) ? true : false;
   }
 
+  public function hasSlots()
+  {
+    return count($this->Slots) > 0 ? true : false;
+  }
+
   public function getSlot($name)
   {
     if ($this->hasSlot($name))

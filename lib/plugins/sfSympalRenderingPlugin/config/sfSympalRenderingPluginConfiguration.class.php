@@ -10,7 +10,7 @@ class sfSympalRenderingPluginConfiguration extends sfPluginConfiguration
   public function filterSympalContent(sfEvent $event, $content)
   {
     $inlineEditBar = '';
-    if (sfContext::getInstance()->getUser()->isEditMode())
+    if (sfContext::getInstance()->getUser()->isEditMode() && $event['content']->hasSlots())
     {
       $inlineEditBar  = '<div class="sympal_inline_edit_bar sympal_form">';
       $inlineEditBar .= ' <a href="#edit" class="toggle_edit_mode">'.image_tag('/sf/sf_admin/images/edit.png').' Edit '.$event['content']['Type']['label'].'</a>';
