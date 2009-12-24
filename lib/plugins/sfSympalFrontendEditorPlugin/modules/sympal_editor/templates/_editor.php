@@ -29,7 +29,7 @@
   {
     $('span.sympal_content_slot').dblclick(function()
     {
-      $('#toggle_edit_mode').click();
+      $('.toggle_edit_mode').click();
     });
   });
 </script>

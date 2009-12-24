@@ -46,7 +46,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       if ($contentTranslationTable->hasField($this->name))
       {
         $form = new sfSympalInlineEditContentForm($content);
-        $form->useFields(array($this->getUser()->getCulture()));
+        $form->useFields(array(sfContext::getInstance()->getUser()->getCulture()));
       }      
     }
 
@@ -67,7 +67,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       if ($contentTypeTranslationTable->hasField($this->name))
       {
         $form = new $contentTypeFormClassName($content->getRecord());
-        $form->useFields(array($this->getUser()->getCulture()));
+        $form->useFields(array(sfContext::getInstance()->getUser()->getCulture()));
       }
     }
 
@@ -125,10 +125,20 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     if ($this->is_column)
     {
       $name = $this->name;
-      return $this->_contentRenderedFor->$name;
+      $value = $this->_contentRenderedFor->$name;
     } else {
-      return $this->_get('value');
+      $value = $this->_get('value');
     }
+    
+    $user = sfContext::getInstance()->getUser();
+
+    if ($user->isEditMode() && !$value)
+    {
+      $rawValue = '[Double click to edit slot content]';
+    } else {
+      $rawValue = $value;
+    }
+    return $rawValue;
   }
 
   public function hasValue()

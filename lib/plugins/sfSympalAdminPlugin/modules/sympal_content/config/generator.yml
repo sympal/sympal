@@ -20,6 +20,7 @@ generator:
           "Settings": [created_by_id, master_menu_item_id, groups_list, permissions_list]
           "Rendering Options": [layout, template]
           "Search Engine Optimization": [page_title, meta_keywords, meta_description]
+          "Change Content Type": [content_type_id]
         fields:
           content_type_id:
             label: Content Type

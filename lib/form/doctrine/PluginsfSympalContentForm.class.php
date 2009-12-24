@@ -37,7 +37,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
 
     $this->widgetSchema['master_menu_item_id']->setOption('query', $q);
     $this->widgetSchema['master_menu_item_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'sfSympalMenuItem', 'query' => $q, 'add_empty' => true));
-    $this->widgetSchema['content_type_id'] = new sfWidgetFormInputHidden();
 
     sfSympalFormToolkit::changeLayoutWidget($this);
 

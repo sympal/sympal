@@ -267,16 +267,6 @@ function get_sympal_content_slot_editor(sfSympalContentSlot $slot)
 {
   $name = $slot->getName();
   $isColumn = $slot->getIsColumn();
-  $defaultValue = '[Double click to edit slot content]';
-
-  $user = sfContext::getInstance()->getUser();
-
-  if ($user->isEditMode() && !$slot->hasValue())
-  {
-    $renderedValue = $defaultValue;
-  } else {
-    $renderedValue = $slot->render();
-  }
 
   $form = $slot->getEditForm();
 
@@ -285,7 +275,7 @@ function get_sympal_content_slot_editor(sfSympalContentSlot $slot)
   <input type="hidden" class="content_slot_id" value="'.$slot->getId().'" />
   <input type="hidden" class="content_id" value="'.$slot->getContentRenderedFor()->getId().'" />
   <span class="editor">'.get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot)).'</span>
-  <span class="value">'.$renderedValue.'</span>
+  <span class="value">'.$slot->render().'</span>
 </span>';
 }
 

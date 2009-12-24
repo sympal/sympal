@@ -122,6 +122,7 @@ class sfSympalToolkit
     action: %s
     sf_format: html
     sympal_content_type: %s
+    sympal_content_type_id: %s
     sympal_content_id: %s
   class: sfDoctrineRoute
   options:
@@ -139,7 +140,7 @@ class sfSympalToolkit
         ->createQuery('c')
         ->leftJoin('c.Type t')
         ->innerJoin('c.Site s')
-        ->where('c.custom_path IS NOT NULL')
+        ->where("c.custom_path IS NOT NULL AND c.custom_path != ''")
         ->andWhere('s.slug = ?', $siteSlug)
         ->execute();
 
@@ -152,6 +153,7 @@ class sfSympalToolkit
           'sympal_content_renderer',
           'index',
           $content->Type->name,
+          $content->Type->id,
           $content->id,
           implode('|', sfSympalConfig::get('language_codes')),
           implode('|', sfSympalConfig::get('content_formats'))
@@ -170,6 +172,7 @@ class sfSympalToolkit
           'sympal_content_renderer',
           'index',
           $contentType->name,
+          $contentType->id,
           null,
           implode('|', sfSympalConfig::get('language_codes')),
           implode('|', sfSympalConfig::get('content_formats'))

@@ -137,7 +137,7 @@
   display: inline;
 }
 
-#sympal_inline_edit_bar {
+.sympal_inline_edit_bar {
   -khtml-border-radius:10px;
 	-moz-border-radius: 10px;
   -webkit-border-radius: 10px;
@@ -149,12 +149,12 @@
   margin-bottom: 10px;
 }
 
-#sympal_inline_edit_bar a {
+.sympal_inline_edit_bar a {
   text-decoration: none;
   font-weight: bold;
   color: #ffffff !important;
 }
 
-#sympal_inline_edit_bar a:hover {
+.sympal_inline_edit_bar a:hover {
   text-decoration: underline;
 }

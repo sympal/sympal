@@ -86,10 +86,10 @@ class Basesympal_contentActions extends autoSympal_contentActions
       {
         $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($type);
       } else {
-        $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($type);
+        $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByNameOrSlug($type, $type);
       }
       $this->getUser()->setAttribute('content_type_id', $this->contentType->id);
-      $request->setAttribute('content_type', $this->contentType->name);
+      $this->getRequest()->setAttribute('content_type', $this->contentType);
     }
 
     return $this->contentType;

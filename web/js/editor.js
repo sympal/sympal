@@ -38,10 +38,10 @@ $(function()
     $($(this).parent.id).find('.value').show()
   });
 
-  $('#sympal_save_content_slots').hide();
+  $('.sympal_save_content_slots').hide();
 
   var enabled = false;
-  $('#toggle_edit_mode').click(function() {
+  $('.toggle_edit_mode').click(function() {
     enabled = enabled ? false : true;
 
     $('.sympal_content_slot .editor').toggle();
@@ -50,12 +50,12 @@ $(function()
     if (enabled)
     {
       enabled = false;
-      $('#toggle_edit_mode').hide();
-      $('#sympal_save_content_slots').show();
+      $('.toggle_edit_mode').hide();
+      $('.sympal_save_content_slots').show();
     }
   });
 
-  $('#sympal_save_content_slots').click(function() {
+  $('.sympal_save_content_slots').click(function() {
     $('.sympal_content_slot form').each(function() {
       var form = $(this);
       $(this).ajaxSubmit({
@@ -65,7 +65,7 @@ $(function()
     $('.sympal_content_slot .editor').toggle();
     $('.sympal_content_slot .value').toggle();
 
-    $('#toggle_edit_mode').show();
-    $('#sympal_save_content_slots').hide();
+    $('.toggle_edit_mode').show();
+    $('.sympal_save_content_slots').hide();
   });
 });

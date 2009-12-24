@@ -11,15 +11,34 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       ->innerJoin($alias.'.'.$typeName.' cr');
   }
 
-  public function getFullTypeQuery($typeName, $alias = 'c')
+  public function getFullTypeQuery($type, $alias = 'c', $contentTypeId = null)
   {
-    $table = Doctrine_Core::getTable($typeName);
+    if ($type instanceof sfSympalContentType)
+    {
+      $table = $type->getTable();
+      $typeModelName = $type->getName();
+    } else {
+      $table = Doctrine_Core::getTable($type);
+      $typeModelName = $type;
+    }
+
+    Doctrine_Core::initializeModels(array($typeModelName));
 
     $q = $this->getBaseQuery($alias);
 
-    $q->innerJoin($alias.'.'.$typeName.' cr');
+    if ($type instanceof sfSympalContentType)
+    {
+      $contentTypeId = $type->getId();
+    }
 
-    if (sfSympalConfig::isI18nEnabled($typeName))
+    if ($contentTypeId)
+    {
+      $q->innerJoin($alias.'.'.$typeModelName.' cr WITH '.$alias.'.content_type_id = ?', $contentTypeId);
+    } else {
+      $q->innerJoin($alias.'.'.$typeModelName.' cr');
+    }
+
+    if (sfSympalConfig::isI18nEnabled($typeModelName))
     {
       $q->leftJoin('cr.Translation crt');
     }
@@ -36,9 +55,10 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
   {
     $request = sfContext::getInstance()->getRequest();
     $contentType = $request->getParameter('sympal_content_type');
+    $contentTypeId = $request->getParameter('sympal_content_type_id');
     $contentId = $request->getParameter('sympal_content_id');
     $contentSlug = $request->getParameter('sympal_content_slug');
-    $q = $this->getFullTypeQuery($contentType);
+    $q = $this->getFullTypeQuery($contentType, 'c', $contentTypeId);
 
     if ($contentId)
     {
@@ -121,7 +141,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
   public function getAdminGenQuery($q)
   {
     $q = Doctrine_Core::getTable('sfSympalContent')
-      ->getFullTypeQuery(sfContext::getInstance()->getRequest()->getAttribute('content_type', 'sfSympalPage'), 'r');
+      ->getFullTypeQuery(sfContext::getInstance()->getRequest()->getAttribute('content_type'), 'r');
 
     return $q;
   }
