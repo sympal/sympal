@@ -117,6 +117,10 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     $form->addSetting('plugin_api', 'username', 'Username or API Key');
     $form->addSetting('plugin_api', 'password');
+
+    $form->addSetting('page_cache', 'enabled', 'Enabled?', 'InputCheckbox', 'Boolean');
+    $form->addSetting('page_cache', 'with_layout', 'With layout?', 'InputCheckbox', 'Boolean');
+    $form->addSetting('page_cache', 'lifetime', 'Lifetime');
   }
 
   public function loadTools(sfEvent $event)

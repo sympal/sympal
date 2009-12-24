@@ -1,0 +1,6 @@
+index:
+  enabled:     <?php echo var_export(sfSympalConfig::get('page_cache', 'enabled', false))."\n" ?>
+
+  with_layout: <?php echo var_export(sfSympalConfig::get('page_cache', 'with_layout', false))."\n" ?>
+
+  lifetime:    <?php echo sfSympalConfig::get('page_cache', 'lifetime', 86400)."\n" ?>

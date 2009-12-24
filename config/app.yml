@@ -1,5 +1,9 @@
 all:
   sympal_config:
+    page_cache:
+      enabled: true
+      with_layout: true
+      lifetime: 3600
     check_for_upgrades_on_dashboard: false
     enable_all_modules: true
     get_cache_driver_callback: [sfSympalCache, getCacheDriver]
