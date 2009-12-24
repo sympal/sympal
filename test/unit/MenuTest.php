@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(53, new lime_output_color());
+$t = new lime_test(52, new lime_output_color());
 
 $configuration->loadHelpers(array('Tag'));
 
@@ -155,7 +155,6 @@ $t->is($menuItem->getMainContent()->getHeaderTitle(), 'Sample Page', 'Test sfSym
 $t->is($menuItem->getLabel(), 'Sample Page', 'Test sfSympalMenuItem::getLabel()');
 $t->is($menuItem->getItemRoute(), '@page?slug=sample-page', 'Test sfSympalMenuItem::getItemRoute()');
 $t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page', 'Test sfSympalBreadcrumbs::getPathAsString()');
-$t->is($menuItem->getLayout(), 'sympal', 'Test getLayout()');
 
 $menuManager = sfSympalMenuSiteManager::getInstance();
 $menuManager->clear();

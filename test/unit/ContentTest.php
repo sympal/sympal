@@ -88,7 +88,7 @@ $t->is($template, 'sympal_page/view');
 $t->is($content->getTitle(), 'Testing this out');
 $t->is($content->getHeaderTitle(), 'Testing this out');
 
-$t->is($content->getLayout(), 'sympal');
+$t->is($content->getLayout(), null);
 $t->is($content->getRoute(), '@page?slug=testing-this-out');
 
 get_sympal_content_slot($content, 'title', 'Text');
