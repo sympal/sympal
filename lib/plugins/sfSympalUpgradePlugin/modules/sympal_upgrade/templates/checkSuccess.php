@@ -1,4 +1,4 @@
-<?php use_stylesheet('/sfSympalPlugin/css/upgrade.css') ?>
+<?php use_stylesheet('/sfSympalUpgradePlugin/css/upgrade.css') ?>
 
 <?php if ($hasNewVersion): ?>
 

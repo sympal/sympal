@@ -1,0 +1,11 @@
+sympal_check_for_updates:
+  url:  /admin/upgrade/check
+  param: { module: sympal_upgrade, action: check }
+
+sympal_upgrade:
+  url:  /admin/upgrade
+  param: { module: sympal_upgrade, action: upgrade }
+
+sympal_run_upgrade_tasks:
+  url:  /admin/upgrade/tasks
+  param: { module: sympal_upgrade, action: run_tasks }

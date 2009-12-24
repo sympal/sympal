@@ -154,18 +154,6 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
     return $breadcrumbs;
   }
 
-  public function getLayout()
-  {
-    if ($layout = $this->getContentType()->getLayout())
-    {
-      return $layout;
-    } else if ($layout = $this->getSite()->getLayout()) {
-      return $layout;
-    } else {
-      return sfSympalConfig::get('default_layout', null, $this->getSite()->getSlug());
-    }
-  }
-
   public function getName()
   {
     return $this->_get('name');

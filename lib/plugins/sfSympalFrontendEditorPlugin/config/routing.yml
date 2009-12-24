@@ -1,0 +1,18 @@
+sympal_edit_content_slot:
+  url:   /edit_content_slot/:content_id/:id
+  param: { module: sympal_edit_slot, action: edit_slot }
+  class: sfDoctrineRoute
+  options:
+    model: sfSympalContentSlot
+    type: object
+
+sympal_save_content_slot:
+  url:   /edit_content_slot/:content_id/:id/save
+  param: { module: sympal_edit_slot, action: save_slot }
+  class: sfDoctrineRoute
+  options:
+    model: sfSympalContentSlot
+    type: object
+  requirements:
+    id: \d+
+    sf_method: [POST]

@@ -11,7 +11,6 @@ all:
     menu_class: sfSympalMenuSite
     breadcrumbs_class: sfSympalMenuBreadcrumbs
     super_admin_signin_url: @sympal_dashboard
-    enable_all_modules: true
     admin_module_web_dir: "/sfSympalPlugin"
     plugin_api:
       username: 

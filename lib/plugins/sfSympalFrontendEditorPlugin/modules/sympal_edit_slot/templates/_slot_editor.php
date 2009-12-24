@@ -1,6 +1,6 @@
 <?php use_helper('jQuery') ?>
 <?php use_javascript('/sfSympalPlugin/js/jQuery.form.js') ?>
-<?php use_javascript('/sfSympalPlugin/js/editor.js') ?>
+<?php use_javascript('/sfSympalFrontendEditorPlugin/js/editor.js') ?>
 
 <div class="sympal_content_slot_editor sympal_<?php echo sfInflector::tableize($contentSlot->getType()->getName()) ?>_content_slot_editor sympal_form">
   <?php echo jq_form_remote_tag(array(

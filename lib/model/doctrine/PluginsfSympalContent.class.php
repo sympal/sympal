@@ -430,19 +430,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
-  public function getLayout()
-  {
-    if ($layout = $this->_get('layout')) {
-      return $layout;
-    } else if ($layout = $this->getType()->getLayout()) {
-      return $layout;
-    } else if ($layout = $this->getSite()->getLayout()) {
-      return $layout;
-    } else {
-      return sfSympalConfig::get('default_layout', null, $this->getSite()->getSlug());
-    }
-  }
-
   public function loadMetaData(sfWebResponse $response)
   {
     // page title
@@ -502,6 +489,19 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
     $template = $template ? $template : 'sympal_default/default_content_template';
     return $template;
+  }
+
+  public function getLayoutToRenderWith()
+  {
+    if ($layout = $this->getLayout()) {
+      return $layout;
+    } else if ($layout = $this->getType()->getLayout()) {
+      return $layout;
+    } else if ($layout = $this->getSite()->getLayout()) {
+      return $layout;
+    } else {
+      return sfSympalConfig::get('default_layout', null, $this->getSite()->getSlug());
+    }
   }
 
   public function getSiteId()

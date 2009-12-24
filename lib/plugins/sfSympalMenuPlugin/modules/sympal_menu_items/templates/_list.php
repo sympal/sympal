@@ -1,9 +1,9 @@
 <?php use_helper('jQuery') ?>
 
-<?php use_stylesheet('/sfSympalPlugin/css/jquery.treeTable.css') ?>
+<?php use_stylesheet('/sfSympalMenuPlugin/css/jQuery.treeTable.css') ?>
 
 <?php use_javascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js') ?>
-<?php use_javascript('/sfSympalPlugin/js/jquery.treeTable.js') ?>
+<?php use_javascript('/sfSympalMenuPlugin/js/jQuery.treeTable.min.js') ?>
 
 <div class="sf_admin_list">
   <?php if (!$pager->getNbResults()): ?>

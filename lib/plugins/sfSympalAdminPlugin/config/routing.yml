@@ -1,0 +1,73 @@
+sympal_dashboard:
+  url:  /admin/dashboard
+  param: { module: sympal_dashboard, action: index }
+  
+sympal_publish_content:
+  url:   /publish_content/:id
+  param: { module: sympal_editor, action: publish_content }
+  class: sfDoctrineRoute
+  options: { model: sfSympalContent, type: object }
+
+sympal_unpublish_content:
+  url:   /unpublish_content/:id
+  param: { module: sympal_editor, action: unpublish_content }
+  class: sfDoctrineRoute
+  options: { model: sfSympalContent, type: object }
+
+sympal_config:
+  url:   /admin/configuration
+  param: { module: sympal_config, action: index }
+
+sympal_config_save:
+  url:   /admin/configuration/save
+  param: { module: sympal_config, action: save }
+
+sympal_content_slot_types:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalContentSlotType
+    module:               sympal_content_slot_types
+    prefix_path:          admin/content/slot_types
+    with_wildcard_routes: true
+
+sympal_content_types:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalContentType
+    module:               sympal_content_types
+    prefix_path:          admin/content/types
+    with_wildcard_routes: true
+
+sympal_sites:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalSite
+    module:               sympal_sites
+    prefix_path:          admin/sites
+    with_wildcard_routes: true
+
+sympal_content_menu_item:
+  url:    /admin/content/:id/menu
+  param: { module: sympal_content_menu_item, action: index }
+  class: sfDoctrineRoute
+  options:
+    model:  sfSympalContent
+    type:   object
+  requirements:
+    sf_method: [get, post]
+
+sympal_content:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalContent
+    module:               sympal_content
+    prefix_path:          admin/content
+    with_wildcard_routes: true
+
+sympal_content_create_type:
+  url:    /admin/content/create/:type
+  param:  { module: sympal_content, action: create_type }
+
+sympal_content_list_type:
+  url:    /admin/content/list/:type
+  param: { module: sympal_content, action: list_type }

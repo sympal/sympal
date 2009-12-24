@@ -1,6 +1,6 @@
 <?php set_sympal_title(__('Sympal Dashboard')) ?>
-<?php use_stylesheet('/sfSympalPlugin/css/dashboard') ?>
-<?php use_stylesheet('/sfSympalPlugin/css/upgrade') ?>
+<?php use_stylesheet('/sfSympalAdminPlugin/css/dashboard') ?>
+<?php use_stylesheet('/sfSympalUpgradePlugin/css/upgrade') ?>
 
 <?php if ($hasNewVersion): ?>
   <div class="sympal_new_version_box">

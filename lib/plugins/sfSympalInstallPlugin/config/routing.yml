@@ -1,0 +1,15 @@
+sympal_install_run:
+  url:  /install/run
+  param: { module: sympal_install, action: run }
+  requirements:
+    sf_method: [post]
+
+sympal_install_plugins:
+  url:  /install/plugins
+  param: { module: sympal_install, action: install_plugins }
+
+sympal_install:
+  url:  /install
+  param: { module: sympal_install, action: index }
+  requirements:
+    sf_method: [get]

@@ -65,7 +65,7 @@ class sfSympalActions extends sfSympalExtendClass
     $this->_handleForward404($content, $e);
     $this->getUser()->checkContentSecurity($content);
 
-    $this->changeTheme($content->getLayout());
+    $this->changeTheme($content->getLayoutToRenderWith());
 
     $renderer = $this->getSympalContext()->getContentRenderer($content);
 
@@ -151,10 +151,10 @@ class sfSympalActions extends sfSympalExtendClass
 
   public function useAdminLayout()
   {
-    $this->getResponse()->addJavascript('/sfSympalPlugin/js/admin.js');
+    $this->getResponse()->addJavascript('/sfSympalAdminPlugin/js/admin.js');
     $this->getResponse()->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
-    $this->getResponse()->addStylesheet('/sfSympalPlugin/css/global.css');
-    $this->getResponse()->addStylesheet('/sfSympalPlugin/css/default.css');
+    $this->getResponse()->addStylesheet('/sfSympalAdminPlugin/css/global.css');
+    $this->getResponse()->addStylesheet('/sfSympalAdminPlugin/css/default.css');
 
     $this->getContext()->getConfiguration()->loadHelpers('jQuery');
 

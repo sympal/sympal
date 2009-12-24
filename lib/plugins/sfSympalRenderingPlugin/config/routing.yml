@@ -1,0 +1,8 @@
+sympal_content_view:
+  url: /content/:slug
+  param: { module: sympal_content_renderer, action: index, result_type: object }
+  class: sfDoctrineRoute
+  options:
+    model:  sfSympalContent
+    type:   object
+    method: getContent

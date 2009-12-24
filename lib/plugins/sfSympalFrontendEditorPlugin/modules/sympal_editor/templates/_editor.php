@@ -2,8 +2,8 @@
   <?php use_helper('jQuery') ?>
   <?php use_javascript('/sfSympalPlugin/js/jQuery.cookie.js') ?>
   <?php use_javascript('/sfSympalPlugin/js/jQuery.hoverIntent.js') ?>
-  <?php use_javascript('/sfSympalPlugin/js/editor.js') ?>
-  <?php use_stylesheet('/sfSympalPlugin/css/editor') ?>
+  <?php use_javascript('/sfSympalFrontendEditorPlugin/js/editor.js') ?>
+  <?php use_stylesheet('/sfSympalFrontendEditorPlugin/css/editor.css') ?>
 
   <div id="sympal_toggle_editor"></div>
 
