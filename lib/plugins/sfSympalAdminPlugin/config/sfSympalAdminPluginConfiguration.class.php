@@ -6,7 +6,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   {
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
-    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadTools'));
+    $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
   }
 
   public function loadAdminMenu(sfEvent $event)
@@ -62,7 +62,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $form->addSetting('page_cache', 'lifetime', 'Lifetime');
   }
 
-  public function loadTools(sfEvent $event)
+  public function loadEditor(sfEvent $event)
   {
     $menu = $event->getSubject();
     $content = $event['content'];
@@ -72,11 +72,14 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $contentEditor = $menu->addChild($content['Type']['label'] . ' Actions')
       ->setCredentials(array('ManageContent'));
 
-    if ($request->getParameter('module') == 'sympal_content')
+    if ($request->getParameter('module') == 'sympal_content' || $request->getParameter('module') == 'sympal_menu_items')
     {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' View '.$content['Type']['label'], $content->getRoute());
-    } else {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'].' in Backend', $content->getEditRoute());      
+      $contentEditor->addChild(image_tag('/sf/sf_admin/images/list.png').' View '.$content['Type']['label'], $content->getRoute());
+    }
+    
+    if ($request->getParameter('module') != 'sympal_content')
+    {
+      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'], $content->getEditRoute());      
     }
 
     $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Type', '@sympal_content_types_edit?id='.$content->getType()->getId());      

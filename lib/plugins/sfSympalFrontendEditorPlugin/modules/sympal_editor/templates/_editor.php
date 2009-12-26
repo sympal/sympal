@@ -23,13 +23,3 @@
     <?php echo $menu ?>
   </div>
 <?php endif; ?>
-
-<script type="text/javascript">
-  $(function()
-  {
-    $('span.sympal_content_slot').dblclick(function()
-    {
-      $('.toggle_edit_mode').click();
-    });
-  });
-</script>

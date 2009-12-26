@@ -45,7 +45,7 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
       {
         $this->form->save();
 
-        $this->getUser()->setFlash('Menu saved successfully!');
+        $this->getUser()->setFlash('notice', 'Menu saved successfully!');
         $this->redirect('@sympal_content_edit?id='.$this->content->id);
       }
     }
