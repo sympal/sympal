@@ -90,9 +90,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       }
     }
 
-    $content = $q->fetchOne();
-
-    return $content;
+    return $q->fetchOne();
   }
 
   public function getBaseQuery($alias = 'c')

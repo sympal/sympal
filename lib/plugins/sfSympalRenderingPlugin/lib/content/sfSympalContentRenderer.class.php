@@ -19,9 +19,12 @@ class sfSympalContentRenderer
     $this->_dispatcher = $this->_configuration->getEventDispatcher();
     $this->_configuration->loadHelpers(array('Tag', 'Url', 'Partial'));
     $this->_content = $content;
-    $this->_menuItem = $this->_content->getMenuItem();
-    $this->_sympalContext->setCurrentMenuItem($this->_menuItem);
     $this->_sympalContext->setCurrentContent($this->_content);
+
+    if ($this->_menuItem = $this->_content->getMenuItem())
+    {
+      $this->_sympalContext->setCurrentMenuItem($this->_menuItem);
+    }
   }
 
   public function getFormat()

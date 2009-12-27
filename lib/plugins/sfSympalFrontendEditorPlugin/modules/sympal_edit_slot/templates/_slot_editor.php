@@ -2,6 +2,9 @@
 <?php use_javascript('/sfSympalPlugin/js/jQuery.form.js') ?>
 <?php use_javascript('/sfSympalFrontendEditorPlugin/js/editor.js') ?>
 
+<?php include_stylesheets_for_form($form) ?>
+<?php include_javascripts_for_form($form) ?>
+
 <div class="sympal_content_slot_editor sympal_<?php echo sfInflector::tableize($contentSlot->getType()) ?>_content_slot_editor sympal_form">
   <?php echo jq_form_remote_tag(array(
     'url' => url_for('@sympal_save_content_slot?content_id='.$contentSlot->getContentRenderedFor()->getId().'&id='.$contentSlot->getId()),

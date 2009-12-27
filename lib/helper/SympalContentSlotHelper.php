@@ -18,12 +18,12 @@ function get_sympal_content_property($content, $name)
  * @param Content $content  The Content instance
  * @param string $name The name of the slot
  * @param string $type The type of slot
- * @param string $isColumn  Whether it is a column property
  * @param string $renderFunction The function to use to render the value
  * @return void
  */
-function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
+function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunction = null)
 {
+  $isColumn = false;
   if ($content->hasField($name))
   {
     $isColumn = true;

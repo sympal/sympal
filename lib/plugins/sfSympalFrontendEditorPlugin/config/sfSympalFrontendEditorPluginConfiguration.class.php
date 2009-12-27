@@ -19,6 +19,7 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $response = sfContext::getInstance()->getResponse();
       $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.hoverIntent.js');
+      $response->addJavascript('/sfSympalPlugin/js/jQuery.elastic.js');
       $response->addJavascript('/sfSympalFrontendEditorPlugin/js/editor.js');
       $response->addStylesheet('/sfSympalFrontendEditorPlugin/css/editor.css');
     }

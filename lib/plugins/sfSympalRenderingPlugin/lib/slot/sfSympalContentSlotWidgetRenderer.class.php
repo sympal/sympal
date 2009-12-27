@@ -11,6 +11,6 @@ class sfSympalContentSlotWidgetRenderer extends sfSympalContentSlotRenderer
       return null;
     }
 
-    return sfSympalToolkit::getSymfonyResource($e[0], $e[1], array('content' => $this->_contentSlot->RelatedContent, 'contentSlot' => $this->_contentSlot));
+    return sfSympalToolkit::getSymfonyResource($e[0], $e[1], array('content' => $this->_contentSlot->getContentRenderedFor(), 'contentSlot' => $this->_contentSlot));
   }
 }

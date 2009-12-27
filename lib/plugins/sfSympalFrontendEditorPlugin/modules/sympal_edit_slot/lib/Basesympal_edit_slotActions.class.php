@@ -57,9 +57,6 @@ abstract class Basesympal_edit_slotActions extends sfActions
     if ($this->form->isValid())
     {
       $this->form->save();
-    } else {
-      exit('errors'.(string) $this->form);
-      // handle errors?
     }
 
     $this->setLayout(false);

@@ -188,7 +188,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function executeSitemap()
   {
     $table = Doctrine_Core::getTable('sfSympalMenuItem');
-    $this->menuItem = $table->getForSlug('sitemap');
+    $this->menuItem = $table->findOneBySlug('sitemap');
     $this->roots = $table->getTree()->fetchRoots();
   }
 
@@ -203,7 +203,10 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->sf_sympal_menu_item = $this->_getMenuItem($request);
     $this->form = $this->configuration->getForm($this->sf_sympal_menu_item);
 
-    $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_menu_item);
+    if ($this->sf_sympal_menu_item)
+    {
+      $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_menu_item);
+    }
   }
 
   public function executeDelete(sfWebRequest $request)

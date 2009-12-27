@@ -79,7 +79,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getOrCreateSlot($name, $type = 'Text', $isColumn = false, $renderFunction = null)
   {
-    if (!$this->hasSlot($name))
+    if (!$hasSlot = $this->hasSlot($name))
     {
       $slot = new sfSympalContentSlot();
       $slot->render_function = $renderFunction;
@@ -95,13 +95,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
           $type = 'ContentProperty';
         }
 
-        $slot->setType($type);
         $slot->setName($name);
+        $slot->setType($type);
+        $slot->save();
+
+        $this->addSlot($slot);
       }
-
-      $slot->save();
-
-      $this->addSlot($slot);
     } else {
       $slot = $this->getSlot($name);
     }

@@ -2,8 +2,10 @@
 
 class sfWidgetFormSympalRichText extends sfWidgetFormSympalMultiLineText
 {
-  public function render($name, $value = null, $attributes = array(), $errors = array())
+  public function getJavaScripts()
   {
-    return parent::render($name, $value, $attributes, $errors);
+    return array(
+      '/sfSympalPlugin/wymeditor/jquery.wymeditor.pack.js'
+    );
   }
 }
