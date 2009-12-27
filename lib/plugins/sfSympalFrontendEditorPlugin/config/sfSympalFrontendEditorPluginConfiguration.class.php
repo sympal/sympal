@@ -29,7 +29,24 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
   {
     $inlineEditBar  = '<div class="sympal_inline_edit_bar sympal_form">';
     $inlineEditBar .= ' <a href="#edit" class="toggle_edit_mode">'.image_tag('/sf/sf_admin/images/edit.png').' Edit '.$event['content']['Type']['label'].'</a>';
-    $inlineEditBar .= ' <input type="button" class="sympal_save_content_slots" name="save" value="Save" />';
+    $inlineEditBar .= ' <div class="sympal_inline_edit_bar_buttons">';
+    $inlineEditBar .= '   <input type="button" class="sympal_save_content_slots" name="save" value="Save" />';
+    $inlineEditBar .= '   <input type="button" class="sympal_preview_content_slots" name="preview" value="Preview" />';
+    $inlineEditBar .= ' </div>';
+    if (sfSympalConfig::isI18nEnabled())
+    {
+      $inlineEditBar .= '<div class="sympal_inline_edit_bar_change_language">';
+      $user = sfContext::getInstance()->getUser();
+      $form = new sfFormLanguage($user, array('languages' => sfSympalConfig::get('language_codes', null, array($user->getCulture()))));
+      unset($form[$form->getCSRFFieldName()]);
+      $widgetSchema = $form->getWidgetSchema();
+      $widgetSchema['language']->setAttribute('onChange', "this.form.submit();");
+
+      $inlineEditBar .= $form->renderFormTag(url_for('@sympal_change_language_form'));
+      $inlineEditBar .= $form['language'];
+      $inlineEditBar .= '</form>';
+      $inlineEditBar .= '</div>';
+    }
     $inlineEditBar .= '</div>';
     return $inlineEditBar.$content.$inlineEditBar;
   }

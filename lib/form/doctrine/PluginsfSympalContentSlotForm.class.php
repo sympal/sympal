@@ -14,7 +14,7 @@ abstract class PluginsfSympalContentSlotForm extends BasesfSympalContentSlotForm
     parent::setup();
 
     unset(
-      $this['content_slot_type_id'],
+      $this['type'],
       $this['is_column'],
       $this['render_function'],
       $this['name'],

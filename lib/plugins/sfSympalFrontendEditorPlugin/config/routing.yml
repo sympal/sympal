@@ -16,3 +16,14 @@ sympal_save_content_slot:
   requirements:
     id: \d+
     sf_method: [POST]
+
+sympal_preview_content_slot:
+  url:   /preview_content_slot/:content_id/:id
+  param: { module: sympal_edit_slot, action: preview_slot }
+  class: sfDoctrineRoute
+  options:
+    model: sfSympalContentSlot
+    type: object
+  requirements:
+    id: \d+
+    sf_method: [POST]

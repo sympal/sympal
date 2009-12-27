@@ -52,8 +52,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
   {
     $this->form = $this->_getContentSlotForm($request);
 
-    $values = $request->getParameter($this->form->getName());
-    $this->form->bind($values);
+    $this->form->bind($request->getParameter($this->form->getName()));
     if ($this->form->isValid())
     {
       $this->form->save();
@@ -67,7 +66,18 @@ abstract class Basesympal_edit_slotActions extends sfActions
   {
     $this->setLayout(false);
 
-    $this->contentSlot = $this->_getContentSlot($request);
-    $this->contentSlot->setValue($request->getParameter('value'));
+    $this->form = $this->_getContentSlotForm($request);
+    $this->contentSlot->resetRenderCache();
+
+    $this->form->bind($request->getParameter($this->form->getName()));
+    if ($this->form->isValid())
+    {
+      $this->form->updateObject();
+
+      $this->setTemplate('preview_slot');
+    } else {
+      exit((string) $this->form);
+      $this->setTemplate('edit_slot');
+    }
   }
 }

@@ -151,6 +151,13 @@
   margin-top: 10px;
   margin-bottom: 10px;
   height: 30px;
+  position: relative;
+}
+
+.sympal_inline_edit_bar_change_language {
+  position: absolute;
+  right: 20px;
+  top: 13px;
 }
 
 .sympal_inline_edit_bar a {

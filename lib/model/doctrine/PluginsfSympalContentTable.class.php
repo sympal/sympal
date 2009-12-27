@@ -116,17 +116,12 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
     if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot'))
     {
-      $q->leftJoin('sl.Translation slt');
+      $q->leftJoin('s.Translation slt');
     }
 
     if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
     {
       $q->leftJoin($alias.'.Translation ct');
-    }
-
-    if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
-    {
-      $q->leftJoin('m.Translation mt');
     }
 
     return $q;

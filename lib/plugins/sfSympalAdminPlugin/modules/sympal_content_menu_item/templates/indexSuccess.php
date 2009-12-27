@@ -17,7 +17,7 @@
 
         <div class="black_bar">
           <input type="submit" name="save" value="Save" />
-          <?php echo button_to('Cancel', $content->getEditRoute()) ?>
+          <input type="button" name="cancel" value="Cancel" onClick="javascript: history.go(-1);" />
         </div>
       </form>
     </div>

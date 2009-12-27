@@ -121,6 +121,14 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       {
         $result = true;
       }
+      if (sfSympalConfig::isI18nEnabled($className))
+      {
+        $table = Doctrine_Core::getTable($className.'Translation');
+        if ($table->hasField($name))
+        {
+          $result = true;
+        }
+      }
     }
     return $result;
   }

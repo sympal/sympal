@@ -19,6 +19,11 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     return $this->_contentRenderedFor;
   }
 
+  public function resetRenderCache()
+  {
+    $this->_rendered = null;
+  }
+
   public function getEditForm()
   {
     if ($this->is_column)
