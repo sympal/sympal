@@ -24,8 +24,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
 
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
 
-    $this->widgetSchema['created_by_id']->setOption('add_empty', true);
-
     $q = Doctrine_Query::create()
       ->from('sfSympalMenuItem m')
       ->orderBy('m.root_id, m.lft ASC');
@@ -34,9 +32,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     {
       $q->leftJoin('m.Translation mt'); 
     }
-
-    $this->widgetSchema['master_menu_item_id']->setOption('query', $q);
-    $this->widgetSchema['master_menu_item_id'] = new sfWidgetFormDoctrineChoice(array('model' => 'sfSympalMenuItem', 'query' => $q, 'add_empty' => true));
 
     sfSympalFormToolkit::changeLayoutWidget($this);
 

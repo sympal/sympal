@@ -19,18 +19,6 @@ abstract class PluginsfSympalMenuItemForm extends BasesfSympalMenuItemForm
 
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
 
-    if ($this->object->ContentType->name)
-    {
-      $q = Doctrine::getTable('sfSympalContent')
-        ->getTypeQuery($this->object->ContentType->name);
-    } else {
-      $q = Doctrine::getTable('sfSympalContent')
-        ->createQuery('c')
-        ->leftJoin('c.Type t');
-    }
-
-    $this->widgetSchema['content_id']->setOption('query', $q);
-
     $q = Doctrine_Query::create()
       ->from('sfSympalMenuItem m');
 

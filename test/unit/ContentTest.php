@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(40, new lime_output_color());
+$t = new lime_test(37, new lime_output_color());
 
 $user = new sfGuardUser();
 $user->first_name = 'test';
@@ -15,7 +15,6 @@ $user->save();
 
 $content = sfSympalContent::createNew('sfSympalPage');
 $content->slug = 'testing-this-out';
-$content->is_published = true;
 $content->date_published = date('Y-m-d', time() - 3600);
 $content->CreatedBy = $user;
 $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal');
@@ -28,11 +27,9 @@ $t->is($content->sfSympalPage->title, 'Testing this out');
 $menuItem = new sfSympalMenuItem();
 $menuItem->name = 'test';
 $menuItem->RelatedContent = $content;
-$menuItem->is_published = true;
 $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal');
 $menuItem->save();
 
-$content->MasterMenuItem = $menuItem;
 $content->save();
 
 $q = Doctrine_Core::getTable('sfSympalContent')
@@ -57,24 +54,20 @@ $sfUser->isEditMode(true);
 $content = $q->fetchOne();
 
 $content->publish();
-$t->is($content->is_published, true);
 $t->is(strtotime($content->date_published) > 0, true);
 
 $content->unpublish();
-$t->is($content->is_published, false);
 $t->is(strtotime($content->date_published) > 0, false);
 
-$content->is_published = 1;
 $content->date_published = new Doctrine_Expression('NOW()');
 $content->save();
 $content->free();
 
 $content = $q->fetchOne();
 
-$t->is($content->is_published, true);
 $t->is(strtotime($content->date_published) > 0, true);
 
-$menuItem = $content->getMainMenuItem();
+$menuItem = $content->getMenuItem();
 
 $t->is($menuItem->name, 'test');
 
@@ -109,7 +102,7 @@ $slot = $content->getOrCreateSlot('title');
 $t->is($slot->name, 'title');
 $slot = $content->getOrCreateSlot('new');
 $t->is($slot->name, 'new');
-$t->is($slot->Type->name, 'Text');
+$t->is($slot->type, 'Text');
 
 $content = $q->fetchOne();
 
@@ -117,9 +110,9 @@ $t->is(count($content->getSlots()), $countBefore + 1);
 
 $t->is($content->title, 'Title value');
 $t->is($slots['title']['value'], 'Title value');
-$t->is($slots['title']['Type']['name'], 'ContentProperty');
-$t->is($slots['body']['Type']['name'], 'Markdown');
-$t->is($slots['teaser']['Type']['name'], 'MultiLineText');
+$t->is($slots['title']['type'], 'ContentProperty');
+$t->is($slots['body']['type'], 'Markdown');
+$t->is($slots['teaser']['type'], 'MultiLineText');
 
 $t->is($slots['title']->render(), 'Title value');
 $t->is($slots['body']->render(), '<div class="sympal_markdown"><p>Body value</p>
@@ -131,7 +124,7 @@ $t->is($slots['body']->render(), '<div class="sympal_markdown"><p>test</p>
 
 $slots->save();
 
-$slots[2]->Type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName('MultiLineText');
+$slots[2]->type = 'MultiLineText';
 $t->is($slots['teaser']->render(), 'Body value<br />
 Testing');
 

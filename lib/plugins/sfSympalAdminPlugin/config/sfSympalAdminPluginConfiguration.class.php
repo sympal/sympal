@@ -31,14 +31,11 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $administration->addChild('Sites', '@sympal_sites')
       ->setCredentials(array('ManageSites'));
 
-    $administration->addChild('Configuration', '@sympal_config')
-      ->setCredentials(array('ManageConfiguration'));
-
-    $content = $menu->addChild('Content Setup')
+    $administration->addChild('Content Types', '@sympal_content_types')
       ->setCredentials(array('ManageContentSetup'));
 
-    $content->addChild('Types', '@sympal_content_types');
-    $content->addChild('Slot Types', '@sympal_content_slot_types');
+    $administration->addChild('Configuration', '@sympal_config')
+      ->setCredentials(array('ManageConfiguration'));
   }
 
   public function loadConfigForm(sfEvent $event)
@@ -84,7 +81,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Type', '@sympal_content_types_edit?id='.$content->getType()->getId());      
 
-    if ($content['is_published'])
+    if ($content['date_published'])
     {
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/cancel.png').' Un-Publish', '@sympal_unpublish_content?id='.$content['id']);
     } else {

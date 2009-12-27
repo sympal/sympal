@@ -20,6 +20,6 @@ generator:
       form:
         display:
           "Permission Information": [name, description]
-          "Associated Records": [groups_list, menu_items_list, content_list, users_list]
+          "Associated Records": [groups_list, users_list]
       edit:    ~
       new:     ~

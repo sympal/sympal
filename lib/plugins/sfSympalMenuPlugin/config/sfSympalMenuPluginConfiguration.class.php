@@ -33,7 +33,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
       $menuEditor = $menu->addChild('Menu Actions')
         ->setCredentials(array('ManageMenus'));
 
-      if ($menuItem['is_published'])
+      if ($menuItem->isPublished())
       {
         $menuEditor->addChild(image_tag('/sf/sf_admin/images/cancel.png').' Un-Publish Menu Item', '@sympal_unpublish_menu_item?id='.$menuItem['id']);
       } else {

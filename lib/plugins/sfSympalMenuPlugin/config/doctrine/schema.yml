@@ -13,7 +13,6 @@ sfSympalMenuItem:
       notnull: true
     root_id: integer
     is_primary: boolean
-    is_published: boolean
     date_published: timestamp
     label: string(255)
     custom_path: string(255)
@@ -41,22 +40,11 @@ sfSympalMenuItem:
       local: site_id
       foreignAlias: MenuItems
       onDelete: CASCADE
-    ContentType:
-      class: sfSympalContentType
-      local: content_type_id
-      foreignAlias: MenuItems
-      onDelete: CASCADE
     Groups:
       class: sfGuardGroup
       local: menu_item_id
       foreign: group_id
       refClass: sfSympalMenuItemGroup
-      foreignAlias: MenuItems
-    Permissions:
-      class: sfGuardPermission
-      local: menu_item_id
-      foreign: permission_id
-      refClass: sfSympalMenuItemPermission
       foreignAlias: MenuItems
 
 sfSympalMenuItemGroup:
@@ -78,25 +66,4 @@ sfSympalMenuItemGroup:
       class: sfGuardGroup
       local: group_id
       foreignAlias: MenuItemGroups
-      onDelete: CASCADE
-
-sfSympalMenuItemPermission:
-  actAs: [sfSympalRecordTemplate]
-  columns:
-    menu_item_id:
-      primary: true
-      type: integer
-    permission_id:
-      primary: type
-      type: integer
-  relations:
-    MenuItem:
-      class: sfSympalMenuItem
-      local: menu_item_id
-      foreignAlias: MenuItemPermissions
-      onDelete: CASCADE
-    Permission:
-      class: sfGuardPermission
-      local: permission_id
-      foreignAlias: MenuItemPermissions
       onDelete: CASCADE

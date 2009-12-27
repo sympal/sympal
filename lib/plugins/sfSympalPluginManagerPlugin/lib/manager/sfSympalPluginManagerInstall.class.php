@@ -123,8 +123,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installVars['contentType'] = $contentType;
 
     $properties = array(
-      'slug' => $slug,
-      'is_published' => true
+      'slug' => $slug
     );
 
     $content = $this->newContent($contentType, $properties);
@@ -141,10 +140,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $installVars['contentList'] = $contentList;
 
     $properties = array(
-      'is_published' => true,
       'date_published' => new Doctrine_Expression('NOW()'),
       'label' => str_replace('sfSympal', null, $this->_contentTypeName),
-      'ContentType' => $contentType,
       'RelatedContent' => $contentList
     );
 

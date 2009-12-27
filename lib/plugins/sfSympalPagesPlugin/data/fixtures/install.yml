@@ -4,23 +4,19 @@ sfSympalMenuItem:
   MenuItem_primary:
     name: primary
     is_primary: true
-    is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     label: Home
     Site: Site_default
-    ContentType: ContentType_Page
     custom_path: @homepage
     children:
       MenuItem_primary_home:
         name: Home
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Home
         Site: Site_default
         RelatedContent: Content_Page_home
       MenuItem_primary_register:
         name: Register
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Register
         Site: Site_default
@@ -28,7 +24,6 @@ sfSympalMenuItem:
         requires_no_auth: true
       MenuItem_primary_signin:
         name: Signin
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Signin
         Site: Site_default
@@ -36,7 +31,6 @@ sfSympalMenuItem:
         requires_no_auth: true
       MenuItem_primary_signout:
         name: Signout
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Signout
         route: @sympal_signout
@@ -44,52 +38,41 @@ sfSympalMenuItem:
         requires_auth: true
       MenuItem_primary_sample_page:
         name: Sample Page
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Sample Page
         Site: Site_default
         RelatedContent: Content_Page_sample_page
-        ContentType: ContentType_Page
       MenuItem_primary_sample_content_list:
         name: Sample Content List
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Sample Content List
         Site: Site_default
         RelatedContent: Content_ContentList_sample_content_list
-        ContentType: ContentType_Page
   MenuItem_footer:
     name: footer
-    is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     label: Home
     Site: Site_default
-    ContentType: ContentType_Page
     RelatedContent: Content_Page_home
     children:
       MenuItem_footer_sample_page:
         name: Sample Page
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Sample Page
         Site: Site_default
         RelatedContent: Content_Page_sample_page
-        ContentType: ContentType_Page
       MenuItem_footer_sample_content_list:
         name: Sample Content List
-        is_published: true
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
         label: Sample Content List
         Site: Site_default
         RelatedContent: Content_ContentList_sample_content_list
-        ContentType: ContentType_Page
 
 sfSympalContent:
   Content_Page_register:
     Type: ContentType_Page
     slug: register
     Site: Site_default
-    is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [Register_slot_body]
     template: sympal_register/page_template
@@ -105,7 +88,6 @@ sfSympalContent:
     Type: ContentType_Page
     slug: home
     Site: Site_default
-    is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     custom_path: "/"
     Slots: [Home_slot_body]
@@ -114,7 +96,6 @@ sfSympalContent:
     Type: ContentType_Page
     slug: sample-page
     Site: Site_default
-    is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [Sample_page_slot_body]
     CreatedBy: admin
@@ -122,23 +103,22 @@ sfSympalContent:
     Type: ContentType_ContentList
     slug: sample-content-list
     Site: Site_default
-    is_published: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     CreatedBy: admin
 
 sfSympalContentSlot:
   Home_slot_body:
     name: body
-    Type: ContentSlotType_Markdown
+    type: Markdown
     value: |
       Welcome to the Sympal content management system.
   Sample_page_slot_body:
     name: body
-    Type: ContentSlotType_Markdown
+    type: Markdown
     value: This is a sample Sympal page.
   Register_slot_body:
     name: body
-    Type: ContentSlotType_Markdown
+    type: Markdown
     value: Register a new user below.
 
 sfSympalPage:

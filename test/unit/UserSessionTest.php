@@ -13,7 +13,11 @@ $content = Doctrine_Core::getTable('sfSympalContent')
 
 $t->is($user->hasAccessToContent($content), true);
 
-$content->Permissions[] = Doctrine_Core::getTable('sfGuardPermission')->findOneByName('ManageContent');
+$group = new sfGuardGroup();
+$group->name = 'SpecialGroup';
+$group->save();
+
+$content->Groups[] = $group;
 $content->save();
 
 $admin = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);

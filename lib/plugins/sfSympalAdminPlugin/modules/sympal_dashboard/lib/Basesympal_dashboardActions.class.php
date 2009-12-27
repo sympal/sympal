@@ -64,10 +64,6 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setRoute('@sympal_content_types')
       ->setCredentials(array('ManageContentSetup'));
 
-    $this->boxes['Slot Types']
-      ->setRoute('@sympal_content_slot_types')
-      ->setCredentials(array('ManageContentSetup'));
-
     $this->boxes['Users']
       ->setRoute('@sympal_users')
       ->setCredentials(array('ManageUsers'));

@@ -23,7 +23,7 @@ class sfSympalContentRenderer
     $response = $this->_symfonyContext->getResponse();
 
     $this->_content = $content;
-    $this->_menuItem = $this->_content->getMainMenuItem();
+    $this->_menuItem = $this->_content->getMenuItem();
     $format = $format ? $format : $request->getRequestFormat('html');
     $format = $format ? $format : 'html';
 

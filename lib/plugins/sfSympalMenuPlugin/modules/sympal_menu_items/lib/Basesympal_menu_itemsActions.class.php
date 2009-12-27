@@ -119,7 +119,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $q = Doctrine_Core::getTable('sfSympalMenuItem')
       ->createQuery('m')
       ->leftJoin('m.Groups g')
-      ->leftJoin('m.Permissions p')
       ->where('m.id = ?', $request->getParameter('id'));
 
     if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))

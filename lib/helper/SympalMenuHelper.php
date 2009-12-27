@@ -41,8 +41,6 @@ function get_sympal_admin_menu()
 {
   $menu = new sfSympalMenuAdminMenu('Sympal Admin');
   $menu->setCredentials(array('ViewAdminBar'));
-
-  $request = sfContext::getInstance()->getRequest();
   $menu->addChild('Go to Site', '@homepage');
   $menu->addChild('My Dashboard', '@sympal_dashboard');
   $menu->addChild('Administration');

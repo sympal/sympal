@@ -23,11 +23,12 @@ $t->is($dataGrid->getPagerHeader(), '<div class="sympal_pager_header"><h3>Showin
 $dataGrid = sfSympalDataGrid::create('sfSympalContentType', 'c')
   ->setMaxPerPage(1)
   ->setPage(1)
+  ->orderBy('c.name DESC')
   ->configureColumn('c.id', 'renderer=test/data_grid_id');
 
 $t->is($dataGrid->getRows(), array(
     array(
-      'c.id' => 'partial_1',
+      'c.id' => 'partial_2',
       'c.name' => 'sfSympalPage',
       'c.description' => 'The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.',
       'c.label' => 'Page',

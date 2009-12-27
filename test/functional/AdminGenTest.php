@@ -11,7 +11,6 @@ $adminGenModules = array(
   'sympal_groups' => '/admin/security/group',
   'sympal_permissions' => '/admin/security/permission',
   //'sympal_content' => '/admin/content',
-  'sympal_content_slot_types' => '/admin/content/slot_types',
   'sympal_content_types' => '/admin/content/types',
   'sympal_sites' => '/admin/sites'
 );

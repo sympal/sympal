@@ -151,7 +151,7 @@ $menuItem = $table
 
 $t->is($menuItem->getIndentedName(), '- Sample Page', 'Test sfSympalMenuItem::getIndentedName()');
 $t->is((string) $menuItem, '- Sample Page', 'Test sfSympalMenuItem::__toString()');
-$t->is($menuItem->getMainContent()->getHeaderTitle(), 'Sample Page', 'Test sfSympalMenuItem::getHeaderTitle()');
+$t->is($menuItem->getContent()->getHeaderTitle(), 'Sample Page', 'Test sfSympalMenuItem::getHeaderTitle()');
 $t->is($menuItem->getLabel(), 'Sample Page', 'Test sfSympalMenuItem::getLabel()');
 $t->is($menuItem->getItemRoute(), '@page?slug=sample-page', 'Test sfSympalMenuItem::getItemRoute()');
 $t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page', 'Test sfSympalBreadcrumbs::getPathAsString()');

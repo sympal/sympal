@@ -100,12 +100,9 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
     $sympalContext = sfSympalContext::getInstance();
     $q = Doctrine_Query::create()
       ->from('sfSympalContent '.$alias)
-      ->leftJoin($alias.'.Permissions p')
       ->leftJoin($alias.'.Groups g')
       ->leftJoin($alias.'.Slots sl INDEXBY sl.name')
-      ->leftJoin('sl.Type sty')
       ->leftJoin($alias.'.Type ty')
-      ->leftJoin($alias.'.MasterMenuItem m')
       ->leftJoin($alias.'.MenuItem mm')
       ->leftJoin($alias.'.CreatedBy u')
       ->innerJoin($alias.'.Site csi')
@@ -116,8 +113,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
     if (!$user->isEditMode())
     {
       $expr = new Doctrine_Expression('NOW()');
-      $q->andWhere($alias.'.is_published = ?', true)
-        ->andWhere($alias.'.date_published <= '.$expr);
+      $q->andWhere($alias.'.date_published <= '.$expr);
     }
 
     if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot'))

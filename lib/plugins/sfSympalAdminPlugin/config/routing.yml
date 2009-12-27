@@ -22,14 +22,6 @@ sympal_config_save:
   url:   /admin/configuration/save
   param: { module: sympal_config, action: save }
 
-sympal_content_slot_types:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalContentSlotType
-    module:               sympal_content_slot_types
-    prefix_path:          admin/content/slot_types
-    with_wildcard_routes: true
-
 sympal_content_types:
   class:                  sfDoctrineRouteCollection
   options:

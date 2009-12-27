@@ -1,10 +1,4 @@
 <?php if ($menu = $menu->render()): ?>
-  <?php use_helper('jQuery') ?>
-  <?php use_javascript('/sfSympalPlugin/js/jQuery.cookie.js') ?>
-  <?php use_javascript('/sfSympalPlugin/js/jQuery.hoverIntent.js') ?>
-  <?php use_javascript('/sfSympalFrontendEditorPlugin/js/editor.js') ?>
-  <?php use_stylesheet('/sfSympalFrontendEditorPlugin/css/editor.css') ?>
-
   <div id="sympal_toggle_editor"></div>
 
   <div id="sympal_editor">

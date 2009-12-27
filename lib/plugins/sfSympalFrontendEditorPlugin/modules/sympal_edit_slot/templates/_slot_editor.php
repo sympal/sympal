@@ -2,7 +2,7 @@
 <?php use_javascript('/sfSympalPlugin/js/jQuery.form.js') ?>
 <?php use_javascript('/sfSympalFrontendEditorPlugin/js/editor.js') ?>
 
-<div class="sympal_content_slot_editor sympal_<?php echo sfInflector::tableize($contentSlot->getType()->getName()) ?>_content_slot_editor sympal_form">
+<div class="sympal_content_slot_editor sympal_<?php echo sfInflector::tableize($contentSlot->getType()) ?>_content_slot_editor sympal_form">
   <?php echo jq_form_remote_tag(array(
     'url' => url_for('@sympal_save_content_slot?content_id='.$contentSlot->getContentRenderedFor()->getId().'&id='.$contentSlot->getId()),
     'update' => "#sympal_content_slot_".$contentSlot->getId()." .value"

@@ -17,4 +17,4 @@
   </div>
 </div>
 
-<?php echo get_sympal_editor($sf_sympal_content->getMainMenuItem(), $sf_sympal_content) ?>
+<?php echo get_sympal_editor($sf_sympal_content->getMenuItem(), $sf_sympal_content) ?>

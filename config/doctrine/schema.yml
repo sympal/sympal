@@ -21,12 +21,10 @@ sfSympalContent:
     content_type_id:
       type: integer
       notnull: true
-    master_menu_item_id: integer
     last_updated_by_id: integer
     created_by_id:
       type: integer
       notnull: true
-    is_published: boolean
     date_published: timestamp
     custom_path: string(255)
     layout: string(255)
@@ -36,17 +34,9 @@ sfSympalContent:
     meta_description: string(500)
     i18n_slug: string(255)
   indexes:
-    is_published:
-      fields: [is_published]
     date_published:
       fields: [date_published]
   relations:
-    MasterMenuItem:
-      class: sfSympalMenuItem
-      local: master_menu_item_id
-      onDelete: SET NULL
-      foreignAlias: MasterContent
-      foreignType: one
     LastUpdatedBy:
       class: sfGuardUser
       local: last_updated_by_id
@@ -72,12 +62,6 @@ sfSympalContent:
       local: content_id
       foreign: group_id
       refClass: sfSympalContentGroup
-      foreignAlias: Content
-    Permissions:
-      class: sfGuardPermission
-      local: content_id
-      foreign: permission_id
-      refClass: sfSympalContentPermission
       foreignAlias: Content
     Slots:
       class: sfSympalContentSlot
@@ -112,9 +96,6 @@ sfSympalContentSlot:
     symfony:
       filter: false
   columns:
-    content_slot_type_id:
-      type: integer
-      notnull: true
     is_column:
       type: boolean
       default: false
@@ -122,16 +103,15 @@ sfSympalContentSlot:
     name:
       type: string(255)
       notnull: true
+    type:
+      type: string(255)
+      notnull: true
     value: clob
   indexes:
     name:
       fields: [name]
-  relations:
-    Type:
-      local: content_slot_type_id
-      class: sfSympalContentSlotType
-      foreignAlias: Slots
-      onDelete: CASCADE
+    type:
+      fields: [type]
 
 sfSympalContentSlotRef:
   actAs: [sfSympalRecordTemplate]
@@ -158,17 +138,6 @@ sfSympalContentSlotRef:
       foreignAlias: ContentSlotRefs
       onDelete: CASCADE
 
-sfSympalContentSlotType:
-  actAs: [sfSympalRecordTemplate]
-  columns:
-    name:
-      type: string(255)
-      notnull: true
-      unique: true
-    is_internal:
-      type: boolean
-      default: 0
-
 sfSympalContentGroup:
   actAs: [sfSympalRecordTemplate]
   options:
@@ -192,29 +161,4 @@ sfSympalContentGroup:
       class: sfGuardGroup
       local: group_id
       foreignAlias: ContentGroups
-      onDelete: CASCADE
-
-sfSympalContentPermission:
-  actAs: [sfSympalRecordTemplate]
-  options:
-    symfony:
-      form: false
-      filter: false
-  columns:
-    content_id:
-      primary: true
-      type: integer
-    permission_id:
-      primary: true8
-      type: integer
-  relations:
-    Content:
-      class: sfSympalContent
-      local: content_id
-      foreignAlias: ContentGroups
-      onDelete: CASCADE
-    Permission:
-      class: sfGuardPermission
-      local: permission_id
-      foreignAlias: ContentPermissions
       onDelete: CASCADE

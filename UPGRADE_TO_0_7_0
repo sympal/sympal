@@ -91,3 +91,13 @@ For example, the following:
 Should be changed to:
 
     $content = new sfSympalContent::createNew('sfSympalPage');
+
+# Removed Content Slot Type Model
+
+As this model is not really needed, it has been removed completely and now the type
+of a slot is just stored as a string type on each slot record.
+
+# Removed is_published flag
+
+The date_published field is enough to know that a record is published or not so
+this field was removed from content and menu items.

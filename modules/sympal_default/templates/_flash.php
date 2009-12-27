@@ -1,5 +1,3 @@
-<?php use_stylesheet('/sfSympalPlugin/css/flash.css') ?>
-
 <?php if ($sf_user->hasFlash('notice') || $sf_user->hasFlash('error')): ?>
   <div id="sympal_flash">
     <?php if ($sf_user->hasFlash('notice')): ?>

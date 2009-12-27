@@ -171,8 +171,6 @@ class sfSympalMenuSiteManager
         ->addSelect('g.id, g.name')
         ->leftJoin('g.Permissions gp')
         ->addSelect('gp.id, gp.name')
-        ->leftJoin('m.Permissions mp')
-        ->addSelect('mp.id, mp.name')
         ->leftJoin('m.RelatedContent c')
         ->addSelect('c.id, c.custom_path, c.slug')
         ->leftJoin('c.Type ct')
@@ -196,8 +194,7 @@ class sfSympalMenuSiteManager
       if (!$user->isEditMode())
       {
         $expr = new Doctrine_Expression('NOW()');
-        $q->andWhere('m.is_published = ?', 1)
-          ->andWhere('m.date_published <= '.$expr);
+        $q->andWhere('m.date_published <= '.$expr);
       }
 
       $this->_menuItems = $q->execute(array(), Doctrine_Core::HYDRATE_RECORD_HIERARCHY);

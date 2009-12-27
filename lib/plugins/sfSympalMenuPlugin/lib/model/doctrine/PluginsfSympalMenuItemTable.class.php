@@ -15,7 +15,8 @@ class PluginsfSympalMenuItemTable extends sfSympalDoctrineTable
     $user = sfContext::getInstance()->getUser();
     if (!$user->isEditMode())
     {
-      $q->andWhere('m.is_published = 1');
+      $expr = new Doctrine_Expression('NOW()');
+      $q->andWhere('m.date_published <= '.$expr);
     }
 
     return $q->fetchOne();

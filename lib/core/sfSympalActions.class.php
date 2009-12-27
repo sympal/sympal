@@ -58,9 +58,7 @@ class sfSympalActions extends sfSympalExtendClass
     $content = null;
     $e = null;
 
-    try {
-      $content = $this->getRoute()->getObject();
-    } catch (Exception $e) {}
+    $content = $this->getRoute()->getObject();
 
     $this->_handleForward404($content, $e);
     $this->getUser()->checkContentSecurity($content);
@@ -130,7 +128,7 @@ class sfSympalActions extends sfSympalExtendClass
       ->andWhere('c.slug = ?', $slug)
       ->fetchOne();
 
-    $menuItem = $content->getMainMenuItem();
+    $menuItem = $content->getMenuItem();
 
     $renderer = new sfSympalContentRenderer($this, $menuItem, $format);
     $renderer->setContent($content);

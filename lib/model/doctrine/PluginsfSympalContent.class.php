@@ -92,9 +92,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       {
         if ($isColumn)
         {
-          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName('ContentProperty');
-        } else {
-          $type = Doctrine_Core::getTable('sfSympalContentSlotType')->findOneByName($type);
+          $type = 'ContentProperty';
         }
 
         $slot->setType($type);
@@ -161,10 +159,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
           $this->_allPermissions[] = $permission->name;
         }
       }
-      foreach ($this->Permissions as $permission)
-      {
-        $this->_allPermissions[] = $permission->name;
-      }
     }
     return $this->_allPermissions;
   }
@@ -179,60 +173,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->getHeaderTitle();
   }
 
-  public function hasMasterMenuItem()
-  {
-      $newReference = false;
-      if ( ! $this->hasReference('MasterMenuItem')) {
-          $newReference = true;
-      }
-
-      $reference = $this->MasterMenuItem;
-      if ($reference && ! $reference instanceof Doctrine_Record) {
-          throw new Doctrine_Record_Exception(
-              'You can only call relatedExists() on a relationship that '.
-              'returns an instance of Doctrine_Record'
-          );
-      }
-      if ( ! $reference) {
-        return false;
-      }
-      $exists = $reference->exists();
-
-      if ($newReference) {
-          $this->clearRelated('MasterMenuItem');
-      }
-
-      return $exists;
-  }
-
   public function getRelatedMenuItem()
   {
-    if ($this->hasMasterMenuItem())
+    $menuItem = $this->_get('MenuItem');
+    if ($menuItem && $menuItem->exists())
     {
-      $this->_mainMenuItem = $this->MasterMenuItem;
-    } else {
-      $menuItem = $this->_get('MenuItem');
-      if ($menuItem && $menuItem->exists())
-      {
-        $this->_mainMenuItem = $menuItem;
-      }
-    }
-    return $this->_mainMenuItem;
-  }
-
-  public function getMainMenuItem()
-  {
-    if (!$this->_mainMenuItem = $this->getRelatedMenuItem())
-    {
-      $q = Doctrine_Core::getTable('sfSympalMenuItem')
-        ->createQuery('m')
-        ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')))
-        ->andWhere('m.content_type_id = ?', $this->content_type_id)
-        ->orWhere('m.is_primary = true')
-        ->orderBy('m.is_primary DESC')
-        ->limit(1);
-
-      $this->_mainMenuItem = $q->fetchOne();
+      $this->_mainMenuItem = $menuItem;
     }
     return $this->_mainMenuItem;
   }
@@ -250,7 +196,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function publish()
   {
-    $this->is_published = true;
     $this->date_published = new Doctrine_Expression('NOW()');
     $this->save();
     $this->refresh();
@@ -258,7 +203,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function unpublish()
   {
-    $this->is_published = false;
     $this->date_published = null;
     $this->save();
   }
@@ -348,7 +292,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getAutomaticUrlHierarchy()
   {
-    $menuItem = $this->getMainMenuItem();
+    $menuItem = $this->getMenuItem();
     unset($this->MenuItem);
     if ($menuItem)
     {
@@ -514,11 +458,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->_get('content_type_id');
   }
 
-  public function getMasterMenuItemId()
-  {
-    return $this->_get('master_menu_item_id');
-  }
-
   public function getLastUpdatedBy()
   {
     return $this->_get('LastUpdatedBy');
@@ -537,11 +476,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   public function getCreatedById()
   {
     return $this->_get('created_by_id');
-  }
-
-  public function getIsPublished()
-  {
-    return $this->_get('is_published');
   }
 
   public function getDatePublished()
@@ -572,11 +506,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   public function getI18nSlug()
   {
     return $this->_get('i18n_slug');
-  }
-
-  public function getMasterMenuItem()
-  {
-    return $this->_get('MasterMenuItem');
   }
 
   public function getSite()

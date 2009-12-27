@@ -148,7 +148,6 @@ class sfSympalPluginManager
     $content->Type = $contentType;
     $content->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);
     $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
-    $content->is_published = true;
     $content->date_published = new Doctrine_Expression('NOW()');
 
     $name = $contentType['name'];
@@ -183,7 +182,6 @@ class sfSympalPluginManager
     $menuItem = new sfSympalMenuItem();
     $menuItem->name = $name;
     $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
-    $menuItem->is_published = true;
     $menuItem->date_published = new Doctrine_Expression('NOW()');
 
     $this->_setDoctrineProperties($menuItem, $properties);

@@ -88,12 +88,6 @@ h3 {
   font-size: 25px;
 }
 
-.sympal_notice, .sympal_error
-{
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 ul.error_list
 {
   margin: 0;
@@ -196,14 +190,6 @@ ul.error_list li
 #content #top_menu ul li a:hover {
   background: #f5f5f5;
   color: #000;
-}
-
-.sympal_notice, .sympal_error {
-  position: absolute;
-  top: 5px;
-  right: 75px;
-  margin-left: 10px;
-  margin-right: 10px;
 }
 
 #content input, #content select, #content textarea {
@@ -346,4 +332,25 @@ ul#sympal-admin-menu li ul li a:hover {
 	-moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
+}
+
+.sympal_notice {
+  margin: 4px 0;
+  padding: 4px 4px 4px 30px;
+  background: url(../images/tick.png) no-repeat 10px 4px;
+}
+
+.sympal_error {
+  margin: 4px 0;
+  padding: 4px 4px 4px 30px;
+  background: url(../images/error.png) no-repeat 10px 4px;
+  background-color: #f33;
+  color: red;
+}
+
+.sympal_notice, .sympal_error {
+  background-color: #ffc;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  font-weight: bold;
 }

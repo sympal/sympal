@@ -10,7 +10,7 @@ $browser->get('/');
 $menuItems = Doctrine_Core::getTable('sfSympalMenuItem')->findAll();
 foreach ($menuItems as $menuItem)
 {
-  if ($menuItem->level <= 0 || $menuItem->requires_auth || $menuItem->requires_no_auth || !($content = $menuItem->getMainContent()))
+  if ($menuItem->level <= 0 || $menuItem->requires_auth || $menuItem->requires_no_auth || !($content = $menuItem->getContent()))
   {
     continue;
   }

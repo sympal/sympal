@@ -21,29 +21,8 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
           $this->_allPermissions[] = $permission->name;
         }
       }
-      foreach ($this->Permissions as $permission)
-      {
-        $this->_allPermissions[] = $permission->name;
-      }
     }
     return $this->_allPermissions;
-  }
-
-  public function getMainContent()
-  {
-    $content = $this->getMasterContent();
-    if ($content && $content instanceof Doctrine_Record && $content->exists())
-    {
-      return $content;
-    } else {
-      $content = $this->getContent();
-      if ($content && $content instanceof Doctrine_Record && $content->exists())
-      {
-        return $content;
-      } else {
-        return false;
-      }
-    }
   }
 
   public function getParentId()
@@ -72,7 +51,6 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
 
   public function publish()
   {
-    $this->is_published = true;
     $this->date_published = new Doctrine_Expression('NOW()');
     $this->save();
     $this->refresh();
@@ -80,7 +58,6 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
 
   public function unpublish()
   {
-    $this->is_published = false;
     $this->date_published = null;
     $this->save();
   }
@@ -164,9 +141,9 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
     return $this->_get('is_primary');
   }
 
-  public function getIsPublished()
+  public function isPublished()
   {
-    return $this->_get('is_published');
+    return $this->_get('date_published');
   }
 
   public function getDatePublished()
@@ -232,15 +209,5 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
   public function getMenuItemGroups()
   {
     return $this->_get('MenuItemGroups');
-  }
-
-  public function getMenuItemPermissions()
-  {
-    return $this->_get('MenuItemPermissions');
-  }
-
-  public function getMasterContent()
-  {
-    return $this->_get('MasterContent');
   }
 }

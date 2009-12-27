@@ -80,9 +80,8 @@ class sfSympalFormToolkit
 
     $widgetSchema = $form->getWidgetSchema();
     $validatorSchema = $form->getValidatorSchema();
-    $type = $contentSlot->Type;
 
-    $class = 'sfWidgetFormSympal'.$type->name;
+    $class = 'sfWidgetFormSympal'.$contentSlot->type;
 
     if (!class_exists($class))
     {
@@ -91,7 +90,7 @@ class sfSympalFormToolkit
 
     $widget = new $class();
 
-    $class = 'sfValidatorFormSympal'.$type->name;
+    $class = 'sfValidatorFormSympal'.$contentSlot->type;
 
     if (!class_exists($class))
     {

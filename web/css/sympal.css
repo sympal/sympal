@@ -444,12 +444,6 @@ table tfoot tr td {
   width: 20px;
 }
 
-.notice, .error
-{
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
 ul.error_list
 {
   margin: 0;
@@ -524,4 +518,25 @@ ul.error_list li
 .sympal_form input:hover, .sympal_form input:focus, .sympal_form select:hover, .sympal_form select:focus, .sympal_form textarea:hover, .sympal_form textarea:focus {
 	border-color:#c5c5c5;
 	background:#ffffcc;
+}
+
+.sympal_notice {
+  margin: 4px 0;
+  padding: 4px 4px 4px 30px;
+  background: url(../images/tick.png) no-repeat 10px 4px;
+}
+
+.sympal_error {
+  margin: 4px 0;
+  padding: 4px 4px 4px 30px;
+  background: url(../images/error.png) no-repeat 10px 4px;
+  background-color: #f33;
+  color: red;
+}
+
+.sympal_notice, .sympal_error {
+  background-color: #ffc;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  font-weight: bold;
 }

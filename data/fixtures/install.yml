@@ -4,21 +4,6 @@ sfSympalSite:
     title: <?php echo sfInflector::humanize(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'))) ?> 
     description: Flexible content management framework built on top of symfony.
 
-sfSympalContentSlotType:
-  ContentSlotType_Markdown:
-    name: Markdown
-  ContentSlotType_MultiLineText:
-    name: MultiLineText
-  ContentSlotType_Text:
-    name: Text
-  ContentSlotType_RichText:
-    name: RichText
-  ContentSlotType_ContentProperty:
-    name: ContentProperty
-    is_internal: true
-  ContentSlotType_Widget:
-    name: Widget
-
 sfSympalContentType:
   ContentType_Page:
     plugin_name: sfSympalPagesPlugin

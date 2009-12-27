@@ -94,7 +94,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
           $this->_rendered = $renderFunction($this->_contentRenderedFor, $this->name);
         }
       } else {
-        $class = 'sfSympalContentSlot'.$this->Type->name.'Renderer';
+        $class = 'sfSympalContentSlot'.$this->type.'Renderer';
 
         if (!class_exists($class))
         {
@@ -134,7 +134,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
     if ($user->isEditMode() && !$value)
     {
-      $rawValue = '[Double click to edit slot content]';
+      $rawValue = '[Click to enable inline edit mode]';
     } else {
       $rawValue = $value;
     }

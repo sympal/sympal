@@ -16,15 +16,14 @@ generator:
       fields: ~
       form:
         display:
-          "Content": [TypeForm, custom_path, is_published, date_published, slug]
-          "Settings": [created_by_id, master_menu_item_id, groups_list, permissions_list]
+          "Content": [TypeForm, custom_path, date_published, slug]
+          "Settings": [content_type_id, created_by_id, groups_list]
           "Rendering Options": [layout, template]
           "Search Engine Optimization": [page_title, meta_keywords, meta_description]
-          "Change Content Type": [content_type_id]
         fields:
           content_type_id:
             label: Content Type
-          master_menu_item_id:
+          menu_item_id:
             label: Under Menu Item
             help: Select the menu item this content record is associated with.
           custom_path:
@@ -36,13 +35,8 @@ generator:
           groups_list:
             label: Groups
             help: Choose the groups this content record is restricted to.
-          permissions_list:
-            label: Permissions
-            help: Choose the permissions this content record is restricted to.
           created_by:
             help: Choose the user that created this record. It will default to the logged in user who created the record.
-          is_published:
-            help: Check to publish this content record. Checking this will automatically set the date published value to the current date. A content record will not be accessible to the public until the published date has been reached.
           date_published:
             help: Select the date this content record is to be published. This can be a date in the future and the content record will not be available until that date.
           slug:
@@ -50,7 +44,7 @@ generator:
       list:
         table_method: getAdminGenQuery
         title: Manage Content
-        display: [_title, is_published]
+        display: [_title, date_published]
         sort: [date_published, DESC]
         batch_actions:
           _delete:

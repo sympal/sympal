@@ -79,6 +79,10 @@ class sfSympalTheme
     return $path;
   }
 
+  /**
+   * TODO: Optimize this eventually with some kind of cache so we know the path to all
+   * theme css and js files and don't have to find them each time
+   */
   protected function _findCssPath($name)
   {
     if (strpos($this->_layoutPath, 'sfSympalPlugin/templates') !== false)

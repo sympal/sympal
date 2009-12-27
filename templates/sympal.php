@@ -2,9 +2,6 @@
  "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <?php $editor = get_sympal_editor() ?>
-  <?php $flash = get_sympal_flash() ?>
-
   <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
   <?php $primaryMenu = (string) $menus['primary'] ?>
   
@@ -51,8 +48,6 @@
 
   <!-- content -->
   <div id="content">
-
-  <?php echo $flash ?>
 
   <!-- left column -->
   <div id="column_left">
@@ -101,7 +96,5 @@
   <?php echo get_sympal_menu('footer') ?>
   </div>
   <!-- end footer -->
-
-  <?php echo $editor ?>
 </body>
 </html>

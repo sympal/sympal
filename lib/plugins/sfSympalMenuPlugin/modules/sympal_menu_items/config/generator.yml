@@ -38,9 +38,9 @@ generator:
         class: false
       form:
         display:
-          "Menu Item": [name, label, content_id, content_type_id, custom_path, is_primary, is_published, date_published]
+          "Menu Item": [name, label, content_id, content_type_id, custom_path, is_primary, date_published]
           "Position": [parent_id, move, where_to_move]
-          "Security": [requires_auth, requires_no_auth, groups_list, permissions_list, ]
+          "Security": [requires_auth, requires_no_auth, groups_list]
         fields:
           parent_id:
             help: Select the parent the menu item is associated with.
@@ -54,8 +54,6 @@ generator:
             label: Content
           is_primary:
             help: Check if this menu item is the root of your primary menu. You must have at least one primary menu.
-          is_published:
-            help: Check to publish this menu item. Checking this will automatically set the date published value to the current date. A menu item will not be accessible to the public until the published date has been reached.
           date_published:
             help: Select the date this menu item is to be published. This can be a date in the future and the menu item will not be available until that date.
           label:
@@ -70,7 +68,5 @@ generator:
             help: Check if this menu item requires the user not be authenticated in order to be visible.
           groups_list:
             help: Select the groups this menu item is restrited to.
-          permissions_list:
-            help: Select the permissions this menu item is restricted to.
       edit: ~
       new:  ~
