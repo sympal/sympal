@@ -19,7 +19,7 @@ function get_sympal_pager_header($pager)
  * @param string $uri  The uri to prefix to the links
  * @return string $html
  */
-function get_sympal_pager_navigation($pager, $uri)
+function get_sympal_pager_navigation($pager, $uri, $requestKey = 'page')
 {
   use_stylesheet('/sfSympalPlugin/css/pager.css');
 
@@ -27,7 +27,7 @@ function get_sympal_pager_navigation($pager, $uri)
  
   if ($pager->haveToPaginate())
   {  
-    $uri .= (preg_match('/\?/', $uri) ? '&' : '?').'page=';
+    $uri .= (preg_match('/\?/', $uri) ? '&' : '?').$requestKey.'=';
  
     // First and previous page
     if ($pager->getPage() != 1)

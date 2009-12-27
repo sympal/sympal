@@ -5,7 +5,7 @@
  */
 abstract class PluginsfSympalContentList extends BasesfSympalContentList
 {
-  public function buildDataGrid($page = 1, sfWebRequest $request)
+  public function buildDataGrid(sfWebRequest $request)
   {
     if ($this->table_method)
     {
@@ -37,7 +37,9 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
     }
 
     $dataGrid->setMaxPerPage(($this->rows_per_page > 0 ? $this->rows_per_page : sfSympalConfig::get('rows_per_page', null, 10)));
-    $dataGrid->setPage($page);
+
+    $dataGridRequestInfo = $request->getParameter($dataGrid->getId());
+    $dataGrid->setPage($dataGridRequestInfo['page']);
 
     return $dataGrid;
   }
