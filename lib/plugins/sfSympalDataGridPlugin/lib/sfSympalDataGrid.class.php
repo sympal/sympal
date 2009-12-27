@@ -213,8 +213,9 @@ class sfSympalDataGrid
         $url = '@'.$routing->getCurrentRouteName();
       }
     }
+    $id = $this->getId();
     $sep = strpos($url, '?') === false ? '?' : '&';
-    return $url.$sep.'sort='.$column['name'].'&order='.(($this->_order == 'asc') ? 'desc' : 'asc');
+    return $url.$sep.$id.'[sort]='.$column['name'].'&'.$id.'[order]='.(($this->_order == 'asc') ? 'desc' : 'asc');
   }
 
   public function getColumnSortLink(array $column, $url = null)
@@ -335,11 +336,12 @@ class sfSympalDataGrid
 
     $request = sfContext::getInstance()->getRequest();
 
-    if ($sort = $request->getParameter('sort'))
+    $dataGridRequestInfo = $request->getParameter($this->getId());
+    if (isset($dataGridRequestInfo['sort']) && $sort = $dataGridRequestInfo['sort'])
     {
       $this->_sort = $sort;
     }
-    if ($order = $request->getParameter('order'))
+    if (isset($dataGridRequestInfo['order']) && $order = $dataGridRequestInfo['order'])
     {
       $this->_order = $order;
     }
@@ -425,7 +427,6 @@ class sfSympalDataGrid
     $current = $record;
     if (isset($column['dqlAlias']) && isset($this->_parents[$column['dqlAlias']]))
     {
-      
       foreach ($this->_parents[$column['dqlAlias']] as $parent)
       {
         if (isset($current[$parent]))
