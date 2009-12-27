@@ -94,14 +94,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
           $this->_rendered = $renderFunction($this->_contentRenderedFor, $this->name);
         }
       } else {
-        $class = 'sfSympalContentSlot'.$this->type.'Renderer';
-
-        if (!class_exists($class))
-        {
-          $class = 'sfSympalContentSlotRenderer';
-        }
-
-        $renderer = new $class($this);
+        $className = 'sfSympalContentSlot'.$this->type.'Renderer';
+        $renderer = new $className($this);
         $this->_rendered = (string) $renderer;
       }
     }
@@ -124,10 +118,11 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   {
     if ($this->is_column)
     {
-      $name = $this->name;
-      $value = $this->_contentRenderedFor->$name;
-    } else {
-      $value = $this->_get('value');
+      $value = $this->_contentRenderedFor->get($this->name);
+    }
+    else
+    {
+      $value = $this->getValue();
     }
     
     $user = sfContext::getInstance()->getUser();

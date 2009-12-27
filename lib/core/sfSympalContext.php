@@ -107,9 +107,4 @@ class sfSympalContext
 
     return self::$_instances[$site];
   }
-
-  public function __call($method, $arguments)
-  {
-    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
-  }
 }

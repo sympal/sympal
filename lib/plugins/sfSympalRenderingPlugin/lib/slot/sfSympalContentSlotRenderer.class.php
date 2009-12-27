@@ -3,8 +3,7 @@
 class sfSympalContentSlotRenderer
 {
   protected
-    $_contentSlot,
-    $_rawValue;
+    $_contentSlot;
 
   public function __construct(sfSympalContentSlot $contentSlot)
   {
@@ -18,35 +17,18 @@ class sfSympalContentSlotRenderer
 
   public function getRawValue()
   {
-    if (!$this->_rawValue)
-    {
-      $value = $this->_contentSlot->getRawValue();
-
-      if (!sfSympalConfig::get('disallow_php_in_content'))
-      {
-        $variables = array(
-          'content' => $this->_contentSlot->getContentRenderedFor(),
-          'menuItem' => $this->_contentSlot->getContentRenderedFor()->getMenuItem()
-        );
-        $value = sfSympalTemplate::process($value, $variables);
-      }
-
-      $this->_rawValue = $value;
-    }
-    return $this->_rawValue;
+    return $this->_contentSlot->getRawValue();
   }
 
   public function __toString()
   {
-    try {
+    try
+    {
       return (string) $this->render();
-    } catch (Exception $e) {
-      return $e->getMessage();
     }
-  }
-
-  public function __call($method, $arguments)
-  {
-    return sfSympalExtendClass::extendEvent($this, $method, $arguments);
+    catch (Exception $e)
+    {
+      return sfSympalToolkit::renderException($e);
+    }
   }
 }

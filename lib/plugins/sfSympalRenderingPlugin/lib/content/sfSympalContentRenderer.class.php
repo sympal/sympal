@@ -18,26 +18,10 @@ class sfSympalContentRenderer
     $this->_configuration = $this->_symfonyContext->getConfiguration();
     $this->_dispatcher = $this->_configuration->getEventDispatcher();
     $this->_configuration->loadHelpers(array('Tag', 'Url', 'Partial'));
-
-    $request = $this->_symfonyContext->getRequest();
-    $response = $this->_symfonyContext->getResponse();
-
     $this->_content = $content;
     $this->_menuItem = $this->_content->getMenuItem();
-    $format = $format ? $format : $request->getRequestFormat('html');
-    $format = $format ? $format : 'html';
-
     $this->_sympalContext->setCurrentMenuItem($this->_menuItem);
-
     $this->_sympalContext->setCurrentContent($this->_content);
-    sfSympalTheme::change($this->_content->getLayout());
-
-    if (!$response->getTitle())
-    {
-      $title = $this->_menuItem->getBreadcrumbs()->getPathAsString();
-      $title = $title ? $this->_content->Site->title.sfSympalConfig::get('breadcrumbs_separator', null, ' / ').$title:$this->_content->Site->title;
-      $response->setTitle($title);
-    }
   }
 
   public function getFormat()

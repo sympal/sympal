@@ -1,4 +1,5 @@
 <?php
+
 class sfSympalPagesPluginConfiguration extends sfPluginConfiguration
 {
   public static

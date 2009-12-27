@@ -28,9 +28,18 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   public
     $sympalConfiguration;
 
-  public static function enableSympalPlugins(ProjectConfiguration $configuration, $plugins = array())
+  /**
+   * Check Whether or not Sympal is enabled for an application
+   *
+   * @return boolean $enabled
+   */
+  public static function isSympalEnabled($application = null)
   {
-    if ($application = sfConfig::get('sf_app'))
+    if (!$application)
+    {
+      $application = sfConfig::get('sf_app');
+    }
+    if ($application)
     {
       $reflection = new ReflectionClass($application.'Configuration');
       if ($reflection->getConstant('disableSympal'))
@@ -38,19 +47,71 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
         return false;
       }
     }
+    return true;
+  }
+
+  /**
+   * Enable only the Sympal plugins required for the frontend.
+   *
+   * @param ProjectConfiguration $configuration
+   */
+  public static function enableFrontendPlugins(ProjectConfiguration $configuration)
+  {
+    if (!self::isSympalEnabled())
+    {
+      return false;
+    }
 
     $configuration->enablePlugins('sfDoctrinePlugin');
     $configuration->enablePlugins('sfSympalPlugin');
-    $configuration->enablePlugins(self::$dependencies);
-    $configuration->enablePlugins($plugins);
+    $configuration->setPluginPath('sfSympalPlugin', dirname(dirname(__FILE__)));
 
-    $sympalPluginPath = dirname(dirname(__FILE__));
-    $configuration->setPluginPath('sfSympalPlugin', $sympalPluginPath);
-    
-    $embeddedPluginPath = $sympalPluginPath.'/lib/plugins';
-    foreach (self::$dependencies as $plugin)
+    self::enableSympalCorePlugins($configuration, array(
+      'sfDoctrineGuardPlugin',
+      'sfFeed2Plugin',
+      'sfWebBrowserPlugin',
+      'sfSympalMenuPlugin',
+      'sfSympalPagesPlugin',
+      'sfSympalContentListPlugin',
+      'sfSympalDataGridPlugin',
+      'sfSympalUserPlugin',
+      'sfSympalRenderingPlugin',
+    ));
+  }
+
+  /**
+   * Enable all Sympal plugins always
+   *
+   * @param ProjectConfiguration $configuration 
+   * @return void
+   */
+  public static function enableSympalPlugins(ProjectConfiguration $configuration)
+  {
+    if (!self::isSympalEnabled())
     {
-      $configuration->setPluginPath($plugin, $embeddedPluginPath.'/'.$plugin);
+      return false;
+    }
+
+    $configuration->enablePlugins('sfDoctrinePlugin');
+    $configuration->enablePlugins('sfSympalPlugin');
+    $configuration->setPluginPath('sfSympalPlugin', dirname(dirname(__FILE__)));
+
+    self::enableSympalCorePlugins($configuration, self::$dependencies);
+  }
+
+  /**
+   * Enable some Sympal core plugins
+   *
+   * @param ProjectConfiguration $configuration 
+   * @param array|string $plugins
+   * @return void
+   */
+  public static function enableSympalCorePlugins(ProjectConfiguration $configuration, $plugins)
+  {
+    foreach ((array) $plugins as $plugin)
+    {
+      $configuration->enablePlugins($plugin);
+      $configuration->setPluginPath($plugin, dirname(dirname(__FILE__)).'/lib/plugins/'.$plugin);
     }
   }
 

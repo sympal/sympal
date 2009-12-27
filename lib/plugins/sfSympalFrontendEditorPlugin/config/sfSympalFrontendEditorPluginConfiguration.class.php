@@ -14,7 +14,8 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $this->dispatcher->connect('sympal.content_renderer.filter_content', array($this, 'addInlineEditBarHtml'));
       $this->dispatcher->connect('response.filter_content', array($this, 'addEditorHtml'));
 
-      $this->configuration->loadHelpers('jQuery');
+      $this->configuration->loadHelpers('jQuery', 'SympalContentSlotEditor');
+
       $response = sfContext::getInstance()->getResponse();
       $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.hoverIntent.js');

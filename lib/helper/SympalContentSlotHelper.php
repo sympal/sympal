@@ -21,7 +21,6 @@ function get_sympal_content_property($content, $name)
  * @param string $isColumn  Whether it is a column property
  * @param string $renderFunction The function to use to render the value
  * @return void
- * @author Jonathan Wage
  */
 function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = false, $renderFunction = null)
 {
@@ -47,24 +46,10 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $isColumn = fa
   $user = sfContext::getInstance()->getUser();
   if ($user->isEditMode())
   {
+    use_helper('SympalContentSlotEditor');
+
     return get_sympal_content_slot_editor($slot);
   } else {
     return $slot->render();
   }
-}
-
-function get_sympal_content_slot_editor(sfSympalContentSlot $slot)
-{
-  $name = $slot->getName();
-  $isColumn = $slot->getIsColumn();
-
-  $form = $slot->getEditForm();
-
-  return '
-<span title="Click to enable inline edit mode" id="sympal_content_slot_'.$slot->getId().'" class="sympal_content_slot">
-  <input type="hidden" class="content_slot_id" value="'.$slot->getId().'" />
-  <input type="hidden" class="content_id" value="'.$slot->getContentRenderedFor()->getId().'" />
-  <span class="editor">'.get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot)).'</span>
-  <span class="value toggle_edit_mode">'.$slot->render().'</span>
-</span>';
 }
