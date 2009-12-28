@@ -20,6 +20,10 @@
 </span>
 
 <script type="text/javascript">
+
+<?php if ($contentSlot->getType() == 'Markdown'): ?>
 $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').markItUp(mySettings);
-$('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form').elastic();
+<?php endif; ?>
+
+$('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').elastic();
 </script>
