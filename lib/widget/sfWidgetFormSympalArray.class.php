@@ -1,6 +1,6 @@
 <?php
 
-class sfWidgetFormSympalArray extends sfWidgetFormSympalMultiLineText
+class sfWidgetFormSympalArray extends sfWidgetFormTextarea
 {
   public function configure($options = array(), $attributes = array())
   {

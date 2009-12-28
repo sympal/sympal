@@ -4,6 +4,13 @@ all:
       enabled: false
       with_layout: false
       lifetime: 3600
+    content_slot_types:
+      Text:
+        label: Single Line of Text
+      RawHtml:
+        label: Raw HTML
+      Markdown:
+        label: Markdown Editor
     check_for_upgrades_on_dashboard: false
     enable_all_modules: true
     get_cache_driver_callback: [sfSympalCache, getCacheDriver]
@@ -15,8 +22,6 @@ all:
     plugin_api:
       username: 
       password: 
-    slot_widgets:
-      Signin Form: sfGuardAuth/signin_form
     content_formats: [html, atom, feed, atom1, rss, rss10, rss091, rss201, xml, yml, json]
     breadcrumbs_separator: ' / '
     i18n: false

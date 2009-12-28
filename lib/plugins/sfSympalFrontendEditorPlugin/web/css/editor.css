@@ -130,6 +130,7 @@
 
 .sympal_content_slot_editor {
   display: inline;
+  position: relative;
 }
 
 .sympal_content_slot_editor form {
@@ -138,6 +139,20 @@
 
 .sympal_content_slot_editor input, .sympal_content_slot_editor textarea {
   width: 98% !important;
+}
+
+.sympal_markdown_content_slot_editor_form .markItUp {
+  width: 98%;
+}
+
+.sympal_content_slot_editor .sympal_change_slot_type {
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.sympal_change_slot_type_dropdown {
+  display: none;
+  z-index: 50000;
 }
 
 .sympal_inline_edit_bar {

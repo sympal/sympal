@@ -10,16 +10,9 @@
  */
 abstract class Basesympal_edit_slotActions extends sfActions
 {
-  public function executeChange_content_slot_type(sfWebRequest $request)
+  public function preExecute()
   {
-    $this->contentSlot = $this->_getContentSlot($request);
-    $this->contentSlot->content_slot_type_id = $request->getParameter('type');
-    $this->contentSlot->save();
-
-    $this->form = $this->_getContentSlotForm($request);
-
     $this->setLayout(false);
-    $this->setTemplate('edit_slot');
   }
 
   protected function _getContentSlot(sfWebRequest $request)
@@ -40,11 +33,19 @@ abstract class Basesympal_edit_slotActions extends sfActions
     return $this->form;
   }
 
-  public function executeEdit_slot(sfWebRequest $request)
+  public function executeChange_content_slot_type(sfWebRequest $request)
   {
-    $this->setLayout(false);
+    $slot = $request->getParameter('sf_sympal_content_slot');
 
     $this->contentSlot = $this->_getContentSlot($request);
+    $this->contentSlot->setType($slot['type']);
+    $this->contentSlot->save();
+
+    $this->form = $this->_getContentSlotForm($request);
+  }
+
+  public function executeEdit_slot(sfWebRequest $request)
+  {
     $this->form = $this->_getContentSlotForm($request);
   }
 
@@ -58,14 +59,11 @@ abstract class Basesympal_edit_slotActions extends sfActions
       $this->form->save();
     }
 
-    $this->setLayout(false);
     $this->setTemplate('preview_slot');
   }
 
   public function executePreview_slot(sfWebRequest $request)
   {
-    $this->setLayout(false);
-
     $this->form = $this->_getContentSlotForm($request);
     $this->contentSlot->resetRenderCache();
 

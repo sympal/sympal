@@ -104,8 +104,7 @@ h3 {
  z-index:						           0;
  margin:                       0 auto;
  padding:                      0;
- width:                        90%;
- min-width:                    1000px;
+ width:                        1000px;
 }
 
 
@@ -314,8 +313,7 @@ h3 {
 div#footer {
   margin:                       0 auto;
   height:                       35px;
-  width:                        88.5%;
-  min-width:                    990px;
+  width:                        980px;
  	padding:                      0;
  	margin-top:                   10px;
  	margin-bottom:                10px;

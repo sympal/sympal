@@ -27,3 +27,14 @@ sympal_preview_content_slot:
   requirements:
     id: \d+
     sf_method: [POST]
+
+sympal_change_content_slot_type:
+  url:   /change_content_slot/:content_id/:id
+  param: { module: sympal_edit_slot, action: change_content_slot_type }
+  class: sfDoctrineRoute
+  options:
+    model: sfSympalContentSlot
+    type: object
+  requirements:
+    id: \d+
+    sf_method: [POST]

@@ -12,6 +12,17 @@ function get_sympal_content_property($content, $name)
   return $content->$name;
 }
 
+function render_content_author(sfSympalContent $content, $slot)
+{
+  return $content->CreatedBy->username;
+}
+
+function render_content_date_published(sfSympalContent $content, $slot)
+{
+  use_helper('Date');
+  return format_datetime($content->date_published);
+}
+
 /**
  * Get Sympal content slot value
  *

@@ -81,6 +81,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       throw new InvalidArgumentException('Invalid content slot');
     }
 
+    sfSympalFormToolkit::embedRichDateWidget('date_published', $form);
+
     return $form;
   }
 

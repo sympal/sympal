@@ -86,14 +86,14 @@ $t->is($content->getRoute(), '@page?slug=testing-this-out');
 
 get_sympal_content_slot($content, 'title', 'Text');
 get_sympal_content_slot($content, 'body', 'Markdown');
-get_sympal_content_slot($content, 'teaser', 'MultiLineText');
+get_sympal_content_slot($content, 'teaser', 'RawHtml');
 
 $content = $q->fetchOne();
 
 $slots = $content->getSlots();
 $slots['title']['value'] = 'Title value';
 $slots['body']['value'] = 'Body value';
-$slots['teaser']['value'] = "Body value\nTesting";
+$slots['teaser']['value'] = "Body value<br />Testing";
 $slots->save();
 $content->save();
 
@@ -112,7 +112,7 @@ $t->is($content->title, 'Title value');
 $t->is($slots['title']['value'], 'Title value');
 $t->is($slots['title']['type'], 'ContentProperty');
 $t->is($slots['body']['type'], 'Markdown');
-$t->is($slots['teaser']['type'], 'MultiLineText');
+$t->is($slots['teaser']['type'], 'RawHtml');
 
 $t->is($slots['title']->render(), 'Title value');
 $t->is($slots['body']->render(), '<div class="sympal_markdown"><p>Body value</p>
@@ -125,8 +125,7 @@ $t->is($slots['body']->render(), '<div class="sympal_markdown"><p>test</p>
 $slots->save();
 
 $slots[2]->type = 'MultiLineText';
-$t->is($slots['teaser']->render(), 'Body value<br />
-Testing');
+$t->is($slots['teaser']->render(), 'Body value<br />Testing');
 
 $content = sfSympalContent::createNew('sfSympalPage');
 

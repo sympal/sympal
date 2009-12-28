@@ -1,5 +1,5 @@
 <?php
 
-class sfWidgetFormSympalMarkdown extends sfWidgetFormSympalMultiLineText
+class sfWidgetFormSympalMarkdown extends sfWidgetFormTextarea
 {
 }

@@ -14,16 +14,24 @@ abstract class PluginsfSympalContentSlotForm extends BasesfSympalContentSlotForm
     parent::setup();
 
     unset(
-      $this['type'],
       $this['is_column'],
       $this['render_function'],
       $this['name'],
       $this['content_list']
     );
 
+    $slotTypes = (sfSympalConfig::get('content_slot_types', null, array()));
+    $choices = array();
+    foreach ($slotTypes as $key => $value)
+    {
+      $choices[$key] = $value['label'];
+    }
+    $this->widgetSchema['type'] = new sfWidgetFormChoice(array('choices' => $choices));
+    $this->validatorSchema['type'] = new sfValidatorChoice(array('choices' => array_keys($choices)));
+
     if (isset($this['value']))
     {
-      $this->useFields(array('value'));
+      $this->useFields(array('value', 'type'));
       sfSympalFormToolkit::changeContentSlotValueWidget($this->object, $this);
     }
   }

@@ -20,6 +20,12 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.hoverIntent.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.elastic.js');
+
+      $response->addJavascript('/sfSympalPlugin/markitup/jquery.markitup.js');
+      $response->addJavascript('/sfSympalPlugin/markitup/sets/markdown/set.js');
+      $response->addStylesheet('/sfSympalPlugin/markitup/skins/markitup/style.css');
+      $response->addStylesheet('/sfSympalPlugin/markitup/sets/markdown/style.css');
+
       $response->addJavascript('/sfSympalFrontendEditorPlugin/js/editor.js');
       $response->addStylesheet('/sfSympalFrontendEditorPlugin/css/editor.css');
     }
