@@ -20,17 +20,8 @@
 </span>
 
 <script type="text/javascript">
-
 <?php if ($contentSlot->getType() == 'Markdown'): ?>
 $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').markItUp(mySettings);
-<?php endif; ?>
-
-<?php if ($contentSlot->getType() == 'TinyMCE'): ?>
-<?php use_javascript('/sfSympalPlugin/tiny_mce/tiny_mce.js') ?>
-function sympalTinyMCETriggerSave()
-{
-  tinyMCE.triggerSave();
-}
 <?php endif; ?>
 
 $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').elastic();

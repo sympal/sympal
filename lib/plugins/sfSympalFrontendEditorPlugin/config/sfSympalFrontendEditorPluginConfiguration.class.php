@@ -17,15 +17,22 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $this->configuration->loadHelpers('jQuery', 'SympalContentSlotEditor');
 
       $response = sfContext::getInstance()->getResponse();
+
+      // Load jquery tools/plugins that the inline editor requires
       $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.hoverIntent.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.elastic.js');
 
+      // Load markitup markdown editor
       $response->addJavascript('/sfSympalPlugin/markitup/jquery.markitup.js');
       $response->addJavascript('/sfSympalPlugin/markitup/sets/markdown/set.js');
       $response->addStylesheet('/sfSympalPlugin/markitup/skins/markitup/style.css');
       $response->addStylesheet('/sfSympalPlugin/markitup/sets/markdown/style.css');
 
+      // Load tinymce
+      $response->addJavascript('/sfSympalPlugin/tiny_mce/tiny_mce.js');
+
+      // Load the sympal editor js and css
       $response->addJavascript('/sfSympalFrontendEditorPlugin/js/editor.js');
       $response->addStylesheet('/sfSympalFrontendEditorPlugin/css/editor.css');
     }
