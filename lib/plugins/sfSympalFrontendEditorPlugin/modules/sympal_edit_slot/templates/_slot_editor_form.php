@@ -1,7 +1,7 @@
 <?php include_stylesheets_for_form($form) ?>
 <?php include_javascripts_for_form($form) ?>
 
-<span class="sympal_<?php echo sfInflector::tableize($contentSlot->getType()) ?>_content_slot_editor_form">
+<span id="sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form" class="sympal_<?php echo sfInflector::tableize($contentSlot->getType()) ?>_content_slot_editor_form">
   <?php echo $form->renderHiddenFields() ?>
 
   <?php if ($contentSlot->getIsColumn()): ?>
@@ -20,6 +20,6 @@
 </span>
 
 <script type="text/javascript">
-$('.sympal_markdown_content_slot_editor_form textarea').markItUp(mySettings);
-$('.sympal_raw_html_content_slot_editor_form textarea, .sympal_markdown_content_slot_editor_form textarea').elastic();
+$('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').markItUp(mySettings);
+$('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form').elastic();
 </script>
