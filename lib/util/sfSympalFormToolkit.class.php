@@ -81,29 +81,19 @@ class sfSympalFormToolkit
     $widgetSchema = $form->getWidgetSchema();
     $validatorSchema = $form->getValidatorSchema();
 
-    $class = 'sfWidgetFormSympal'.$contentSlot->type;
+    $contentSlotTypes = sfSympalConfig::get('content_slot_types', null, array());
+    $options = $contentSlotTypes[$contentSlot->type];
 
-    if (!class_exists($class))
-    {
-      $class = 'sfWidgetFormInput';
-    }
+    $widgetClass = isset($options['widget_class']) ? $options['widget_class'] : 'sfWidgetFormSympal'.$contentSlot->type;
+    $widgetClass = class_exists($widgetClass) ? $widgetClass : 'sfWidgetFormInput';
+    $widgetOptions = isset($options['widget_options']) ? $options['widget_options'] : array();
 
-    $widget = new $class();
+    $validatorClass = isset($options['validator_class']) ? $options['validator_class'] : 'sfValidatorFormSympal'.$contentSlot->type;
+    $validatorClass = class_exists($validatorClass) ? $validatorClass : 'sfValidatorPass';
+    $validatorOptions = isset($options['validator_options']) ? $options['validator_options'] : array();
 
-    $class = 'sfValidatorFormSympal'.$contentSlot->type;
-
-    if (!class_exists($class))
-    {
-      $class = 'sfValidatorPass';
-    }
-
-    $validator = new $class;
-
-    $widget->setAttribute('id', 'content_slot_value_' . $contentSlot['id']);
-    $widget->setAttribute('onKeyUp', "edit_on_key_up('".$contentSlot['id']."');");
-
-    $widgetSchema['value'] = $widget;
-    $validatorSchema['value'] = $validator;
+    $widgetSchema['value'] = new $widgetClass($widgetOptions);
+    $validatorSchema['value'] = new $validatorClass($validatorOptions);
   }
 
   public static function changeLayoutWidget($form)

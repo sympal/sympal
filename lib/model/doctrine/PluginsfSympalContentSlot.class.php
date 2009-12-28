@@ -102,6 +102,10 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
         }
       } else {
         $className = 'sfSympalContentSlot'.$this->type.'Renderer';
+        if (!class_exists($className))
+        {
+          $className = 'sfSympalContentSlotRenderer';
+        }
         $renderer = new $className($this);
         $this->_rendered = (string) $renderer;
       }

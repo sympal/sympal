@@ -11,6 +11,11 @@ all:
         label: Raw HTML
       Markdown:
         label: Markdown Editor
+      TinyMCE:
+        label: TinyMCE Rich Text Editor
+        widget_class: sfWidgetFormTextareaTinyMCE
+        widget_options:
+          config: 'onchange_callback: "sympalTinyMCETriggerSave"'
     check_for_upgrades_on_dashboard: false
     enable_all_modules: true
     get_cache_driver_callback: [sfSympalCache, getCacheDriver]
