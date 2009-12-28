@@ -22,6 +22,8 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.hoverIntent.js');
       $response->addJavascript('/sfSympalPlugin/js/jQuery.elastic.js');
+      $response->addJavascript('/sfSympalPlugin/fancybox/jquery.fancybox.js');
+      $response->addStylesheet('/sfSympalPlugin/fancybox/jquery.fancybox.css');
 
       // Load markitup markdown editor
       $response->addJavascript('/sfSympalPlugin/markitup/jquery.markitup.js');

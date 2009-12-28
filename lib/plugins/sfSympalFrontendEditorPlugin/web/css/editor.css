@@ -20,7 +20,7 @@
   margin-bottom: 10px;
 }
 
-#sympal_editor input.sympal_editor_button {
+#sympal_editor .sympal_editor_button {
   color: #ffffff;
   font-weight: bold;
   font-size: 12px;
@@ -34,12 +34,19 @@
   border-radius: 5px;
 }
 
-#sympal_editor input.sympal_editor_button:hover {
+#sympal_editor a.sympal_editor_button {
+  color: #ffffff;
+  text-decoration: none;
+  margin: 0;
+  padding: 5px;
+}
+
+#sympal_editor .sympal_editor_button:hover {
   color: #ffffff;
   background: #333333;
 }
 
-#sympal_editor input.sympal_editor_button:focus {
+#sympal_editor .sympal_editor_button:focus {
   color: #ffffff;
   background: #333333;
 }

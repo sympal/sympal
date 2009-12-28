@@ -2,6 +2,8 @@
   <div id="sympal_editor">
     <h2>Sympal Editor</h2>
 
+    <a class="sympal_editor_button sympal_sitemap" href="<?php echo url_for('@sympal_editor_sitemap', 'absolute=true') ?>">Sitemap</a>
+
     <?php if ($sf_request->getParameter('module') != 'sympal_dashboard'): ?>
       <?php echo button_to('My Dashboard', '@sympal_dashboard', 'class="sympal_editor_button"') ?>
     <?php endif; ?>
