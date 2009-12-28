@@ -41,11 +41,15 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
   public function addInlineEditBarHtml(sfEvent $event, $content)
   {
     $inlineEditBar  = '<div class="sympal_inline_edit_bar sympal_form">';
-    $inlineEditBar .= ' <a href="#edit" class="toggle_edit_mode">'.image_tag('/sf/sf_admin/images/edit.png').' Edit '.$event['content']['Type']['label'].'</a>';
+    $inlineEditBar .= ' <div class="sympal_inline_edit_bar_container">';
+    $inlineEditBar .= ' <a href="#edit" class="toggle_edit_mode">'.image_tag('/sf/sf_admin/images/edit.png').' Enable Edit Mode</a>';
     $inlineEditBar .= ' <div class="sympal_inline_edit_bar_buttons">';
     $inlineEditBar .= '   <input type="button" class="sympal_save_content_slots" name="save" value="Save" />';
     $inlineEditBar .= '   <input type="button" class="sympal_preview_content_slots" name="preview" value="Preview" />';
+    $inlineEditBar .= '   <input type="button" class="sympal_disable_edit_mode" name="disable_edit_mode" value="Disable Edit Mode" />';
+    $inlineEditBar .= '   '.button_to('Edit Backend', $event['content']->getEditRoute());
     $inlineEditBar .= ' </div>';
+
     if (sfSympalConfig::isI18nEnabled())
     {
       $inlineEditBar .= '<div class="sympal_inline_edit_bar_change_language">';
@@ -61,7 +65,9 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $inlineEditBar .= '</div>';
     }
     $inlineEditBar .= '</div>';
-    return $inlineEditBar.$content.$inlineEditBar;
+    $inlineEditBar .= '</div>';
+
+    return $inlineEditBar.$content;
   }
 
   public function addEditorHtml(sfEvent $event, $content)

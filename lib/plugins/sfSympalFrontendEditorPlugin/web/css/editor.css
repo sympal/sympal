@@ -1,35 +1,14 @@
-#sympal_toggle_editor {
-  position: fixed;
-  top: 5px;
-  left: 0;
-  cursor: pointer;
-  background: #333;
-  width: 8px;
-  border-right: 1px solid #000;
-  border-bottom: 1px solid #000;
-  font-weight: bold;
-  margin: 0;
-  z-index: 10;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-#sympal_toggle_editor:hover {
-  color: #fff;
-  background: #333;
-}
-
 #sympal_editor {
+  cursor: pointer;
   -khtml-border-radius:10px;
 	-moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
   background: #fff;
-  margin-left: -500px;
+  margin-left: -295px;
   padding: 12px;
-  padding-left: 40px;
   border: 1px solid #ccc;
-  min-width: 200px;
+  width: 300px;
   position: fixed;
   top: 5px;
   left: 0;
@@ -68,8 +47,8 @@
 #sympal_editor ul {
   padding: 0;
   margin: 0;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #sympal_editor ul li {
@@ -98,7 +77,7 @@
 
 #sympal_editor ul li ul li a {
   text-decoration: none;
-  padding: 8px;
+  padding: 4px;
   display: block;
 }
 
@@ -156,17 +135,22 @@
 }
 
 .sympal_inline_edit_bar {
+  cursor: pointer;
   -khtml-border-radius:10px;
 	-moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: #333333;
+  background: #fff;
+  border: 1px solid #ccc;
   padding: 12px;
   font-weight: bold;
   margin-top: 10px;
   margin-bottom: 10px;
-  height: 30px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 20px;
+  width: 700px;
+  z-index: 100;
 }
 
 .sympal_inline_edit_bar_change_language {
@@ -181,9 +165,25 @@
   font-size: 16px;
   margin-top: 6px;
   display: block;
-  color: #ffffff !important;
+  width: 175px;
+  color: #333 !important;
 }
 
 .sympal_inline_edit_bar a:hover {
   text-decoration: underline;
+}
+
+.sympal_edit_content_container {
+  display: none;
+  background-color: #fff;
+  top: 20px;
+  left: 100px;
+  width: 800px;
+  height: 500px;
+  overflow: auto;
+  padding: 14px;
+  -khtml-border-radius: 20px;
+	-moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  border-radius: 20px;
 }

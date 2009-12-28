@@ -1,6 +1,4 @@
 <?php if ($menu = $menu->render()): ?>
-  <div id="sympal_toggle_editor"></div>
-
   <div id="sympal_editor">
     <h2>Sympal Editor</h2>
 
@@ -15,5 +13,8 @@
     <?php echo button_to('Signout', '@sympal_signout', 'class=sympal_editor_button confirm=Are you sure you wish to signout?') ?>
 
     <?php echo $menu ?>
+    
+    Viewing <?php echo $content->getType()->getLabel() ?> titled <strong>"<?php echo $content ?>"</strong> 
+    created by <strong><?php echo $content->getAuthorName() ?></strong> on <strong><?php echo format_datetime($content->getDatePublished()) ?></strong>.
   </div>
 <?php endif; ?>

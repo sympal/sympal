@@ -15,7 +15,7 @@ sympal_save_content_slot:
     type: object
   requirements:
     id: \d+
-    sf_method: [POST]
+    sf_method: [post]
 
 sympal_preview_content_slot:
   url:   /preview_content_slot/:content_id/:id
@@ -26,7 +26,7 @@ sympal_preview_content_slot:
     type: object
   requirements:
     id: \d+
-    sf_method: [POST]
+    sf_method: [post]
 
 sympal_change_content_slot_type:
   url:   /change_content_slot/:content_id/:id
@@ -37,4 +37,4 @@ sympal_change_content_slot_type:
     type: object
   requirements:
     id: \d+
-    sf_method: [POST]
+    sf_method: [post]
