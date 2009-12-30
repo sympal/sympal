@@ -61,7 +61,7 @@ abstract class PluginsfSympalContentListForm extends BasesfSympalContentListForm
       }
       foreach ($array3 as $key => $value)
       {
-        $array3[$key] = sfInflector::humanize(sfInflector::tableize($value)).': '.$class.'::'.$value.'()';
+        $array3[$key] = $class.'::'.$value.'()';
       }
       return $array3;
     }
