@@ -5,7 +5,7 @@
 <div id="sf_admin_container">
 <?php endif; ?>
 
-  <h2><?php echo $title = __('Sympal menu items List', array(), 'messages'); set_sympal_title($title); ?></h2>
+  <h2><?php echo $title = __('Sympal menu items List', array(), 'messages') ?></h2>
 
   <div id="sf_admin_header">
     <?php include_partial('sympal_menu_items/list_header', array('pager' => $pager)) ?>

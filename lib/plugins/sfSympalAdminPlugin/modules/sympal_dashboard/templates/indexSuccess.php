@@ -1,4 +1,3 @@
-<?php set_sympal_title(__('Sympal Dashboard')) ?>
 <?php use_stylesheet('/sfSympalAdminPlugin/css/dashboard') ?>
 <?php use_stylesheet('/sfSympalUpgradePlugin/css/upgrade') ?>
 

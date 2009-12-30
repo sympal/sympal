@@ -2,7 +2,7 @@
   <?php if ($form->isNew()): ?>
     <h1>Add the "<?php echo $content ?>" <?php echo $content['Type']['label'] ?> to your Menu</h1>
   <?php else: ?>
-    <h1>Edit the "<?php echo $content ?>" <?php echo $content['Type']['label'] ?> Menu Item</h1>
+    <h1>Editing the "<?php echo $content ?>" <?php echo $content['Type']['label'] ?> Menu Item</h1>
   <?php endif; ?>
 
   <div id="sf_admin_content_menu_item">

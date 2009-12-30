@@ -1,2 +1,6 @@
 all:
   stylesheets: ["/sfSympalPluginManagerPlugin/css/plugin_manager": { position: last }]
+  
+default:
+  metas:
+    title: Sympal Admin / Plugin Manager

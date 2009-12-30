@@ -109,6 +109,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $type = $this->getUser()->getAttribute('content_type_id', sfSympalConfig::get('default_admin_list_content_type', null, 'sfSympalPage'));
     $this->contentType = $this->_getContentType($type, $request);
 
+    $this->getResponse()->setTitle('Sympal Admin / '.$this->contentType->getLabel());
+
     parent::executeIndex($request);
   }
 
@@ -174,6 +176,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $user = $this->getUser();
     $user->checkContentSecurity($this->sf_sympal_content);
+
+    $this->getResponse()->setTitle('Sympal Admin / Editing '.$this->sf_sympal_content);
 
     $this->form = $this->configuration->getForm($this->sf_sympal_content);
   }

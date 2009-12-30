@@ -22,6 +22,9 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
     $this->content = $this->getRoute()->getObject();
     $this->menuItem = $this->content->getMenuItem();
     $this->menuItem->Site = $this->content->Site;
+
+    $this->getResponse()->setTitle(sprintf('Sympal Admin / Editing the "%s" Page Menu Item', $this->content));
+
     $this->form = new sfSympalMenuItemForm($this->menuItem);
     $widgetSchema = $this->form->getWidgetSchema();
     $widgetSchema['parent_id']->setOption('add_empty', '');

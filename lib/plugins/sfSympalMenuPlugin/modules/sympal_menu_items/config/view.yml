@@ -1,0 +1,7 @@
+default:
+  metas:
+    title: Sympal Admin / Menu Manager
+
+sitemapSuccess:
+  metas:
+    title: Sympal Admin / Sitemap

@@ -40,29 +40,11 @@ function get_sympal_breadcrumbs($menuItem, $subItem = null)
     $breadcrumbs = $menuItem->getBreadcrumbs($subItem);
   }
 
-  $title = $breadcrumbs->getPathAsString();
-  set_sympal_title($title);
-
   if ($html = (string) $breadcrumbs)
   {
     return $html;
   } else {
     return false;
-  }
-}
-
-/**
- * Set the response title
- *
- * @param string $title 
- * @return void
- */
-function set_sympal_title($title = null)
-{
-  $response = sfContext::getInstance()->getResponse();
-  if (!$response->getTitle())
-  {
-    $response->setTitle($title);
   }
 }
 
