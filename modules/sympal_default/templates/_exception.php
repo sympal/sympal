@@ -1,4 +1,4 @@
-<?php use_stylesheet('/sfSympalPlugin/css/exception.css') ?>
+<?php sympal_use_stylesheet('/sfSympalPlugin/css/exception.css') ?>
 
 <div class="sympal_exception">
   <h2><?php echo get_class($e) ?>: <?php echo $e->getMessage() ?></h2>

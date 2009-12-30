@@ -49,6 +49,9 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $form->addSetting(null, 'recaptcha_private_key', 'Recaptcha Private Key');
     $form->addSetting(null, 'breadcrumbs_separator', 'Breadcrumbs Separator');
     $form->addSetting(null, 'default_from_email_address', 'Default From Address');
+    $form->addSetting(null, 'enable_markdown_editor', 'Enable Markdown Editor', 'InputCheckbox', 'Boolean');
+    $form->addSetting(null, 'elastic_textareas', 'Elastic Textareas', 'InputCheckbox', 'Boolean');
+    $form->addSetting(null, 'check_for_upgrades_on_dashboard', 'Check for Upgrades', 'InputCheckbox', 'Boolean');
 
     $form->addSetting('plugin_api', 'username', 'Username or API Key');
     $form->addSetting('plugin_api', 'password');

@@ -32,7 +32,7 @@ class sfSympalTheme
       $response->removeStylesheet($lastStylesheet);
     }
 
-    $response->addStylesheet($this->_cssPath, 'last');
+    $response->addStylesheet(sfSympalConfig::getAssetPath($this->_cssPath), 'last');
 
     sfSympalConfig::set('last_stylesheet', $this->_cssPath);
   }

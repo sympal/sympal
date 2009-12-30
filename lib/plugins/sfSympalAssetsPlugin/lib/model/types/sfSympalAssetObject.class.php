@@ -6,15 +6,20 @@ abstract class sfSympalAssetObject
     $_filePath,
     $_rootPath,
     $_name,
-    $_type,
     $_size,
     $_icon,
-    $_doctrineAsset;
+    $_doctrineAsset,
+    $_type = 'file';
 
   public function __construct($filePath)
   {
     $this->_filePath = $filePath;    
     $this->_rootPath = sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir', '/uploads');
+
+    if ($this->getTypeFromExtension() != $this->_type)
+    {
+      throw new sfException(sprintf('The file "%s" is not an image', $file));
+    }
   }
 
   public function exists()
@@ -22,9 +27,14 @@ abstract class sfSympalAssetObject
     return file_exists($this->getPath());
   }
 
-  public function getType()
+  public function getTypeFromExtension()
   {
     return sfSympalAssetToolkit::getTypeFromExtension($this->getExtension());
+  }
+
+  public function getType()
+  {
+    return $this->_type;
   }
 
   public function isImage()
@@ -63,11 +73,11 @@ abstract class sfSympalAssetObject
 
   public function getRelativePathDirectory()
   {
-    if ($this->getRootPath() == dirname($this->getPath()))
+    if ($this->getRootPath() == $this->getPathDirectory())
     {
       return '';
     } else {
-      return str_replace($this->getRootPath(), null, dirname($this->getPath()));
+      return str_replace($this->getRootPath(), null, $this->getPathDirectory());
     }
   }
 
@@ -82,9 +92,9 @@ abstract class sfSympalAssetObject
     return sfSympalConfig::get('assets', 'web_path',  $request->getUriPrefix().$request->getRelativeUrlRoot()).sfSympalConfig::get('assets', 'root_dir', '/uploads').$this->getRelativePath();
   }
   
-  public function getPathDir()
+  public function getPathDirectory()
   {
-    return pathinfo($this->getPath(), PATHINFO_DIRNAME);
+    return dirname($this->getPath());
   }
 
   public function getRootPath()
@@ -115,6 +125,11 @@ abstract class sfSympalAssetObject
       return unlink($this->getPath());
     }
     return false;
+  }
+
+  public function save()
+  {
+    return true;
   }
 
   public function getDoctrineAsset()

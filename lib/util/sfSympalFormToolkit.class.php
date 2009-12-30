@@ -21,14 +21,13 @@ class sfSympalFormToolkit
 
   public static function embedRichDateWidget($name, sfFormDoctrine $form)
   {
-    sfApplicationConfiguration::getActive()->loadHelpers('jQuery');
+    sfSympalToolkit::useJQuery();
 
     $response = sfContext::getInstance()->getResponse();
-    $response->addStylesheet('/sfSympalPlugin/jquery/css/jquery-ui.css');
-    $response->addStylesheet('/sfSympalPlugin/jquery/css/ui.theme.css');
-    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js');
-    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery.bgiframe.min.js');
-    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui-i18n.min.js');
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/css/jquery-ui.css'));
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/css/ui.theme.css'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.bgiframe.min.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery-ui-i18n.min.js'));
 
     $widgetSchema = $form->getWidgetSchema();
     $widgetSchema[$name] = new sfWidgetFormJQueryDate();

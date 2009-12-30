@@ -2,6 +2,12 @@
 
 class sfSympalToolkit
 {
+  public static function useJQuery($plugins = array())
+  {
+    sfApplicationConfiguration::getActive()->loadHelpers('jQuery');
+    jq_add_plugins_by_name($plugins);
+  }
+
   public static function renderException(Exception $e)
   {
     return get_partial('sympal_default/exception', array('e' => $e));

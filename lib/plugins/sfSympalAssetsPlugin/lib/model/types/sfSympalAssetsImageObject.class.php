@@ -4,17 +4,8 @@ class sfSympalAssetsImageObject extends sfSympalAssetsFileObject
 {
   protected
     $_dimensions = null,
-    $_thumbnail = null;
-
-  public function __construct($file)
-  {
-    parent::__construct($file);
-
-    if ($this->getType() != 'image')
-    {
-      throw new sfException(sprintf('The file "%s" is not an image', $file));
-    }
-  }
+    $_thumbnail = null,
+    $_type = 'image';
 
   public function isImage()
   {
@@ -89,5 +80,42 @@ class sfSympalAssetsImageObject extends sfSympalAssetsFileObject
   public function getEmbed($options = array())
   {
     return image_tag($this->getUrl(), $options);
+  }
+
+  public function getThumbnailDirectory()
+  {
+    return $this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'thumbnails_dir', '.uploads');
+  }
+
+  private function _generateThumbnail()
+  {
+    if (!class_exists('sfImage'))
+    {
+      throw new sfException('sfImageTransformPlugin must be installed in order to generate thumbnails.');
+    }
+
+    $thumb = new sfImage($this->getPath());
+    $thumb->thumbnail(
+      sfSympalConfig::get('assets', 'thumbnails_max_width', 64),
+      sfSympalConfig::get('assets', 'thumbnails_max_height', 64)
+    );
+
+    $destinationDirectory = $this->getThumbnailDirectory();
+    if(!file_exists($destinationDirectory))
+    {
+      mkdir($destinationDirectory);
+      chmod($destinationDirectory, 0777);
+    }
+    return $thumb->saveAs($destinationDirectory.'/'.$this->getName());
+  }
+
+  public function save()
+  {
+    if (sfSympalConfig::get('assets', 'thumbnails_enabled', false))
+    {
+      $this->_generateThumbnail();
+    }
+
+    return parent::save();
   }
 }

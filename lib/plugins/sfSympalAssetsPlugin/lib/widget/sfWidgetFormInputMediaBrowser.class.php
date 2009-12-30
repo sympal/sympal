@@ -69,7 +69,7 @@ class sfWidgetFormInputSympalAssets extends sfWidgetForm
     }
     if(!isset($attributes['load_stylesheet']) || $attributes['load_stylesheet'] !== false)
     {
-      $this->context->getResponse()->addStylesheet('/sfSympalAssetsPlugin/css/form_widget.css');
+      $this->context->getResponse()->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAssetsPlugin/css/form_widget.css'));
     }
 
 

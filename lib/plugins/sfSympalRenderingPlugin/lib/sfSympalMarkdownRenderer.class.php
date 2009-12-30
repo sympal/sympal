@@ -9,7 +9,7 @@ class sfSympalMarkdownRenderer
     $markdown = str_replace('{?php', '<?php', $markdown);
     $markdown = str_replace('?}', '?>', $markdown);
 
-    sfContext::getInstance()->getResponse()->addStylesheet('/sfSympalRenderingPlugin/css/markdown.css');
+    sfContext::getInstance()->getResponse()->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalRenderingPlugin/css/markdown.css'));
 
     return '<div class="sympal_markdown">'.self::enhanceHtml(Markdown($markdown)).'</div>';
   }

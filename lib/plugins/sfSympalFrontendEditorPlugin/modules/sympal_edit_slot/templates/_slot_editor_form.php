@@ -20,9 +20,11 @@
 </span>
 
 <script type="text/javascript">
-<?php if ($contentSlot->getType() == 'Markdown'): ?>
+<?php if ($contentSlot->getType() == 'Markdown' && sfSympalConfig::get('enable_markdown_editor', null, true)): ?>
 $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').markItUp(mySettings);
 <?php endif; ?>
 
+<?php if (sfSympalConfig::get('elastic_textareas', null, true)) :?>
 $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').elastic();
+<?php endif; ?>
 </script>

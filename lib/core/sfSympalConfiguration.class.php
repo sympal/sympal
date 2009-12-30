@@ -276,5 +276,8 @@ class sfSympalConfiguration
       sfConfig::set('sf_module_disabled_module', 'sympal_default');
       sfConfig::set('sf_module_disabled_action', 'disabled');
     }
+
+    sfConfig::set('sf_jquery_path', sfSympalConfig::get('jquery_reloaded', 'path'));
+    sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
   }
 }

@@ -7,21 +7,26 @@ class sfSympalActions extends sfSympalExtendClass
     return sfSympalContext::getInstance();
   }
 
-  public function checkFilePermissions()
+  public function checkFilePermissions($items = null)
   {
-    $items = array();
-
-    if (file_exists(sfConfig::get('sf_upload_dir')))
+    if ($items === null)
     {
-      $items[] = sfConfig::get('sf_upload_dir');
+      $items = array();
+
+      if (file_exists(sfConfig::get('sf_upload_dir')))
+      {
+        $items[] = sfConfig::get('sf_upload_dir');
+      }
+      $items[] = sfConfig::get('sf_cache_dir');
+      $items[] = sfConfig::get('sf_config_dir');
+      $items[] = sfConfig::get('sf_data_dir').'/sql';
+      $items[] = sfConfig::get('sf_log_dir');
+      $items[] = sfConfig::get('sf_lib_dir');
+      $items[] = sfConfig::get('sf_plugins_dir');
+      $items[] = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'symfony';
+    } else {
+      $items = (array) $items;
     }
-    $items[] = sfConfig::get('sf_cache_dir');
-    $items[] = sfConfig::get('sf_config_dir');
-    $items[] = sfConfig::get('sf_data_dir').'/sql';
-    $items[] = sfConfig::get('sf_log_dir');
-    $items[] = sfConfig::get('sf_lib_dir');
-    $items[] = sfConfig::get('sf_plugins_dir');
-    $items[] = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'symfony';
 
     $dirs = sfFinder::type('dir')->in($items);
     $files = sfFinder::type('file')->in($items);
@@ -150,15 +155,14 @@ class sfSympalActions extends sfSympalExtendClass
   public function useAdminLayout()
   {
     $response = $this->getResponse();
-    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js');
-    $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
-    $response->addJavascript('/sfSympalPlugin/fancybox/jquery.fancybox.js');
-    $response->addJavascript('/sfSympalAdminPlugin/js/admin.js');
-    $response->addStylesheet('/sfSympalPlugin/fancybox/jquery.fancybox.css');
-    $response->addStylesheet('/sfSympalAdminPlugin/css/global.css');
-    $response->addStylesheet('/sfSympalAdminPlugin/css/default.css');
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.cookie.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/admin.js'));
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/global.css'));
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/default.css'));
 
-    $this->getContext()->getConfiguration()->loadHelpers('jQuery');
+    sfSympalToolkit::useJQuery();
 
     $this->changeTheme(sfSympalConfig::get('admin_layout', null, 'admin'));
   }

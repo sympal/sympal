@@ -1,5 +1,5 @@
-<?php use_stylesheet('/sfSympalAdminPlugin/css/dashboard') ?>
-<?php use_stylesheet('/sfSympalUpgradePlugin/css/upgrade') ?>
+<?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/dashboard') ?>
+<?php sympal_use_stylesheet('/sfSympalUpgradePlugin/css/upgrade') ?>
 
 <?php if ($hasNewVersion): ?>
   <div class="sympal_new_version_box">

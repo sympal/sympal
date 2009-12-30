@@ -65,6 +65,12 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
     return parent::delete($conn);
   }
 
+  public function save(Doctrine_Connection $conn = null)
+  {
+    $this->getAssetObject()->save();
+    return parent::save($conn);
+  }
+
   public function __call($method, $arguments)
   {
     if (method_exists($this->getAssetObject(), $method))

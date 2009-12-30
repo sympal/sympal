@@ -1,4 +1,4 @@
-<?php use_stylesheet('/sfSympalPlugin/css/sympal') ?>
+<?php sympal_use_stylesheet('/sfSympalPlugin/css/sympal') ?>
 
 <?php echo image_tag('/sfSympalPlugin/images/header_logo.gif') ?>
 

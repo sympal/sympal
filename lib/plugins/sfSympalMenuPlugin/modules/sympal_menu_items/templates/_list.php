@@ -1,9 +1,7 @@
-<?php use_helper('jQuery') ?>
+<?php sympal_use_jquery() ?>
 
-<?php use_stylesheet('/sfSympalMenuPlugin/css/jQuery.treeTable.css') ?>
-
-<?php use_javascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js') ?>
-<?php use_javascript('/sfSympalMenuPlugin/js/jQuery.treeTable.min.js') ?>
+<?php sympal_use_stylesheet('/sfSympalMenuPlugin/css/jQuery.treeTable.css') ?>
+<?php sympal_use_javascript('/sfSympalMenuPlugin/js/jQuery.treeTable.min.js') ?>
 
 <div class="sf_admin_list">
   <?php if (!$pager->getNbResults()): ?>

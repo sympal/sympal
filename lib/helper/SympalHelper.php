@@ -1,5 +1,20 @@
 <?php
 
+function sympal_use_jquery($plugins = array())
+{
+  sfSympalToolkit::useJQuery($plugins);
+}
+
+function sympal_use_javascript($path, $position = 'last')
+{
+  return use_javascript(sfSympalConfig::getAssetPath($path), $position);
+}
+
+function sympal_use_stylesheet($path, $position = 'last')
+{
+  return use_stylesheet(sfSympalConfig::getAssetPath($path), $position);
+}
+
 function sympal_link_to_site($site, $name, $path = null)
 {
   $request = sfContext::getInstance()->getRequest();

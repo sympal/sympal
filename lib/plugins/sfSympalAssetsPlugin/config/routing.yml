@@ -21,11 +21,20 @@ sympal_assets_create_asset:
   requirements: { sf_method: post }
 
 sympal_assets_edit_asset:
-  url:    /admin/assets/edit/asset
+  url:    /admin/assets/edit/asset/:id
   params: { module: sympal_assets, action: edit_asset }
+  class: sfDoctrineRoute
+  options:
+    type: object
+    model: sfSympalAsset
+  requirements:
+    sf_method: [get, post]
 
 sympal_assets_delete_asset:
-  url:    /admin/assets/delete/asset
+  url:    /admin/assets/delete/asset/:id
   class:  sfRequestRoute
   params: { module: sympal_assets, action: delete_asset }
-  requirements: { sf_method: get }
+  class: sfDoctrineRoute
+  options:
+    type: object
+    model: sfSympalAsset

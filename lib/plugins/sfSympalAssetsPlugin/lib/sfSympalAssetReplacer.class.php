@@ -50,7 +50,7 @@ class sfSympalAssetReplacer
 
   private function _parseSyntaxes($content)
   {
-    preg_match_all("/\[(link|asset):(.*)\]/", $content, $matches);
+    preg_match_all("/\[(link|asset):(.*?)\]/", $content, $matches);
 
     if (isset($matches[0]) && $matches[0])
     {
@@ -81,7 +81,7 @@ class sfSympalAssetReplacer
 
   private function _replaceAssets($ids, $replacements, $content)
   {
-    if ($this->_content->Assets->count() != count($ids))
+    if (array_diff($this->_content->Assets->getPrimaryKeys(), $ids))
     {
       $assetObjects = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery()
@@ -106,7 +106,7 @@ class sfSympalAssetReplacer
 
   private function _replaceLinks($ids, $replacements, $content)
   {
-    if ($this->_content->Links->count() != count($ids))
+    if (array_diff($this->_content->Links->getPrimaryKeys(), $ids))
     {
       $q = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery('c')

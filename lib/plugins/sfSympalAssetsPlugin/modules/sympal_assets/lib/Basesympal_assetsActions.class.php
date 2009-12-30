@@ -19,7 +19,9 @@ class Basesympal_assetsActions extends sfActions
   {
     $this->directories = $this->_getDirectories($this->fullPath);
 
-    $this->assets = $this->_getAssets($this->directory);
+    $this->_synchronizeAssets($this->directory);
+
+    $this->assets = Doctrine_Core::getTable('sfSympalAsset')->findByPath($this->directory);
 
     $this->currentRoute = $this->getContext()->getRouting()->getCurrentRouteName();
     $this->currentParams = $request->getGetParameters();
@@ -87,11 +89,6 @@ class Basesympal_assetsActions extends sfActions
       $fullName = $extension ? $name.'.'.$extension : $name;
       $destinationDirectory = sfConfig::get('sf_web_dir').'/'.sfSympalConfig::get('assets', 'root_dir').$upload['directory'];
 
-      if (sfSympalConfig::get('assets', 'thumbnails_enabled', false) && sfSympalAssetToolkit::getTypeFromExtension($extension) == 'image')
-      {
-        $this->generateThumbnail($postFile->getTempName(), $fullName, $destinationDirectory);
-      }
-
       $this->getUser()->setFlash('notice', 'File uploaded successfully.');
       $postFile->save($destinationDirectory.'/'.$fullName);
 
@@ -113,24 +110,14 @@ class Basesympal_assetsActions extends sfActions
 
   public function executeDelete_asset(sfWebRequest $request)
   {
-    $asset = sfSympalAssetToolkit::createAssetObject(urldecode($request->getParameter('file')));
-
+    $this->asset = $this->getRoute()->getObject();
     $this->askConfirmation(
       'Are you sure?',
-      sprintf('Are you sure you want to delete the asset named "%s"?<h3>'.$asset->getRelativePath().'</h3>', $asset->getName())
+      sprintf('Are you sure you want to delete the asset named "%s"?', $this->asset->getName())
     );
 
-    $dir = $asset->getRelativePathDirectory();
-    $name = $asset->getName();
-
-    $asset->delete();
-
-    Doctrine_Core::getTable('sfSympalAsset')
-      ->createQuery('a')
-      ->delete()
-      ->where('path = ?', $dir)
-      ->andWhere('name = ?', $name)
-      ->execute();
+    $dir = $this->asset->getRelativePathDirectory();
+    $this->asset->delete();
 
     $this->getUser()->setFlash('notice', 'File successfully deleted.');
     $this->redirect('@sympal_assets?dir='.$dir);
@@ -138,25 +125,23 @@ class Basesympal_assetsActions extends sfActions
 
   public function executeEdit_asset(sfWebRequest $request)
   {
+    $this->asset = $this->getRoute()->getObject();
+
     if ($request->isMethod('post'))
     {
       $this->form = new sfSympalAssetEditForm();
       $this->form->bind($request->getParameter($this->form->getName()));
 
-      $this->asset = sfSympalAssetToolkit::createAssetObject($this->form->getValue('directory').'/'.$this->form->getValue('current_name'));
-
       if ($this->form->isValid())
       {
-        $doctrineAsset = $this->asset->getDoctrineAsset();
-        $doctrineAsset->move(dirname($this->asset->getPath()).'/'.$this->form->getValue('new_name'));
-        $doctrineAsset->save();
+        $this->asset->move(dirname($this->asset->getPath()).'/'.$this->form->getValue('new_name'));
+        $this->asset->save();
 
-        $this->redirect($this->generateUrl('sympal_assets_edit_asset', array('file' => dirname($this->asset->getFilePath()).'/'.$this->form->getValue('new_name'))));
+        $this->redirect($this->generateUrl('sympal_assets_edit_asset', $this->asset));
       }
     }
     else
     {
-      $this->asset = sfSympalAssetToolkit::createAssetObject(urldecode($request->getParameter('file')));
       $this->form = new sfSympalAssetEditForm(array(
         'new_name' => $this->asset->getName(),
         'current_name' => $this->asset->getName(),
@@ -165,7 +150,7 @@ class Basesympal_assetsActions extends sfActions
     }
   }
 
-  protected function _getDirectories($path)
+  private function _getDirectories($path)
   {
     return sfFinder::type('dir')
       ->maxdepth(0)
@@ -175,36 +160,13 @@ class Basesympal_assetsActions extends sfActions
       ->in($path);
   }
 
-  protected function _getAssets($path)
+  private function _synchronizeAssets($path)
   {
-    $files = sfFinder::type('file')
-      ->maxdepth(0)
-      ->relative()
-      ->in($this->rootPath.'/'.$path);
-
-    $assets = Doctrine_Core::getTable('sfSympalAsset')
-      ->createQuery('a')
-      ->from('sfSympalAsset a INDEXBY a.name')
-      ->andWhere('a.path = ?', $path)
-      ->execute();
-
-    foreach ($files as $file)
-    {
-      if (!isset($assets[$file]))
-      {
-        $assetObject = sfSympalAssetToolkit::createAssetObject($path.'/'.$file);
-        $doctrineAsset = new sfSympalAsset();
-        $doctrineAsset->setAssetObject($assetObject);
-        $doctrineAsset->save();
-
-        $assets->add($doctrineAsset);
-      }
-    }
-
-    return $assets;
+    $synchronizer = new sfSympalAssetSynchronizer($this->getContext()->getEventDispatcher());
+    $synchronizer->run();
   }
 
-  protected function _getParentDir($path)
+  private function _getParentDir($path)
   {
     // Remove trailing slash
     if(substr($path, -1, 1) == '/')
@@ -221,27 +183,5 @@ class Basesympal_assetsActions extends sfActions
     }
 
     return (string) substr($path, 0, $slashPos);
-  }
-
-  protected function generateThumbnail($sourceFile, $destinationName, $destinationDirectory)
-  {
-    if(!class_exists('sfImage'))
-    {
-      throw new sfException('sfImageTransformPlugin must be installed in order to generate thumbnails.');
-    }
-
-    $thumb = new sfImage($sourceFile);
-    $thumb->thumbnail(
-      sfSympalConfig::get('assets', 'thumbnails_max_width', 64),
-      sfSympalConfig::get('assets', 'thumbnails_max_height', 64)
-    );
-
-    $destinationDirectory = $destinationDirectory.'/'.sfSympalConfig::get('assets', 'thumbnails_dir', '.uploads');
-    if(!file_exists($destinationDirectory))
-    {
-      mkdir($destinationDirectory);
-      chmod($destinationDirectory, 0777);
-    }
-    return $thumb->saveAs($destinationDirectory.'/'.$destinationName);
   }
 }

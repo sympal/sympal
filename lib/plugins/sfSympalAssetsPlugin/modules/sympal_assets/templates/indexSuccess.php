@@ -1,9 +1,9 @@
-<?php use_helper('jQuery') ?>
-<?php use_javascript('/sfSympalPlugin/fancybox/jquery.fancybox.js') ?>
-<?php use_stylesheet('/sfSympalPlugin/fancybox/jquery.fancybox.css') ?>
+<?php sympal_use_jquery() ?>
+<?php sympal_use_javascript('/sfSympalPlugin/fancybox/jquery.fancybox.js') ?>
+<?php sympal_use_stylesheet('/sfSympalPlugin/fancybox/jquery.fancybox.css') ?>
 
-<?php use_stylesheet('/sfSympalAssetsPlugin/css/assets.css') ?>
-<?php use_javascript('/sfSympalAssetsPlugin/js/assets.js') ?>
+<?php sympal_use_stylesheet('/sfSympalAssetsPlugin/css/assets.css') ?>
+<?php sympal_use_javascript('/sfSympalAssetsPlugin/js/assets.js') ?>
 
 <?php use_helper('I18N') ?>
 

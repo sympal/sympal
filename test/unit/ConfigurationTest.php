@@ -9,13 +9,14 @@ $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPl
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
 
 $requiredPlugins = array(
-  'sfSympalPlugin',
   'sfDoctrineGuardPlugin',
   'sfFormExtraPlugin',
   'sfTaskExtraPlugin',
   'sfFeed2Plugin',
   'sfWebBrowserPlugin',
   'sfJqueryReloadedPlugin',
+  'sfThumbnailPlugin',
+  'sfImageTransformPlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
@@ -26,7 +27,9 @@ $requiredPlugins = array(
   'sfSympalUpgradePlugin',
   'sfSympalRenderingPlugin',
   'sfSympalAdminPlugin',
-  'sfSympalFrontendEditorPlugin'
+  'sfSympalFrontendEditorPlugin',
+  'sfSympalAssetsPlugin',
+  'sfSympalPlugin'
 );
 
 $t->is($sympalConfiguration->getRequiredPlugins(), $requiredPlugins);
@@ -38,6 +41,8 @@ $corePlugins = array(
   'sfFeed2Plugin',
   'sfWebBrowserPlugin',
   'sfJqueryReloadedPlugin',
+  'sfThumbnailPlugin',
+  'sfImageTransformPlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
@@ -48,7 +53,8 @@ $corePlugins = array(
   'sfSympalUpgradePlugin',
   'sfSympalRenderingPlugin',
   'sfSympalAdminPlugin',
-  'sfSympalFrontendEditorPlugin'
+  'sfSympalFrontendEditorPlugin',
+  'sfSympalAssetsPlugin'
 );
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins);

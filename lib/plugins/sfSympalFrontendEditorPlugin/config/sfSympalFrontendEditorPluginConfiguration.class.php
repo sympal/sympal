@@ -14,28 +14,32 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $this->dispatcher->connect('sympal.content_renderer.filter_content', array($this, 'addInlineEditBarHtml'));
       $this->dispatcher->connect('response.filter_content', array($this, 'addEditorHtml'));
 
-      $this->configuration->loadHelpers('jQuery', 'SympalContentSlotEditor');
+      $this->configuration->loadHelpers('SympalContentSlotEditor');
+
+      sfSympalToolkit::useJQuery(array('ui'));
 
       $response = sfContext::getInstance()->getResponse();
 
       // Load jquery tools/plugins that the inline editor requires
-      $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
-      $response->addJavascript('/sfSympalPlugin/js/jQuery.hoverIntent.js');
-      $response->addJavascript('/sfSympalPlugin/js/jQuery.elastic.js');
-      $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js');
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.cookie.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.hoverIntent.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.elastic.js'));
 
       // Load markitup markdown editor
-      $response->addJavascript('/sfSympalPlugin/markitup/jquery.markitup.js');
-      $response->addJavascript('/sfSympalPlugin/markitup/sets/markdown/set.js');
-      $response->addStylesheet('/sfSympalPlugin/markitup/skins/markitup/style.css');
-      $response->addStylesheet('/sfSympalPlugin/markitup/sets/markdown/style.css');
+      if (sfSympalConfig::get('enable_markdown_editor'))
+      {
+        $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/markitup/jquery.markitup.js'));
+        $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/markitup/sets/markdown/set.js'));
+        $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/markitup/skins/markitup/style.css'));
+        $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/markitup/sets/markdown/style.css'));
+      }
 
       // Load tinymce
-      $response->addJavascript('/sfSympalPlugin/tiny_mce/tiny_mce.js');
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/tiny_mce/tiny_mce.js'));
 
       // Load the sympal editor js and css
-      $response->addJavascript('/sfSympalFrontendEditorPlugin/js/editor.js');
-      $response->addStylesheet('/sfSympalFrontendEditorPlugin/css/editor.css');
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/js/editor.js'));
+      $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/css/editor.css'));
     }
   }
 

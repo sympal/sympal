@@ -14,7 +14,7 @@
 
   <?php $subMenu = get_sympal_menu(sfSympalContext::getInstance()->getCurrentMenuItem(), true) ?>
   <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
-    <?php use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
+    <?php sympal_use_stylesheet('/sfSympalPlugin/css/right.css', 'last') ?>
   <?php endif; ?>
 
   <?php include_http_metas() ?>

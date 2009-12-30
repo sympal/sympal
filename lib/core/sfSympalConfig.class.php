@@ -47,6 +47,17 @@ class sfSympalConfig
     return self::get('current_version', null, sfSympalPluginConfiguration::VERSION);
   }
 
+  public static function getAssetPath($path)
+  {
+    $paths = self::get('asset_paths');
+    if (isset($paths[$path]))
+    {
+      return $paths[$path];
+    } else {
+      return $path;
+    }
+  }
+
   public static function writeSetting($group, $name, $value = null)
   {
     if (is_null($value))

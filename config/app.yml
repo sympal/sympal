@@ -1,10 +1,36 @@
 all:
   sympal_config:
+    # Override the path of any bundled asset (js or css)
+    # Used with the sfSympalConfig::getAssetPath() helper method
+    # echo sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/js/editor.js); // /js/my_editor.js
+    asset_paths:
+      #"/sfSympalFrontendEditorPlugin/js/editor.js": "/js/my_editor.js"
+
+    # Customize the path to the loaded jQuery instance and any plugins
+    jquery_reloaded:
+      path: ~
+      plugin_paths: ~
+
+    # Enable and disable the markdown editor. When disabled a normal textarea is used
+    enable_markdown_editor: true
+
+    # Enable and disable the elastic textareas
+    elastic_textareas: true
+
+    # Configure Symfony page caching. Enabling this feature turns on page caching for all pages
     page_cache:
       enabled: false
       with_layout: false
       lifetime: 3600
+
+    # Configure and customize the available content slot types
     content_slot_types:
+      #MySlotType:
+      #  label: Label of My Slot Type
+      #  widget_class: MySlotTypeWidget (defaults to sfWidgetFormSympalMySlotType)
+      #  widget_options: []
+      #  validator_class: MySlotTypeValidator (defaults to sfValidatorFormSympalMySlotType)
+      #  validator_options: []
       Text:
         label: Single Line of Text
       RawHtml:
@@ -14,26 +40,64 @@ all:
       TinyMCE:
         label: TinyMCE Rich Text Editor
         widget_class: sfWidgetFormTextareaTinyMCE
+        widget_options:
+          config: 'onchange_callback: "sympalTinyMCETriggerSave"'
+
+    # Enable and disable the check for upgrades via the web when on the Sympal dashboard
     check_for_upgrades_on_dashboard: false
+
+    # Whether or not to enable all modules found in Sympal plugins
     enable_all_modules: true
+
+    # Callback to retrieve the cache driver used for storing various Sympal cache entries
     get_cache_driver_callback: [sfSympalCache, getCacheDriver]
+
+    # Customize the class used for managing menus
     menu_manager_class: sfSympalMenuSiteManager
+
+    # Customize the menu class used to render site menus
     menu_class: sfSympalMenuSite
+
+    # Customize the menu class used to render site breadcrumbs
     breadcrumbs_class: sfSympalMenuBreadcrumbs
-    super_admin_signin_url: @sympal_dashboard
-    admin_module_web_dir: "/sfSympalPlugin"
+
+    # Customize the admin module web directory
+    admin_module_web_dir: "/sfSympalAdminPlugin"
+
+    # Configure the Symfony Plugin API username and password
+    # Required for the php symfony sympal:report-statistics task
     plugin_api:
-      username: 
-      password: 
-    content_formats: [html, atom, feed, atom1, rss, rss10, rss091, rss201, xml, yml, json]
+      username:
+      password:
+
+    # Configure the available formats to render content in
+    content_formats:
+      - html
+      - atom
+      - feed
+      - atom1
+      - rss
+      - rss10
+      - rss091
+      - rss201
+      - xml
+      - yml
+      - json
+
+    # Configure the string used to separate breadcrumb strings
     breadcrumbs_separator: ' / '
+
+    # Configure internationalization
     i18n: false
+    # Configure what models and fields get internationalized by Sympal
     internationalized_models:
       sfSympalContent: [i18n_slug, page_title, meta_keywords, meta_description]
       sfSympalContentSlot: [value]
       sfSympalMenuItem: [label]
       sfSympalPage: [title]
       sfSympalSite: [page_title, meta_keywords, meta_description]
+
+    # Configure what models are sluggable
     sluggable_models:
       sfSympalContent:
         builder: [sfSympalContent, slugBuilder]
@@ -43,12 +107,29 @@ all:
       sfSympalContentType:
         fields: [label]
         indexName: content_type_sluggable
+
+    # Configure e-mail settings
     default_from_email_address: noreply@sympalphp.org
+
+    # Configure form class used for editing the Sympal configuration from the web
     config_form_class: sfSympalConfigForm
+
+    # Configure recaptcha from sfFormExtraPlugin
     recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX
     recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb
+
+    # Configure the available languages
     language_codes: [en, fr, es]
+
+    # Configure the default layout to render Sympal with
     default_layout: sympal
+
+    # Configure the number of rows per page to use when using pagination
     rows_per_page: 10
+
+    # Configure the sources to find Sympal plugins to download and install
+    # This can be a SVN repository or a local directory.
     plugin_sources: ["http://svn.symfony-project.com/plugins"]
+
+    # Allowed markdown styled boxes
     markdown_styled_boxes: [quote, tip, caution, note]

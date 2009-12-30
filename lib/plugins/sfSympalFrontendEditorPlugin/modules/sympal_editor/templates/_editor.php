@@ -13,7 +13,8 @@
     <?php echo button_to(__('Signout'), '@sympal_signout', 'class=sympal_editor_button confirm=Are you sure you wish to signout?') ?>
 
     <?php echo $menu ?>
-  
+
+    <?php use_helper('Date') ?>
     Viewing <?php echo $content->getType()->getLabel() ?> titled <strong>"<?php echo $content ?>"</strong> 
     created by <strong><?php echo $content->getAuthorName() ?></strong> on <strong><?php echo format_datetime($content->getDatePublished()) ?></strong>.
   </div>
