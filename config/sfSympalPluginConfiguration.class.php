@@ -12,6 +12,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfFeed2Plugin',
       'sfWebBrowserPlugin',
       'sfJqueryReloadedPlugin',
+      'sfThumbnailPlugin',
+      'sfImageTransformPlugin',
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
       'sfSympalPagesPlugin',

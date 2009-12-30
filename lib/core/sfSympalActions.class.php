@@ -150,12 +150,11 @@ class sfSympalActions extends sfSympalExtendClass
   public function useAdminLayout()
   {
     $response = $this->getResponse();
-    $response->addJavascript('/sfSympalAdminPlugin/js/admin.js');
+    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js');
     $response->addJavascript('/sfSympalPlugin/js/jQuery.cookie.js');
     $response->addJavascript('/sfSympalPlugin/fancybox/jquery.fancybox.js');
+    $response->addJavascript('/sfSympalAdminPlugin/js/admin.js');
     $response->addStylesheet('/sfSympalPlugin/fancybox/jquery.fancybox.css');
-    $response->addJavascript('/sfSympalPlugin/jquery/js/jquery-ui.min.js');
-    
     $response->addStylesheet('/sfSympalAdminPlugin/css/global.css');
     $response->addStylesheet('/sfSympalAdminPlugin/css/default.css');
 

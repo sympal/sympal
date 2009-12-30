@@ -418,6 +418,62 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
+  public function addLink(sfSympalContent $content)
+  {
+    $link = new sfSympalContentLink();
+    $link->content_id = $this->id;
+    $link->linked_content_id = $content->id;
+    $link->save();
+
+    return $link;
+  }
+
+  public function addAsset(sfSympalAsset $asset)
+  {
+    $contentAsset = new sfSympalContentAsset();
+    $contentAsset->content_id = $this->id;
+    $contentAsset->asset_id = $asset->id;
+    $contentAsset->save();
+
+    return $contentAsset;
+  }
+
+  public function deleteLinkAndAssetReferences()
+  {
+    $this->deleteAssetReferences();
+    $this->deleteLinkReferences();
+  }
+
+  public function deleteAssetReferences()
+  {
+    $count = Doctrine_Query::create()
+      ->delete('sfSympalContentLink')
+      ->where('content_id = ?', $this->getId())
+      ->execute();
+    $this->refreshRelated('Assets');
+    return $count;
+  }
+
+  public function deleteLinkReferences()
+  {
+    $count = Doctrine_Query::create()
+      ->delete('sfSympalContentAsset')
+      ->where('content_id = ?', $this->getId())
+      ->execute();
+    $this->refreshRelated('Links');
+    return $count;
+  }
+
+  public function postInsert($event)
+  {
+    $event->getInvoker()->deleteLinkAndAssetReferences();
+  }
+
+  public function postUpdate($event)
+  {
+    $event->getInvoker()->deleteLinkAndAssetReferences();
+  }
+
   public static function slugBuilder($text, $content)
   {
     if ($record = $content->getRecord())

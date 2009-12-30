@@ -52,6 +52,10 @@ abstract class Basesympal_dashboardActions extends sfActions
         ->setLiClass('create_content');
     }
 
+    $this->boxes['Assets Manager']
+      ->setRoute('@sympal_assets')
+      ->setCredentials(array('ManageAssets'));
+
     $this->boxes['Menu Manager']
       ->setRoute('@sympal_menu_items')
       ->setCredentials(array('ManageMenus'));
@@ -84,6 +88,6 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setRoute('@sympal_sitemap')
       ->setCredentials(array('ManageMenus'));
 
-    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_dashboard_boxes', array('menu' => $this->boxes)));
+    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this->boxes, 'sympal.load_dashboard_boxes'));
   }
 }

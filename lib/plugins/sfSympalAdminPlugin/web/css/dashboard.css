@@ -125,3 +125,8 @@
   background: url(../images/slot_types.png) no-repeat;
   background-position: center;
 }
+
+#sympal-dashboard #boxes ul li#dashboard-boxes-assets-manager a {
+  background: url(../../sfSympalAssetsPlugin/images/icons/folder.png) no-repeat;
+  background-position: center;
+}

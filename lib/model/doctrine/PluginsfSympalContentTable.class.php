@@ -101,6 +101,8 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       ->leftJoin($alias.'.Groups g')
       ->leftJoin($alias.'.Slots s INDEXBY sl.name')
       ->leftJoin($alias.'.MenuItem m')
+      ->leftJoin($alias.'.Links l INDEXBY l.id')
+      ->leftJoin($alias.'.Assets a INDEXBY a.id')
       ->innerJoin($alias.'.Type t')
       ->innerJoin($alias.'.CreatedBy u')
       ->innerJoin($alias.'.Site si')

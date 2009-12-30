@@ -1,0 +1,31 @@
+all:
+  sympal_config:
+    assets:
+      web_path:               ~              # The web path to use to link to the assets
+      root_dir:               /uploads       # The path to the directory where the assets are located
+      thumbnails_enabled:     true           # Enable thumbnail creation on upload
+      thumbnails_dir:         .thumbnails    # Directory name for storing thumbnails
+      thumbnails_max_width:   64
+      thumbnails_max_height:  64
+
+      file_types:                           # define file_types is usefull for displaying icons in browser
+        document:                           # type of file (also used as default icon name)
+          extensions: [doc, xls, xcf, ai]   # extensions associated to this type
+          icon:       doc                   # optional icon file name, without extension
+        image:                              
+          extensions: [png, jpg, jpeg, gif]
+        pdf:
+          extensions: [pdf]
+        bin:
+          extensions: [bin, exe, sh, bat, deb, yum]
+        video:
+          extensions: [wmv, avi, mpg, mpeg, flv, mp4]
+        audio:
+          extensions: [ogg, mp3, flac, wma, cda]
+        text:
+          extensions: [txt]
+        tarball:
+          extensions: [tar, gz, zip, bzip, gzip, rar, 7z]
+  sfImageTransformPlugin:
+    mime_type:
+      auto_detect: true

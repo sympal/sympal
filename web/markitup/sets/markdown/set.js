@@ -28,9 +28,6 @@ mySettings = {
 		{name:'Numeric List', openWith:function(markItUp) {
 			return markItUp.line+'. ';
 		}},
-		{separator:'---------------' },
-		{name:'Picture', key:'P', replaceWith:'![[![Alternative text]!]]([![Url:!:http://]!] "[![Title]!]")'},
-		{name:'Link', key:'L', openWith:'[', closeWith:']([![Url:!:http://]!] "[![Title]!]")', placeHolder:'Your text to link here...' },
 		{separator:'---------------'},	
 		{name:'Quote', openWith:"> **QUOTE**\n> "},
 		{name:'Code Block / Code', openWith:"(!(\t|!|`)!)[php]\n\t"},
@@ -38,7 +35,9 @@ mySettings = {
 		{name:'Caution', openWith:"> **CAUTION**\n> "},
 		{name:'Note', openWith:"> **NOTE**\n> "},
 		{name:'Sidebar', openWith:"> **SIDEBAR**\n> "},
-		{separator:'---------------'}
+		// TODO: These buttons obviously need to be enhanced :)
+		{name:'Asset', key:'A', openWith:'[asset:', closeWith:'[![Asset ID:!:]!]]' },
+		{name:'Link to Content', key:'C', openWith:'[link:', closeWith:'[![Content ID:!:]!]]' }
 	]
 }
 

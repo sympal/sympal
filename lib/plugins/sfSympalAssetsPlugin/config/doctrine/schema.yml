@@ -1,0 +1,47 @@
+sfSympalAsset:
+  actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      filter: false
+      form: false
+  columns:
+    name:
+      type: string(255)
+      notnull: true
+    path:
+      type: string(255)
+      notnull: true
+  relations:
+    Content:
+      class: sfSympalContent
+      refClass: sfSympalContentAsset
+      local: asset_id
+      foreign: content_id
+      foreignAlias: Assets
+
+sfSympalContentAsset:
+  actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      filter: false
+      form: false
+  columns:
+    content_id:
+      type: integer
+      primary: true
+    asset_id:
+      type: integer
+      primary: true
+  relations:
+    Content:
+      class: sfSympalContent
+      local: content_id
+      foreign: id
+      onDelete: CASCADE
+      foreignAlias: sfSympalContentAssets
+    Asset:
+      class: sfSympalAsset
+      local: asset_id
+      foreign: id
+      onDelete: CASCADE
+      foreignAlias: sfSympalContentAssets

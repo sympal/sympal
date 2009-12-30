@@ -1,0 +1,31 @@
+sympal_assets:
+  url:    /admin/assets
+  params: { module: sympal_assets, action: index }
+
+sympal_assets_create_directory:
+  url:    /admin/assets/create/directory
+  class:  sfRequestRoute
+  params: { module: sympal_assets, action: create_directory }
+  requirements: { sf_method: post }
+
+sympal_assets_delete_directory:
+  url:    /admin/assets/delete/directory
+  class:  sfRequestRoute
+  params: { module: sympal_assets, action: delete_directory }
+  requirements: { sf_method: get }
+
+sympal_assets_create_asset:
+  url:    /admin/assets/create/asset
+  class:  sfRequestRoute
+  params: { module: sympal_assets, action: create_asset }
+  requirements: { sf_method: post }
+
+sympal_assets_edit_asset:
+  url:    /admin/assets/edit/asset
+  params: { module: sympal_assets, action: edit_asset }
+
+sympal_assets_delete_asset:
+  url:    /admin/assets/delete/asset
+  class:  sfRequestRoute
+  params: { module: sympal_assets, action: delete_asset }
+  requirements: { sf_method: get }

@@ -19,20 +19,25 @@
   <!-- content -->
   <div id="content">
 
-  <div id="header">
-    <h1>Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
-  </div>
+  <?php if (!$sf_request->getParameter('popup')): ?>
+    <div id="header">
+      <h1>Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
+    </div>
 
-  <div id="column_left">
-    <?php echo get_sympal_admin_menu() ?>
-  </div>
+    <div id="column_left">
+      <?php echo get_sympal_admin_menu() ?>
+    </div>
 
-  <!-- right column -->
-  <div id="column_right">
-    <?php echo get_sympal_flash() ?>
+    <!-- right column -->
+    <div id="column_right">
+      <?php echo get_sympal_flash() ?>
+      <?php echo $sf_content ?>
+    </div>
+    <!-- end left column -->
+  <?php else: ?>
     <?php echo $sf_content ?>
-  </div>
-  <!-- end left column -->
+  <?php endif; ?>
+
 
   </div>
   <!-- end content -->

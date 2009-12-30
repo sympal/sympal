@@ -1,0 +1,86 @@
+#sympal_assets_forms {
+  border-bottom: 1px solid #CCC;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  height: 100px;
+}
+
+fieldset#sympal_assets_upload, fieldset#sympal_assets_mkdir {
+  border: 0;
+  float: left;
+  background: #eee;
+  border: 1px solid #CCC;
+  margin-top: 20px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+#sympal_assets_upload legend, #sympal_assets_mkdir legend {
+  font-weight:  bold;
+}
+
+ul#sympal_assets_list {
+  list-style: none;
+}
+ul#sympal_assets_list li {
+  float: left;
+  margin: 0 10px 10px 0;
+  min-width: 100px;
+  background: #EEE;
+  border: 1px solid #999;
+  text-align: center;
+  background-color: #FFF;
+  list-style: none;
+}
+ul#sympal_assets_list a {
+  display: block;
+}
+ul#sympal_assets_list img {
+  border: none;
+  margin: 10px 0 10px 0;
+}
+
+ul#sympal_assets_list .folder a, ul#sympal_assets_list .icon a {
+  width: 100px;
+  height: 85px;
+  margin: auto;
+}
+ul#sympal_assets_list .icon img {
+  max-width: 80px;
+  max-height: 80px;
+}
+
+ul#sympal_assets_list .name {
+  font-size: .8em;
+  background: #999;
+  color: #FFF;
+  padding: 2px;
+  height: 17px;
+}
+
+#sympal_assets_list .embed_code {
+  font-size: 12px;
+}
+#sympal_assets_list .action .delete {
+  float: right;
+  display: block;
+  text-indent: -5000px;
+  width: 16px;
+  height: 16px;
+  background: transparent url('../../sfSympalPlugin/images/delete.png')
+}
+
+#sympal_assets_list .action .edit {
+  float: right;
+  display: block;
+  text-indent: -5000px;
+  width: 16px;
+  height: 16px;
+  background: transparent url('../../sfSympalPlugin/images/edit.png')  
+}
+
+#sympal_assets_list .action span {
+  float: left;
+  margin-right: 10px;
+  font-size: .7em;
+}

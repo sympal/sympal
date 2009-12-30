@@ -69,6 +69,39 @@ sfSympalContent:
       local: content_id
       foreign: content_slot_id
       foreignAlias: Content
+    Links:
+      class: sfSympalContent
+      refClass: sfSympalContentLink
+      local: content_id
+      foreign: linked_content_id
+      autoComplete: false
+
+sfSympalContentLink:
+  actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      filter: false
+      form: false
+  columns:
+    content_id:
+      type: integer
+      primary: true
+    linked_content_id:
+      type: integer
+      primary: true
+  relations:
+    Content:
+      class: sfSympalContent
+      local: content_id
+      foreign: id
+      onDelete: CASCADE
+      foreignAlias: sfSympalContentLinks
+    LinkedContent:
+      class: sfSympalContent
+      local: linked_content_id
+      foreign: id
+      onDelete: CASCADE
+      foreignAlias: sfSympalContentLinks
 
 sfSympalContentType:
   actAs: [sfSympalRecordTemplate]

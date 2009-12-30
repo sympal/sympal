@@ -17,13 +17,4 @@ class Basesympal_editorActions extends sfActions
     $this->getUser()->setFlash('notice', 'Content un-published successfully!');
     $this->redirect($request->getReferer());
   }
-
-  public function executeSitemap()
-  {
-    $this->setLayout(false);
-
-    $table = Doctrine_Core::getTable('sfSympalMenuItem');
-    $this->menuItem = $table->findOneBySlug('sitemap');
-    $this->roots = $table->getTree()->fetchRoots();
-  }
 }
