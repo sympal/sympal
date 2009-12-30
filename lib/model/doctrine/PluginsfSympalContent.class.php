@@ -450,7 +450,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       ->delete('sfSympalContentLink')
       ->where('content_id = ?', $this->getId())
       ->execute();
-    $this->refreshRelated('Assets');
     return $count;
   }
 
@@ -460,7 +459,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       ->delete('sfSympalContentAsset')
       ->where('content_id = ?', $this->getId())
       ->execute();
-    $this->refreshRelated('Links');
     return $count;
   }
 

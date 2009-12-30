@@ -81,20 +81,21 @@ class sfSympalAssetReplacer
 
   private function _replaceAssets($ids, $replacements, $content)
   {
-    $assetObjects = $this->_content->Assets;
-    if ($assetObjects->count() != count($ids))
+    if ($this->_content->Assets->count() != count($ids))
     {
       $assetObjects = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery()
-        ->from('sfSympalAsset a INDEXBY a.id')
+        ->from('sfSympalAsset a')
         ->whereIn('a.id', array_unique($ids))
         ->execute();
       foreach ($assetObjects as $assetObject)
       {
         $this->_content->Assets[] = $assetObject;
       }
+      $this->_content->save();
     }
 
+    $assetObjects = $this->_buildObjects($this->_content->Assets);
     foreach ($replacements as $replacement)
     {
       $assetObject = $assetObjects[$replacement['id']];
@@ -105,12 +106,11 @@ class sfSympalAssetReplacer
 
   private function _replaceLinks($ids, $replacements, $content)
   {
-    $contentObjects = $this->_content->Links;
-    if ($contentObjects->count() != count($ids))
+    if ($this->_content->Links->count() != count($ids))
     {
       $q = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery('c')
-        ->from('sfSympalContent c INDEXBY c.id')
+        ->from('sfSympalContent c')
         ->innerJoin('c.Type t')
         ->whereIn('c.id', array_unique($ids));
 
@@ -127,14 +127,25 @@ class sfSympalAssetReplacer
       $this->_content->save();
     }
 
+    $contentObjects = $this->_buildObjects($this->_content->Links);
     foreach ($replacements as $replacement)
     {
       $contentObject = $contentObjects[$replacement['id']];
-      $label = isset($replacement['options']['label']) ? $this->replace($replacement['options']['label']) : 'Link to #'.$replacement['id'];
+      $label = isset($replacement['options']['label']) ? $this->replace($replacement['options']['label']) : 'Link to content id #'.$replacement['id'];
       unset($replacement['options']['label']);
 
       $content = str_replace($replacement['replace'], link_to($label, $contentObject->getRoute(), $replacement['options']), $content);
     }
     return $content;
+  }
+
+  private function _buildObjects(Doctrine_Collection $collection)
+  {
+    $objects = array();
+    foreach ($collection as $key => $value)
+    {
+      $objects[$value->id] = $value;
+    }
+    return $objects;
   }
 }
