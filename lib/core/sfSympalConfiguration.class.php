@@ -198,6 +198,10 @@ class sfSympalConfiguration
       $layout = sfSympalConfig::get($request->getParameter('module'), 'layout');
       if (!$layout)
       {
+        $layout = sfSympalConfig::get(sfContext::getInstance()->getRouting()->getCurrentRouteName(), 'layout');
+      }
+      if (!$layout)
+      {
         $layout = sfSympalConfig::get('default_layout');
       }
       sfSympalTheme::change($layout);

@@ -4,10 +4,10 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()
   {
-    $this->dispatcher->connect('context.load_factories', array($this, 'loadEditor'));
+    $this->dispatcher->connect('sympal.content_renderer.filter_content', array($this, 'loadEditor'));
   }
 
-  public function loadEditor(sfEvent $event)
+  public function loadEditor(sfEvent $event, $content)
   {
     if (sfContext::getInstance()->getUser()->isEditMode())
     {
@@ -40,6 +40,7 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/js/editor.js'));
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/css/editor.css'));
     }
+    return $content;
   }
 
   public function addEditorHtml(sfEvent $event, $content)
