@@ -186,19 +186,13 @@
   border: 1px solid #333;
 }
 
-.sympal_inline_edit_bar input {
+.sympal_inline_edit_bar input, .sympal_inline_edit_bar select {
   padding: 0px !important;
 }
 
 .sympal_inline_edit_bar input:hover {
   background-color: #375fc2 !important;
   color: #ffffff;
-}
-
-.sympal_inline_edit_bar_change_language {
-  position: absolute;
-  right: 20px;
-  top: 13px;
 }
 
 .sympal_inline_edit_bar a {
