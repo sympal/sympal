@@ -8,15 +8,15 @@
     'update' => "#sympal_content_slot_".$contentSlot->getId()." .value"
   )) ?>
 
-    <span class="sympal_content_slot_editor_form">
-      <?php echo get_partial('sympal_edit_slot/slot_editor_form', array('form' => $form, 'contentSlot' => $contentSlot)) ?>
-    </span>
-
     <?php if (!$contentSlot->is_column): ?>
       <a href="#edit" class="sympal_change_slot_type">>> Change Slot Type</a>
       <div class="sympal_change_slot_type_dropdown">
         <?php echo $form['type'] ?>
       </div>
     <?php endif; ?>
+
+    <span class="sympal_content_slot_editor_form">
+      <?php echo get_partial('sympal_edit_slot/slot_editor_form', array('form' => $form, 'contentSlot' => $contentSlot)) ?>
+    </span>
   </form>
 </div>

@@ -30,7 +30,6 @@
 
 <h2><?php echo $directory ? $directory : '/' ?></h2>
 
-
 <ul id="sympal_assets_list">
   <?php if($parentDirectory): ?>
     <li class="up">

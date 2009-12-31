@@ -1,16 +1,10 @@
 #sympal_editor {
-  cursor: pointer;
-  -khtml-border-radius:10px;
-	-moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
   background: #fff;
-  margin-left: -295px;
   padding: 12px;
   border: 1px solid #ccc;
   width: 325px;
   position: fixed;
-  top: 5px;
+  top: 0;
   left: 0;
 }
 
@@ -142,22 +136,59 @@
 }
 
 .sympal_inline_edit_bar {
-  cursor: pointer;
   -khtml-border-radius:10px;
 	-moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 12px;
   font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 2px;
+  margin-right: 10px;
   position: fixed;
   top: 0;
-  left: 20px;
-  width: 700px;
-  z-index: 100;
+  right: 0;
+  z-index: 9999999;
+}
+
+.sympal_inline_edit_bar ul {
+  float: left;
+  margin: 0;
+}
+.sympal_inline_edit_bar ul li {
+  float: left;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.sympal_inline_edit_bar ul li input {
+  margin-right: 5px;
+  border: 1px solid #888;
+}
+
+.sympal_inline_edit_bar input.sympal_disable_edit_mode,
+.sympal_inline_edit_bar input.toggle_edit_mode,
+.sympal_inline_edit_bar input.sympal_save_content_slots,
+.sympal_inline_edit_bar input.sympal_preview_content_slots {
+  background-color: #375fc2;
+  color: #ffffff;
+}
+
+.sympal_inline_edit_bar input.sympal_disable_edit_mode:hover,
+.sympal_inline_edit_bar input.toggle_edit_mode:hover,
+.sympal_inline_edit_bar input.sympal_save_content_slots:hover,
+.sympal_inline_edit_bar input.sympal_preview_content_slots:hover {
+  background-color: #333 !important;
+  color: #ffffff;
+  border: 1px solid #333;
+}
+
+.sympal_inline_edit_bar input {
+  padding: 0px !important;
+}
+
+.sympal_inline_edit_bar input:hover {
+  background-color: #375fc2 !important;
+  color: #ffffff;
 }
 
 .sympal_inline_edit_bar_change_language {
@@ -170,9 +201,8 @@
   text-decoration: none;
   font-weight: bold;
   font-size: 16px;
-  margin-top: 6px;
-  display: block;
   width: 175px;
+  margin-top: 5px;
   color: #333 !important;
 }
 
@@ -193,4 +223,11 @@
 	-moz-border-radius: 20px;
   -webkit-border-radius: 20px;
   border-radius: 20px;
+}
+
+#sfWebDebugBar {
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  height: 20px;
 }

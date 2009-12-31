@@ -35,6 +35,7 @@ body a {
 
 html {
 	background:                   #000000 url(../images/backplate.jpg) no-repeat top center;
+	margin-top: 20px;
 }
 
 ul, ul li {
