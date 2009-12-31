@@ -130,3 +130,8 @@
   background: url(../../sfSympalAssetsPlugin/images/icons/folder.png) no-repeat;
   background-position: center;
 }
+
+#sympal-dashboard #boxes ul li#dashboard-boxes-check-for-updates a {
+  background: url(../../sfSympalPlugin/images/update_icon.png) no-repeat;
+  background-position: center;
+}

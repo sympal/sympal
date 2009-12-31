@@ -88,6 +88,10 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setRoute('@sympal_sitemap')
       ->setCredentials(array('ManageMenus'));
 
+    $this->boxes['Check for Updates']
+      ->setRoute('@sympal_check_for_updates')
+      ->setCredentials(array('ManageSetup'));
+
     $this->getContext()->getEventDispatcher()->notify(new sfEvent($this->boxes, 'sympal.load_dashboard_boxes'));
   }
 }

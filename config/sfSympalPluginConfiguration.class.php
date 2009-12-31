@@ -2,7 +2,7 @@
 
 class sfSympalPluginConfiguration extends sfPluginConfiguration
 {
-  const VERSION = '0.7.0';
+  const VERSION = '1.0.0-DEV';
 
   public static
     $dependencies = array(
