@@ -17,4 +17,14 @@ class Basesympal_editorActions extends sfActions
     $this->getUser()->setFlash('notice', 'Content un-published successfully!');
     $this->redirect($request->getReferer());
   }
+
+  public function executeLinks(sfWebRequest $request)
+  {
+    $this->content = Doctrine_Core::getTable('sfSympalContent')
+      ->createQuery('c')
+      ->leftJoin('c.MenuItem m')
+      ->where('c.site_id = ?', $this->getSympalContext()->getSite()->getId())
+      ->orderBy('m.root_id, m.lft ASC')
+      ->execute();
+  }
 }

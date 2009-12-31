@@ -150,6 +150,16 @@ class Basesympal_assetsActions extends sfActions
     }
   }
 
+  public function executeSelect(sfWebRequest $request)
+  {
+    foreach ($this->getResponse()->getStylesheets() as $key => $value)
+    {
+      $this->getResponse()->removeStylesheet($key);
+    }
+    $this->setLayout(false);
+    $this->executeIndex($request);
+  }
+
   private function _getDirectories($path)
   {
     return sfFinder::type('dir')

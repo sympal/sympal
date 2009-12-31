@@ -3,6 +3,8 @@
 
 <div class="sf_admin_form">
   [?php echo form_tag_for($form, '@<?php echo $this->params['route_prefix'] ?>') ?]
+    [?php include_partial('<?php echo $this->getModuleName() ?>/form_actions', array('<?php echo $this->getSingularName() ?>' => $<?php echo $this->getSingularName() ?>, 'form' => $form, 'configuration' => $configuration, 'helper' => $helper)) ?]
+
     [?php echo $form->renderHiddenFields(false) ?]
 
     [?php if ($form->hasGlobalErrors()): ?]

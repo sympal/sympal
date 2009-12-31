@@ -38,3 +38,7 @@ sympal_assets_delete_asset:
   options:
     type: object
     model: sfSympalAsset
+
+sympal_assets_select:
+  url:    /assets/select
+  param: { module: sympal_assets, action: select }

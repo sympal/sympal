@@ -38,3 +38,7 @@ sympal_change_content_slot_type:
   requirements:
     id: \d+
     sf_method: [post]
+
+sympal_editor_links:
+  url:   /editor/links
+  param: { module: sympal_editor, action: links }
