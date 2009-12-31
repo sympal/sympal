@@ -1,15 +1,14 @@
-#sympal_editor, #sympal_assets, #sympal_links {
+#sympal_editor, #sympal_assets, #sympal_links , #sympal_assets {
   background: #fff;
   padding: 12px;
   border: 1px solid #ccc;
-  width: 325px;
   position: fixed;
   top: 0;
   left: 0;
-}
-
-#sympal_assets {
-  width: 400px;
+  display: none;
+  width: 600px;
+  height: 400px;
+  overflow: auto;
 }
 
 #sympal_editor h2 {

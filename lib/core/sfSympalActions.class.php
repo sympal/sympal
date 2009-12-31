@@ -2,6 +2,12 @@
 
 class sfSympalActions extends sfSympalExtendClass
 {
+  public function isAjax()
+  {
+    $request = $this->getRequest();
+    return $request->isXmlHttpRequest() || $request->getParameter('is_ajax');
+  }
+
   public function getSympalContext()
   {
     return sfSympalContext::getInstance();

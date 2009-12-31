@@ -1,0 +1,24 @@
+#sympal_assets_forms {
+  border-bottom: 1px solid #CCC;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  height: 100px;
+}
+
+fieldset#sympal_assets_upload, fieldset#sympal_assets_mkdir {
+  border: 0;
+  float: left;
+  background: #eee;
+  border: 1px solid #CCC;
+  margin-top: 20px;
+  padding: 10px;
+  margin-right: 10px;
+}
+
+#sympal_assets_upload legend, #sympal_assets_mkdir legend {
+  font-weight:  bold;
+}
+
+ul#sympal_assets_list li {
+  list-style-type: none;
+}

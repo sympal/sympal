@@ -10,22 +10,7 @@
 <h1><?php echo __('Sympal Assets Manager') ?></h1>
 
 <div id="sympal_assets_forms">
-  <fieldset id="sympal_assets_upload">
-    <legend><?php echo __('Upload an Asset') ?></legend>
-    <form action="<?php echo url_for('sympal_assets_create_asset') ?>" method="post" enctype="multipart/form-data">
-      <?php echo $uploadForm ?>
-      <input type="submit" class="submit" value="<?php echo __('Upload') ?>" />
-    </form>
-  </fieldset>
-
-  <fieldset id="sympal_assets_mkdir">
-    <legend><?php echo __('Create a New Directory') ?></legend>
-    <form action="<?php echo url_for('sympal_assets_create_directory') ?>" method="post">
-      <?php echo $directoryForm ?>
-      <input type="submit" class="submit" value="<?php echo __('Create') ?>" />
-    </form>
-  </fieldset>
-  <div class="clear"></div>
+  <?php echo get_partial('sympal_assets/forms', array('uploadForm' => $uploadForm, 'directoryForm' => $directoryForm)) ?>
 </div>
 
 <h2><?php echo $directory ? $directory : '/' ?></h2>

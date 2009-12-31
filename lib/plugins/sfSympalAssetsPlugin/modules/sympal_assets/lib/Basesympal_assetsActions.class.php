@@ -6,6 +6,11 @@ class Basesympal_assetsActions extends sfActions
   {
     $this->useAdminLayout();
 
+    if ($this->isAjax())
+    {
+      $this->setLayout(false);
+    }
+
     $request = $this->getRequest();
 
     $this->rootPath = sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir', '/uploads');
@@ -13,6 +18,9 @@ class Basesympal_assetsActions extends sfActions
     $this->directory = urldecode($dir);
     $this->parentDirectory = $this->_getParentDir($this->directory);
     $this->fullPath = $this->rootPath.'/'.$this->directory;
+
+    $this->currentRoute = $this->getContext()->getRouting()->getCurrentRouteName();
+    $this->currentParams = $request->getGetParameters();
   }
 
   public function executeIndex(sfWebRequest $request)
@@ -22,9 +30,6 @@ class Basesympal_assetsActions extends sfActions
     $this->_synchronizeAssets($this->directory);
 
     $this->assets = Doctrine_Core::getTable('sfSympalAsset')->findByPath($this->directory);
-
-    $this->currentRoute = $this->getContext()->getRouting()->getCurrentRouteName();
-    $this->currentParams = $request->getGetParameters();
 
     $this->uploadForm = new sfSympalAssetUploadForm(array('directory' => $this->directory));
     $this->directoryForm = new sfSympalAssetsDirectoryForm(array('directory' => $this->directory));
@@ -105,7 +110,12 @@ class Basesympal_assetsActions extends sfActions
     {
       $this->getUser()->setFlash('error', 'Could not upload file.');
     }
-    $this->redirect($request->getReferer());
+    if ($this->isAjax())
+    {
+      $this->redirect('@sympal_assets_select?is_ajax='.$this->isAjax().'&dir='.$upload['directory']);
+    } else {
+      $this->redirect('@sympal_assets?is_ajax='.$this->isAjax().'&dir='.$upload['directory']);      
+    }
   }
 
   public function executeDelete_asset(sfWebRequest $request)

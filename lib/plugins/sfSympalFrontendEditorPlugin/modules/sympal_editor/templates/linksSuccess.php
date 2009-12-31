@@ -5,7 +5,8 @@
 
   <ul>
     <?php foreach ($content as $c): ?>
-      <li id="<?php echo $c->getId() ?>" style="margin-left: <?php echo ($c->getMenuItem()->getLevel() - 1) * 15 ?>px;">
+      <?php $menuItem = $c->getMenuItem() ?>    
+      <li id="<?php echo $c->getId() ?>"<?php if ($menuItem): ?> style="margin-left: <?php echo ($menuItem->getLevel() - 1) * 15 ?>px;"<?php endif; ?>>
         <a href="#link"><?php echo $c ?></a>
       </li>
     <?php endforeach; ?>
