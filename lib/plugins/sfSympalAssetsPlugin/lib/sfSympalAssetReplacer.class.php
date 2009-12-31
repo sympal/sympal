@@ -81,7 +81,7 @@ class sfSympalAssetReplacer
 
   private function _replaceAssets($ids, $replacements, $content)
   {
-    if (array_diff($this->_content->Assets->getPrimaryKeys(), $ids))
+    if (array_diff($ids, $this->_content->Assets->getPrimaryKeys()) || array_diff($this->_content->Assets->getPrimaryKeys(), $ids))
     {
       $assetObjects = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery()
@@ -106,7 +106,7 @@ class sfSympalAssetReplacer
 
   private function _replaceLinks($ids, $replacements, $content)
   {
-    if (array_diff($this->_content->Links->getPrimaryKeys(), $ids))
+    if (array_diff($ids, $this->_content->Links->getPrimaryKeys()) || array_diff($this->_content->Links->getPrimaryKeys(), $ids))
     {
       $q = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery('c')
@@ -141,7 +141,7 @@ class sfSympalAssetReplacer
 
   private function _buildObjects(Doctrine_Collection $collection)
   {
-    $objects = array();
+    $objects = new Doctrine_Collection($collection->getTable());
     foreach ($collection as $key => $value)
     {
       $objects[$value->id] = $value;

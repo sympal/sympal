@@ -7,6 +7,7 @@
 <div class="sympal_inline_edit_bar sympal_form">
   <div class="sympal_inline_edit_bar_container">
     <ul>
+      <li><?php echo button_to('Signout', '@sympal_signout', 'confirm=Are you sure you want to signout?') ?></li>
       <li><input type="button" class="toggle_editor_menu" name="toggle_editor_menu" value="Editor Menu" /></li>
       <li><?php echo button_to('Go to My Dashboard', '@sympal_dashboard', array('class' => 'sympal_dashboard')) ?></li>
       <li><input type="button" class="toggle_edit_mode" value="Enable Edit Mode" /></li>
