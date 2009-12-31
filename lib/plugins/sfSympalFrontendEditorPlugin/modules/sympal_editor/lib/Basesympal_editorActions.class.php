@@ -20,10 +20,19 @@ class Basesympal_editorActions extends sfActions
 
   public function executeLinks(sfWebRequest $request)
   {
+    $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')
+      ->createQuery('t')
+      ->orderBy('t.label ASC')
+      ->execute();
+    if (!$contentTypeId = $request->getParameter('content_type_id'))
+    {
+      $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName('sfSympalPage');
+    } else {
+      $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($contentTypeId);
+    }
+    $contentTypeId = $this->contentType->getId();
     $this->content = Doctrine_Core::getTable('sfSympalContent')
-      ->createQuery('c')
-      ->leftJoin('c.MenuItem m')
-      ->where('c.site_id = ?', $this->getSympalContext()->getSite()->getId())
+      ->getFullTypeQuery($this->contentType->getName(), 'c', $contentTypeId)
       ->orderBy('m.root_id, m.lft ASC')
       ->execute();
   }

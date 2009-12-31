@@ -1,10 +1,21 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalAssetsPlugin/css/select.css') ?>" />
 <script type="text/javascript" src="<?php echo javascript_path('/sfSympalAssetsPlugin/js/select.js') ?>"></script>
 
-<div id="sympal_assets_container">
+<div id="sympal_assets_container" class="sympal_form">
+  <h1>Asset Browser</h1>
+
+  <p>
+    Browse your assets below and insert them into the currently focused editor by
+    just clicking the asset you want to insert. You can control where the asset is 
+    inserted by positioning the cursor in the editor. You may also upload new assets
+    and create directories below.
+  </p>
+
   <input type="hidden" id="current_url" value="<?php echo $sf_request->getUri() ?>" />
   <input type="button" class="sympal_assets_upload" value="Upload Asset" />
   <input type="button" class="sympal_create_directory" value="Create Directory" />
+
+  <br/>
 
   <?php echo get_partial('sympal_assets/forms', array('uploadForm' => $uploadForm, 'directoryForm' => $directoryForm)) ?>
 
