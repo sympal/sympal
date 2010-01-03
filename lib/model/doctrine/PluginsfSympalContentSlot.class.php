@@ -137,7 +137,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
     if ($user->isEditMode() && !$value)
     {
-      $rawValue = '[Click to enable inline edit mode]';
+      $rawValue = '[Double click to enable inline edit mode]';
     } else {
       $rawValue = $value;
     }

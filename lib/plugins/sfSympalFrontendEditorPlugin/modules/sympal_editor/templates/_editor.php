@@ -24,7 +24,7 @@
         </li>
       <?php endif; ?>
       <li><input type="button" class="toggle_editor_menu" name="toggle_editor_menu" value="Editor Menu" title="Click to toggle Sympal editor menu" /></li>
-      <li><?php echo button_to('Dashboard', '@sympal_dashboard', array('class' => 'sympal_dashboard')) ?></li>
+      <li><input type="button" class="toggle_dashboard_menu" value="Dashboard" rel="<?php echo url_for('@sympal_dashboard') ?>" /></li>
       <li><input type="button" class="toggle_edit_mode" value="Enable Edit Mode" /></li>
     </ul>
 
@@ -40,3 +40,4 @@
 
 <div id="sympal_assets"></div>
 <div id="sympal_links"></div>
+<div id="sympal_dashboard"></div>

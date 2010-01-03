@@ -10,4 +10,28 @@
  */
 abstract class Basesympal_adminActions extends sfActions
 {
+  public function executeSignin($request)
+  {
+    $user = $this->getUser();
+    if ($user->isAuthenticated())
+    {
+      return $this->redirect('@sympal_dashboard');
+    }
+
+    $this->useAdminLayout();
+
+    $class = sfConfig::get('app_sf_guard_plugin_signin_form', 'sfGuardFormSignin'); 
+    $this->form = new $class();
+
+    if ($request->isMethod('post'))
+    {
+      $this->form->bind($request->getParameter('signin'));
+      if ($this->form->isValid())
+      {
+        $values = $this->form->getValues(); 
+        $this->getUser()->signin($values['user'], array_key_exists('remember', $values) ? $values['remember'] : false);
+        return $this->redirect('@sympal_dashboard');
+      }
+    }
+  }
 }

@@ -193,12 +193,19 @@ class sfSympalActions extends sfSympalExtendClass
       {
         return true;
       } else {
-        $this->redirect($request->getParameter('redirect_url'));
+        if ($this->isAjax())
+        {
+          $url = $request->getParameter('redirect_url');
+          $this->redirect($url.(strpos($url, '?') !== false ? '&' : '?').'ajax=1');          
+        } else {
+          $this->redirect($request->getParameter('redirect_url'));
+        }
       }
     } else {
       $this->getResponse()->setTitle($title);
       $request->setAttribute('title', $title);
       $request->setAttribute('message', $message);
+      $request->setAttribute('is_ajax', $this->isAjax());
 
       $this->forward('sympal_default', 'ask_confirmation');
     }

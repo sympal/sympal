@@ -75,6 +75,7 @@ h3 {
 
 #content {
   margin:                       0;
+  
   padding:                      20px;
   background:                   url(../images/content_header.gif) no-repeat top center;  
   background-color: #fff;
@@ -353,4 +354,8 @@ ul#sympal-admin-menu li ul li a:hover {
   margin-bottom: 10px;
   border: 1px solid #ddd;
   font-weight: bold;
+}
+
+#sympal_admin_signin {
+  
 }

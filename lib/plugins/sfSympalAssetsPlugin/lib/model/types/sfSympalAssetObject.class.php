@@ -149,6 +149,16 @@ abstract class sfSympalAssetObject
     return $this->_doctrineAsset;
   }
 
+  public function rename($newName)
+  {
+    $this->move($this->getPathDirectory().'/'.$newName);
+  }
+
+  public function moveTo($path)
+  {
+    $this->move($path.'/'.$this->getName());
+  }
+
   public function move($newPath)
   {
     rename($this->getPath(), $newPath);
@@ -162,7 +172,23 @@ abstract class sfSympalAssetObject
 
   public function render($options = array())
   {
-    if (isset($options['thumbnail']) && $options['thumbnail'] && isset($options['link']) && $options['link'])
+    if (isset($options['linked_thumbnail']))
+    {
+      return link_to($this->getThumbnailImage($options), $this->getUrl(), $options);
+    }
+    else if (isset($options['url']))
+    {
+      return $this->getUrl();
+    }
+    else if (isset($options['thumbnail_url']))
+    {
+      return $this->getThumbnailUrl();
+    }
+    else if (isset($options['icon_url']))
+    {
+      return $this->getIcon();
+    }
+    else if (isset($options['thumbnail']) && $options['thumbnail'] && isset($options['link']) && $options['link'])
     {
       return link_to($this->getThumbnailImage(array_merge($options, array('align' => 'left'))).' '.$this->getName(), $this->getUrl(), $options);
     }

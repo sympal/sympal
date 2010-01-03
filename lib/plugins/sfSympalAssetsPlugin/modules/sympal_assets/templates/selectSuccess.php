@@ -30,15 +30,42 @@
 
     <?php foreach($directories as $dir): ?>
       <li class="folder">
+        <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/delete.png'), array(
+            'url' => url_for('@sympal_assets_delete_directory?directory='.urlencode($directory.'/'.pathinfo($dir, PATHINFO_BASENAME))),
+            'update' => 'sympal_assets_container',
+            'title' => sprintf('Delete directory "%s"', $dir),
+            'method' => 'get'
+          )
+        ) ?>
+
         <?php echo image_tag('/sfSympalAssetsPlugin/images/icons/folder.png', 'width=25') ?>
-        <?php echo link_to($dir, $currentRoute, array_merge($sf_data->getRaw('currentParams'), array('dir' => urlencode($directory.'/'.pathinfo($dir, PATHINFO_BASENAME))))) ?>
+        <?php echo link_to($dir, $currentRoute, array_merge($sf_data->getRaw('currentParams'), array('dir' => urlencode($directory.'/'.pathinfo($dir, PATHINFO_BASENAME)))), array('class' => 'go')) ?>
       </li>
     <?php endforeach ?>
 
     <?php foreach($assets as $asset): ?>
       <li id="<?php echo $asset->getId() ?>" class="asset">
-        <?php echo image_tag($asset->getThumbnailUrl(), 'width=25') ?>
-        <?php echo link_to($asset->getName(), $asset->getUrl()) ?>
+        <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/edit.png'), array(
+            'url' => url_for('sympal_assets_edit_asset', $asset),
+            'update' => 'sympal_assets_container',
+            'title' => sprintf('Edit file "%s"', $asset->getName()),
+            'method' => 'get'
+          )
+        ) ?>
+
+        <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/delete.png'), array(
+            'url' => url_for('sympal_assets_delete_asset', $asset),
+            'update' => 'sympal_assets_container',
+            'title' => sprintf('Delete file "%s"', $asset->getName()),
+            'method' => 'get'
+          )
+        ) ?>
+
+        <?php echo link_to($asset->getName(), $asset->getUrl(), 'class=insert title='.$asset->getEmbedCode()) ?>
+
+        <?php if ($asset->isImage()): ?>
+          <?php echo image_tag($asset->getUrl(), 'class="preview" style="display: none;"') ?>
+        <?php endif; ?>
       </li>
     <?php endforeach ?>
   </ul>

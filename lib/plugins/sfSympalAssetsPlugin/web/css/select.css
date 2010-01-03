@@ -16,3 +16,10 @@ fieldset#sympal_assets_upload, fieldset#sympal_assets_mkdir {
 ul#sympal_assets_list li {
   list-style-type: none;
 }
+
+ul#sympal_assets_list li.asset .preview {
+  float: right;
+  max-width: 250px;
+  display: none;
+  margin-top: -75px;
+}

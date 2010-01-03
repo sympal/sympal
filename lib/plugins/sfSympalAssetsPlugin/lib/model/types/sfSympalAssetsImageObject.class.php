@@ -94,19 +94,24 @@ class sfSympalAssetsImageObject extends sfSympalAssetsFileObject
       throw new sfException('sfImageTransformPlugin must be installed in order to generate thumbnails.');
     }
 
-    $thumb = new sfImage($this->getPath());
-    $thumb->thumbnail(
-      sfSympalConfig::get('assets', 'thumbnails_max_width', 64),
-      sfSympalConfig::get('assets', 'thumbnails_max_height', 64)
-    );
-
-    $destinationDirectory = $this->getThumbnailDirectory();
-    if(!file_exists($destinationDirectory))
+    if (file_exists($this->getPath()))
     {
-      mkdir($destinationDirectory);
-      chmod($destinationDirectory, 0777);
+      $thumb = new sfImage($this->getPath());
+      $thumb->thumbnail(
+        sfSympalConfig::get('assets', 'thumbnails_max_width', 64),
+        sfSympalConfig::get('assets', 'thumbnails_max_height', 64)
+      );
+
+      $destinationDirectory = $this->getThumbnailDirectory();
+      if(!file_exists($destinationDirectory))
+      {
+        mkdir($destinationDirectory);
+        chmod($destinationDirectory, 0777);
+      }
+      return $thumb->saveAs($destinationDirectory.'/'.$this->getName());
+    } else {
+      return false;
     }
-    return $thumb->saveAs($destinationDirectory.'/'.$this->getName());
   }
 
   public function save()

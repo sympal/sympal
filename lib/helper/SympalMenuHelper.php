@@ -41,7 +41,7 @@ function get_sympal_admin_menu()
 {
   $menu = new sfSympalMenuAdminMenu('Sympal Admin');
   $menu->setCredentials(array('ViewAdminBar'));
-  $menu->addChild('Go to Site', '@homepage');
+  $menu->addChild('Go to Site Frontend', '@homepage');
   $menu->addChild('My Dashboard', '@sympal_dashboard');
   $menu->addChild('Administration');
   $menu->addChild('Security');

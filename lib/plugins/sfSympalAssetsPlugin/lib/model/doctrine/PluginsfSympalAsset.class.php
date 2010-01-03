@@ -33,6 +33,16 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
     $this->setNewPath($newPath);
   }
 
+  public function moveTo($path)
+  {
+    return $this->move($path.'/'.$this->getName());
+  }
+
+  public function rename($newName)
+  {
+    return $this->move($this->getPathDirectory().'/'.$newName);
+  }
+
   public function render($options = array())
   {
     return $this->getAssetObject()->render($options);

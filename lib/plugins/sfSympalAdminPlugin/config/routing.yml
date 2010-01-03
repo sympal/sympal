@@ -1,3 +1,7 @@
+sympal_admin:
+  url:  /admin
+  param: { module: sympal_admin, action: signin }
+
 sympal_dashboard:
   url:  /admin/dashboard
   param: { module: sympal_dashboard, action: index }

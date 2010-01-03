@@ -29,11 +29,17 @@ class Basesympal_defaultActions extends sfActions
 
   public function executeAsk_confirmation(sfWebRequest $request)
   {
-    $this->useAdminLayout();
+    if ($this->isAjax())
+    {
+      $this->setLayout(false);
+    } else {
+      $this->useAdminLayout();
+    }
 
     $this->url = $request->getUri();
     $this->title = $request->getAttribute('title');
     $this->message = $request->getAttribute('message');
+    $this->isAjax = $request->getAttribute('is_ajax');
   }
 
   public function executeError404()

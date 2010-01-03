@@ -19,6 +19,11 @@ abstract class Basesympal_dashboardActions extends sfActions
 
   public function executeIndex()
   {
+    if ($this->isAjax = $this->isAjax())
+    {
+      $this->setLayout(false);
+    }
+
     if (sfSympalConfig::get('check_for_upgrades_on_dashboard', null, false))
     {
       $this->upgrade = new sfSympalUpgradeFromWeb(

@@ -1,5 +1,10 @@
-<?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/dashboard') ?>
-<?php sympal_use_stylesheet('/sfSympalUpgradePlugin/css/upgrade') ?>
+<?php if ($isAjax): ?>
+  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalAdminPlugin/css/dashboard') ?>" />
+  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalUpgradePlugin/css/upgrade') ?>" />
+<?php else: ?>
+  <?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/dashboard') ?>
+  <?php sympal_use_stylesheet('/sfSympalUpgradePlugin/css/upgrade') ?>
+<?php endif; ?>
 
 <?php if ($hasNewVersion): ?>
   <div class="sympal_new_version_box">

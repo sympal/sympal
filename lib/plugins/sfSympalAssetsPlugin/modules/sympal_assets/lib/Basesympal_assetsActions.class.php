@@ -6,7 +6,8 @@ class Basesympal_assetsActions extends sfActions
   {
     $this->useAdminLayout();
 
-    if ($this->isAjax())
+    $this->isAjax = $this->isAjax();
+    if ($this->isAjax)
     {
       $this->setLayout(false);
     }
@@ -74,7 +75,14 @@ class Basesympal_assetsActions extends sfActions
     {
       $this->getUser()->setFlash('error', 'Could not delete directory.');
     }
-    $this->redirect('@sympal_assets?dir='.str_replace(sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir'), null, dirname($path)));
+
+    $dir = str_replace(sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir'), null, dirname($path));
+    if ($this->isAjax)
+    {
+      $this->redirect('@sympal_assets_select?is_ajax=&dir='.$dir);
+    } else {
+      $this->redirect('@sympal_assets?dir='.$dir);
+    }
   }
 
   public function executeCreate_asset(sfWebRequest $request)
@@ -110,11 +118,11 @@ class Basesympal_assetsActions extends sfActions
     {
       $this->getUser()->setFlash('error', 'Could not upload file.');
     }
-    if ($this->isAjax())
+    if ($this->isAjax)
     {
-      $this->redirect('@sympal_assets_select?is_ajax='.$this->isAjax().'&dir='.$upload['directory']);
+      $this->redirect('@sympal_assets_select?is_ajax='.$this->isAjax.'&dir='.$upload['directory']);
     } else {
-      $this->redirect('@sympal_assets?is_ajax='.$this->isAjax().'&dir='.$upload['directory']);      
+      $this->redirect('@sympal_assets?is_ajax='.$this->isAjax.'&dir='.$upload['directory']);      
     }
   }
 
@@ -129,8 +137,13 @@ class Basesympal_assetsActions extends sfActions
     $dir = $this->asset->getRelativePathDirectory();
     $this->asset->delete();
 
-    $this->getUser()->setFlash('notice', 'File successfully deleted.');
-    $this->redirect('@sympal_assets?dir='.$dir);
+    if ($this->isAjax)
+    {
+      $this->redirect('@sympal_assets_select?is_ajax=&dir='.$dir);
+    } else {
+      $this->getUser()->setFlash('notice', 'File successfully deleted.');
+      $this->redirect('@sympal_assets?is_ajax=&dir='.$dir);
+    }
   }
 
   public function executeEdit_asset(sfWebRequest $request)
@@ -144,10 +157,15 @@ class Basesympal_assetsActions extends sfActions
 
       if ($this->form->isValid())
       {
-        $this->asset->move(dirname($this->asset->getPath()).'/'.$this->form->getValue('new_name'));
+        $this->asset->rename($this->form->getValue('new_name'));
         $this->asset->save();
 
-        $this->redirect($this->generateUrl('sympal_assets_edit_asset', $this->asset));
+        if ($this->isAjax)
+        {
+          $this->redirect('@sympal_assets_select?is_ajax=1&dir='.$this->asset->getRelativePathDirectory());
+        } else {
+          $this->redirect($this->generateUrl('sympal_assets_edit_asset', $this->asset));
+        }
       }
     }
     else

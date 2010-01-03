@@ -19,12 +19,17 @@
   <!-- content -->
   <div id="content">
 
-  <?php if (!$sf_request->getParameter('popup')): ?>
+  <?php if (!$sf_request->getParameter('popup') && $sf_user->isAuthenticated()): ?>
     <div id="header">
       <h1>Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
     </div>
 
     <div id="column_left">
+      <p>
+        <strong>
+          Signed in as <?php echo $sf_user->getUsername() ?> [<?php echo link_to('signout', '@sympal_signout', 'confirm=Are you sure you wish to signout?') ?>]
+        </strong>
+      </p>
       <?php echo get_sympal_admin_menu() ?>
     </div>
 
@@ -37,7 +42,6 @@
   <?php else: ?>
     <?php echo $sf_content ?>
   <?php endif; ?>
-
 
   </div>
   <!-- end content -->
