@@ -40,4 +40,6 @@
       <?php endforeach; ?>
     </ul>
   </div>
+  
+  <a class="sympal_close_menu">close</a>
 </div>

@@ -20,4 +20,7 @@
 
     <?php echo $boxes->render() ?>
   </div>
+  <?php if ($isAjax): ?>
+    <a class="sympal_close_menu">close</a>
+  <?php endif; ?>
 </div>

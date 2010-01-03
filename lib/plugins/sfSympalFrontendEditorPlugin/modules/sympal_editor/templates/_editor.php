@@ -1,6 +1,7 @@
 <?php if ($menu = $menu->render()): ?>
   <div id="sympal_editor">
     <?php echo $menu ?>
+    <a class="sympal_close_menu">close</a>
   </div>
 <?php endif; ?>
 

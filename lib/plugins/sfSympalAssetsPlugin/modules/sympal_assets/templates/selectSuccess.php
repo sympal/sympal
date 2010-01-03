@@ -69,4 +69,6 @@
       </li>
     <?php endforeach ?>
   </ul>
+
+  <a class="sympal_close_menu">close</a>
 </div>
