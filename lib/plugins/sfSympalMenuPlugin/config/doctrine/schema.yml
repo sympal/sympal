@@ -21,7 +21,6 @@ sfSympalMenuItem:
     site_id:
       type: integer
       notnull: true
-    content_type_id: integer
     content_id: integer
   relations:
     RootMenuItem:
