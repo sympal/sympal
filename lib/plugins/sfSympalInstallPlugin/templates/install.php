@@ -10,9 +10,11 @@
   <?php include_javascripts() ?>
 </head>
 <body>
-  <div id="content">
-    <?php echo $flash ?>
-    <?php echo $sf_content ?>
+  <div id="container">
+    <div id="content">
+      <?php echo $flash ?>
+      <?php echo $sf_content ?>
+    </div>
   </div>
 </body>
 </html>

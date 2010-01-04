@@ -9,7 +9,7 @@ class sfSympalTheme
   public function __construct($name)
   {
     $this->_layoutPath = $this->_findLayoutPath($name);
-    $this->_cssPath = $this->_findCssPath($name);
+    $this->_cssPath = sfSympalConfig::getAssetPath($this->_findCssPath($name));
 
     $context = sfContext::getInstance();
     $request = $context->getRequest();
@@ -32,7 +32,7 @@ class sfSympalTheme
       $response->removeStylesheet($lastStylesheet);
     }
 
-    $response->addStylesheet(sfSympalConfig::getAssetPath($this->_cssPath), 'last');
+    $response->addStylesheet($this->_cssPath, 'last');
 
     sfSympalConfig::set('last_stylesheet', $this->_cssPath);
   }
