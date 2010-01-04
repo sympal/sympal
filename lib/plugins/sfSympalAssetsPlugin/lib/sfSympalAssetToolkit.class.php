@@ -14,7 +14,7 @@ class sfSympalAssetToolkit
   {
     $extension = sfSympalAssetToolkit::getExtensionFromFile($file);
     $type = sfSympalAssetToolkit::getTypeFromExtension($extension);
-    $class = isset(self::$_typeClassMap[$type]) ? self::$_typeClassMap[$type] : 'sfSympalAssetsFileObject';
+    $class = isset(self::$_typeClassMap[$type]) ? self::$_typeClassMap[$type] : 'sfSympalAssetFileObject';
     return new $class($file);
   }
 
