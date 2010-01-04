@@ -55,7 +55,7 @@ class sfSympalContentRenderer
     $replace = array(
       $this->_content->getSite()->getTitle(),
       (string) $this->_content,
-      ($this->_menuItem ? $this->_menuItem->getLabel() : (string) $content),
+      ($this->_menuItem ? $this->_menuItem->getLabel() : (string) $this->_content),
       $this->_content->getId(),
       sfSympalConfig::get('breadcrumbs_separator'),
       ($title ? $title : (string) $this->_content)
