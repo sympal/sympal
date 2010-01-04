@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalAssetsImageObject extends sfSympalAssetsFileObject
+class sfSympalAssetImageObject extends sfSympalAssetFileObject
 {
   protected
     $_dimensions = null,

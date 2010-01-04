@@ -3,8 +3,9 @@
 class sfSympalAssetToolkit
 {
   protected static $_typeClassMap = array(
-    'image' => 'sfSympalAssetsImageObject',
-    'file' => 'sfSympalAssetsFileObject'
+    'image' => 'sfSympalAssetImageObject',
+    'file' => 'sfSympalAssetFileObject',
+    'video' => 'sfSympalAssetVideoObject'
   );
 
   public static $iconsPath;
@@ -13,11 +14,7 @@ class sfSympalAssetToolkit
   {
     $extension = sfSympalAssetToolkit::getExtensionFromFile($file);
     $type = sfSympalAssetToolkit::getTypeFromExtension($extension);
-    if (!isset(self::$_typeClassMap[$type]))
-    {
-      throw new InvalidArgumentException('Invalid file type');
-    }
-    $class = self::$_typeClassMap[$type];
+    $class = isset(self::$_typeClassMap[$type]) ? self::$_typeClassMap[$type] : 'sfSympalAssetsFileObject';
     return new $class($file);
   }
 

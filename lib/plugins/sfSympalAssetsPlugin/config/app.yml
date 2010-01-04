@@ -19,7 +19,7 @@ all:
         bin:
           extensions: [bin, exe, sh, bat, deb, yum]
         video:
-          extensions: [wmv, avi, mpg, mpeg, flv, mp4]
+          extensions: [wmv, avi, mpg, mpeg, flv, mp4, swf]
         audio:
           extensions: [ogg, mp3, flac, wma, cda]
         text:
