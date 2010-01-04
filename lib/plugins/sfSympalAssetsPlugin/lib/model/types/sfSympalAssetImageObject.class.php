@@ -42,7 +42,8 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
   public function cropImage($x, $y, $w, $h)
   {
-    $targetWidth = $targetHeight = 150;
+    $targetWidth = $w;
+    $targetHeight = $h;
   	$quality = 90;
 
     $extension = $this->getExtension();

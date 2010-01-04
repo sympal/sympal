@@ -1,8 +1,6 @@
 <div id="sf_admin_container">
   <h1>Editing Asset "<?php echo $asset ?>"</h1>
 
-  <h2>"<?php echo $asset->getRelativePath() ?>"</h2>
-
   <div id="sympal_edit_asset">
     <div class="sf_admin_form">
       <?php if ($isAjax): ?>
@@ -18,18 +16,37 @@
         </script>
       <?php endif; ?>
 
-      <?php echo $form->renderFormTag(url_for('sympal_assets_edit_asset', $asset)) ?>
+      <?php echo $form->renderFormTag(url_for('sympal_assets_edit_asset', $asset), array('enctype' => 'multipart/form-data')) ?>
         <?php echo $form->renderHiddenFields() ?>
-        <table>
-          <?php echo $form ?>
-        </table>
+        <input type="hidden" name="is_ajax" value="<?php echo $isAjax ?>" />
+
+        <h2>Upload New File</h2>
+        <?php echo $form['file'] ?>
+        <input type="submit" value="Upload" />
+
+        <h2>Rename</h2>
+        <?php echo $form['new_name'] ?>
+        <input type="submit" value="Save" />
+
+        <h2>Resize</h2>
+        <?php echo $form['width'] ?> x 
+        <?php echo $form['height'] ?>
         <input type="submit" value="Save" />
       </form>
       
       <?php if ($asset->isImage()): ?>
+        <h2>Current Crop</h2>
+        <?php echo image_tag($asset->getUrl()) ?>
+
         <h2>Crop Original Image</h2>
-        <?php echo image_tag($asset->getOriginal()->getUrl(), array('id' => 'jcrop_target')) ?>
+        <p>
+          <?php echo image_tag($asset->getOriginal()->getUrl(), array('id' => 'jcrop_target')) ?>
+        </p>
         <input type="button" id="sympal_save_crop" value="Save Crop" />
+
+        <?php sympal_use_jquery() ?>
+        <?php sympal_use_javascript('/sfSympalPlugin/js/jquery.Jcrop.js') ?>
+        <?php sympal_use_stylesheet('/sfSympalPlugin/css/jquery.Jcrop.css') ?>
 
         <script type="text/javascript">
         $(function() {
@@ -38,7 +55,12 @@
           	onChange: sympalSaveImageCrop
           });
           $('#sympal_save_crop').click(function() {
+            <?php if ($isAjax): ?>
             $('#sympal_assets_container').load(url);
+            <?php else: ?>
+            $.get(url);
+            location.href = '<?php echo url_for ('@sympal_assets?dir='.$asset->getRelativePathDirectory()) ?>';
+            <?php endif; ?>
           });
           function sympalSaveImageCrop(c)
           {

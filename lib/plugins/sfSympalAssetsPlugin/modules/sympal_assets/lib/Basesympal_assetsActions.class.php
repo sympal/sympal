@@ -154,15 +154,29 @@ class Basesympal_assetsActions extends sfActions
     {
       $this->form = new sfSympalAssetEditForm();
       $this->form->setAsset($this->asset);
-      $this->form->bind($request->getParameter($this->form->getName()));
+      $this->form->bind($request->getParameter($this->form->getName()), $request->getFiles($this->form->getName()));
 
       if ($this->form->isValid())
       {
-        $this->asset->rename($this->form->getValue('new_name'));
-
-        if ($this->asset->isImage())
+        $postFile = $this->form->getValue('file');
+        if ($postFile)
         {
-          $this->asset->resize($this->form->getValue('width'), $this->form->getValue('height'));
+          $fileName = $postFile->getOriginalName();
+          $name = Doctrine_Inflector::urlize(sfSympalAssetToolkit::getNameFromFile($fileName));
+          $extension = pathinfo($fileName, PATHINFO_EXTENSION);
+          $fullName = $extension ? $name.'.'.$extension : $name;
+          $newPath = $this->asset->getPathDirectory().'/'.$fullName;
+          $this->asset->move($newPath);
+          $postFile->save($newPath);
+          $this->asset->save();
+          $this->asset->copyOriginal();
+        } else {
+          if ($this->asset->isImage())
+          {
+            $this->asset->resize($this->form->getValue('width'), $this->form->getValue('height'));
+          }
+
+          $this->asset->rename($this->form->getValue('new_name'));
         }
 
         $this->asset->save();
@@ -212,6 +226,7 @@ class Basesympal_assetsActions extends sfActions
     $h = $request->getParameter('h');
 
     $asset->cropImage($x, $y, $w, $h);
+    $asset->save();
 
     if ($this->isAjax)
     {

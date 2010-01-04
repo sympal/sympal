@@ -2,7 +2,7 @@
 
 class sfSympalAssetUploadForm extends sfForm
 {
-  protected $uploadDirectory;
+  private $_uploadDirectory;
 
   public function configure()
   {
@@ -21,15 +21,15 @@ class sfSympalAssetUploadForm extends sfForm
 
   public function getUploadDirectory()
   {
-    if(!$this->uploadDirectory)
+    if(!$this->_uploadDirectory)
     {
-      $this->uploadDirectory = sfConfig::get('sf_upload_dir');
+      $this->_uploadDirectory = sfConfig::get('sf_upload_dir');
     }
-    return $this->uploadDirectory;
+    return $this->_uploadDirectory;
   }
 
   public function setUploadDirectory($directory)
   {
-    $this->uploadDirectory = $directory;
+    $this->_uploadDirectory = $directory;
   }
 }

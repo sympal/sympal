@@ -83,15 +83,20 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
 
     if ($isNew)
     {
-      $dir = $this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir');
-      if (!is_dir($dir))
-      {
-        mkdir($dir, 0777, true);
-      }
-      copy($this->getPath(), $dir.'/'.$this->getName());
+      $this->copyOriginal();
     }
 
     return $result;
+  }
+
+  public function copyOriginal()
+  {
+    $dir = $this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir');
+    if (!is_dir($dir))
+    {
+      mkdir($dir, 0777, true);
+    }
+    copy($this->getPath(), $dir.'/'.$this->getName());
   }
 
   public function __call($method, $arguments)
