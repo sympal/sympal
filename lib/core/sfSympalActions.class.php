@@ -94,6 +94,11 @@ class sfSympalActions extends sfSympalExtendClass
       }
     }
 
+    if (sfSympalConfig::get('auto_seo', 'title'))
+    {
+      $renderer->setResponseTitle($response);
+    }
+
     return $renderer;
   }
 

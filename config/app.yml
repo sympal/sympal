@@ -1,5 +1,10 @@
 all:
   sympal_config:
+    # Automatically set the response meta title based on the current content and menu item
+    auto_seo:
+      title: true
+      title_format: %site_title% %separator% %ancestors%
+
     # Override the path of any bundled asset (js or css)
     # Used with the sfSympalConfig::getAssetPath() helper method
     # echo sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/js/editor.js); // /js/my_editor.js

@@ -27,6 +27,44 @@ class sfSympalContentRenderer
     }
   }
 
+  public function setResponseTitle(sfWebResponse $response)
+  {
+    if ($this->_menuItem)
+    {
+      $breadcrumbs = $this->_menuItem->getBreadcrumbs();
+      $children = array();
+      foreach ($breadcrumbs->getChildren() as $child)
+      {
+        $children[] = $child->renderLabel();
+      }
+      array_shift($children);
+
+      $title = implode(sfSympalConfig::get('breadcrumbs_separator', null, ' / '), $children);
+    } else {
+      $title = (string) $this->_content;
+    }
+    $format = sfSympalConfig::get('auto_seo', 'title_format');
+    $find = array(
+      '%site_title%',
+      '%content_title%',
+      '%menu_item_label%',
+      '%content_id%',
+      '%separator%',
+      '%ancestors%'
+    );
+    $replace = array(
+      $this->_content->getSite()->getTitle(),
+      (string) $this->_content,
+      ($this->_menuItem ? $this->_menuItem->getLabel() : (string) $content),
+      $this->_content->getId(),
+      sfSympalConfig::get('breadcrumbs_separator'),
+      ($title ? $title : (string) $this->_content)
+    );
+    $title = str_replace($find, $replace, $format);
+    $response->setTitle($title);
+    return $title;
+  }
+
   public function getFormat()
   {
     return $this->_format;
