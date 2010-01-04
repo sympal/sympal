@@ -145,6 +145,7 @@ ul.error_list li
 
 #content {
   background: none;
+  min-height: 600px;
 }
 
 #content #top_menu {
@@ -211,7 +212,9 @@ ul.error_list li
 
 #column_left {
   width: 225px;
-  float: left;
+  position: absolute;
+  top: 60px;
+  left: 20px;
 }
 
 #column_right {

@@ -1,6 +1,6 @@
 <?php ob_start() ?>
 generator:
-  class:                   sfDoctrineGenerator
+  class:                   sfSympalDoctrineGenerator
   param:
     model_class:           sfSympalContent
     theme:                 sympal_admin

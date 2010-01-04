@@ -67,3 +67,7 @@ sympal_content_create_type:
 sympal_content_list_type:
   url:    /admin/content/list/:type
   param: { module: sympal_content, action: list_type }
+
+sympal_admin_save_nested_set:
+  url:    /admin/save_nested_set/:model
+  param: { module: sympal_admin, action: save_nested_set }

@@ -34,4 +34,40 @@ abstract class Basesympal_adminActions extends sfActions
       }
     }
   }
+
+  public function executeSave_nested_set(sfWebRequest $request)
+  {
+    $this->getContext()->getLogger()->log(var_export($request->getParameterHolder()->getAll(), true));
+    $data = $request->getParameterHolder()->getAll();
+    foreach ($data as $key => $value)
+    {
+      if (strpos($key, 'sf_admin_nested_set_') !== false)
+      {
+        $items = $value['items'];
+        foreach ($items as $item)
+        {
+          if (isset($item['children']))
+          {
+            $this->_saveChildren($request->getParameter('model'), $item['id'], $item['children']);
+          }
+        }
+      }
+    }
+    return sfView::NONE;
+  }
+
+  private function _saveChildren($model, $parentId, $children)
+  {
+    $menuItem = Doctrine_Core::getTable($model)->find($parentId);
+    foreach ($children as $child)
+    {
+      $childMenuItem = Doctrine_Core::getTable($model)->find($child['id']);
+      $childMenuItem->getNode()->moveAsLastChildOf($menuItem);
+      $this->getContext()->getLogger()->log('test');
+      if (isset($child['children']))
+      {
+        $this->_saveChildren($model, $child['id'], $child['children']);
+      }
+    }
+  }
 }

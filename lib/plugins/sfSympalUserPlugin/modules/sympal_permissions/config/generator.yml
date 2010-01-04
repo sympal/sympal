@@ -1,5 +1,5 @@
 generator:
-  class: sfDoctrineGenerator
+  class:                   sfSympalDoctrineGenerator
   param:
     model_class:           sfGuardPermission
     theme:                 sympal_admin

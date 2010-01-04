@@ -1,5 +1,5 @@
 generator:
-  class: sfDoctrineGenerator
+  class:                   sfSympalDoctrineGenerator
   param:
     model_class:           sfSympalMenuItem
     theme:                 sympal_admin
@@ -12,30 +12,18 @@ generator:
 
     config:
       actions: ~
-      fields:  ~
+      fields: ~
       list:
-        display: [name]
-        max_per_page: 999999
+        display: [=name]
         batch_actions:
-          order:
-            label: Update tree order
-          _delete: ~
           publish:
             action: publish
             label: Publish
           unpublish:
             action: unpublish
             label: Un-Publish
-        object_actions:
-          new:
-            label: Add Child
-          _edit:    ~
-          _delete:  ~
-        actions:
-          _new:
-            label: Add New Menu
       filter:
-        class: false
+        class: sfSympalAdminGenSearchForm
       form:
         display:
           "Menu Item": [name, label, content_id, content_type_id, custom_path, is_primary, date_published]
