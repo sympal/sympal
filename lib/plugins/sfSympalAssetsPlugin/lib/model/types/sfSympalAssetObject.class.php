@@ -1,6 +1,6 @@
 <?php
 
-abstract class sfSympalAssetObject
+class sfSympalAssetObject
 {
   protected
     $_filePath,
@@ -9,6 +9,7 @@ abstract class sfSympalAssetObject
     $_size,
     $_icon,
     $_doctrineAsset,
+    $_original,
     $_type = 'file';
 
   public function __construct($filePath)
@@ -118,11 +119,28 @@ abstract class sfSympalAssetObject
     return $round >= 1 ? round($this->_size / $round) : $this->_size;
   }
 
+  public function getOriginal()
+  {
+    if (!$this->_original)
+    {
+      $original = sfSympalAssetToolkit::createAssetObject($this->getRelativePathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir').'/'.$this->getName());
+      if ($original->exists())
+      {
+        $this->_original = $original;
+      }
+    }
+    return $this->_original;
+  }
+
   public function delete()
   {
     if ($this->exists())
     {
-      return unlink($this->getPath());
+      unlink($this->getPath());
+    }
+    if ($original = $this->getOriginal())
+    {
+      $original->delete();
     }
     return false;
   }
@@ -161,8 +179,13 @@ abstract class sfSympalAssetObject
 
   public function move($newPath)
   {
+    $original = $this->getOriginal();
     rename($this->getPath(), $newPath);
     $this->setNewPath($newPath);
+    if ($original)
+    {
+      $original->move($this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir').'/'.$this->getName());
+    }
   }
 
   public function setNewPath($path)

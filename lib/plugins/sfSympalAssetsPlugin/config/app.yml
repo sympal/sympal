@@ -5,6 +5,7 @@ all:
       root_dir:               /uploads       # The path to the directory where the assets are located
       thumbnails_enabled:     true           # Enable thumbnail creation on upload
       thumbnails_dir:         .thumbnails    # Directory name for storing thumbnails
+      originals_dir:          .originals
       thumbnails_max_width:   64
       thumbnails_max_height:  64
 

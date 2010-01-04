@@ -42,3 +42,11 @@ sympal_assets_delete_asset:
 sympal_assets_select:
   url:    /assets/select
   param: { module: sympal_assets, action: select }
+
+sympal_assets_save_image_crop:
+  url:    /assets/save_image_crop/:id
+  param: { module: sympal_assets, action: save_image_crop }
+  class: sfDoctrineRoute
+  options:
+    type: object
+    model: sfSympalAsset

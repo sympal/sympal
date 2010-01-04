@@ -153,11 +153,18 @@ class Basesympal_assetsActions extends sfActions
     if ($request->isMethod('post'))
     {
       $this->form = new sfSympalAssetEditForm();
+      $this->form->setAsset($this->asset);
       $this->form->bind($request->getParameter($this->form->getName()));
 
       if ($this->form->isValid())
       {
         $this->asset->rename($this->form->getValue('new_name'));
+
+        if ($this->asset->isImage())
+        {
+          $this->asset->resize($this->form->getValue('width'), $this->form->getValue('height'));
+        }
+
         $this->asset->save();
 
         if ($this->isAjax)
@@ -170,11 +177,18 @@ class Basesympal_assetsActions extends sfActions
     }
     else
     {
-      $this->form = new sfSympalAssetEditForm(array(
+      $values = array(
         'new_name' => $this->asset->getName(),
         'current_name' => $this->asset->getName(),
         'directory' => $this->asset->getRelativePathDirectory()
-      ));
+      );
+      if ($this->asset->isImage())
+      {
+        $values['width'] = $this->asset->getWidth();
+        $values['height'] = $this->asset->getHeight();
+      }
+      $this->form = new sfSympalAssetEditForm($values);
+      $this->form->setAsset($this->asset);
     }
   }
 
@@ -186,6 +200,25 @@ class Basesympal_assetsActions extends sfActions
     }
     $this->setLayout(false);
     $this->executeIndex($request);
+  }
+
+  public function executeSave_image_crop(sfWebRequest $request)
+  {
+    $asset = $this->getRoute()->getObject();
+
+    $x = $request->getParameter('x');
+    $y = $request->getParameter('y');
+    $w = $request->getParameter('w');
+    $h = $request->getParameter('h');
+
+    $asset->cropImage($x, $y, $w, $h);
+
+    if ($this->isAjax)
+    {
+      $this->redirect('@sympal_assets_select?is_ajax=1&dir='.$asset->getRelativePathDirectory());
+    } else {
+      $this->redirect($this->generateUrl('sympal_assets_edit_asset', $asset));
+    }
   }
 
   private function _getDirectories($path)

@@ -22,6 +22,7 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       // Load jquery tools/plugins that the inline editor requires
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.cookie.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.elastic.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.Jcrop.min.js'));
 
       // Load markitup markdown editor
       if (sfSympalConfig::get('enable_markdown_editor'))

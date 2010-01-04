@@ -33,6 +33,29 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     return $dimensions[1];
   }
 
+  public function resize($width, $height)
+  {
+    $thumb = new sfImage($this->getOriginal()->getPath());
+    $thumb->thumbnail($width, $height);
+    return $thumb->saveAs($this->getPath());
+  }
+
+  public function cropImage($x, $y, $w, $h)
+  {
+    $targetWidth = $targetHeight = 150;
+  	$quality = 90;
+
+    $extension = $this->getExtension();
+    $type = $extension == 'jpg' ? 'jpeg' : $extension;
+    $func = 'imagecreatefrom'.$type;
+  	$imgR = $func($this->getOriginal()->getPath());
+  	$destR = imagecreatetruecolor($targetWidth, $targetHeight);
+  	imagecopyresampled($destR ,$imgR, 0, 0, $x, $y, $targetWidth, $targetHeight, $w, $h);
+
+    $func = 'image'.$type;
+  	return $func($destR, $this->getPath(), $quality);
+  }
+
   public function getThumbnail()
   {
     if (!$this->_thumbnail)

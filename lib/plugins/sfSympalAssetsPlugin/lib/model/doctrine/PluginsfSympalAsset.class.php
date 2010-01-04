@@ -78,7 +78,20 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
   public function save(Doctrine_Connection $conn = null)
   {
     $this->getAssetObject()->save();
-    return parent::save($conn);
+    $isNew = $this->isNew();
+    $result = parent::save($conn);
+
+    if ($isNew)
+    {
+      $dir = $this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir');
+      if (!is_dir($dir))
+      {
+        mkdir($dir, 0777, true);
+      }
+      copy($this->getPath(), $dir.'/'.$this->getName());
+    }
+
+    return $result;
   }
 
   public function __call($method, $arguments)
