@@ -346,7 +346,7 @@ class sfSympalDataGrid
       $this->_order = $order;
     }
 
-    if ($this->_sort && $this->_isSortable)
+    if ($this->_sort)
     {
       $this->_query->addOrderBy($this->_sort.(isset($this->_order) ? ' '.$this->_order : null));
     }

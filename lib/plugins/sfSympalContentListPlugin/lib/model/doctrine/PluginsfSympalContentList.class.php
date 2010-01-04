@@ -16,7 +16,7 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       {
         $dataGrid = $q;
       } else if ($q instanceof sfDoctrinePager || $q instanceof Doctrine_Query_Abstract) {
-        $dataGrid = sfSympalDataGrid::create($q)->init();
+        $dataGrid = sfSympalDataGrid::create($q);
       } else {
         throw new sfException(sprintf('ContentList table_method must return an instance of sfSympalDataGrid, sfDoctrinePager or Doctrine_Query_Abstract. An instance of "%s" was returned.', get_class($q)));
       }
@@ -24,7 +24,7 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       $pager = new sfDoctrinePager('sfSympalContent');
       $pager->setQuery($this->_buildQuery($request));
 
-      $dataGrid = sfSympalDataGrid::create($pager)->init();
+      $dataGrid = sfSympalDataGrid::create($pager);
     }
 
     if ($this->sort_column) 
@@ -40,6 +40,7 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
 
     $dataGridRequestInfo = $request->getParameter($dataGrid->getId());
     $dataGrid->setPage($dataGridRequestInfo['page']);
+    $dataGrid->init();
 
     return $dataGrid;
   }
