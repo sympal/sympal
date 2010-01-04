@@ -39,7 +39,7 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
     $dataGrid->setMaxPerPage(($this->rows_per_page > 0 ? $this->rows_per_page : sfSympalConfig::get('rows_per_page', null, 10)));
 
     $dataGridRequestInfo = $request->getParameter($dataGrid->getId());
-    $dataGrid->setPage($dataGridRequestInfo['page']);
+    $dataGrid->setPage(isset($dataGridRequestInfo['page']) ? $dataGridRequestInfo['page'] : 1);
     $dataGrid->init();
 
     return $dataGrid;
