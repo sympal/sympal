@@ -14,7 +14,7 @@ abstract class Basesympal_configActions extends sfActions
   {
     parent::preExecute();
 
-    $this->useAdminLayout();
+    $this->useAdminTheme();
   }
 
   protected function _getForm()

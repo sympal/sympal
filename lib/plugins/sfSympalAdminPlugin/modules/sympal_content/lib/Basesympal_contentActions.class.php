@@ -12,7 +12,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $this->redirect('@homepage');
     }
 
-    $this->useAdminLayout();
+    $this->useAdminTheme();
   }
 
   protected function _getContent(sfWebRequest $menuItem)

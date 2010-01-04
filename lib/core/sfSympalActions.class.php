@@ -74,8 +74,8 @@ class sfSympalActions extends sfSympalExtendClass
     $this->_handleForward404($content, $e);
     $this->getUser()->checkContentSecurity($content);
 
-    $this->changeTheme($content->getLayoutToRenderWith());
-
+    $this->loadTheme($content->getThemeToRenderWith());
+    
     $renderer = $this->getSympalContext()->getContentRenderer($content);
 
     $content->loadMetaData($response);
@@ -153,29 +153,14 @@ class sfSympalActions extends sfSympalExtendClass
     return $renderer;
   }
 
-  public function changeTheme($name)
+  public function loadTheme($name)
   {
-    return sfSympalTheme::change($name);
+    return $this->getSympalContext()->loadTheme($name);
   }
 
-  public function loadDefaultLayout()
+  public function useAdminTheme()
   {
-    return sfSympalTheme::loadDefault();
-  }
-
-  public function useAdminLayout()
-  {
-    $response = $this->getResponse();
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.cookie.js'));
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/admin.js'));
-    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
-    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/global.css'));
-    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/default.css'));
-
-    sfSympalToolkit::useJQuery();
-
-    $this->changeTheme(sfSympalConfig::get('admin_layout', null, 'admin'));
+    $this->loadTheme(sfSympalConfig::get('admin_theme', null, 'admin'));
   }
 
   public function askConfirmation($title, $message, $variables = array())

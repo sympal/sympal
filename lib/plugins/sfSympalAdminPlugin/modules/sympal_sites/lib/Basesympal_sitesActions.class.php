@@ -6,7 +6,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
   {
     parent::preExecute();
 
-    $this->useAdminLayout();
+    $this->useAdminTheme();
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)

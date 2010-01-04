@@ -1,7 +1,7 @@
 sfSympalSite:
   actAs: [sfSympalRecordTemplate]
   columns:
-    layout: string(255)
+    theme: string(255)
     title:
       type: string(255)
       notnull: true
@@ -27,7 +27,7 @@ sfSympalContent:
       notnull: true
     date_published: timestamp
     custom_path: string(255)
-    layout: string(255)
+    theme: string(255)
     template: string(255)
     page_title: string(255)
     meta_keywords: string(500)
@@ -117,7 +117,7 @@ sfSympalContentType:
       type: string(255)
       notnull: true
     default_path: string(255)
-    layout: string(255)
+    theme: string(255)
     template: string(255)
   indexes:
     content_type_name:

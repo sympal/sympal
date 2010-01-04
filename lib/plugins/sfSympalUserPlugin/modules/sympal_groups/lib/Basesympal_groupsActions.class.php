@@ -9,6 +9,6 @@ class Basesympal_groupsActions extends autoSympal_groupsActions
   {
     parent::preExecute();
 
-    $this->useAdminLayout();
+    $this->useAdminTheme();
   }
 }

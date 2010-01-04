@@ -3,24 +3,54 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(6, new lime_output_color());
+$t = new lime_test(17, new lime_output_color());
 
-$dir = $configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir();
+$pluginConfig = $configuration->getPluginConfiguration('sfSympalPlugin');
+$sympalContext = $pluginConfig->getSympalConfiguration()->getSympalContext();
+$dir = $pluginConfig->getRootDir();
 
 // Default sympal theme
-$theme = new sfSympalTheme('sympal');
+$theme = $sympalContext->getThemeObject('sympal');
 
 $t->is($theme->getLayoutPath(), $dir.'/templates/sympal.php');
-$t->is($theme->getCssPath(), '/sfSympalPlugin/css/sympal.css');
+$t->is($theme->getStylesheets(), array('/sfSympalPlugin/css/sympal.css'));
+$t->is($theme->getJavascripts(), array());
+$t->is($theme->getName(), 'sympal');
+$t->is($theme->getConfiguration() instanceof sfSympalThemeConfiguration, true);
 
 // Theme from another plugin
-$theme = new sfSympalTheme('test_theme');
+$theme = $sympalContext->getThemeObject('test_theme');
 
 $t->is($theme->getLayoutPath(), $dir.'/test/fixtures/project/plugins/sfSympalThemeTestPlugin/templates/test_theme.php');
-$t->is($theme->getCssPath(), '/sfSympalThemeTestPlugin/css/test_theme.css');
+$t->is($theme->getStylesheets(), array('/sfSympalThemeTestPlugin/css/test_theme.css'));
+$t->is($theme->getJavascripts(), array());
 
 // Theme from application
-$theme = new sfSympalTheme('test');
+$theme = $sympalContext->getThemeObject('test');
 
 $t->is($theme->getLayoutPath(), $dir.'/test/fixtures/project/apps/sympal/templates/test.php');
-$t->is($theme->getCssPath(), 'test');
+$t->is($theme->getStylesheets(), array('test'));
+$t->is($theme->getJavascripts(), array());
+$t->is(count($sympalContext->getThemeObjects()), 3);
+$theme = $sympalContext->getThemeObject('test');
+$t->is(count($sympalContext->getThemeObjects()), 3);
+try {
+  $theme = $sympalContext->getThemeObject('test2');
+  $t->fail('Should have thrown exception');
+} catch (Exception $e) {
+  $t->pass();
+}
+$t->is(count($sympalContext->getThemeObjects()), 3);
+
+$adminTheme = $sympalContext->getThemeObject('admin');
+$t->is($adminTheme->getStylesheets(), array(
+  '/sfSympalPlugin/fancybox/jquery.fancybox.css',
+  '/sfSympalAdminPlugin/css/global.css',
+  '/sfSympalAdminPlugin/css/default.css',
+  '/sfSympalAdminPlugin/css/admin.css'
+));
+$t->is($adminTheme->getJavascripts(), array(
+  '/sfSympalPlugin/js/jQuery.cookie.js',
+  '/sfSympalPlugin/fancybox/jquery.fancybox.js',
+  '/sfSympalAdminPlugin/js/admin.js'
+));

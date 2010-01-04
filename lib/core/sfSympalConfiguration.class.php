@@ -189,22 +189,27 @@ class sfSympalConfiguration
     return $this->getCache()->getLayouts();
   }
 
+  public function getDefaultTheme(sfWebRequest $request)
+  {
+    $theme = sfSympalConfig::get($request->getParameter('module'), 'theme');
+    if (!$theme)
+    {
+      $theme = sfSympalConfig::get(sfContext::getInstance()->getRouting()->getCurrentRouteName(), 'theme');
+    }
+    if (!$theme)
+    {
+      $theme = sfSympalConfig::get('default_theme');
+    }
+    return $theme;
+  }
+
   public function initializeTheme()
   {
     $request = sfContext::getInstance()->getRequest();
 
     if (!$request->isXmlHttpRequest() && $request->getParameter('module') != 'sympal_content_renderer')
     {
-      $layout = sfSympalConfig::get($request->getParameter('module'), 'layout');
-      if (!$layout)
-      {
-        $layout = sfSympalConfig::get(sfContext::getInstance()->getRouting()->getCurrentRouteName(), 'layout');
-      }
-      if (!$layout)
-      {
-        $layout = sfSympalConfig::get('default_layout');
-      }
-      sfSympalTheme::change($layout);
+      $this->_sympalContext->loadTheme($this->getDefaultTheme($request));
     }
   }
 

@@ -14,7 +14,7 @@ abstract class Basesympal_upgradeActions extends sfActions
   {
     parent::preExecute();
 
-    $this->useAdminLayout();
+    $this->useAdminTheme();
 
     $this->upgrade = new sfSympalUpgradeFromWeb(
       $this->getContext()->getConfiguration(),

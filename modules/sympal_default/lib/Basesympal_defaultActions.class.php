@@ -2,11 +2,6 @@
 
 class Basesympal_defaultActions extends sfActions
 {
-  public function preExecute()
-  {
-    sfSympalTheme::loadDefault();
-  }
-
   public function executeNew_site(sfWebRequest $request)
   {
     
@@ -33,7 +28,7 @@ class Basesympal_defaultActions extends sfActions
     {
       $this->setLayout(false);
     } else {
-      $this->useAdminLayout();
+      $this->useAdminTheme();
     }
 
     $this->url = $request->getUri();

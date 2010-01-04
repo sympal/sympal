@@ -95,7 +95,7 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
     Doctrine_Core::getTable('sfSympalMenuItem')
       ->createQuery('m')
       ->delete()
-      ->where('m.name = ? OR m.content_type_id = ?', array($this->_contentTypeName, $contentType['id']))
+      ->where('m.name = ?', array($this->_contentTypeName))
       ->execute();
 
     // Delete the content type record

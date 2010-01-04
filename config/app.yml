@@ -1,5 +1,25 @@
 all:
   sympal_config:
+    # Configure Sympal themes
+    themes:
+      sympal:
+        layout: sympal
+        stylesheets:
+          - /sfSympalPlugin/css/sympal.css
+      admin:
+        layout: admin
+        javascripts:
+          - /sfSympalPlugin/js/jQuery.cookie.js
+          - /sfSympalPlugin/fancybox/jquery.fancybox.js
+          - /sfSympalAdminPlugin/js/admin.js
+        stylesheets:
+          - /sfSympalPlugin/fancybox/jquery.fancybox.css
+          - /sfSympalAdminPlugin/css/global.css
+          - /sfSympalAdminPlugin/css/default.css
+          - /sfSympalAdminPlugin/css/admin.css
+        callables:
+          - [sympal_use_jquery]
+
     # Automatically set the response meta title based on the current content and menu item
     auto_seo:
       title: true
@@ -126,8 +146,8 @@ all:
     # Configure the available languages
     language_codes: [en, fr, es]
 
-    # Configure the default layout to render Sympal with
-    default_layout: sympal
+    # Configure the default theme to render Sympal with
+    default_theme: sympal
 
     # Configure the number of rows per page to use when using pagination
     rows_per_page: 10

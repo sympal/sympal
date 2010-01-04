@@ -91,13 +91,13 @@ class sfSympalFormToolkit
 
   public static function changeLayoutWidget($form)
   {
-    $array = self::getLayoutWidgetAndValidator();
+    $array = self::getThemeWidgetAndValidator();
 
     $form->setWidget('layout', $array['widget']);
     $form->setValidator('layout', $array['validator']);
   }
 
-  public static function getLayoutWidgetAndValidator()
+  public static function getThemeWidgetAndValidator()
   {
     $all = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getLayouts();
     $layouts = array('' => '');

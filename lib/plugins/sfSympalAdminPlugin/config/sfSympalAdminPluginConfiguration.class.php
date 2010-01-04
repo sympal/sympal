@@ -42,8 +42,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   {
     $form = $event->getSubject();
 
-    $array = sfSympalFormToolkit::getLayoutWidgetAndValidator();
-    $form->addSetting(null, 'default_layout', 'Default Layout', $array['widget'], $array['validator']);
+    $array = sfSympalFormToolkit::getThemeWidgetAndValidator();
+    $form->addSetting(null, 'default_theme', 'Default Theme', $array['widget'], $array['validator']);
     $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
     $form->addSetting(null, 'recaptcha_public_key', 'Recaptcha Public Key');
     $form->addSetting(null, 'recaptcha_private_key', 'Recaptcha Private Key');

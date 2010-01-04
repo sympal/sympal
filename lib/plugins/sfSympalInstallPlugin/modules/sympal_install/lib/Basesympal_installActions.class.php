@@ -13,7 +13,7 @@ abstract class Basesympal_installActions extends sfActions
   public function preExecute()
   {
     $this->_check();
-    $this->changeTheme('install');
+    $this->loadTheme('install');
   }
 
   public function _check()

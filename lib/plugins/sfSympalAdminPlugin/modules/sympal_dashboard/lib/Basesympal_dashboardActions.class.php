@@ -14,7 +14,7 @@ abstract class Basesympal_dashboardActions extends sfActions
   {
     parent::preExecute();
 
-    $this->useAdminLayout();
+    $this->useAdminTheme();
   }
 
   public function executeIndex()
