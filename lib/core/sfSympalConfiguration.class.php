@@ -54,17 +54,14 @@ class sfSympalConfiguration
    * Callable attached to Symfony event context.load_factories. When this event
    * is triggered we also create the Sympal context.
    */
-  public function bootstrap()
+  public function bootstrap(sfEvent $event)
   {
     $record = Doctrine_Core::getTable('sfGuardUser')->getRecordInstance();
     $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
 
     $this->_cache = new sfSympalCache($this);
 
-    $this->_sympalContext = sfSympalContext::createInstance(
-      sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')),
-      sfContext::getInstance()
-    );
+    $this->_sympalContext = sfSympalContext::createInstance($event->getSubject());
 
     $this->_enableModules();
 

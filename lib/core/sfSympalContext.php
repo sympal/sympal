@@ -18,9 +18,9 @@ class sfSympalContext
     $_theme,
     $_themeObjects = array();
 
-  public function __construct($siteSlug, sfSympalConfiguration $sympalConfiguration, sfContext $symfonyContext)
+  public function __construct(sfSympalConfiguration $sympalConfiguration, sfContext $symfonyContext)
   {
-    $this->_siteSlug = $siteSlug;
+    $this->_siteSlug = $symfonyContext->getConfiguration()->getApplication();
     $this->_sympalConfiguration = $sympalConfiguration;
     $this->_symfonyContext = $symfonyContext;
   }
@@ -155,11 +155,12 @@ class sfSympalContext
     return self::$_instances[$site];
   }
 
-  public static function createInstance($site, sfContext $symfonyContext)
+  public static function createInstance(sfContext $symfonyContext)
   {
+    $site = $symfonyContext->getConfiguration()->getApplication();
     $sympalConfiguration = $symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();
 
-    $instance = new self($site, $sympalConfiguration, $symfonyContext);
+    $instance = new self($sympalConfiguration, $symfonyContext);
     self::$_instances[$site] = $instance;
     self::$_current = $instance;
 
