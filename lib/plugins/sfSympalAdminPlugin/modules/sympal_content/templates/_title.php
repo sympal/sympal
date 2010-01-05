@@ -1,6 +1,6 @@
 <?php $padding ?>
 <?php if ($menuItem = $sf_sympal_content->getMenuItem()): ?>
-  <?php echo $padding = str_repeat(' &nbsp; &nbsp; ', $menuItem->getLevel()) ?>
+  <?php echo $padding = str_repeat(' &nbsp; &nbsp; ', $menuItem->getLevel() > 0 ? ($menuItem->getLevel() - 1) : 0) ?>
   <?php echo image_tag('/sfSympalPlugin/images/'.($menuItem->getNode()->isLeaf() ? 'page' : 'folder').'.png') ?>
 <?php endif; ?>
 
