@@ -27,7 +27,7 @@ generator:
         class: sfSympalAdminGenSearchForm
       form:
         display:
-          "Menu Item": [name, label, content_id, content_type_id, custom_path, is_primary, date_published]
+          "Menu Item": [name, label, content_id, custom_path, is_primary, date_published]
           "Position": [parent_id, move, where_to_move]
           "Security": [requires_auth, requires_no_auth, groups_list]
         fields:
