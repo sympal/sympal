@@ -35,6 +35,6 @@ abstract class PluginsfSympalContentTypeForm extends BasesfSympalContentTypeForm
     $models = array_merge(array('' => ''), $models);
     $this->widgetSchema['name'] = new sfWidgetFormChoice(array('choices' => $models));
 
-    sfSympalFormToolkit::changeLayoutWidget($this);
+    sfSympalFormToolkit::changeThemeWidget($this);
   }
 }

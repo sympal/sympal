@@ -36,7 +36,7 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $q->leftJoin('m.Translation mt'); 
     }
 
-    sfSympalFormToolkit::changeLayoutWidget($this);
+    sfSympalFormToolkit::changeThemeWidget($this);
 
     if (!$this->object->content_type_id)
     {

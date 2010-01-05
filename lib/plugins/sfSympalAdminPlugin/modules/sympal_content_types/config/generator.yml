@@ -18,6 +18,6 @@ generator:
       filter:
         class: false
       form:
-        display: [plugin_name, name, label, description, default_path, layout, template, slug]
+        display: [plugin_name, name, label, description, default_path, theme, template, slug]
       edit:    ~
       new:     ~

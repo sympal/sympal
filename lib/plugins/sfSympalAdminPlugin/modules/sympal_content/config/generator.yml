@@ -18,7 +18,7 @@ generator:
         display:
           "Content": [TypeForm, custom_path, date_published, slug]
           "Settings": [content_type_id, created_by_id, groups_list]
-          "Rendering Options": [layout, theme]
+          "Rendering Options": [template, theme]
           "Search Engine Optimization": [page_title, meta_keywords, meta_description]
         fields:
           content_type_id:
