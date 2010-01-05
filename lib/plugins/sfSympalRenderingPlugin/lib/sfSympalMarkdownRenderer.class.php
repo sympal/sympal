@@ -11,10 +11,10 @@ class sfSympalMarkdownRenderer
 
     sfContext::getInstance()->getResponse()->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalRenderingPlugin/css/markdown.css'));
 
-    return '<div class="sympal_markdown">'.self::enhanceHtml(Markdown($markdown)).'</div>';
+    return '<div class="sympal_markdown">'.self::enhanceHtml(Markdown($markdown), $markdown).'</div>';
   }
 
-  public static function enhanceHtml($html)
+  public static function enhanceHtml($html, $markdown)
   {
     $boxes = sfSympalConfig::get('markdown_styled_boxes', null, array('quote', 'tip', 'caution', 'note'));
     $boxes = implode('|', $boxes);
@@ -34,6 +34,9 @@ class sfSympalMarkdownRenderer
 
     // Syntax highlighting
     $html = preg_replace_callback('#<pre><code>(.+?)</code></pre>#s', array('sfSympalMarkdownRenderer', 'highlightPhp'), $html);
+
+    // Trigger filter event
+    $html = sfProjectConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($markdown, 'sympal.markdown.filter_html'), $html)->getReturnValue();
 
     return $html;
   }
