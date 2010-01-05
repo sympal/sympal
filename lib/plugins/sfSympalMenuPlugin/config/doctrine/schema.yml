@@ -33,7 +33,7 @@ sfSympalMenuItem:
       class: sfSympalContent
       foreignAlias: MenuItem
       foreignType: one
-      onDelete: CASCADE
+      onDelete: SET NULL
     Site:
       class: sfSympalSite
       local: site_id
