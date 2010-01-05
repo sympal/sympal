@@ -33,7 +33,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
     if ($contentTypeId)
     {
-      $q->innerJoin($alias.'.'.$typeModelName.' cr WITH '.$alias.'.content_type_id = ?', $contentTypeId);
+      $q->innerJoin($alias.'.'.$typeModelName.' cr WITH '.$alias.'.content_type_id = '.$contentTypeId);
     } else {
       $q->innerJoin($alias.'.'.$typeModelName.' cr');
     }
