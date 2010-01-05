@@ -87,7 +87,7 @@ class sfSympalTheme
     {
       if (count($callable) > 1)
       {
-        call_user_func_array($callable);
+        call_user_func($callable);
       } else {
         call_user_func($callable[0]);
       }
