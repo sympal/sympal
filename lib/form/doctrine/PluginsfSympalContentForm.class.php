@@ -19,7 +19,10 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this['site_id'],
       $this['created_at'],
       $this['updated_at'],
-      $this['last_updated_by_id']
+      $this['last_updated_by_id'],
+      $this['slots_list'],
+      $this['links_list'],
+      $this['assets_list']
     );
 
     sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
