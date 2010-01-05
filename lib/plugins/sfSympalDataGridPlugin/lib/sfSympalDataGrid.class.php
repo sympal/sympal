@@ -19,6 +19,8 @@ class sfSympalDataGrid
     $_isSortable = true,
     $_initialized = false;
 
+  protected static $_symfonyContext;
+
   public function __construct($modelName, $alias = null)
   {
     if (is_string($modelName))
@@ -46,6 +48,11 @@ class sfSympalDataGrid
       throw new Doctrine_Exception('First argument should be either the name of a model or an existing Doctrine_Query object');
     }
     $this->_table = Doctrine_Core::getTable($this->_modelName);
+  }
+
+  public static function setSymfonyContext(sfContext $symfonyContext)
+  {
+    self::$_symfonyContext = $symfonyContext;
   }
 
   public static function create($modelName, $alias = null)
@@ -199,9 +206,8 @@ class sfSympalDataGrid
 
   public function getColumnSortUrl(array $column, $url = null)
   {
-    $context = sfContext::getInstance();
-    $routing = $context->getRouting();
-    $request = $context->getRequest();
+    $routing = self::$_symfonyContext->getRouting();
+    $request = self::$_symfonyContext->getRequest();
     if ($url === null)
     {
       $url = $routing->getCurrentInternalUri();
@@ -242,7 +248,7 @@ class sfSympalDataGrid
       'dataGrid' => $this
     );
 
-    return sfSympalToolkit::getSymfonyResource($this->_renderingModule.'/pager_header', $params);
+    return $this->getSymfonyResource($this->_renderingModule.'/pager_header', $params);
   }
 
   public function getPagerNavigation($url)
@@ -254,7 +260,7 @@ class sfSympalDataGrid
       'url' => $url
     );
 
-    return sfSympalToolkit::getSymfonyResource($this->_renderingModule.'/pager_navigation', $params);
+    return $this->getSymfonyResource($this->_renderingModule.'/pager_navigation', $params);
   }
 
   public function getRows($hydrationMode = null)
@@ -289,7 +295,7 @@ class sfSympalDataGrid
       {
         $row[$column['name']] = $record->$column['method']();
       } else if (isset($column['renderer'])) {
-        $row[$column['name']] = sfSympalToolkit::getSymfonyResource($column['renderer'], array(
+        $row[$column['name']] = $this->getSymfonyResource($column['renderer'], array(
           'dataGrid' => $this,
           'column' => $column,
           'record' => $record
@@ -315,7 +321,7 @@ class sfSympalDataGrid
     $params['pager'] = $this->_pager;
     $params['hydrationMode'] = $hydrationMode;
 
-    return sfSympalToolkit::getSymfonyResource($this->_renderingModule.'/list', $params);
+    return $this->getSymfonyResource($this->_renderingModule.'/list', $params);
   }
 
   public function init()
@@ -334,7 +340,7 @@ class sfSympalDataGrid
       $this->_initializeColumns();
     }
 
-    $request = sfContext::getInstance()->getRequest();
+    $request = self::$_symfonyContext->getRequest();
 
     $dataGridRequestInfo = $request->getParameter($this->getId());
     if (isset($dataGridRequestInfo['sort']) && $sort = $dataGridRequestInfo['sort'])
@@ -436,6 +442,28 @@ class sfSympalDataGrid
       }
     }
     return $current[$column['fieldName']];
+  }
+
+  public function getSymfonyResource($module, $action = null, $variables = array())
+  {
+    if (strpos($module, '/'))
+    {
+      $variables = (array) $action;
+      $e = explode('/', $module);
+      list($module, $action) = $e;
+    }
+
+    self::$_symfonyContext->getConfiguration()->loadHelpers('Partial');
+    $controller = self::$_symfonyContext->getController();
+
+    if ($controller->componentExists($module, $action))
+    {
+      return get_component($module, $action, $variables);
+    } else {
+      return get_partial($module.'/'.$action, $variables);
+    }
+
+    throw new sfException('Could not find component or partial for the module "'.$module.'" and action "'.$action.'"');
   }
 
   public function __call($method, $arguments)
