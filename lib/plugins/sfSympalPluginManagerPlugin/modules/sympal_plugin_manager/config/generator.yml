@@ -20,7 +20,7 @@ generator:
         batch_actions: []
         object_actions: []
       filter:
-        display: [plugin_author_id, name, description, is_downloaded, is_installed, is_theme]
+        class: sfSympalAdminGenSearchForm
       form:    ~
       edit:    ~
       new:     ~
