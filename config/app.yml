@@ -42,8 +42,9 @@ all:
     # Enable and disable the elastic textareas
     elastic_textareas: true
 
-    # Configure Symfony page caching. Enabling this feature turns on page caching for all pages
+    # Configure Sympal page caching. Enabling this feature turns on page caching for all pages
     page_cache:
+      super: false
       enabled: false
       with_layout: false
       lifetime: 3600

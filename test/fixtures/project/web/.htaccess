@@ -13,8 +13,18 @@ Options +FollowSymLinks +ExecCGI
   #RewriteRule .* - [L]
 
   # we check if the .html version is here (caching)
-  RewriteRule ^$ index.html [QSA]
-  RewriteRule ^([^.]+)$ $1.html [QSA]
+  RewriteCond %{REQUEST_METHOD} GET
+  RewriteCond %{DOCUMENT_ROOT}/cache/%{HTTP_HOST}/%{REQUEST_URI}index.html.php -f
+  RewriteRule ^(.*) cache/%{HTTP_HOST}/$1index.html.php [L]
+
+  RewriteCond %{REQUEST_METHOD} GET
+  RewriteCond %{DOCUMENT_ROOT}/cache/%{HTTP_HOST}/%{REQUEST_URI}.html.php -f
+  RewriteRule ^(.*) cache/%{HTTP_HOST}/$1.html.php [L]
+
+  RewriteCond %{REQUEST_METHOD} GET
+  RewriteCond %{DOCUMENT_ROOT}/cache/%{HTTP_HOST}/%{REQUEST_URI}.php -f
+  RewriteRule ^(.*) cache/%{HTTP_HOST}/$1.php [L]
+
   RewriteCond %{REQUEST_FILENAME} !-f
 
   # no, so we redirect to our front web controller

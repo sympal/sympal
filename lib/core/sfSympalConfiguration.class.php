@@ -37,6 +37,13 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('controller.change_action', array($this, 'initializeTheme'));
     $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
 
+    if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
+    {
+      $superCache = new sfSympalSuperCache($this);
+      $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
+      $this->_dispatcher->connect('task.cache.clear', array($superCache, 'listenToTaskCacheClear'));
+    }
+
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
