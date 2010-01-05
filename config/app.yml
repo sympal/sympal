@@ -70,7 +70,7 @@ all:
         label: TinyMCE Rich Text Editor
         widget_class: sfWidgetFormTextareaTinyMCE
         widget_options:
-          config: 'onchange_callback: "sympalTinyMCETriggerSave"'
+          config: 'onchange_callback: "sympalTinyMCETriggerSave", handle_event_callback : "sympalHandleTinyMCEEvent"'
 
     # Enable and disable the check for upgrades via the web when on the Sympal dashboard
     check_for_upgrades_on_dashboard: false
