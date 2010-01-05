@@ -57,6 +57,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $form->addSetting('plugin_api', 'password');
 
     $form->addSetting('page_cache', 'enabled', 'Enabled?', 'InputCheckbox', 'Boolean');
+
+    $form->addSetting('page_cache', 'super', 'Enable Super Cache?', 'InputCheckbox', 'Boolean');
     $form->addSetting('page_cache', 'with_layout', 'With layout?', 'InputCheckbox', 'Boolean');
     $form->addSetting('page_cache', 'lifetime', 'Lifetime');
   }
