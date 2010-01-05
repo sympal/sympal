@@ -6,4 +6,10 @@
 
 <?php echo link_to($sf_sympal_content, $sf_sympal_content->getEditRoute()) ?>
 
-<br/><?php echo $padding ?> &nbsp; &nbsp; &nbsp;<small><?php echo link_to($sf_sympal_content->getEvaluatedRoutePath(), $sf_sympal_content->getRoute()) ?></small>
+<br/>
+
+<?php if ($padding): ?>
+  <?php echo $padding ?> &nbsp; &nbsp; &nbsp;
+<?php endif; ?>
+
+<small><?php echo link_to($sf_sympal_content->getEvaluatedRoutePath(), $sf_sympal_content->getRoute()) ?></small>
