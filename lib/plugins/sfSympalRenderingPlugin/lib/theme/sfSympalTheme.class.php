@@ -6,8 +6,6 @@ class sfSympalTheme
     $_isLoaded = false,
     $_sympalContext,
     $_configuration,
-    $_module,
-    $_action,
     $_request,
     $_response;
 
@@ -17,10 +15,6 @@ class sfSympalTheme
     $this->_configuration = $configuration;
     $this->_request = $this->_sympalContext->getSymfonyContext()->getRequest();
     $this->_response = $this->_sympalContext->getSymfonyContext()->getResponse();
-
-    $actionEntry = $this->_sympalContext->getSymfonyContext()->getController()->getActionStack()->getLastEntry();
-    $this->_module = $actionEntry ? $actionEntry->getModuleName():$this->_request->getParameter('module');
-    $this->_action = $actionEntry ? $actionEntry->getActionName():$this->_request->getParameter('action');
   }
 
   public function getConfiguration()
@@ -50,12 +44,12 @@ class sfSympalTheme
 
   public function load()
   {
+    // Change the layout
+    $this->changeLayout();
+
     if ($this->_isLoaded === false)
     {
       $this->_sympalContext->unloadPreviousTheme();
-
-      // Change the layout
-      $this->changeLayout();
 
       // Add theme stylesheets to response
       $this->addStylesheets();
@@ -134,7 +128,11 @@ class sfSympalTheme
     $path = $info['dirname'].'/'.$info['filename'];
     $name = $info['filename'];
 
-    sfConfig::set('symfony.view.'.$this->_module.'_'.$this->_action.'_layout', $path);
+    $actionEntry = $this->_sympalContext->getSymfonyContext()->getController()->getActionStack()->getLastEntry();
+    $module = $actionEntry ? $actionEntry->getModuleName():$this->_request->getParameter('module');
+    $action = $actionEntry ? $actionEntry->getActionName():$this->_request->getParameter('action');
+
+    sfConfig::set('symfony.view.'.$module.'_'.$action.'_layout', $path);
     sfConfig::set('symfony.view.sympal_default_error404_layout', $path);
     sfConfig::set('symfony.view.sympal_default_secure_layout', $path);
   }

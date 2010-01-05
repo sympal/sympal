@@ -18,7 +18,7 @@ all:
           - /sfSympalAdminPlugin/css/default.css
           - /sfSympalAdminPlugin/css/admin.css
         callables:
-          - [sympal_use_jquery]
+          - [sfSympalToolkit, useJQuery]
 
     # Automatically set the response meta title based on the current content and menu item
     auto_seo:
