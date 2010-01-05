@@ -42,7 +42,6 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 
       $menuEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Menu Item', '@sympal_content_menu_item?id='.$content['id']);
 
-      $menuEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' Add Child Menu Item', 'sympal_menu_items/ListNew?id='.$menuItem['id']);
       $menuEditor->addChild(image_tag('/sf/sf_admin/images/delete.png').' Delete', '@sympal_menu_items_delete?id='.$menuItem['id']);
     } else {
       $menuEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' Add to Menu', '@sympal_content_menu_item?id='.$content['id']);

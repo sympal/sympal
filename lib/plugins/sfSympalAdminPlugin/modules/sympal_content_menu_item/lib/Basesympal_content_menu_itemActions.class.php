@@ -31,7 +31,6 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
     unset(
       $this->form['id'],
       $this->form['is_primary'],
-      $this->form['content_type_id'],
       $this->form['content_id'],
       $this->form['groups_list'],
       $this->form['permissions_list'],

@@ -14,6 +14,7 @@ generator:
       actions: ~
       fields: ~
       list:
+        sort: ['root_id, lft', 'asc']
         max_per_page: 9999999999999999999
         display: [=name]
         batch_actions:
