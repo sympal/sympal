@@ -21,7 +21,7 @@
     <input type="hidden" name="sf_method" value="<?php echo $sf_request->getMethod() ?>" />
     <input type="hidden" name="sympal_ask_confirmation" value="1" />
     <input type="hidden" name="redirect_url" value="<?php echo $sf_request->getReferer() ?>" />
-    <input type="hidden" name="is_ajax" value="<?php echo $isAjax ?>"
+    <input type="hidden" name="is_ajax" value="<?php echo $isAjax ?>" />
     <?php foreach ($sf_request->getParameterHolder()->getAll() as $key => $value): ?>
       <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value ?>" />
     <?php endforeach; ?>
