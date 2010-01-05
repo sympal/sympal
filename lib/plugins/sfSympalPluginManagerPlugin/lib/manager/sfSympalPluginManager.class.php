@@ -250,6 +250,13 @@ class sfSympalPluginManager
     $task->run(array(), array('all-classes', '--application='.sfConfig::get('sf_app')));
   }
 
+  protected function _clearCache()
+  {
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfCacheClearTask($this->_dispatcher, $this->_formatter);
+    $task->run();
+  }
+
   protected function _publishAssets()
   {
     if ($this->hasWebDirectory())

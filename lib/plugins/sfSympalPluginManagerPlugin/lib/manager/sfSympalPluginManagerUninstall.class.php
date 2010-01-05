@@ -56,6 +56,8 @@ class sfSympalPluginManagerUninstall extends sfSympalPluginManager
       $this->_publishAssets();
     }
 
+    $this->_clearCache();
+
     sfSympalConfig::writeSetting($this->_pluginName, 'installed', false);
   }
 
