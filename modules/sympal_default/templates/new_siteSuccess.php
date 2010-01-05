@@ -1,4 +1,4 @@
-<h1><?php echo __('New %1% Site', array('%1%' => __('Sympal'))) ?></h1>
+<h1><?php echo __('New %1% Site', array('%1%' => sfSympalConfig::get('sympal_name'))) ?></h1>
 
 <p>
   <?php echo __('You have successfully created a new Site but no content could be found.') ?>
