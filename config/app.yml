@@ -1,7 +1,7 @@
 all:
   sympal_config:
     # Configure forms that should have recaptcha enabled
-    recaptcha_forms: []
+    recaptcha_forms: [sfGuardRegisterForm]
 
     # The displayed name. You can change this to the project name you build on top of Sympal for example.
     sympal_name: Sympal
