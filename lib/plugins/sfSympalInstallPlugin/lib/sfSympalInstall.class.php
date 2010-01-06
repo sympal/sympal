@@ -3,6 +3,7 @@
 class sfSympalInstall
 {
   protected
+    $_configuration,
     $_dispatcher,
     $_formatter,
     $_application = 'sympal',
@@ -64,6 +65,45 @@ class sfSympalInstall
 
     sfSympalConfig::set('installing', true);
 
+    // Prepare the installation parameters
+    $this->_prepareParams();
+
+    // Setup/create the Sympal database
+    $this->_setupDatabase();
+
+    // Install Sympal to the database
+    $this->_installSympal();
+
+    // Run installation procss for any addon plugins
+    $this->_installAddonPlugins();
+
+    // Execute post install execute
+    $this->_executePostInstallSql();
+
+    // Execute post install hooks
+    $this->_executePostInstallHooks();
+
+    // Publish plugin assets
+    $this->_publishAssets();
+
+    // Clear the cache
+    $this->_clearCache();
+
+    // Prime the cache
+    $this->_primeCache();
+
+    // Run fix permissions to ensure a 100% ready to go environment
+    $this->_fixPerms();
+
+    sfSympalConfig::writeSetting('installed', true);
+    sfSympalConfig::set('installing', false);
+    sfSympalConfig::writeSetting('current_version', sfSympalPluginConfiguration::VERSION);
+
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
+  }
+
+  protected function _prepareParams()
+  {
     foreach ($this->_params as $key => $value)
     {
       if ($value)
@@ -71,23 +111,6 @@ class sfSympalInstall
         sfSympalConfig::set('sympal_install_admin_'.$key, $value);
       }
     }
-
-    $this->_setupDatabase();
-    $this->_installSympal();
-    $this->_installAddonPlugins();
-    $this->_executePostInstallSql();
-    $this->_executePostInstallHooks();
-
-    $task = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
-    $task->run();
-
-    sfToolkit::clearGlob(sfConfig::get('sf_cache_dir'));
-
-    sfSympalConfig::writeSetting('installed', true);
-    sfSympalConfig::set('installing', false);
-    sfSympalConfig::writeSetting('current_version', sfSympalPluginConfiguration::VERSION);
-
-    $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
   }
 
   protected function _setupDatabase()
@@ -210,5 +233,33 @@ class sfSympalInstall
 
       $this->_configuration->install();
     }
+  }
+
+  protected function _publishAssets()
+  {
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfPluginPublishAssetsTask($this->_dispatcher, $this->_formatter);
+    $task->run();
+  }
+
+  protected function _clearCache()
+  {
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfCacheClearTask($this->_dispatcher, $this->_formatter);
+    $task->run();
+  }
+
+  protected function _primeCache()
+  {
+    $autoload = sfSimpleAutoload::getInstance();
+    $autoload->reload();
+    $autoload->saveCache();
+  }
+
+  protected function _fixPerms()
+  {
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfSympalFixPermsTask($this->_dispatcher, $this->_formatter);
+    $task->run();
   }
 }

@@ -36,13 +36,13 @@ EOF;
     $fileFinder = sfFinder::type('file');
     foreach ($items as $item)
     {
-      $this->getFilesystem()->chmod($item, 0777);
+      @$this->getFilesystem()->chmod($item, 0777);
       if (is_file($item))
       {
         continue;
       }
-      $this->getFilesystem()->chmod($dirFinder->in($items), 0777);
-      $this->getFilesystem()->chmod($fileFinder->in($items), 0666);
+      @$this->getFilesystem()->chmod($dirFinder->in($items), 0777);
+      @$this->getFilesystem()->chmod($fileFinder->in($items), 0666);
     }
   }
 }
