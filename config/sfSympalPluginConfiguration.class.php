@@ -63,5 +63,34 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
         unset($form['created_at'], $form['updated_at']);
       }
     }
+    $widgetSchema = $form->getWidgetSchema();
+    $requiredFields = $this->_getValidatorSchemaRequiredFields($form->getValidatorSchema(), $widgetSchema->getNameFormat());
+    $widgetSchema->addOption('required_fields', $requiredFields);
+    $widgetSchema->addFormFormatter('table', new sfSympalWidgetFormSchemaFormatterTable($widgetSchema));
+  }
+
+  protected function _getValidatorSchemaRequiredFields(sfValidatorSchema $validatorSchema = null, $format = null)
+  {
+    $fields = array();
+
+    foreach ($validatorSchema->getFields() as $name => $validator)
+    {
+      $field = sprintf($format, $name);
+      if ($validator instanceof sfValidatorSchema)
+      {
+        // recur
+        $fields = array_merge(
+          $fields,
+          $this->_getValidatorSchemaRequiredFields($validator, $field.'[%s]')
+        );
+      }
+      else if ($validator->getOption('required'))
+      {
+        // this field is required
+        $fields[] = $field;
+      }
+    }
+
+    return $fields;
   }
 }

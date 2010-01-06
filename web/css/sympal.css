@@ -538,3 +538,11 @@ ul.error_list li
   border: 1px solid #ddd;
   font-weight: bold;
 }
+
+label.required:after
+{
+  content:'*';
+  color: red;
+  float: right;
+  font-weight: bold;
+}

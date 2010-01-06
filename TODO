@@ -1,0 +1,7 @@
+1.0 TODO List
+=============
+
+This is a list of features and changes that I want to implement before the release
+of 1.0.
+
+* URL Redirecting: Simple model and admin generator to redirect one url to another

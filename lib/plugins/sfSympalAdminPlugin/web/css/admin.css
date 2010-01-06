@@ -383,3 +383,11 @@ ul#sympal-admin-menu li ul li a:hover {
 #sympal_server_check table tbody tr td {
   background: #fff;
 }
+
+label.required:after
+{
+  content:'*';
+  color: red;
+  float: right;
+  font-weight: bold;
+}
