@@ -7,7 +7,7 @@ generator:
     with_show:             false
     singular:              ~
     plural:                ~
-    route_prefix:          sf_sympal_redirect
+    route_prefix:          sympal_redirects
     with_doctrine_route:   true
     actions_base_class:    sfActions
 

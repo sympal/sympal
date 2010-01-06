@@ -1,6 +1,3 @@
-sf_sympal_redirect:
-  class: sfDoctrineRouteCollection
-  options: { model: sfSympalRedirect, module: sympal_redirects, prefix_path: /sympal_redirects, column: id, with_wildcard_routes: true }
 forward_to_route:
   url: '/forward/to/route/:param1/:param2'
   param: { module: test, action: route_to_forward_to }
