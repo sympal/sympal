@@ -71,3 +71,11 @@ sympal_content_list_type:
 sympal_admin_save_nested_set:
   url:    /admin/save_nested_set/:model
   param: { module: sympal_admin, action: save_nested_set }
+
+sympal_check_server:
+  url:    /admin/check_server
+  param: { module: sympal_admin, action: check_server }
+
+sympal_phpinfo:
+  url:    /admin/phpinfo
+  param: { module: sympal_admin, action: phpinfo }

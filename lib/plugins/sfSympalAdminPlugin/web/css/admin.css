@@ -362,3 +362,20 @@ ul#sympal-admin-menu li ul li a:hover {
 #sympal_admin_signin {
   
 }
+
+#sympal_server_check table {
+  background: #375fc2;
+  -khtml-border-radius:0.4em;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  width: 500px;
+}
+
+#sympal_server_check table tr th {
+   color: white;
+}
+
+#sympal_server_check table tbody tr td {
+  background: #fff;
+}

@@ -135,3 +135,8 @@
   background: url(../../sfSympalPlugin/images/update_icon.png) no-repeat;
   background-position: center;
 }
+
+#sympal-dashboard #boxes ul li#dashboard-boxes-check-server a {
+  background: url(../../sfSympalPlugin/images/check_icon.png) no-repeat;
+  background-position: center;
+}
