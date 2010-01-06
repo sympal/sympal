@@ -36,37 +36,6 @@ sfSympalMenuItem:
         route: @sympal_signout
         Site: Site_default
         requires_auth: true
-      MenuItem_primary_sample_page:
-        name: Sample Page
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: Sample Page
-        Site: Site_default
-        RelatedContent: Content_Page_sample_page
-      MenuItem_primary_sample_content_list:
-        name: Sample Content List
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: Sample Content List
-        Site: Site_default
-        RelatedContent: Content_ContentList_sample_content_list
-  MenuItem_footer:
-    name: footer
-    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    label: Home
-    Site: Site_default
-    RelatedContent: Content_Page_home
-    children:
-      MenuItem_footer_sample_page:
-        name: Sample Page
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: Sample Page
-        Site: Site_default
-        RelatedContent: Content_Page_sample_page
-      MenuItem_footer_sample_content_list:
-        name: Sample Content List
-        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-        label: Sample Content List
-        Site: Site_default
-        RelatedContent: Content_ContentList_sample_content_list
 
 sfSympalContent:
   Content_Page_register:
@@ -92,26 +61,13 @@ sfSympalContent:
     custom_path: "/"
     Slots: [Home_slot_body]
     CreatedBy: admin
-  Content_Page_sample_page:
-    Type: ContentType_Page
-    slug: sample-page
-    Site: Site_default
-    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    Slots: [Sample_page_slot_body]
-    CreatedBy: admin
-  Content_ContentList_sample_content_list:
-    Type: ContentType_ContentList
-    slug: sample-content-list
-    Site: Site_default
-    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
-    CreatedBy: admin
 
 sfSympalContentSlot:
   Home_slot_body:
     name: body
     type: Markdown
     value: |
-      Welcome to the Sympal content management system.
+      Welcome to your new installation of the Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> content management system. You can signin with the username **<?php echo sfSympalConfig::get('sympal_install_admin_username', null, 'admin') ?>** and password **<?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?>** to begin playing with Sympal!
   Sample_page_slot_body:
     name: body
     type: Markdown
@@ -128,13 +84,3 @@ sfSympalPage:
   home:
     title: Home
     Content: Content_Page_home
-  sample_page:
-    title: Sample Page
-    Content: Content_Page_sample_page
-
-sfSympalContentList:
-  sample_content_list:
-    title: Sample Content List
-    Content: Content_ContentList_sample_content_list
-    ContentType: ContentType_Page
-    table_method: getDefaultPagesDataGrid

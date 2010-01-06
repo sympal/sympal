@@ -132,12 +132,34 @@
   display: inline;
 }
 
-.sympal_content_slot_editor input, .sympal_content_slot_editor textarea {
-  width: 98% !important;
+.sympal_content_slot_editor input,
+.sympal_content_slot_editor select,
+.sympal_content_slot_editor textarea {
+	padding: 0.40em;
+	border:1px solid #ddd;
+	background: #fafafa;
+	font:bold 0.95em arial, sans-serif;
+	-khtml-border-radius:0.4em;
+	-moz-border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  border-radius: 0.4em;
 }
 
-.sympal_markdown_content_slot_editor_form .markItUp {
+.sympal_content_slot_editor input:hover,
+.sympal_content_slot_editor input:focus,
+.sympal_content_slot_editor select:hover,
+.sympal_content_slot_editor select:focus,
+.sympal_content_slot_editor textarea:hover,
+.sympal_content_slot_editor textarea:focus {
+	border-color:#c5c5c5;
+	background:#ffffcc;
+}
+
+.sympal_content_slot_editor input, .sympal_content_slot_editor textarea {
   width: 98%;
+}
+
+.sympal_markdown_content_slot_editor_form .markItUpEditor {
 }
 
 .sympal_content_slot_editor .sympal_change_slot_type {
@@ -167,6 +189,7 @@
 .sympal_inline_edit_bar ul {
   float: left;
   margin: 0;
+  padding: 0;
 }
 .sympal_inline_edit_bar ul li {
   float: left;
@@ -179,6 +202,10 @@
   margin-right: 5px;
   border: 1px solid #888;
   cursor: pointer;
+  -khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
 }
 
 .sympal_inline_edit_bar ul li a {

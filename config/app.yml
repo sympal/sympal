@@ -5,6 +5,10 @@ all:
 
     # Configure Sympal themes
     themes:
+      default:
+        layout: default
+        stylesheets:
+          - /sfSympalPlugin/css/default.css
       sympal:
         layout: sympal
         stylesheets:
@@ -151,7 +155,7 @@ all:
     language_codes: [en, fr, es]
 
     # Configure the default theme to render Sympal with
-    default_theme: sympal
+    default_theme: default
 
     # Configure the number of rows per page to use when using pagination
     rows_per_page: 10
