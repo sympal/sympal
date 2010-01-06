@@ -44,7 +44,7 @@
     <?php endforeach ?>
 
     <?php foreach($assets as $asset): ?>
-      <li id="<?php echo $asset->getId() ?>" class="asset">
+      <li id="<?php echo $asset->getId() ?>" title="<?php echo $asset->getName() ?>" class="asset">
         <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/edit.png'), array(
             'url' => url_for('sympal_assets_edit_asset', $asset),
             'update' => 'sympal_assets_container',
