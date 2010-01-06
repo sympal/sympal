@@ -1,2 +1,4 @@
-# default values
-#all:
+all:
+  sympal_config:
+    # Configure forms that should have recaptcha enabled
+    recaptcha_forms: [-sfGuardRegisterForm]
