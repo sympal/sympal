@@ -1,9 +1,62 @@
 <?php
 
-if (!$this->askConfirmation('Welcome to the Sympal installer! Do you wish to continue on with the installation? (y/n)', 'QUESTION_LARGE'))
+$classes = array(
+  'sfSympalServerCheck',
+  'sfSympalServerCheckRenderer',
+  'sfSympalServerCheckCliRenderer',
+  'sfSympalServerCheckUnit'
+);
+foreach ($classes as $file)
 {
-  $this->logBlock('Sympal installation was cancelled!', 'ERROR_LARGE');
-  return;
+  $code = file_get_contents('http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk/lib/check/'.$file.'.class.php');
+  file_put_contents(sys_get_temp_dir().'/'.$file.'.class.php', $code);
+  require sys_get_temp_dir().'/'.$file.'.class.php';
+}
+
+class sfSympalServerCheckInstallRenderer extends sfSympalServerCheckCliRenderer
+{
+  public function hasErrors()
+  {
+    return !empty($this->_errors) ? true : false;
+  }
+
+  public function hasWarnings()
+  {
+    return !empty($this->_warnings) ? true : false;
+  }
+}
+
+$error = false;
+try {
+  $check = new sfSympalServerCheck();
+  $renderer = new sfSympalServerCheckInstallRenderer($check);
+  $renderer->setTask($this);
+  $renderer->render();
+} catch (Exception $e) {
+  $this->logBlock($e->getMessage(), 'ERROR_LARGE');
+  $error = true;
+}
+
+if ($renderer->hasErrors() || $renderer->hasWarnings())
+{
+  $error = true;
+}
+
+if ($error)
+{
+  $this->logBlock('SYMPAL SERVER CHECK RETURNED ERRORS', 'ERROR_LARGE');
+
+  if (!$this->askConfirmation('The server check returned some errors and/or warnings. Do you wish to continue with the installation? (y/n)', 'QUESTION_LARGE'))
+  {
+    $this->logBlock('Sympal installation was cancelled!', 'ERROR_LARGE');
+    return;
+  }
+} else {
+  if (!$this->askConfirmation('The server check was a success! You should have no problem running Sympal. Do you wish to continue on with the installation? (y/n)', 'QUESTION_LARGE'))
+  {
+    $this->logBlock('Sympal installation was cancelled!', 'ERROR_LARGE');
+    return;
+  }
 }
 
 $this->logSection('sympal', '...adding Sympal code to ProjectConfiguration');
