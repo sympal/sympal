@@ -11,7 +11,8 @@
 
 [?php echo button_to('Back to List', '@'.$sf_context->getRouting()->getCurrentRouteName()) ?]
 
-<h1>[?php echo __('Adjust Order') ?]</h1>
+<h1>[?php echo $title = __('Adjust Order') ?]</h1>
+[?php $sf_response->setTitle($title) ?]
 
 [?php foreach ($pager->getResults() as $result): ?]
 [?php if ($result->getNode()->isRoot()): ?]
@@ -42,7 +43,7 @@ $(function() {
 <?php endif; ?>
 
 <div id="sf_admin_container">
-  <h1>[?php echo <?php echo $this->getI18NString('list.title') ?> ?]</h1>
+  <h1>[?php echo $title = <?php echo $this->getI18NString('list.title') ?>; $sf_response->setTitle($title); ?]</h1>
 
   <div id="sf_admin_header">
     [?php include_partial('<?php echo $this->getModuleName() ?>/list_header', array('pager' => $pager)) ?]
