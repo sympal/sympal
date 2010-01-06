@@ -158,6 +158,11 @@ class sfSympalActions extends sfSympalExtendClass
     return $this->getSympalContext()->loadTheme($name);
   }
 
+  public function useDefaultTheme()
+  {
+    $this->loadTheme(sfSympalConfig::get('default_theme'));
+  }
+
   public function useAdminTheme()
   {
     $this->loadTheme(sfSympalConfig::get('admin_theme', null, 'admin'));

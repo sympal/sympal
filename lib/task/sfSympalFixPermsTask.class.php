@@ -18,6 +18,10 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
+    $autoload = sfSimpleAutoload::getInstance();
+    $autoload->reload();
+    $autoload->saveCache();
+
     $items = array();
 
     if (file_exists(sfConfig::get('sf_upload_dir')))
