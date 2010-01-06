@@ -35,9 +35,9 @@ class sfSympalForm extends sfSympalExtendClass
     return $fields;
   }
 
-  public static function listenToFormPostConfigure(sfEvent $event)
+  public function sympalConfigure()
   {
-    $form = $event->getSubject();
+    $form = $this->getSubject();
     if ($form instanceof sfFormDoctrine)
     {
       sfSympalFormToolkit::embedI18n($form->getObject(), $form);
@@ -51,5 +51,37 @@ class sfSympalForm extends sfSympalExtendClass
     $requiredFields = $form->getRequiredFields();
     $widgetSchema->addOption('required_fields', $requiredFields);
     $widgetSchema->addFormFormatter('table', new sfSympalWidgetFormSchemaFormatterTable($widgetSchema));
+
+    if ($form->hasRecaptcha())
+    {
+      sfSympalFormToolkit::embedRecaptcha($form);
+    }
+  }
+
+  public function hasRecaptcha()
+  {
+    $forms = (array) sfSympalConfig::get('recaptcha_forms');
+    return in_array(get_class($this->getSubject()), $forms) ? true : false;
+  }
+
+  public static function listenToFormPostConfigure(sfEvent $event)
+  {
+    $event->getSubject()->sympalConfigure();
+  }
+
+  public static function listenToFormFilterValues(sfEvent $event, $values)
+  {
+    $form = $event->getSubject();
+    if ($form->hasRecaptcha())
+    {
+      $request = sfContext::getInstance()->getRequest();
+      $captcha = array(
+        'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
+        'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
+      );
+      $values = array_merge($values, array('captcha' => $captcha));
+    }
+
+    return $values;
   }
 }

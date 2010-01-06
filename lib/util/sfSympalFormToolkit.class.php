@@ -27,7 +27,7 @@ class sfSympalFormToolkit
     $widgetSchema[$name] = new sfWidgetFormJQueryDate();
   }
 
-  public static function embedRecaptcha(sfFormDoctrine $form)
+  public static function embedRecaptcha(sfForm $form)
   {
     $publicKey = sfSympalConfig::get('recaptcha_public_key');
     $privateKey = sfSympalConfig::get('recaptcha_private_key');

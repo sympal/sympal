@@ -14,6 +14,11 @@ class sfSympalExtendClass implements ArrayAccess
     }
   }
 
+  public function getSubject()
+  {
+    return $this->_subject;
+  }
+
   public function offsetGet($name)
   {
     return $this->__get($name);

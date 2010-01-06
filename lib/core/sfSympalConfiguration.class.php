@@ -38,6 +38,7 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
     $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
     $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
+    $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
 
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
     {
