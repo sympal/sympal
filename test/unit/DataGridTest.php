@@ -28,7 +28,7 @@ $dataGrid = sfSympalDataGrid::create('sfSympalContentType', 'c')
 
 $t->is($dataGrid->getRows(), array(
     array(
-      'c.id' => 'partial_2',
+      'c.id' => 'partial_1',
       'c.name' => 'sfSympalPage',
       'c.description' => 'The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.',
       'c.label' => 'Page',

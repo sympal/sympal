@@ -135,6 +135,7 @@ class sfSympalToolkit
     model: sfSympalContent
     type: object
     method: getContent
+    allow_empty: true
     requirements:
       sf_culture:  (%s)
       sf_format:   (%s)

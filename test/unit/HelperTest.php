@@ -3,21 +3,9 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(4, new lime_output_color());
+$t = new lime_test(1, new lime_output_color());
 
 $browser = new sfTestFunctional(new sfBrowser());
-$browser->get('/');
-
-$menuItem = Doctrine_Core::getTable('sfSympalMenuItem')->findOneBySlug('sample-page');
-$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page');
-$t->is(get_sympal_breadcrumbs($menuItem), '<div id="sympal_breadcrumbs"><ul id="breadcrumbs-menu"><li id="breadcrumbs-home" class="first"><a href="/index.php/">Home</a></li><li id="breadcrumbs-sample-page" class="last">Sample Page</li></ul></div>');
-
-$breadcrumbs = array(
-  'Home' => '@homepage',
-  'About' => 'http://www.google.com',
-  'Jonathan H. Wage' => 'http://www.jwage.com'
-);
-$t->is(get_sympal_breadcrumbs($breadcrumbs), '<div id="sympal_breadcrumbs"><ul id="breadcrumbs-menu"><li id="breadcrumbs-home" class="first"><a href="/index.php/">Home</a></li><li id="breadcrumbs-about"><a href="http://www.google.com">About</a></li><li id="breadcrumbs-jonathan-h-wage" class="last">Jonathan H. Wage</li></ul></div>');
 
 $markdown = "
 >**TIP**

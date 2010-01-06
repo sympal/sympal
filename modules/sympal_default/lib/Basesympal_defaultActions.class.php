@@ -4,7 +4,7 @@ class Basesympal_defaultActions extends sfActions
 {
   public function executeNew_site(sfWebRequest $request)
   {
-    
+    $this->useDefaultTheme();
   }
 
   public function executeChange_language(sfWebRequest $request)

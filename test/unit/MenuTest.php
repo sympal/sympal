@@ -112,17 +112,17 @@ class sfSympalMenuSiteTest extends sfSympalMenuSite
 
 $manager = sfSympalMenuSiteManager::getInstance();
 $primaryMenu = $manager->getMenu('primary', false, 'sfSympalMenuSiteTest');
-$t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-home" class="first">Home</li><li id="primary-signout">Signout</li><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list" class="last">Sample Content List</li></ul>', 'Test __toString()');
+$t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-home" class="first">Home</li><li id="primary-signout" class="last">Signout</li></ul>', 'Test __toString()');
 
 $split = $manager->split($primaryMenu, 2, true);
 $total = $primaryMenu->count();
 $t->is($split['primary']->count(), 2, 'Test count()');
-$t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-home" class="first">Home</li><li id="primary-signout">Signout</li></ul>', 'Test split() primary');
-$t->is((string) $split['secondary'], '<ul id="secondary-menu"><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list" class="last">Sample Content List</li></ul>', 'Test split() secondary');
-$t->is($split['secondary']->count(), 2, 'Test secondary count()');
+$t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-home" class="first">Home</li><li id="primary-signout" class="last">Signout</li></ul>', 'Test split() primary');
+$t->is((string) $split['secondary'], '', 'Test split() secondary');
+$t->is($split['secondary']->count(), 0, 'Test secondary count()');
 
 $footerMenu = $manager->getMenu('footer', false, 'sfSympalMenuSiteTest');
-$t->is((string) $footerMenu, '<ul id="footer-menu"><li id="footer-sample-page" class="first">Sample Page</li><li id="footer-sample-content-list" class="last">Sample Content List</li></ul>', 'Test footer menu');
+$t->is((string) $footerMenu, '', 'Test footer menu');
 
 $menu = new sfSympalMenuTest('Test Menu');
 $root1 = $menu->getChild('Root 1');
@@ -146,15 +146,15 @@ $menuItems = $table
 
 $menuItem = $table
   ->createQuery('m')
-  ->where('m.slug = ?', 'sample-page')
+  ->where('m.slug = ?', 'home')
   ->fetchOne();
 
-$t->is($menuItem->getIndentedName(), '- Sample Page', 'Test sfSympalMenuItem::getIndentedName()');
-$t->is((string) $menuItem, '- Sample Page', 'Test sfSympalMenuItem::__toString()');
-$t->is($menuItem->getContent()->getHeaderTitle(), 'Sample Page', 'Test sfSympalMenuItem::getHeaderTitle()');
-$t->is($menuItem->getLabel(), 'Sample Page', 'Test sfSympalMenuItem::getLabel()');
-$t->is($menuItem->getItemRoute(), '@page?slug=sample-page', 'Test sfSympalMenuItem::getItemRoute()');
-$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page', 'Test sfSympalBreadcrumbs::getPathAsString()');
+$t->is($menuItem->getIndentedName(), '- Home', 'Test sfSympalMenuItem::getIndentedName()');
+$t->is((string) $menuItem, '- Home', 'Test sfSympalMenuItem::__toString()');
+$t->is($menuItem->getContent()->getHeaderTitle(), 'Home', 'Test sfSympalMenuItem::getHeaderTitle()');
+$t->is($menuItem->getLabel(), 'Home', 'Test sfSympalMenuItem::getLabel()');
+$t->is($menuItem->getItemRoute(), '@sympal_content_home', 'Test sfSympalMenuItem::getItemRoute()');
+$t->is($menuItem->getBreadcrumbs()->getPathAsString(), '', 'Test sfSympalBreadcrumbs::getPathAsString()');
 
 $menuManager = sfSympalMenuSiteManager::getInstance();
 $menuManager->clear();

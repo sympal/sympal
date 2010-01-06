@@ -1,0 +1,23 @@
+generator:
+  class:                   sfSympalDoctrineGenerator
+  param:
+    model_class:           sfSympalRedirect
+    theme:                 sympal_admin
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sf_sympal_redirect
+    with_doctrine_route:   true
+    actions_base_class:    sfActions
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        display: [source, destination]
+      filter:
+        display: [source, destination]
+      form:    ~
+      edit:    ~
+      new:     ~

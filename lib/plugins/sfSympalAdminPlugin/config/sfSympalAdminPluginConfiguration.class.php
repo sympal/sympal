@@ -36,6 +36,9 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $administration->addChild('Configuration', '@sympal_config')
       ->setCredentials(array('ManageConfiguration'));
+
+    $administration->addChild('Manage Redirects', '@sympal_redirects')
+      ->setCredentials(array('ManageContentSetup'));
   }
 
   public function loadConfigForm(sfEvent $event)

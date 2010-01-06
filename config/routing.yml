@@ -15,6 +15,7 @@ homepage:
   param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
   class: sfDoctrineRoute
   options:
+    allow_empty: true
     model:  sfSympalContent
     type:   object
     method: getContent
@@ -24,6 +25,7 @@ sympal_homepage:
   param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
   class: sfDoctrineRoute
   options:
+    allow_empty: true
     model:  sfSympalContent
     type:   object
     method: getContent

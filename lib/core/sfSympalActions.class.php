@@ -66,12 +66,9 @@ class sfSympalActions extends sfSympalExtendClass
     $request = $this->getRequest();
     $response = $this->getResponse();
 
-    $content = null;
-    $e = null;
-
     $content = $this->getRoute()->getObject();
 
-    $this->_handleForward404($content, $e);
+    $this->_handleForward404($content);
     $this->getUser()->checkContentSecurity($content);
 
     $this->loadTheme($content->getThemeToRenderWith());
@@ -102,21 +99,24 @@ class sfSympalActions extends sfSympalExtendClass
     return $renderer;
   }
 
-  private function _handleForward404($record, Exception $e = null)
+  private function _handleForward404($record)
   {
     if (!$record)
     {
       $sympalContext = $this->getSympalContext();
       $site = $sympalContext->getSite();
+
+      // No site record exception
       if (!$site)
       {
         $message = sprintf(
-          'The Symfony application "%s" does not have a site record in the database. You must either run the sympal:create-site %s or the sympal:install %s task in order to get started.',
+          'The Symfony application "%s" does not have a site record in the database. You must create a site with the sympal:create-site %s task and then install with the sympal:install %s task in order to get started.',
           sfConfig::get('sf_app'),
           sfConfig::get('sf_app'),
           sfConfig::get('sf_app')
         );
         throw new sfException($message);
+      // Check for no content and redirect to default new site page
       } else {
         $q = Doctrine_Query::create()
           ->from('sfSympalContent c')
@@ -127,12 +127,10 @@ class sfSympalActions extends sfSympalExtendClass
           $this->forward('sympal_default', 'new_site');
         }
 
-        if ($e)
-        {
-          throw $e;
-        } else {
-          $this->forward404();
-        }
+        $redirecter = new sfSympalRedirecter($this->getSubject());
+        $redirecter->redirect();
+
+        $this->forward404();
       }
     }
   }

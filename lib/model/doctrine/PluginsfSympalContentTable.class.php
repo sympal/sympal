@@ -58,6 +58,22 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
     $contentTypeId = $request->getParameter('sympal_content_type_id');
     $contentId = $request->getParameter('sympal_content_id');
     $contentSlug = $request->getParameter('sympal_content_slug');
+
+    if (($contentId || $contentSlug) && !$contentType && !$contentTypeId)
+    {
+      $type = Doctrine_Core::getTable('sfSympalContentType')
+        ->createQuery('t')
+        ->select('t.id, t.name')
+        ->innerJoin('t.Content c')
+        ->where('c.id = ? OR c.slug = ?', array($contentId, $contentSlug))
+        ->fetchOne();
+      if (!$type)
+      {
+        return false;
+      }
+      $contentType = $type->getName();
+      $contentTypeId = $type->getId();
+    }
     $q = $this->getFullTypeQuery($contentType, 'c', $contentTypeId);
 
     if ($contentId)

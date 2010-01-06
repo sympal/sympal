@@ -39,6 +39,7 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
     $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
     $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
+    $this->_dispatcher->connect('routing.load_configuration', array($this, 'listenToRoutingLoadConfiguration'));
 
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
     {
@@ -51,6 +52,23 @@ class sfSympalConfiguration
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
+  }
+
+  public function listenToRoutingLoadConfiguration(sfEvent $event)
+  {
+    // Append route at end to catch all
+    $event->getSubject()->appendRoute('sympal_default', new sfDoctrineRoute('/:sympal_content_slug/*', array(
+      'module' => 'sympal_content_renderer',
+      'action' => 'index',
+      'result_type' => 'object'
+    ), array(
+      'model' => 'sfSympalContent',
+    ),array(
+      'allow_empty' => true,
+      'model' => 'sfSympalContent',
+      'type' => 'object',
+      'method' => 'getContent'
+    )));
   }
 
   /**

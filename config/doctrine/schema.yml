@@ -12,6 +12,25 @@ sfSympalSite:
     meta_keywords: string(500)
     meta_description: string(500)
 
+sfSympalRedirect:
+  actAs: [sfSympalRecordTemplate]
+  columns:
+    site_id:
+      type: integer
+      notnull: true
+    source:
+      type: string(255)
+      notnull: true
+    destination:
+      type: string(255)
+      notnull: true
+  relations:
+    Site:
+      local: site_id
+      class: sfSympalSite
+      onDelete: CASCADE
+      foreignAlias: Redirects
+
 sfSympalContent:
   actAs: [Timestampable, sfSympalRecordTemplate]
   columns:

@@ -60,6 +60,14 @@ sympal_content:
     prefix_path:          admin/content
     with_wildcard_routes: true
 
+sympal_redirects:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalRedirect
+    module:               sympal_redirects
+    prefix_path:          admin/redirects
+    with_wildcard_routes: true
+
 sympal_content_create_type:
   url:    /admin/content/create/:type
   param:  { module: sympal_content, action: create_type }
