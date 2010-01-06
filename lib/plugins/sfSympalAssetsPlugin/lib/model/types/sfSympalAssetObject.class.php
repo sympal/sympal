@@ -17,9 +17,9 @@ class sfSympalAssetObject
     $this->_filePath = $filePath;    
     $this->_rootPath = sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir', '/uploads');
 
-    if ($this->getTypeFromExtension() != $this->_type)
+    if ($this->getTypeFromExtension() != $this->_type && $this->_type !== 'file')
     {
-      throw new sfException(sprintf('The file "%s" is not an image', $file));
+      throw new sfException(sprintf('The file "%s" is not a %s', $file, $this->_type));
     }
   }
 
