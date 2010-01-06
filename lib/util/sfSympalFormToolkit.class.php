@@ -48,22 +48,6 @@ class sfSympalFormToolkit
     ));
   }
 
-  public static function bindFormRecaptcha($form, $recaptcha = false)
-  {
-    $request = sfContext::getInstance()->getRequest();
-
-    if ($recaptcha)
-    {
-      $captcha = array(
-        'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
-        'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
-      );
-      $form->bind(array_merge($request->getParameter($form->getName()), array('captcha' => $captcha)));
-    } else {
-      $form->bind($request->getParameter($form->getName())); 
-    }
-  }
-
   public static function changeContentSlotValueWidget($contentSlot, $form)
   {
     if ($contentSlot->is_column)
