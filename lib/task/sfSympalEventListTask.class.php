@@ -68,7 +68,7 @@ EOF;
       $configuration = ProjectConfiguration::getApplicationConfiguration('sympal', 'dev', true, null, $dispatcher);
       $context = sfContext::createInstance($configuration);
 
-      $user = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(true);
+      $user = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(true);
       $browser = new sfSympalEventListerBrowser(null, null, null, $context);
       $browser->getUser()->setAuthenticated(true);
       $browser->getUser()->signin($user);

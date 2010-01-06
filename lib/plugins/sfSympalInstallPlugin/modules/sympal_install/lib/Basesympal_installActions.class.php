@@ -84,7 +84,7 @@ abstract class Basesympal_installActions extends sfActions
         return sfView::SUCCESS;
       }
 
-      $user = Doctrine_Core::getTable('sfGuardUser')->findOneByUsername($values['user']['username']);
+      $user = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByUsername($values['user']['username']);
       $this->getUser()->signin($user);
 
       if ($values['setup']['plugins'])

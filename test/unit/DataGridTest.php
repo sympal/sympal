@@ -5,7 +5,7 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
 $t = new lime_test(8, new lime_output_color());
 
-$dataGrid = sfSympalDataGrid::create('sfGuardUser', 'u')
+$dataGrid = sfSympalDataGrid::create(sfSympalConfig::get('user_model'), 'u')
   ->addColumn('u.id', 'renderer=test/data_grid_id')
   ->addColumn('u.username', 'method=__toString')
   ->addColumn('name');

@@ -46,7 +46,7 @@ EOF;
       if ($isContentType)
       {
         $record = sfSympalContent::createNew($model);
-        $record->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(true);
+        $record->CreatedBy = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(true);
         $record->getRecord()->fromArray($row);
         $record->date_published = new Doctrine_Expression('NOW()');
         $record->slug = (string) $record;

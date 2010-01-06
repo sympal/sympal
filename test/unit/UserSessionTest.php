@@ -20,7 +20,7 @@ $group->save();
 $content->Groups[] = $group;
 $content->save();
 
-$admin = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);
+$admin = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(1);
 $user->signIn($admin);
 
 $t->is($user->hasAccessToContent($content), true);

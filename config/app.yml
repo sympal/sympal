@@ -1,5 +1,10 @@
 all:
   sympal_config:
+    # Configure the name of the user, group and permission models Sympal should reference
+    user_model: sfGuardUser
+    group_model: sfGuardGroup
+    permission_model: sfGuardPermission
+
     # Configure where we should redirect after successfully signing in.
     # The default is either the referrer or the homepage
     success_signin_url: ~

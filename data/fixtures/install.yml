@@ -31,7 +31,7 @@ sfSympalContentType:
     default_path: /lists/:slug
 <?php endif; ?>
 
-sfGuardUser:
+<?php echo sfSympalConfig::get('user_model') ?>:
   admin:
     first_name: <?php echo sfSympalConfig::get('sympal_install_admin_first_name', null, 'Sympal') ?> 
     last_name: <?php echo sfSympalConfig::get('sympal_install_admin_last_name', null, 'Admin') ?> 
@@ -41,7 +41,7 @@ sfGuardUser:
     password: <?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?> 
     is_super_admin: true
 
-sfGuardGroup:
+<?php echo sfSympalConfig::get('group_model') ?>:
   AdministratorGroup:
     name: Administrator
     Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
@@ -59,7 +59,7 @@ sfGuardGroup:
     name: Developer
     Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
 
-sfGuardPermission:
+<?php echo sfSympalConfig::get('permission_model') ?>:
   ViewDashboard:
     name: ViewDashboard
   ManageContent:

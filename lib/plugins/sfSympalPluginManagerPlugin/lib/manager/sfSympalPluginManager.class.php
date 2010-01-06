@@ -146,7 +146,7 @@ class sfSympalPluginManager
 
     $content = new sfSympalContent();
     $content->Type = $contentType;
-    $content->CreatedBy = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(1);
+    $content->CreatedBy = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(1);
     $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
     $content->date_published = new Doctrine_Expression('NOW()');
 

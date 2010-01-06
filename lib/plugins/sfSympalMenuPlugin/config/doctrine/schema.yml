@@ -40,7 +40,7 @@ sfSympalMenuItem:
       foreignAlias: MenuItems
       onDelete: CASCADE
     Groups:
-      class: sfGuardGroup
+      class: <?php echo sfSympalConfig::get('group_model') ?> 
       local: menu_item_id
       foreign: group_id
       refClass: sfSympalMenuItemGroup
@@ -62,7 +62,7 @@ sfSympalMenuItemGroup:
       foreignAlias: MenuItemGroups
       onDelete: CASCADE
     Group:
-      class: sfGuardGroup
+      class: <?php echo sfSympalConfig::get('group_model') ?> 
       local: group_id
       foreignAlias: MenuItemGroups
       onDelete: CASCADE

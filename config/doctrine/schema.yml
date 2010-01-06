@@ -57,12 +57,12 @@ sfSympalContent:
       fields: [date_published]
   relations:
     LastUpdatedBy:
-      class: sfGuardUser
+      class: <?php echo sfSympalConfig::get('user_model') ?> 
       local: last_updated_by_id
       foreignAlias: LastUpdatedContent
       onDelete: SET NULL
     CreatedBy:
-      class: sfGuardUser
+      class: <?php echo sfSympalConfig::get('user_model') ?> 
       local: created_by_id
       foreignAlias: CreatedContent
       onDelete: CASCADE
@@ -77,7 +77,7 @@ sfSympalContent:
       onDelete: CASCADE
       foreignAlias: Content
     Groups:
-      class: sfGuardGroup
+      class: <?php echo sfSympalConfig::get('group_model') ?> 
       local: content_id
       foreign: group_id
       refClass: sfSympalContentGroup
@@ -210,7 +210,7 @@ sfSympalContentGroup:
       foreignAlias: ContentGroups
       onDelete: CASCADE
     Group:
-      class: sfGuardGroup
+      class: <?php echo sfSympalConfig::get('group_model') ?> 
       local: group_id
       foreignAlias: ContentGroups
       onDelete: CASCADE
