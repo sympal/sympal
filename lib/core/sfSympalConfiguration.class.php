@@ -36,6 +36,8 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
     $this->_dispatcher->connect('controller.change_action', array($this, 'initializeTheme'));
     $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
+    $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
+    $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
 
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
     {
