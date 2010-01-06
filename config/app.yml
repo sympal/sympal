@@ -1,5 +1,9 @@
 all:
   sympal_config:
+    # Configure where we should redirect after successfully signing in.
+    # The default is either the referrer or the homepage
+    success_signin_url: ~
+
     # Configure forms that should have recaptcha enabled
     recaptcha_forms: [sfGuardRegisterForm]
 
