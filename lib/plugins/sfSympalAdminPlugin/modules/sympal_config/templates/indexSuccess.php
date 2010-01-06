@@ -1,6 +1,3 @@
-<?php sympal_use_stylesheet('/sfSympalPlugin/css/global.css') ?>
-<?php sympal_use_stylesheet('/sfSympalPlugin/css/default.css') ?>
-
 <div id="sf_admin_container">
   <h1>Sympal Configuration</h1>
 
