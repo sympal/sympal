@@ -92,14 +92,14 @@ class sfSympalInstall
     // Prime the cache
     $this->_primeCache();
 
-    // Run fix permissions to ensure a 100% ready to go environment
-    $this->_fixPerms();
-
     sfSympalConfig::writeSetting('installed', true);
     sfSympalConfig::set('installing', false);
     sfSympalConfig::writeSetting('current_version', sfSympalPluginConfiguration::VERSION);
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
+
+    // Run fix permissions to ensure a 100% ready to go environment
+    $this->_fixPerms();
   }
 
   protected function _prepareParams()
