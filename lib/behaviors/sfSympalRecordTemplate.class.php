@@ -21,7 +21,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
 
     if ($this->isI18ned())
     {
-      $this->sympalActAs('Doctrine_Template_I18n', array('fields' => $this->getI18nedFields()), 'Doctrine_Template_I18n');
+      $this->sympalActAsI18n(array('fields' => $this->getI18nedFields()), 'Doctrine_Template_I18n');
     }
 
     if ($this->isContent())
@@ -50,6 +50,19 @@ class sfSympalRecordTemplate extends Doctrine_Template
     $tpl->setTable($this->_table);
     $tpl->setUp();
     $tpl->setTableDefinition();
+  }
+
+  public function sympalActAsI18n($options = array(), $name = null)
+  {
+    $this->sympalActAs('Doctrine_Template_I18n', $options, $name);
+
+    if (!$this->_table->getOption('has_symfony_i18n_filter'))
+    {
+      $this->_table
+        ->unshiftFilter(new sfSympalDoctrineRecordI18nFilter())
+        ->setOption('has_symfony_i18n_filter', true)
+      ;
+    }
   }
 
   public function setUp()
