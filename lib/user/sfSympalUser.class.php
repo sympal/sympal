@@ -7,9 +7,7 @@ class sfSympalUser extends sfGuardSecurityUser
 
   public function isEditMode()
   {
-    $user = sfContext::getInstance()->getUser();
-
-    return $user->isAuthenticated()  && $user->hasCredential('ManageContent');
+    return $this->isAuthenticated()  && $this->hasCredential('ManageContent');
   }
 
   public function hasAccessToContent($content)

@@ -10,13 +10,28 @@
 </head>
 <body>
   <div id="container">
-  	<div id="header"><h1><?php echo link_to(sfSympalConfig::get('sympal_name'), '@sympal_homepage') ?></h1></div>
+  	<div id="header">
+  	  <h1><?php echo link_to($sf_sympal_context->getSite()->getTitle(), '@sympal_homepage') ?></h1>
+  	  <h2><?php echo $sf_sympal_context->getSite()->getDescription() ?></h2>
+  	</div>
   	<div id="content">
       <?php echo $sf_content ?>
   	</div>
+  	<?php $menu = get_sympal_menu('primary') ?>
   	<div id="sidebar">
   	  <h2>Navigation</h2>
-      <?php echo get_sympal_menu('primary') ?>
+  	  <?php if ($menu): ?>
+        <?php echo $menu ?>
+      <?php else: ?>
+        <ul>
+          <?php if (!$sf_user->isAuthenticated()): ?>
+            <li><?php echo link_to('Register', '@sympal_register') ?></li>
+            <li><?php echo link_to('Signin', '@sympal_signin') ?></li>
+          <?php else: ?>
+            <li><?php echo link_to('Signout', '@sympal_signout', 'confirm=Are you sure?') ?></li>
+          <?php endif; ?>
+        </ul>
+      <?php endif; ?>
   	</div>
   	<div id="footer"></div>
   </div>

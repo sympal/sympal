@@ -22,9 +22,17 @@ class Basesympal_sitesActions extends autosympal_sitesActions
 
       if ($new)
       {
+        $name = str_replace('-', '_', $site->slug);
+        $dispatcher = $this->getContext()->getEventDispatcher();
+        $formatter = new sfFormatter();
+
         chdir(sfConfig::get('sf_root_dir'));
-        $task = new sfSympalCreateSiteTask($this->getContext()->getEventDispatcher(), new sfFormatter());
-        $task->run(array($site->title, $site->description));
+        $task = new sfGenerateAppTask($dispatcher, $formatter);
+        $task->run(array($name));
+        $task = new sfSympalPrepareApplicationTask($dispatcher, $formatter);
+        $task->run(array($name));
+        $task = new sfSympalCreateSiteTask($dispatcher, $formatter);
+        $task->run(array($name));
 
         $site = Doctrine_Core::getTable('sfSympalSite')->findOneByTitle($site->title);
       }

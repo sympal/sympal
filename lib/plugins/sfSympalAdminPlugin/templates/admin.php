@@ -21,7 +21,7 @@
 
   <?php if (!$sf_request->getParameter('popup') && $sf_user->isAuthenticated()): ?>
     <div id="header">
-      <h1>Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
+      <h1><?php echo $sf_sympal_context->getSite()->getTitle() ?> <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
     </div>
 
     <div id="column_left">

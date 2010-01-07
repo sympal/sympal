@@ -51,6 +51,14 @@ h1{font-size:138.5%;}h2{font-size:123.1%;}h3{font-size:108%;}h1,h2,h3{margin:1em
   text-shadow: #000 1px 1px 1px;
 }
 
+#container #header h2 {
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  font-weight: normal;
+}
+
 #container #content {
 	float: left;
 	width: 610px;
