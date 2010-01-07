@@ -145,6 +145,10 @@ class sfSympalContext
   {
     if (is_null($site))
     {
+      if (!self::$_current)
+      {
+        throw new InvalidArgumentException('Could not find a current sympal context instance');
+      }
       return self::$_current;
     }
 
@@ -155,10 +159,9 @@ class sfSympalContext
     return self::$_instances[$site];
   }
 
-  public static function createInstance(sfContext $symfonyContext)
+  public static function createInstance(sfContext $symfonyContext, sfSympalConfiguration $sympalConfiguration)
   {
     $site = $symfonyContext->getConfiguration()->getApplication();
-    $sympalConfiguration = $symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();
 
     $instance = new self($sympalConfiguration, $symfonyContext);
     self::$_instances[$site] = $instance;

@@ -133,9 +133,9 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $result;
   }
 
-  public function getUrl()
+  public function getUrl($options)
   {
-    return $this->getRoute();
+    return sfContext::getInstance()->getController()->genUrl($this->getRoute(), $options);
   }
 
   public function getPubDate()

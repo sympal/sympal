@@ -2,6 +2,12 @@
 
 class Basesympal_defaultActions extends sfActions
 {
+  public function executeSitemap(sfWebRequest $request)
+  {
+    $this->setLayout(false);
+    $this->sitemapGenerator = new sfSympalSitemapGenerator($this->getContext()->getConfiguration()->getApplication());
+  }
+
   public function executeNew_site(sfWebRequest $request)
   {
     $this->loadTheme($this->getSympalContext()->getSite()->getTheme());

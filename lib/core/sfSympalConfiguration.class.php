@@ -78,12 +78,14 @@ class sfSympalConfiguration
    */
   public function bootstrap(sfEvent $event)
   {
+    $this->_projectConfiguration = $event->getSubject()->getConfiguration();
+
     $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
     $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
 
     $this->_cache = new sfSympalCache($this);
 
-    $this->_sympalContext = sfSympalContext::createInstance($event->getSubject());
+    $this->_sympalContext = sfSympalContext::createInstance($event->getSubject(), $this);
 
     $this->_enableModules();
 
