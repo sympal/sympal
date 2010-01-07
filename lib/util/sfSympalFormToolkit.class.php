@@ -59,7 +59,7 @@ class sfSympalFormToolkit
     $validatorSchema = $form->getValidatorSchema();
 
     $contentSlotTypes = sfSympalConfig::get('content_slot_types', null, array());
-    $options = $contentSlotTypes[$contentSlot->type];
+    $options = isset($contentSlotTypes[$contentSlot->type]) ? $contentSlotTypes[$contentSlot->type] : array();
 
     $widgetClass = isset($options['widget_class']) ? $options['widget_class'] : 'sfWidgetFormSympal'.$contentSlot->type;
     $widgetClass = class_exists($widgetClass) ? $widgetClass : 'sfWidgetFormInput';

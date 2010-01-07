@@ -90,11 +90,6 @@
   background: url(../images/error.png) no-repeat 4px 4px;
 }
 
-#sf_admin_container input, #sf_admin_container textarea
-{
-  width: auto;
-}
-
 #sf_admin_container .radio_list, #sf_admin_container .checkbox_list
 {
   margin: 0;

@@ -5,8 +5,8 @@
   </div>
 <?php endif; ?>
 
-<div class="sympal_inline_edit_bar sympal_form">
-  <div class="sympal_inline_edit_bar_container">
+<div class="sympal_inline_edit_bar_container">
+  <div class="sympal_inline_edit_bar sympal_form">
     <ul>
       <li><?php echo button_to('X', '@sympal_signout', 'title=Signout class=signout confirm=Are you sure you want to signout?') ?></li>
       <?php if (sfSympalConfig::isI18nEnabled()): ?>

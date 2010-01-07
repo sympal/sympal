@@ -34,11 +34,25 @@ function render_content_date_published(sfSympalContent $content, $slot)
  */
 function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunction = null)
 {
+  $slot = null;
+  if ($name instanceof sfSympalContentSlot)
+  {
+    $slot = $name;
+    $name = $name->getName();
+  }
+
   $isColumn = false;
   if ($content->hasField($name))
   {
     $isColumn = true;
   }
+
+  if (!$slot)
+  {
+    $slot = $content->getOrCreateSlot($name, $type, $isColumn, $renderFunction);
+  }
+
+  $slot->setContentRenderedFor($content);
 
   if ($isColumn && is_null($renderFunction))
   {
@@ -46,13 +60,6 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunctio
   }
 
   $slots = $content->getSlots();
-
-  if ($name instanceof sfSympalContentSlot)
-  {
-    $slot = $name;
-  } else {
-    $slot = $content->getOrCreateSlot($name, $type, $isColumn, $renderFunction);
-  }
 
   $user = sfContext::getInstance()->getUser();
   if ($user->isEditMode())

@@ -15,16 +15,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->useAdminTheme();
   }
 
-  protected function _getContent(sfWebRequest $menuItem)
-  {
-    $q = Doctrine_Core::getTable('sfSympalContent')
-      ->createQuery('c')
-      ->where('c.id = ?', $request->getParameter('id'));
-
-    $content = $q->fetchOne();
-    $this->forward404Unless($content);
-    return $content;
-  }
 
   protected function _publishContent(sfSympalMenuItemGroupContent $content, $publish = true)
   {
@@ -160,26 +150,49 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->setTemplate('new');
   }
 
-  public function executeEdit(sfWebRequest $request)
+  protected function _getContentById($id)
   {
     $contentType = Doctrine_Core::getTable('sfSympalContent')
       ->createQuery('c')
       ->select('t.name')
       ->leftJoin('c.Type t')
-      ->where('c.id = ?', $request->getParameter('id'))
+      ->where('c.id = ?', $id)
       ->execute(array(), Doctrine_Core::HYDRATE_NONE);
 
     $this->sf_sympal_content = Doctrine_Core::getTable('sfSympalContent')
       ->getFullTypeQuery($contentType[0][0])
-      ->where('c.id = ?', $request->getParameter('id'))
+      ->where('c.id = ?', $id)
       ->fetchOne();
 
+    $this->forward404Unless($this->sf_sympal_content);
+    return $this->sf_sympal_content;
+  }
+
+  protected function _getContent(sfWebRequest $request)
+  {
+    return $this->_getContentById($request->getParameter('id'));
+  }
+
+  public function executeEdit(sfWebRequest $request)
+  {
+    $this->sf_sympal_content = $this->_getContent($request);
     $user = $this->getUser();
     $user->checkContentSecurity($this->sf_sympal_content);
 
     $this->getResponse()->setTitle('Sympal Admin / Editing '.$this->sf_sympal_content);
 
     $this->form = $this->configuration->getForm($this->sf_sympal_content);
+  }
+
+  public function executeEdit_slots(sfWebRequest $request)
+  {
+    $this->sf_sympal_content = $this->_getContent($request);
+    $this->getSympalContext()->setCurrentContent($this->sf_sympal_content);
+    if ($menuItem = $this->sf_sympal_content->getMenuItem())
+    {
+      $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_content->getMenuItem());
+    }
+    $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalFrontendEditorPlugin')->loadEditorAssets();
   }
 
   public function executeCreate(sfWebRequest $request)
@@ -206,7 +219,14 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $this->getUser()->setFlash('notice', $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.');
 
       $content = $form->save();
+      $id = $content->getId();
+      $content->free(true);
 
+      // Render the content to make sure slots and other things are populated
+      $content = $this->_getContentById($id);
+      $this->getSympalContext()->getContentRenderer($content)->render();
+
+      // Reset the routes cache incase of the url changing or a custom url was added
       $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')
         ->getSympalConfiguration()->getCache()->resetRouteCache();
 
@@ -225,6 +245,10 @@ class Basesympal_contentActions extends autoSympal_contentActions
       else if ($request->hasParameter('_save_and_edit_menu'))
       {
         $this->redirect('@sympal_content_menu_item?id='.$content->id);
+      }
+      else if ($request->hasParameter('_save_and_edit_slots'))
+      {
+        $this->redirect('@sympal_content_edit_slots?id='.$content->id);
       }
       else
       {

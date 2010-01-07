@@ -60,6 +60,10 @@ sympal_content:
     prefix_path:          admin/content
     with_wildcard_routes: true
 
+sympal_content_edit_slots:
+  url:  /admin/content/:id/edit_slots
+  param: { module: sympal_content, action: edit_slots }
+
 sympal_redirects:
   class:                  sfDoctrineRouteCollection
   options:

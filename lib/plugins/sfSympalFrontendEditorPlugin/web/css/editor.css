@@ -172,11 +172,7 @@
   z-index: 50000;
 }
 
-.sympal_inline_edit_bar {
-  -khtml-border-radius:10px;
-	-moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+.sympal_inline_edit_bar_container {
   font-weight: bold;
   margin-top: 2px;
   margin-right: 10px;
@@ -200,12 +196,14 @@
 
 .sympal_inline_edit_bar ul li input {
   margin-right: 5px;
-  border: 1px solid #888;
+  border: 1px solid #888 !important;
   cursor: pointer;
   -khtml-border-radius: 5px;
 	-moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  font-weight: normal !important;
+  font-size: 13px !important;
 }
 
 .sympal_inline_edit_bar ul li a {
@@ -216,8 +214,8 @@
 .sympal_inline_edit_bar input.toggle_edit_mode,
 .sympal_inline_edit_bar input.sympal_save_content_slots,
 .sympal_inline_edit_bar input.sympal_preview_content_slots {
-  background-color: #375fc2;
-  color: #ffffff;
+  background-color: #375fc2 !important;
+  color: #ffffff !important;
 }
 
 .sympal_inline_edit_bar input.sympal_disable_edit_mode:hover,
@@ -225,8 +223,8 @@
 .sympal_inline_edit_bar input.sympal_save_content_slots:hover,
 .sympal_inline_edit_bar input.sympal_preview_content_slots:hover {
   background-color: #333 !important;
-  color: #ffffff;
-  border: 1px solid #333;
+  color: #ffffff !important;
+  border: 1px solid #333 !important;
 }
 
 .sympal_inline_edit_bar input, .sympal_inline_edit_bar select {
@@ -278,5 +276,5 @@
   width: 20px;
   height: 20px;
   color: transparent;
-  border: none;
+  border: none !important;
 }

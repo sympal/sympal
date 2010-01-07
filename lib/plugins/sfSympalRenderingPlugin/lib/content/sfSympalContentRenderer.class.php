@@ -117,11 +117,6 @@ class sfSympalContentRenderer
           }
       }
     }
-    
-    if ($return === null)
-    {
-      sfContext::getInstance()->getController()->getActionStack()->getLastEntry()->getActionInstance()->forward404();
-    }
 
     return $return;
   }

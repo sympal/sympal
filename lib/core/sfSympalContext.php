@@ -136,7 +136,7 @@ class sfSympalContext
     return $this->_symfonyContext;
   }
 
-  public function getContentRenderer(sfSympalContent $content, $format = null)
+  public function getContentRenderer(sfSympalContent $content, $format = 'html')
   {
     return new sfSympalContentRenderer($this, $content, $format);
   }
