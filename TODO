@@ -1,7 +1,12 @@
-1.0 TODO List
-=============
+## 1.0
 
-This is a list of features and changes that I want to implement before the release
-of 1.0.
+* Fix inline editing save to use one request instead one request per slot.
+* Enhance rss, xml formats to have a filter so we can customize what data is returned
+for each model and even for each different format type.
 
-* URL Redirecting: Simple model and admin generator to redirect one url to another
+## 1.1
+
+* Add enhancement for assets organization. Allow the following: global assets 
+for all sites, site specific assets and user assets.
+* Make configuration in app.yml allow site specific configuration. May require
+making a custom config handler and changing to a sympal.yml

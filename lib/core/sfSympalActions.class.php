@@ -73,7 +73,7 @@ class sfSympalActions extends sfSympalExtendClass
 
     $this->loadTheme($content->getThemeToRenderWith());
     
-    $renderer = $this->getSympalContext()->getContentRenderer($content);
+    $renderer = $this->getSympalContext()->getContentRenderer($content, $request->getRequestFormat());
 
     $content->loadMetaData($response);
 

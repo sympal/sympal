@@ -9,9 +9,9 @@ class sfSympalContentRenderer
     $_dispatcher,
     $_menuItem,
     $_content,
-    $_format = 'html';
+    $_format;
 
-  public function __construct(sfSympalContext $sympalContext, sfSympalContent $content, $format = null)
+  public function __construct(sfSympalContext $sympalContext, sfSympalContent $content, $format = 'html')
   {
     $this->_symfonyContext = $sympalContext->getSymfonyContext();
     $this->_sympalContext = $sympalContext;
@@ -20,6 +20,7 @@ class sfSympalContentRenderer
     $this->_configuration->loadHelpers(array('Tag', 'Url', 'Partial'));
     $this->_content = $content;
     $this->_sympalContext->setCurrentContent($this->_content);
+    $this->_format = $format;
 
     if ($this->_menuItem = $this->_content->getMenuItem())
     {
