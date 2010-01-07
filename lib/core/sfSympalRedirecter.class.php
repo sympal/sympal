@@ -12,7 +12,7 @@ class sfSympalRedirecter
   public function getRedirect()
   {
     return Doctrine_Core::getTable('sfSympalRedirect')->findOneBySourceAndSiteId(
-      $_SERVER['PATH_INFO'],
+      isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : null,
       sfSympalContext::getInstance()->getSite()->getId()
     );
   }
