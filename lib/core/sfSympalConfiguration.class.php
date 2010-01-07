@@ -98,8 +98,14 @@ class sfSympalConfiguration
   public function filterTemplateParameters(sfEvent $event, $parameters)
   {
     $parameters['sf_sympal_context'] = $this->_sympalContext;
-    $parameters['sf_sympal_content'] = $this->_sympalContext->getCurrentContent();
-    $parameters['sf_sympal_menu_item'] = $this->_sympalContext->getCurrentMenuItem();
+    if ($content = $this->_sympalContext->getCurrentContent())
+    {
+      $parameters['sf_sympal_content'] = $content;
+    }
+    if ($menuItem = $this->_sympalContext->getCurrentMenuItem())
+    {
+      $parameters['sf_sympal_menu_item'] = $menuItem;
+    }
     return $parameters;
   }
 
