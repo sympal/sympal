@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalReportStatisticsTask extends sfTaskExtraBaseTask
+class sfSympalReportStatisticsTask extends sfSympalBaseTask
 {
   protected function configure()
   {

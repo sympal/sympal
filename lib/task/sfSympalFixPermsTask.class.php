@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalFixPermsTask extends sfBaseTask
+class sfSympalFixPermsTask extends sfSympalBaseTask
 {
   protected function configure()
   {
