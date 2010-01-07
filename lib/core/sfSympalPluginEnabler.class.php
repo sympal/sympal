@@ -77,9 +77,18 @@ class sfSympalPluginEnabler
     }
   }
 
+  public function disableSympalCorePlugins($plugins)
+  {
+    foreach ((array) $plugins as $plugin)
+    {
+      $this->_configuration->disablePlugins($plugin);
+      $this->_configuration->setPluginPath($plugin, false);
+    }
+  }
+
   public function overrideSympalPlugin($plugin, $newPlugin, $newPluginPath = null)
   {
-    $this->_configuration->disablePlugin($plugin);
+    $this->_configuration->disablePlugins($plugin);
     $this->_configuration->enablePlugins($newPlugin);
     if ($newPluginPath)
     {

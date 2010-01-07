@@ -42,6 +42,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     $enabler = new sfSympalPluginEnabler($configuration);
     $enabler->enableSympalPlugins();
+
+    return $enabler;
   }
 
   public function getSympalConfiguration()
