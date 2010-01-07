@@ -32,10 +32,18 @@
   <div id="links">
     <h2><?php echo $contentType->getLabel() ?> Links</h2>
     <ul>
+      <?php $menuItem = $content->getFirst()->getMenuItem() ?>
+      <?php if ($menuItem && $parentMenuNode = sfSympalMenuSiteManager::getMenu('primary')->findMenuItem($menuItem)->getParent()): ?>
+        <li>
+          <?php echo image_tag('/sfSympalPlugin/images/folder.png') ?>
+          <?php echo link_to($parentMenuNode->getMenuItem()->getLabel(), $parentMenuNode->getMenuItem()->getItemRoute()) ?>
+        </li>
+      <?php endif; ?>
+
       <?php foreach ($content as $c): ?>
-        <?php $menuItem = $c->getMenuItem() ?>    
-        <li id="<?php echo $c->getId() ?>"<?php if ($menuItem): ?> style="margin-left: <?php echo ($menuItem->getLevel() - 1) * 15 ?>px;"<?php endif; ?>>
-          <?php if ($menuItem->getNode()->isLeaf()): ?>
+        <?php $menuItem = $c->getMenuItem() ?>
+        <li id="<?php echo $c->getId() ?>"<?php if ($menuItem): ?> style="margin-left: <?php echo ($menuItem->getLevel() - ($parentMenuNode ? $parentMenuNode->getLevel() : 1)) * 15 ?>px;"<?php endif; ?>>
+          <?php if (!$menuItem || $menuItem->getNode()->isLeaf()): ?>
             <?php echo image_tag('/sfSympalPlugin/images/page.png') ?>
           <?php else: ?>
             <?php echo image_tag('/sfSympalPlugin/images/folder.png') ?>
