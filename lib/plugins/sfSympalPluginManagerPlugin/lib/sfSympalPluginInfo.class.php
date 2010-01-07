@@ -26,6 +26,7 @@ class sfSympalPluginInfo
   {
     $q = Doctrine_Core::getTable('sfSympalPlugin')
       ->createQuery('p')
+      ->leftJoin('p.Author a')
       ->where('p.name = ?', $this->getName());
 
     $plugin = $q->fetchOne();
@@ -46,8 +47,11 @@ class sfSympalPluginInfo
 
     if ($this->getAuthor())
     {
-      $plugin->Author->email = $this->getAuthorEmail();
-      $plugin->Author->name = $this->getAuthor();
+      $author = Doctrine_Core::getTable('sfSympalPluginAuthor')->findOneByEmail($this->getAuthorEmail());
+      $author = $author ? $author : new sfSympalPluginAuthor();
+      $author->email = $this->getAuthorEmail();
+      $author->name = $this->getAuthor();
+      $plugin->setAuthor($author);
     }
 
     $plugin->is_downloaded = $this->isDownloaded();
