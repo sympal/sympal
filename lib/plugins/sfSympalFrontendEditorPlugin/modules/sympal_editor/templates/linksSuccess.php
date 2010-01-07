@@ -35,6 +35,12 @@
       <?php foreach ($content as $c): ?>
         <?php $menuItem = $c->getMenuItem() ?>    
         <li id="<?php echo $c->getId() ?>"<?php if ($menuItem): ?> style="margin-left: <?php echo ($menuItem->getLevel() - 1) * 15 ?>px;"<?php endif; ?>>
+          <?php if ($menuItem->getNode()->isLeaf()): ?>
+            <?php echo image_tag('/sfSympalPlugin/images/page.png') ?>
+          <?php else: ?>
+            <?php echo image_tag('/sfSympalPlugin/images/folder.png') ?>
+          <?php endif; ?>
+
           <a href="#link"><?php echo $c ?></a>
         </li>
       <?php endforeach; ?>
