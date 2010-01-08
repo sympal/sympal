@@ -1,5 +1,8 @@
 all:
   sympal_config:
+    # Default menu to install plugin content types to
+    default_install_content_type_menu: primary
+
     # Configure the name of the user, group and permission models Sympal should reference
     user_model: sfGuardUser
     group_model: sfGuardGroup

@@ -195,9 +195,15 @@ class sfSympalPluginManager
   {
     $this->logSection('sympal', sprintf('...saving menu item "%s"', $menuItem));
 
-    $roots = Doctrine_Core::getTable('sfSympalMenuItem')->getTree()->fetchRoots();
-    $root = $roots[0];
-    $menuItem->getNode()->insertAsLastChildOf($root);
+    $root = Doctrine_Core::getTable('sfSympalMenuItem')->findOneBySlug(sfSympalConfig::get('default_install_content_type_menu', null, 'primary'));
+    if (!$root)
+    {
+      $root = Doctrine_Core::getTable('sfSympalMenuItem')->findOneByIsPrimary(true);
+    }
+    if ($root)
+    {
+      $menuItem->getNode()->insertAsLastChildOf($root);
+    }
   }
 
   public function getContentTypeForPlugin($name = null)
