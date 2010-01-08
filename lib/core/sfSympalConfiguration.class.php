@@ -29,7 +29,8 @@ class sfSympalConfiguration
       'sfSympalMenu',
       'sfParameterHolder',
       'sfSympalDataGrid',
-      'sfSympalUpgradeFromWeb'
+      'sfSympalUpgradeFromWeb',
+      'sfSympalServerCheckHtmlRenderer'
     ));
 
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
