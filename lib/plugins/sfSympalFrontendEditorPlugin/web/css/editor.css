@@ -9,6 +9,7 @@
   width: 600px;
   height: 400px;
   overflow: auto;
+  z-index: 9999999;
 }
 
 .sympal_close_menu {
@@ -169,7 +170,7 @@
 
 .sympal_change_slot_type_dropdown {
   display: none;
-  z-index: 50000;
+  z-index: 9999999;
 }
 
 .sympal_inline_edit_bar_container {
