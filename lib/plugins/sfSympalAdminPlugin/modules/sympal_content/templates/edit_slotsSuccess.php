@@ -25,5 +25,3 @@
     </div>
   </div>
 </div>
-
-<?php echo get_sympal_editor() ?>

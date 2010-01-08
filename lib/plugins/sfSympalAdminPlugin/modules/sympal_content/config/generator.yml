@@ -49,6 +49,8 @@ generator:
           _list:
           view:
             action: view
+          edit_slots:
+            action: edit_slots
           _save:
           save_and_view:
           save_and_edit_menu:

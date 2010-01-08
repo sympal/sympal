@@ -1,0 +1,43 @@
+#sf_admin_container .sf_admin_form
+{
+  position: relative;
+}
+#sf_admin_container fieldset
+{
+  margin-right: 250px;
+}
+#sf_admin_container ul.sf_admin_actions
+{
+  padding: 8px;
+  background: #B0C4DE;
+  width: 225px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  -khtml-border-radius:10px;
+	-moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+#sf_admin_container ul.sf_admin_actions li
+{
+  padding: 4px;
+  display: block;
+}
+
+#sf_admin_container ul.sf_admin_actions li a
+{
+  font-weight: bold;
+  color: #000;
+}
+
+#sf_admin_container ul.sf_admin_actions li input
+{
+  border: 1px solid #808080;
+}
+
+#sf_admin_container .sympal_admin_embedded_form
+{
+  background: #fff;
+}
