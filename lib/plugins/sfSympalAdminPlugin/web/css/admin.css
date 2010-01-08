@@ -148,50 +148,59 @@ ul.error_list li
   min-height: 600px;
 }
 
-#content #top_menu {
+#content #sympal_content_type_menu {
   margin-bottom: 15px;
-  height: 20px;
   background-color: #333333;
-  padding: 0.6em;
-  -khtml-border-radius:0.4em;
-	-moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  width: 200px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 9999999999;
 }
 
-#content #top_menu img {
-  vertical-align: middle;
+#content #sympal_content_type_menu h3 {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #ffffff;
+  margin: 0;
+  padding: 6px;
+  cursor: pointer;
 }
 
-#content #top_menu ul {
+#content #sympal_content_type_menu h3:hover {
+  background: #375fc2;
+}
+
+#content #sympal_content_type_menu ul {
+  background-color: #333333;
   margin: 0;
   padding: 0;
+  margin-top: 10px;
+  display: none;
 }
 
-#content #top_menu ul li {
-  list-style-type: none;
-  float: left;
-  margin: 0;
-  margin-left: 5px;
-  margin-right: 5px;
-  color: #ffffff;
-}
-
-#content #top_menu ul li.current a {
-  background: #f5f5f5;
-  color: #000;
-}
-
-#content #top_menu ul li a {
-  padding: 5px;
-  color: #ffffff;
+#content #sympal_content_type_menu ul li {
+  color: #fff;
   font-weight: bold;
-  background: none;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 }
 
-#content #top_menu ul li a:hover {
-  background: #f5f5f5;
-  color: #000;
+#content #sympal_content_type_menu ul li:hover {
+  color: #333;
+  background: #fff;
+}
+
+#content #sympal_content_type_menu ul li:hover a {
+  color: #333;
+}
+
+#content #sympal_content_type_menu ul li a {
+  display: block;
+  padding: 8px;
+  color: #fff;
 }
 
 #content input, #content select, #content textarea {

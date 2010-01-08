@@ -1,7 +1,7 @@
 <?php $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll() ?>
-<div id="top_menu">
+<div id="sympal_content_type_menu">
+  <h3>Change Content Type</h3>
   <ul>
-    <li>Content Types: </li>
     <?php foreach ($contentTypes as $contentType): ?>
       <li<?php if ($sf_user->getAttribute('content_type_id') == $contentType->id): ?> class="current"<?php endif; ?>><?php echo link_to($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId()) ?></li>
     <?php endforeach; ?>
