@@ -36,6 +36,31 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $content;
   }
 
+  public function getModule()
+  {
+    return $this->getType()->getModule();
+  }
+
+  public function hasCustomAction()
+  {
+    return sfSympalToolkit::moduleAndActionExists($this->getModule(), $this->getCustomActionName());
+  }
+
+  public function getCustomActionName()
+  {
+    return str_replace('-', '_', $this->getSlug());
+  }
+
+  public function getAction()
+  {
+    if ($this->hasCustomAction())
+    {
+      return $this->getCustomActionName();
+    } else {
+      return 'index';
+    }
+  }
+
   public function hasSlot($name)
   {
     return isset($this->Slots[$name]) ? true : false;
@@ -378,33 +403,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       return $route.'?'.http_build_query($values);
     } else {
       return $route;
-    }
-  }
-
-  public function loadMetaData(sfWebResponse $response)
-  {
-    // page title
-    if ($pageTitle = $this['page_title'])
-    {
-      $response->setTitle($pageTitle);
-    } else if ($pageTitle = $this['Site']['page_title']) {
-      $response->setTitle($pageTitle);
-    }
-
-    // meta keywords
-    if ($metaKeywords = $this['meta_keywords'])
-    {
-      $response->addMeta('keywords', $metaKeywords);
-    } else if ($metaKeywords = $this['Site']['meta_keywords']) {
-      $response->addMeta('keywords', $metaKeywords);
-    }
-
-    // meta description
-    if ($metaDescription = $this['meta_description'])
-    {
-      $response->addMeta('description', $metaDescription);
-    } else if ($metaDescription = $this['Site']['meta_description']) {
-      $response->addMeta('description', $metaDescription);
     }
   }
 

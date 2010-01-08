@@ -97,6 +97,17 @@ class sfSympalToolkit
     }
   }
 
+  public static function moduleAndActionExists($moduleName, $actionName)
+  {
+    $modulePath = sfConfig::get('sf_apps_dir').'/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions/actions.class.php';
+    if (file_exists($modulePath))
+    {
+      return strpos(file_get_contents($modulePath), 'public function execute'.ucfirst($actionName)) !== false ? true : false;
+    } else {
+      return false;
+    }
+  }
+
   public static function getAllLanguageCodes()
   {
     $flags = sfFinder::type('file')
@@ -157,8 +168,8 @@ class sfSympalToolkit
         $routes[] = sprintf($routeTemplate,
           substr($content->getRouteName(), 1),
           $content->getRoutePath(),
-          'sympal_content_renderer',
-          'index',
+          $content->getModule(),
+          $content->getAction(),
           $content->Type->name,
           $content->Type->id,
           $content->id,
@@ -176,8 +187,8 @@ class sfSympalToolkit
         $routes[] = sprintf($routeTemplate,
           substr($contentType->getRouteName(), 1),
           $contentType->getRoutePath(),
-          'sympal_content_renderer',
-          'index',
+          $contentType->getModule(),
+          $contentType->getAction(),
           $contentType->name,
           $contentType->id,
           null,

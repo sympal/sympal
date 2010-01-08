@@ -57,18 +57,9 @@ class sfSympalConfiguration
   public function listenToRoutingLoadConfiguration(sfEvent $event)
   {
     // Append route at end to catch all
-    $event->getSubject()->appendRoute('sympal_default', new sfDoctrineRoute('/:sympal_content_slug.:sf_format/*', array(
-      'module' => 'sympal_content_renderer',
-      'action' => 'index',
-      'result_type' => 'object',
-      'sf_format' => 'html'
-    ), array(
-      'model' => 'sfSympalContent',
-    ),array(
-      'allow_empty' => true,
-      'model' => 'sfSympalContent',
-      'type' => 'object',
-      'method' => 'getContent'
+    $event->getSubject()->appendRoute('sympal_default', new sfRoute('/*', array(
+      'module' => 'sympal_default',
+      'action' => 'default'
     )));
   }
 

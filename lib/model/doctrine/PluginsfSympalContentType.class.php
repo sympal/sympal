@@ -44,4 +44,29 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     }
     return $path;
   }
+
+  public function getCustomModuleName()
+  {
+    return 'sympal_'.str_replace('-', '_', $this->getSlug());
+  }
+
+  public function hasCustomModule()
+  {
+    return sfSympalToolkit::moduleAndActionExists($this->getCustomModuleName(), 'index');
+  }
+
+  public function getModule()
+  {
+    if ($this->hasCustomModule())
+    {
+      return $this->getCustomModuleName();
+    } else {
+      return 'sympal_content_renderer';
+    }
+  }
+
+  public function getAction()
+  {
+    return 'index';
+  }
 }

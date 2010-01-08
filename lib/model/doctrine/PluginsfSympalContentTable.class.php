@@ -51,6 +51,15 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
     return $q;
   }
 
+  public function getContentRecordsTypeBy($by, $value)
+  {
+    return Doctrine_Core::getTable('sfSympalContentType')
+      ->createQuery('t')
+      ->innerJoin('t.Content c')
+      ->where('c.'.$by.' = ?', $value)
+      ->fetchOne();
+  }
+
   public function getContent($params = array())
   {
     $request = sfContext::getInstance()->getRequest();
@@ -61,24 +70,29 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
     if (($contentId || $contentSlug) && !$contentType && !$contentTypeId)
     {
-      $type = Doctrine_Core::getTable('sfSympalContentType')
-        ->createQuery('t')
-        ->select('t.id, t.name')
-        ->innerJoin('t.Content c')
-        ->where('c.id = ? OR c.slug = ?', array($contentId, $contentSlug))
-        ->fetchOne();
-      if (!$type)
+      if ($contentId)
       {
+        $type = $this->getContentRecordsTypeBy('id', $contentId);
+      } else if ($contentSlug) {
+        $type = $this->getContentRecordsTypeBy('slug', $contentSlug);
+      }
+
+      if ($type)
+      {
+        $contentType = $type->getName();
+        $contentTypeId = $type->getId();
+      } else {
         return false;
       }
-      $contentType = $type->getName();
-      $contentTypeId = $type->getId();
     }
     $q = $this->getFullTypeQuery($contentType, 'c', $contentTypeId);
 
+    // If we have an explicit content id
     if ($contentId)
     {
       $q->andWhere('c.id = ?', $contentId);
+
+    // If we have an explicit content slug
     } else if ($contentSlug) {
       if ($this->hasRelation('Translation') && $this->getRelation('Translation')->getTable()->hasField('slug'))
       {
@@ -86,23 +100,42 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       } else {
         $q->andWhere('c.slug = ?', $contentSlug);
       }
-    }
 
-    foreach ($params as $key => $value)
-    {
-      if ($key == 'slug' && $this->hasRelation('Translation'))
+    // Try and find the content record based on the params in the route
+    } else {
+      // Loop over all other request parameters and see if they can be used to add a where condition
+      // to find the content record
+      $paramFound = false;
+      foreach ($params as $key => $value)
       {
-        $q->andWhere('c.slug = ? OR ct.i18n_slug = ?', array($value, $value));
-        continue;
+        if ($key == 'slug' && $this->hasRelation('Translation'))
+        {
+          $paramFound = true;
+          $q->andWhere('c.slug = ? OR ct.i18n_slug = ?', array($value, $value));
+          continue;
+        }
+
+        if ($this->hasField($key))
+        {
+          $paramFound = true;
+          $q->andWhere('c.'.$key.' = ?', $value);
+        }
+        else if ($this->hasRelation('Translation') && $this->getRelation('Translation')->getTable()->hasField($key))
+        {
+          $paramFound = true;
+          $q->andWhere('ct.'.$key, $value);
+        }
+        else if ($this->getRelation($contentType)->getTable()->hasField($key))
+        {
+          $paramFound = true;
+          $q->andWhere('cr.'.$key.' = ?', $value);
+        }
       }
 
-      if ($this->hasField($key))
+      // If no params were found to add a condition on lets find where slug = action_name
+      if (!$paramFound)
       {
-        $q->andWhere('c.'.$key.' = ?', $value);
-      } else if ($this->hasRelation('Translation') && $this->getRelation('Translation')->getTable()->hasField($key)) {
-        $q->andWhere('ct.'.$key, $value);
-      } else if ($this->getRelation($contentType)->getTable()->hasField($key)) {
-        $q->andWhere('cr.'.$key.' = ?', $value);
+        $q->andWhere('c.slug = ?', $request->getParameter('action'));
       }
     }
 

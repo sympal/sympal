@@ -72,8 +72,10 @@ function get_sympal_breadcrumbs($menuItem, $subItem = null)
  */
 function get_sympal_editor($menuItem = null, $content = null)
 {
-  $user = sfContext::getInstance()->getUser();
   $sympalContext = sfSympalContext::getInstance();
+  $symfonyContext = $sympalContext->getSymfonyContext();
+  $symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalFrontendEditorPlugin')->loadEditorAssets();
+  $user = $symfonyContext->getUser();
   $menuItem = $menuItem ? $menuItem : $sympalContext->getCurrentMenuItem();
   $content = $content ? $content : $sympalContext->getCurrentContent();
 

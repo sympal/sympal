@@ -61,94 +61,9 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
-  public function loadSympalContentRenderer()
+  public function getSympalContentActionLoader()
   {
-    $request = $this->getRequest();
-    $response = $this->getResponse();
-
-    $content = $this->getRoute()->getObject();
-
-    $this->_handleForward404($content);
-    $this->getUser()->checkContentSecurity($content);
-
-    $this->loadTheme($content->getThemeToRenderWith());
-    
-    $renderer = $this->getSympalContext()->getContentRenderer($content, $request->getRequestFormat());
-
-    $content->loadMetaData($response);
-
-    if ($renderer->getFormat() != 'html')
-    {
-      sfConfig::set('sf_web_debug', false);
-
-      $format = $request->getRequestFormat();
-      $request->setRequestFormat('html');
-      $this->setLayout(false);
-
-      if ($mimeType = $request->getMimeType($format))
-      {
-        $response->setContentType($mimeType);
-      }
-    }
-
-    if (sfSympalConfig::get('auto_seo', 'title'))
-    {
-      $renderer->setResponseTitle($response);
-    }
-
-    return $renderer;
-  }
-
-  private function _handleForward404($record)
-  {
-    if (!$record)
-    {
-      $sympalContext = $this->getSympalContext();
-      $site = $sympalContext->getSite();
-
-      // No site record exception
-      if (!$site)
-      {
-        $message = sprintf(
-          'The Symfony application "%s" does not have a site record in the database. You must create a site with the sympal:create-site %s task and then install with the sympal:install %s task in order to get started.',
-          sfConfig::get('sf_app'),
-          sfConfig::get('sf_app'),
-          sfConfig::get('sf_app')
-        );
-        throw new sfException($message);
-      // Check for no content and redirect to default new site page
-      } else {
-        $q = Doctrine_Query::create()
-          ->from('sfSympalContent c')
-          ->andWhere('c.site_id = ?', $site->getId());
-        $count = $q->count();
-        if (!$count)
-        {
-          $this->forward('sympal_default', 'new_site');
-        }
-
-        $redirecter = new sfSympalRedirecter($this->getSubject());
-        $redirecter->redirect();
-
-        $this->forward404();
-      }
-    }
-  }
-
-  public function quickRenderContent($type, $slug, $format = 'html')
-  {
-    $content = Doctrine_Core::getTable('sfSympalContent')
-      ->getFullTypeQuery($type)
-      ->andWhere('c.slug = ?', $slug)
-      ->fetchOne();
-
-    $menuItem = $content->getMenuItem();
-
-    $renderer = new sfSympalContentRenderer($this, $menuItem, $format);
-    $renderer->setContent($content);
-    $renderer->initialize();
-
-    return $renderer;
+    return $this->getSympalContext()->getSympalContentActionLoader($this->getSubject());
   }
 
   public function loadTheme($name)

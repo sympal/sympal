@@ -52,4 +52,12 @@ class Basesympal_defaultActions extends sfActions
   {
     $this->useSiteTheme();
   }
+
+  public function executeDefault()
+  {
+    $redirecter = new sfSympalRedirecter($this);
+    $redirecter->redirect();
+
+    $this->forward404();
+  }
 }

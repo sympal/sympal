@@ -47,6 +47,10 @@ class sfSympalContext
     {
       $this->_site = $content->getSite();
     }
+    if ($menuItem = $content->getMenuItem())
+    {
+      $this->_currentMenuItem = $menuItem;
+    }
   }
 
   public function setSite(sfSympalSite $site)
@@ -139,6 +143,11 @@ class sfSympalContext
   public function getContentRenderer(sfSympalContent $content, $format = 'html')
   {
     return new sfSympalContentRenderer($this, $content, $format);
+  }
+
+  public function getSympalContentActionLoader(sfActions $actions)
+  {
+    return new sfSympalContentActionLoader($actions);
   }
 
   public static function getInstance($site = null)
