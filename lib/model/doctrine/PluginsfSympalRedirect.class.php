@@ -12,5 +12,10 @@
  */
 abstract class PluginsfSympalRedirect extends BasesfSympalRedirect
 {
+  public function preSave($event)
+  {
+    parent::preSave($event);
 
+    $this->source = $this->source[0] == '/' ? $this->source : '/'.$this->source;
+  }
 }

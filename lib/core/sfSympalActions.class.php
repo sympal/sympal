@@ -156,6 +156,16 @@ class sfSympalActions extends sfSympalExtendClass
     return $this->getSympalContext()->loadTheme($name);
   }
 
+  public function loadThemeOrDefault($name)
+  {
+    if ($name)
+    {
+      return $this->getSympalContext()->loadTheme($name);
+    } else {
+      return $this->getSympalContext()->loadTheme(sfSympalConfig::get('default_theme'));
+    }
+  }
+
   public function useDefaultTheme()
   {
     $this->loadTheme(sfSympalConfig::get('default_theme'));
@@ -164,6 +174,11 @@ class sfSympalActions extends sfSympalExtendClass
   public function useAdminTheme()
   {
     $this->loadTheme(sfSympalConfig::get('admin_theme', null, 'admin'));
+  }
+
+  public function useSiteTheme()
+  {
+    $this->loadThemeOrDefault($this->getSympalContext()->getSite()->getTheme());
   }
 
   public function askConfirmation($title, $message, $variables = array())

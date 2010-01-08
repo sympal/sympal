@@ -10,7 +10,7 @@ class Basesympal_defaultActions extends sfActions
 
   public function executeNew_site(sfWebRequest $request)
   {
-    $this->loadTheme($this->getSympalContext()->getSite()->getTheme());
+    $this->useSiteTheme();
   }
 
   public function executeChange_language(sfWebRequest $request)
@@ -45,10 +45,11 @@ class Basesympal_defaultActions extends sfActions
 
   public function executeError404()
   {
+    $this->useSiteTheme();
   }
 
   public function executeDisabled()
   {
-    
+    $this->useSiteTheme();
   }
 }

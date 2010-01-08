@@ -12,7 +12,7 @@ class sfSympalRedirecter
   public function getRedirect()
   {
     return Doctrine_Core::getTable('sfSympalRedirect')->findOneBySourceAndSiteId(
-      isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : null,
+      $this->_actions->getRequest()->getPathInfo(),
       sfSympalContext::getInstance()->getSite()->getId()
     );
   }
@@ -21,11 +21,16 @@ class sfSympalRedirecter
   {
     if ($redirect = $this->getRedirect())
     {
-      $params = str_replace($_SERVER['SCRIPT_NAME'].$path, null, $_SERVER['REQUEST_URI']);
-      $params = $params[0] == '?' ? substr($params, 1) : $params;
-      $redirectTo = $redirect->getDestination();
-      $redirectTo = $redirectTo.(strpos($redirectTo, '?') !== false ? '&' : '?').$params;
-      $this->_actions->redirect($redirectTo);
+      $destination = $redirect->getDestination();
+
+      // If the destination is not a url or a symfony route then prefix
+      // it with the current requests pathinfo prefix
+      if ($destination[0] != '@' && substr($destination, 0, 3) != 'http')
+      {
+        $destination = trim($destination, '/');
+        $destination = $this->_actions->getRequest()->getPathInfoPrefix().'/'.$destination;
+      }
+      $this->_actions->redirect($destination);
     }
   }
 }
