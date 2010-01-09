@@ -1,5 +1,8 @@
 all:
   sympal_config:
+    # Configure the google analytics code to automatically add to your website
+    google_analytics_code: ~
+
     # Default menu to install plugin content types to
     default_install_content_type_menu: primary
 
@@ -189,7 +192,7 @@ all:
     language_codes: [en, fr, es]
 
     # Configure the default theme to render Sympal with
-    default_theme: wordpress_default
+    default_theme: default
 
     # Configure the name of the theme to use for Sympal admin areas
     admin_theme: admin
