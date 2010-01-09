@@ -22,9 +22,11 @@
 
   	  <?php $menu = get_sympal_menu('primary') ?>
     	<div id="sidebar">
-    	  <?php echo get_slot('sympal_right_sidebar') ?>
+        <?php if (has_slot('sympal_right_sidebar')): ?>
+          <?php echo get_slot('sympal_right_sidebar') ?>
+        <?php endif; ?>
 
-  	    <h2>Navigation</h2>
+        <h2>Navigation</h2>
 
     	  <?php if ($menu): ?>
           <?php echo $menu ?>

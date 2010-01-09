@@ -62,7 +62,9 @@
      <div class="roundedbox">
       <div class="roundedbox_head"><div></div></div>
       <div class="roundedbox_body">
-        <?php echo get_slot('sympal_right_sidebar') ?>
+        <?php if (has_slot('sympal_right_sidebar')): ?>
+          <?php echo get_slot('sympal_right_sidebar') ?>
+        <?php endif; ?>
 
         <?php if ($subMenu): ?>
           <div id="sympal_sub_menu">
