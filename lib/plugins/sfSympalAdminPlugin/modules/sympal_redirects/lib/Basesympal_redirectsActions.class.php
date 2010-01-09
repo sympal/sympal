@@ -16,7 +16,7 @@ abstract class Basesympal_redirectsActions extends autoSympal_redirectsActions
   public function preExecute()
   {
     parent::preExecute();
-    $this->useAdminTheme();
+    $this->loadAdminTheme();
   }
 
   public function executeCreate(sfWebRequest $request)

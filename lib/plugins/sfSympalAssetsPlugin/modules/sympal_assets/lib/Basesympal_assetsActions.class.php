@@ -4,7 +4,7 @@ class Basesympal_assetsActions extends sfActions
 {
   public function preExecute()
   {
-    $this->useAdminTheme();
+    $this->loadAdminTheme();
 
     $this->isAjax = $this->isAjax();
     if ($this->isAjax)

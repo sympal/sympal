@@ -18,6 +18,19 @@ all:
     # The displayed name. You can change this to the project name you build on top of Sympal for example.
     sympal_name: Sympal
 
+    # Configure the available content templates for the different content types
+    # Every content type must have a template named "default_view"
+    sfSympalPage:
+      content_templates:
+        default_view:
+          template: sympal_page/view
+        register:
+          template: sympal_register/page_template
+    sfSympalContentList:
+      content_templates:
+        default_view:
+          template: sympal_content_list/view
+
     # Configure Sympal themes
     themes:
       default:

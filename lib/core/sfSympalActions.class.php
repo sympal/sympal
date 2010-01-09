@@ -81,17 +81,17 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
-  public function useDefaultTheme()
+  public function loadDefaultTheme()
   {
     $this->loadTheme(sfSympalConfig::get('default_theme'));
   }
 
-  public function useAdminTheme()
+  public function loadAdminTheme()
   {
     $this->loadTheme(sfSympalConfig::get('admin_theme', null, 'admin'));
   }
 
-  public function useSiteTheme()
+  public function loadSiteTheme()
   {
     $this->loadThemeOrDefault($this->getSympalContext()->getSite()->getTheme());
   }

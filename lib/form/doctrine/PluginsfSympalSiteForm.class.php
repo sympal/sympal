@@ -9,10 +9,4 @@
  */
 abstract class PluginsfSympalSiteForm extends BasesfSympalSiteForm
 {
-  public function setup()
-  {
-    parent::setup();
-
-    sfSympalFormToolkit::changeThemeWidget($this);
-  }
 }

@@ -217,6 +217,16 @@ class sfSympalConfiguration
     return $this->getCache()->getLayouts();
   }
 
+  public function getThemes()
+  {
+    return sfSympalConfig::get('themes');
+  }
+
+  public function getContentTemplates($model)
+  {
+    return sfSympalConfig::get($model, 'content_templates');
+  }
+
   public function getDefaultTheme(sfWebRequest $request)
   {
     $theme = sfSympalConfig::get($request->getParameter('module'), 'theme');
@@ -316,5 +326,10 @@ class sfSympalConfiguration
 
     sfConfig::set('sf_jquery_path', sfSympalConfig::get('jquery_reloaded', 'path'));
     sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
+  }
+
+  public static function getActive()
+  {
+    return sfApplicationConfiguration::getActive()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();
   }
 }

@@ -56,6 +56,25 @@ class sfSympalForm extends sfSympalExtendClass
     {
       sfSympalFormToolkit::embedRecaptcha($form);
     }
+
+    if (isset($form['template']))
+    {
+      sfSympalFormToolkit::changeTemplateWidget($form);
+    }
+
+    if (isset($form['theme']))
+    {
+      sfSympalFormToolkit::changeThemeWidget($this);
+    }
+
+    foreach ($form as $name => $field)
+    {
+      $widget = $field->getWidget();
+      if ($widget instanceof sfWidgetFormDateTime || $widget instanceof sfWidgetFormDate)
+      {
+        sfSympalFormToolkit::changeDateWidget($name, $form);
+      }
+    }
   }
 
   public function hasRecaptcha()

@@ -18,7 +18,7 @@ abstract class Basesympal_adminActions extends sfActions
       return $this->redirect('@sympal_dashboard');
     }
 
-    $this->useAdminTheme();
+    $this->loadAdminTheme();
 
     $class = sfConfig::get('app_sf_guard_plugin_signin_form', 'sfGuardFormSignin'); 
     $this->form = new $class();
@@ -74,7 +74,7 @@ abstract class Basesympal_adminActions extends sfActions
   public function executeCheck_server(sfWebRequest $request)
   {
     $this->getResponse()->setTitle('Sympal Admin / Check Server');
-    $this->useAdminTheme();
+    $this->loadAdminTheme();
 
     $check = new sfSympalServerCheck();
     $this->renderer = new sfSympalServerCheckHtmlRenderer($check);

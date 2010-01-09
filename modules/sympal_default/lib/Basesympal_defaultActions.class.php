@@ -10,7 +10,7 @@ class Basesympal_defaultActions extends sfActions
 
   public function executeNew_site(sfWebRequest $request)
   {
-    $this->useSiteTheme();
+    $this->loadSiteTheme();
   }
 
   public function executeChange_language(sfWebRequest $request)
@@ -34,7 +34,7 @@ class Basesympal_defaultActions extends sfActions
     {
       $this->setLayout(false);
     } else {
-      $this->useAdminTheme();
+      $this->loadAdminTheme();
     }
 
     $this->url = $request->getUri();
@@ -45,12 +45,12 @@ class Basesympal_defaultActions extends sfActions
 
   public function executeError404()
   {
-    $this->useSiteTheme();
+    $this->loadSiteTheme();
   }
 
   public function executeDisabled()
   {
-    $this->useSiteTheme();
+    $this->loadSiteTheme();
   }
 
   public function executeDefault()

@@ -19,9 +19,10 @@ class sfSympalFormToolkit
     }
   }
 
-  public static function embedRichDateWidget($name, sfFormDoctrine $form)
+  public static function changeDateWidget($name, sfFormDoctrine $form)
   {
     sfSympalToolkit::useJQuery(array('ui'));
+    sfSympalToolkit::useStylesheet('/sfSympalPlugin/css/jqueryui/jquery-ui.css');
 
     $widgetSchema = $form->getWidgetSchema();
     $widgetSchema[$name] = new sfWidgetFormJQueryDate();
@@ -81,20 +82,55 @@ class sfSympalFormToolkit
     $form->setValidator('theme', $array['validator']);
   }
 
-  public static function getThemeWidgetAndValidator()
+  public static function changeTemplateWidget($form)
   {
-    $all = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getLayouts();
-    $layouts = array('' => '');
-    foreach ($all as $path => $name)
+    $array = self::getTemplateWidgetAndValidator($form);
+
+    $form->setWidget('template', $array['widget']);
+    $form->setValidator('template', $array['validator']);
+  }
+
+  public static function getTemplateWidgetAndValidator($form)
+  {
+    $object = $form->getObject();
+    if ($object instanceof sfSympalContent)
     {
-      $info = pathinfo($path);
-      $layouts[$info['filename']] = sfInflector::humanize($name);
+      $type = $object->getType()->getName();
+    } else if ($object instanceof sfSympalContentType) {
+      $type = $object->getName();
+    } else {
+      throw new InvalidArgumentException('Form must be an instance of sfSympalContentForm or sfSympalContentTypeForm');
+    }
+
+    $templates = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getContentTemplates($type);
+    $options = array('' => '');
+    foreach ($templates as $name => $template)
+    {
+      $options[$name] = sfInflector::humanize($name);
     }
     $widget = new sfWidgetFormChoice(array(
-      'choices'   => $layouts
+      'choices'   => $options
     ));
     $validator = new sfValidatorChoice(array(
-      'choices'   => array_keys($layouts),
+      'choices'   => array_keys($options),
+      'required' => false
+    ));
+    return array('widget' => $widget, 'validator' => $validator);
+  }
+
+  public static function getThemeWidgetAndValidator()
+  {
+    $themes = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getThemes();
+    $options = array('' => '');
+    foreach ($themes as $name => $theme)
+    {
+      $options[$name] = sfInflector::humanize($name);
+    }
+    $widget = new sfWidgetFormChoice(array(
+      'choices'   => $options
+    ));
+    $validator = new sfValidatorChoice(array(
+      'choices'   => array_keys($options),
       'required' => false
     ));
     return array('widget' => $widget, 'validator' => $validator);

@@ -14,7 +14,7 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
   {
     parent::preExecute();
 
-    $this->useAdminTheme();
+    $this->loadAdminTheme();
   }
 
   public function executeIndex(sfWebRequest $request)

@@ -11,7 +11,7 @@ sfSympalContentType:
     slug: page
     description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
     label: Page
-    template: sympal_page/view
+    template: default_view
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
     default_path: /pages/:sf_culture/:slug
 <?php else: ?>
@@ -24,7 +24,7 @@ sfSympalContentType:
     slug: content-list
     description: The content list content type is the default Sympal content type for displaying lists of content.
     label: Content List
-    template: sympal_content_list/view
+    template: default_view
 <?php if (sfSympalConfig::isI18nEnabled('ContentType')): ?> 
     default_path: /lists/:sf_culture/:slug
 <?php else: ?>

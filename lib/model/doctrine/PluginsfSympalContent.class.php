@@ -490,7 +490,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     {
       $template = $this->getType()->getTemplate();
     }
-    $template = $template ? $template : 'sympal_default/default_content_template';
+    $templates = sfSympalConfiguration::getActive()->getContentTemplates($this->getType()->getName());
+    if (isset($templates[$template]))
+    {
+      $template = $templates[$template]['template'];
+    }
+    $template = $template ? $template : 'default_view';
     return $template;
   }
 

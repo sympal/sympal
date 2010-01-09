@@ -91,3 +91,11 @@ sympal_check_server:
 sympal_phpinfo:
   url:    /admin/phpinfo
   param: { module: sympal_admin, action: phpinfo }
+
+sympal_themes:
+  url:    /admin/themes
+  param: { module: sympal_themes, action: index }
+
+sympal_themes_preview:
+  url:    /admin/themes/:preview
+  param: { module: sympal_themes, action: index }

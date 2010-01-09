@@ -2,9 +2,24 @@
 
 class sfSympalToolkit
 {
+  public static function loadHelpers($helpers)
+  {
+    sfApplicationConfiguration::getActive()->loadHelpers($helpers);
+  }
+
+  public static function useStylesheet($stylesheet, $position = 'last')
+  {
+    return sfContext::getInstance()->getResponse()->addStylesheet($stylesheet, $position);
+  }
+
+  public static function useJavascript($stylesheet, $position = 'last')
+  {
+    return sfContext::getInstance()->getResponse()->addJavascript($javascript, $position);
+  }
+
   public static function useJQuery($plugins = array())
   {
-    sfApplicationConfiguration::getActive()->loadHelpers('jQuery');
+    self::loadHelpers('jQuery');
     jq_add_plugins_by_name($plugins);
   }
 

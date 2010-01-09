@@ -25,8 +25,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this['assets_list']
     );
 
-    sfSympalFormToolkit::embedRichDateWidget('date_published', $this);
-
     $q = Doctrine_Query::create()
       ->from('sfSympalMenuItem m')
       ->orderBy('m.root_id, m.lft ASC');
@@ -35,8 +33,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     {
       $q->leftJoin('m.Translation mt'); 
     }
-
-    sfSympalFormToolkit::changeThemeWidget($this);
 
     if (!$this->object->content_type_id)
     {
