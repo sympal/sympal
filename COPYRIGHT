@@ -1,0 +1,19 @@
+Copyrights
+----------
+
+Sympal
+------
+
+Sympal is a CMS built on top of the latest version of Symfony, 1.4. It is designed to take advantage of all the great existing features Symfony already provides and it builds on top of these existing features using the plugin architecture. It is made up of multiple plugins and also bundles some existing Symfony plugins developed by third parties. Sympal was built to be unobtrusive and plug n' play so you can use only the individual things you want to use if you want.
+
+Url:        http://www.sympalphp.org
+Copyright:  2008-2010
+License:    MIT - see LICENSE file
+
+Diem
+----
+
+Diem borrowed concepts and code from the Diem Project which is another popular
+CMS built on top of Symfony.
+
+Url:       http://www.diem-project.org

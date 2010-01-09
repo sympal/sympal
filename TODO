@@ -3,8 +3,6 @@
 * Fix inline editing save to use one request instead one request per slot.
 * Enhance rss, xml formats to have a filter so we can customize what data is returned
 for each model and even for each different format type.
-* Make template fields on sfSympalContent and sfSympalContentType to be a dropdown of
-configured templates.
 
 ## 1.1
 
