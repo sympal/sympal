@@ -7,7 +7,6 @@
 
       <div id="sf_admin_signin">
         <div class="sf_admin_form">
-
           <?php echo get_partial('sympal_default/render_form', array('form' => $form)) ?>
 
           <input type="submit" value="<?php echo __('Signin', null, 'sf_guard') ?>" />
