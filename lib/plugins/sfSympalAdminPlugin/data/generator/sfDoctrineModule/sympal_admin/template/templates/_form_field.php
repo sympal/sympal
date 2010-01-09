@@ -46,8 +46,8 @@
           [?php include_partial('<?php echo $this->getModuleName() ?>/form_field', array(
             'name'           => $fieldName,
             'attributes'     => array(),
-            'label'          => array(),
-            'help'           => array(),
+            'label'          => '',
+            'help'           => '',
             'form'           => $form[$name],
             'field'          => $field,
             'class'          => 'sf_admin_form_row sf_admin_'.strtolower($field->getType()).' sf_admin_form_field_'.$name,
