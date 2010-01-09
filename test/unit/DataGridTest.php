@@ -35,7 +35,7 @@ $t->is($dataGrid->getRows(), array(
       'c.plugin_name' => 'sfSympalPagesPlugin',
       'c.default_path' => '/pages/:slug',
       'c.theme' => NULL,
-      'c.template' => 'sympal_page/view',
+      'c.template' => 'default_view',
       'c.slug' => 'page',
     )
   )
