@@ -386,11 +386,11 @@ class sfSympalDataGrid
           'is_sortable' => true
         ), $options, $component['table']->getDefinitionOf($fieldName), $component);
       } else {
-        $column = array(
+        $column = array_merge(array(
           'name' => $fieldName,
           'fieldName' => $fieldName,
           'is_sortable' => false
-        );
+        ), $options);
       }
 
       if ( ! isset($column['label']))
