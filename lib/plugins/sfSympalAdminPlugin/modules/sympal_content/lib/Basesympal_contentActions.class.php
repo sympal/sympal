@@ -192,6 +192,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
     {
       $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_content->getMenuItem());
     }
+    $this->getSympalContext()->getContentRenderer($this->sf_sympal_content)->render();
+
     $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalFrontendEditorPlugin')->loadEditorAssets();
   }
 
@@ -220,11 +222,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
       $content = $form->save();
       $id = $content->getId();
-      $content->free(true);
-
-      // Render the content to make sure slots and other things are populated
-      $content = $this->_getContentById($id);
-      $this->getSympalContext()->getContentRenderer($content)->render();
 
       // Reset the routes cache incase of the url changing or a custom url was added
       $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')
