@@ -37,6 +37,12 @@ all:
         layout: default
         stylesheets:
           - /sfSympalPlugin/css/default.css
+
+      wordpress_default:
+        layout: wordpress
+        stylesheets:
+          - /sfSympalPlugin/css/wordpress.css
+
       sympal:
         layout: sympal
         stylesheets:
@@ -183,7 +189,7 @@ all:
     language_codes: [en, fr, es]
 
     # Configure the default theme to render Sympal with
-    default_theme: default
+    default_theme: wordpress_default
 
     # Configure the name of the theme to use for Sympal admin areas
     admin_theme: admin

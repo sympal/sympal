@@ -19,7 +19,10 @@
   	</div>
   	<?php $menu = get_sympal_menu('primary') ?>
   	<div id="sidebar">
-  	  <h2>Navigation</h2>
+  	  <?php echo get_slot('sympal_right_sidebar') ?>
+
+	    <h2>Navigation</h2>
+
   	  <?php if ($menu): ?>
         <?php echo $menu ?>
       <?php else: ?>

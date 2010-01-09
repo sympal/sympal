@@ -35,9 +35,6 @@ mySettings = {
 		{name:'Caution', openWith:"> **CAUTION**\n> "},
 		{name:'Note', openWith:"> **NOTE**\n> "},
 		{name:'Sidebar', openWith:"> **SIDEBAR**\n> "},
-		// TODO: These buttons obviously need to be enhanced :)
-		{name:'Asset', key:'A', openWith:'[asset:', closeWith:'[![Asset ID:!:]!]]' },
-		{name:'Link to Content', key:'C', openWith:'[link:', closeWith:'[![Content ID:!:]!]]' }
 	]
 }
 
