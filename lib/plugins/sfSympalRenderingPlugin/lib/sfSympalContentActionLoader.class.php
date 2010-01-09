@@ -25,7 +25,10 @@ class sfSympalContentActionLoader
     if (!$this->_content)
     {
       $this->_content = $this->_actions->getRoute()->getObject();
-      $this->_menuItem = $this->_content->getMenuItem();
+      if ($this->_content)
+      {
+        $this->_menuItem = $this->_content->getMenuItem();
+      }
     }
     return $this->_content;
   }
@@ -149,8 +152,7 @@ class sfSympalContentActionLoader
   {
     if (!$record)
     {
-      $sympalContext = $this->getSympalContext();
-      $site = $sympalContext->getSite();
+      $site = $this->_sympalContext->getSite();
 
       // No site record exception
       if (!$site)
@@ -173,7 +175,7 @@ class sfSympalContentActionLoader
           $this->forward('sympal_default', 'new_site');
         }
 
-        $this->forward404();
+        $this->_actions->forward404();
       }
     }
   }
