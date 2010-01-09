@@ -13,12 +13,9 @@ fieldset#sympal_assets_upload, fieldset#sympal_assets_mkdir {
   font-weight:  bold;
 }
 
-ul#sympal_assets_list {
-  position: relative;
-}
-
 ul#sympal_assets_list li {
   list-style-type: none;
+  position: relative;
 }
 
 ul#sympal_assets_list li.asset .preview {
@@ -26,6 +23,6 @@ ul#sympal_assets_list li.asset .preview {
   max-height: 200px;
   display: none;
   position: absolute;
-  top: -75px;
+  top: -100px;
   right: 0;
 }
