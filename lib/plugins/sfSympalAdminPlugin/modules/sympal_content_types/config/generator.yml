@@ -18,7 +18,7 @@ generator:
       filter:
         class: false
       form:
-        display: [plugin_name, name, label, description, default_path, theme, template, slug]
+        display: [label, name, description, default_path, plugin_name, theme, template, slug]
         fields:
           plugin_name:
             help: The name of the plugin that contains the content type.
