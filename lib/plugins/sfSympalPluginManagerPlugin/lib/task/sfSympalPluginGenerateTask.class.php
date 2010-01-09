@@ -13,6 +13,7 @@ class sfSympalPluginGenerateTask extends sfBaseTask
       new sfCommandOption('test-application', null, sfCommandOption::PARAMETER_REQUIRED, 'A name for the initial test application', 'frontend'),
       new sfCommandOption('skip-test-dir', null, sfCommandOption::PARAMETER_NONE, 'Skip generation of the plugin test directory'),
       new sfCommandOption('content-type', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the content type to create', null),
+      new sfCommandOption('theme', null, sfCommandOption::PARAMETER_OPTIONAL, 'The name of the skeleton theme to generate in the plugin'),
       new sfCommandOption('re-generate', null, sfCommandOption::PARAMETER_NONE, 'Re-generate the plugin. Will remove it if it exists already and re-generate everything.'),
       new sfCommandOption('install', null, sfCommandOption::PARAMETER_NONE, 'Install the plugin after generating it.'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
@@ -114,6 +115,20 @@ EOF;
     if (isset($pluginYamlSchema))
     {
       $itemsToCreate['config/doctrine/schema.yml'] = $pluginYamlSchema;
+    }
+
+    if (isset($options['theme']))
+    {
+      $itemsToCreate['config/app.yml'] = sprintf('all:
+  sympal_config:
+    themes:
+      %s:
+        layout: %s
+        stylesheets:
+          - %s', $options['theme'], $options['theme'], '/'.$pluginName.'/css/'.$options['theme'].'.css');
+
+      $itemsToCreate['templates/'.$options['theme'].'.php'] = file_get_contents($this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/templates/default.php');
+      $itemsToCreate['web/css/'.$options['theme'].'.css'] = file_get_contents($this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/web/css/default.css');
     }
 
     foreach ($itemsToCreate as $item => $value)
