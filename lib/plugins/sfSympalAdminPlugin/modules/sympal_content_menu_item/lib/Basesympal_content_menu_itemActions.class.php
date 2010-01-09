@@ -40,6 +40,12 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
       $this->form['requires_no_auth']
     );
 
+    if ($this->menuItem->isNew())
+    {
+      $this->form->setDefault('name', $this->content->getTitle());
+      $this->form->setDefault('label', $this->content->getTitle());
+    }
+
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getParameter($this->form->getName()));

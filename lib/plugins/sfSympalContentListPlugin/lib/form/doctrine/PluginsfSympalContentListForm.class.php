@@ -59,11 +59,12 @@ abstract class PluginsfSympalContentListForm extends BasesfSympalContentListForm
       } else {
         $array3 = $array1;
       }
+      $return = array();
       foreach ($array3 as $key => $value)
       {
-        $array3[$key] = $class.'::'.$value.'()';
+        $return[$value] = $value.'()';
       }
-      return $array3;
+      return $return;
     }
   }
 }
