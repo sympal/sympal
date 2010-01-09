@@ -27,13 +27,13 @@ html {
 }
 
 body {
-	font-size: 62.5%; /* Resets 1em to 10px */
-	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
-	color: #333;
 	padding: 0;
 }
 
 #container {
+	font-size: 82%;
+	font-family: 'Lucida Grande', Verdana, Arial, Sans-Serif;
+	color: #333;
 	width: 760px;
 	margin: 0 auto;
 	margin-top: 30px;
