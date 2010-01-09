@@ -1,5 +1,9 @@
 <div id="sf_admin_container">
-  <h1>Sympal Configuration</h1>
+  <h1><?php echo __('Sympal Configuration') ?></h1>
+
+  <p><?php echo __('Manage the configuration of your Sympal project from the
+  easy to use web form below. The different functionalities added by Sympal
+  plugins may add settings here for you to control.') ?></p>
 
   <div id="sf_admin_configuration">
     <div class="sf_admin_form">

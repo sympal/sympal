@@ -1,8 +1,7 @@
 <h1>Themes</h1>
 
-<p>
-  Click a theme to preview it.
-</p>
+<p><?php echo __('Preview the available themes in this Sympal project. Click a 
+theme name below to see what it looks like!') ?></p>
 
 <ul>
   <?php foreach ($themes as $name => $theme): ?>

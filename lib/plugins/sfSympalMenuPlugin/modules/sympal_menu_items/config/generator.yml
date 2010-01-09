@@ -49,7 +49,7 @@ generator:
           label:
             help: Enter the menu item label.
           slug:
-            help: Enter the unique slug for this menu item. This is a human readable string used to identify a menu item.
+            help: The text slug identifier that represents this menu item.
           custom_path:
             help: Enter the custom path that this menu item maps to. It can be a URL or a symfony route.
           requires_auth:

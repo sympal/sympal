@@ -19,5 +19,22 @@ generator:
         class: false
       form:
         display: [plugin_name, name, label, description, default_path, theme, template, slug]
+        fields:
+          plugin_name:
+            help: The name of the plugin that contains the content type.
+          name:
+            help: The Doctrine model name for the content type.
+          label:
+            help: The label to use when referring to the content type.
+          description:
+            help: The description of the content type.
+          default_path:
+            help: The default path to use to generate routes for this content type. Example: /my_pages/:slug
+          theme:
+            help: The theme to render this content type with by default.
+          template:
+            help: The content template to render this content type with by default.
+          slug:
+            help: The text slug identifier that represents this content type.
       edit:    ~
       new:     ~

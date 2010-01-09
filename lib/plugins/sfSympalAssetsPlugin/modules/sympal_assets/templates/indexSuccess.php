@@ -9,6 +9,11 @@
 
 <h1><?php echo __('Sympal Assets Manager') ?></h1>
 
+<p><?php echo __('Manage your Sympal project assets below! An asset in Sympal is
+any type of file from a PDF document to an image or a video. Upload new assets, create 
+directories to store your assets, rename and move your assets and embed or link
+to them in your content.') ?></p>
+
 <div id="sympal_assets_forms">
   <?php echo get_partial('sympal_assets/forms', array('uploadForm' => $uploadForm, 'directoryForm' => $directoryForm)) ?>
 </div>

@@ -18,6 +18,11 @@ generator:
         display: [source, destination]
       filter:
         display: [source, destination]
-      form:    ~
+      form:
+        fields:
+          source:
+            help: "The source path to redirect. Example: /some_page"
+          destination:
+            help: "The destination to redirect to: Example: /new_url, @some_route or http://www.someurl.com"
       edit:    ~
       new:     ~

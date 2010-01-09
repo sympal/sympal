@@ -21,5 +21,20 @@ generator:
         display:
           "Site Information": [title, description, theme, slug]
           "Search Engine Optimization": [page_title, meta_keywords, meta_description]
+        fields:
+          title:
+            help: The title of the Sympal site.
+          description:
+            help: The description of the Sympal site.
+          theme:
+            help: The theme to render this site with by default.
+          slug:
+            help: The text slug identifier that represents this site.
+          page_title:
+            help: The meta page title to use for pages in this site.
+          meta_keywords:
+            help: The meta keywords to use for pages in this site.
+          meta_description:
+            help: The meta description to use for pages in this site.
       edit:    ~
       new:     ~

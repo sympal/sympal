@@ -27,6 +27,27 @@ generator:
             label: Under Menu Item
           groups_list:
             label: Groups
+            help: The groups that have access to view this content record.
+          custom_path:
+            help: The custom path to use to generate routes for this content record. Example: /my_pages/my_page_name
+          slug:
+            help: The text slug identifier that represents this content record.
+          date_published:
+            help: The date to publish and make this content record public.
+          content_type_id:
+            help: Change the content type of this content record.
+          created_by_id:
+            help: Choose the user who created this content record.
+          theme:
+            help: The theme to render this content record with.
+          template:
+            help: The content template to render this content record with.
+          page_title:
+            help: The meta page title to use for this content record.
+          meta_keywords:
+            help: The meta keywords to use for this content record.
+          meta_description:
+            help: The meta description to use for this content record.
       list:
         table_method: getAdminGenQuery
         title: Manage Content
