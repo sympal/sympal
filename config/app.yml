@@ -118,7 +118,6 @@ all:
         label: Markdown Editor
       TinyMCE:
         label: TinyMCE Rich Text Editor
-        widget_class: sfWidgetFormTextareaTinyMCE
         widget_options:
           config: 'onchange_callback: "sympalTinyMCETriggerSave", handle_event_callback : "sympalHandleTinyMCEEvent"'
 

@@ -75,11 +75,9 @@ class sfSympalFormToolkit
     $options = isset($contentSlotTypes[$contentSlot->type]) ? $contentSlotTypes[$contentSlot->type] : array();
 
     $widgetClass = isset($options['widget_class']) ? $options['widget_class'] : 'sfWidgetFormSympal'.$contentSlot->type;
-    $widgetClass = class_exists($widgetClass) ? $widgetClass : 'sfWidgetFormInput';
     $widgetOptions = isset($options['widget_options']) ? $options['widget_options'] : array();
 
     $validatorClass = isset($options['validator_class']) ? $options['validator_class'] : 'sfValidatorFormSympal'.$contentSlot->type;
-    $validatorClass = class_exists($validatorClass) ? $validatorClass : 'sfValidatorPass';
     $validatorOptions = isset($options['validator_options']) ? $options['validator_options'] : array();
 
     $widgetSchema['value'] = new $widgetClass($widgetOptions);
