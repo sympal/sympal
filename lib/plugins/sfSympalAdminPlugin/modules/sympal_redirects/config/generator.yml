@@ -15,14 +15,16 @@ generator:
       actions: ~
       fields:  ~
       list:
-        display: [source, destination]
+        display: [source, destination, content_id]
       filter:
-        display: [source, destination]
+        display: [source, destination, content_id]
       form:
         fields:
           source:
             help: "The source path to redirect. Example: /some_page"
           destination:
             help: "The destination to redirect to: Example: /new_url, @some_route or http://www.someurl.com"
+          content_id:
+            help: "The content record to redirect to instead of a manual entered destination above."
       edit:    ~
       new:     ~

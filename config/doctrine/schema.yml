@@ -21,13 +21,17 @@ sfSympalRedirect:
     source:
       type: string(255)
       notnull: true
-    destination:
-      type: string(255)
-      notnull: true
+    destination: string(255)
+    content_id: integer
   relations:
     Site:
       local: site_id
       class: sfSympalSite
+      onDelete: CASCADE
+      foreignAlias: Redirects
+    Content:
+      local: content_id
+      class: sfSympalContent
       onDelete: CASCADE
       foreignAlias: Redirects
 

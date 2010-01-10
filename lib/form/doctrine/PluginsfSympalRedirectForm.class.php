@@ -13,6 +13,6 @@ abstract class PluginsfSympalRedirectForm extends BasesfSympalRedirectForm
   public function setup()
   {
     parent::setup();
-    $this->useFields(array('source', 'destination'));
+    $this->useFields(array('source', 'destination', 'content_id'));
   }
 }

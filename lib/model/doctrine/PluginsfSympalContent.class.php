@@ -158,7 +158,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $result;
   }
 
-  public function getUrl($options)
+  public function getUrl($options = array())
   {
     return sfContext::getInstance()->getController()->genUrl($this->getRoute(), $options);
   }
@@ -198,6 +198,17 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   public function __toString()
   {
     return $this->getHeaderTitle();
+  }
+
+  public function getIndented()
+  {
+    $menuItem = $this->getMenuItem();
+    if ($menuItem)
+    {
+      return str_repeat('-', $menuItem->getLevel()).' '.(string) $this;
+    } else {
+      return (string) $this;
+    }
   }
 
   public function getTitle()

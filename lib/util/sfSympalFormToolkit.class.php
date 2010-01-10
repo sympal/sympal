@@ -2,7 +2,7 @@
 
 class sfSympalFormToolkit
 {
-  public static function embedI18n($name, sfFormDoctrine $form)
+  public static function embedI18n($name, sfForm $form)
   {
     if (sfSympalConfig::isI18nEnabled($name))
     {
@@ -19,7 +19,19 @@ class sfSympalFormToolkit
     }
   }
 
-  public static function changeDateWidget($name, sfFormDoctrine $form)
+  public static function changeContentIdWidget(sfForm $form)
+  {
+    $q = Doctrine_Core::getTable('sfSympalContent')
+      ->createQuery('c')
+      ->leftJoin('c.Type t')
+      ->leftJoin('c.MenuItem m')
+      ->orderBy('m.root_id, m.lft');
+    $widgetSchema = $form->getWidgetSchema();
+    $widgetSchema['content_id']->setOption('query', $q);
+    $widgetSchema['content_id']->setOption('method', 'getIndented');
+  }
+
+  public static function changeDateWidget($name, sfForm $form)
   {
     sfSympalToolkit::useJQuery(array('ui'));
     sfSympalToolkit::useStylesheet('/sfSympalPlugin/css/jqueryui/jquery-ui.css');
@@ -49,7 +61,7 @@ class sfSympalFormToolkit
     ));
   }
 
-  public static function changeContentSlotValueWidget($contentSlot, $form)
+  public static function changeContentSlotValueWidget(sfSympalContentSlot $contentSlot, sfForm $form)
   {
     if ($contentSlot->is_column)
     {
@@ -74,7 +86,7 @@ class sfSympalFormToolkit
     $validatorSchema['value'] = new $validatorClass($validatorOptions);
   }
 
-  public static function changeThemeWidget($form)
+  public static function changeThemeWidget(sfForm $form)
   {
     $array = self::getThemeWidgetAndValidator();
 
@@ -82,7 +94,7 @@ class sfSympalFormToolkit
     $form->setValidator('theme', $array['validator']);
   }
 
-  public static function changeTemplateWidget($form)
+  public static function changeTemplateWidget(sfForm $form)
   {
     $array = self::getTemplateWidgetAndValidator($form);
 
@@ -90,7 +102,7 @@ class sfSympalFormToolkit
     $form->setValidator('template', $array['validator']);
   }
 
-  public static function getTemplateWidgetAndValidator($form)
+  public static function getTemplateWidgetAndValidator(sfForm $form)
   {
     $object = $form->getObject();
     if ($object instanceof sfSympalContent)
