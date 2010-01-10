@@ -219,12 +219,12 @@ class sfSympalConfiguration
 
   public function getThemes()
   {
-    return sfSympalConfig::get('themes');
+    return sfSympalConfig::get('themes', null, array());
   }
 
   public function getContentTemplates($model)
   {
-    return sfSympalConfig::get($model, 'content_templates');
+    return sfSympalConfig::get($model, 'content_templates', array());
   }
 
   public function getDefaultTheme(sfWebRequest $request)
