@@ -1,17 +1,15 @@
 <?php
 
-class sfSympalConfig
+class sfSympalConfig extends sfConfig
 {
   public static function get($group, $name = null, $default = null)
   {
-    $default = is_null($default) ? false:$default;
-    if (is_null($name))
+    $default = $default === null ? false : $default;
+    if ($name === null)
     {
-      return sfConfig::get('app_sympal_config_'.$group, $default);
+      return isset(self::$config['app_sympal_config_'.$group]) ? self::$config['app_sympal_config_'.$group] : $default;
     } else {
-      $settings = sfConfig::get('app_sympal_config_'.$group);
-
-      return isset($settings[$name]) ? $settings[$name]:$default;
+      return isset(self::$config['app_sympal_config_'.$group][$name]) ? self::$config['app_sympal_config_'.$group][$name] : $default;
     }
   }
 
@@ -19,11 +17,9 @@ class sfSympalConfig
   {
     if (is_null($value))
     {
-      return sfConfig::set('app_sympal_config_'.$group, $name);
+      return self::$config['app_sympal_config_'.$group] = $name;
     } else {
-      $settings = sfConfig::get('app_sympal_config_'.$group);
-      $settings[$name] = $value;
-      sfConfig::set('app_sympal_config_'.$group, $settings);
+      return self::$config['app_sympal_config_'.$group][$name] = $value;
     }
   }
 
@@ -35,27 +31,20 @@ class sfSympalConfig
       {
         $name = get_class($name);
       }
-      $i18nedModels = self::get('internationalized_models');
-      return self::get('i18n') && isset($i18nedModels[$name]);
+      return isset(self::$config['app_sympal_config_i18n']) && self::$config['app_sympal_config_i18n'] && isset(self::$config['app_sympal_config_internationalized_models'][$name]);
     } else {
-      return self::get('i18n');
+      return isset(self::$config['app_sympal_config_i18n']) && self::$config['app_sympal_config_i18n'];
     }
   }
 
   public static function getCurrentVersion()
   {
-    return self::get('current_version', null, sfSympalPluginConfiguration::VERSION);
+    return isset(self::$config['app_sympal_config_asset_paths']['current_version']) ? self::$config['app_sympal_config_asset_paths']['current_version'] : sfSympalPluginConfiguration::VERSION;
   }
 
   public static function getAssetPath($path)
   {
-    $paths = self::get('asset_paths');
-    if (isset($paths[$path]))
-    {
-      return $paths[$path];
-    } else {
-      return $path;
-    }
+    return isset(self::$config['app_sympal_config_asset_paths'][$path]) ? self::$config['app_sympal_config_asset_paths'][$path] : $path;
   }
 
   public static function writeSetting($group, $name, $value = null)
@@ -81,12 +70,7 @@ class sfSympalConfig
       $array['all']['sympal_config'][$group][$name] = $value;
     }
 
-    if (is_null($group))
-    {
-      sfSympalConfig::set($name, $value);
-    } else {
-      sfSympalConfig::set($group, $name, $value);
-    }
+    self::set($group, $name, $value);
 
     file_put_contents($path, sfYaml::dump($array, 4));
   }
