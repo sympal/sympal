@@ -31,16 +31,16 @@ $theme = $sympalContext->getThemeObject('test');
 $t->is($theme->getLayoutPath(), $dir.'/test/fixtures/project/apps/sympal/templates/test.php');
 $t->is($theme->getStylesheets(), array('test'));
 $t->is($theme->getJavascripts(), array());
-$t->is(count($sympalContext->getThemeObjects()), 3);
+$t->is(count($sympalContext->getThemeObjects()), 4);
 $theme = $sympalContext->getThemeObject('test');
-$t->is(count($sympalContext->getThemeObjects()), 3);
+$t->is(count($sympalContext->getThemeObjects()), 4);
 try {
   $theme = $sympalContext->getThemeObject('test2');
   $t->fail('Should have thrown exception');
 } catch (Exception $e) {
   $t->pass();
 }
-$t->is(count($sympalContext->getThemeObjects()), 3);
+$t->is(count($sympalContext->getThemeObjects()), 4);
 
 $adminTheme = $sympalContext->getThemeObject('admin');
 $t->is($adminTheme->getStylesheets(), array(

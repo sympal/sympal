@@ -30,7 +30,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     {
       return $this->_getContentSlotColumnForm();
     } else {
-      return new sfSympalContentSlotForm($this);
+      $className = sfSympalConfig::get('default_inline_edit_slot_form', null, 'sfSympalInlineEditContentSlotForm');
+      return new $className($this);
     }
   }
 
@@ -41,7 +42,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
     if ($contentTable->hasField($this->name))
     {
-      $form = new sfSympalInlineEditContentForm($content);
+      $formClass = sfSympalConfig::get('default_inline_edit_column_form');
+      $form = new $formClass($content);
       $form->useFields(array($this->name));
     }
 
@@ -50,13 +52,14 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
       if ($contentTranslationTable->hasField($this->name))
       {
-        $form = new sfSympalInlineEditContentForm($content);
+        $formClass = sfSympalConfig::get('default_inline_edit_column_form');
+        $form = new $formClass($content);
         $form->useFields(array(sfContext::getInstance()->getUser()->getCulture()));
       }      
     }
 
     $contentTypeClassName = $content->getContentTypeClassName();
-    $contentTypeFormClassName = $contentTypeClassName.'Form';
+    $contentTypeFormClassName = sfSympalConfig::get($contentTypeClassName, 'default_inline_edit_column_form', $contentTypeClassName.'Form');
     $contentTypeTable = Doctrine_Core::getTable($contentTypeClassName);
     if ($contentTypeTable->hasField($this->name))
     {
@@ -67,7 +70,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
     {
       $contentTypeTranslationClassName = $contentTypeClassName.'Translation';
-      $contentTypeTranslationFormClassName = $contentTypeTranslationClassName.'Form';
+      $contentTypeTranslationFormClassName = sfSympalConfig::get($contentTypeTranslationClassName, 'default_inline_edit_column_form', $contentTypeTranslationClassName.'Form');
       $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
       if ($contentTypeTranslationTable->hasField($this->name))
       {

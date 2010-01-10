@@ -1,5 +1,9 @@
 all:
   sympal_config:
+    # Configure default forms used for inline editing slots
+    default_inline_edit_column_form: sfSympalInlineEditContentColumnForm
+    default_inline_edit_slot_form: sfSympalInlineEditContentSlotForm
+
     # Configure the default rendering module and action
     default_rendering_module: sympal_content_renderer
     default_rendering_action: index
@@ -28,6 +32,7 @@ all:
     # Configure the available content templates for the different content types
     # Every content type must have a template named "default_view"
     sfSympalPage:
+      default_inline_edit_column_form: sfSympalPageForm
       content_templates:
         default_view:
           template: sympal_page/view
