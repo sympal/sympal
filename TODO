@@ -1,9 +1,18 @@
 ## 1.0
 
+### Bug Fixes and Improvements
+
 * Fix inline editing save to use one request instead one request per slot.
 * Enhance rss, xml formats to have a filter so we can customize what data is returned
 for each model and even for each different format type.
 
+### Performance
+
+* Remove sfSympalContentType model and move content type configurations to app.yml to remove
+unnecessary joins in queries. Also moving configuration out of the database to follow the rest of Sympal.
+* Cache Site record for application and remove Site join from menu and content queries
+* Add denormalized cache for list of groups on content record and menu items to avoid m2m joins to retrieve groups
+* Test if loading content slots in another query is faster than left joining them in the main query.
 
 ### New Documentation Chapters
 
