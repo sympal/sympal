@@ -4,6 +4,17 @@
 * Enhance rss, xml formats to have a filter so we can customize what data is returned
 for each model and even for each different format type.
 
+
+### New Documentation Chapters
+
+* Customizing the Sympal Admin
+* Themes
+* Content Templates
+* Redirects
+* Overriding Stylesheets and Javascripts
+* Asset Types
+* Content Lists
+
 ## 1.1
 
 * Add enhancement for assets organization. Allow the following: global assets 
