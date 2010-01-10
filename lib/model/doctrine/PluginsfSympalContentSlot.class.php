@@ -24,13 +24,18 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     $this->_rendered = null;
   }
 
+  public function getSlotEditFormRenderer()
+  {
+    return sfSympalConfig::get('inline_editing', 'default_form_renderer', 'sympal_edit_slot/slot_editor_renderer');
+  }
+
   public function getEditForm()
   {
     if ($this->is_column)
     {
       return $this->_getContentSlotColumnForm();
     } else {
-      $className = sfSympalConfig::get('default_inline_edit_slot_form', null, 'sfSympalInlineEditContentSlotForm');
+      $className = sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
       return new $className($this);
     }
   }
@@ -42,7 +47,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
     if ($contentTable->hasField($this->name))
     {
-      $formClass = sfSympalConfig::get('default_inline_edit_column_form');
+      $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
       $form = new $formClass($content);
       $form->useFields(array($this->name));
     }
@@ -52,14 +57,14 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
       if ($contentTranslationTable->hasField($this->name))
       {
-        $formClass = sfSympalConfig::get('default_inline_edit_column_form');
+        $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
         $form = new $formClass($content);
         $form->useFields(array(sfContext::getInstance()->getUser()->getCulture()));
       }      
     }
 
     $contentTypeClassName = $content->getContentTypeClassName();
-    $contentTypeFormClassName = sfSympalConfig::get($contentTypeClassName, 'default_inline_edit_column_form', $contentTypeClassName.'Form');
+    $contentTypeFormClassName = sfSympalConfig::get($contentTypeClassName, 'default_inline_editing_column_form', $contentTypeClassName.'Form');
     $contentTypeTable = Doctrine_Core::getTable($contentTypeClassName);
     if ($contentTypeTable->hasField($this->name))
     {
@@ -70,7 +75,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
     {
       $contentTypeTranslationClassName = $contentTypeClassName.'Translation';
-      $contentTypeTranslationFormClassName = sfSympalConfig::get($contentTypeTranslationClassName, 'default_inline_edit_column_form', $contentTypeTranslationClassName.'Form');
+      $contentTypeTranslationFormClassName = sfSympalConfig::get($contentTypeTranslationClassName, 'default_inline_editing_column_form', $contentTypeTranslationClassName.'Form');
       $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
       if ($contentTypeTranslationTable->hasField($this->name))
       {
