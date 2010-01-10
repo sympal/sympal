@@ -18,7 +18,7 @@ sympal_sitemap:
 
 homepage:
   url:   /
-  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
+  param: { module: <?php echo sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer') ?>, action: <?php echo sfSympalConfig::get('default_rendering_action', null, 'action') ?>, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
   class: sfDoctrineRoute
   options:
     allow_empty: true
@@ -28,7 +28,7 @@ homepage:
 
 sympal_homepage:
   url:   /
-  param: { module: sympal_content_renderer, action: index, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
+  param: { module: <?php echo sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer') ?>, action: <?php echo sfSympalConfig::get('default_rendering_action', null, 'action') ?>, result_type: object, sympal_content_type: sfSympalPage, sympal_content_slug: home }
   class: sfDoctrineRoute
   options:
     allow_empty: true

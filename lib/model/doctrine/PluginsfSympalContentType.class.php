@@ -47,12 +47,17 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
 
   public function getCustomModuleName()
   {
-    return 'sympal_'.str_replace('-', '_', $this->getSlug());
+    if ($moduleName = $this->_get('module'))
+    {
+      return $moduleName;
+    } else {
+      return 'sympal_'.str_replace('-', '_', $this->getSlug());
+    }
   }
 
   public function hasCustomModule()
   {
-    return sfSympalToolkit::moduleAndActionExists($this->getCustomModuleName(), 'index');
+    return $this->_get('module') || sfSympalToolkit::moduleAndActionExists($this->getCustomModuleName(), 'index');
   }
 
   public function getModule()
@@ -61,12 +66,17 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     {
       return $this->getCustomModuleName();
     } else {
-      return 'sympal_content_renderer';
+      return sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer');
     }
   }
 
   public function getAction()
   {
-    return 'index';
+    if ($actionName = $this->_get('action'))
+    {
+      return $actionName;
+    } else {
+      return sfSympalConfig::get('default_rendering_action', null, 'index');
+    }
   }
 }

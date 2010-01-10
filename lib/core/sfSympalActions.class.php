@@ -2,6 +2,13 @@
 
 class sfSympalActions extends sfSympalExtendClass
 {
+  public function resetSympalRoutesCache()
+  {
+    // Reset the routes cache incase of the url changing or a custom url was added
+    return $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')
+      ->getSympalConfiguration()->getCache()->resetRouteCache();
+  }
+
   public function isAjax()
   {
     $request = $this->getRequest();

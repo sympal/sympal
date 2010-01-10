@@ -18,7 +18,7 @@ generator:
         display:
           "Content": [TypeForm, custom_path, date_published, slug]
           "Settings": [content_type_id, created_by_id, groups_list]
-          "Rendering Options": [template, theme]
+          "Rendering Options": [template, theme, module, action]
           "Search Engine Optimization": [page_title, meta_keywords, meta_description]
         fields:
           content_type_id:
@@ -42,6 +42,10 @@ generator:
             help: The theme to render this content record with.
           template:
             help: The content template to render this content record with.
+          module:
+            help: The Symfony module to render this content record with.
+          action:
+            help: The Symfony module to render this content record with.
           page_title:
             help: The meta page title to use for this content record.
           meta_keywords:

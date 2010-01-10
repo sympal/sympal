@@ -52,6 +52,8 @@ sfSympalContent:
     custom_path: string(255)
     theme: string(255)
     template: string(255)
+    module: string(255)
+    action: string(255)
     page_title: string(255)
     meta_keywords: string(500)
     meta_description: string(500)
@@ -142,6 +144,8 @@ sfSympalContentType:
     default_path: string(255)
     theme: string(255)
     template: string(255)
+    module: string(255)
+    action: string(255)
   indexes:
     content_type_name:
       fields: [name]

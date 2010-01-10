@@ -1,6 +1,6 @@
 sympal_content_view:
   url: /content/:slug
-  param: { module: sympal_content_renderer, action: index, result_type: object }
+  param: { module: <?php echo sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer') ?>, action: <?php echo sfSympalConfig::get('default_rendering_action', null, 'index') ?>, result_type: object }
   class: sfDoctrineRoute
   options:
     model:  sfSympalContent

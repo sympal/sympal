@@ -1,5 +1,9 @@
 all:
   sympal_config:
+    # Configure the default rendering module and action
+    default_rendering_module: sympal_content_renderer
+    default_rendering_action: index
+
     # Configure the google analytics code to automatically add to your website
     google_analytics_code: ~
 

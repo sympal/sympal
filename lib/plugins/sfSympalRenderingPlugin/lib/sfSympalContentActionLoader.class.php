@@ -50,10 +50,20 @@ class sfSympalContentActionLoader
     $this->_sympalContext->loadTheme($content->getThemeToRenderWith());
     $this->_sympalContext->setCurrentContent($content);
 
-    if (method_exists($this->_actions, ($function = 'execute'.ucfirst($action = $content->getCustomActionName()))))
+    // Handle custom action
+    $customActionName = $content->getCustomActionName();
+    if ($customActionName && $customActionName !== $this->_request->getParameter('action'))
     {
-      $this->_actions->setTemplate($action);
-      $this->_actions->$function($this->_request);
+      if (method_exists($this->_actions, ($function = 'execute'.ucfirst($customActionName))))
+      {
+        $this->_actions->$function($this->_request);
+      }
+
+      $customTemplatePath = sfConfig::get('sf_apps_dir').'/'.sfConfig::get('sf_app').'/modules/'.$content->getModule().'/templates/'.$customActionName.'Success.php';
+      if (file_exists($customTemplatePath))
+      {
+        $this->_actions->setTemplate($customActionName);
+      }
     }
 
     $this->_sympalContext->getSymfonyContext()->getConfiguration()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_content', array('content' => $content)));
@@ -172,7 +182,7 @@ class sfSympalContentActionLoader
         $count = $q->count();
         if (!$count)
         {
-          $this->forward('sympal_default', 'new_site');
+          $this->_actions->forward('sympal_default', 'new_site');
         }
 
         $this->_actions->forward404();

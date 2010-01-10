@@ -245,7 +245,7 @@ class sfSympalConfiguration
   {
     $request = sfContext::getInstance()->getRequest();
 
-    if (!$request->isXmlHttpRequest() && $request->getParameter('module') != 'sympal_content_renderer')
+    if (!$request->isXmlHttpRequest())
     {
       $this->_sympalContext->loadTheme($this->getDefaultTheme($request));
     }

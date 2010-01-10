@@ -18,7 +18,9 @@ generator:
       filter:
         class: false
       form:
-        display: [label, name, description, default_path, plugin_name, theme, template, slug]
+        display:
+          "Content Type": [label, name, description, default_path, plugin_name, slug]
+          "Rendering": [template, theme, module, action]
         fields:
           plugin_name:
             help: The name of the plugin that contains the content type.
@@ -31,9 +33,13 @@ generator:
           default_path:
             help: The default path to use to generate routes for this content type. Example: /my_pages/:slug
           theme:
-            help: The theme to render this content type with by default.
+            help: The theme to render this content type with.
           template:
-            help: The content template to render this content type with by default.
+            help: The content template to render this content type with.
+          module:
+            help: The Symfony module to render this content type with.
+          action:
+            help: The Symfony module to render this content type with.
           slug:
             help: The text slug identifier that represents this content type.
       edit:    ~

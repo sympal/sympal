@@ -13,8 +13,13 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
 
     $this->loadAdminTheme();
+    $this->getContext()->getEventDispatcher()->connect('admin.save_object', array($this, 'listenToAdminSaveObject'));
   }
 
+  public function listenToAdminSaveObject(sfEvent $event)
+  {
+    $this->resetSympalRoutesCache();
+  }
 
   protected function _publishContent(sfSympalMenuItemGroupContent $content, $publish = true)
   {
@@ -222,10 +227,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
       $content = $form->save();
       $id = $content->getId();
-
-      // Reset the routes cache incase of the url changing or a custom url was added
-      $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')
-        ->getSympalConfiguration()->getCache()->resetRouteCache();
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));
 

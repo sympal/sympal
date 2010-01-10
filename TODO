@@ -8,10 +8,14 @@ for each model and even for each different format type.
 
 ### Performance
 
-* Remove sfSympalContentType model and move content type configurations to app.yml to remove
-unnecessary joins in queries. Also moving configuration out of the database to follow the rest of Sympal.
+#### Eliminate Joins
+
+* Cache sfSympalContentType data so we do not need to join it on content and menu item queries
 * Cache Site record for application and remove Site join from menu and content queries
 * Add denormalized cache for list of groups on content record and menu items to avoid m2m joins to retrieve groups
+
+#### Possibilities?
+
 * Test if loading content slots in another query is faster than left joining them in the main query.
 
 ### New Documentation Chapters
