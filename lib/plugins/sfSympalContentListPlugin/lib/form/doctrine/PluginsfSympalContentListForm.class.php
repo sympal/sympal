@@ -60,7 +60,7 @@ abstract class PluginsfSympalContentListForm extends BasesfSympalContentListForm
         $array3 = $array1;
       }
       $return = array();
-      foreach ($array3 as $key => $value)
+      foreach ((array) $array3 as $key => $value)
       {
         $return[$value] = $value.'()';
       }
