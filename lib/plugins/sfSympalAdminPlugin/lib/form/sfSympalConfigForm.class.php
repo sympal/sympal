@@ -109,6 +109,10 @@ class sfSympalConfigForm extends BaseForm
     {
       unlink($cachePath);
     }
+
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfCacheClearTask(sfApplicationConfiguration::getActive()->getEventDispatcher(), new sfFormatter());
+    $task->run(array(), array('type' => 'config'));
   }
 
   protected function _buildArrayToWrite()
