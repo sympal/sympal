@@ -1,9 +1,9 @@
 <?php if ($isAjax): ?>
-  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalAdminPlugin/css/dashboard') ?>" />
-  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalUpgradePlugin/css/upgrade') ?>" />
+  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalAdminPlugin/css/dashboard.css') ?>" />
+  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalUpgradePlugin/css/upgrade.css') ?>" />
 <?php else: ?>
-  <?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/dashboard') ?>
-  <?php sympal_use_stylesheet('/sfSympalUpgradePlugin/css/upgrade') ?>
+  <?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/dashboard.css') ?>
+  <?php sympal_use_stylesheet('/sfSympalUpgradePlugin/css/upgrade.css') ?>
 <?php endif; ?>
 
 <?php if ($hasNewVersion): ?>

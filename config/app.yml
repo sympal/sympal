@@ -1,5 +1,9 @@
 all:
   sympal_config:
+    # Minify css and javascript
+    minifier:
+      enabled: true
+
     # Configure some defaults for inline editing
     inline_editing:
       default_column_form: sfSympalInlineEditContentColumnForm

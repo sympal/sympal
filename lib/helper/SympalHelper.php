@@ -1,5 +1,17 @@
 <?php
 
+function sympal_minify()
+{
+  if (sfSympalConfig::get('minifier', 'enabled', true))
+  {
+    $minifier = new sfSympalMinifier(
+      sfContext::getInstance()->getResponse(),
+      sfContext::getInstance()->getRequest()
+    );
+    $minifier->minify();
+  }
+}
+
 function sympal_use_jquery($plugins = array())
 {
   sfSympalToolkit::useJQuery($plugins);
