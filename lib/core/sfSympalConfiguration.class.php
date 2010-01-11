@@ -271,9 +271,9 @@ class sfSympalConfiguration
       if (sfSympalConfig::get('enable_all_modules'))
       {
         $modules = array_merge($modules, $this->getModules());
+      } else {
+        $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
       }
-      $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
-
       sfConfig::set('sf_enabled_modules', $modules);
     }
   }
