@@ -105,9 +105,9 @@ class sfSympalFormToolkit
     $object = $form->getObject();
     if ($object instanceof sfSympalContent)
     {
-      $type = $object->getType()->getName();
+      $type = $object->getType()->getSlug();
     } else if ($object instanceof sfSympalContentType) {
-      $type = $object->getName();
+      $type = $object->getSlug();
     } else {
       throw new InvalidArgumentException('Form must be an instance of sfSympalContentForm or sfSympalContentTypeForm');
     }
