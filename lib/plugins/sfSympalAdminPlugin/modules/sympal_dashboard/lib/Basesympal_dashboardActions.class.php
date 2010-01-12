@@ -101,6 +101,6 @@ abstract class Basesympal_dashboardActions extends sfActions
       ->setRoute('@sympal_check_server')
       ->setCredentials(array('ManageSetup'));
 
-    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this->boxes, 'sympal.load_dashboard_boxes'));
+    $this->getContext()->getEventDispatcher()->notify(new sfEvent($this->boxes, 'sympal.load_dashboard'));
   }
 }
