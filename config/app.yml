@@ -40,7 +40,7 @@ all:
 
     # Configure the available content templates for the different content types
     # Every content type must have a template named "default_view"
-    sfSympalPage:
+    page:
       default_inline_editing_column_form: sfSympalPageForm
       default_rendering_module: ~
       default_rendering_action: ~
@@ -51,7 +51,7 @@ all:
           template: sympal_page/view
         register:
           template: sympal_register/page_template
-    sfSympalContentList:
+    content-list:
       default_rendering_module: ~
       default_rendering_action: ~
       content_templates:

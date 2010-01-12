@@ -66,7 +66,7 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     {
       return $this->getCustomModuleName();
     } else {
-      return sfSympalConfig::get($this->getName(), 'default_rendering_module', sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer'));
+      return sfSympalConfig::get($this->getSlug(), 'default_rendering_module', sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer'));
     }
   }
 
@@ -76,7 +76,7 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     {
       return $actionName;
     } else {
-      return sfSympalConfig::get($this->getName(), 'default_rendering_action', sfSympalConfig::get('default_rendering_action', null, 'index'));
+      return sfSympalConfig::get($this->getSlug(), 'default_rendering_action', sfSympalConfig::get('default_rendering_action', null, 'index'));
     }
   }
 }

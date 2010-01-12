@@ -11,7 +11,7 @@
   {
     display: normal;
   }
-  .toggle_edit_mode
+  input.toggle_edit_mode
   {
     display: none;
   }
@@ -20,7 +20,7 @@
   {
     display: none;
   }
-  .toggle_edit_mode
+  input.toggle_edit_mode
   {
     display: normal;
   }
