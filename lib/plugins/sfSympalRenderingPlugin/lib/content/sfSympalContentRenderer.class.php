@@ -62,7 +62,7 @@ class sfSympalContentRenderer
       $return = sfSympalToolkit::getSymfonyResource($this->_content->getTemplateToRenderWith(), $variables);
       $return = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_content', $variables), $return)->getReturnValue();
     } else {
-      $return = $this->renderNonHtmlFormat();
+      $return = $this->renderNonHtmlFormats();
     }
     return $return;
   }

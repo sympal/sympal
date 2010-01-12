@@ -73,6 +73,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
   public function loadEditor(sfEvent $event)
   {
+    $this->configuration->loadHelpers(array('Asset', 'Partial'));
+
     $menu = $event->getSubject();
     $content = $event['content'];
     $user = sfContext::getInstance()->getUser();
