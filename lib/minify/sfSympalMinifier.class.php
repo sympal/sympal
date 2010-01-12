@@ -32,7 +32,10 @@ class sfSympalMinifier
         foreach ($files as $file => $options)
         {
           $path = sfConfig::get('sf_web_dir').'/'.$file;
-          $minified .= "\n\n".$this->{'_minify'.$typeName}(file_get_contents($path), $this->_request->getUriPrefix().$this->_request->getRelativeUrlRoot().$file);
+          if (file_exists($path))
+          {
+            $minified .= "\n\n".$this->{'_minify'.$typeName}(file_get_contents($path), $this->_request->getUriPrefix().$this->_request->getRelativeUrlRoot().$file);
+          }
         }
 
         if (!is_dir($dir = dirname($cachedPath)))

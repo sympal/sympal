@@ -31,6 +31,7 @@ class sfSympalActions extends sfSympalExtendClass
         $items[] = sfConfig::get('sf_upload_dir');
       }
       $items[] = sfConfig::get('sf_cache_dir');
+      $items[] = sfConfig::get('sf_web_dir').'/cache';
       $items[] = sfConfig::get('sf_config_dir');
       $items[] = sfConfig::get('sf_data_dir').'/sql';
       $items[] = sfConfig::get('sf_log_dir');
