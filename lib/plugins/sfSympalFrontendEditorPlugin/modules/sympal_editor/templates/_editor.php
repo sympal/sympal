@@ -5,6 +5,28 @@
   </div>
 <?php endif; ?>
 
+<style type="text/css">
+<?php if ($sf_request->getCookie('sympal_inline_edit_mode') == 'true'): ?>
+  .sympal_inline_edit_bar_buttons
+  {
+    display: normal;
+  }
+  .toggle_edit_mode
+  {
+    display: none;
+  }
+<?php else: ?>
+  .sympal_inline_edit_bar_buttons
+  {
+    display: none;
+  }
+  .toggle_edit_mode
+  {
+    display: normal;
+  }
+<?php endif; ?>
+</style>
+
 <div class="sympal_inline_edit_bar_container">
   <div class="sympal_inline_edit_bar sympal_form">
     <ul>

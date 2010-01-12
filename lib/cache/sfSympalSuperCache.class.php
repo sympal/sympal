@@ -9,17 +9,6 @@ class sfSympalSuperCache
     $this->_sympalConfiguration = $sympalConfiguration;
   }
 
-  public function listenToTaskCacheClear(sfEvent $event)
-  {
-    $event->getSubject()->logSection('sympal', 'Clearing Sympal super cache');
-
-    $cacheDir = sfConfig::get('sf_web_dir').'/cache';
-    if (is_dir($cacheDir))
-    {
-      $event->getSubject()->getFilesystem()->remove(sfFinder::type('file')->ignore_version_control()->discard('.sf')->in($cacheDir));
-    }
-  }
-
   public function listenToResponseFilterContent(sfEvent $event, $content)
   {
     $symfonyContext = $this->_sympalConfiguration->getSympalContext()->getSymfonyContext();

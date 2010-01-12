@@ -46,13 +46,25 @@ class sfSympalConfiguration
     {
       $superCache = new sfSympalSuperCache($this);
       $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
-      $this->_dispatcher->connect('task.cache.clear', array($superCache, 'listenToTaskCacheClear'));
     }
+
+    $this->_dispatcher->connect('task.cache.clear', array($this, 'listenToTaskCacheClear'));
 
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
+  }
+
+  public function listenToTaskCacheClear(sfEvent $event)
+  {
+    $event->getSubject()->logSection('sympal', 'Clearing Sympal super cache');
+
+    $cacheDir = sfConfig::get('sf_web_dir').'/cache';
+    if (is_dir($cacheDir))
+    {
+      $event->getSubject()->getFilesystem()->remove(sfFinder::type('file')->ignore_version_control()->discard('.sf')->in($cacheDir));
+    }
   }
 
   public function listenToRoutingLoadConfiguration(sfEvent $event)
