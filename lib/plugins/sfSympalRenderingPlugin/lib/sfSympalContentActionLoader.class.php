@@ -59,7 +59,7 @@ class sfSympalContentActionLoader
         $this->_actions->$function($this->_request);
       }
 
-      $customTemplatePath = sfConfig::get('sf_apps_dir').'/'.sfConfig::get('sf_app').'/modules/'.$content->getModule().'/templates/'.$customActionName.'Success.php';
+      $customTemplatePath = sfConfig::get('sf_apps_dir').'/'.sfConfig::get('sf_app').'/modules/'.$content->getModuleToRenderWith().'/templates/'.$customActionName.'Success.php';
       if (file_exists($customTemplatePath))
       {
         $this->_actions->setTemplate($customActionName);
