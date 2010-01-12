@@ -36,8 +36,8 @@ $t->is($dataGrid->getRows(), array(
       'c.default_path' => '/pages/:slug',
       'c.theme' => NULL,
       'c.template' => 'default_view',
-      'c.module' => 'sympal_content_renderer',
-      'c.action' => 'index',
+      'c.module' => NULL,
+      'c.action' => NULL,
       'c.slug' => 'page',
     )
   )

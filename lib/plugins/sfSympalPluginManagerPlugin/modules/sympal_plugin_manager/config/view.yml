@@ -1,5 +1,5 @@
 all:
-  stylesheets: ["/sfSympalPluginManagerPlugin/css/plugin_manager": { position: last }]
+  stylesheets: ["/sfSympalPluginManagerPlugin/css/plugin_manager.css": { position: last }]
   
 default:
   metas:

@@ -516,20 +516,20 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     {
       $template = $templates[$template]['template'];
     }
-    $template = $template ? $template : sfSympalConfig::get('default_content_template');
+    $template = $template ? $template : sfSympalConfig::get($this->getType()->getName(), 'default_content_template', sfSympalConfig::get('default_content_template'));
     return $template;
   }
 
   public function getThemeToRenderWith()
   {
-    if ($layout = $this->getTheme()) {
-      return $layout;
-    } else if ($layout = $this->getType()->getTheme()) {
-      return $layout;
-    } else if ($layout = $this->getSite()->getTheme()) {
-      return $layout;
+    if ($theme = $this->getTheme()) {
+      return $theme;
+    } else if ($theme = $this->getType()->getTheme()) {
+      return $theme;
+    } else if ($theme = $this->getSite()->getTheme()) {
+      return $theme;
     } else {
-      return sfSympalConfig::get('default_theme', null, $this->getSite()->getSlug());
+      return sfSympalConfig::get($this->getType()->getName(), 'default_theme', sfSympalConfig::get('default_theme', null, $this->getSite()->getSlug()));
     }
   }
 
