@@ -185,6 +185,9 @@ class sfSympalContentActionLoader
           $this->_actions->forward('sympal_default', 'new_site');
         }
 
+        $redirecter = new sfSympalRedirecter($this->_actions);
+        $redirecter->redirect();
+
         $this->_actions->forward404();
       }
     }
