@@ -516,7 +516,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     {
       $template = $templates[$template]['template'];
     }
-    $template = $template ? $template : 'default_view';
+    $template = $template ? $template : 'sympal_default/default_content_template';
     return $template;
   }
 
