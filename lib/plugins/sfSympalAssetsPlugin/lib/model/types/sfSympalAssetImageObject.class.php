@@ -113,6 +113,11 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
   private function _generateThumbnail()
   {
+    if (!sfSympalConfig::get('assets', 'thumbnails_enabled', false))
+    {
+      return;
+    }
+
     if (!class_exists('sfImage'))
     {
       throw new sfException('sfImageTransformPlugin must be installed in order to generate thumbnails.');
@@ -138,13 +143,13 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     }
   }
 
-  public function save()
+  public function postInsert(sfEvent $event)
   {
-    if (sfSympalConfig::get('assets', 'thumbnails_enabled', false))
-    {
-      $this->_generateThumbnail();
-    }
+    $this->_generateThumbnail();
+  }
 
-    return parent::save();
+  public function postUpdate(sfEvent $event)
+  {
+    $this->_generateThumbnail();
   }
 }
