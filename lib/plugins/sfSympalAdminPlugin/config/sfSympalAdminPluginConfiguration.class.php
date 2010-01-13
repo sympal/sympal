@@ -35,10 +35,10 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       ->addChild('Edit Site', '@sympal_sites_edit?id='.sfSympalContext::getInstance()->getSite()->getId())
       ->setCredentials(array('ManageContentSetup'));
 
-    $manageContent->addChild('Content Types', '@sympal_content_types')
-      ->setCredentials(array('ManageContentSetup'));
-
     $administration = $menu->getChild('Administration');
+
+    $administration->addChild('Content Types', '@sympal_content_types')
+      ->setCredentials(array('ManageContentSetup'));
 
     $administration->addChild('Themes', '@sympal_themes')
       ->setCredentials(array('ManageThemes'));
