@@ -333,7 +333,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getRouteName()
   {
-    if ($this['custom_path'] || $this['module'] || $this['action'])
+    if ($this->get('custom_path', false) || $this->get('module', false) || $this->get('action', false))
     {
       return '@sympal_content_' . str_replace('-', '_', $this['slug']);
     } else if ($this['Type']['default_path']) {
