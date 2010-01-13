@@ -38,14 +38,10 @@ class sfSympalContentRenderer
   {
     if (!$this->_renderVariables)
     {
-      $typeVarName = strtolower($this->_content['Type']['name'][0]).substr($this->_content['Type']['name'], 1, strlen($this->_content['Type']['name']));
-
       $this->_renderVariables = array(
-        'format' => $this->_format,
-        'content' => $this->_content,
+        'format'   => $this->_format,
+        'content'  => $this->_content,
         'menuItem' => $this->_menuItem,
-        $typeVarName => $this->_content->getRecord(),
-        'contentRecord' => $this->_content->getRecord()
       );
 
       $this->_renderVariables = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_variables'), $this->_renderVariables)->getReturnValue();
