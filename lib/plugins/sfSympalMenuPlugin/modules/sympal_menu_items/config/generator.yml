@@ -14,6 +14,7 @@ generator:
       actions: ~
       fields: ~
       list:
+        title: Menu items list
         sort: ['root_id, lft', 'asc']
         max_per_page: 9999999999999999999
         display: [=name]
@@ -58,5 +59,7 @@ generator:
             help: Check if this menu item requires the user not be authenticated in order to be visible.
           groups_list:
             help: Select the groups this menu item is restricted to.
-      edit: ~
-      new:  ~
+      edit:
+        title: Edit menu item 
+      new:
+        title: New menu item
