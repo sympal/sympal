@@ -180,9 +180,33 @@ class sfSympalToolkit
       $routes = array();
       foreach ($contents as $content)
       {
-        $routes[] = sprintf($routeTemplate,
+        $routes['content_'.$content->getId()] = sprintf($routeTemplate,
           substr($content->getRouteName(), 1),
           $content->getRoutePath(),
+          $content->getModuleToRenderWith(),
+          $content->getActionToRenderWith(),
+          $content->Type->name,
+          $content->Type->id,
+          $content->id,
+          implode('|', sfSympalConfig::get('language_codes')),
+          implode('|', sfSympalConfig::get('content_formats'))
+        );
+      }
+
+      $contents = Doctrine::getTable('sfSympalContent')
+        ->createQuery('c')
+        ->leftJoin('c.Type t')
+        ->innerJoin('c.Site s')
+        ->where("c.module IS NOT NULL AND c.module != ''")
+        ->orWhere("c.action IS NOT NULL AND c.action != ''")
+        ->andWhere('s.slug = ?', $siteSlug)
+        ->execute();
+
+      foreach ($contents as $content)
+      {
+        $routes['content_'.$content->getId()] = sprintf($routeTemplate,
+          substr($content->getRouteName(), 1),
+          $content->getEvaluatedRoutePath(),
           $content->getModuleToRenderWith(),
           $content->getActionToRenderWith(),
           $content->Type->name,
@@ -199,7 +223,7 @@ class sfSympalToolkit
 
       foreach ($contentTypes as $contentType)
       {
-        $routes[] = sprintf($routeTemplate,
+        $routes['content_type_'.$contentType->getId()] = sprintf($routeTemplate,
           substr($contentType->getRouteName(), 1),
           $contentType->getRoutePath(),
           $contentType->getModuleToRenderWith(),

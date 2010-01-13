@@ -8,6 +8,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   protected
     $_allPermissions,
     $_route,
+    $_routeObject,
     $_mainMenuItem;
 
   public static function createNew($type)
@@ -300,6 +301,21 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       ->render();
   }
 
+  public function getMonthPublished($format = 'm')
+  {
+    return date('m', strtotime($this->getDatePublished()));
+  }
+
+  public function getDayPublished()
+  {
+    return date('d', strtotime($this->getDatePublished()));
+  }
+
+  public function getYearPublished()
+  {
+    return date('Y', strtotime($this->getDatePublished()));
+  }
+
   public function getAuthorName()
   {
     return $this->getCreatedBy()->getName();
@@ -317,7 +333,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getRouteName()
   {
-    if ($this['custom_path'])
+    if ($this['custom_path'] || $this['module'] || $this['action'])
     {
       return '@sympal_content_' . str_replace('-', '_', $this['slug']);
     } else if ($this['Type']['default_path']) {
@@ -361,6 +377,20 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
+  public function getRouteObject($path = null)
+  {
+    if (!$this->_routeObject)
+    {
+      if (is_null($path))
+      {
+        $path = $this->getRoutePath();
+      }
+
+      $this->_routeObject = new sfRoute($path, array('sf_format' => 'html'));
+    }
+    return $this->_routeObject;
+  }
+
   public function getRoute($routeString = null, $path = null)
   {
     if (!$this->_route)
@@ -380,15 +410,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
         $routeString = $this->getRouteName();
       }
 
-      if (is_null($path))
-      {
-        $path = $this->getRoutePath();
-      }
-
-      $route = new sfRoute($path);
-      $variables = $route->getVariables();
-
-      $this->_route = $this->_fillRoute($routeString, $variables);
+      $this->_route = $this->_fillRoute($routeString);
     }
 
     return $this->_route;
@@ -396,14 +418,23 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getEvaluatedRoutePath()
   {
-    $route = url_for($this->getRoute());
-    $replace = sfContext::getInstance()->getRequest()->getScriptName();
-
-    return str_replace($replace, null, $route);
+    return $this->getRouteObject()->generate($this->_buildValues());
   }
 
-  protected function _fillRoute($route, $variables)
+  protected function _fillRoute($route)
   {
+    $values = $this->_buildValues();
+    if (!empty($values))
+    {
+      return $route.'?'.http_build_query($values);
+    } else {
+      return $route;
+    }
+  }
+
+  protected function _buildValues()
+  {
+    $variables = $this->getRouteObject()->getVariables();
     $isI18nEnabled = sfSympalConfig::isI18nEnabled();
 
     $values = array();
@@ -418,13 +449,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
         $values[$name] = $this->$method();
       }
     }
-
-    if (!empty($values))
-    {
-      return $route.'?'.http_build_query($values);
-    } else {
-      return $route;
-    }
+    return $values;
   }
 
   public function trySettingTitleProperty($value)

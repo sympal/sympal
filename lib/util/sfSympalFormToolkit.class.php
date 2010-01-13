@@ -31,6 +31,25 @@ class sfSympalFormToolkit
     $widgetSchema['content_id']->setOption('method', 'getIndented');
   }
 
+  public static function changeModuleWidget(sfForm $form)
+  {
+    $modules = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getModules();
+    $options = array('' => '');
+    foreach ($modules as $module)
+    {
+      $options[$module] = $module;
+    }
+    $widgetSchema = $form->getWidgetSchema();
+    $widgetSchema['module'] = new sfWidgetFormChoice(array(
+      'choices'   => $options
+    ));
+    $validatorSchema = $form->getValidatorSchema();
+    $validatorSchema['module'] = new sfValidatorChoice(array(
+      'choices'   => array_keys($options),
+      'required' => false
+    ));
+  }
+
   public static function changeDateWidget($name, sfForm $form)
   {
     sfSympalToolkit::useJQuery(array('ui'));
