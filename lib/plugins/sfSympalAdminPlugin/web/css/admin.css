@@ -34,7 +34,7 @@ body a {
 }
 
 html {
-	background:                   #000000 url(../images/backplate.jpg) no-repeat top center;
+	background: #000000;
 	margin-top: 20px;
 }
 
@@ -48,36 +48,35 @@ p {
 }
 
 h1 {
-  color:                        #11A8FF;
-  font-size:                    22px;
-  padding:                      0;
-  margin:                       0;
+  color: #11A8FF;
+  font-size: 22px;
+  padding: 0;
+  margin: 0;
   margin-bottom: 10px;
 }
 
 h2 {
-  color:                        #DA8915;
-  font-size:                    18px;
+  color: #DA8915;
+  font-size: 18px;
 }
 
 h3 {
-  color:                        #3278B6;
-  font-size:                    14px;
+  color: #3278B6;
+  font-size: 14px;
 }
 
 #container {
-  z-index:						           0;
-  background-color:             #FFFFFF;
-  margin:                       0 auto;
-  padding:                      0;
-  width:                        96%;
+  z-index: 0;
+  background-color: #FFFFFF;
+  margin: 0 auto;
+  padding: 0;
+  width: 96%;
 }
 
 #content {
-  margin:                       0;
-  
-  padding:                      20px;
-  background:                   url(../images/content_header.gif) no-repeat top center;  
+  margin: 0;
+  padding: 20px;
+  background: url(../images/content_header.gif) no-repeat top center;  
   background-color: #fff;
   min-height: 400px;
   position: relative;
