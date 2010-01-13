@@ -56,39 +56,34 @@
   color: white;
 }
 
-#sympal-dashboard #boxes ul li#dashboard-boxes-create-content a {
-  background: url(../images/create-content.png) no-repeat;
-  background-position: center;
-}
-
 #sympal-dashboard #boxes ul li#dashboard-boxes-sitemap a {
-  background: url(../images/sitemap.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -1295px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-manage-content a {
-  background: url(../images/manage-content.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -75px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-sites a {
-  background: url(../images/sites.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center 20px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-menu-manager a {
-  background: url(../images/menu_manager.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -390px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-plugin-manager a {
-  background: url(../images/plugin_manager.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -505px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-content-types a {
-  background: url(../images/content_types.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -620px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-content-templates a {
@@ -97,46 +92,41 @@
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-users a {
-  background: url(../images/users.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -750px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-groups a {
-  background: url(../images/groups.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -895px;
 }
 
 #sympal-dashboard #boxes ul li.create_content a {
-  background: url(../images/create_content.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -175px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-permissions a {
-  background: url(../images/permissions.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -1035px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-configuration a {
-  background: url(../images/configuration.png) no-repeat;
-  background-position: center;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-slot-types a {
-  background: url(../images/slot_types.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -1175px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-assets-manager a {
-  background: url(../../sfSympalAssetsPlugin/images/icons/folder.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -275px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-check-for-updates a {
-  background: url(../../sfSympalPlugin/images/update_icon.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -1400px;
 }
 
 #sympal-dashboard #boxes ul li#dashboard-boxes-check-server a {
-  background: url(../../sfSympalPlugin/images/check_icon.png) no-repeat;
-  background-position: center;
+  background: url(../images/dashboard_sprite.gif) no-repeat;
+  background-position: center -1510px;
 }
