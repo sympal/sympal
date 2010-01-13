@@ -15,11 +15,9 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 
   public function loadAdminMenu(sfEvent $event)
   {
-    $menu = $event->getSubject();
-
-    $administration = $menu->getChild('Administration');
-    $menus = $administration->addChild('Menu Manager', '@sympal_menu_items')
-      ->setCredentials(array('ManageMenus'));
+    $event->getSubject()
+      ->getChild('Site Administration')
+      ->addChild('Menus', '@sympal_menu_items')->setCredentials(array('ManageMenus'));
   }
 
   public function loadEditor(sfEvent $event)

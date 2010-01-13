@@ -43,8 +43,10 @@ function get_sympal_admin_menu()
   $menu->setCredentials(array('ViewAdminBar'));
   $menu->addChild('Go to Site Frontend', '@homepage');
   $menu->addChild('My Dashboard', '@sympal_dashboard');
-  $menu->addChild('Administration');
-  $menu->addChild('Security');
+  $menu->addChild('Content', null, array('label' => 'Site Content'));
+  $menu->addChild('Administration', null, array('label' => 'Global Setup'));
+  $menu->addChild('Site Administration', null, array('label' => sfSympalContext::getInstance()->getSite()->getTitle().' Setup'));
+  $menu->addChild('Security', null, array('label' => 'Users & Security'));
 
   sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_admin_menu'));
 

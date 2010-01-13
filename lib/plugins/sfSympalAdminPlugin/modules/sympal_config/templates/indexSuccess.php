@@ -1,5 +1,5 @@
 <div id="sf_admin_container">
-  <h1><?php echo __('Sympal Configuration') ?></h1>
+  <h1><?php echo __('System Settings') ?></h1>
 
   <p><?php echo __('Manage the configuration of your Sympal project from the
   easy to use web form below. The different functionalities added by Sympal

@@ -16,8 +16,10 @@ abstract class Basesympal_themesActions extends sfActions
 
     if ($preview = $request->getParameter('preview'))
     {
+      $this->getResponse()->setTitle(sprintf('Sympal Admin / Previewing %s', $preview));
       $this->loadTheme($preview);
     } else {
+      $this->getResponse()->setTitle(sprintf('Sympal Admin / Themes'));
       $this->loadAdminTheme();
     }
   }

@@ -12,6 +12,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   public function loadAdminMenu(sfEvent $event)
   {
     $menu = $event->getSubject();
+    $manageContent = $menu->getChild('Content');
 
     $user = sfContext::getInstance()->getUser();
 
@@ -20,28 +21,33 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
       foreach ($contentTypes as $contentType)
       {
-        $node = $menu->addChild('Manage '.$contentType->getLabel().' Content');
-        $node->addChild('Create', '@sympal_content_create_type?type='.$contentType->getId());
-        $node->addChild('List', '@sympal_content_list_type?type='.$contentType->getId());
+        $manageContent->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId());
       }
     }
 
+    $siteAdministration = $menu->getChild('Site Administration');
+
+    $siteAdministration
+      ->addChild('404 Redirects', '@sympal_redirects')
+      ->setCredentials(array('ManageContentSetup'));
+
+    $siteAdministration
+      ->addChild('Edit Site', '@sympal_sites_edit?id='.sfSympalContext::getInstance()->getSite()->getId())
+      ->setCredentials(array('ManageContentSetup'));
+
+    $manageContent->addChild('Content Types', '@sympal_content_types')
+      ->setCredentials(array('ManageContentSetup'));
+
     $administration = $menu->getChild('Administration');
+
+    $administration->addChild('Themes', '@sympal_themes')
+      ->setCredentials(array('ManageThemes'));
 
     $administration->addChild('Sites', '@sympal_sites')
       ->setCredentials(array('ManageSites'));
 
-    $administration->addChild('Content Types', '@sympal_content_types')
-      ->setCredentials(array('ManageContentSetup'));
-
-    $administration->addChild('Configuration', '@sympal_config')
+    $administration->addChild('System Settings', '@sympal_config')
       ->setCredentials(array('ManageConfiguration'));
-
-    $administration->addChild('Manage Redirects', '@sympal_redirects')
-      ->setCredentials(array('ManageContentSetup'));
-
-    $administration->addChild('Preview Themes', '@sympal_themes')
-      ->setCredentials(array('ManageThemes'));
   }
 
   public function loadConfigForm(sfEvent $event)
