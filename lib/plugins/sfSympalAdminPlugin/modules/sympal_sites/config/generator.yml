@@ -14,7 +14,7 @@ generator:
       actions: ~
       fields: ~
       list:
-        display: [=title, description, _go_to]
+        display: [=title, description, _switch_site]
       filter:
         class: false
       form:

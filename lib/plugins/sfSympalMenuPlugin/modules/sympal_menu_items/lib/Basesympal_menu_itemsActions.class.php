@@ -7,6 +7,14 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     parent::preExecute();
 
     $this->loadAdminTheme();
+
+    $this->getContext()->getEventDispatcher()->connect('admin.build_query', array($this, 'listenToAdminBuildQuery'));
+  }
+
+  public function listenToAdminBuildQuery(sfEvent $event, Doctrine_Query $query)
+  {
+    $query->andWhere('site_id = ?', sfSympalContext::getInstance()->getSite()->getId());
+    return $query;
   }
 
   protected function processForm(sfWebRequest $request, sfForm $form)
