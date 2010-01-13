@@ -20,7 +20,7 @@ class PluginsfSympalMenuItemTable extends sfSympalDoctrineTable
       ->leftJoin('g.Permissions gp')
       ->addSelect('gp.id, gp.name')
       ->leftJoin('m.RelatedContent c')
-      ->addSelect('c.id, c.custom_path, c.slug')
+      ->addSelect('c.id, c.custom_path, c.slug, c.date_published')
       ->leftJoin('c.Type ct')
       ->addSelect('ct.id, ct.name, ct.default_path, ct.slug')
       ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
