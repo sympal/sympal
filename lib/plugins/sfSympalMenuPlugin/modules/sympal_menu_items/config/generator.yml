@@ -35,7 +35,7 @@ generator:
           parent_id:
             help: Select the parent the menu item is associated with.
           name:
-            help: Enter the name of the menu item. Their is an optional label that can be entered which has priority over the name.
+            help: Enter the name of the menu item. There is an optional label that can be entered which has priority over the name.
           content_type_id:
             help: Choose what type of content this menu is associated with.
             label: Content Type
@@ -57,6 +57,6 @@ generator:
           requires_no_auth:
             help: Check if this menu item requires the user not be authenticated in order to be visible.
           groups_list:
-            help: Select the groups this menu item is restrited to.
+            help: Select the groups this menu item is restricted to.
       edit: ~
       new:  ~
