@@ -18,6 +18,12 @@ class sfSympalMinifier
     $this->_minifyFiles($this->_response->getStylesheets(), 'css');
   }
 
+  private function _isMinifiable($file)
+  {
+    $exclude = sfSympalConfig::get('minifier', 'exclude', array());
+    return !in_array($file, $exclude);
+  }
+
   private function _minifyFiles(array $files, $type)
   {
     if ($files)
@@ -31,6 +37,10 @@ class sfSympalMinifier
         $minified = '';
         foreach ($files as $file => $options)
         {
+          if (!$this->_isMinifiable($file))
+          {
+            continue;
+          }
           $path = sfConfig::get('sf_web_dir').'/'.$file;
           if (file_exists($path))
           {
@@ -47,6 +57,10 @@ class sfSympalMinifier
     
       foreach ($this->_response->{'get'.$typeName.'s'}() as $file => $options)
       {
+        if (!$this->_isMinifiable($file))
+        {
+          continue;
+        }
         $this->_response->{'remove'.$typeName}($file);
       }
       $this->_response->{'add'.$typeName}($webPath);
