@@ -10,7 +10,7 @@ $adminGenModules = array(
   'sympal_users' => '/admin/security/user',
   'sympal_groups' => '/admin/security/group',
   'sympal_permissions' => '/admin/security/permission',
-  //'sympal_content' => '/admin/content',
+  'sympal_content' => '/admin/content',
   'sympal_content_types' => '/admin/content/types',
   'sympal_sites' => '/admin/sites'
 );
