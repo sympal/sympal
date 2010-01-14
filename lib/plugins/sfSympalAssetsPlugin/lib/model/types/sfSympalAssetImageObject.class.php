@@ -72,7 +72,12 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
   public function getThumbnailUrl()
   {
-    return $this->getThumbnail()->getUrl();
+    if ($thumbnail = $this->getThumbnail())
+    {
+      return $thumbnail->getUrl();
+    } else {
+      return null;
+    }
   }
 
   public function move($newPath)
@@ -143,12 +148,7 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     }
   }
 
-  public function postInsert(sfEvent $event)
-  {
-    $this->_generateThumbnail();
-  }
-
-  public function postUpdate(sfEvent $event)
+  public function save()
   {
     $this->_generateThumbnail();
   }
