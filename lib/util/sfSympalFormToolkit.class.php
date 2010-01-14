@@ -21,15 +21,18 @@ class sfSympalFormToolkit
 
   public static function changeContentIdWidget(sfForm $form)
   {
-    $q = Doctrine_Core::getTable('sfSympalContent')
-      ->createQuery('c')
-      ->leftJoin('c.Type t')
-      ->leftJoin('c.MenuItem m')
-      ->where('c.site_id = ?', sfSympalContext::getInstance()->getSite()->getId())
-      ->orderBy('m.root_id, m.lft');
     $widgetSchema = $form->getWidgetSchema();
-    $widgetSchema['content_id']->setOption('query', $q);
-    $widgetSchema['content_id']->setOption('method', 'getIndented');
+    if ($widgetSchema['content_id'] instanceof sfWidgetFormDoctrineChoice)
+    {
+      $q = Doctrine_Core::getTable('sfSympalContent')
+        ->createQuery('c')
+        ->leftJoin('c.Type t')
+        ->leftJoin('c.MenuItem m')
+        ->where('c.site_id = ?', sfSympalContext::getInstance()->getSite()->getId())
+        ->orderBy('m.root_id, m.lft');
+      $widgetSchema['content_id']->setOption('query', $q);
+      $widgetSchema['content_id']->setOption('method', 'getIndented');
+    }
   }
 
   public static function changeModuleWidget(sfForm $form)

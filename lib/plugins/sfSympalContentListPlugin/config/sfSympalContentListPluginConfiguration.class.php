@@ -23,10 +23,10 @@ class sfSympalContentListPluginConfiguration extends sfPluginConfiguration
 
   public function listenForFilterVariables(sfEvent $event, $variables)
   {
-    if (isset($variables['sfSympalContentList']))
+    $content = $variables['content'];
+    if ($content->getType()->getName() == 'sfSympalContentList')
     {
-      $content = $variables['content'];
-      $contentList = $variables['sfSympalContentList'];
+      $contentList = $content->getRecord();
 
       $request = sfContext::getInstance()->getRequest();
       $dataGrid = $contentList->buildDataGrid($request);
