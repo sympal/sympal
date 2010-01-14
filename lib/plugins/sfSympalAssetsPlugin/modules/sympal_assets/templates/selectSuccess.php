@@ -1,5 +1,6 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalAssetsPlugin/css/select.css') ?>" />
 <script type="text/javascript" src="<?php echo javascript_path('/sfSympalAssetsPlugin/js/select.js') ?>"></script>
+<?php use_helper('jQuery') ?>
 
 <div id="sympal_assets_container" class="sympal_form">
   <h1>Asset Browser</h1>
