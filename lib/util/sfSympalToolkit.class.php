@@ -167,6 +167,7 @@ class sfSympalToolkit
       sf_format:   (%s)
 ';
 
+      $routes = array();
       $contentTypes = Doctrine::getTable('sfSympalContentType')
         ->createQuery('t')
         ->execute();
@@ -196,7 +197,6 @@ class sfSympalToolkit
         ->andWhere('s.slug = ?', $siteSlug)
         ->execute();
 
-      $routes = array();
       foreach ($contents as $content)
       {
         $routes['content_'.$content->getId()] = sprintf($routeTemplate,
