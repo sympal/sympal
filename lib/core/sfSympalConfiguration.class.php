@@ -6,6 +6,7 @@ class sfSympalConfiguration
     $_dispatcher,
     $_projectConfiguration,
     $_sympalContext,
+    $_symfonyContext,
     $_bootstrap,
     $_plugins = array(),
     $_modules = array(),
@@ -90,7 +91,8 @@ class sfSympalConfiguration
 
     $this->_cache = new sfSympalCache($this);
 
-    $this->_sympalContext = sfSympalContext::createInstance($event->getSubject(), $this);
+    $this->_symfonyContext = $event->getSubject();
+    $this->_sympalContext = sfSympalContext::createInstance($this->_symfonyContext, $this);
 
     $this->_enableModules();
 
@@ -240,33 +242,51 @@ class sfSympalConfiguration
     return sfSympalConfig::get($model, 'content_templates', array());
   }
 
-  public function getThemeForRequest(sfWebRequest $request)
+  public function getThemeForRequest()
   {
+    $request = $this->_symfonyContext->getRequest();
+
+    if (sfSympalConfig::get('allow_changing_theme_by_url'))
+    {
+      $user = $this->_symfonyContext->getUser();
+
+      if ($theme = $request->getParameter(sfSympalConfig::get('theme_request_parameter_name', null, 'sf_sympal_theme')))
+      {
+        $user->setCurrentTheme($theme);
+        return $theme;
+      }
+
+      if ($theme = $user->getCurrentTheme())
+      {
+        return $theme;
+      }
+    }
+
     $module = $request->getParameter('module');
     $adminModules = sfSympalConfig::get('admin_modules');
     if (in_array($module, $adminModules))
     {
       return sfSympalConfig::get('admin_theme', null, 'admin');
     }
-    $theme = sfSympalConfig::get($module, 'theme');
-    if (!$theme)
+
+    if ($theme = sfSympalConfig::get($module, 'theme'))
     {
-      $theme = sfSympalConfig::get(sfContext::getInstance()->getRouting()->getCurrentRouteName(), 'theme');
+      return $theme;
     }
-    if (!$theme)
+
+    if ($theme = $theme = sfSympalConfig::get(sfContext::getInstance()->getRouting()->getCurrentRouteName(), 'theme'))
     {
-      $theme = sfSympalConfig::get('default_theme');
+      return $theme;
     }
-    return $theme;
+
+    return sfSympalConfig::get('default_theme');
   }
 
   public function initializeTheme()
   {
-    $request = sfContext::getInstance()->getRequest();
-
-    if (!$request->isXmlHttpRequest())
+    if (!$this->_symfonyContext->getRequest()->isXmlHttpRequest())
     {
-      $this->_sympalContext->loadTheme($this->getThemeForRequest($request));
+      $this->_sympalContext->loadTheme($this->getThemeForRequest());
     }
   }
 

@@ -39,4 +39,14 @@ class sfSympalUser extends sfGuardSecurityUser
     }
     return $access;
   }
+
+  public function setCurrentTheme($theme)
+  {
+    $this->setAttribute('sympal_current_theme', $theme);
+  }
+
+  public function getCurrentTheme()
+  {
+    return $this->getAttribute('sympal_current_theme');
+  }
 }
