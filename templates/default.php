@@ -24,17 +24,17 @@
         <?php echo get_slot('sympal_right_sidebar') ?>
       <?php endif; ?>
 
-      <h2>Navigation</h2>
+      <h2><?php echo __('Navigation') ?></h2>
 
   	  <?php if ($menu): ?>
         <?php echo $menu ?>
       <?php else: ?>
         <ul>
           <?php if (!$sf_user->isAuthenticated()): ?>
-            <li><?php echo link_to('Register', '@sympal_register') ?></li>
-            <li><?php echo link_to('Signin', '@sympal_signin') ?></li>
+            <li><?php echo link_to(__('Register'), '@sympal_register') ?></li>
+            <li><?php echo link_to(__('Signin'), '@sympal_signin') ?></li>
           <?php else: ?>
-            <li><?php echo link_to('Signout', '@sympal_signout', 'confirm=Are you sure?') ?></li>
+            <li><?php echo link_to(__('Signout'), '@sympal_signout', 'confirm='.__('Are you sure?')) ?></li>
           <?php endif; ?>
         </ul>
       <?php endif; ?>
