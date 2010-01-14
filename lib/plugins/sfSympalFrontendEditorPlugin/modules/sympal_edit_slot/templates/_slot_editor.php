@@ -9,7 +9,7 @@
   )) ?>
 
     <?php if (!$contentSlot->is_column): ?>
-      <a href="#edit" class="sympal_change_slot_type">>> Change Slot Type</a>
+      <a href="#edit" class="sympal_change_slot_type">>> <?php echo __('Change Slot Type') ?></a>
       <div class="sympal_change_slot_type_dropdown">
         <?php echo $form['type'] ?>
       </div>

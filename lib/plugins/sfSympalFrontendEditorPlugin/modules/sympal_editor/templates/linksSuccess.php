@@ -3,16 +3,17 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalFrontendEditorPlugin/css/links.css') ?>" />
 
 <div id="sympal_links_container">
-  <h1>Link Browser</h1>
+  <h1><?php echo __('Link Browser') ?></h1>
 
   <p>
-    Browse your content below and insert links into the currently focused editor by
-    just clicking the page you want to link to. You can control where the link is 
-    inserted by positioning the cursor in the editor.
+    <?php echo __(
+      'Browse your content below and insert links into the currently focused editor by '.
+      'just clicking the page you want to link to.') ?>
+    <?php echo __('You can control where the link is inserted by positioning the cursor in the editor.') ?>
   </p>
 
   <div id="content_types">
-    <h2>Content Types</h2>
+    <h2><?php echo __('Content Types') ?></h2>
     <ul id="content_types">
       <?php foreach ($contentTypes as $type): ?>
         <li>
@@ -60,5 +61,5 @@
     </ul>
   </div>
 
-  <a class="sympal_close_menu">close</a>
+  <a class="sympal_close_menu"><?php echo __('close') ?></a>
 </div>
