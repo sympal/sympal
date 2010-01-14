@@ -8,8 +8,12 @@
  */
 function get_sympal_pager_header($pager)
 {
-  $indice = $pager->getFirstIndice();
-  return '<div class="sympal_pager_header"><h3>Showing '.$indice.' to '.($pager->getLastIndice()).' of '.$pager->getNbResults().' total results.</h3></div>';
+  return '<div class="sympal_pager_header"><h3>'.
+    __('Showing %first% to %last% of %count% total results.', array(
+      '%first%' => $pager->getFirstIndice(),
+      '%last%' => $pager->getLastIndice(),
+      '%count%' => $pager->getNbResults()
+    )).'</h3></div>';
 }
 
 /**
