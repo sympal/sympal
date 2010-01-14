@@ -168,25 +168,6 @@ class sfSympalToolkit
 ';
 
       $routes = array();
-      $contentTypes = Doctrine::getTable('sfSympalContentType')
-        ->createQuery('t')
-        ->execute();
-
-      foreach ($contentTypes as $contentType)
-      {
-        $routes['content_type_'.$contentType->getId()] = sprintf($routeTemplate,
-          substr($contentType->getRouteName(), 1),
-          $contentType->getRoutePath(),
-          $contentType->getModuleToRenderWith(),
-          $contentType->getActionToRenderWith(),
-          $contentType->name,
-          $contentType->id,
-          null,
-          implode('|', sfSympalConfig::get('language_codes')),
-          implode('|', sfSympalConfig::get('content_formats'))
-        );
-      }
-
       $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
 
       $contents = Doctrine::getTable('sfSympalContent')
@@ -231,6 +212,25 @@ class sfSympalToolkit
           $content->Type->name,
           $content->Type->id,
           $content->id,
+          implode('|', sfSympalConfig::get('language_codes')),
+          implode('|', sfSympalConfig::get('content_formats'))
+        );
+      }
+
+      $contentTypes = Doctrine::getTable('sfSympalContentType')
+        ->createQuery('t')
+        ->execute();
+
+      foreach ($contentTypes as $contentType)
+      {
+        $routes['content_type_'.$contentType->getId()] = sprintf($routeTemplate,
+          substr($contentType->getRouteName(), 1),
+          $contentType->getRoutePath(),
+          $contentType->getModuleToRenderWith(),
+          $contentType->getActionToRenderWith(),
+          $contentType->name,
+          $contentType->id,
+          null,
           implode('|', sfSympalConfig::get('language_codes')),
           implode('|', sfSympalConfig::get('content_formats'))
         );
