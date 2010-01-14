@@ -1,8 +1,8 @@
 generator:
-  class:                   sfSympalDoctrineGenerator
+  class:                   <?php echo sfSympalConfig::getAdminGeneratorClass() ?> 
   param:
     model_class:           sfGuardGroup
-    theme:                 sympal_admin
+    theme:                 <?php echo sfSympalConfig::getAdminGeneratorTheme() ?> 
     non_verbose_templates: true
     with_show:             false
     singular:              ~

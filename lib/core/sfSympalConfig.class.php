@@ -47,6 +47,18 @@ class sfSympalConfig extends sfConfig
     return isset(self::$config['app_sympal_config_asset_paths'][$path]) ? self::$config['app_sympal_config_asset_paths'][$path] : $path;
   }
 
+  public static function getAdminGeneratorTheme()
+  {
+    $theme = sfSympalConfig::get('themes', sfSympalConfig::get('admin_theme'));
+    return isset($theme['admin_generator_theme']) ? $theme['admin_generator_theme'] : sfSympalConfig::get('default_admin_generator_theme', null, 'sympal_admin');
+  }
+
+  public static function getAdminGeneratorClass()
+  {
+    $theme = sfSympalConfig::get('themes', sfSympalConfig::get('admin_theme'));
+    return isset($theme['admin_generator_class']) ? $theme['admin_generator_class'] : sfSympalConfig::get('default_admin_generator_class', null, 'sfSympalDoctrineGenerator');
+  }
+
   public static function writeSetting($group, $name, $value = null)
   {
     if (is_null($value))
