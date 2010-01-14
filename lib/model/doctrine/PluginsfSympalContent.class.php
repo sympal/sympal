@@ -386,7 +386,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
         $path = $this->getRoutePath();
       }
 
-      $this->_routeObject = new sfRoute($path, array('sf_format' => 'html'));
+      $this->_routeObject = new sfRoute($path, array('sf_format' => 'html', 'sf_culture' => sfConfig::get('default_culture')));
     }
     return $this->_routeObject;
   }
