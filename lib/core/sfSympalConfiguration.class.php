@@ -59,7 +59,7 @@ class sfSympalConfiguration
 
   public function listenToTaskCacheClear(sfEvent $event)
   {
-    $event->getSubject()->logSection('sympal', 'Clearing Sympal super cache');
+    $event->getSubject()->logSection('sympal', 'Clearing web cache folder');
 
     $cacheDir = sfConfig::get('sf_web_dir').'/cache';
     if (is_dir($cacheDir))
