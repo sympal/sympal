@@ -14,8 +14,6 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
   {
     parent::preExecute();
 
-    $this->loadAdminTheme();
-
     $this->getContext()->getEventDispatcher()->connect('admin.save_object', array($this, 'listenToAdminSaveObject'));
   }
 

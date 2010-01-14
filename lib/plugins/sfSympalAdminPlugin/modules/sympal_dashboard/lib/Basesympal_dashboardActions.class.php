@@ -10,13 +10,6 @@
  */
 abstract class Basesympal_dashboardActions extends sfActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-
-    $this->loadAdminTheme();
-  }
-
   public function executeIndex()
   {
     if ($this->isAjax = $this->isAjax())

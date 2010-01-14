@@ -30,7 +30,8 @@ class sfSympalConfiguration
       'sfParameterHolder',
       'sfSympalDataGrid',
       'sfSympalUpgradeFromWeb',
-      'sfSympalServerCheckHtmlRenderer'
+      'sfSympalServerCheckHtmlRenderer',
+      'sfSympalSitemapGenerator'
     ));
 
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
@@ -239,9 +240,15 @@ class sfSympalConfiguration
     return sfSympalConfig::get($model, 'content_templates', array());
   }
 
-  public function getDefaultTheme(sfWebRequest $request)
+  public function getThemeForRequest(sfWebRequest $request)
   {
-    $theme = sfSympalConfig::get($request->getParameter('module'), 'theme');
+    $module = $request->getParameter('module');
+    $adminModules = sfSympalConfig::get('admin_modules');
+    if (in_array($module, $adminModules))
+    {
+      return sfSympalConfig::get('admin_theme', null, 'admin');
+    }
+    $theme = sfSympalConfig::get($module, 'theme');
     if (!$theme)
     {
       $theme = sfSympalConfig::get(sfContext::getInstance()->getRouting()->getCurrentRouteName(), 'theme');
@@ -259,7 +266,7 @@ class sfSympalConfiguration
 
     if (!$request->isXmlHttpRequest())
     {
-      $this->_sympalContext->loadTheme($this->getDefaultTheme($request));
+      $this->_sympalContext->loadTheme($this->getThemeForRequest($request));
     }
   }
 

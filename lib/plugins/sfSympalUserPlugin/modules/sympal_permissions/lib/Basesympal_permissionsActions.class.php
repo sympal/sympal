@@ -5,10 +5,4 @@ require_once dirname(__FILE__).'/../lib/sympal_permissionsGeneratorHelper.class.
 
 class Basesympal_permissionsActions extends autosympal_permissionsActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-
-    $this->loadAdminTheme();
-  }
 }

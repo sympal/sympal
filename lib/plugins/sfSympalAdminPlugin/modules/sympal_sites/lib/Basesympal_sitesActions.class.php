@@ -2,13 +2,6 @@
 
 class Basesympal_sitesActions extends autosympal_sitesActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-
-    $this->loadAdminTheme();
-  }
-
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));

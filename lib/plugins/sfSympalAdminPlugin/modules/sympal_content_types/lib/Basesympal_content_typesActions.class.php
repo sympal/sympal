@@ -6,7 +6,6 @@ class Basesympal_content_types_Actions extends autoSympal_content_typesActions
   {
     parent::preExecute();
 
-    $this->loadAdminTheme();
     $this->getContext()->getEventDispatcher()->connect('admin.save_object', array($this, 'listenToAdminSaveObject'));
   }
 

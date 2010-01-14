@@ -6,8 +6,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   {
     parent::preExecute();
 
-    $this->loadAdminTheme();
-
     $this->getContext()->getEventDispatcher()->connect('admin.build_query', array($this, 'listenToAdminBuildQuery'));
   }
 

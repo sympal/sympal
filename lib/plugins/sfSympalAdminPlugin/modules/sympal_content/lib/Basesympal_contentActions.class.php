@@ -12,7 +12,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
       $this->redirect('@homepage');
     }
 
-    $this->loadAdminTheme();
     $this->getContext()->getEventDispatcher()->connect('admin.save_object', array($this, 'listenToAdminSaveObject'));
   }
 
