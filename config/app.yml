@@ -9,22 +9,22 @@ all:
     # Configure the modules which are Sympal admin modules. This allows us to
     # automatically load the admin theme for these modules.
     admin_modules:
-      - sympal_admin
-      - sympal_config
-      - sympal_content
-      - sympal_content_menu_item
-      - sympal_content_types
-      - sympal_dashboard
-      - sympal_redirects
-      - sympal_sites
-      - sympal_themes
-      - sympal_users
-      - sympal_groups
-      - sympal_permissions
-      - sympal_menu_items
-      - sympal_plugin_manager
-      - sympal_assets
-      - sympal_upgrade
+      sympal_admin: ~
+      sympal_config: ~
+      sympal_content: ~
+      sympal_content_menu_item: ~
+      sympal_content_types: ~
+      sympal_dashboard: ~
+      sympal_redirects: ~
+      sympal_sites: ~
+      sympal_themes: ~
+      sympal_users: ~
+      sympal_groups: ~
+      sympal_permissions: ~
+      sympal_menu_items: ~
+      sympal_plugin_manager: ~
+      sympal_assets: ~
+      sympal_upgrade: ~
 
     # Minify css and javascript
     minifier:

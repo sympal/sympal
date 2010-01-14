@@ -246,6 +246,13 @@ class sfSympalConfiguration
   {
     $request = $this->_symfonyContext->getRequest();
 
+    $module = $request->getParameter('module');
+    $adminModules = sfSympalConfig::get('admin_modules');
+    if (array_key_exists($module, $adminModules))
+    {
+      return sfSympalConfig::get('admin_theme', null, 'admin');
+    }
+
     if (sfSympalConfig::get('allow_changing_theme_by_url'))
     {
       $user = $this->_symfonyContext->getUser();
@@ -260,13 +267,6 @@ class sfSympalConfiguration
       {
         return $theme;
       }
-    }
-
-    $module = $request->getParameter('module');
-    $adminModules = sfSympalConfig::get('admin_modules');
-    if (in_array($module, $adminModules))
-    {
-      return sfSympalConfig::get('admin_theme', null, 'admin');
     }
 
     if ($theme = sfSympalConfig::get($module, 'theme'))
