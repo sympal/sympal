@@ -15,3 +15,5 @@ $t = $browser->test();
 $t->is($after['all']['sympal_config']['breadcrumbs_separator'], ' :: ', 'Test breadcrumbs separator saved');
 $t->is($after['all']['sympal_config']['plugin_api']['username'], 'test', 'Test plugin_api.username saved');
 $t->is($after['all']['sympal_config']['plugin_api']['password'], 'test', 'Test plugin_api.password saved');
+
+sfSympalConfig::writeSetting('breadcrumbs_separator', ' / ');
