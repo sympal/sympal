@@ -35,7 +35,6 @@ function uninstallPlugin($name, $t)
 }
 
 installPlugin('sfSympalBlogPlugin', $t);
-uninstallPlugin('sfSympalBlogPlugin', $t);
 
 installPlugin('sfSympalEventPlugin', $t);
 uninstallPlugin('sfSympalEventPlugin', $t);

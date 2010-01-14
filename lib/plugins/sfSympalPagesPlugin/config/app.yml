@@ -1,7 +1,0 @@
-all:
-  sympal_config:
-    Page:
-      enable_comments: true
-    I18n:
-      Page:
-        enabled: true

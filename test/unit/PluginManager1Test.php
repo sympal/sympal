@@ -19,6 +19,9 @@ function generatePlugin($name, $contentType, $t)
 
 function downloadPlugin($name, $t)
 {
+  $manager = sfSympalPluginManager::getActionInstance($name, 'uninstall');
+  $manager->uninstall(true);
+
   $manager = sfSympalPluginManager::getActionInstance($name, 'download');
   $manager->download();
 

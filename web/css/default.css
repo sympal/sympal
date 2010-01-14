@@ -79,6 +79,13 @@ h1{font-size:138.5%;}h2{font-size:123.1%;}h3{font-size:108%;}h1,h2,h3{margin:1em
 	padding: 10px;
 	color: #fff;
 }
+#container #sidebar ul {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+#container #sidebar ul li {
+  margin-bottom: 5px;
+}
 #container #sidebar a {
   color: #fff;
   text-shadow: #000 1px 1px 1px;

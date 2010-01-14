@@ -22,7 +22,7 @@ all:
 
     # Minify css and javascript
     minifier:
-      enabled: true
+      enabled: false
 
     # Configure some defaults for inline editing
     inline_editing:
