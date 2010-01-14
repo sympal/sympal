@@ -40,6 +40,10 @@ class sfSympalMenuSite extends sfSympalMenu
 
     if ($subItem)
     {
+      if ($subItem instanceof sfSympalContent && $this->_menuItem->_content_id == $subItem->id)
+      {
+        $subItem = array();
+      }
       if (!is_array($subItem))
       {
         $subItem = array((string) $subItem => null);

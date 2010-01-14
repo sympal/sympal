@@ -1,5 +1,7 @@
 all:
   sympal_config:
+    # Configure the modules which are Sympal admin modules. This allows us to
+    # automatically load the admin theme for these modules.
     admin_modules:
       - sympal_admin
       - sympal_config

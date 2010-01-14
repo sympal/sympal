@@ -166,6 +166,27 @@ body {
   padding-left: 10px;
 }
 
+#sympal_breadcrumbs li a:hover
+{
+  color: #35acc5;
+}
+
+#sympal_breadcrumbs li.first
+{
+  background: url('../images/home.png') no-repeat;
+  background-position: center;
+  text-indent: -9999;
+  font-size: 0;
+  width: 30px;
+}
+
+#sympal_breadcrumbs li.first a
+{
+  text-indent: -9999;
+  font-size: 0;
+  width: 20px;
+}
+
 #sympal_breadcrumbs li a
 {
   height: 30px;
@@ -176,24 +197,6 @@ body {
   padding-right: 15px;
   text-decoration: none;
   color: #454545;
-}
-
-#sympal_breadcrumbs li a:hover
-{
-  color: #35acc5;
-}
-
-#sympal_breadcrumbs li#breadcrumbs-home
-{
-  background: url('../images/home.png') no-repeat;
-  background-position: center;
-}
-
-#sympal_breadcrumbs li#breadcrumbs-home a
-{
-  text-indent: -9999;
-  font-size: 0;
-  width: 20px;
 }
 
 label.required:after

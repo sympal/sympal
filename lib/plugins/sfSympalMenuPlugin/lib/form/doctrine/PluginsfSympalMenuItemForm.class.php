@@ -30,6 +30,8 @@ abstract class PluginsfSympalMenuItemForm extends BasesfSympalMenuItemForm
       $q->leftJoin('m.Translation mt');
     }
 
+    $q->andWhere('m.site_id = ?', sfSympalContext::getInstance()->getSite()->getId());
+
     $this->widgetSchema['parent_id'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'sfSympalMenuItem',
       'add_empty' => '~ (object is at root level)',
