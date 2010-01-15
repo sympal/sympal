@@ -1,4 +1,4 @@
-<?php if (sfConfig::get('sf_environment') == 'prod'): ?>
+<?php if (sfConfig::get('sf_cache')): ?>
 
 index:
   enabled:     <?php echo var_export(sfSympalConfig::get('page_cache', 'enabled', false))."\n" ?>

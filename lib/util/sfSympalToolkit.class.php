@@ -206,7 +206,7 @@ class sfSympalToolkit
       {
         $routes['content_'.$content->getId()] = sprintf($routeTemplate,
           substr($content->getRouteName(), 1),
-          $content->getEvaluatedRoutePath(),
+          $content->getRoutePath(),
           $content->getModuleToRenderWith(),
           $content->getActionToRenderWith(),
           $content->Type->name,

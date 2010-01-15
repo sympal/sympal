@@ -336,9 +336,13 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     if ($this->get('custom_path', false) || $this->get('module', false) || $this->get('action', false))
     {
       return '@sympal_content_' . str_replace('-', '_', $this['slug']);
-    } else if ($this['Type']['default_path']) {
+    }
+    else if ($this['Type']['default_path'])
+    {
       return $this['Type']['route_name'];
-    } else if ($this['slug']) {
+    }
+    else if ($this['slug'])
+    {
       return '@sympal_content_view';
     }
   }
@@ -352,28 +356,21 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
         $path .= '.:sf_format';
       }
       return $path;
-    } else if ($path = $this['Type']['route_path']) {
-      return $path;
-    } else if ($this['slug']) {
-      return '/content/:slug';
     }
-  }
-
-  public function getAutomaticUrlHierarchy()
-  {
-    $menuItem = $this->getMenuItem();
-    unset($this->MenuItem);
-    if ($menuItem)
+    else if ($this->get('module', false) || $this->get('action', false))
     {
-      $url = str_replace(' / ', '/', $menuItem->getBreadcrumbs($this)->getPathAsString());
-      $e = explode('/', $url);
-      unset($e[0]);
-      $e = array_map(array('Doctrine_Inflector', 'urlize'), $e);
-      $url = implode('/', $e);
-      if ($url)
-      {
-        return '/'.$url;
-      }
+      $values = $this->_buildValues();
+      $values['sf_culture'] = ':sf_culture';
+      $values['sf_format'] = ':sf_format';
+      return $this->getRouteObject()->generate($values);
+    }
+    else if ($path = $this['Type']['route_path'])
+    {
+      return $path;
+    }
+    else if ($this['slug'])
+    {
+      return '/content/:slug';
     }
   }
 
@@ -418,7 +415,9 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getEvaluatedRoutePath()
   {
-    return $this->getRouteObject()->generate($this->_buildValues());
+    $values = $this->_buildValues();
+    $values['sf_culture'] = sfContext::getInstance()->getUser()->getCulture();
+    return $this->getRouteObject()->generate($values);
   }
 
   protected function _fillRoute($route)

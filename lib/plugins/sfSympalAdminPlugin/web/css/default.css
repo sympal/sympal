@@ -212,15 +212,6 @@
   color: #fff;
 }
 
-#sf_admin_container .sf_admin_row_0 td
-{
-}
-
-#sf_admin_container .sf_admin_row_1 td
-{
-/*  background-color: #eee;*/
-}
-
 #sf_admin_container fieldset h2
 {
   text-shadow: #4E89D5 1px 1px 1px;
@@ -286,6 +277,13 @@
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
+
+#sf_admin_container .sf_admin_text input,
+#sf_admin_container .sf_admin_text textarea
+{
+  width: 75%;
+}
+
 
 #sf_admin_container .sf_admin_form_row .content
 {
