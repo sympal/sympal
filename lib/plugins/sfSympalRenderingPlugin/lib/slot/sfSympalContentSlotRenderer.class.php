@@ -8,16 +8,36 @@ class sfSympalContentSlotRenderer
   public function __construct(sfSympalContentSlot $contentSlot)
   {
     $this->_contentSlot = $contentSlot;
+    $this->_content = $contentSlot->getContentRenderedFor();
   }
 
   public function render()
   {
-    return $this->getRawValue();
+    return $this->getRenderedValue();
   }
 
   public function getRawValue()
   {
     return $this->_contentSlot->getRawValue();
+  }
+
+  public function getRenderedValue()
+  {
+    if ($this->_contentSlot->render_function)
+    {
+      $renderFunction = $this->_contentSlot->render_function;
+      if (method_exists($this->_content, $renderFunction))
+      {
+        return $this->_content->$renderFunction($this);
+      } else if (method_exists($this->_contentSlot, $renderFunction)) {
+        return $this->_contentSlot->$renderFunction($this);
+      } else {
+        sfSympalToolkit::autoloadHelper($renderFunction);
+        return $renderFunction($this->_content, $this->_contentSlot->name);
+      }
+    } else {
+      return $this->getRawValue();
+    }
   }
 
   public function __toString()

@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(37, new lime_output_color());
+$t = new lime_test(38, new lime_output_color());
 
 $user = new sfGuardUser();
 $user->first_name = 'test';
@@ -110,7 +110,8 @@ $t->is(count($content->getSlots()), $countBefore + 1);
 
 $t->is($content->title, 'Title value');
 $t->is($slots['title']['value'], 'Title value');
-$t->is($slots['title']['type'], 'ContentProperty');
+$t->is($slots['title']['type'], 'Text');
+$t->is($slots['title']['is_column'], true);
 $t->is($slots['body']['type'], 'Markdown');
 $t->is($slots['teaser']['type'], 'RawHtml');
 

@@ -118,30 +118,27 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $contentSlotRef;
   }
 
-  public function getOrCreateSlot($name, $type = 'Text', $isColumn = false, $renderFunction = null)
+  public function getOrCreateSlot($name, $type = null, $renderFunction = null)
   {
     if (!$hasSlot = $this->hasSlot($name))
     {
+      $isColumn = $this->hasField($name) ? true : false;
+      $type = $type ? $type : 'Text';
+
       $slot = new sfSympalContentSlot();
+      $slot->is_column = $isColumn;
+      
+      if ($slot->is_column && is_null($renderFunction))
+      {
+        $renderFunction = 'get_sympal_content_property';
+      }
+
       $slot->render_function = $renderFunction;
-      if ($isColumn)
-      {
-        $slot->is_column = true;
-      }
+      $slot->name = $name;
+      $slot->type = $type;
+      $slot->save();
 
-      if (!$slot->exists())
-      {
-        if ($isColumn)
-        {
-          $type = 'ContentProperty';
-        }
-
-        $slot->setName($name);
-        $slot->setType($type);
-        $slot->save();
-
-        $this->addSlot($slot);
-      }
+      $this->addSlot($slot);
     } else {
       $slot = $this->getSlot($name);
     }
@@ -156,7 +153,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $result = $this->_table->hasField($name);
     if (!$result)
     {
-      $className = $this->getContentTypeClassName();
+      $className = $this->getType()->getName();
       $table = Doctrine_Core::getTable($className);
       if ($table->hasField($name))
       {

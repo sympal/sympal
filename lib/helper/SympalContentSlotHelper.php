@@ -29,7 +29,7 @@ function render_content_date_published(sfSympalContent $content, $slot)
  * @param Content $content  The Content instance
  * @param string $name The name of the slot
  * @param string $type The type of slot
- * @param string $renderFunction The function to use to render the value
+ * @param string $renderFunction The function/callable used to render the value of slots which are columns
  * @return void
  */
 function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunction = null)
@@ -39,30 +39,13 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunctio
   {
     $slot = $name;
     $name = $name->getName();
-  }
-
-  $isColumn = false;
-  if ($content->hasField($name))
-  {
-    $isColumn = true;
-  }
-
-  if (!$slot)
-  {
-    $slot = $content->getOrCreateSlot($name, $type, $isColumn, $renderFunction);
+  } else {
+    $slot = $content->getOrCreateSlot($name, $type, $renderFunction);
   }
 
   $slot->setContentRenderedFor($content);
 
-  if ($isColumn && is_null($renderFunction))
-  {
-    $renderFunction = 'get_sympal_content_property';
-  }
-
-  $slots = $content->getSlots();
-
-  $user = sfContext::getInstance()->getUser();
-  if ($user->isEditMode())
+  if (sfContext::getInstance()->getUser()->isEditMode())
   {
     use_helper('SympalContentSlotEditor');
 

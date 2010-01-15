@@ -4,6 +4,6 @@ class sfSympalContentSlotMarkdownRenderer extends sfSympalContentSlotRenderer
 {
   public function render()
   {
-    return sfSympalMarkdownRenderer::convertToHtml($this->getRawValue());
+    return sfSympalMarkdownRenderer::convertToHtml($this->getRenderedValue());
   }
 }

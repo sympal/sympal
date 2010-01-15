@@ -7,7 +7,7 @@ $browser = new sfSympalTestFunctional(new sfBrowser());
 $browser->
   signInAsAdmin()->
   get('/blog-post/sample_blogpost')->
-  click('Save', array('sf_sympal_comment' => array(
+  click('Save Comment', array('sf_sympal_comment' => array(
     'subject' => 'Test',
     'body' => 'Test',
   )), array('_with_csrf' => true))
