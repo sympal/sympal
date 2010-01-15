@@ -52,6 +52,10 @@ class sfSympalMinifier
         {
           mkdir($dir, 0777, true);
         }
+        if (!is_dir($dir = dirname($cachedPath)))
+        {
+          mkdir($dir, 0777, true);
+        }
         file_put_contents($cachedPath, $minified);
       }
     

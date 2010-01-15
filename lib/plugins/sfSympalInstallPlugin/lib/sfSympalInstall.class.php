@@ -166,6 +166,12 @@ class sfSympalInstall
   {
     $task = new sfSympalCreateSiteTask($this->_dispatcher, $this->_formatter);
     $task->run(array('application' => $this->_application), array('no-confirmation' => true));  
+
+    $dir = sfConfig::get('sf_web_dir').'/cache';
+    if (!is_dir($dir))
+    {
+      mkdir($dir, 0777, true);
+    }
   }
 
   protected function _installAddonPlugins()
