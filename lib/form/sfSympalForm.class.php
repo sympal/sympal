@@ -90,7 +90,9 @@ class sfSympalForm extends sfSympalExtendClass
   public function hasRecaptcha()
   {
     $forms = sfSympalConfig::get('recaptcha_forms', null, array());
-    return in_array(get_class($this->getSubject()), $forms) ? true : false;
+    $class = get_class($this->getSubject());
+
+    return (in_array($class, $forms) || array_key_exists($class, $forms)) ? true : false;
   }
 
   public static function listenToFormPostConfigure(sfEvent $event)
