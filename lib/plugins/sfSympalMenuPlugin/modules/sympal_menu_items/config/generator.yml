@@ -17,7 +17,7 @@ generator:
         title: Menu items list
         sort: ['root_id, lft', 'asc']
         max_per_page: 9999999999999999999
-        display: [=name]
+        display: [=name, _is_published]
         batch_actions:
           publish:
             action: publish

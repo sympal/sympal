@@ -141,9 +141,14 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
     return $this->_get('is_primary');
   }
 
-  public function isPublished()
+  public function getIsPublished()
   {
-    return $this->_get('date_published');
+    return ($this->getDatePublished() && strtotime($this->getDatePublished()) <= time()) ? true : false;
+  }
+
+  public function getIsPublishedInTheFuture()
+  {
+    return ($this->getDatePublished() && strtotime($this->getDatePublished()) > time()) ? true : false;
   }
 
   public function getDatePublished()

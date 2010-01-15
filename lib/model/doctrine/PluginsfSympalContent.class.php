@@ -58,8 +58,13 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     {
       return $actionName;
     } else {
-      return str_replace('-', '_', $this->getSlug());
+      return $this->getUnderscoredSlug();
     }
+  }
+
+  public function getUnderscoredSlug()
+  {
+    return str_replace('-', '_', $this->getSlug());
   }
 
   public function getActionToRenderWith()
@@ -301,6 +306,16 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       ->render();
   }
 
+  public function getIsPublished()
+  {
+    return ($this->getDatePublished() && strtotime($this->getDatePublished()) <= time()) ? true : false;
+  }
+
+  public function getIsPublishedInTheFuture()
+  {
+    return ($this->getDatePublished() && strtotime($this->getDatePublished()) > time()) ? true : false;
+  }
+
   public function getMonthPublished($format = 'm')
   {
     return date('m', strtotime($this->getDatePublished()));
@@ -335,7 +350,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   {
     if ($this->get('custom_path', false) || $this->get('module', false) || $this->get('action', false))
     {
-      return '@sympal_content_' . str_replace('-', '_', $this['slug']);
+      return '@sympal_content_' . $this->getUnderscoredSlug();
     }
     else if ($this['Type']['default_path'])
     {
@@ -359,7 +374,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
     else if ($this->get('module', false) || $this->get('action', false))
     {
-      $values = $this->_buildValues();
+      $values = $this->_buildRouteValues();
       $values['sf_culture'] = ':sf_culture';
       $values['sf_format'] = ':sf_format';
       return $this->getRouteObject()->generate($values);
@@ -415,14 +430,14 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getEvaluatedRoutePath()
   {
-    $values = $this->_buildValues();
+    $values = $this->_buildRouteValues();
     $values['sf_culture'] = sfContext::getInstance()->getUser()->getCulture();
     return $this->getRouteObject()->generate($values);
   }
 
   protected function _fillRoute($route)
   {
-    $values = $this->_buildValues();
+    $values = $this->_buildRouteValues();
     if (!empty($values))
     {
       return $route.'?'.http_build_query($values);
@@ -431,7 +446,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
-  protected function _buildValues()
+  protected function _buildRouteValues()
   {
     $variables = $this->getRouteObject()->getVariables();
     $isI18nEnabled = sfSympalConfig::isI18nEnabled();

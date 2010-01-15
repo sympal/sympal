@@ -31,7 +31,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 
     if ($menuItem && $menuItem->exists())
     {
-      if ($menuItem->isPublished())
+      if ($menuItem->getIsPublished())
       {
         $menuEditor->addChild(image_tag('/sf/sf_admin/images/cancel.png').' Un-Publish Menu Item', '@sympal_unpublish_menu_item?id='.$menuItem['id']);
       } else {
