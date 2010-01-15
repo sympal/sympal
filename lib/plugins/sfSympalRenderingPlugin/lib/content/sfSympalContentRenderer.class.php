@@ -70,7 +70,7 @@ class sfSympalContentRenderer
       case 'xml':
       case 'json':
       case 'yml':
-        $return = $this->_content->exportTo($this->_format, true);
+        $return = $this->_content->getFormatData($this->_format);
       default:
         $event = $this->_dispatcher->notifyUntil(new sfEvent($this, 'sympal.content_renderer.unknown_format', $this->getRenderVariables()));
 

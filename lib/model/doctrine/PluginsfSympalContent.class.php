@@ -299,11 +299,75 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
+  public function getFeedDescriptionPotentialSlots()
+  {
+    return array(
+      'body'
+    );
+  }
+
   public function getFeedDescription()
   {
-    return sfSympalContext::getInstance()
-      ->getRenderer($this)
-      ->render();
+    if (method_exists($this->getContentTypeClassName(), 'getFeedDescription'))
+    {
+      return $this->getRecord()->getFeedDescription();
+    }
+
+    foreach ($this->getFeedDescriptionPotentialSlots() as $slot)
+    {
+      if ($this->hasSlot($slot))
+      {
+        return $this->getSlot($slot)->render();
+      }
+    }
+    if ($this->Slots->count() > 0)
+    {
+      return $this->Slots->getFirst()->render();
+    }
+  }
+
+  public function getFormatData($format)
+  {
+    $method = 'get'.ucfirst($format).'FormatData';
+    if (method_exists($this->getContentTypeClassName(), $method))
+    {
+      return $this->getRecord()->$method();
+    } else if (method_exists($this, $method)) {
+      $data = $this->$method();
+    } else {
+      $data = $this->getDefaultFormatData();
+    }
+    return Doctrine_Parser::dump($this->$method(), $format);
+  }
+
+  public function getDefaultFormatData()
+  {
+    $data = $this->toArray(true);
+    unset(
+      $data['MenuItem']['__children'],
+      $data['MenuItem']['Groups'],
+      $data['Groups'],
+      $data['Links'],
+      $data['Assets'],
+      $data['CreatedBy'],
+      $data['Site']
+    );
+    return $data;
+  }
+
+  public function getXmlFormatData()
+  {
+    return $this->getDefaultFormatData();
+  }
+
+  public function getYmlFormatData()
+  {
+    return $this->getDefaultFormatData();
+  }
+
+  public function getJsonFormatData()
+  {
+    return $this->getDefaultFormatData();
   }
 
   public function getIsPublished()

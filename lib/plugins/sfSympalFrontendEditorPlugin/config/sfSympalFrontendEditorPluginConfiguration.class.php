@@ -6,15 +6,27 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
 
   public function initialize()
   {
-    $this->dispatcher->connect('response.filter_content', array($this, 'addEditorHtml'));
     $this->dispatcher->connect('sympal.load_content', array($this, 'loadEditor'));
+  }
+
+  private function _shouldLoadEditor()
+  {
+    // Only load the editor if
+    // ... edit mode is on
+    // ... request format is html
+    return sfContext::getInstance()->getUser()->isEditMode()
+      && sfContext::getInstance()->getRequest()->getRequestFormat() == 'html';
   }
 
   public function loadEditor(sfEvent $event)
   {
-    if (sfContext::getInstance()->getUser()->isEditMode() && sfSympalContext::getInstance()->getCurrentContent())
+    if ($this->_shouldLoadEditor())
     {
+      // Load the editor assets (css/js)
       $this->loadEditorAssets();
+
+      // Use the response.filter_content event to add the editor html
+      $this->dispatcher->connect('response.filter_content', array($this, 'addEditorHtml'));
     }
   }
 
@@ -55,11 +67,6 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
 
   public function addEditorHtml(sfEvent $event, $content)
   {
-    if ($contentRecord = sfSympalContext::getInstance()->getCurrentContent())
-    {
-      return str_replace('</body>', get_sympal_editor().'</body>', $content);
-    } else {
-      return $content;
-    }
+    return str_replace('</body>', get_sympal_editor().'</body>', $content);
   }
 }
