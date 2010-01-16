@@ -15,12 +15,14 @@ all:
           icon:       doc                   # optional icon file name, without extension
         image:                              
           extensions: [png, jpg, jpeg, gif]
+          class:      sfSympalAssetImageObject
         pdf:
           extensions: [pdf]
         bin:
           extensions: [bin, exe, sh, bat, deb, yum]
         video:
           extensions: [wmv, avi, mpg, mpeg, flv, mp4, swf]
+          class:      sfSympalAssetVideoObject
         audio:
           extensions: [ogg, mp3, flac, wma, cda]
         text:

@@ -2,20 +2,19 @@
 
 class sfSympalAssetToolkit
 {
-  protected static $_typeClassMap = array(
-    'image' => 'sfSympalAssetImageObject',
-    'file' => 'sfSympalAssetFileObject',
-    'video' => 'sfSympalAssetVideoObject'
-  );
-
   public static $iconsPath;
 
   public static function createAssetObject($file)
   {
-    $extension = sfSympalAssetToolkit::getExtensionFromFile($file);
-    $type = sfSympalAssetToolkit::getTypeFromExtension($extension);
-    $class = isset(self::$_typeClassMap[$type]) ? self::$_typeClassMap[$type] : 'sfSympalAssetFileObject';
+    $class = self::getClassFromExtension(self::getExtensionFromFile($file));
     return new $class($file);
+  }
+
+  public static function getClassFromExtension($extension)
+  {
+    $type = self::getTypeFromExtension($extension);
+    $types = self::getFileTypes();
+    return isset($types[$type]['class']) ? $types[$type]['class'] : 'sfSympalAssetFileObject';
   }
 
   public static function getTypeFromExtension($extension)
