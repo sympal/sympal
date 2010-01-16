@@ -1,4 +1,4 @@
-<h1>Themes</h1>
+<h1><?php echo __('Themes') ?></h1>
 
 <p><?php echo __('Preview the available themes in this Sympal project. Click a 
 theme name below to see what it looks like!') ?></p>
