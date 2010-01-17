@@ -153,18 +153,27 @@ all:
     content_slot_types:
       #MySlotType:
       #  label: Label of My Slot Type
+      #  form: MySlotForm (defaults to sfSympalInlineEditContentSlotForm)
       #  widget_class: MySlotTypeWidget (defaults to sfWidgetFormSympalMySlotType)
       #  widget_options: []
       #  validator_class: MySlotTypeValidator (defaults to sfValidatorFormSympalMySlotType)
       #  validator_options: []
       Text:
         label: Single Line of Text
+        form: sfSympalInlineEditContentSlotForm
+        form_renderer: sympal_edit_slot/slot_editor_renderer
       RawHtml:
         label: Raw HTML
+        form: sfSympalInlineEditContentSlotForm
+        form_renderer: sympal_edit_slot/slot_editor_renderer
       Markdown:
         label: Markdown Editor
+        form: sfSympalInlineEditContentSlotForm
+        form_renderer: sympal_edit_slot/slot_editor_renderer
       TinyMCE:
         label: TinyMCE Rich Text Editor
+        form: sfSympalInlineEditContentSlotForm
+        form_renderer: sympal_edit_slot/slot_editor_renderer
         widget_options:
           config: 'onchange_callback: "sympalTinyMCETriggerSave", handle_event_callback : "sympalHandleTinyMCEEvent"'
 

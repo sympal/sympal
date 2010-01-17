@@ -26,7 +26,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
   public function getSlotEditFormRenderer()
   {
-    return sfSympalConfig::get('inline_editing', 'default_form_renderer', 'sympal_edit_slot/slot_editor_renderer');
+    $contentSlotTypes = sfSympalConfig::get('content_slot_types');
+    return isset($contentSlotTypes[$this->type]['form_renderer']) ? $contentSlotTypes[$this->type]['form_renderer'] : sfSympalConfig::get('inline_editing', 'default_form_renderer', 'sympal_edit_slot/slot_editor_renderer');
   }
 
   public function getEditForm()
@@ -35,7 +36,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     {
       return $this->_getContentSlotColumnForm();
     } else {
-      $className = sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
+      $contentSlotTypes = sfSympalConfig::get('content_slot_types');
+      $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
       return new $className($this);
     }
   }
