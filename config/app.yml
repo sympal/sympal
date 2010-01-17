@@ -223,6 +223,7 @@ all:
 
     # Configure internationalization
     i18n: false
+
     # Configure what models and fields get internationalized by Sympal
     internationalized_models:
       sfSympalContent: [i18n_slug, page_title, meta_keywords, meta_description]

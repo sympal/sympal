@@ -11,4 +11,10 @@ abstract class sfSympalBaseTask extends sfTaskExtraBaseTask
   {
     return new sfDatabaseManager($this->configuration);
   }
+
+  public function clearCache(array $options = array())
+  {
+    $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
+    $task->run(array(), $options);
+  }
 }

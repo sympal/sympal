@@ -11,7 +11,7 @@ abstract class PluginsfSympalSite extends BasesfSympalSite
     $this->deleteApplication();
   }
 
-  public function deleteApplication(Doctrine_Connection $conn = null)
+  public function deleteApplication()
   {
     sfToolkit::clearDirectory(sfConfig::get('sf_apps_dir').'/'.$this->slug);
     rmdir(sfConfig::get('sf_apps_dir').'/'.$this->slug);

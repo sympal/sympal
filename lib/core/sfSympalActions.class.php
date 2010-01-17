@@ -197,4 +197,9 @@ class sfSympalActions extends sfSympalExtendClass
   {
     $this->redirect($this->getRequest()->getReferer());
   }
+
+  public function refresh()
+  {
+    $this->redirect($this->getRequest()->getUri());
+  }
 }

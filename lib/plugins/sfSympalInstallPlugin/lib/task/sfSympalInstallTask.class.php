@@ -5,20 +5,21 @@ class sfSympalInstallTask extends sfTaskExtraBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('email-address', sfCommandArgument::OPTIONAL, 'The e-mail address of the first user to create.', 'admin@sympalphp.org'),
-      new sfCommandArgument('username', sfCommandArgument::OPTIONAL, 'The username of the first user to create.', 'admin'),
-      new sfCommandArgument('password', sfCommandArgument::OPTIONAL, 'The password of the first user to create.', 'admin'),
+      new sfCommandArgument('application', sfCommandArgument::OPTIONAL, 'The application to install Sympal in.', sfSympalToolkit::getDefaultApplication()),
     ));
 
     $this->addOptions(array(
+      new sfCommandOption('email-address', null, sfCommandOption::PARAMETER_OPTIONAL, 'The e-mail address of the first user to create', 'admin@sympalphp.org'),
+      new sfCommandOption('username', null, sfCommandOption::PARAMETER_OPTIONAL, 'The username of the first user to create.', 'admin'),
+      new sfCommandOption('password', null, sfCommandOption::PARAMETER_OPTIONAL, 'The password of the first user to create.', 'admin'),
       new sfCommandOption('first-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'The first name of the first user to create.'),
       new sfCommandOption('last-name', null, sfCommandOption::PARAMETER_OPTIONAL, 'The last name of the first user to create.'),
       new sfCommandOption('db-dsn', null, sfCommandOption::PARAMETER_OPTIONAL, 'The database DSN to install with.'),
       new sfCommandOption('db-username', null, sfCommandOption::PARAMETER_OPTIONAL, 'The database username.'),
       new sfCommandOption('db-password', null, sfCommandOption::PARAMETER_OPTIONAL, 'The database password.'),
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The title of the Sympal site to install', sfSympalToolkit::getDefaultApplication()),
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
+      new sfCommandOption('force-reinstall', null, sfCommandOption::PARAMETER_NONE, 'Force re-installation'),
+      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
 
     $this->aliases = array();
@@ -32,10 +33,13 @@ The [./symfony sympal:install|INFO] task installs the Sympal CMS into a blank Sy
   [./symfony sympal:install|INFO]
 
 By default the task will find the first application in the apps folder and install 
-Sympal for that application. You can specify the application with the --application
-option:
+Sympal for that application. You can specify the application with the first argument.
 
-  [./symfony sympal:install --application=my_app|INFO]
+  [./symfony sympal:install my_app|INFO]
+
+To force a full reinstall of sympal use the force-reinstall option:
+
+  [./symfony sympal:install --force-reinstall|INFO]
 EOF;
   }
 
@@ -44,20 +48,46 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will remove all data in your configured databases and initialize the sympal database.', 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
+    $databaseManager = new sfDatabaseManager($this->configuration);
+
+    $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);
+    $install->setApplication($arguments['application']);
+
+    $msg = array();
+    if (isset($options['force-reinstall']) && $options['force-reinstall']) {
+      $msg[] = 'This command will remove all data in your configured databases and initialize the Sympal database.';
+      $type = 'ERROR_LARGE';
+    } else if ($install->checkSympalSiteExists()) {
+      $msg[] = sprintf('Sympal has already been installed for the application named "%s".', $arguments['application']);
+      $msg[] = 'Do you wish to delete the site and re-create it?';
+      $msg[] = '';
+      $msg[] = 'Use the --force-reinstall option to reinstall Sympal completely.';
+      $msg[] = '';
+      $type = 'ERROR_LARGE';
+    } else if ($install->checkSympalDatabaseExists() && !$install->checkSympalSiteExists()) {
+      $msg[] = sprintf('Sympal has already been installed but the application named "%s" has not had a site created for it yet.', $arguments['application']);
+      $msg[] = 'Do you want to create a site record for this application?';
+      $msg[] = '';
+      $msg[] = 'Use the --force-reinstall option to reinstall Sympal completely.';
+      $msg[] = '';
+      $type = 'QUESTION_LARGE';
+    } else {
+      $msg[] = sprintf('This command will initialize the sympal Database for the application named "%s".', $arguments['application']);
+      $type = 'QUESTION_LARGE';
+    }
+
+    $msg[] = 'Are you sure you want to proceed? (y/N)';
+
+    if (!$options['no-confirmation'] && !$this->askConfirmation($msg, $type, false))
     {
       $this->logSection('sympal', 'Install task aborted');
 
       return 1;
     }
 
-    $databaseManager = new sfDatabaseManager($this->configuration);
-
-    $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);
-    $install->setApplication($options['application']);
-    $install->setParam('email_address', $arguments['email-address']);
-    $install->setParam('username', $arguments['username']);
-    $install->setParam('password', $arguments['password']);
+    $install->setParam('email_address', $options['email-address']);
+    $install->setParam('username', $options['username']);
+    $install->setParam('password', $options['password']);
     if (isset($options['first-name']))
     {
       $install->setParam('first_name', $options['first-name']);
@@ -78,13 +108,17 @@ EOF;
     {
       $install->setParam('db_password', $options['db-password']);
     }
+    if (isset($options['force-reinstall']) && $options['force-reinstall'])
+    {
+      $install->setForceReinstall(true);
+    }
 
     $install->install();
 
     $this->log(null);
-    $this->logSection('sympal', sprintf('Sympal was installed successfully...', $options['application']), null, 'COMMENT');
+    $this->logSection('sympal', sprintf('Sympal was installed successfully...', $arguments['application']), null, 'COMMENT');
 
-    $url = 'http://localhost/'.$options['application'].'_dev.php/security/signin';
+    $url = 'http://localhost/'.$arguments['application'].'_dev.php/security/signin';
     $this->logSection('sympal', sprintf('Open your browser to "%s"', $url), null, 'COMMENT');
     $this->logSection('sympal', sprintf('You can signin with the username "%s" and password "%s"', $install->getParam('username'), $install->getParam('password')), null, 'COMMENT');
   }

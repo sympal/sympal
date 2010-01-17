@@ -9,7 +9,6 @@ class sfSympalDeleteSiteTask extends sfSympalBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application name', sfSympalToolkit::getDefaultApplication()),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('and-app', null, sfCommandOption::PARAMETER_NONE, 'Delete Symfony application directory as well.'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
@@ -37,7 +36,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('You are about to delete the site named %s', $arguments['application']), 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('You are about to delete the site named "%s"', $arguments['application']), 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
     {
       $this->logSection('sympal', 'Delete site task aborted');
 
@@ -55,7 +54,7 @@ EOF;
 
     if (isset($options['and-app']) && $options['and-app'])
     {
-      $this->logSection('sympal', sprintf('Deleting Symfony application named "%s"', $arguments['application']));
+      $this->logSection('sympal', sprintf('Deleting Symfony application named "%s"...', $arguments['application']));
 
       sfToolkit::clearDirectory(sfConfig::get('sf_apps_dir').'/'.$arguments['application']);
       rmdir(sfConfig::get('sf_apps_dir').'/'.$arguments['application']);

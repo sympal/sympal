@@ -9,8 +9,10 @@ $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPl
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
 
 $requiredPlugins = array(
-  'sfDoctrineGuardPlugin',
+  'sfSympalPlugin',
+  'sfSympalUserPlugin',
   'sfFormExtraPlugin',
+  'sfDoctrineGuardPlugin',
   'sfTaskExtraPlugin',
   'sfFeed2Plugin',
   'sfWebBrowserPlugin',
@@ -22,14 +24,12 @@ $requiredPlugins = array(
   'sfSympalPagesPlugin',
   'sfSympalContentListPlugin',
   'sfSympalDataGridPlugin',
-  'sfSympalUserPlugin',
   'sfSympalInstallPlugin',
   'sfSympalUpgradePlugin',
   'sfSympalRenderingPlugin',
   'sfSympalAdminPlugin',
   'sfSympalFrontendEditorPlugin',
   'sfSympalAssetsPlugin',
-  'sfSympalPlugin'
 );
 
 $t->is($sympalConfiguration->getRequiredPlugins(), $requiredPlugins);

@@ -2,8 +2,9 @@ all:
   doctrine:
     class: sfDoctrineDatabase
     param:
+      #dsn: 'sqlite:///%SF_DATA_DIR%/test.sqlite'
       dsn: 'mysql://root:@localhost/sympal'
-      username: root
+      #username: root
 
 test:
   doctrine:

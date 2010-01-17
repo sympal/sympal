@@ -22,7 +22,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
         chdir(sfConfig::get('sf_root_dir'));
         $task = new sfGenerateAppTask($dispatcher, $formatter);
         $task->run(array($name));
-        $task = new sfSympalPrepareApplicationTask($dispatcher, $formatter);
+        $task = new sfSympalEnableForAppTask($dispatcher, $formatter);
         $task->run(array($name));
         $task = new sfSympalCreateSiteTask($dispatcher, $formatter);
         $task->run(array($name));

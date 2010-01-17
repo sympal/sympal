@@ -97,7 +97,7 @@ class sfSympalConfiguration
 
     $this->_enableModules();
 
-    $this->_redirectIfNotInstalled();
+    $this->_checkSympalInstall();
 
     $this->initializeTheme();
 
@@ -318,10 +318,20 @@ class sfSympalConfiguration
     }
   }
 
-  private function _redirectIfNotInstalled()
+  private function _checkSympalInstall()
   {
     $sfContext = sfContext::getInstance();
     $request = $sfContext->getRequest();
+
+    // Prepare the symfony application is it has not been prepared yet
+    if (!$sfContext->getUser() instanceof sfSympalUser)
+    {
+      chdir(sfConfig::get('sf_root_dir'));
+      $task = new sfSympalEnableForAppTask($this->_dispatcher, new sfFormatter());
+      $task->run(array($this->_projectConfiguration->getApplication()), array());
+
+      $sfContext->getController()->redirect('@homepage');
+    }
 
     // Redirect to install module if...
     //  not in test environment
@@ -330,6 +340,14 @@ class sfSympalConfiguration
     if (sfConfig::get('sf_environment') != 'test' && !sfSympalConfig::get('installed') && $request->getParameter('module') != 'sympal_install')
     {
       $sfContext->getController()->redirect('@sympal_install');
+    }
+
+    // Redirect to homepage if no site record exists so we can prompt the user to create
+    // a site record for this application
+    // This check is only ran in dev mode
+    if (sfConfig::get('sf_environment') == 'dev' && !$this->_sympalContext->getSite() && $sfContext->getRequest()->getPathInfo() != '/')
+    {
+      $sfContext->getController()->redirect('@homepage');
     }
   }
 

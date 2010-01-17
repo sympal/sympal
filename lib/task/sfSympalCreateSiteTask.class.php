@@ -5,11 +5,10 @@ class sfSympalCreateSiteTask extends sfSympalBaseTask
   protected function configure()
   {
     $this->addArguments(array(
-      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The site/application title'),
+      new sfCommandArgument('site', sfCommandArgument::REQUIRED, 'The site'),
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
       new sfCommandOption('layout', null, sfCommandOption::PARAMETER_OPTIONAL, 'The site/application layout', null),
       new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
       new sfCommandOption('load-dummy-data', null, sfCommandOption::PARAMETER_NONE, 'Load dummy data for the newly created site.'),
@@ -29,20 +28,51 @@ and generate the according symfony application.
 EOF;
   }
 
+  protected function execute($arguments = array(), $options = array())
+  {
+    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('You are about to create a new site named "%s"', $arguments['site']), 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
+    {
+      $this->logSection('sympal', 'Install task aborted');
+
+      return 1;
+    }
+
+    if (isset($options['interactive']) && $options['interactive'])
+    {
+      sfSympalConfig::set('sympal_install_admin_email_address', $this->askAndValidate('Enter E-Mail Address:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_first_name', $this->askAndValidate('Enter First Name:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_last_name', $this->askAndValidate('Enter Last Name:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Username:', new sfValidatorString()));
+      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Password:', new sfValidatorString()));
+    }
+
+    $this->_generateApplication($arguments['site']);
+    $this->_prepareApplication($arguments['site']);
+
+    $this->configuration = $this->createConfiguration($arguments['site'], 'dev');
+    $context = sfContext::createInstance($this->configuration);
+
+    $databaseManager = new sfDatabaseManager($this->configuration);
+    $site = $this->_getOrCreateSite($arguments, $options);
+  }
+
   protected function _getOrCreateSite($arguments, $options)
   {
-    $site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug($arguments['application']);
+    $site = Doctrine_Core::getTable('sfSympalSite')
+      ->createQuery('s')
+      ->where('s.slug = ?', $arguments['site'])
+      ->fetchOne();
     if (!$site)
     {
       $this->logSection('sympal', 'Creating new site record in database...');
       $site = new sfSympalSite();
-      $site->title = $arguments['application'];
-      $site->slug = $arguments['application'];
+      $site->title = sfInflector::humanize($arguments['site']);
+      $site->slug = $arguments['site'];
     }
 
     if (!$site->description)
     {
-      $site->description = 'Description for '.$arguments['application'].' site.';
+      $site->description = 'Description for '.$arguments['site'].' site.';
     }
 
     if ($options['layout'])
@@ -55,43 +85,17 @@ EOF;
     return $site;
   }
 
-  protected function _prepareApplication(sfSympalSite $site)
+  protected function _generateApplication($application)
   {
-    $task = new sfSympalPrepareApplicationTask($this->dispatcher, $this->formatter);
-    $task->run(array($site->slug), array());
+    try {
+      $task = new sfGenerateAppTask($this->dispatcher, $this->formatter);
+      $task->run(array($application), array());
+    } catch (Exception $e) {}
   }
 
-  protected function _installSiteData()
+  protected function _prepareApplication($application)
   {
-  }
-
-  protected function execute($arguments = array(), $options = array())
-  {
-    if (!$options['no-confirmation'] && !$this->askConfirmation(array(sprintf('You are about to create a new site named %s', $arguments['application']), 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
-    {
-      $this->logSection('sympal', 'Install task aborted');
-
-      return 1;
-    }
-
-    $path = sfConfig::get('sf_apps_dir').'/'.$arguments['application'];
-    if (!file_exists($path))
-    {
-      throw new sfException(sprintf('Could not find a Symfony application named "%s". You must generate an application with the generate:app task.', $options['application']));
-    }
-
-    if (isset($options['interactive']) && $options['interactive'])
-    {
-      sfSympalConfig::set('sympal_install_admin_email_address', $this->askAndValidate('Enter E-Mail Address:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_first_name', $this->askAndValidate('Enter First Name:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_last_name', $this->askAndValidate('Enter Last Name:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Username:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Password:', new sfValidatorString()));
-    }
-
-    $databaseManager = new sfDatabaseManager($this->configuration);
-    $site = $this->_getOrCreateSite($arguments, $options);
-    $this->_prepareApplication($site);
-    $this->_installSiteData($site);
+    $task = new sfSympalEnableForAppTask($this->dispatcher, $this->formatter);
+    $task->run(array($application), array());
   }
 }

@@ -7,6 +7,7 @@ class sfSympalInstall
     $_dispatcher,
     $_formatter,
     $_application = 'sympal',
+    $_forceReinstall = false,
     $_params = array(
       'db_dsn' => null,
       'db_username' => null,
@@ -34,6 +35,11 @@ class sfSympalInstall
     $this->_application = $application;
   }
 
+  public function setConfiguration(ProjectConfiguration $configuration)
+  {
+    $this->_configuration = $configuration;
+  }
+
   public function getParam($key)
   {
     return $this->_params[$key];
@@ -54,6 +60,11 @@ class sfSympalInstall
     $this->_params = $params;
   }
 
+  public function setForceReinstall($bool)
+  {
+    $this->_forceReinstall = $bool;
+  }
+
   public function logSection($section, $message, $size = null, $style = 'INFO')
   {
     $this->_configuration->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array($this->_formatter->formatSection($section, $message, $size, $style))));
@@ -68,29 +79,48 @@ class sfSympalInstall
     // Prepare the installation parameters
     $this->_prepareParams();
 
-    // Setup/create the Sympal database
-    $this->_setupDatabase();
+    // Build all classes
+    $this->_buildAllClasses();
 
-    // Install Sympal to the database
-    $this->_installSympal();
+    $dbExists = $this->checkSympalDatabaseExists();
 
-    // Run installation procss for any addon plugins
-    $this->_installAddonPlugins();
+    // If database does not exist or we are forcing a reinstall then lets do a full install
+    if (!$dbExists || $this->_forceReinstall)
+    {
+      // Setup/create the Sympal database
+      $this->_setupDatabase();
 
-    // Execute post install execute
-    $this->_executePostInstallSql();
+      // Install Sympal to the database
+      $this->_installSympal();
 
-    // Execute post install hooks
-    $this->_executePostInstallHooks();
+      // Run installation procss for any addon plugins
+      $this->_installAddonPlugins();
 
-    // Publish plugin assets
-    $this->_publishAssets();
+      // Execute post install execute
+      $this->_executePostInstallSql();
 
-    // Clear the cache
-    $this->_clearCache();
+      // Execute post install hooks
+      $this->_executePostInstallHooks();
+    // If db exists and site does not exist then lets create the site
+    } else if ($dbExists && !$this->checkSympalSiteExists()) {
+      $this->_createSite();
+    // Delete site and recreate it
+    } else {
+      Doctrine_Manager::connection()->execute('delete from sf_sympal_site where slug = ?', array($this->_application));
+      $this->_createSite();
+    }
 
-    // Prime the cache
-    $this->_primeCache();
+    if (!$dbExists || $this->_forceReinstall)
+    {
+      // Publish plugin assets
+      $this->_publishAssets();
+
+      // Clear the cache
+      $this->_clearCache();
+
+      // Prime the cache
+      $this->_primeCache();
+    }
 
     sfSympalConfig::writeSetting('installed', true);
     sfSympalConfig::set('installing', false);
@@ -98,8 +128,11 @@ class sfSympalInstall
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
 
-    // Run fix permissions to ensure a 100% ready to go environment
-    $this->_fixPerms();
+    if (!$dbExists || $this->_forceReinstall)
+    {
+      // Run fix permissions to ensure a 100% ready to go environment
+      $this->_fixPerms();
+    }
   }
 
   protected function _prepareParams()
@@ -111,6 +144,48 @@ class sfSympalInstall
         sfSympalConfig::set('sympal_install_admin_'.$key, $value);
       }
     }
+  }
+
+  public function checkSympalSiteExists()
+  {
+    try {
+      $conn = Doctrine_Manager::connection();
+      $result = $conn->fetchColumn('select slug from sf_sympal_site where slug = ?', array($this->_application));
+      $return = isset($result[0]) && $result[0] == $this->_application;
+    } catch (Exception $e) { 
+      $return = false;
+    }
+    $conn->close();
+    return $return;
+  }
+
+  public function checkSympalDatabaseExists()
+  {
+    try {
+      $conn = Doctrine_Manager::connection();
+      $conn->fetchColumn('select slug from sf_sympal_site where slug = ?', array($this->_application));
+      $return = true;
+    } catch (Exception $e) {
+      $return = false;
+    }
+    $conn->close();
+    return $return;
+  }
+
+  private function _createSite()
+  {
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfSympalCreateSiteTask($this->_dispatcher, $this->_formatter);
+    $task->run(array($this->_application), array('no-confirmation' => true));
+  }
+
+  protected function _buildAllClasses()
+  {
+    $this->logSection('sympal', '...building all classes', null, 'COMMENT');
+
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
+    $task->run(array(), array('all-classes', '--application='.sfConfig::get('sf_app')));
   }
 
   protected function _setupDatabase()

@@ -27,6 +27,7 @@ class sfSympalContentActionLoader
       $this->_content = $this->_actions->getRoute()->getObject();
       if ($this->_content)
       {
+        $this->_sympalContext->setSite($this->_content->getSite());
         $this->_menuItem = $this->_content->getMenuItem();
       }
     }
@@ -162,6 +163,13 @@ class sfSympalContentActionLoader
     return $title;
   }
 
+  private function _createSite()
+  {
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfSympalCreateSiteTask($this->_actions->getContext()->getEventDispatcher(), new sfFormatter());
+    $task->run(array($this->_sympalContext->getSiteSlug()), array('no-confirmation' => true));
+  }
+
   private function _handleForward404($record)
   {
     if (!$record)
@@ -171,13 +179,14 @@ class sfSympalContentActionLoader
       // No site record exception
       if (!$site)
       {
-        $message = sprintf(
-          'The Symfony application "%s" does not have a site record in the database. You must create a site with the sympal:create-site %s task and then install with the sympal:install %s task in order to get started.',
-          sfConfig::get('sf_app'),
-          sfConfig::get('sf_app'),
-          sfConfig::get('sf_app')
+        // Site doesn't exist for this application make sure the user wants to create a site for this application
+        $this->_actions->askConfirmation(
+          sprintf('No site found for the application named "%s"', $this->_sympalContext->getSiteSlug()),
+          sprintf('Do you want to create a site for the application named "%s"? Clicking yes will create a site record in the database and allow you to begin building out the content for your site!', $this->_sympalContext->getSiteSlug())
         );
-        throw new sfException($message);
+
+        $this->_createSite();
+        $this->_actions->refresh();
       // Check for no content and redirect to default new site page
       } else {
         $q = Doctrine_Query::create()

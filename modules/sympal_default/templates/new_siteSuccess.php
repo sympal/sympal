@@ -3,8 +3,12 @@
 <p>
   <?php echo __('You have successfully created a new Site but no content could be found.') ?>
   <?php if ($sf_user->isAuthenticated()): ?>
-    <?php echo __('Go to your %1% to get started working with %2%.', array(
-      '%1%' => link_to('Dashboard', '@sympal_dashboard'), '%2%' => __('Sympal'))
-    ) ?>  
+    <?php echo __('Go to your %1% to begin building out the content for your site!', array(
+      '%1%' => link_to('Dashboard', '@sympal_dashboard'))
+    ) ?>
+  <?php else: ?>
+    <?php echo __('%1% to begin building out the content for your site!', array(
+      '%1%' => link_to('Signin', '@sympal_signin')
+    )) ?>
   <?php endif; ?>
 </p>

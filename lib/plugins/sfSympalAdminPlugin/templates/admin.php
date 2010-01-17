@@ -20,7 +20,7 @@
   <!-- content -->
   <div id="content">
 
-  <?php if (!$sf_request->getParameter('popup') && $sf_user->isAuthenticated()): ?>
+  <?php if (!$sf_request->getParameter('popup') && $sf_user->isAuthenticated() && $sf_sympal_context->getSite()): ?>
     <div id="header">
       <h1><?php echo $sf_sympal_context->getSite()->getTitle() ?> <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
     </div>

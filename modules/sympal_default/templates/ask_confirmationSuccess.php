@@ -27,6 +27,8 @@
     <?php endforeach; ?>
 
     <input type="submit" name="yes" value="Yes" />
-    <input type="submit" name="no" value="No" />
+    <?php if ($sf_request->getReferer()): ?>
+      <input type="submit" name="no" value="No" />
+    <?php endif; ?>
   </form>
 </div>

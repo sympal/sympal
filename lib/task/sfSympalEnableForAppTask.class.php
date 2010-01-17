@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalPrepareApplicationTask extends sfSympalBaseTask
+class sfSympalEnableForAppTask extends sfSympalBaseTask
 {
   protected function configure()
   {
@@ -10,7 +10,7 @@ class sfSympalPrepareApplicationTask extends sfSympalBaseTask
 
     $this->aliases = array();
     $this->namespace = 'sympal';
-    $this->name = 'prepare-application';
+    $this->name = 'enable-for-app';
     $this->briefDescription = 'Prepare a Symfony application to be a Sympal site';
 
     $this->detailedDescription = <<<EOF
@@ -22,9 +22,18 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $path = sfConfig::get('sf_apps_dir').'/'.$arguments['application'];
+    $this->logSection('sympal', sprintf('Preparing Symfony application named "%s" for Sympal...', $arguments['application']));
 
-    $this->logSection('sympal', sprintf('Preparing Symfony application "%s" for Sympal...', $path));
+    $path = sfConfig::get('sf_app_dir').'/config/'.$arguments['application'].'Configuration.class.php';
+    $find = '  const disableSympal = true;';
+    $replace = '';
+    $code = file_get_contents($path);
+    $code = str_replace($find, $replace, $code);
+    file_put_contents($path, $code);
+
+    $this->logSection('sympal', '...making sure Sympal is not disabled for this application', null, 'COMMENT');
+
+    $path = sfConfig::get('sf_apps_dir').'/'.$arguments['application'];
 
     $code = file_get_contents($path.'/lib/myUser.class.php');
     file_put_contents($path.'/lib/myUser.class.php', str_replace('class myUser extends sfBasicSecurityUser',  'class myUser extends sfSympalUser', $code));
@@ -36,5 +45,7 @@ EOF;
     file_put_contents($path, sfYaml::dump($array));
 
     $this->logSection('sympal', '...removing default application default routes', null, 'COMMENT');
+
+    $this->clearCache();
   }
 }

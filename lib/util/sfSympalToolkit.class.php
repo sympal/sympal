@@ -34,13 +34,15 @@ class sfSympalToolkit
     foreach ($apps as $app)
     {
       $info = pathinfo($app);
-      require_once sfConfig::get('sf_apps_dir').'/'.$info['filename'].'/config/'.$info['filename'].'Configuration.class.php';
+      $path = $app.'/config/'.$info['filename'].'Configuration.class.php';
+      require_once $path;
       $reflection = new ReflectionClass($info['filename'].'Configuration');
       if (!$reflection->getConstant('disableSympal'))
       {
         return $info['filename'];
       }
     }
+
     return 'sympal';
   }
 
