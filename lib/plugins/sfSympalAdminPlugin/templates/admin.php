@@ -31,6 +31,23 @@
           Signed in as <?php echo $sf_user->getUsername() ?> [<?php echo link_to('signout', '@sympal_signout', 'confirm=Are you sure you wish to signout?') ?>]
         </strong>
       </p>
+
+      <?php if (sfSympalConfig::isI18nEnabled()): ?>
+        <?php
+        $user = sfContext::getInstance()->getUser();
+        $form = new sfFormLanguage($user, array('languages' => sfSympalConfig::get('language_codes', null, array($user->getCulture()))));
+        unset($form[$form->getCSRFFieldName()]);
+        $widgetSchema = $form->getWidgetSchema();
+        $widgetSchema['language']->setAttribute('onChange', "this.form.submit();");
+        ?>
+
+        <?php echo $form->renderFormTag(url_for('@sympal_change_language_form')) ?>
+          <?php echo $form ?>
+        </form>
+
+        <br/>
+      <?php endif; ?>
+
       <?php echo get_sympal_admin_menu() ?>
     </div>
 
