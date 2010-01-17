@@ -35,7 +35,8 @@ abstract class Basesympal_edit_slotActions extends sfActions
 
   public function executeChange_content_slot_type(sfWebRequest $request)
   {
-    $slot = $request->getParameter('sf_sympal_content_slot');
+    $slotId = $request->getParameter('id');
+    $slot = $request->getParameter('sf_sympal_content_slot_'.$slotId);
 
     $this->contentSlot = $this->_getContentSlot($request);
     $this->contentSlot->setType($slot['type']);
