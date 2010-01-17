@@ -22,7 +22,7 @@ The [symfony sympal:version|INFO] task outputs the current Sympal version.
 
 You can also check for new versions:
 
-  [./symfony sympal:version --check]
+  [./symfony sympal:version --check|INFO]
 EOF;
   }
 
