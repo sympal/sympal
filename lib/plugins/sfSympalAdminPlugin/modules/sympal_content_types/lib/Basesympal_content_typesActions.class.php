@@ -11,6 +11,6 @@ class Basesympal_content_types_Actions extends autoSympal_content_typesActions
 
   public function listenToAdminSaveObject(sfEvent $event)
   {
-    $this->resetSympalRoutesCache();
+    $this->clearCache();
   }
 }
