@@ -21,6 +21,11 @@ class sfSympalMenuSite extends sfSympalMenu
     return false;
   }
 
+  public function getMenuItem()
+  {
+    return $this->_menuItem;
+  }
+
   public function getPathAsString()
   {
     $path = array();
@@ -73,24 +78,40 @@ class sfSympalMenuSite extends sfSympalMenu
     return sfSympalMenuBreadcrumbs::generate($this->getBreadcrumbsArray($subItem));
   }
 
-  public function setMenuItem(sfSympalMenuItem $menuItem)
+  protected function _prepareMenuItem($menuItem)
   {
-    $this->_route = $menuItem->getItemRoute();
-    $this->_menuItem = $menuItem->toArray(false);
-    unset($this->_menuItem['__children']);
+    if ($menuItem instanceof sfSympalMenuItem)
+    {
+      $array = $menuItem->toArray(false);
+      $array['item_route'] = $menuItem->getItemRoute();
+      $array['requires_auth'] = $menuItem->getRequiresAuth();
+      $array['requires_no_auth'] = $menuItem->getRequiresNoAuth();
+      $array['all_permissions'] = $menuItem->getAllPermissions();
+      $array['level'] = $menuItem->getLevel();
+      unset($array['__children']);
+      return $array;
+    }
+    return $menuItem;
+  }
 
-    $this->requiresAuth($menuItem->requires_auth);
-    $this->requiresNoAuth($menuItem->requires_no_auth);
-    $this->setCredentials($menuItem->getAllPermissions());
+  public function setMenuItem($menuItem)
+  {
+    $this->_menuItem = $this->_prepareMenuItem($menuItem);
+    $this->setRoute($this->_menuItem['item_route']);
+    $this->requiresAuth($this->_menuItem['requires_auth']);
+    $this->requiresNoAuth($this->_menuItem['requires_no_auth']);
+    $this->setCredentials($this->_menuItem['all_permissions']);
 
     $currentMenuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
 
     if ($currentMenuItem && $currentMenuItem->exists())
     {
-      $this->isCurrent($menuItem->id == $currentMenuItem->id);
+      $this->isCurrent($this->_menuItem['id'] == $currentMenuItem['id']);
+    } else {
+      $this->isCurrent(false);
     }
 
-    $this->setLevel($menuItem->level);
+    $this->setLevel($this->_menuItem['level']);
   }
 
   public function getTopLevelParent()
@@ -107,11 +128,11 @@ class sfSympalMenuSite extends sfSympalMenu
     return $this;
   }
 
-  public function getMenuItemSubMenu(sfSympalMenuItem $menuItem)
+  public function getMenuItemSubMenu($menuItem)
   {
     foreach ($this->_children as $child)
     {
-      if ($child->getMenuItem()->id == $menuItem->id && $child->getChildren())
+      if ($child->_menuItem['id'] == $menuItem['id'] && $child->getChildren())
       {
         $result = $child;
       } else if ($n = $child->getMenuItemSubMenu($menuItem)) {
