@@ -17,7 +17,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function listenToAdminSaveObject(sfEvent $event)
   {
-    $this->resetSympalRoutesCache();
+    $this->clearCache();
   }
 
   protected function _publishContent(sfSympalMenuItemGroupContent $content, $publish = true)

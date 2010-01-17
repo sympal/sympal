@@ -9,6 +9,13 @@ class sfSympalActions extends sfSympalExtendClass
       ->getSympalConfiguration()->getCache()->resetRouteCache();
   }
 
+  public function clearCache(array $options = array())
+  {
+    chdir(sfConfig::get('sf_root_dir'));
+    $task = new sfCacheClearTask($this->getContext()->getEventDispatcher(), new sfFormatter());
+    $task->run(array(), $options);
+  }
+
   public function isAjax()
   {
     $request = $this->getRequest();

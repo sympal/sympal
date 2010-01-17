@@ -44,7 +44,6 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
     $this->_dispatcher->connect('routing.load_configuration', array($this, 'listenToRoutingLoadConfiguration'));
     $this->_dispatcher->connect('routing.load_configuration', array($this, 'listenToRoutingLoadConfiguration'));
-    $this->_dispatcher->connect('application.throw_exception', array($this, 'listenToApplicationThrowException'));
 
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
     {
@@ -58,26 +57,6 @@ class sfSympalConfiguration
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
     Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
-  }
-
-  public function listenToApplicationThrowException(sfEvent $event)
-  {
-    try {
-      $user = $this->_symfonyContext->getUser();
-      if ($user->isEditMode() && $this->_symfonyContext->getRequest()->isMethod('get'))
-      {
-        if (!$user->getAttribute('sf_sympal_exception_cache_cleared'))
-        {
-          chdir(sfConfig::get('sf_root_dir'));
-          $task = new sfCacheClearTask($this->_dispatcher, new sfFormatter());
-          $task->run(array(), array());
-          $this->_symfonyContext->getUser()->setAttribute('sf_sympal_exception_cache_cleared', true);
-          $this->_symfonyContext->getController()->redirect($this->_symfonyContext->getRequest()->getUri());
-        } else {
-          $this->_symfonyContext->getUser()->setAttribute('sf_sympal_exception_cache_cleared', false);
-        }
-      }
-    } catch (Exception $e) {}
   }
 
   public function listenToTaskCacheClear(sfEvent $event)
