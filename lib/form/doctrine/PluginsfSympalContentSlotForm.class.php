@@ -28,7 +28,12 @@ abstract class PluginsfSympalContentSlotForm extends BasesfSympalContentSlotForm
     }
     $this->widgetSchema['type'] = new sfWidgetFormChoice(array('choices' => $choices));
     $this->validatorSchema['type'] = new sfValidatorChoice(array('choices' => array_keys($choices)));
-
+    
+    $this->setupValueField();
+  }
+  
+  protected function setupValueField()
+  {
     if (isset($this['value']))
     {
       $this->useFields(array('value', 'type'));
