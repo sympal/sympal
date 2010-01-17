@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalAssetsPluginConfiguration extends sfSympalPluginConfiguration
+class sfSympalAssetsPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()
   {
@@ -19,6 +19,5 @@ class sfSympalAssetsPluginConfiguration extends sfSympalPluginConfiguration
   public function loadConfigForm(sfEvent $event)
   {
     $form = $event->getSubject();
-
   }
 }

@@ -101,7 +101,7 @@ class sfSympalConfiguration
     $this->initializeTheme();
 
     $this->_projectConfiguration->loadHelpers(array(
-      'Sympal', 'SympalContentSlot', 'SympalMenu', 'SympalPager', 'I18N'
+      'Sympal', 'SympalContentSlot', 'SympalMenu', 'SympalPager', 'I18N', 'Asset'
     ));
   }
 

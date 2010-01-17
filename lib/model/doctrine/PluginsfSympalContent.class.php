@@ -310,17 +310,23 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       return $this->getRecord()->getFeedDescription();
     }
 
-    foreach ($this->getFeedDescriptionPotentialSlots() as $slot)
+    foreach ($this->getFeedDescriptionPotentialSlots() as $slotName)
     {
-      if ($this->hasSlot($slot))
+      if ($this->hasSlot($slotName))
       {
-        return $this->getSlot($slot)->render();
+        $slot = $this->getSlot($slotName);
+        break;
       }
     }
+
     if ($this->Slots->count() > 0)
     {
-      return $this->Slots->getFirst()->render();
+      $slot = $this->Slots->getFirst();
     }
+
+    $slot->setContentRenderedFor($this);
+
+    return $slot->render();
   }
 
   public function getFormatData($format)
