@@ -181,7 +181,7 @@ all:
         form: sfSympalInlineEditContentSlotForm
         form_renderer: sympal_edit_slot/slot_editor_renderer
         widget_options:
-          config: 'onchange_callback: "sympalTinyMCETriggerSave", handle_event_callback : "sympalHandleTinyMCEEvent"'
+          config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
 
     # Enable and disable the check for upgrades via the web when on the Sympal dashboard
     check_for_upgrades_on_dashboard: false
