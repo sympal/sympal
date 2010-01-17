@@ -71,7 +71,14 @@ abstract class PluginsfSympalMenuItemForm extends BasesfSympalMenuItemForm
     ));
     $this->widgetSchema->setLabel('where_to_move', 'Position before or after?');
 
-    unset($this['site_id'], $this['Content'], $this['root_id'], $this['lft'], $this['rgt'], $this['level'], $this['slug']);
+    unset(
+      $this['site_id'],
+      $this['Content'],
+      $this['root_id'],
+      $this['lft'],
+      $this['rgt'],
+      $this['level']
+    );
   }
   
   public function updateParentIdColumn($parentId)
