@@ -16,7 +16,8 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
     // ... request format is html
     return sfContext::getInstance()->getUser()->isEditMode()
       && sfContext::getInstance()->getRequest()->getRequestFormat() == 'html'
-      && !sfSympalConfig::get('page_cache', 'enabled');
+      && !sfSympalConfig::get('page_cache', 'enabled')
+      && sfSympalConfig::get('inline_editing', 'enabled');
   }
 
   public function loadEditor(sfEvent $event)

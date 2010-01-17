@@ -35,6 +35,7 @@ all:
 
     # Configure some defaults for inline editing
     inline_editing:
+      enabled: true
       default_column_form: sfSympalInlineEditContentColumnForm
       default_slot_form: sfSympalInlineEditContentSlotForm
       default_form_renderer: sympal_edit_slot/slot_editor_renderer
