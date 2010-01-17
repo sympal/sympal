@@ -310,6 +310,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       return $this->getRecord()->getFeedDescription();
     }
 
+    $slot = false;
     foreach ($this->getFeedDescriptionPotentialSlots() as $slotName)
     {
       if ($this->hasSlot($slotName))
@@ -319,14 +320,19 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       }
     }
 
-    if ($this->Slots->count() > 0)
+    if ($slot === false && $this->Slots->count() > 0)
     {
       $slot = $this->Slots->getFirst();
     }
 
-    $slot->setContentRenderedFor($this);
+    if ($slot instanceof sfSympalContentSlot)
+    {
+      $slot->setContentRenderedFor($this);
 
-    return $slot->render();
+      return $slot->render();
+    } else {
+      return (string) $this;
+    }
   }
 
   public function getFormatData($format)
