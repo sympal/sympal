@@ -10,7 +10,7 @@ $browser->
   click('Save', array('settings' => array('breadcrumbs_separator' => ' :: ', 'plugin_api' => array('username' => 'test', 'password' => 'test'))))
 ;
 
-$after = sfYaml::load(sfConfig::get('sf_config_dir').'/app.yml');
+$after = sfYaml::load(sfConfig::get('sf_app_dir').'/config/app.yml');
 $t = $browser->test();
 $t->is($after['all']['sympal_config']['breadcrumbs_separator'], ' :: ', 'Test breadcrumbs separator saved');
 $t->is($after['all']['sympal_config']['plugin_api']['username'], 'test', 'Test plugin_api.username saved');

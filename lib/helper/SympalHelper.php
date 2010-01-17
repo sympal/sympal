@@ -91,7 +91,7 @@ function get_sympal_editor($menuItem = null, $content = null)
   $menuItem = $menuItem ? $menuItem : $sympalContext->getCurrentMenuItem();
   $content = $content ? $content : $sympalContext->getCurrentContent();
 
-  if ($user->isEditMode() && $content)
+  if ($content)
   {
     $menu = new sfSympalMenuTools('Sympal Editor');
 

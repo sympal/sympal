@@ -1,7 +1,9 @@
 <?php
 
-function get_sympal_content_slot_editor(sfSympalContentSlot $slot)
+function get_sympal_content_slot_editor(sfSympalContent $content, sfSympalContentSlot $slot)
 {
+  $slot->setContentRenderedFor($content);
+
   $name = $slot->getName();
   $isColumn = $slot->getIsColumn();
 

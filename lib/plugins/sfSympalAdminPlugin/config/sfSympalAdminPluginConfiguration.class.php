@@ -16,13 +16,10 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $user = sfContext::getInstance()->getUser();
 
-    if ($user->isEditMode())
+    $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
+    foreach ($contentTypes as $contentType)
     {
-      $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
-      foreach ($contentTypes as $contentType)
-      {
-        $manageContent->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId());
-      }
+      $manageContent->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId());
     }
 
     $siteAdministration = $menu->getChild('Site Administration');

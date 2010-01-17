@@ -183,13 +183,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getContentTypeClassName()
   {
-    $contentTypes = sfSympalContext::getInstance()->getSympalConfiguration()->getContentTypes();
-    if (isset($contentTypes[$this['content_type_id']]))
-    {
-      return $contentTypes[$this['content_type_id']];
-    } else {
-      throw new sfException('Invalid content type id "'.$this['content_type_id'].'". Id was not found in content type cache.');
-    }
+    return $this->getType()->getName();
   }
 
   public function getAllPermissions()

@@ -5,7 +5,11 @@ sympal_admin:
 sympal_dashboard:
   url:  /admin/dashboard
   param: { module: sympal_dashboard, action: index }
-  
+
+sympal_clear_cache:
+  url:  /admin/clear_cache
+  param: { module: sympal_admin, action: clear_cache }
+
 sympal_publish_content:
   url:   /publish_content/:id
   param: { module: sympal_editor, action: publish_content }

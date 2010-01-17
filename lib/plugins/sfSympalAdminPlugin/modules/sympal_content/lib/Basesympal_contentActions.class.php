@@ -6,12 +6,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     parent::preExecute();
 
-    if (!$this->getUser()->isEditMode())
-    {
-      $this->getUser()->setFlash('error', 'In order to work with content you must turn on edit mode!');
-      $this->redirect('@homepage');
-    }
-
     $this->getContext()->getEventDispatcher()->connect('admin.save_object', array($this, 'listenToAdminSaveObject'));
   }
 

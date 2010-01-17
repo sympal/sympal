@@ -9,18 +9,19 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_content', array($this, 'loadEditor'));
   }
 
-  private function _shouldLoadEditor()
+  public function shouldLoadEditor()
   {
     // Only load the editor if
     // ... edit mode is on
     // ... request format is html
     return sfContext::getInstance()->getUser()->isEditMode()
-      && sfContext::getInstance()->getRequest()->getRequestFormat() == 'html';
+      && sfContext::getInstance()->getRequest()->getRequestFormat() == 'html'
+      && !sfSympalConfig::get('page_cache', 'enabled');
   }
 
   public function loadEditor(sfEvent $event)
   {
-    if ($this->_shouldLoadEditor())
+    if ($this->shouldLoadEditor())
     {
       // Load the editor assets (css/js)
       $this->loadEditorAssets();

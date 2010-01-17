@@ -159,7 +159,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
     $user = sfContext::getInstance()->getUser();
 
-    if (!$user->isEditMode())
+    if (!$user->hasCredential('ManageContent'))
     {
       $expr = new Doctrine_Expression('NOW()');
       $q->andWhere($alias.'.date_published <= '.$expr);

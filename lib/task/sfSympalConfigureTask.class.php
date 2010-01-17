@@ -9,7 +9,7 @@ class sfSympalConfigureTask extends sfSympalBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application', sfSympalToolkit::getDefaultApplication()),
+      new sfCommandOption('application', null, sfCommandOption::PARAMETER_OPTIONAL, 'The application', null),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
 
@@ -40,16 +40,17 @@ EOF;
       $value = is_numeric($value) ? (int) $value : $value;
       $value = $value == 'false' ? false : $value;
       $value = $value == 'true' ? true : $value;
+      $writeToApp = isset($options['application']) && $options['application'] ? true : false;
 
       if ($group)
       {
         $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s" under the "%s" group.', $key, $value, $group));
 
-        sfSympalConfig::writeSetting($group, $key, $value);
+        sfSympalConfig::writeSetting($group, $key, $value, $writeToApp);
       } else {
         $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s".', $key, $value, $group));
 
-        sfSympalConfig::writeSetting($key, $value);
+        sfSympalConfig::writeSetting(null, $key, $value, $writeToApp);
       }
     }
   }

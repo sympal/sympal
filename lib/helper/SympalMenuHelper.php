@@ -43,6 +43,12 @@ function get_sympal_admin_menu()
   $menu = new sfSympalMenuAdminMenu('Sympal Admin');
   $menu->setCredentials(array('ViewAdminBar'));
   $menu->addChild('Go to Site Frontend', '@homepage');
+
+  if (sfSympalConfig::get('page_cache', 'enabled'))
+  {
+    $menu->addChild('Clear Cache', '@sympal_clear_cache');
+  }
+
   $menu->addChild('My Dashboard', '@sympal_dashboard');
   $menu->addChild('Content', null, array('label' => $siteTitle.' Content'));
   $menu->addChild('Site Administration', null, array('label' => $siteTitle.' Setup'));

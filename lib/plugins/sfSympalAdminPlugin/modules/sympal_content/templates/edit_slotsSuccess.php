@@ -8,7 +8,7 @@
           <fieldset id="sf_fieldset_<?php echo $slot->getName() ?>">
             <h2><?php echo $slot ?></h2>
             <div class="sf_admin_form_row">
-              <?php echo get_sympal_content_slot($sf_sympal_content, $slot) ?>
+              <?php echo get_sympal_content_slot_editor($sf_sympal_content, $slot) ?>
             </div>
           </fieldset>
         <?php endif; ?>
@@ -25,3 +25,5 @@
     </div>
   </div>
 </div>
+
+<?php echo get_sympal_editor() ?>

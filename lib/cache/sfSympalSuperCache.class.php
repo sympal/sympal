@@ -11,7 +11,7 @@ class sfSympalSuperCache
 
   public function listenToResponseFilterContent(sfEvent $event, $content)
   {
-    $symfonyContext = $this->_sympalConfiguration->getSympalContext()->getSymfonyContext();
+    $symfonyContext = sfContext::getInstance();
     $response = $event->getSubject();
     $request = $symfonyContext->getRequest();
 

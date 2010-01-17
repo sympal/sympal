@@ -59,7 +59,7 @@ class sfSympalConfig extends sfConfig
     return isset($theme['admin_generator_class']) ? $theme['admin_generator_class'] : sfSympalConfig::get('default_admin_generator_class', null, 'sfSympalDoctrineGenerator');
   }
 
-  public static function writeSetting($group, $name, $value = null)
+  public static function writeSetting($group, $name, $value = null, $application = false)
   {
     if (is_null($value))
     {
@@ -68,7 +68,13 @@ class sfSympalConfig extends sfConfig
       $group = null;
     }
 
-    $path = sfConfig::get('sf_config_dir').'/app.yml';
+    if ($application)
+    {
+      $path = sfConfig::get('sf_app_dir').'/config/app.yml';
+    } else {
+      $path = sfConfig::get('sf_config_dir').'/app.yml';
+    }
+
     if (!file_exists($path))
     {
       touch($path);

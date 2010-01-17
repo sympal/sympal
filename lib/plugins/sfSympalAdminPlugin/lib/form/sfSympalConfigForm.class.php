@@ -99,7 +99,7 @@ class sfSympalConfigForm extends BaseForm
   {
     $array = $this->_buildArrayToWrite();
 
-    $this->_path = sfConfig::get('sf_config_dir').'/app.yml';
+    $this->_path = sfConfig::get('sf_app_dir').'/config/app.yml';
 
     file_put_contents($this->_path, sfYaml::dump($array, 4));
 

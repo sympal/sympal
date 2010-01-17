@@ -70,6 +70,11 @@ class sfSympalContext
     return $this->_site;
   }
 
+  public function shouldLoadFrontendEditor()
+  {
+    return $this->_symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalFrontendEditorPlugin')->shouldLoadEditor();
+  }
+
   public function getSiteSlug()
   {
     return $this->_siteSlug;

@@ -45,11 +45,11 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunctio
 
   $slot->setContentRenderedFor($content);
 
-  if (sfContext::getInstance()->getUser()->isEditMode())
+  if (sfSympalContext::getInstance()->shouldLoadFrontendEditor())
   {
     use_helper('SympalContentSlotEditor');
 
-    return get_sympal_content_slot_editor($slot);
+    return get_sympal_content_slot_editor($content, $slot);
   } else {
     return $slot->render();
   }

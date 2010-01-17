@@ -129,10 +129,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     {
       $value = $this->getValue();
     }
-    
-    $user = sfContext::getInstance()->getUser();
 
-    if ($user->isEditMode() && !$value)
+    if (sfSympalContext::getInstance()->shouldLoadFrontendEditor() && !$value)
     {
       $rawValue = '[Double click to enable inline edit mode]';
     } else {
