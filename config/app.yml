@@ -149,6 +149,11 @@ all:
       with_layout: false
       lifetime: 3600
 
+    # Configure Sympal menu caching. Enabling this feature will cache the built menu objects avoiding
+    # database queries for menus
+    menu_cache:
+      enabled: true
+
     # Configure and customize the available content slot types
     content_slot_types:
       #MySlotType:

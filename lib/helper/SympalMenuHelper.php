@@ -7,7 +7,7 @@
  * @param bool $showChildren Whether or not it should show the children when rendering
  * @param string $class The menu class to return an instance of
  */
-function get_sympal_menu($name, $showChildren = true, $class = null)
+function get_sympal_menu($name, $showChildren = null, $class = null)
 {
   return sfSympalMenuSiteManager::getMenu($name, $showChildren, $class);
 }
@@ -21,7 +21,7 @@ function get_sympal_menu($name, $showChildren = true, $class = null)
  * @param string $split Whether to return a 2nd menu item with the remaining menu items in it
  * @return mixed Either one sfSympalMenu instance of an array with 2 sfSympalMenu instances
  */
-function get_sympal_split_menus($name, $showChildren = true, $max = null, $split = false)
+function get_sympal_split_menus($name, $showChildren = null, $max = null, $split = false)
 {
   $menu = sfSympalMenuSiteManager::getMenu($name, $showChildren);
   if ($menu)

@@ -12,11 +12,6 @@ class sfSympalMenuSiteManager
 
   protected static $_instance;
 
-  public function __construct()
-  {
-    $this->initialize();
-  }
-
   public static function getInstance()
   {
     if (!self::$_instance)
@@ -49,26 +44,67 @@ class sfSympalMenuSiteManager
     $this->initialize();
   }
 
-  public static function getMenu($name, $showChildren = true, $class = null)
+  public static function getMenu($name, $showChildren = null, $class = null)
   {
     return self::getInstance()->_getMenu($name, $showChildren, $class);
   }
 
-  protected function _getMenu($name, $showChildren = true, $class = null)
+  protected function _getMenu($name, $showChildren = null, $class = null)
   {
-    $key = md5($name.var_export($showChildren, true).$class);
-    if (isset($this->_menus[$key]))
-    {
-      return $this->_menus[$key];
-    }
-
     if (!$name)
     {
       return false;
     }
 
+    $cacheKey = 'SYMPAL_MENU_'.md5($name.var_export($showChildren, true).$class);
+    if (isset($this->_menus[$cacheKey]))
+    {
+      return $this->_menus[$cacheKey];
+    }
+
+    if ($menuCacheEnabled = sfSympalConfig::get('menu_cache', 'enabled', true))
+    {
+      $cache = sfSympalConfiguration::getActive()->getCache();
+      if ($cache->has($cacheKey))
+      {
+        $menu = $cache->get($cacheKey);
+        $this->_menus[$cacheKey] = $menu;
+
+        if ($showChildren !== null)
+        {
+          $menu->callRecursively('showChildren', $showChildren);
+        }
+
+        return $menu;
+      }
+    }
+
     $this->initialize();
 
+    $menu = $this->_buildMenu($name, $class);
+
+    if ($menu)
+    {
+      if ($showChildren !== null)
+      {
+        $menu->callRecursively('showChildren', $showChildren);
+      }
+
+      $this->_menus[$cacheKey] = $menu;
+
+      if ($menuCacheEnabled)
+      {
+        $cache->set($cacheKey, $menu);
+      }
+
+      return $menu;
+    } else {
+      return false;
+    }
+  }
+
+  protected function _buildMenu($name, $class)
+  {
     if ($name instanceof sfSympalMenuItem)
     {
       $menuItem = $name;
@@ -96,20 +132,9 @@ class sfSympalMenuSiteManager
 
     if (isset($menuItem))
     {
-      $return = $menu->getMenuItemSubMenu($menu->findMenuItem($menuItem)->getTopLevelParent()->getMenuItem());
+      return $menu->getMenuItemSubMenu($menu->findMenuItem($menuItem)->getTopLevelParent()->getMenuItem());
     } else {
-      $return = $menu;
-    }
-
-    if ($return)
-    {
-      $return->callRecursively('showChildren', $showChildren);
-
-      $this->_menus[$key] = $return;
-
-      return $return;
-    } else {
-      return false;
+      return $menu;
     }
   }
 

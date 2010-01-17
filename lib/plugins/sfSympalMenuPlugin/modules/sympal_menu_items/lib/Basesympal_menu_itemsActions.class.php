@@ -26,6 +26,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
       $tree = $form->save();
 
+      $this->clearCache();
+
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $tree)));
 
       if ($request->hasParameter('_save_and_add'))

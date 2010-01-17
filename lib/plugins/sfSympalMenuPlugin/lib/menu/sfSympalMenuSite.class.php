@@ -7,7 +7,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
   public function findMenuItem(sfSympalMenuItem $menuItem)
   {
-    if ($this->_menuItem->id == $menuItem->id)
+    if ($this->_menuItem['id'] == $menuItem->id)
     {
       return $this;
     }
@@ -27,7 +27,7 @@ class sfSympalMenuSite extends sfSympalMenu
     $obj = $this;
 
     do {
-    	$path[] = __($obj->getMenuItem()->getLabel());
+    	$path[] = __($obj->_menuItem['label']);
     } while ($obj = $obj->getParent());
 
     return implode(' > ', array_reverse($path));
@@ -40,7 +40,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
     if ($subItem)
     {
-      if ($subItem instanceof sfSympalContent && $this->_menuItem->_content_id == $subItem->id)
+      if ($subItem instanceof sfSympalContent && $this->_menuItem['content_id'] == $subItem->id)
       {
         $subItem = array();
       }
@@ -61,9 +61,8 @@ class sfSympalMenuSite extends sfSympalMenu
     }
 
     do {
-      $menuItem = $obj->getMenuItem();
-      $label = __($menuItem->getLabel());
-    	$breadcrumbs[$label] = $menuItem->getItemRoute();
+      $label = __($obj->getLabel());
+    	$breadcrumbs[$label] = $obj->getRoute();
     } while ($obj = $obj->getParent());
 
     return count($breadcrumbs) > 1 ? array_reverse($breadcrumbs):array();
@@ -74,14 +73,11 @@ class sfSympalMenuSite extends sfSympalMenu
     return sfSympalMenuBreadcrumbs::generate($this->getBreadcrumbsArray($subItem));
   }
 
-  public function getMenuItem()
-  {
-    return $this->_menuItem;
-  }
-
   public function setMenuItem(sfSympalMenuItem $menuItem)
   {
-    $this->_menuItem = $menuItem;
+    $this->_route = $menuItem->getItemRoute();
+    $this->_menuItem = $menuItem->toArray(false);
+    unset($this->_menuItem['__children']);
 
     $this->requiresAuth($menuItem->requires_auth);
     $this->requiresNoAuth($menuItem->requires_no_auth);
@@ -102,7 +98,7 @@ class sfSympalMenuSite extends sfSympalMenu
     $obj = $this;
 
     do {
-    	if ($obj->getMenuItem()->getLevel() == 1)
+    	if ($obj->getLevel() == 1)
     	{
     	  return $obj;
     	}
@@ -137,21 +133,10 @@ class sfSympalMenuSite extends sfSympalMenu
   public function isCurrentAncestor()
   {
     $menuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
-    if ($menuItem) {
-
-      $current = $this;
-      $children = $current->getChildren();
-      do {
-        foreach ($children as $child)
-        {
-          if ($child->getMenuItem() == $menuItem)
-          {
-            return true;
-          } else {
-            $current = $child;
-          }
-        }
-      } while ($children = $current->getChildren());
+    if ($menuItem && $this->_menuItem)
+    {
+      $this->_currentObject = $this->findMenuItem($menuItem);
+      return parent::isCurrentAncestor();
     }
 
     return false;

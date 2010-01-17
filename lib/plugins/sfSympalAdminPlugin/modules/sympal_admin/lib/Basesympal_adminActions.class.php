@@ -58,6 +58,9 @@ abstract class Basesympal_adminActions extends sfActions
         }
       }
     }
+
+    $this->clearCache();
+
     return sfView::NONE;
   }
 

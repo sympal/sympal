@@ -210,6 +210,11 @@ class sfSympalCache
     return $this->_cacheDriver->set($key, serialize($data), $lifeTime);
   }
 
+  public function has($key)
+  {
+    return $this->_cacheDriver->has($key);
+  }
+
   public function get($key)
   {
     return unserialize($this->_cacheDriver->get($key));

@@ -7,6 +7,7 @@ class sfSympalConfiguration
     $_projectConfiguration,
     $_sympalContext,
     $_symfonyContext,
+    $_doctrineManager,
     $_bootstrap,
     $_plugins = array(),
     $_modules = array(),
@@ -16,6 +17,7 @@ class sfSympalConfiguration
   {
     $this->_dispatcher = $dispatcher;
     $this->_projectConfiguration = $projectConfiguration;
+    $this->_doctrineManager = Doctrine_Manager::getInstance();
 
     $this->_initializeSymfonyConfig();
 
@@ -53,10 +55,10 @@ class sfSympalConfiguration
 
     $this->_dispatcher->connect('task.cache.clear', array($this, 'listenToTaskCacheClear'));
 
-    Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
-    Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
-    Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
-    Doctrine_Manager::getInstance()->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
+    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
+    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
+    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
+    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
   }
 
   public function listenToTaskCacheClear(sfEvent $event)
@@ -118,6 +120,11 @@ class sfSympalConfiguration
       $parameters['sf_sympal_menu_item'] = $menuItem;
     }
     return $parameters;
+  }
+
+  public function getDoctrineManager()
+  {
+    return $this->_doctrineManager;
   }
 
   public function getCache()

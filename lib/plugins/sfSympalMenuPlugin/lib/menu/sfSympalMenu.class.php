@@ -15,6 +15,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     $_requiresNoAuth   = null,
     $_showChildren     = true,
     $_current          = false,
+    $_currentObject    = null,
     $_options          = array(),
     $_children         = array(),
     $_credentials      = array();
@@ -449,13 +450,18 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return $this->_current;
   }
 
+  public function setCurrentObject(sfSympalMenu $currentObject)
+  {
+    $this->_currentObject = $currentObject;
+  }
+
   public function isCurrentAncestor()
   {
-    $menuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
-    if ($menuItem){
-      while ($menuItem->getLevel() != 0)
+    if ($currentObject = $this->_currentObject)
+    {
+      while ($currentObject->getLevel() != 0)
       {
-        if ($this->getRoute() == $menuItem->getRoute() && $this->getLabel() == $menuItem->getLabel())
+        if ($this->getRoute() == $currentObject->getRoute() && $this->getLabel() == $currentObject->getLabel())
         {
           $ret = true;
 
@@ -463,7 +469,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
         }
 
         $ret = false;
-        $menuItem = $menuItem->getNode()->getParent();
+        $currentObject = $currentObject->getParent();
       }
     }
     else

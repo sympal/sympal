@@ -154,7 +154,7 @@ $t->is((string) $menuItem, '- Home', 'Test sfSympalMenuItem::__toString()');
 $t->is($menuItem->getContent()->getHeaderTitle(), 'Home', 'Test sfSympalMenuItem::getHeaderTitle()');
 $t->is($menuItem->getLabel(), 'Home', 'Test sfSympalMenuItem::getLabel()');
 $t->is($menuItem->getItemRoute(), '@sympal_content_home', 'Test sfSympalMenuItem::getItemRoute()');
-$t->is($menuItem->getBreadcrumbs()->getPathAsString(), '', 'Test sfSympalBreadcrumbs::getPathAsString()');
+$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'primary / Home', 'Test sfSympalBreadcrumbs::getPathAsString()');
 
 $menuManager = sfSympalMenuSiteManager::getInstance();
 $menuManager->clear();
