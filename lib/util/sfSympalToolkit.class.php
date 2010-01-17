@@ -9,12 +9,12 @@ class sfSympalToolkit
 
   public static function useStylesheet($stylesheet, $position = 'last')
   {
-    return sfContext::getInstance()->getResponse()->addStylesheet($stylesheet, $position);
+    return sfContext::getInstance()->getResponse()->addStylesheet(sfSympalConfig::getAssetPath($stylesheet), $position);
   }
 
   public static function useJavascript($stylesheet, $position = 'last')
   {
-    return sfContext::getInstance()->getResponse()->addJavascript($javascript, $position);
+    return sfContext::getInstance()->getResponse()->addJavascript(sfSympalConfig::getAssetPath($javascript), $position);
   }
 
   public static function useJQuery($plugins = array())
