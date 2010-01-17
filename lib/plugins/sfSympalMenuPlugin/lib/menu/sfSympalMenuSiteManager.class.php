@@ -49,6 +49,11 @@ class sfSympalMenuSiteManager
     return self::getInstance()->_getMenu($name, $showChildren, $class);
   }
 
+  protected function _getCache()
+  {
+    return sfSympalConfig::get('menu_cache', 'enabled', true) ? sfSympalConfiguration::getActive()->getCache() : false;
+  }
+
   protected function _getMenu($name, $showChildren = null, $class = null)
   {
     if (!$name)
@@ -62,45 +67,27 @@ class sfSympalMenuSiteManager
       return $this->_menus[$cacheKey];
     }
 
-    if ($menuCacheEnabled = sfSympalConfig::get('menu_cache', 'enabled', true))
+    $cache = $this->_getCache();
+    if ($cache && $cache->has($cacheKey))
     {
-      $cache = sfSympalConfiguration::getActive()->getCache();
-      if ($cache->has($cacheKey))
-      {
-        $menu = $cache->get($cacheKey);
-        $this->_menus[$cacheKey] = $menu;
-
-        if ($showChildren !== null)
-        {
-          $menu->callRecursively('showChildren', $showChildren);
-        }
-
-        return $menu;
-      }
-    }
-
-    $this->initialize();
-
-    $menu = $this->_buildMenu($name, $class);
-
-    if ($menu)
-    {
-      if ($showChildren !== null)
-      {
-        $menu->callRecursively('showChildren', $showChildren);
-      }
-
-      $this->_menus[$cacheKey] = $menu;
-
-      if ($menuCacheEnabled)
+      $menu = $cache->get($cacheKey);
+    } else {
+      $this->initialize();
+      $menu = $this->_buildMenu($name, $class);
+      if ($cache)
       {
         $cache->set($cacheKey, $menu);
       }
-
-      return $menu;
-    } else {
-      return false;
     }
+
+    $this->_menus[$cacheKey] = $menu;
+
+    if ($showChildren !== null && $menu)
+    {
+      $menu->callRecursively('showChildren', $showChildren);
+    }
+
+    return $menu;
   }
 
   protected function _buildMenu($name, $class)

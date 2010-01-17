@@ -15,6 +15,11 @@ class sfSympalConfiguration
 
   public function __construct(sfEventDispatcher $dispatcher, ProjectConfiguration $projectConfiguration)
   {
+    // We disable Symfony autoload again feature because it is too slow in dev mode
+    // If you introduce a new class when using sympal you just must clear your
+    // cache manually
+    sfAutoloadAgain::getInstance()->unregister();
+
     $this->_dispatcher = $dispatcher;
     $this->_projectConfiguration = $projectConfiguration;
     $this->_doctrineManager = Doctrine_Manager::getInstance();
