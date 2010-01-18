@@ -209,13 +209,27 @@ html {
 .sympal_inline_edit_bar {
 }
 
+.sympal_inline_edit_bar_publish {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #000000;
+  width: 40px;
+  height: 30px;
+}
+
+.sympal_inline_edit_bar_publish img {
+  margin-top: 8px;
+  margin-left: 10px;
+}
+
 .sympal_inline_edit_admin_menu
 {
   background: #000;
   height: 30px;
   position: fixed;
   top: 0;
-  left: 5px;
+  left: 35px;
   margin: 0;
   padding: 0;
 }

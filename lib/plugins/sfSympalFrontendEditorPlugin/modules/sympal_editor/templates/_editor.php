@@ -31,6 +31,15 @@
 
 <div class="sympal_inline_edit_bar_container">
   <div class="sympal_inline_edit_bar sympal_form">
+    <div class="sympal_inline_edit_bar_publish">
+      <?php if ($sf_sympal_content->getIsPublished()): ?>
+        <?php echo image_tag('/sfSympalPlugin/images/published_icon.png', 'title=Published on '.format_date($sf_sympal_content->getDatePublished(), 'g')) ?>
+      <?php elseif ($sf_sympal_content->getIsPublishedInTheFuture()): ?>
+        <?php echo image_tag('/sfSympalPlugin/images/future_published_icon.png', 'title=Will publish on '.format_date($sf_sympal_content->getDatePublished(), 'g')) ?>
+      <?php else: ?>
+        <?php echo image_tag('/sfSympalPlugin/images/unpublished_icon.png', 'title=Has not been published yet.') ?>
+      <?php endif; ?>
+    </div>
 
     <?php if (!$sf_sympal_context->isAdminModule()): ?>
       <div class="sympal_inline_edit_admin_menu">
