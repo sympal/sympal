@@ -106,6 +106,11 @@ class sfSympalContext
     return $this->_themeObjects;
   }
 
+  public function isAdminModule()
+  {
+    return $this->_sympalConfiguration->isAdminModule();
+  }
+
   public function getPreviousTheme()
   {
     return $this->getThemeObject($this->_previousTheme);

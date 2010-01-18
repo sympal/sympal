@@ -39,10 +39,17 @@ function get_sympal_split_menus($name, $showChildren = null, $max = null, $split
  */
 function get_sympal_admin_menu()
 {
-  $siteTitle = sfSympalContext::getInstance()->getSite()->getTitle();
+  $sympalContext = sfSympalContext::getInstance();
+  $siteTitle = $sympalContext->getSite()->getTitle();
   $menu = new sfSympalMenuAdminMenu('Sympal Admin');
   $menu->setCredentials(array('ViewAdminBar'));
-  $menu->addChild('Go to Site Frontend', '@homepage');
+
+  if ($sympalContext->isAdminModule())
+  {
+    $menu->addChild('Go to Site Frontend', '@homepage');
+  } else {
+    $menu->addChild('Go to Site Admin Area', '@sympal_admin');
+  }
 
   if (sfSympalConfig::get('page_cache', 'enabled'))
   {

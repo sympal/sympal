@@ -255,13 +255,19 @@ class sfSympalConfiguration
     return sfSympalConfig::get($model, 'content_templates', array());
   }
 
+  public function isAdminModule()
+  {
+    $module = $this->_symfonyContext->getRequest()->getParameter('module');
+    $adminModules = sfSympalConfig::get('admin_modules');
+    return array_key_exists($module, $adminModules);
+  }
+
   public function getThemeForRequest()
   {
     $request = $this->_symfonyContext->getRequest();
-
     $module = $request->getParameter('module');
-    $adminModules = sfSympalConfig::get('admin_modules');
-    if (array_key_exists($module, $adminModules))
+
+    if ($this->isAdminModule())
     {
       return sfSympalConfig::get('admin_theme', null, 'admin');
     }

@@ -1,0 +1,36 @@
+#sympal_dashboard, #sympal_editor, #sympal_assets, #sympal_links , #sympal_assets {
+  top: 30px;
+}
+
+#sfWebDebugBar {
+  border-bottom: none;
+  background: none !important;  
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.sympal_inline_edit_bar_background {
+  filter:alpha(opacity=75);
+  -moz-opacity:0.75;
+  -khtml-opacity: 0.75;
+  opacity: 0.75;
+  border-bottom: 1px solid #000;
+  background: #333 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 100%;
+}
+
+.sympal_inline_edit_bar_container {
+  font-weight: bold;
+  position: fixed;
+  top: 3px;
+  right: 10px;
+}
+
+.sympal_toggle_inline_edit_bar {
+  display: none;
+}

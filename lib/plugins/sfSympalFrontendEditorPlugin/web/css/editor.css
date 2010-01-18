@@ -3,7 +3,7 @@
   padding: 12px;
   border: 1px solid #ccc;
   position: fixed;
-  top: 20px;
+  top: 60px;
   right: 25px;
   display: none;
   width: 600px;
@@ -173,31 +173,152 @@
   z-index: 9999999;
 }
 
-.sympal_inline_edit_bar_container {
+.sympal_toggle_inline_edit_bar {
+  position: absolute;
+  left: 0;
+  top: 37px;
+  z-index: 9999999999;
+  color: #333;
   font-weight: bold;
-  margin-top: 2px;
-  margin-right: 10px;
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 9999999;
+  cursor: pointer;
+  background: #ccc;
+  padding: 4px;
 }
 
-.sympal_inline_edit_bar ul {
+.sympal_inline_edit_bar_background {
+  filter:alpha(opacity=75);
+  -moz-opacity:0.75;
+  -khtml-opacity: 0.75;
+  opacity: 0.75;
+  border-bottom: 1px solid #000;
+  background: #333 !important;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 60px;
+  width: 100%;
+}
+
+.sympal_inline_edit_bar_container {
+  font-weight: bold;
+  position: fixed;
+  top: 30px;
+  right: 10px;
+}
+
+.sympal_inline_edit_bar {
+}
+
+.sympal_inline_edit_admin_menu
+{
+  background: #333;
+  height: 25px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.sympal_inline_edit_admin_menu ul
+{
+  padding: 0;
+  margin: 0;
+}
+
+.sympal_inline_edit_admin_menu ul li
+{
+  float: left;
+  list-style: none;
+  color: #fff;
+  margin: 0;
+  padding: 4px;
+  padding-right: 8px;
+  padding-left: 8px;
+  font-weight: normal;
+}
+
+.sympal_inline_edit_admin_menu ul li:hover
+{
+  background: #fff;
+  color: #333;
+}
+
+.sympal_inline_edit_admin_menu ul li:hover a
+{
+  color: #333;
+}
+
+.sympal_inline_edit_admin_menu ul li a
+{
+  display: block;
+  text-decoration: none;
+  white-space: nowrap;
+  color: #fff;
+  font-weight: normal;
+}
+
+.sympal_inline_edit_admin_menu ul li a:hover
+{
+  text-decoration: none;
+  color: #333;
+}
+
+.sympal_inline_edit_admin_menu ul li ul
+{
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  visibility: hidden;
+  background: #fff;
+  border-left: 1px solid #333;
+  border-bottom: 1px solid #333;
+  border-right: 1px solid #333;
+  margin-left: -9px;
+  margin-top: 4px;
+  width: 200px;
+  padding-top: 10px;
+}
+
+.sympal_inline_edit_admin_menu ul li ul li
+{
+  float: none;
+  display: inline;
+  padding: 0;
+  margin: 0;
+}
+
+.sympal_inline_edit_admin_menu ul li ul li a
+{
+  width: auto;
+  color: #333;
+  padding: 6px;
+}
+
+.sympal_inline_edit_admin_menu ul li ul li a:hover
+{
+  text-decoration: none;
+  background: #333;
+  color: #fff;
+}
+
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons {
   float: left;
   margin: 0;
   padding: 0;
 }
-.sympal_inline_edit_bar ul li {
+
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li {
   float: left;
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.sympal_inline_edit_bar ul li input {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li input {
   margin-right: 5px;
-  border: 1px solid #888 !important;
+  padding: 3px !important;
+  border: none !important;
   cursor: pointer;
   -khtml-border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -207,7 +328,11 @@
   font-size: 13px !important;
 }
 
-.sympal_inline_edit_bar ul li a {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li input:hover {
+  color: #fff;
+}
+
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li a {
   cursor: pointer;
 }
 
@@ -224,8 +349,7 @@
 .sympal_inline_edit_bar input.sympal_save_content_slots:hover,
 .sympal_inline_edit_bar input.sympal_preview_content_slots:hover {
   background-color: #333 !important;
-  color: #ffffff !important;
-  border: 1px solid #333 !important;
+  color: #fff !important;
 }
 
 .sympal_inline_edit_bar input, .sympal_inline_edit_bar select {
@@ -235,15 +359,6 @@
 .sympal_inline_edit_bar input:hover {
   background-color: #375fc2 !important;
   color: #ffffff;
-}
-
-.sympal_inline_edit_bar a {
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-  width: 175px;
-  margin-top: 5px;
-  color: #333 !important;
 }
 
 .sympal_inline_edit_bar a:hover {
@@ -266,16 +381,32 @@
 }
 
 #sfWebDebugBar {
-  background: #fff;
-  border-bottom: 1px solid #ccc;
-  width: 100%;
-  height: 20px;
+  border-bottom: none;
+  background: none !important;  
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 0;
 }
 
-.sympal_inline_edit_bar .signout, .sympal_inline_edit_bar .signout:hover {
-  background: url(../../sfSympalPlugin/images/signout.png) no-repeat center !important;
-  width: 20px;
-  height: 20px;
-  color: transparent;
-  border: none !important;
+#sfWebDebugBar .sfWebDebugMenu li
+{
+  color: #fff !important;
+}
+
+#sfWebDebug .sfWebDebugTop
+{
+  position: fixed !important;
+  top: 30px !important;
+}
+
+.sfWebDebugInfo, .sfWebDebugInfo td
+{
+  background: none !important;
+  color: #fff !important;
+}
+
+.sfWebDebugInfo a, .sfWebDebugInfo td a
+{
+  color: #fff !important;
 }

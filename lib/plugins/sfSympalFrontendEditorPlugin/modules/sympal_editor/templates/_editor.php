@@ -27,13 +27,18 @@
 <?php endif; ?>
 </style>
 
+<div class="sympal_inline_edit_bar_background"></div>
+
 <div class="sympal_inline_edit_bar_container">
   <div class="sympal_inline_edit_bar sympal_form">
-    <ul>
-      <li><?php echo button_to('X', '@sympal_signout', array(
-        'title' => __('Signout'),
-        'class' => 'signout',
-        'confirm' => __('Are you sure you want to signout?'))) ?></li>
+
+    <?php if (!$sf_sympal_context->isAdminModule()): ?>
+      <div class="sympal_inline_edit_admin_menu">
+        <?php echo get_sympal_admin_menu() ?>
+      </div>
+    <?php endif; ?>
+
+    <ul class="sympal_inline_edit_bar_big_buttons">
       <?php if (sfSympalConfig::isI18nEnabled()): ?>
         <li>
           <?php
@@ -54,7 +59,7 @@
       <li><input type="button" class="toggle_edit_mode" value="<?php echo __('Enable Edit Mode') ?>" /></li>
     </ul>
 
-    <ul class="sympal_inline_edit_bar_buttons">
+    <ul class="sympal_inline_edit_bar_big_buttons sympal_inline_edit_bar_buttons">
       <li><input type="button" class="toggle_sympal_assets" name="assets" rel="<?php echo url_for('@sympal_assets_select') ?>" value="<?php echo __('Assets') ?>" /></li>
       <li><input type="button" class="toggle_sympal_links" name="links" rel="<?php echo url_for('@sympal_editor_links') ?>" value="<?php echo __('Links') ?>" /></li>
       <li><input type="button" class="sympal_save_content_slots" name="save" value="<?php echo __('Save') ?>" /></li>
