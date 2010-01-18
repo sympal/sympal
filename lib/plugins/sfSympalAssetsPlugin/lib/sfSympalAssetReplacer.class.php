@@ -131,10 +131,21 @@ class sfSympalAssetReplacer
     foreach ($replacements as $replacement)
     {
       $contentObject = $contentObjects[$replacement['id']];
-      $label = isset($replacement['options']['label']) ? $this->replace($replacement['options']['label']) : 'Link to content id #'.$replacement['id'];
-      unset($replacement['options']['label']);
-
-      $content = str_replace($replacement['replace'], link_to($label, $contentObject->getRoute(), $replacement['options']), $content);
+      
+      $urlOnly = isset($replacement['options']['url']) ? $replacement['options']['url'] : false;
+      unset($replacement['options']['url']);
+      
+      if ($urlOnly)
+      {
+        $content = str_replace($replacement['replace'], url_for($contentObject->getRoute(), $replacement['options']), $content);
+      }
+      else
+      {
+        $label = isset($replacement['options']['label']) ? $this->replace($replacement['options']['label']) : 'Link to content id #'.$replacement['id'];
+        unset($replacement['options']['label']);
+        
+        $content = str_replace($replacement['replace'], link_to($label, $contentObject->getRoute(), $replacement['options']), $content);
+      }
     }
     return $content;
   }
