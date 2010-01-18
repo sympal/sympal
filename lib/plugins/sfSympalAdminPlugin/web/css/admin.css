@@ -47,20 +47,33 @@ p {
   margin-bottom:                0;
 }
 
-h1 {
+#content #header {
+  position: absolute;
+  right: 30px;
+  top: 10px;
+  height: 50px;
+}
+
+#content #header h1 {
+  font-weight: bold;
+  color: #333;
+  font-size: 20px;
+}
+
+#content h1 {
   color: #11A8FF;
-  font-size: 22px;
+  font-size: 18px;
   padding: 0;
   margin: 0;
   margin-bottom: 10px;
 }
 
-h2 {
+#content h2 {
   color: #DA8915;
-  font-size: 18px;
+  font-size: 14px;
 }
 
-h3 {
+#content h3 {
   color: #3278B6;
   font-size: 14px;
 }
@@ -79,16 +92,6 @@ h3 {
   background-color: #fff;
   min-height: 400px;
   position: relative;
-}
-
-#content #header h1 {
-  color: #fff;
-  font-weight: bold;
-  font-size: 16px;
-  position: absolute;
-  top: -22px;
-  left: 25px;
-  z-index: 101;
 }
 
 ul.error_list
