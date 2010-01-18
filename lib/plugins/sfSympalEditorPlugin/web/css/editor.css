@@ -75,7 +75,7 @@ html {
 }
 
 .sympal_content_slot_editor input, .sympal_content_slot_editor textarea {
-  width: 98%;
+  width: 98% !important;
 }
 
 .sympal_markdown_content_slot_editor_form .markItUpEditor {
