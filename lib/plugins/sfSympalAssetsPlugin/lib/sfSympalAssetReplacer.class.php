@@ -66,7 +66,7 @@ class sfSympalAssetReplacer
         $ids[$types[$key]][] = $e[0];
         $replacements[$types[$key]][] = array(
           'id' => $e[0],
-          'options' => _parse_attributes(str_replace($e[0], null, $body)),
+          'options' => _parse_attributes(substr($body, strlen($e[0]))),
           'replace' => $matches[0][$key]
         );
       }
