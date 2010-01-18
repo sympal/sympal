@@ -28,92 +28,6 @@ html {
   cursor: pointer;
 }
 
-#sympal_editor h2 {
-  color: #333;
-  margin: 0;
-  margin-bottom: 10px;
-}
-
-#sympal_editor .sympal_editor_button {
-  color: #ffffff;
-  font-weight: bold;
-  font-size: 12px;
-  background: #375fc2;
-  border: none;
-  padding: 4px;
-  border: 1px solid #375fc2;
-  -khtml-border-radius: 5px;
-	-moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-}
-
-#sympal_editor a.sympal_editor_button {
-  color: #ffffff;
-  text-decoration: none;
-  margin: 0;
-  padding: 5px;
-}
-
-#sympal_editor .sympal_editor_button:hover {
-  color: #ffffff;
-  background: #333333;
-}
-
-#sympal_editor .sympal_editor_button:focus {
-  color: #ffffff;
-  background: #333333;
-}
-
-#sympal_editor ul {
-  padding: 0;
-  margin: 0;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-#sympal_editor ul li {
-  padding: 0;
-  margin: 0;
-  list-style-type: none;
-  font-weight: bold;
-  color: #3278B6;
-  font-size: 16px;
-  text-indent: 20px;
-}
-
-#sympal_editor ul li img {
-  border: none;
-}
-
-#sympal_editor ul li ul li {
-  text-align: left;
-  font-weight: bold;
-  color: #000;
-  background: #fff;
-  font-size: 13px;
-  border-bottom: 1px solid #eee;
-  text-indent: 0;
-}
-
-#sympal_editor ul li ul li a {
-  text-decoration: none;
-  padding: 4px;
-  display: block;
-}
-
-#sympal_editor ul li ul li a:hover {
-  background: #375fc2;
-  color: white;
-  display: block;
-  font-weight: bold;
-}
-
-#sympal_editor ul li ul li a:active {
-  background: #ffc;
-  color: #000;
-}
-
 .sympal_content_slot .editor {
   display: none;
 }
@@ -181,7 +95,7 @@ html {
   position: absolute;
   left: 0;
   top: 37px;
-  z-index: 9999999999;
+  z-index: 101;
   color: #333;
   font-weight: bold;
   cursor: pointer;
@@ -201,6 +115,7 @@ html {
   left: 0;
   height: 30px;
   width: 100%;
+  z-index: 100;
 }
 
 .sympal_inline_edit_bar_bottom_background {
@@ -215,6 +130,7 @@ html {
   left: 0;
   height: 30px;
   width: 100%;
+  z-index: 100;
 }
 
 .sympal_inline_edit_bar_container {
@@ -222,6 +138,7 @@ html {
   position: fixed;
   bottom: 2px;
   right: 10px;
+  z-index: 101;
 }
 
 .sympal_inline_edit_bar {
