@@ -47,6 +47,7 @@ function get_sympal_admin_menu()
   if ($sympalContext->isAdminModule())
   {
     $menu->addChild('Go to Site Frontend', '@homepage');
+    $menu->addChild('My Dashboard', '@sympal_dashboard');
   } else {
     $menu->addChild('Go to Site Admin', '@sympal_admin');
   }
@@ -56,7 +57,6 @@ function get_sympal_admin_menu()
     $menu->addChild('Clear Cache', '@sympal_clear_cache');
   }
 
-  $menu->addChild('My Dashboard', '@sympal_dashboard');
   $menu->addChild('Content', null, array('label' => $siteTitle.' Content'));
   $menu->addChild('Site Administration', null, array('label' => $siteTitle.' Setup'));
   $menu->addChild('Security', null, array('label' => 'Users & Security'));
