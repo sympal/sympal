@@ -14,7 +14,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->clearCache();
   }
 
-  protected function _publishContent(sfSympalMenuItemGroupContent $content, $publish = true)
+  protected function _publishContent(sfSympalContent $content, $publish = true)
   {
     $func = $publish ? 'publish':'unpublish';
     return $content->$func();
