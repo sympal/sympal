@@ -48,7 +48,7 @@ function get_sympal_admin_menu()
   {
     $menu->addChild('Go to Site Frontend', '@homepage');
   } else {
-    $menu->addChild('Go to Site Admin Area', '@sympal_admin');
+    $menu->addChild('Go to Site Admin', '@sympal_admin');
   }
 
   if (sfSympalConfig::get('page_cache', 'enabled'))
