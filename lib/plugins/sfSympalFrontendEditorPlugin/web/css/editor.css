@@ -1,3 +1,7 @@
+html {
+  margin-top: 60px;
+}
+
 #sympal_dashboard, #sympal_editor, #sympal_assets, #sympal_links , #sympal_assets {
   background: #fff;
   padding: 12px;
@@ -186,10 +190,6 @@
 }
 
 .sympal_inline_edit_bar_background {
-  filter:alpha(opacity=75);
-  -moz-opacity:0.75;
-  -khtml-opacity: 0.75;
-  opacity: 0.75;
   border-bottom: 1px solid #000;
   background: #333 !important;
   position: fixed;
@@ -211,11 +211,11 @@
 
 .sympal_inline_edit_admin_menu
 {
-  background: #333;
+  background: #000;
   height: 25px;
   position: fixed;
   top: 0;
-  left: 0;
+  left: 5px;
   margin: 0;
   padding: 0;
 }
@@ -298,7 +298,7 @@
 .sympal_inline_edit_admin_menu ul li ul li a:hover
 {
   text-decoration: none;
-  background: #333;
+  background: #000;
   color: #fff;
 }
 
@@ -353,47 +353,48 @@
 }
 
 .sympal_inline_edit_bar input.sympal_disable_edit_mode {
-  background: url(../../sf/sf_admin/images/cancel.png) 2px 3px no-repeat;
+  background: url(../../sf/sf_admin/images/cancel.png) 2px 3px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.sympal_preview_content_slots {
-  background: url(../../sfSympalAdminPlugin/images/search_icon.gif) 2px 3px no-repeat;
+  background: url(../../sfSympalAdminPlugin/images/search_icon.gif) 2px 3px no-repeat !important;
   text-indent: 15px;
 }
 
 .sympal_inline_edit_bar input.sympal_save_content_slots {
-  background: url(../../sfSympalPlugin/images/save_icon.gif) 2px 4px no-repeat;
+  background: url(../../sfSympalPlugin/images/save_icon.gif) 2px 4px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.toggle_sympal_assets {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/insert_asset.gif) 2px 4px no-repeat;
+  background: #f5f5f5 url(../../sfSympalPlugin/images/insert_asset.gif) 2px 4px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.toggle_dashboard_menu {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/dashboard_icon.gif) 2px 4px no-repeat;
+  background: #f5f5f5 url(../../sfSympalPlugin/images/dashboard_icon.gif) 2px 4px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.toggle_editor_menu {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/edit.png) 2px 4px no-repeat;
+  background: #f5f5f5 url(../../sfSympalPlugin/images/edit.png) 2px 4px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.toggle_sympal_links {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/links_icon.gif) 2px 5px no-repeat;
+  background: #f5f5f5 url(../../sfSympalPlugin/images/links_icon.gif) 2px 5px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.toggle_edit_mode {
-  background: url(../../sf/sf_admin/images/tick.png) 2px 3px no-repeat;
+  background: url(../../sf/sf_admin/images/tick.png) 2px 3px no-repeat !important;
   text-indent: 15px;
 }
 
 .sympal_inline_edit_bar input, .sympal_inline_edit_bar select {
-  padding: 0px !important;
+  padding: 2px !important;
+  margin-right: 5px;
 }
 
 .sympal_inline_edit_bar input:hover {

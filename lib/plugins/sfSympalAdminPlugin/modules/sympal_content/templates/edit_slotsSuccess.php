@@ -16,14 +16,7 @@
         <?php endif; ?>
       <?php endforeach; ?>
 
-      <div class="sympal_inline_edit_bar sympal_form">
-        <ul class="sympal_inline_edit_bar_buttons">
-          <li><input type="button" class="sympal_save_content_slots" name="save" value="Save" /></li>
-        </ul>
-        <ul>
-          <li><?php echo button_to('Go back to Editing Content', $sf_sympal_content->getEditRoute()) ?></li>
-        </ul>
-      </div>
+      <?php echo button_to('Go back to Editing Content', $sf_sympal_content->getEditRoute()) ?>
     </div>
   </div>
 </div>

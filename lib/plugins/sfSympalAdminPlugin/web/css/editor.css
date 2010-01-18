@@ -29,8 +29,13 @@
   position: fixed;
   top: 3px;
   right: 10px;
+  z-index: 101 !important;
 }
 
 .sympal_toggle_inline_edit_bar {
   display: none;
+}
+
+html {
+  margin-top: 30px;
 }
