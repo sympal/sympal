@@ -39,7 +39,7 @@
         <?php if ($menuItem && $parentMenuNode = sfSympalMenuSiteManager::getMenu('primary')->findMenuItem($menuItem)->getParent()): ?>
           <li>
             <?php echo image_tag('/sfSympalPlugin/images/folder.png') ?>
-            <?php echo link_to($parentMenuNode->getMenuItem()->getLabel(), $parentMenuNode->getMenuItem()->getItemRoute()) ?>
+            <?php echo link_to($parentMenuNode->getLabel(), $parentMenuNode->getRoute()) ?>
           </li>
         <?php endif; ?>
 
