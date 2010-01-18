@@ -20,14 +20,14 @@
   <!-- content -->
   <div id="content">
 
-  <?php if (!$sf_request->getParameter('popup') && $sf_user->isAuthenticated() && $sf_sympal_context->getSite()): ?>
+  <?php if ($sf_sympal_context->getSite() && $sf_user->isAuthenticated()): ?>
     <div id="header">
       <h1><?php echo $sf_sympal_context->getSite()->getTitle() ?> <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
     </div>
-
-    <?php echo get_sympal_flash() ?>
-    <?php echo $sf_content ?>
   <?php endif; ?>
+
+  <?php echo get_sympal_flash() ?>
+  <?php echo $sf_content ?>
 
   </div>
   <!-- end content -->
