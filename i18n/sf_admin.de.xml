@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit id="10">
+        <source>Reset</source>
+        <target>Zurücksetzen</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Filter</source>
+        <target>Filtern</target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>[0] no result|[1] 1 result|(1,+Inf] %1% results</source>
+        <target>[0] keine Ergebnisse|[1] 1 Ergebnis|(1,+Inf] %1% Ergebnisse</target>
+      </trans-unit>
+      <trans-unit id="40">
+        <source>Actions</source>
+        <target>Aktionen</target>
+      </trans-unit>
+      <trans-unit id="50">
+        <source>Edit</source>
+        <target>Bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="60">
+        <source>Delete</source>
+        <target>Löschen</target>
+      </trans-unit>
+      <trans-unit id="70">
+        <source>Are you sure?</source>
+        <target>Sind Sie sicher?</target>
+      </trans-unit>
+      <trans-unit id="80">
+        <source>Choose an action</source>
+        <target>Wählen Sie eine Aktion</target>
+      </trans-unit>
+      <trans-unit id="90">
+        <source>go</source>
+        <target>Los</target>
+      </trans-unit>
+      <trans-unit id="100">
+        <source>New</source>
+        <target>Neu</target>
+      </trans-unit>
+      <trans-unit id="110">
+        <source>Back to list</source>
+        <target>Zurück zur Liste</target>
+      </trans-unit>
+      <trans-unit id="120">
+        <source>Save</source>
+        <target>Speichern</target>
+      </trans-unit>
+      <trans-unit id="130">
+        <source>Save and add</source>
+        <target>Speichern und neu</target>
+      </trans-unit>
+      <trans-unit id="140">
+        <source>No results found</source>
+        <target>Keine Ergebnisse gefunden</target>
+      </trans-unit>
+      <trans-unit id="150">
+        <source>Publish</source>
+        <target>Veröffentlichen</target>
+      </trans-unit>
+      <trans-unit id="160">
+        <source>Un-Publish</source>
+        <target>Offline schalten</target>
+      </trans-unit>
+      <trans-unit id="170">
+        <source>New Content List</source>
+        <target>Neue Content-Liste</target>
+      </trans-unit>
+      <trans-unit id="180">
+        <source>Save and view</source>
+        <target>Speichern und anzeigen</target>
+      </trans-unit>
+      <trans-unit id="190">
+        <source>Save and edit menu</source>
+        <target>Speichern und Menü bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="200">
+        <source>Save and edit slots</source>
+        <target>Speichern und Slots bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="210">
+        <source>New Page</source>
+        <target>Neue Seite</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

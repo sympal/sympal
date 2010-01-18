@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit id="10">
+        <source>Sympal plugin manager List</source>
+        <target>Sympal Plugin-Manager Liste</target>
+      </trans-unit>
+      <trans-unit id="20">
+        <source>Manage the Sympal plugins in this project below! You can easily
+download and install new plugins found on the web.</source>
+        <target>Verwalten Sie hier die Sympal-Plugins in diesem Projekt! Sie können
+neue Plugins einfach herunterladen und installieren.</target>
+      </trans-unit>
+      <trans-unit id="30">
+        <source>Search</source>
+        <target>Suche</target>
+      </trans-unit>
+      <!-- FIXME hier war was mit br -->
+      <trans-unit id="40">
+        <source>Enter keywords to search by. Wildcards (*) are supported.</source>
+        <target>Geben Sie Stichworte ein, nach denen gesucht werden soll. Es werden Platzhalter (*) unterstützt.</target>
+      </trans-unit>
+      <trans-unit id="60">
+        <source>Image</source>
+        <target>Bild</target>
+      </trans-unit>
+      <trans-unit id="70">
+        <source>Title</source>
+        <target>Titel</target>
+      </trans-unit>
+      <trans-unit id="80">
+        <source>Go to Site Frontend</source>
+        <target>Zum Frontend wechseln</target>
+      </trans-unit>
+      <trans-unit id="90">
+        <source>My Dashboard</source>
+        <target>Mein Dashboard</target>
+      </trans-unit>
+      <!-- FIXME -->
+      <trans-unit id="100">
+        <source>Frontend Content</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="110">
+        <source>Content List</source>
+        <target>Content-Liste</target>
+      </trans-unit>
+      <trans-unit id="120">
+        <source>Page</source>
+        <target>Seite</target>
+      </trans-unit>
+      <trans-unit id="130">
+        <source>Assets</source>
+        <target>Dateien</target>
+      </trans-unit>
+      <!-- FIXME -->
+      <trans-unit id="140">
+        <source>Frontend Setup</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="150">
+        <source>404 Redirects</source>
+        <target>404 Umleitungen</target>
+      </trans-unit>
+      <trans-unit id="160">
+        <source>Edit Site</source>
+        <target>Website bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="170">
+        <source>Menus</source>
+        <target>Menüpunkte</target>
+      </trans-unit>
+      <!-- FIXME -->
+      <trans-unit id="180">
+        <source>Users &amp; Security</source>
+        <target>Benutzer &amp; Sicherheit</target>
+      </trans-unit>
+      <trans-unit id="190">
+        <source>Users</source>
+        <target>Benutzer</target>
+      </trans-unit>
+      <trans-unit id="200">
+        <source>Groups</source>
+        <target>Gruppen</target>
+      </trans-unit>
+      <trans-unit id="210">
+        <source>Permissions</source>
+        <target>Berechtigungen</target>
+      </trans-unit>
+      <trans-unit id="220">
+        <source>Global Setup</source>
+        <target>Globales Setup</target>
+      </trans-unit>
+      <trans-unit id="230">
+        <source>Content Types</source>
+        <target>Content-Typen</target>
+      </trans-unit>
+      <trans-unit id="240">
+        <source>Themes</source>
+        <target>Erscheinungsbild</target>
+      </trans-unit>
+      <trans-unit id="250">
+        <source>Sites</source>
+        <target>Websites</target>
+      </trans-unit>
+      <trans-unit id="260">
+        <source>System Settings</source>
+        <target>Systemeinstellungen</target>
+      </trans-unit>
+      <trans-unit id="270">
+        <source>Plugin Manager</source>
+        <target>Plugin-Manager</target>
+      </trans-unit>
+      <!-- FIXME -->
+      <trans-unit id="280">
+        <source>Manage the configuration of your Sympal project from the
+  easy to use web form below. The different functionalities added by Sympal
+  plugins may add settings here for you to control.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="290">
+        <source>Rows per page</source>
+        <target>Einträge pro Seite</target>
+      </trans-unit>
+      <trans-unit id="300">
+        <source>Default theme</source>
+        <target>Standard-Erscheinungsbild</target>
+      </trans-unit>
+      <trans-unit id="310">
+        <source>Themes</source>
+        <target>Erscheinungsbild</target>
+      </trans-unit>
+      <trans-unit id="330">
+        <source>Default</source>
+        <target>Standard</target>
+      </trans-unit>
+      <trans-unit id="340">
+        <source>Wordpress default</source>
+        <target>Wordpress Standard</target>
+      </trans-unit>
+      <trans-unit id="370">
+        <source>Default rendering module</source>
+        <target>Modul für die Standarddarstellung</target>
+      </trans-unit>
+      <trans-unit id="380">
+        <source>Default rendering action</source>
+        <target>Action für die Standarddarstellung</target>
+      </trans-unit>
+      <trans-unit id="390">
+        <source>Recaptcha public key</source>
+        <target>Öffentlicher Schlüssel für ReCaptcha</target>
+      </trans-unit>
+      <trans-unit id="400">
+        <source>Privater Schlüssel für ReCaptcha</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="410">
+        <source>Breadcrumbs separator</source>
+        <target>Trennungszeichen für das Brotkrumenmenü (Breadcrumbs)</target>
+      </trans-unit>
+      <trans-unit id="420">
+        <source>Default from email address</source>
+        <target>Standard Absender E-Mail-Adresse</target>
+      </trans-unit>
+      <trans-unit id="430">
+        <source>Enable markdown editor</source>
+        <target>Markdown-Editor ermöglichen</target>
+      </trans-unit>
+      <trans-unit id="440">
+        <source>Elastic textareas</source>
+        <target>Elastische Texteingabefelder</target>
+      </trans-unit>
+      <trans-unit id="450">
+        <source>Check for upgrades on dashboard</source>
+        <target>Prüfe Upgrades auf dem Dashboard</target>
+      </trans-unit>
+      <trans-unit id="460">
+        <source>Username or API Key</source>
+        <target>Benutzername oder API-Schlüssel</target>
+      </trans-unit>
+      <trans-unit id="470">
+        <source>Password</source>
+        <target>Passwort</target>
+      </trans-unit>
+      <trans-unit id="480">
+        <source>Enabled?</source>
+        <target>Aktiviert?</target>
+      </trans-unit>
+      <trans-unit id="490">
+        <source>Enable Super Cache?</source>
+        <target>Aktiviere Super-Cache?</target>
+      </trans-unit>
+      <trans-unit id="500">
+        <source>With layout?</source>
+        <target>Mit Layout?</target>
+      </trans-unit>
+      <trans-unit id="510">
+        <source>Lifetime</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="520">
+        <source>Enable Comments</source>
+        <target>Kommentare ermöglichen</target>
+      </trans-unit>
+      <trans-unit id="530">
+        <source>Default Status</source>
+        <target>Standard-Status</target>
+      </trans-unit>
+      <trans-unit id="540">
+        <source>Enabled</source>
+        <target>Aktiviert</target>
+      </trans-unit>
+      <trans-unit id="550">
+        <source>Commenting Requires Authentication</source>
+        <target>Kommentieren erfordert Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="560">
+        <source>Sympal Admin / Settings</source>
+        <target>Sympal Admin / Einstellungen</target>
+      </trans-unit>
+      <trans-unit id="570">
+        <source>Sympal sites List</source>
+        <target>Sympal Websites-Liste</target>
+      </trans-unit>
+      <trans-unit id="580">
+        <source>Browse, create, edit and delete your Sympal sites below! Manage your sites and switch between the current site and your other sites easily!</source>
+        <target>Browsen, erstellen, bearbeiten und löschen Sie Ihre Websites hier! Verwalten Sie Ihre Websites und wechseln Sie einfach zwischen der aktuellen und anderen Websites!</target>
+      </trans-unit>
+      <trans-unit id="590">
+        <source>Description</source>
+        <target>Beschreibung</target>
+      </trans-unit>
+      <trans-unit id="600">
+        <source>Switch site</source>
+        <target>Website wechseln</target>
+      </trans-unit>
+      <trans-unit id="610">
+        <source>New Sympal sites</source>
+        <target>Neue Website</target>
+      </trans-unit>
+      <trans-unit id="620">
+        <source>Site Information</source>
+        <target>Website-Information</target>
+      </trans-unit>
+      <trans-unit id="630">
+        <source>The title of the Sympal site.</source>
+        <target>Der Titel der Website.</target>
+      </trans-unit>
+      <trans-unit id="640">
+        <source>The description of the Sympal site.</source>
+        <target>Die Beschreibung der Website.</target>
+      </trans-unit>
+      <trans-unit id="650">
+        <source>Theme</source>
+        <target>Erscheinungsbild</target>
+      </trans-unit>
+      <trans-unit id="660">
+        <source>The theme to render this site with by default.</source>
+        <target>Das Erscheinungsbild, mit dem diese Website standardmäßig dargestellt werden soll.</target>
+      </trans-unit>
+      <!-- TRANSLATE ME -->
+      <trans-unit id="670">
+        <source>Slug</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="680">
+        <source>The text slug identifier that represents this site.</source>
+        <target>Der Text-Slug, der diese Website repräsentiert.</target>
+      </trans-unit>
+      <trans-unit id="690">
+        <source>Search Engine Optimization</source>
+        <target>Suchmaschinenoptimierung (SEO)</target>
+      </trans-unit>
+      <trans-unit id="710">
+        <source>Page title</source>
+        <target>Seitentitel</target>
+      </trans-unit>
+      <!-- FIXME -->
+      <trans-unit id="720">
+        <source>English Page title</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="730">
+        <source>The meta page title to use for pages in this site.</source>
+        <target>Der Meta-Seitentitel, der für Seiten dieser Website verwendet werden soll.</target>
+      </trans-unit>
+      <trans-unit id="740">
+        <source>Meta keywords</source>
+        <target>Meta-Stichwörter</target>
+      </trans-unit>
+      <!-- FIXME -->
+      <trans-unit id="750">
+        <source>English Meta keywords</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="760">
+        <source>The meta keywords to use for pages in this site.</source>
+        <target>Metatag Stichwörter, die für Seiten dieser Website verwendet werden sollen.</target>
+      </trans-unit>
+      <trans-unit id="770">
+        <source>Meta description</source>
+        <target>Beschreibung</target>
+      </trans-unit>
+      <!-- FIXME -->
+      <trans-unit id="780">
+        <source>English Meta description</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="790">
+        <source>The meta description to use for pages in this site.</source>
+        <target>Die Beschreibung, die für Seiten dieser Seite in den Metatags stehen soll.</target>
+      </trans-unit>
+      <trans-unit id="800">
+        <source>Preview the available themes in this Sympal project. Click a 
+theme name below to see what it looks like!</source>
+        <target>Schauen Sie sich hier die verfügbaren Erscheinungsbilder in diesem
+Projekt in der Vorschau an. Klicken Sie unten auf einen Namen, um zu sehen,
+wie es aussieht.</target>
+      </trans-unit>
+      <trans-unit id="810">
+        <source>Sympal Admin / Themes</source>
+        <target>Admin / Erscheinungsbilder</target>
+      </trans-unit>
+      <trans-unit id="820">
+        <source>Sympal content types List</source>
+        <target>Liste der Content-Typen</target>
+      </trans-unit>
+      <trans-unit id="830">
+        <source>Manage the available content types in your Sympal project. Create
+entirely new content types or add a custom extension of an existing content type
+already available in Sympal.</source>
+        <target>Verwalten Sie die verfügbaren Content-Typen in Ihrem Projekt.
+Erstellen Sie vollständig neue Content-Typen oder fügen Sie eine bereits existierende
+Erweiterung hinzu.</target>
+      </trans-unit>
+      <trans-unit id="840">
+        <source>Label</source>
+        <target>Beschriftung</target>
+      </trans-unit>
+      <trans-unit id="850">
+        <source>New Sympal content types</source>
+        <target>Neuer Content-Typ</target>
+      </trans-unit>
+      <trans-unit id="860">
+        <source>Content Type</source>
+        <target>Content-Typ</target>
+      </trans-unit>
+      <trans-unit id="870">
+        <source>The label to use when referring to the content type.</source>
+        <target>Die Beschriftung, die benutzt wird, wenn sich auf den Content-Typ bezogen wird.</target>
+      </trans-unit>
+      <trans-unit id="880">
+        <source>Name</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="920">
+        <source>The Doctrine model name for the content type.</source>
+        <target>Der Doctrine-Model-Name für den Content-Typ.</target>
+      </trans-unit>
+      <trans-unit id="930">
+        <source>The description of the content type.</source>
+        <target>Beschreibung dieses Content-Typen.</target>
+      </trans-unit>
+      <trans-unit id="940">
+        <source>Default path</source>
+        <target>Standard-Pfad</target>
+      </trans-unit>
+      <trans-unit id="950">
+        <source>The default path to use to generate routes for this content type. Example: /my_pages/:slug</source>
+        <target>Der Standard-Pfad, um Routen für diesen Content-Typ zu generieren. Beispiel: /my_pages/:slug</target>
+      </trans-unit>
+      <trans-unit id="960">
+        <source>Plugin</source>
+        <target>Plugin</target>
+      </trans-unit>
+      <trans-unit id="1000">
+        <source>The name of the plugin that contains the content type.</source>
+        <target>Der Name des Plugins, das den Content-Typ enthält.</target>
+      </trans-unit>
+      <trans-unit id="1010">
+        <source>The text slug identifier that represents this content type.</source>
+        <target>Der Slug, der den Content-Typ repräsentiert.</target>
+      </trans-unit>
+      <trans-unit id="1020">
+        <source>Rendering</source>
+        <target>Darstellung</target>
+      </trans-unit>
+      <trans-unit id="1030">
+        <source>Template</source>
+        <target>Template</target>
+      </trans-unit>
+      <trans-unit id="1040">
+        <source>The content template to render this content type with.</source>
+        <target>Das Template, mit dem dieser Content-Typ dargestellt wird.</target>
+      </trans-unit>
+      <trans-unit id="1050">
+        <source>The theme to render this content type with.</source>
+        <target>Das Erscheinungsbild, mit dem der Content-Typ dargestellt wird.</target>
+      </trans-unit>
+      <trans-unit id="1060">
+        <source>Module</source>
+        <target>Modul</target>
+      </trans-unit>
+      <trans-unit id="1410">
+        <source>The Symfony module to render this content type with.</source>
+        <target>Das Symfony-Modul, mit dem dieser Content-Typ dargestellt werden soll.</target>
+      </trans-unit>
+      <trans-unit id="1420">
+        <source>Action</source>
+        <target>Aktion</target>
+      </trans-unit>
+      <trans-unit id="1430">
+        <source>Required.</source>
+        <target>Erforderlich.</target>
+      </trans-unit>
+      <trans-unit id="1440">
+        <source>The item has not been saved due to some errors.</source>
+        <target>Der Eintrag wurde aufgrund von Fehlern nicht gespeichert.</target>
+      </trans-unit>
+      <trans-unit id="1450">
+        <source>Sympal users List</source>
+        <target>Liste der Benutzer</target>
+      </trans-unit>
+      <trans-unit id="1460">
+        <source>Username</source>
+        <target>Benutzername</target>
+      </trans-unit>
+      <trans-unit id="1470">
+        <source>Last login</source>
+        <target>Letzter Login</target>
+      </trans-unit>
+      <trans-unit id="1480">
+        <source>New Sympal users</source>
+        <target>Neuer Benutzer</target>
+      </trans-unit>
+      <trans-unit id="1490">
+        <source>User Information</source>
+        <target>Benutzerinformationen</target>
+      </trans-unit>
+      <trans-unit id="1500">
+        <source>Password again</source>
+        <target>Passwort wiederholen</target>
+      </trans-unit>
+      <trans-unit id="1510">
+        <source>Is active</source>
+        <target>Aktiv</target>
+      </trans-unit>
+      <trans-unit id="1520">
+        <source>Is super admin</source>
+        <target>Super-Admin</target>
+      </trans-unit>
+      <trans-unit id="1530">
+        <source>Profile Information</source>
+        <target>Profil-Informationen</target>
+      </trans-unit>
+      <trans-unit id="1540">
+        <source>First name</source>
+        <target>Vorname</target>
+      </trans-unit>
+      <trans-unit id="1550">
+        <source>Last name</source>
+        <target>Nachname</target>
+      </trans-unit>
+      <trans-unit id="1560">
+        <source>Email address</source>
+        <target>E-Mail-Adresse</target>
+      </trans-unit>
+      <trans-unit id="1570">
+        <source>Security Credentials</source>
+        <target>Berechtigungen</target>
+      </trans-unit>
+      <trans-unit id="1580">
+        <source>Sympal groups List</source>
+        <target>Liste der Gruppen</target>
+      </trans-unit>
+      <trans-unit id="1590">
+        <source>Edit Sympal groups</source>
+        <target>Gruppe bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="1600">
+        <source>Group Information</source>
+        <target>Gruppeninformationen</target>
+      </trans-unit>
+      <trans-unit id="1610">
+        <source>Associated Records</source>
+        <target>Zugeordnete Datensätze</target>
+      </trans-unit>
+      <trans-unit id="1620">
+        <source>Menu items list</source>
+        <target>Liste der Menüpunkte</target>
+      </trans-unit>
+      <trans-unit id="1630">
+        <source>Content list</source>
+        <target>Content-Liste</target>
+      </trans-unit>
+      <trans-unit id="1640">
+        <source>New Sympal groups</source>
+        <target>Neue Gruppe</target>
+      </trans-unit>
+      <trans-unit id="1650">
+        <source>Sympal permissions List</source>
+        <target>Liste der Berechtigungen</target>
+      </trans-unit>
+      <trans-unit id="1660">
+        <source>Edit Sympal permissions</source>
+        <target>Berechtigung bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="1670">
+        <source>Permission Information</source>
+        <target>Berechtigungs-Informationen</target>
+      </trans-unit>
+      <trans-unit id="1680">
+        <source>New Sympal permissions</source>
+        <target>Neue Berechtigung</target>
+      </trans-unit>
+      <trans-unit id="1690">
+        <source>Sympal redirects List</source>
+        <target>Liste der 404 Umleitungen</target>
+      </trans-unit>
+      <trans-unit id="1700">
+        <source>Manage a list of URLs to redirect in case of URL changing or old URLs that you 
+would like to point to something new. This is useful for maintaining search 
+engine optimization.</source>
+        <target>Verwalten Sie eine Liste von URLs, die auf ein neues Ziel umgeleitet werden,
+falls Sie eine URL ändern möchten. Das ist nützlich für die Suchmaschinenoptimierung.</target>
+      </trans-unit>
+      <trans-unit id="1710">
+        <source>Source</source>
+        <target>Quelle</target>
+      </trans-unit>
+      <trans-unit id="1720">
+        <source>Destination</source>
+        <target>Ziel</target>
+      </trans-unit>
+      <trans-unit id="1730">
+        <source>is empty</source>
+        <target>ist leer</target>
+      </trans-unit>
+      <trans-unit id="1740">
+        <source>Content</source>
+        <target>Content</target>
+      </trans-unit>
+      <trans-unit id="1750">
+        <source>New Sympal redirects</source>
+        <target>Neue Umleitung</target>
+      </trans-unit>
+      <trans-unit id="1760">
+        <source>The source path to redirect. Example: /some_page</source>
+        <target>Der Quell-Pfad von dem aus umgeleitet wird. Beispiel: /some_page</target>
+      </trans-unit>
+      <trans-unit id="1770">
+        <source>The destination to redirect to: Example: /new_url, @some_route or http://www.someurl.com</source>
+        <target>Das Ziel zu dem umgeleitet werden soll. Beispiel: /neue_url, @eine_route oder http://www.eineurl.com</target>
+      </trans-unit>
+      <trans-unit id="1780">
+        <source>The content record to redirect to instead of a manual entered destination above.</source>
+        <target>Wählen Sie alternativ den Content-Datensatz aus, zu dem umgeleitet werden soll, anstelle des Ziels.</target>
+      </trans-unit>
+      <trans-unit id="1790">
+        <source>Edit Sympal redirects</source>
+        <target>Umleitung bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="1800">
+        <source>The item was created successfully.</source>
+        <target>Der Eintrag wurde erfolgreich erstellt.</target>
+      </trans-unit>
+      <trans-unit id="1810">
+        <source>Manage your Sites menus below! Edit the menu items or adjust the
+order of your sites menu hierarchy via a nice drag and drop interface by clicking
+the button above.</source>
+        <target>Verwalten Sie hier die Menüpunkte Ihrer Website. Bearbeiten Sie die
+Menüpunkte oder ändern Sie die Struktur mit einer hübschen Drag'n'Drop-Funktion,
+duch Klicken auf den oberen Button.</target>
+      </trans-unit>
+      <trans-unit id="1820">
+        <source>Is published</source>
+        <target>Ist veröffentlicht</target>
+      </trans-unit>
+      <trans-unit id="1830">
+        <source>Edit menu item</source>
+        <target>Menüpunkt bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="1840">
+        <source>Menu Item</source>
+        <target>Menüpunkt</target>
+      </trans-unit>
+      <trans-unit id="1850">
+        <source>Enter the name of the menu item. There is an optional label that can be entered which has priority over the name.</source>
+        <target>Geben Sie den Namen des Menüpunktes ein. Es gibt eine optionale Beschriftung, die Priorität hat.</target>
+      </trans-unit>
+      <trans-unit id="1870">
+        <source>Enter the menu item label.</source>
+        <target>Geben Sie die Beschriftung für den Menüpunkt ein.</target>
+      </trans-unit>
+      <trans-unit id="1880">
+        <source>Choose the content record this menu item maps to.</source>
+        <target>Wählen Sie den Content-Datensatz mit dem dieser Menüpunkt verbunden ist.</target>
+      </trans-unit>
+      <trans-unit id="1890">
+        <source>Custom path</source>
+        <target>Benutzerdefinierter Pfad</target>
+      </trans-unit>
+      <trans-unit id="1900">
+        <source>Enter the custom path that this menu item maps to. It can be a URL or a symfony route.</source>
+        <target>Geben Sie einen Pfad ein, das zu dem Menüpunkt führt. Es kann eine URL sein, oder eine Symfony-Route.</target>
+      </trans-unit>
+      <trans-unit id="1910">
+        <source>Is primary</source>
+        <target>Ist primär</target>
+      </trans-unit>
+      <trans-unit id="1920">
+        <source>Check if this menu item is the root of your primary menu. You must have at least one primary menu.</source>
+        <target>Kreuzen Sie diesen Punkt an, wenn der Menüpunkt die Wurzel Ihres Primärmenüs ist. Sie müssen wenigstens ein Primärmenü haben.</target>
+      </trans-unit>
+      <trans-unit id="1930">
+        <source>Date published</source>
+        <target>Veröffentlichungsdatum</target>
+      </trans-unit>
+      <trans-unit id="1940">
+        <source>Select the date this menu item is to be published. This can be a date in the future and the menu item will not be available until that date.</source>
+        <target>Wählen Sie das Datum, an dem der Menüpunkt veröffentlicht werden soll. Wenn das Datum in der Zukunft liegt, wird der Menüpunkt erst ab dem angegeben Datum sichtbar sein.</target>
+      </trans-unit>
+      <trans-unit id="1950">
+        <source>Position</source>
+        <target>Position</target>
+      </trans-unit>
+      <trans-unit id="1960">
+        <source>Child of</source>
+        <target>Unterpunkt von</target>
+      </trans-unit>
+      <trans-unit id="1970">
+        <source>Select the parent the menu item is associated with.</source>
+        <target>Wählen Sie den übergeordneten Menüpunkt, unter dem dieser Menüpunkt stehen soll.</target>
+      </trans-unit>
+      <trans-unit id="1980">
+        <source>Position menu item</source>
+        <target>Menüpunkt neu positionieren</target>
+      </trans-unit>
+      <trans-unit id="1990">
+        <source>Position before or after?</source>
+        <target>Davor oder danach positionieren?</target>
+      </trans-unit>
+      <trans-unit id="2000">
+        <source>Before</source>
+        <target>Davor</target>
+      </trans-unit>
+      <trans-unit id="2010">
+        <source>After</source>
+        <target>Danach</target>
+      </trans-unit>
+      <trans-unit id="2020">
+        <source>Security</source>
+        <target>Sicherheit</target>
+      </trans-unit>
+      <trans-unit id="2030">
+        <source>Requires auth</source>
+        <target>Erfordert Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="2040">
+        <source>Check if this menu item requires the user to be authenticated in order to be visible.</source>
+        <target>Kreuzen Sie diesen Punkt an, wenn der Benutzer eingeloggt sein muss, um diesen Menüpunkt sehen zu können.</target>
+      </trans-unit>
+      <trans-unit id="2050">
+        <source>Requires no auth</source>
+        <target>Erfordert keine Authentifizierung</target>
+      </trans-unit>
+      <trans-unit id="2060">
+        <source>Check if this menu item requires the user not be authenticated in order to be visible.</source>
+        <target>Kreuzen Sie diesen Punkt an, wenn der Benutzer ausgeloggt sein muss, um diesen Menüpunkt sehen zu können.</target>
+      </trans-unit>
+      <trans-unit id="2070">
+        <source>Groups list</source>
+        <target>Liste der Gruppen</target>
+      </trans-unit>
+      <trans-unit id="2080">
+        <source>Select the groups this menu item is restricted to.</source>
+        <target>Wählen Sie die Gruppen auf die dieser Menüpunkt begrenzt ist.</target>
+      </trans-unit>
+      <trans-unit id="2090">
+        <source>New menu item</source>
+        <target>Neuer Menüpunkt</target>
+      </trans-unit>
+      <trans-unit id="2100">
+        <source>Adjust Order</source>
+        <target>Reihenfolge ändern</target>
+      </trans-unit>
+      <trans-unit id="2110">
+        <source>Manage Content List Content</source>
+        <target>Content-Liste verwalten</target>
+      </trans-unit>
+      <trans-unit id="2120">
+        <source>Create New %%type%%</source>
+        <target>Neuen %%type%% erstellen</target>
+      </trans-unit>
+      <trans-unit id="2130">
+        <source>Content type</source>
+        <target>Content-Typ</target>
+      </trans-unit>
+      <trans-unit id="2140">
+        <source>Sort column</source>
+        <target>Sortierspalte</target>
+      </trans-unit>
+      <trans-unit id="2300">
+        <source>Sort order</source>
+        <target>Sortierrichtung</target>
+      </trans-unit>
+      <!-- FIXME check if this is translated
+      <trans-unit id="2310">
+        <source>ASC</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="2320">
+        <source>DESC</source>
+        <target></target>
+      </trans-unit>
+      -->
+      <trans-unit id="2330">
+        <source>Table method</source>
+        <target>Tabellenmethode</target>
+      </trans-unit>
+      <trans-unit id="2350">
+        <source>DQL-Abfrage</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="2360">
+        <source>The custom path to use to generate routes for this content record. Example: /my_pages/my_page_name</source>
+        <target>Der benutzerdefinierte Pfad, um Routen für diesen Contentdatensatz zu generieren. Beispiel: /meine_seiten/mein_seitenname</target>
+      </trans-unit>
+      <trans-unit id="2370">
+        <source>The date to publish and make this content record public.</source>
+        <target>Das Datum an dem der Datensatz veröffentlicht werden soll.</target>
+      </trans-unit>
+      <trans-unit id="2380">
+        <source>The text slug identifier that represents this content record.</source>
+        <target>Der Slug, der diesen Datensatz repräsentiert.</target>
+      </trans-unit>
+      <trans-unit id="2390">
+        <source>Settings</source>
+        <target>Einstellungen</target>
+      </trans-unit>
+      <trans-unit id="2400">
+        <source>Change the content type of this content record.</source>
+        <target>Ändern Sie den Content-Typ dieses Datensatzes.</target>
+      </trans-unit>
+      <trans-unit id="2410">
+        <source>Created by</source>
+        <target>Erstellt von</target>
+      </trans-unit>
+      <trans-unit id="2420">
+        <source>Choose the user who created this content record.</source>
+        <target>Wählen Sie den Benutzer, der diesen Datensatz erstellt hat.</target>
+      </trans-unit>
+      <trans-unit id="2430">
+        <source>The groups that have access to view this content record.</source>
+        <target>Die Gruppen, die Lese-Zugriff auf diesen Datensatz haben.</target>
+      </trans-unit>
+      <trans-unit id="2440">
+        <source>Rendering Options</source>
+        <target>Darstellungsoptionen</target>
+      </trans-unit>
+      <trans-unit id="2450">
+        <source>Blog post list</source>
+        <target>Liste der Blogeinträge</target>
+      </trans-unit>
+      <trans-unit id="2460">
+        <source>Default view</source>
+        <target>Standard-Anzeige</target>
+      </trans-unit>
+      <trans-unit id="2470">
+        <source>The content template to render this content record with.</source>
+        <target>Das Template mit dem dieser Inhalt dargestellt werden soll.</target>
+      </trans-unit>
+      <trans-unit id="2480">
+        <source>The theme to render this content record with.</source>
+        <target>Das Erscheinungsbild mit dem dieser Inhalt dargestellt werden soll.</target>
+      </trans-unit>
+      <trans-unit id="2490">
+        <source>The Symfony module to render this content record with.</source>
+        <target>Das Symfony-Modul das diesen Inhalt darstellen soll.</target>
+      </trans-unit>
+      <trans-unit id="2500">
+        <source>The meta page title to use for this content record.</source>
+        <target>Metatag Seitentitel für diesen Inhalt.</target>
+      </trans-unit>
+      <trans-unit id="2510">
+        <source>The meta keywords to use for this content record.</source>
+        <target>Metatag Stichwörter für diesen Inhalt.</target>
+      </trans-unit>
+      <trans-unit id="2520">
+        <source>The meta description to use for this content record.</source>
+        <target>Metatag Beschreibung für diesen Inhalt.</target>
+      </trans-unit>
+      <trans-unit id="2530">
+        <source>Create New Content List</source>
+        <target>Neue Content-Liste</target>
+      </trans-unit>
+      <trans-unit id="2540">
+        <source>Double click to enable inline edit mode.</source>
+        <target>Doppelklicken, um den Inline-Bearbeitungsmodus zu aktivieren.</target>
+      </trans-unit>
+      <trans-unit id="2550">
+        <source>Change Slot Type</source>
+        <target>Wechseln Sie den Slottyp</target>
+      </trans-unit>
+      <trans-unit id="2560">
+        <source>Single Line of Text</source>
+        <target>Eine einzelne Textzeile</target>
+      </trans-unit>
+      <trans-unit id="2570">
+        <source>Raw HTML</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="2580">
+        <source>Markdown Editor</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="2590">
+        <source>TinyMCE Rich Text Editor</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="2600">
+        <source>Showing %first% to %last% of %count% total results.</source>
+        <target>Zeige %first% bis %last% von %count% Ergebnissen.</target>
+      </trans-unit>
+      <trans-unit id="2620">
+        <source>Navigation</source>
+        <target>Navigation</target>
+      </trans-unit>
+      <trans-unit id="2640">
+        <source>Signout</source>
+        <target>Ausloggen</target>
+      </trans-unit>
+      <trans-unit id="2670">
+        <source>Select Language</source>
+        <target>Wählen Sie die Sprache</target>
+      </trans-unit>
+      <trans-unit id="2700">
+        <source>Go</source>
+        <target>Los</target>
+      </trans-unit>
+      <trans-unit id="2710">
+        <source>Content List Actions</source>
+        <target>Aktionen zur Content-Liste</target>
+      </trans-unit>
+      <!-- FIXME fix the template -->
+      <trans-unit id="2720">
+        <source>Edit Content List</source>
+        <target>Content-Liste bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="2730">
+        <source>Edit Content Type</source>
+        <target>Content-Typ bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="2740">
+        <source>Publish</source>
+        <target>Veröffentlichen</target>
+      </trans-unit>
+      <trans-unit id="2750">
+        <source>Create New Content List</source>
+        <target>Neue Content-Liste erstellen</target>
+      </trans-unit>
+      <trans-unit id="2760">
+        <source>Change Language</source>
+        <target>Sprache ändern</target>
+      </trans-unit>
+      <trans-unit id="2780">
+        <source>Menu Actions</source>
+        <target>Menüaktionen</target>
+      </trans-unit>
+      <!-- FIXME fix template -->
+      <trans-unit id="2790">
+        <source>Add to Menu</source>
+        <target>Zum Menü hinzufügen</target>
+      </trans-unit>
+      <trans-unit id="2800">
+        <source>Are you sure you want to signout?</source>
+        <target>Sind Sie sicher, dass Sie sich ausloggen möchten?</target>
+      </trans-unit>
+      <trans-unit id="2810">
+        <source>Editor Menu</source>
+        <target>Bearbeitungsmenü</target>
+      </trans-unit>
+      <trans-unit id="2820">
+        <source>Click to toggle Sympal editor menu</source>
+        <target>Klicken, um das Bearbeitungsmenü ein-/auszublenden.</target>
+      </trans-unit>
+      <trans-unit id="2830">
+        <source>Dashboard</source>
+        <target>Dashboard</target>
+      </trans-unit>
+      <trans-unit id="2840">
+        <source>Enable Edit Mode</source>
+        <target>In Bearbeitungsmodus wechseln</target>
+      </trans-unit>
+      <trans-unit id="2850">
+        <source>Links</source>
+        <target>Links</target>
+      </trans-unit>
+      <trans-unit id="2860">
+        <source>Save</source>
+        <target>Speichern</target>
+      </trans-unit>
+      <trans-unit id="2870">
+        <source>Preview</source>
+        <target>Vorschau</target>
+      </trans-unit>
+      <trans-unit id="2880">
+        <source>Disable Edit Mode</source>
+        <target>Bearbeitungsmodus verlassen</target>
+      </trans-unit>
+      <trans-unit id="2890">
+        <source>Sympal Dashboard</source>
+        <target>Sympal Dashboard</target>
+      </trans-unit>
+      <trans-unit id="2900">
+        <source>Hello <strong>%name%</strong>! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.</source>
+        <target>Hallo <strong>%name%</strong>! Willkommen zu Ihrem Sympal Dashboard. Unten können Sie zu diversen Funktionen und Modulen wechseln, um die Website zu administrieren.</target>
+      </trans-unit>
+      <trans-unit id="2910">
+        <source>Go to the Sympal admin area for your site.</source>
+        <target>Wechseln Sie zum Administrationsbereich Ihrer Website.</target>
+      </trans-unit>
+      <trans-unit id="2920">
+        <source>Manage Content</source>
+        <target>Inhalte verwalten</target>
+      </trans-unit>
+      <trans-unit id="2930">
+        <source>Create Content List</source>
+        <target>Content-Liste erstellen</target>
+      </trans-unit>
+      <trans-unit id="2940">
+        <source>Create Page</source>
+        <target>Seite erstellen</target>
+      </trans-unit>
+      <trans-unit id="2950">
+        <source>Assets Manager</source>
+        <target>Dateimanager</target>
+      </trans-unit>
+      <trans-unit id="2960">
+        <source>Menu Manager</source>
+        <target>Menümanager</target>
+      </trans-unit>
+      <trans-unit id="2970">
+        <source>Configuration</source>
+        <target>Konfiguration</target>
+      </trans-unit>
+      <trans-unit id="2980">
+        <source>Sitemap</source>
+        <target>Sitemap</target>
+      </trans-unit>
+      <trans-unit id="2990">
+        <source>Check for Updates</source>
+        <target>Auf Updates prüfen</target>
+      </trans-unit>
+      <trans-unit id="3000">
+        <source>Check Server</source>
+        <target>Server prüfen</target>
+      </trans-unit>
+      <trans-unit id="3020">
+        <source>Manage Page Content</source>
+        <target>Seiteninhalt verwalten</target>
+      </trans-unit>
+      <trans-unit id="3030">
+        <source>Register</source>
+        <target>Registrieren</target>
+      </trans-unit>
+      <trans-unit id="3040">
+        <source>Create New Page</source>
+        <target>Neue Seite erstellen</target>
+      </trans-unit>
+      <trans-unit id="3050">
+        <source>Sympal Assets Manager</source>
+        <target>Dateimanager</target>
+      </trans-unit>
+      <trans-unit id="3060">
+        <source>Manage your Sympal project assets below! An asset in Sympal is
+any type of file from a PDF document to an image or a video. Upload new assets, create 
+directories to store your assets, rename and move your assets and embed or link
+to them in your content.</source>
+        <target>Verwalten Sie hier hochgeladene Dateien! Es können Dateien
+beliebigen Typs hochgeladen werden, vom PDF bis zum Bild oder Video.
+Sie können neue Dateien hochladen, Ordner zur Organisation erstellen und
+Dateien umbenennen, verschieben und diese dann in Inhalte einbetten oder zu ihnen
+verlinken.</target>
+      </trans-unit>
+      <trans-unit id="3070">
+        <source>Upload an Asset</source>
+        <target>Eine Datei hochladen</target>
+      </trans-unit>
+      <trans-unit id="3080">
+        <source>File</source>
+        <target>Datei</target>
+      </trans-unit>
+      <trans-unit id="3090">
+        <source>Upload</source>
+        <target>Hochladen</target>
+      </trans-unit>
+      <trans-unit id="3100">
+        <source>Create a New Directory</source>
+        <target>Neuen Ordner erstellen</target>
+      </trans-unit>
+      <trans-unit id="3110">
+        <source>Create</source>
+        <target>Erstellen</target>
+      </trans-unit>
+      <trans-unit id="3120">
+        <source>Delete folder "%s"</source>
+        <target>Ordner "%s" löschen</target>
+      </trans-unit>
+      <trans-unit id="3140">
+        <source>Directory created successfully.</source>
+        <target>Ordner erfolgreich erstellt.</target>
+      </trans-unit>
+      <trans-unit id="3150">
+        <source>Are you sure?</source>
+        <target>Sind Sie sicher?</target>
+      </trans-unit>
+      <trans-unit id="3160">
+        <source>Directory deleted successfully.</source>
+        <target>Ordner erfolgreich gelöscht.</target>
+      </trans-unit>
+      <trans-unit id="3180">
+        <source>Page Actions</source>
+        <target>Seitenaktionen</target>
+      </trans-unit>
+      <!-- FIXME fix the template -->
+      <trans-unit id="3190">
+        <source>Edit Page</source>
+        <target>Seite bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="3200">
+        <source>Un-Publish</source>
+        <target>Offline schalten</target>
+      </trans-unit>
+      <trans-unit id="3210">
+        <source>Create New Page</source>
+        <target>Neue Seite erstellen</target>
+      </trans-unit>
+      <trans-unit id="3220">
+        <source>Un-Publish Menu Item</source>
+        <target>Menüpunkt offline schalten</target>
+      </trans-unit>
+      <trans-unit id="3230">
+        <source>Edit Menu Item</source>
+        <target>Menüpunkt bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="3240">
+        <source>Delete</source>
+        <target>Löschen</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
