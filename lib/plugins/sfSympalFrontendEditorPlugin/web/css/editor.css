@@ -228,6 +228,7 @@ html {
 
 .sympal_inline_edit_admin_menu ul li
 {
+  cursor: pointer;
   float: left;
   list-style: none;
   color: #fff;
