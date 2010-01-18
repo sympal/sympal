@@ -353,7 +353,7 @@ html {
 }
 
 #sfWebDebugBar .sfWebDebugMenu {
-  background: #333 !important;
+  background: #000 !important;
   visibility: hidden;
 }
 

@@ -82,9 +82,13 @@ h3 {
 }
 
 #content #header h1 {
-  color: #333;
+  color: #fff;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 16px;
+  position: absolute;
+  top: -22px;
+  left: 25px;
+  z-index: 101;
 }
 
 ul.error_list
