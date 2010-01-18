@@ -63,6 +63,11 @@ class sfSympalFrontendEditorPluginConfiguration extends sfPluginConfiguration
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/js/editor.js'));
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/css/editor.css'));
 
+      if (!sfConfig::get('sf_debug'))
+      {
+        $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/css/editor_small.css'), 'last');
+      }
+
       $this->_editorAssetsLoaded = true;
     }
   }

@@ -212,7 +212,7 @@ html {
 .sympal_inline_edit_admin_menu
 {
   background: #000;
-  height: 25px;
+  height: 30px;
   position: fixed;
   top: 0;
   left: 5px;
@@ -232,9 +232,10 @@ html {
   list-style: none;
   color: #fff;
   margin: 0;
-  padding: 4px;
+  height: 30px;
   padding-right: 8px;
   padding-left: 8px;
+  padding-top: 8px;
   font-weight: normal;
 }
 
@@ -275,9 +276,8 @@ html {
   border-bottom: 1px solid #333;
   border-right: 1px solid #333;
   margin-left: -9px;
-  margin-top: 4px;
+  margin-top: 7px;
   width: 200px;
-  padding-top: 10px;
 }
 
 .sympal_inline_edit_admin_menu ul li ul li
