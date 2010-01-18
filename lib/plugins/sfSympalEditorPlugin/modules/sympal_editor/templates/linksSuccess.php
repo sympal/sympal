@@ -1,6 +1,6 @@
 <?php sympal_use_jquery() ?>
-<script type="text/javascript" src="<?php echo javascript_path('/sfSympalFrontendEditorPlugin/js/links.js') ?>"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalFrontendEditorPlugin/css/links.css') ?>" />
+<script type="text/javascript" src="<?php echo javascript_path('/sfSympalEditorPlugin/js/links.js') ?>"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalEditorPlugin/css/links.css') ?>" />
 
 <div id="sympal_links_container">
   <h1><?php echo __('Link Browser') ?></h1>

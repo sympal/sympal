@@ -25,39 +25,7 @@
       <h1><?php echo $sf_sympal_context->getSite()->getTitle() ?> <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
     </div>
 
-    <div id="column_left">
-      <p>
-        <strong>
-          Signed in as <?php echo $sf_user->getUsername() ?> [<?php echo link_to('signout', '@sympal_signout', 'confirm=Are you sure you wish to signout?') ?>]
-        </strong>
-      </p>
-
-      <?php if (sfSympalConfig::isI18nEnabled()): ?>
-        <?php
-        $user = sfContext::getInstance()->getUser();
-        $form = new sfFormLanguage($user, array('languages' => sfSympalConfig::get('language_codes', null, array($user->getCulture()))));
-        unset($form[$form->getCSRFFieldName()]);
-        $widgetSchema = $form->getWidgetSchema();
-        $widgetSchema['language']->setAttribute('onChange', "this.form.submit();");
-        ?>
-
-        <?php echo $form->renderFormTag(url_for('@sympal_change_language_form')) ?>
-          <?php echo $form ?>
-        </form>
-
-        <br/>
-      <?php endif; ?>
-
-      <?php echo get_sympal_admin_menu() ?>
-    </div>
-
-    <!-- right column -->
-    <div id="column_right">
-      <?php echo get_sympal_flash() ?>
-      <?php echo $sf_content ?>
-    </div>
-    <!-- end left column -->
-  <?php else: ?>
+    <?php echo get_sympal_flash() ?>
     <?php echo $sf_content ?>
   <?php endif; ?>
 

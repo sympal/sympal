@@ -128,9 +128,9 @@ all:
 
     # Override the path of any bundled asset (js or css)
     # Used with the sfSympalConfig::getAssetPath() helper method
-    # echo sfSympalConfig::getAssetPath('/sfSympalFrontendEditorPlugin/js/editor.js); // /js/my_editor.js
+    # echo sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/editor.js); // /js/my_editor.js
     asset_paths:
-      #"/sfSympalFrontendEditorPlugin/js/editor.js": "/js/my_editor.js"
+      #"/sfSympalEditorPlugin/js/editor.js": "/js/my_editor.js"
 
     # Customize the path to the loaded jQuery instance and any plugins
     jquery_reloaded:

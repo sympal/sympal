@@ -1,5 +1,5 @@
 html {
-  margin-top: 60px;
+  margin-top: 30px;
 }
 
 #sympal_dashboard, #sympal_editor, #sympal_assets, #sympal_links , #sympal_assets {
@@ -7,7 +7,7 @@ html {
   padding: 12px;
   border: 1px solid #ccc;
   position: fixed;
-  top: 60px;
+  bottom: 31px;
   right: 25px;
   display: none;
   width: 600px;
@@ -189,20 +189,38 @@ html {
   padding: 4px;
 }
 
-.sympal_inline_edit_bar_background {
+.sympal_inline_edit_bar_top_background {
   border-bottom: 1px solid #000;
-  background: #333 !important;
+  filter:alpha(opacity=80);
+	-moz-opacity: 0.80;
+	-khtml-opacity: 0.80;
+	opacity: 0.80;
+  background: #333;
   position: fixed;
   top: 0;
   left: 0;
-  height: 60px;
+  height: 30px;
+  width: 100%;
+}
+
+.sympal_inline_edit_bar_bottom_background {
+  border-top: 1px solid #000;
+  background: #333 !important;
+  filter:alpha(opacity=80);
+	-moz-opacity: 0.80;
+	-khtml-opacity: 0.80;
+	opacity: 0.80;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 30px;
   width: 100%;
 }
 
 .sympal_inline_edit_bar_container {
   font-weight: bold;
   position: fixed;
-  top: 30px;
+  bottom: 2px;
   right: 10px;
 }
 
@@ -211,9 +229,8 @@ html {
 
 .sympal_inline_edit_bar_publish {
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
-  background: #000000;
   width: 40px;
   height: 30px;
 }
@@ -225,17 +242,17 @@ html {
 
 .sympal_inline_edit_admin_menu
 {
-  background: #000;
   height: 30px;
   position: fixed;
   top: 0;
-  left: 35px;
+  right: 60px;
   margin: 0;
   padding: 0;
 }
 
 .sympal_inline_edit_admin_menu ul
 {
+  z-index: 101 !important;
   padding: 0;
   margin: 0;
 }
@@ -252,6 +269,7 @@ html {
   padding-left: 8px;
   padding-top: 8px;
   font-weight: normal;
+  font-size: 12px;
 }
 
 .sympal_inline_edit_admin_menu ul li:hover
@@ -339,6 +357,7 @@ html {
 	-moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
+  border: 1px solid #333 !important;
   font-weight: normal !important;
   font-size: 13px !important;
 }
@@ -351,34 +370,18 @@ html {
   cursor: pointer;
 }
 
-.sympal_inline_edit_bar input.sympal_disable_edit_mode,
-.sympal_inline_edit_bar input.toggle_edit_mode,
-.sympal_inline_edit_bar input.sympal_save_content_slots,
-.sympal_inline_edit_bar input.sympal_preview_content_slots {
-  background-color: #375fc2 !important;
-  color: #ffffff !important;
-}
-
-.sympal_inline_edit_bar input.sympal_disable_edit_mode:hover,
-.sympal_inline_edit_bar input.toggle_edit_mode:hover,
-.sympal_inline_edit_bar input.sympal_save_content_slots:hover,
-.sympal_inline_edit_bar input.sympal_preview_content_slots:hover {
-  background-color: #333 !important;
-  color: #fff !important;
-}
-
 .sympal_inline_edit_bar input.sympal_disable_edit_mode {
-  background: url(../../sf/sf_admin/images/cancel.png) 2px 3px no-repeat !important;
+  background: #f5f5f5 url(../../sf/sf_admin/images/cancel.png) 2px 3px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.sympal_preview_content_slots {
-  background: url(../../sfSympalAdminPlugin/images/search_icon.gif) 2px 3px no-repeat !important;
+  background: #f5f5f5 url(../../sfSympalAdminPlugin/images/search_icon.gif) 2px 3px no-repeat !important;
   text-indent: 15px;
 }
 
 .sympal_inline_edit_bar input.sympal_save_content_slots {
-  background: url(../../sfSympalPlugin/images/save_icon.gif) 2px 4px no-repeat !important;
+  background: #f5f5f5 url(../../sfSympalPlugin/images/save_icon.gif) 2px 4px no-repeat !important;
   text-indent: 15px;  
 }
 
@@ -392,18 +395,13 @@ html {
   text-indent: 15px;  
 }
 
-.sympal_inline_edit_bar input.toggle_editor_menu {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/edit.png) 2px 4px no-repeat !important;
-  text-indent: 15px;  
-}
-
 .sympal_inline_edit_bar input.toggle_sympal_links {
   background: #f5f5f5 url(../../sfSympalPlugin/images/links_icon.gif) 2px 5px no-repeat !important;
   text-indent: 15px;  
 }
 
 .sympal_inline_edit_bar input.toggle_edit_mode {
-  background: url(../../sf/sf_admin/images/tick.png) 2px 3px no-repeat !important;
+  background: #f5f5f5 url(../../sf/sf_admin/images/tick.png) 2px 3px no-repeat !important;
   text-indent: 15px;
 }
 
@@ -436,24 +434,34 @@ html {
   border-radius: 20px;
 }
 
+#sfWebDebugBar .sfWebDebugMenu {
+  background: #333 !important;
+  visibility: hidden;
+}
+
 #sfWebDebugBar {
   border-bottom: none;
   background: none !important;  
   position: fixed;
-  top: 0;
-  right: 0;
+  left: 0;
+  top: 5px !important;
   height: 0;
+}
+
+#sfWebDebugSymfonyVersion
+{
+  margin-left: 0pt;
+  padding-top: 1px;
+  padding-right: 4px;
+  padding-bottom: 1px;
+  padding-left: 4px;
+  background-color: #333 !important;
+  color: #ffffff;
 }
 
 #sfWebDebugBar .sfWebDebugMenu li
 {
   color: #fff !important;
-}
-
-#sfWebDebug .sfWebDebugTop
-{
-  position: fixed !important;
-  top: 30px !important;
 }
 
 .sfWebDebugInfo, .sfWebDebugInfo td
@@ -465,4 +473,9 @@ html {
 .sfWebDebugInfo a, .sfWebDebugInfo td a
 {
   color: #fff !important;
+}
+
+#sfWebDebug .sfWebDebugTop
+{
+  top: 30px !important;
 }

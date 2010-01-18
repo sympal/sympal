@@ -85,20 +85,28 @@ function get_sympal_breadcrumbs($menuItem, $subItem = null)
 function get_sympal_editor($menuItem = null, $content = null)
 {
   $sympalContext = sfSympalContext::getInstance();
-  $symfonyContext = $sympalContext->getSymfonyContext();
-  $symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalFrontendEditorPlugin')->loadEditorAssets();
-  $user = $symfonyContext->getUser();
-  $menuItem = $menuItem ? $menuItem : $sympalContext->getCurrentMenuItem();
-  $content = $content ? $content : $sympalContext->getCurrentContent();
+
+  $sympalContext->
+    getSymfonyContext()->
+    getConfiguration()->
+    getPluginConfiguration('sfSympalEditorPlugin')->
+    loadEditorAssets()
+  ;
+
+  $content = $sympalContext->getCurrentContent();
+  $menuItem = $sympalContext->getCurrentMenuItem();
 
   if ($content)
   {
-    $menu = new sfSympalMenuTools('Sympal Editor');
-
-    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_editor', array('content' => $content, 'menuItem' => $menuItem)));
-
-    return get_partial('sympal_editor/editor', array('menu' => $menu, 'content' => $content, 'menuItem' => $menuItem));
+    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(
+      new sfEvent(get_sympal_admin_menu_object(), 'sympal.load_editor', array(
+        'content' => $content,
+        'menuItem' => $menuItem
+      )
+    ));
   }
+
+  return get_partial('sympal_editor/editor');
 }
 
 /**

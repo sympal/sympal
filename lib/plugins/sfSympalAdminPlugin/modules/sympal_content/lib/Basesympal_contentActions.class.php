@@ -192,7 +192,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
     $this->getSympalContext()->getContentRenderer($this->sf_sympal_content)->render();
 
-    $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalFrontendEditorPlugin')->loadEditorAssets();
+    $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalEditorPlugin')->loadEditorAssets();
   }
 
   public function executeCreate(sfWebRequest $request)

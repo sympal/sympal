@@ -34,7 +34,7 @@ body a {
 }
 
 html {
-	background: #000000;
+	background-color: #FFFFFF;
 	margin-top: 20px;
 }
 
@@ -70,7 +70,7 @@ h3 {
   background-color: #FFFFFF;
   margin: 0 auto;
   padding: 0;
-  width: 96%;
+  width: 100%;
 }
 
 #content {
@@ -133,10 +133,6 @@ ul.error_list li
 
 #container {
   margin-top: 10px;
-  -khtml-border-radius:0.4em;
-	-moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
   margin-bottom: 20px;
   padding-bottom: 20px;
 }
@@ -217,18 +213,6 @@ ul.error_list li
 	background:#ffffcc;
 }
 
-#column_left {
-  width: 225px;
-  position: absolute;
-  top: 60px;
-  left: 20px;
-}
-
-#column_right {
-  margin-left: 250px;
-  margin-top: 15px;
-}
-
 body {
   font-family: Helvetica, Arial, sans-serif;
   font-size: 0.9em;
@@ -236,69 +220,6 @@ body {
 
 p {
   line-height: 1.5em;
-}
-
-
-#sympal_admin_menu {
-  background: #375fc2;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  -khtml-border-radius:0.4em;
-	-moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
-}
-
-ul#sympal-admin-menu, ul#sympal-admin-menu ul {
-  background: #fff;
-  list-style-type:none;
-  margin: 0;
-  padding: 0;
-}
-
-ul#sympal-admin-menu a {
-  display: block;
-  text-decoration: none;
-}
-
-ul#sympal-admin-menu li .clickable {
-  background: #375fc2;
-  color: #fff;	
-  padding: 0.7em;
-  padding-left: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-ul#sympal-admin-menu li .clickable:hover {
-  text-shadow: #fff 0px 0px 3px;
-}
-
-ul#sympal-admin-menu li {
-  margin-top: 1px;
-}
-
-ul#sympal-admin-menu li a {
-  background: #375fc2;
-  color: #fff;	
-  padding: 0.5em;
-  font-weight: bold;
-}
-
-ul#sympal-admin-menu li a:hover {
-  text-shadow: #fff 0px 0px 3px;
-}
-
-ul#sympal-admin-menu li ul li a {
-  background: #eee;
-  color: #000;
-  padding-left: 20px;
-}
-
-ul#sympal-admin-menu li ul li a:hover {
-  background: #ccc;
-  border-left: 5px #375fc2 solid;
-  padding-left: 20px;
 }
 
 #sf_admin_container .ui-widget-header {

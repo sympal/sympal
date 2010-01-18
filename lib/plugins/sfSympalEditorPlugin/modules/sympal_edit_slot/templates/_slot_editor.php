@@ -1,6 +1,6 @@
 <?php sympal_use_jquery() ?>
 <?php sympal_use_javascript('/sfSympalPlugin/js/jQuery.form.js') ?>
-<?php sympal_use_javascript('/sfSympalFrontendEditorPlugin/js/editor.js') ?>
+<?php sympal_use_javascript('/sfSympalEditorPlugin/js/editor.js') ?>
 
 <div class="sympal_content_slot_editor sympal_form">
   <?php echo jq_form_remote_tag(array(

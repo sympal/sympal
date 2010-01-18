@@ -1,5 +1,3 @@
-<?php sympal_use_stylesheet('/sfSympalFrontendEditorPlugin/css/editor_small.css', 'last') ?>
-
 <div id="sf_admin_container">
   <h1>Editing "<?php echo $sf_sympal_content ?>" Slots</h1>
 
@@ -20,5 +18,3 @@
     </div>
   </div>
 </div>
-
-<?php echo get_sympal_editor() ?>

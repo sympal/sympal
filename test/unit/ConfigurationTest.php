@@ -28,7 +28,7 @@ $requiredPlugins = array(
   'sfSympalUpgradePlugin',
   'sfSympalRenderingPlugin',
   'sfSympalAdminPlugin',
-  'sfSympalFrontendEditorPlugin',
+  'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin',
 );
 
@@ -53,7 +53,7 @@ $corePlugins = array(
   'sfSympalUpgradePlugin',
   'sfSympalRenderingPlugin',
   'sfSympalAdminPlugin',
-  'sfSympalFrontendEditorPlugin',
+  'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin'
 );
 
