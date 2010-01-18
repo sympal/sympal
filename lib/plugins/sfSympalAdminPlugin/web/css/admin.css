@@ -150,34 +150,34 @@ ul.error_list li
 }
 
 #content #sympal_content_type_menu {
-  margin-bottom: 15px;
-  background-color: #333333;
+  background-color: #ffffff;
   width: 200px;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 50px;
+  right: 40px;
   z-index: 9999999999;
 }
 
 #content #sympal_content_type_menu h3 {
+  background-color: #ffffff;
   text-align: center;
   font-weight: bold;
   font-size: 16px;
-  color: #ffffff;
+  color: #333333;
   margin: 0;
   padding: 6px;
   cursor: pointer;
 }
 
 #content #sympal_content_type_menu h3:hover {
-  background: #375fc2;
+  background: #333333;
+  color: #ffffff;
 }
 
 #content #sympal_content_type_menu ul {
   background-color: #333333;
   margin: 0;
   padding: 0;
-  margin-top: 10px;
   display: none;
 }
 
