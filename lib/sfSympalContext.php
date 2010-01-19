@@ -178,6 +178,11 @@ class sfSympalContext
     return self::$_instances[$site];
   }
 
+  public static function hasInstance($site = null)
+  {
+    return is_null($site) ? !empty(self::$_instances) : isset(self::$_instances[$site]);
+  }
+
   public static function createInstance(sfContext $symfonyContext, sfSympalConfiguration $sympalConfiguration)
   {
     $site = $symfonyContext->getConfiguration()->getApplication();

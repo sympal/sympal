@@ -27,7 +27,20 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
 
   public function postSave($event)
   {
-    return $this->getMenu()->clearCache();
+    if (sfSympalContext::hasInstance())
+    {
+      return $this->clearMenuCache();
+    }
+  }
+
+  public function clearMenuCache()
+  {
+    if ($menu = $this->getMenu())
+    {
+      return $menu->clearCache();
+    } else {
+      return false;
+    }
   }
 
   public function getParentId()
