@@ -10,7 +10,7 @@ class sfSympalPluginEnabler
   public function __construct(ProjectConfiguration $configuration)
   {
     $this->_configuration = $configuration;
-    $this->_sympalPluginPath = realpath(dirname(__FILE__).'/../..');
+    $this->_sympalPluginPath = realpath(dirname(__FILE__).'/..');
   }
 
   public function isSympalEnabled()

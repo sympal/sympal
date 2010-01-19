@@ -38,7 +38,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
   public static function enableSympalPlugins(ProjectConfiguration $configuration)
   {
-    require_once(dirname(__FILE__).'/../lib/core/sfSympalPluginEnabler.class.php');
+    require_once(dirname(__FILE__).'/../lib/sfSympalPluginEnabler.class.php');
 
     $enabler = new sfSympalPluginEnabler($configuration);
     $enabler->enableSympalPlugins();
