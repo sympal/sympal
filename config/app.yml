@@ -263,7 +263,7 @@ all:
     gravatar_default_image: "/sfSympalPlugin/images/symfony_button.gif"
 
     # Configure the available languages
-    language_codes: [en, fr, es]
+    language_codes: []
 
     # Configure the default theme to render Sympal with
     default_theme: default

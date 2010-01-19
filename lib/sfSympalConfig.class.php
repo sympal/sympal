@@ -2,6 +2,11 @@
 
 class sfSympalConfig extends sfConfig
 {
+  public static function getLanguageCodes()
+  {
+    return !empty(self::$config['app_sympal_config_language_codes']) ? self::$config['app_sympal_config_language_codes'] : array();
+  }
+
   public static function get($group, $name = null, $default = null)
   {
     $default = $default === null ? false : $default;
@@ -25,6 +30,11 @@ class sfSympalConfig extends sfConfig
 
   public static function isI18nEnabled($name = null)
   {
+    if (empty(self::$config['app_sympal_config_language_codes']))
+    {
+      return false;
+    }
+
     if ($name)
     {
       if (is_object($name))

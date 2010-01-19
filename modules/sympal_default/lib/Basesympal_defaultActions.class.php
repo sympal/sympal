@@ -16,7 +16,7 @@ class Basesympal_defaultActions extends sfActions
   public function executeChange_language(sfWebRequest $request)
   {
     $oldCulture = $this->getUser()->getCulture();
-    $this->form = new sfFormLanguage($this->getUser(), array('languages' => sfSympalConfig::get('language_codes', null, array($this->getUser()->getCulture()))));
+    $this->form = new sfFormLanguage($this->getUser(), array('languages' => sfSympalConfig::getLanguageCodes()));
     unset($this->form[$this->form->getCSRFFieldName()]);
 
     $this->form->process($request);

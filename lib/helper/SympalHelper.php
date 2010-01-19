@@ -117,7 +117,7 @@ function get_sympal_editor($menuItem = null, $content = null)
 function get_change_language_icons()
 {
   $icons = array();
-  foreach (sfSympalConfig::get('language_codes') as $code)
+  foreach (sfSympalConfig::getLanguageCodes() as $code)
   {
     if (sfContext::getInstance()->getUser()->getCulture() == $code)
     {

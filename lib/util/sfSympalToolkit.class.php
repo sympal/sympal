@@ -190,7 +190,7 @@ class sfSympalToolkit
           $content->Type->name,
           $content->Type->id,
           $content->id,
-          implode('|', sfSympalConfig::get('language_codes')),
+          implode('|', sfSympalConfig::getLanguageCodes()),
           implode('|', sfSympalConfig::get('content_formats'))
         );
       }
@@ -214,7 +214,7 @@ class sfSympalToolkit
           $content->Type->name,
           $content->Type->id,
           $content->id,
-          implode('|', sfSympalConfig::get('language_codes')),
+          implode('|', sfSympalConfig::getLanguageCodes()),
           implode('|', sfSympalConfig::get('content_formats'))
         );
       }
@@ -233,7 +233,7 @@ class sfSympalToolkit
           $contentType->name,
           $contentType->id,
           null,
-          implode('|', sfSympalConfig::get('language_codes')),
+          implode('|', sfSympalConfig::getLanguageCodes()),
           implode('|', sfSympalConfig::get('content_formats'))
         );
       }
