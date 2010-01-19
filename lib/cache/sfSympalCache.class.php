@@ -205,6 +205,11 @@ class sfSympalCache
     $this->set('layouts', $layoutsCache);
   }
 
+  public function remove($key)
+  {
+    return $this->_cacheDriver->remove($key);
+  }
+
   public function set($key, $data, $lifeTime = null)
   {
     return $this->_cacheDriver->set($key, serialize($data), $lifeTime);

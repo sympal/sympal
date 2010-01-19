@@ -3,7 +3,23 @@
 class sfSympalMenuSite extends sfSympalMenu
 {
   protected 
-    $_menuItem = null;
+    $_menuItem = null,
+    $_cacheKey = null;
+
+  public function setCacheKey($cacheKey)
+  {
+    $this->_cacheKey = $cacheKey;
+  }
+
+  public function getCacheKey()
+  {
+    return $this->_cacheKey;
+  }
+
+  public function clearCache()
+  {
+    return sfSympalConfiguration::getActive()->getCache()->remove($this->_cacheKey);
+  }
 
   public function findMenuItem(sfSympalMenuItem $menuItem)
   {
@@ -88,6 +104,7 @@ class sfSympalMenuSite extends sfSympalMenu
       $array['requires_no_auth'] = $menuItem->getRequiresNoAuth();
       $array['all_permissions'] = $menuItem->getAllPermissions();
       $array['level'] = $menuItem->getLevel();
+      $array['date_published'] = $menuItem->getDatePublished();
       unset($array['__children']);
       return $array;
     }
@@ -101,6 +118,13 @@ class sfSympalMenuSite extends sfSympalMenu
     $this->requiresAuth($this->_menuItem['requires_auth']);
     $this->requiresNoAuth($this->_menuItem['requires_no_auth']);
     $this->setCredentials($this->_menuItem['all_permissions']);
+
+    // If not published yet then you must have certain credentials
+    $datePublished = strtotime($this->_menuItem['date_published']);
+    if (!$datePublished || $datePublished > time())
+    {
+      $this->setCredentials(array('ManageContent'));
+    }
 
     $currentMenuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
 

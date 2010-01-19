@@ -12,6 +12,14 @@ class sfSympalMenuSiteManager
 
   protected static $_instance;
 
+  public function __construct()
+  {
+    if ($cache = $this->_getCache())
+    {
+      $this->_rootSlugs = $cache->get('SYMPAL_MENU_ROOT_SLUGS');
+    }
+  }
+
   public static function getInstance()
   {
     if (!self::$_instance)
@@ -61,6 +69,12 @@ class sfSympalMenuSiteManager
       return false;
     }
 
+    if ($name instanceof sfSympalMenuItem)
+    {
+      $menuItem = $name;
+      $name = $this->_rootSlugs[$name['root_id']];
+    }
+
     $cacheKey = 'SYMPAL_MENU_'.md5($name.var_export($showChildren, true).$class);
     if (isset($this->_menus[$cacheKey]))
     {
@@ -82,9 +96,14 @@ class sfSympalMenuSiteManager
 
     $this->_menus[$cacheKey] = $menu;
 
-    if ($showChildren !== null && $menu)
+    if ($menu)
     {
-      $menu->callRecursively('showChildren', $showChildren);
+      if ($showChildren !== null)
+      {
+        $menu->callRecursively('showChildren', $showChildren);
+      }
+
+      $menu->setCacheKey($cacheKey);
     }
 
     return $menu;
@@ -92,12 +111,6 @@ class sfSympalMenuSiteManager
 
   protected function _buildMenu($name, $class)
   {
-    if ($name instanceof sfSympalMenuItem)
-    {
-      $menuItem = $name;
-      $name = $this->_rootSlugs[$name['root_id']];
-    }
-
     $rootId = array_search($name, $this->_rootSlugs);
 
     if (!$rootId)
@@ -182,6 +195,11 @@ class sfSympalMenuSiteManager
         $this->_rootSlugs[$menuItem['root_id']] = $menuItem['slug'];
         $this->_rootMenuItems[$menuItem['root_id']] = $menuItem;
         $this->_hierarchies[$menuItem['root_id']] = $menuItem['__children'];
+      }
+
+      if ($cache = $this->_getCache())
+      {
+        $cache->set('SYMPAL_MENU_ROOT_SLUGS', $this->_rootSlugs);
       }
 
       // Mark the process as done so it is cached

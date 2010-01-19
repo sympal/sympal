@@ -38,13 +38,6 @@ class PluginsfSympalMenuItemTable extends sfSympalDoctrineTable
       $q->addSelect('t.*');
     }
 
-    $user = sfContext::getInstance()->getUser();
-    if (!$user->hasCredential('ManageContent'))
-    {
-      $expr = new Doctrine_Expression('NOW()');
-      $q->andWhere('m.date_published <= '.$expr);
-    }
-
     return $q;
   }
 }

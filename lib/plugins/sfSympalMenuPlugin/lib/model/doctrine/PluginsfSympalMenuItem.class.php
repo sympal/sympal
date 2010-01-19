@@ -25,6 +25,11 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
     return $this->_allPermissions;
   }
 
+  public function postSave($event)
+  {
+    return $this->getMenu()->clearCache();
+  }
+
   public function getParentId()
   {
     $node = $this->getNode();
@@ -110,19 +115,27 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
     return $route;
   }
 
+  public function getMenu()
+  {
+    return sfSympalMenuSiteManager::getMenu($this);
+  }
+
   public function getBreadcrumbs($subItem = null)
   {
     $breadcrumbs = null;
-    $menu = sfSympalMenuSiteManager::getMenu('primary');
-    if ($menu)
+    // Get the menu this menu item belongs to
+    if ($menu = $this->getMenu())
     {
+      // Find the node for this menu item
       $node = $menu->findMenuItem($this);
 
+      // Get the breadcrumbs
       if ($node)
       {
         $breadcrumbs = $node->getBreadcrumbs($subItem);
       }
     }
+    // If no breadcrumbs generate a blank object
     if (is_null($breadcrumbs))
     {
       $breadcrumbs = sfSympalMenuBreadcrumbs::generate(array());
