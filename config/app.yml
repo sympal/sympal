@@ -259,6 +259,8 @@ all:
     # Configure recaptcha from sfFormExtraPlugin
     recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX
     recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb
+    
+    gravatar_default_image: "/sfSympalPlugin/images/symfony_button.gif"
 
     # Configure the available languages
     language_codes: [en, fr, es]

@@ -129,10 +129,18 @@ function get_change_language_icons()
   return implode(' ', $icons);
 }
 
+/**
+ * Returns the url to a gravatar image based on the given email address
+ * 
+ * @param string $emailAddress The email address to lookup in gravatar
+ * @param string The size of the image to return
+ */
 function get_gravatar_url($emailAddress, $size = 40)
 {
-  $default = "http://www.somewhere.com/homestar.jpg";
+  $default = sfSympalConfig::get('gravatar_default_image');
+  $default = image_path($default, true);
 
   $url = 'http://www.gravatar.com/avatar.php?gravatar_id='.md5(strtolower($emailAddress)).'&default='.urlencode($default).'&size='.$size;
+  
   return $url;
 }
