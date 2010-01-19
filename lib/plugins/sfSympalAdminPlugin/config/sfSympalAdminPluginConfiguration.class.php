@@ -106,11 +106,5 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     }
 
     $contentEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' Create New '.$content['Type']['label'], '@sympal_content_create_type?type='.$content['Type']['slug']);
-
-    if (sfSympalConfig::isI18nEnabled())
-    {
-      $menu->addChild('Change Language')
-        ->addChild(get_component('sympal_default', 'language'));
-    }
   }
 }
