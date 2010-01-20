@@ -14,8 +14,8 @@ and create directories below.') ?>
   </p>
 
   <input type="hidden" id="current_url" value="<?php echo $sf_request->getUri() ?>" />
-  <input type="button" class="sympal_assets_upload" value="Upload Asset" />
-  <input type="button" class="sympal_create_directory" value="Create Directory" />
+  <input type="button" class="sympal_assets_upload" value="<?php echo __('Upload Asset') ?>" />
+  <input type="button" class="sympal_create_directory" value="<?php echo __('Create Directory') ?>" />
 
   <br/>
 
