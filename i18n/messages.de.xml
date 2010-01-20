@@ -541,7 +541,7 @@ falls Sie eine URL ändern möchten. Das ist nützlich für die Suchmaschinenopt
       </trans-unit>
       <trans-unit id="1740">
         <source>Content</source>
-        <target>Content</target>
+        <target>Inhalt</target>
       </trans-unit>
       <trans-unit id="1750">
         <source>New Sympal redirects</source>
@@ -802,8 +802,8 @@ duch Klicken auf den oberen Button.</target>
         <target>Neue Content-Liste</target>
       </trans-unit>
       <trans-unit id="2540">
-        <source>Double click to enable inline edit mode.</source>
-        <target>Doppelklicken, um den Inline-Bearbeitungsmodus zu aktivieren.</target>
+        <source>[Double click to enable inline edit mode.]</source>
+        <target>[Doppelklicken, um den Bearbeitungsmodus zu aktivieren.]</target>
       </trans-unit>
       <trans-unit id="2550">
         <source>Change Slot Type</source>
@@ -1075,6 +1075,19 @@ verlinken.</target>
         <source>Change Content Type</source>
         <target>Content-Typ wechseln</target>
       </trans-unit>
+      <trans-unit id="3350">
+        <source>Edit slots</source>
+        <target>Slots bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="3360">
+        <source>View</source>
+        <target>Anzeigen</target>
+      </trans-unit>
+      <trans-unit id="3370">
+        <source>close</source>
+        <target>schließen</target>
+      </trans-unit>
+      
     </body>
   </file>
 </xliff>
