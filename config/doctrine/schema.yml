@@ -45,9 +45,7 @@ sfSympalContent:
       type: integer
       notnull: true
     last_updated_by_id: integer
-    created_by_id:
-      type: integer
-      notnull: true
+    created_by_id: integer
     date_published: timestamp
     custom_path: string(255)
     theme: string(255)
@@ -71,7 +69,7 @@ sfSympalContent:
       class: <?php echo sfSympalConfig::get('user_model') ?> 
       local: created_by_id
       foreignAlias: CreatedContent
-      onDelete: CASCADE
+      onDelete: SET NULL
     Site:
       local: site_id
       class: sfSympalSite
