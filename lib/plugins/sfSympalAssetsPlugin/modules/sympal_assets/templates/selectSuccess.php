@@ -71,5 +71,5 @@
     <?php endforeach ?>
   </ul>
 
-  <a class="sympal_close_menu">close</a>
+  <a class="sympal_close_menu"><?php echo __('Close') ?></a>
 </div>

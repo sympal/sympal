@@ -19,12 +19,10 @@ html {
 .sympal_close_menu {
   float: right;
   clear: both;
-  background: #ffc;
   border: 1px solid #ccc;
-  font-size: 0;
-  background: url(../../sfSympalPlugin/images/close.gif) no-repeat;
-  width: 50px;
-  height: 20px;
+  background: #ffc;
+  padding: 3px 3px 3px 23px;
+  background: 3px 3px url(../../sfSympalPlugin/images/cancel.png) no-repeat;
   cursor: pointer;
 }
 

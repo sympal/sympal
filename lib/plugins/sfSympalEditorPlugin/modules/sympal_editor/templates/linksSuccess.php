@@ -31,7 +31,7 @@
   </div>
 
   <div id="links">
-    <h2><?php echo $contentType->getLabel() ?> Links</h2>
+    <h2><?php echo $contentType->getLabel() ?> <?php echo __('Links') ?></h2>
     <ul>
       <?php if ($content->count()): ?>
 
@@ -61,5 +61,5 @@
     </ul>
   </div>
 
-  <a class="sympal_close_menu"><?php echo __('close') ?></a>
+  <a class="sympal_close_menu"><?php echo __('Close') ?></a>
 </div>

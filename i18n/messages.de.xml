@@ -4,6 +4,14 @@
   <file original="global" source-language="en" datatype="plaintext">
     <header/>
     <body>
+      <trans-unit id="2">
+        <source>Yes</source>
+        <target>Ja</target>
+      </trans-unit>
+      <trans-unit id="3">
+        <source>No</source>
+        <target>Nein</target>
+      </trans-unit>
       <trans-unit id="10">
         <source>Sympal plugin manager List</source>
         <target>Sympal Plugin-Manager Liste</target>
@@ -803,7 +811,7 @@ duch Klicken auf den oberen Button.</target>
       </trans-unit>
       <trans-unit id="2540">
         <source>[Double click to enable inline edit mode.]</source>
-        <target>[Doppelklicken, um den Bearbeitungsmodus zu aktivieren.]</target>
+        <target>[Doppelklicken, um in den Bearbeitungsmodus zu wechseln.]</target>
       </trans-unit>
       <trans-unit id="2550">
         <source>Change Slot Type</source>
@@ -1084,10 +1092,50 @@ verlinken.</target>
         <target>Anzeigen</target>
       </trans-unit>
       <trans-unit id="3370">
-        <source>close</source>
-        <target>schließen</target>
+        <source>Close</source>
+        <target>Schließen</target>
       </trans-unit>
-      
+      <trans-unit id="3380">
+        <source>Click to unpublish content.</source>
+        <target>Hier klicken, um den Content offline zu schalten.</target>
+      </trans-unit>
+      <trans-unit id="3390">
+        <source>Click to publish content.</source>
+        <target>Hier klicken, um den Content zu veröffentlichen.</target>
+      </trans-unit>
+      <trans-unit id="3400">
+        <source>Publish Content</source>
+        <target>Inhalt veröffentlichen</target>
+      </trans-unit>
+      <trans-unit id="3410">
+        <source>Are you sure you want publish this content?</source>
+        <target>Sind Sie sicher, dass Sie diesen Inhalt veröffentlichen möchten?</target>
+      </trans-unit>
+      <trans-unit id="3420">
+        <source>Un-publish Content</source>
+        <target>Inhalt offline schalten</target>
+      </trans-unit>
+      <trans-unit id="3430">
+        <source>Are you sure you want un-publish this content?</source>
+        <target>Sind Sie sicher, dass Sie diesen Inhalt offline schalten möchten?</target>
+      </trans-unit>
+      <!-- link browser -->
+      <trans-unit id="3500">
+        <source>Link Browser</source>
+        <target>Linkauswahl</target>
+      </trans-unit>
+      <trans-unit id="3510">
+        <source>Browse your content below and insert links into the currently focused editor by just clicking the page you want to link to.</source>
+        <target>Fügen Sie an die aktuelle Cursorposition einen Link ein, einfach durch anklicken der gewünschten Seite.</target>
+      </trans-unit>
+      <trans-unit id="3520">
+        <source>You can control where the link is inserted by positioning the cursor in the editor.</source>
+        <target>Sie können die Stelle an der der Link eingefügt wird durch ändern der Cursorposition im Editor bestimmen.</target>
+      </trans-unit>
+      <trans-unit id="3530">
+        <source>Nothing found</source>
+        <target>Nichts gefunden</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

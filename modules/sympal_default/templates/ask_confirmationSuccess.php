@@ -13,9 +13,9 @@
 <?php endif; ?>
 
 <div id="sympal_ask_confirmation">
-  <h2><?php echo $title ?></h2>
+  <h2><?php echo __($title) ?></h2>
 
-  <p><?php echo htmlspecialchars_decode($message) ?></p>
+  <p><?php echo htmlspecialchars_decode(__($message)) ?></p>
 
   <form action="<?php echo $url ?>" method="POST">
     <input type="hidden" name="sf_method" value="<?php echo $sf_request->getMethod() ?>" />
@@ -26,9 +26,9 @@
       <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value ?>" />
     <?php endforeach; ?>
 
-    <input type="submit" name="yes" class="yes" value="Yes" />
+    <input type="submit" name="yes" class="yes" value="<?php echo __('Yes') ?>" />
     <?php if ($sf_request->getReferer()): ?>
-      <input type="submit" name="no" class="no" value="No" />
+      <input type="submit" name="no" class="no" value="<?php echo __('No') ?>" />
     <?php endif; ?>
   </form>
 </div>

@@ -25,6 +25,6 @@
     <?php echo $boxes->render() ?>
   </div>
   <?php if ($isAjax): ?>
-    <a class="sympal_close_menu">close</a>
+    <a class="sympal_close_menu"><?php echo __('Close') ?></a>
   <?php endif; ?>
 </div>
