@@ -1,12 +1,16 @@
 <?php use_helper('jQuery') ?>
 <div id="sf_admin_container">
   <div>
+    <?php if ($sf_request->isXmlHttpRequest()): ?>
     <?php echo jq_link_to_remote(__('Back to list', array(), 'sf_admin'), array(
       'url' => url_for('@sympal_assets_select'),
       'update' => 'sympal_assets_container',
       'title' => __('Back to list', array(), 'sf_admin'),
       'method' => 'get'
     )) ?>
+    <?php else: ?>
+    <?php echo link_to(__('Back to list', array(), 'sf_admin'), '@sympal_assets') ?>
+    <?php endif ?>
   </div>
   <h1><?php echo __('Editing Asset "%asset%"', array('%asset%' => $asset->getName())) ?></h1>
 
