@@ -33,7 +33,9 @@ for each model and even for each different format type.
 Missing translations:
 
 * "Save Order >>" in nested set editor
-
+* Upgrade module
+* Server check
+* Most admin generator action titles
 
 ## 1.1
 

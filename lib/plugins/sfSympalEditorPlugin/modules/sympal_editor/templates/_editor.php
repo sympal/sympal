@@ -46,7 +46,7 @@
     </div>
 
     <div class="sympal_inline_edit_signout">
-      <?php echo link_to(image_tag('/sfSympalPlugin/images/signout.png', 'title='.__('Signout')), '@sympal_signout', 'confirm=Are you sure you want to signout?') ?>
+      <?php echo link_to(image_tag('/sfSympalPlugin/images/signout.png', 'title='.__('Signout')), '@sympal_signout', 'confirm='.__('Are you sure you want to signout?')) ?>
     </div>
 
     <?php if (isset($sf_sympal_content) && $sf_sympal_content): ?>
