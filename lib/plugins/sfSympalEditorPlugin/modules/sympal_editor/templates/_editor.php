@@ -32,11 +32,11 @@
     <?php if (isset($sf_sympal_content) && $sf_sympal_content): ?>
       <div class="sympal_inline_edit_bar_publish">
         <?php if ($sf_sympal_content->getIsPublished()): ?>
-          <?php echo image_tag('/sfSympalPlugin/images/published_icon.png', 'title=Published on '.format_date($sf_sympal_content->getDatePublished(), 'g')) ?>
+          <?php echo link_to(image_tag('/sfSympalPlugin/images/published_icon.png', 'title=Published on '.format_date($sf_sympal_content->getDatePublished(), 'g').'. Click to unpublish content.'), '@sympal_unpublish_content?id='.$sf_sympal_content['id']) ?>
         <?php elseif ($sf_sympal_content->getIsPublishedInTheFuture()): ?>
-          <?php echo image_tag('/sfSympalPlugin/images/future_published_icon.png', 'title=Will publish on '.format_date($sf_sympal_content->getDatePublished(), 'g')) ?>
+          <?php echo link_to(image_tag('/sfSympalPlugin/images/future_published_icon.png', 'title=Will publish on '.format_date($sf_sympal_content->getDatePublished(), 'g').'. Click to unpublish content.'), '@sympal_unpublish_content?id='.$sf_sympal_content['id']) ?>
         <?php else: ?>
-          <?php echo image_tag('/sfSympalPlugin/images/unpublished_icon.png', 'title=Has not been published yet.') ?>
+          <?php echo link_to(image_tag('/sfSympalPlugin/images/unpublished_icon.png', 'title=Has not been published yet. Click to publish content.'), '@sympal_publish_content?id='.$sf_sympal_content['id']) ?>
         <?php endif; ?>
       </div>
     <?php endif; ?>
@@ -67,15 +67,21 @@
           </li>
         <?php endif; ?>
         <li><input type="button" class="toggle_dashboard_menu" value="<?php echo __('Dashboard') ?>" rel="<?php echo url_for('@sympal_dashboard') ?>" /></li>
-        <li><input type="button" class="toggle_edit_mode" value="<?php echo __('Enable Edit Mode') ?>" /></li>
+
+        <?php if ($sf_sympal_content->getEditableSlotsExistOnPage()): ?>
+          <li><input type="button" class="toggle_edit_mode" value="<?php echo __('Enable Edit Mode') ?>" /></li>
+        <?php endif; ?>
       </ul>
 
       <ul class="sympal_inline_edit_bar_big_buttons sympal_inline_edit_bar_buttons">
         <li><input type="button" class="toggle_sympal_assets" name="assets" rel="<?php echo url_for('@sympal_assets_select') ?>" value="<?php echo __('Assets') ?>" /></li>
         <li><input type="button" class="toggle_sympal_links" name="links" rel="<?php echo url_for('@sympal_editor_links') ?>" value="<?php echo __('Links') ?>" /></li>
-        <li><input type="button" class="sympal_save_content_slots" name="save" value="<?php echo __('Save') ?>" /></li>
-        <li><input type="button" class="sympal_preview_content_slots" name="preview" value="<?php echo __('Preview') ?>" /></li>
-        <li><input type="button" class="sympal_disable_edit_mode" name="disable_edit_mode" value="<?php echo __('Disable Edit Mode') ?>" /></li>
+
+        <?php if ($sf_sympal_content->getEditableSlotsExistOnPage()): ?>
+          <li><input type="button" class="sympal_save_content_slots" name="save" value="<?php echo __('Save') ?>" /></li>
+          <li><input type="button" class="sympal_preview_content_slots" name="preview" value="<?php echo __('Preview') ?>" /></li>
+          <li><input type="button" class="sympal_disable_edit_mode" name="disable_edit_mode" value="<?php echo __('Disable Edit Mode') ?>" /></li>
+        <?php endif; ?>
       </ul>
     <?php endif; ?>
   </div>

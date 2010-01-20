@@ -66,10 +66,9 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/editor.js'));
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/css/editor.css'));
 
-      if (!sfConfig::get('sf_debug'))
-      {
-        $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/css/editor_nodebug.css'), 'last');
-      }
+      // Fancybox
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
+      $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
 
       $this->_editorAssetsLoaded = true;
     }

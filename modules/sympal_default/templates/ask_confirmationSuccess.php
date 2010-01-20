@@ -4,15 +4,15 @@
 <?php if ($isAjax): ?>
   <script type="text/javascript">
   $(function() {
-    var updateId = $('#ask_confirmation').parent('div, span').attr('id');
-    $('#ask_confirmation form').ajaxForm({
+    var updateId = $('#sympal_ask_confirmation').parent('div, span').attr('id');
+    $('#sympal_ask_confirmation form').ajaxForm({
       target: '#' + updateId
     });
   });
   </script>
 <?php endif; ?>
 
-<div id="ask_confirmation">
+<div id="sympal_ask_confirmation">
   <h2><?php echo $title ?></h2>
 
   <p><?php echo htmlspecialchars_decode($message) ?></p>
@@ -26,9 +26,9 @@
       <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value ?>" />
     <?php endforeach; ?>
 
-    <input type="submit" name="yes" value="Yes" />
+    <input type="submit" name="yes" class="yes" value="Yes" />
     <?php if ($sf_request->getReferer()): ?>
-      <input type="submit" name="no" value="No" />
+      <input type="submit" name="no" class="no" value="No" />
     <?php endif; ?>
   </form>
 </div>

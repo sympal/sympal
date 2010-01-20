@@ -2,6 +2,8 @@
 
 function get_sympal_content_slot_editor(sfSympalContent $content, sfSympalContentSlot $slot)
 {
+  $content->setEditableSlotsExistOnPage(true);
+
   $slot->setContentRenderedFor($content);
 
   $name = $slot->getName();

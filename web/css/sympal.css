@@ -457,19 +457,19 @@ ul.error_list li
   background: url(../images/error.png) no-repeat 4px 4px;
 }
 
-#ask_confirmation {
+#sympal_ask_confirmation {
   padding: 12px;
   background: #ffc;
   border: 1px solid #ddd;
 }
 
-#ask_confirmation h2 {
+#sympal_ask_confirmation h2 {
   padding: 0;
   margin: 0;
   margin-bottom: 10px;
 }
 
-#ask_confirmation p {
+#sympal_ask_confirmation p {
   margin-bottom: 10px;
 }
 

@@ -80,31 +80,29 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $menu = $event->getSubject();
     $content = $event['content'];
+    $menuItem = $event['menuItem'];
+
+    $sympalConfiguration = sfSympalConfiguration::getActive();
     $user = sfContext::getInstance()->getUser();
     $request = sfContext::getInstance()->getRequest();
 
-    $contentEditor = $menu->addChild($content['Type']['label'] . ' Actions')
+    $contentEditor = $menu->getChild($content->getType()->getLabel() . ' Actions')
       ->setCredentials(array('ManageContent'));
 
-    if ($request->getParameter('module') == 'sympal_content' || $request->getParameter('module') == 'sympal_menu_items')
+    if ($sympalConfiguration->isAdminModule())
     {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/list.png').' View '.$content['Type']['label'], $content->getRoute());
-    }
-    
-    if ($request->getParameter('module') != 'sympal_content')
-    {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content['Type']['label'], $content->getEditRoute());      
+      $contentEditor->addChild(image_tag('/sf/sf_admin/images/list.png').' View '.$content->getType()->getLabel(), $content->getRoute());    
     }
 
+    $contentEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' Create New '.$content->getType()->getLabel(), '@sympal_content_create_type?type='.$content['Type']['slug']);
+    $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit '.$content->getType()->getLabel(), $content->getEditRoute());      
     $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Content Type', '@sympal_content_types_edit?id='.$content->getType()->getId());      
 
-    if ($content['date_published'])
+    if ($menuItem && $menuItem->exists())
     {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/cancel.png').' Un-Publish', '@sympal_unpublish_content?id='.$content['id']);
+      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' Edit Menu Item', '@sympal_content_menu_item?id='.$content->getId());
     } else {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/tick.png').' Publish', '@sympal_publish_content?id='.$content['id']);
+      $contentEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' Add to Menu', '@sympal_content_menu_item?id='.$content->getId());
     }
-
-    $contentEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' Create New '.$content['Type']['label'], '@sympal_content_create_type?type='.$content['Type']['slug']);
   }
 }

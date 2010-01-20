@@ -16,22 +16,17 @@
   </div>
 
   <div id="container">
-
-  <!-- content -->
-  <div id="content">
-
-  <?php if ($sf_sympal_context->getSite() && $sf_user->isAuthenticated()): ?>
-    <div id="header">
-      <h1><?php echo $sf_sympal_context->getSite()->getTitle() ?> <?php echo sfSympalConfig::getCurrentVersion() ?> Admin</h1>
+    <div id="content">
+      <?php echo get_sympal_flash() ?>
+      <?php echo $sf_content ?>
     </div>
-  <?php endif; ?>
 
-  <?php echo get_sympal_flash() ?>
-  <?php echo $sf_content ?>
+    <?php if ($sf_sympal_context->getSite() && $sf_user->isAuthenticated()): ?>
+      <div id="footer">
+        <p><?php echo __('Powered by %1% %2%', array('%1%' => link_to('Sympal', 'http://www.sympalphp.org', 'target=_BLANK'), '%2%' => sfSympalConfig::getCurrentVersion())) ?>.</p>
+      </div>
+    <?php endif; ?>
+  </div>
 
-  </div>
-  <!-- end content -->
-  <br style="clear: both;" />
-  </div>
 </body>
 </html>

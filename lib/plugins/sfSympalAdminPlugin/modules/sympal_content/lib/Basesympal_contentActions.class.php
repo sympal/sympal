@@ -50,22 +50,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
   }
 
-  public function executePublish(sfWebRequest $request)
-  {
-    $content = $this->_getContent($request);
-    $this->_publishMenuItem($content, true);
-
-    $msg = $publish ? 'Content published successfully!':'Content unpublished successfully!';
-    $this->getUser()->setFlash('notice', $msg);
-    $this->redirect($request->getReferer());
-  }
-
-  public function executeUnpublish(sfWebRequest $request)
-  {
-    $content = $this->_getContent($request);
-    $this->_publishContent($content, false);
-  }
-
   protected function _getContentType($type, sfWebRequest $request)
   {
     if (!$this->contentType)
@@ -176,6 +160,12 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->sf_sympal_content = $this->_getContent($request);
     $user = $this->getUser();
     $user->checkContentSecurity($this->sf_sympal_content);
+
+    $this->getSympalContext()->setCurrentContent($this->sf_sympal_content);
+    if ($menuItem = $this->sf_sympal_content->getMenuItem())
+    {
+      $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_content->getMenuItem());
+    }
 
     $this->getResponse()->setTitle('Sympal Admin / Editing '.$this->sf_sympal_content);
 

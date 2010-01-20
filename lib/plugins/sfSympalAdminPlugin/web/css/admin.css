@@ -47,19 +47,6 @@ p {
   margin-bottom:                0;
 }
 
-#content #header {
-  position: absolute;
-  right: 30px;
-  top: 10px;
-  height: 50px;
-}
-
-#content #header h1 {
-  font-weight: bold;
-  color: #333;
-  font-size: 20px;
-}
-
 #content h1 {
   color: #11A8FF;
   font-size: 18px;
@@ -86,11 +73,15 @@ p {
   width: 100%;
 }
 
+#container #footer p {
+  text-align: center;
+  font-size: 11px;
+}
+
 #content {
   margin: 0;
   padding: 20px;
   background-color: #fff;
-  min-height: 400px;
   position: relative;
 }
 
@@ -112,19 +103,19 @@ ul.error_list li
   background: url(../images/error.png) no-repeat 4px 4px;
 }
 
-#ask_confirmation {
+#sympal_ask_confirmation {
   padding: 12px;
   background: #ffc;
   border: 1px solid #ddd;
 }
 
-#ask_confirmation h2 {
+#sympal_ask_confirmation h2 {
   padding: 0;
   margin: 0;
   margin-bottom: 10px;
 }
 
-#ask_confirmation p {
+#sympal_ask_confirmation p {
   margin-bottom: 10px;
 }
 
@@ -146,7 +137,6 @@ ul.error_list li
 
 #content {
   background: none;
-  min-height: 600px;
 }
 
 #content #sympal_content_type_menu {
@@ -155,7 +145,7 @@ ul.error_list li
   position: absolute;
   top: 50px;
   right: 40px;
-  z-index: 9999999999;
+  z-index: 101;
 }
 
 #content #sympal_content_type_menu h3 {

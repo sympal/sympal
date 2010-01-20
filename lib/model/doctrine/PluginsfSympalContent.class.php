@@ -9,7 +9,8 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $_allPermissions,
     $_route,
     $_routeObject,
-    $_mainMenuItem;
+    $_mainMenuItem,
+    $_editableSlotsExistOnPage = false;
 
   public static function createNew($type)
   {
@@ -35,6 +36,16 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $content->$name = new $name();
 
     return $content;
+  }
+
+  public function setEditableSlotsExistOnPage($bool)
+  {
+    $this->_editableSlotsExistOnPage = $bool;
+  }
+
+  public function getEditableSlotsExistOnPage()
+  {
+    return $this->_editableSlotsExistOnPage;
   }
 
   public function getModuleToRenderWith()
@@ -246,6 +257,10 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function publish()
   {
+    if ($menu = $this->getMenuItem())
+    {
+      $menu->publish();
+    }
     $this->date_published = new Doctrine_Expression('NOW()');
     $this->save();
     $this->refresh();
@@ -253,6 +268,10 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function unpublish()
   {
+    if ($menu = $this->getMenuItem())
+    {
+      $menu->unpublish();
+    }
     $this->date_published = null;
     $this->save();
   }
