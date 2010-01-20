@@ -1,5 +1,14 @@
+<?php use_helper('jQuery') ?>
 <div id="sf_admin_container">
-  <h1>Editing Asset "<?php echo $asset ?>"</h1>
+  <div>
+    <?php echo jq_link_to_remote(__('Back to list', array(), 'sf_admin'), array(
+      'url' => url_for('@sympal_assets_select'),
+      'update' => 'sympal_assets_container',
+      'title' => __('Back to list', array(), 'sf_admin'),
+      'method' => 'get'
+    )) ?>
+  </div>
+  <h1><?php echo __('Editing Asset "%asset%"', array('%asset%' => $asset->getName())) ?></h1>
 
   <div id="sympal_edit_asset">
     <div class="sf_admin_form">
@@ -20,29 +29,29 @@
         <?php echo $form->renderHiddenFields() ?>
         <input type="hidden" name="is_ajax" value="<?php echo $isAjax ?>" />
 
-        <h2>Upload New File</h2>
+        <h2><?php echo __('Upload New File') ?></h2>
         <?php echo $form['file'] ?>
-        <input type="submit" value="Upload" />
+        <input type="submit" value="<?php echo __('Upload') ?>" />
 
-        <h2>Rename</h2>
+        <h2><?php echo __('Rename') ?></h2>
         <?php echo $form['new_name'] ?>
-        <input type="submit" value="Save" />
+        <input type="submit" value="<?php echo __('Save') ?>" />
 
-        <h2>Resize</h2>
+        <h2><?php echo __('Resize') ?></h2>
         <?php echo $form['width'] ?> x 
         <?php echo $form['height'] ?>
-        <input type="submit" value="Save" />
+        <input type="submit" value="<?php echo __('Save') ?>" />
       </form>
       
       <?php if ($asset->isImage()): ?>
-        <h2>Current Crop</h2>
+        <h2><?php echo __('Current Crop') ?></h2>
         <?php echo image_tag($asset->getUrl()) ?>
 
-        <h2>Crop Original Image</h2>
+        <h2><?php echo __('Crop Original Image') ?></h2>
         <p>
           <?php echo image_tag($asset->getOriginal()->getUrl(), array('id' => 'jcrop_target')) ?>
         </p>
-        <input type="button" id="sympal_save_crop" value="Save Crop" />
+        <input type="button" id="sympal_save_crop" value="<?php echo __('Save Crop') ?>" />
 
         <?php sympal_use_jquery() ?>
         <?php sympal_use_javascript('/sfSympalPlugin/js/jquery.Jcrop.js') ?>

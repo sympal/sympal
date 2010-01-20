@@ -1119,6 +1119,7 @@ verlinken.</target>
         <source>Are you sure you want un-publish this content?</source>
         <target>Sind Sie sicher, dass Sie diesen Inhalt offline schalten möchten?</target>
       </trans-unit>
+
       <!-- link browser -->
       <trans-unit id="3500">
         <source>Link Browser</source>
@@ -1135,6 +1136,86 @@ verlinken.</target>
       <trans-unit id="3530">
         <source>Nothing found</source>
         <target>Nichts gefunden</target>
+      </trans-unit>
+
+      <!-- asset browser -->
+      <trans-unit id="3600">
+        <source>Asset Browser</source>
+        <target>Dateien</target>
+      </trans-unit>
+      <trans-unit id="3610">
+        <source>Browse your assets below and insert them into the currently focused editor by
+just clicking the asset you want to insert. You can control where the asset is 
+inserted by positioning the cursor in the editor. You may also upload new assets
+and create directories below.</source>
+        <target>Fügen Sie an die aktuelle Cursorposition eine Datei ein, einfach durch
+anklicken der gewünschten Datei. Sie können die Stelle an der die Datei eingefügt wird
+durch ändern der Cursorposition im Editor bestimmen. Sie können hier auch
+neue Dateien hochladen und Ordner anlegen.</target>
+      </trans-unit>
+      <trans-unit id="3620">
+        <source>Delete directory "%dir%"</source>
+        <target>Ordner "%dir%" löschen</target>
+      </trans-unit>
+      <trans-unit id="3630">
+        <source>Edit file "%file%"</source>
+        <target>Datei "%file%" bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="3640">
+        <source>Delete file "%file%"</source>
+        <target>Datei "%file%" löschen</target>
+      </trans-unit>
+      <trans-unit id="3650">
+        <source>Upload an Asset</source>
+        <target>Eine Datei hochladen</target>
+      </trans-unit>
+      <trans-unit id="3660">
+        <source>Upload</source>
+        <target>Hochladen</target>
+      </trans-unit>
+      <trans-unit id="3670">
+        <source>Create</source>
+        <target>Erstellen</target>
+      </trans-unit>
+      <trans-unit id="3680">
+        <source>Create a New Directory</source>
+        <target>Einen neuen Ordner erstellen</target>
+      </trans-unit>
+      <trans-unit id="3690">
+        <source>Upload Asset</source>
+        <target>Datei hochladen</target>
+      </trans-unit>
+      <trans-unit id="3700">
+        <source>Create Directory</source>
+        <target>Ordner erstellen</target>
+      </trans-unit>
+      <trans-unit id="3710">
+        <source>Editing Asset "%asset%"</source>
+        <target>Datei "%asset%" bearbeiten</target>
+      </trans-unit>
+      <trans-unit id="3720">
+        <source>Upload New File</source>
+        <target>Neue Datei hochladen</target>
+      </trans-unit>
+      <trans-unit id="3730">
+        <source>Rename</source>
+        <target>Umbenennen</target>
+      </trans-unit>
+      <trans-unit id="3740">
+        <source>Resize</source>
+        <target>Größe ändern</target>
+      </trans-unit>
+      <trans-unit id="3750">
+        <source>Current Crop</source>
+        <target>Aktueller Ausschnitt</target>
+      </trans-unit>
+      <trans-unit id="3760">
+        <source>Crop Original Image</source>
+        <target>Original</target>
+      </trans-unit>
+      <trans-unit id="3770">
+        <source>Save Crop</source>
+        <target>Ausschnitt speichern</target>
       </trans-unit>
     </body>
   </file>

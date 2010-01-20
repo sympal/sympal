@@ -14,14 +14,14 @@
     <?php echo link_to('edit', 'sympal_assets_edit_asset', $asset,
       array(
         'class' => 'edit',
-        'title' => sprintf('Edit file "%s"', $asset->getName())
+        'title' => __('Edit file "%file%"', array('%file%' => $asset->getName()))
       )
     ) ?>
 
     <?php echo link_to('delete', 'sympal_assets_delete_asset', $asset,
       array(
         'class' => 'delete',
-        'title' => sprintf('Delete file "%s"', $asset->getName())
+        'title' => __('Edit file "%file%"', array('%file%' => $asset->getName()))
       )
     ) ?>
   </div>

@@ -3,13 +3,14 @@
 <?php use_helper('jQuery') ?>
 
 <div id="sympal_assets_container" class="sympal_form">
-  <h1>Asset Browser</h1>
+  <h1><?php echo __('Asset Browser') ?></h1>
 
   <p>
-    Browse your assets below and insert them into the currently focused editor by
-    just clicking the asset you want to insert. You can control where the asset is 
-    inserted by positioning the cursor in the editor. You may also upload new assets
-    and create directories below.
+    <?php echo
+__('Browse your assets below and insert them into the currently focused editor by
+just clicking the asset you want to insert. You can control where the asset is 
+inserted by positioning the cursor in the editor. You may also upload new assets
+and create directories below.') ?>
   </p>
 
   <input type="hidden" id="current_url" value="<?php echo $sf_request->getUri() ?>" />
@@ -34,7 +35,7 @@
         <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/delete.png'), array(
             'url' => url_for('@sympal_assets_delete_directory?directory='.urlencode($directory.'/'.pathinfo($dir, PATHINFO_BASENAME))),
             'update' => 'sympal_assets_container',
-            'title' => sprintf('Delete directory "%s"', $dir),
+            'title' => __('Delete directory "%dir%"', array('%dir%' => $dir)),
             'method' => 'get'
           )
         ) ?>
@@ -49,7 +50,7 @@
         <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/edit.png'), array(
             'url' => url_for('sympal_assets_edit_asset', $asset),
             'update' => 'sympal_assets_container',
-            'title' => sprintf('Edit file "%s"', $asset->getName()),
+            'title' => __('Edit file "%file%"', array('%file%' => $asset->getName())),
             'method' => 'get'
           )
         ) ?>
@@ -57,7 +58,7 @@
         <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/delete.png'), array(
             'url' => url_for('sympal_assets_delete_asset', $asset),
             'update' => 'sympal_assets_container',
-            'title' => sprintf('Delete file "%s"', $asset->getName()),
+            'title' => __('Delete file "%file%"', array('%file%' => $asset->getName())),
             'method' => 'get'
           )
         ) ?>
