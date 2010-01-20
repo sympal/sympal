@@ -28,6 +28,13 @@ for each model and even for each different format type.
 * Asset Types
 * Content Lists
 
+### I18N
+
+Missing translations:
+
+* "Save Order >>" in nested set editor
+
+
 ## 1.1
 
 * Add enhancement for assets organization. Allow the following: global assets 
