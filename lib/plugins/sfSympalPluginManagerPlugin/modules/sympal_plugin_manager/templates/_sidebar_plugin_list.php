@@ -10,5 +10,5 @@
     <?php endforeach; ?>
   </ul>
 <?php else: ?>
-  <p><strong>No Plugins Found</strong></p>
+  <p><strong><?php echo __('No Plugins Found') ?></strong></p>
 <?php endif; ?>

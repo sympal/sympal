@@ -2,7 +2,7 @@
 
 <div id="sympal_plugin_manager">
   <div id="view">
-    <?php echo link_to('Back to Plugins', '@sympal_plugin_manager') ?>
+    <?php echo link_to(__('Back to Plugins'), '@sympal_plugin_manager') ?>
 
     <div id="header">
       <?php echo image_tag($sf_sympal_plugin->getImage(), 'align=right') ?>
@@ -18,7 +18,7 @@
     </div>
 
     <div id="actions">
-      <h3>Plugin Actions</h3>
+      <h3><?php echo __('Plugin Actions') ?></h3>
 
       <?php echo get_partial('sympal_plugin_manager/actions', array('sf_sympal_plugin' => $sf_sympal_plugin, 'additional' => true)) ?>
     </div>

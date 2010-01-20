@@ -71,7 +71,7 @@
 
 .sympal_plugin_actions li {
   margin: 0 !important;
-  padding: 0 !important;
+  padding: 0 1em 0 0 !important;
   float: left;
   list-style-type: none;
   white-space: nowrap;

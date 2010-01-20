@@ -1217,6 +1217,41 @@ neue Dateien hochladen und Ordner anlegen.</target>
         <source>Save Crop</source>
         <target>Ausschnitt speichern</target>
       </trans-unit>
+
+      <!-- plugin manager -->
+      <trans-unit id="3900">
+        <source>Uninstall</source>
+        <target>Deinstallieren</target>
+      </trans-unit>
+      <trans-unit id="3910">
+        <source>Re-Install</source>
+        <target>Neu installieren</target>
+      </trans-unit>
+      <trans-unit id="3920">
+        <source>Install</source>
+        <target>Installieren</target>
+      </trans-unit>
+      <trans-unit id="3930">
+        <source>Homepage</source>
+        <target>Homepage</target>
+      </trans-unit>
+      <trans-unit id="3940">
+        <source>Ticketing</source>
+        <target>Abrechnung</target>
+      </trans-unit>
+      <trans-unit id="3950">
+        <source>No Plugins Found</source>
+        <target>Keine Plugins gefunden</target>
+      </trans-unit>
+      <trans-unit id="3960">
+        <source>Back to Plugins</source>
+        <target>Zurück zur Pluginliste</target>
+      </trans-unit>
+      <trans-unit id="3970">
+        <source>Plugin Actions</source>
+        <target>Pluginaktionen</target>
+      </trans-unit>
+
     </body>
   </file>
 </xliff>
