@@ -1071,6 +1071,10 @@ verlinken.</target>
         <source>The item was updated successfully.</source>
         <target>Das Objekt wurde erfolgreich aktualisiert.</target>
       </trans-unit>
+      <trans-unit id="3340">
+        <source>Change Content Type</source>
+        <target>Content-Typ wechseln</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

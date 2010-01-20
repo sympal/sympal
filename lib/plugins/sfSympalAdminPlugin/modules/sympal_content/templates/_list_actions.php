@@ -1,1 +1,1 @@
-<?php echo $helper->linkToNew(array(  'params' =>   array(  ),  'class_suffix' => 'new',  'label' => 'New '.$contentType->getLabel(),)) ?>
+<?php echo $helper->linkToNew(array('params' => array(), 'class_suffix' => 'new', 'label' => __('New '.$contentType->getLabel()))) ?>
