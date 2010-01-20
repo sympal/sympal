@@ -155,12 +155,17 @@ html {
 .sympal_inline_edit_bar_publish img {
   margin-top: 8px;
   margin-left: 10px;
+  border: none;
 }
 
 .sympal_inline_edit_signout {
   position: fixed;
   top: 8px;
   right: 10px;
+}
+
+.sympal_inline_edit_signout img {
+  border: none;
 }
 
 .sympal_inline_edit_admin_menu
