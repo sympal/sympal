@@ -1,5 +1,2 @@
 all:
   is_secure: true
-
-signin:
-  is_secure: false

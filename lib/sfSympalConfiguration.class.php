@@ -111,6 +111,11 @@ class sfSympalConfiguration
     $this->_projectConfiguration->loadHelpers(array(
       'Sympal', 'SympalContentSlot', 'SympalMenu', 'SympalPager', 'I18N', 'Asset'
     ));
+
+    if ($this->isAdminModule())
+    {
+      sfConfig::set('sf_login_module', 'sympal_admin');
+    }
   }
 
   public function filterTemplateParameters(sfEvent $event, $parameters)

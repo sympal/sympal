@@ -25,6 +25,8 @@ abstract class Basesympal_adminActions extends sfActions
       return $this->redirect('@sympal_dashboard');
     }
 
+    $this->getResponse()->setTitle('Sympal Admin / Signin');
+
     $class = sfConfig::get('app_sf_guard_plugin_signin_form', 'sfGuardFormSignin'); 
     $this->form = new $class();
 

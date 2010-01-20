@@ -541,5 +541,6 @@ label.required:after
   content:'*';
   color: red;
   float: right;
+  margin-left: 20px;
   font-weight: bold;
 }
