@@ -17,7 +17,7 @@
             <?php echo $form->renderGroup($group) ?>
           </fieldset>
         <?php endforeach; ?>
-        <input type="submit" name="save" value="Save" />
+        <input type="submit" name="save" value="<?php echo __('Save') ?>" />
       </form>
     </div>
   </div>

@@ -127,7 +127,10 @@ neue Plugins einfach herunterladen und installieren.</target>
         <source>Manage the configuration of your Sympal project from the
   easy to use web form below. The different functionalities added by Sympal
   plugins may add settings here for you to control.</source>
-        <target></target>
+        <target>Verwalten Sie die Konfiguration Ihres Projektes mit diesem
+  einfach zu bedienenden Formular. Die verschiedenen Funktionen, die durch
+  Plugins hinzugefügt wurden, können hier zusätzliche Einstellungen
+  hinzufügen.</target>
       </trans-unit>
       <trans-unit id="290">
         <source>Rows per page</source>
@@ -162,8 +165,8 @@ neue Plugins einfach herunterladen und installieren.</target>
         <target>Öffentlicher Schlüssel für ReCaptcha</target>
       </trans-unit>
       <trans-unit id="400">
-        <source>Privater Schlüssel für ReCaptcha</source>
-        <target></target>
+        <source>Recaptcha private key</source>
+        <target>Privater Schlüssel für ReCaptcha</target>
       </trans-unit>
       <trans-unit id="410">
         <source>Breadcrumbs separator</source>
