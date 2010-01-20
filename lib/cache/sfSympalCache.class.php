@@ -53,7 +53,11 @@ class sfSympalCache
   public function resetRouteCache()
   {
     $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml';
-    unlink($cachePath);
+    if (file_exists($cachePath))
+    {
+      unlink($cachePath);
+    }
+
     $context = sfContext::getInstance();
     $configCache = $context->getConfigCache();
 
