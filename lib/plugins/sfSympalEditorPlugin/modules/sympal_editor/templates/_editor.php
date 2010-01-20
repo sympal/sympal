@@ -45,6 +45,10 @@
       <?php echo get_sympal_admin_menu() ?>
     </div>
 
+    <div class="sympal_inline_edit_signout">
+      <?php echo link_to(image_tag('/sfSympalPlugin/images/signout.png', 'title=Signout'), '@sympal_signout', 'confirm=Are you sure you want to signout?') ?>
+    </div>
+
     <?php if (isset($sf_sympal_content) && $sf_sympal_content): ?>
       <ul class="sympal_inline_edit_bar_big_buttons">
         <?php if (sfSympalConfig::isI18nEnabled()): ?>

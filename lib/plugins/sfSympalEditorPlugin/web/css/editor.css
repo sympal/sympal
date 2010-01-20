@@ -157,6 +157,12 @@ html {
   margin-left: 10px;
 }
 
+.sympal_inline_edit_signout {
+  position: fixed;
+  top: 8px;
+  right: 10px;
+}
+
 .sympal_inline_edit_admin_menu
 {
   height: 30px;
