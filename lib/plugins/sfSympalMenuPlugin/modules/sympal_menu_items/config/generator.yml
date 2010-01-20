@@ -19,6 +19,7 @@ generator:
         max_per_page: 9999999999999999999
         display: [=name, _is_published]
         batch_actions:
+          _delete: ~
           publish:
             action: publish
             label: Publish
