@@ -23,7 +23,7 @@ class sfSympalServerCheck
       ),
       'php config' => array(
         new sfSympalServerCheckUnit('version', phpversion(), '5.2.4', self::ERROR),
-        new sfSympalServerCheckUnit('memory', ini_get('memory_limit'), '64M', self::ERROR),
+        new sfSympalServerCheckUnit('memory', ini_get('memory_limit'), PHP_SAPI == 'cli' ? '128M' : '48M', self::ERROR),
         new sfSympalServerCheckUnit('magic quote gpc', ini_get('magic_quotes_gpc'), false),
         new sfSympalServerCheckUnit('upload max filesize', ini_get('upload_max_filesize'), '2M'),
         new sfSympalServerCheckUnit('post max size', ini_get('post_max_size'), '2M'),
