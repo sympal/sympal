@@ -737,8 +737,8 @@ duch Klicken auf den oberen Button.</target>
         <target>Tabellenmethode</target>
       </trans-unit>
       <trans-unit id="2350">
-        <source>DQL-Abfrage</source>
-        <target></target>
+        <source>Dql query</source>
+        <target>DQL-Abfrage</target>
       </trans-unit>
       <trans-unit id="2360">
         <source>The custom path to use to generate routes for this content record. Example: /my_pages/my_page_name</source>
