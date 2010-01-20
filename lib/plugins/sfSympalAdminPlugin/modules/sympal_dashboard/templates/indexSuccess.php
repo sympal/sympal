@@ -16,7 +16,7 @@
   <div id="boxes">
     <h1><?php echo __('Sympal Dashboard') ?></h1>
 
-    <p><?php echo __('Hello <strong>%name%</strong>! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.', array('%name%' => $sf_user->getName())) ?></p>
+    <p><?php echo __('Hello %name%! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.', array('%name%' => '<strong>'.$sf_user->getName().'</strong>')) ?></p>
 
     <?php if ($sf_request->isXmlHttpRequest()): ?>
       <p><?php echo link_to(__('Go to the Sympal admin area for your site.'), '@sympal_dashboard') ?></p>

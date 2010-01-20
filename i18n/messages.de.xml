@@ -623,6 +623,10 @@ duch Klicken auf den oberen Button.</target>
         <source>Select the date this menu item is to be published. This can be a date in the future and the menu item will not be available until that date.</source>
         <target>Wählen Sie das Datum, an dem der Menüpunkt veröffentlicht werden soll. Wenn das Datum in der Zukunft liegt, wird der Menüpunkt erst ab dem angegeben Datum sichtbar sein.</target>
       </trans-unit>
+      <trans-unit id="1945">
+        <source>The text slug identifier that represents this menu item.</source>
+        <target>Der Slug, der diesen Menüpunkt repräsentiert.</target>
+      </trans-unit>
       <trans-unit id="1950">
         <source>Position</source>
         <target>Position</target>
@@ -916,8 +920,8 @@ duch Klicken auf den oberen Button.</target>
         <target>Sympal Dashboard</target>
       </trans-unit>
       <trans-unit id="2900">
-        <source>Hello <strong>%name%</strong>! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.</source>
-        <target>Hallo <strong>%name%</strong>! Willkommen zu Ihrem Sympal Dashboard. Unten können Sie zu diversen Funktionen und Modulen wechseln, um die Website zu administrieren.</target>
+        <source>Hello %name%! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.</source>
+        <target>Hallo %name%! Willkommen zu Ihrem Sympal Dashboard. Unten können Sie zu diversen Funktionen und Modulen wechseln, um die Website zu administrieren.</target>
       </trans-unit>
       <trans-unit id="2910">
         <source>Go to the Sympal admin area for your site.</source>
@@ -1050,6 +1054,22 @@ verlinken.</target>
       <trans-unit id="3240">
         <source>Delete</source>
         <target>Löschen</target>
+      </trans-unit>
+      <trans-unit id="3300">
+        <source>Published on %date%</source>
+        <target>Wurde veröffentlicht am %date%</target>
+      </trans-unit>
+      <trans-unit id="3310">
+        <source>Will publish on %date%</source>
+        <target>Wird veröffentlicht am %date%</target>
+      </trans-unit>
+      <trans-unit id="3320">
+        <source>Has not been published yet.</source>
+        <target>Wurde noch nicht veröffentlicht.</target>
+      </trans-unit>
+      <trans-unit id="3330">
+        <source>The item was updated successfully.</source>
+        <target>Das Objekt wurde erfolgreich aktualisiert.</target>
       </trans-unit>
     </body>
   </file>

@@ -9,7 +9,7 @@
 [?php sympal_use_javascript('/sfSympalAdminPlugin/js/jquery.nestedsortablewidget.pack.js') ?]
 [?php sympal_use_javascript('/sfSympalAdminPlugin/js/jquery.nested_set.js') ?]
 
-[?php echo button_to('Back to List', '@'.$sf_context->getRouting()->getCurrentRouteName()) ?]
+[?php echo button_to(__('Back to list', array(), 'sf_admin'), '@'.$sf_context->getRouting()->getCurrentRouteName()) ?]
 
 <h1>[?php echo $title = __('Adjust Order') ?]</h1>
 [?php $sf_response->setTitle($title) ?]
@@ -39,7 +39,7 @@ $(function() {
 [?php include_partial('<?php echo $this->getModuleName() ?>/assets') ?]
 
 <?php if ($this->isNestedSet()): ?>
-  [?php echo button_to('Adjust Order', '@'.$sf_context->getRouting()->getCurrentRouteName().'?order=1') ?]
+  [?php echo button_to(__('Adjust Order'), '@'.$sf_context->getRouting()->getCurrentRouteName().'?order=1') ?]
 <?php endif; ?>
 
 <div id="sf_admin_container">
