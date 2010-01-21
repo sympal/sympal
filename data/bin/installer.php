@@ -144,6 +144,83 @@ $this->runTask('configure:database', array(
 $this->logSection('install', 'create an application');
 $this->runTask('generate:app', $application);
 
+// i18n
+class sfValidatorSympalCultures extends sfValidatorString
+{
+  protected function configure($options = array(), $messages = array())
+  {
+    parent::configure($options, $messages);
+
+    $this->setOption('empty_value', array());
+    $this->setOption('required', false);
+    $this->setOption('trim', true);
+
+    $this->addMessage('invalid', 'Please enter a comma separated list of cultures.');
+  }
+
+  public function doClean($value)
+  {
+    $parts = explode(',', $value);
+
+    $cultures = array();
+
+    foreach ($parts as $culture)
+    {
+      $culture = trim($culture);
+
+      if (!empty($culture))
+      {
+        $cultures[] = $culture;
+      }  
+    }
+
+    if (empty($cultures))
+    {
+      throw new sfValidatorError($this, 'invalid');
+    }
+
+    return $cultures;
+  }
+}
+
+$this->logBlock("
+The next input allows you to turn on internationalisation for your Sympal project.
+If you don't need internationalisation simply leave it blank.
+But if you want internationalisation enter a comma separated list of cultures,
+example: en,de,fr
+The first one will be configured as default culture.
+", 'COMMENT');
+
+$cultures = $this->askAndValidate("Enter a comma separated list of cultures or leave blank if you don't need i18n:", new sfValidatorSympalCultures(), array('style' => 'QUESTION_LARGE'));
+
+if (count($cultures) > 0)
+{
+  $this->logSection('i18n', 'enabling i18n in Sympal with cultures: '.implode(', ', $cultures));
+
+  $out = $err = null;
+  $command = sprintf(
+    '%s "%s" %s',
+    sfToolkit::getPhpCli(),
+    sfConfig::get('sf_root_dir').'/symfony',
+    'sympal:configure '.sprintf('i18n=true language_codes="[%s]"', implode(',', $cultures))
+  );
+  $this->logBlock($command, 'INFO');
+  $this->getFilesystem()->execute($command, $out, $err);
+
+  $this->logSection('i18n', sprintf('enabling i18n in application "%s"', $application));
+
+  $settingsFilename = sfConfig::get('sf_apps_dir').'/'.$application.'/config/settings.yml';
+  $settings = file_get_contents($settingsFilename);
+  $settings .= <<<EOF
+
+    i18n: true
+    default_culture: {$cultures[0]}
+EOF;
+
+  file_put_contents($settingsFilename, $settings);
+}
+
+// execute sympal installation
 $out = $err = null;
 $command = sprintf(
   '%s "%s" %s',
