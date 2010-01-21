@@ -1234,11 +1234,11 @@ et créer des répertoires.</target>
       
       <trans-unit id="4000">
         <source>Add the "%content%" %type% to your Menu</source>
-        <target>Fügen Sie %type% "%content%" Ihrem Menü hinzu</target>
+        <target></target>
       </trans-unit>
       <trans-unit id="4010">
         <source>Editing the "%content%" %type% Menu Item</source>
-        <target>Bearbeiten Sie den Menüpunkt für %type% "%content%"</target>
+        <target></target>
       </trans-unit>
     </body>
   </file>
