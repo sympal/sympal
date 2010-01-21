@@ -13,18 +13,20 @@ class sfSympalContentSlotRenderer
 
   public function render()
   {
-    // translate inline edit information
-    if ('[Double click to enable inline edit mode.]' == $value = $this->getRenderedValue())
-    {
-      $value = __($value);
-    }
+    $value = $this->getRenderedValue();
+
+    $this->translateInlineEditMessage($value);
 
     return $value;
   }
 
   public function getRawValue()
   {
-    return $this->_contentSlot->getRawValue();
+    $value = $this->_contentSlot->getRawValue();
+
+    $this->translateInlineEditMessage($value);
+
+    return $value;
   }
 
   public function getRenderedValue()
@@ -62,6 +64,14 @@ class sfSympalContentSlotRenderer
     catch (Exception $e)
     {
       return sfSympalToolkit::renderException($e);
+    }
+  }
+
+  protected function translateInlineEditMessage(&$value)
+  {
+    if ('[Double click to enable inline edit mode.]' == $value)
+    {
+      $value = __($value);
     }
   }
 }
