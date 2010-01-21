@@ -111,7 +111,7 @@ class sfSympalMenuSiteManager
 
   protected function _buildMenu($name, $class)
   {
-    $rootId = array_search($name, $this->_rootSlugs);
+    $rootId = array_search($name, (array) $this->_rootSlugs);
 
     if (!$rootId)
     {

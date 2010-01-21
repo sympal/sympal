@@ -149,7 +149,7 @@ $command = sprintf(
   '%s "%s" %s',
   sfToolkit::getPhpCli(),
   sfConfig::get('sf_root_dir').'/symfony',
-  'sympal:install '.$emailAddress.' '.$username.' '.$password.' --no-confirmation --db-dsn="'.$db['dsn'].'" --db-username="'.$db['username'].'" --db-password="'.$db['password'].'" --first-name="'.$firstName.'" --last-name="'.$lastName.'" --application='.$application
+  'sympal:install '.$application.' --force-reinstall --email-address="'.$emailAddress.'" --username="'.$username.'" --password="'.$password.'" --no-confirmation --db-dsn="'.$db['dsn'].'" --db-username="'.$db['username'].'" --db-password="'.$db['password'].'" --first-name="'.$firstName.'" --last-name="'.$lastName.'"'
 );
 $this->logBlock($command, 'INFO');
 $this->getFilesystem()->execute($command, $out, $err);
