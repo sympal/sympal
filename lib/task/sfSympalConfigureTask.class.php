@@ -40,15 +40,23 @@ EOF;
       $value = is_numeric($value) ? (int) $value : $value;
       $value = $value == 'false' ? false : $value;
       $value = $value == 'true' ? true : $value;
+
+      $infoValue = $value;
+      if (in_array(substr($value, 0, 1), array('[', '{')))
+      {
+        $value = sfYamlInline::load($value);
+        $infoValue = 'YAML: '.$infoValue;
+      }
+
       $writeToApp = isset($options['application']) && $options['application'] ? true : false;
 
       if ($group)
       {
-        $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s" under the "%s" group.', $key, $value, $group));
+        $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s" under the "%s" group.', $key, $infoValue, $group));
 
         sfSympalConfig::writeSetting($group, $key, $value, $writeToApp);
       } else {
-        $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s".', $key, $value, $group));
+        $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s".', $key, $infoValue, $group));
 
         sfSympalConfig::writeSetting(null, $key, $value, $writeToApp);
       }
