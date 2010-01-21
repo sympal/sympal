@@ -11,7 +11,8 @@ class sfSympalConfiguration
     $_bootstrap,
     $_plugins = array(),
     $_modules = array(),
-    $_layouts = array();
+    $_layouts = array(),
+    $_cache;
 
   public function __construct(sfEventDispatcher $dispatcher, ProjectConfiguration $projectConfiguration)
   {
@@ -49,7 +50,6 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
     $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
     $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
-    $this->_dispatcher->connect('routing.load_configuration', array($this, 'listenToRoutingLoadConfiguration'));
     $this->_dispatcher->connect('routing.load_configuration', array($this, 'listenToRoutingLoadConfiguration'));
 
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
