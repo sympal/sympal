@@ -58,6 +58,7 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
       {
         $this->form->save();
 
+        // TODO redirect to the frontend when coming from there 
         $this->getUser()->setFlash('notice', 'Menu saved successfully!');
         $this->redirect('@sympal_content_edit?id='.$this->content->id);
       }

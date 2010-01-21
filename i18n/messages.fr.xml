@@ -17,7 +17,7 @@ download and install new plugins found on the web.</source>
         <source>Search</source>
         <target>Recherche</target>
       </trans-unit>
-      <!-- FIXME hier war was mit br -->
+      
       <trans-unit id="40">
         <source>Enter keywords to search by. Wildcards (*) are supported.</source>
         <target>Veuillez saisir les mots-clés à recherche. Le caractère générique (*) est supporté.</target>
@@ -1230,6 +1230,15 @@ et créer des répertoires.</target>
       <trans-unit id="3970">
         <source>Plugin Actions</source>
         <target>Actions de plugin</target>
+      </trans-unit>
+      
+      <trans-unit id="4000">
+        <source>Add the "%content%" %type% to your Menu</source>
+        <target>Fügen Sie %type% "%content%" Ihrem Menü hinzu</target>
+      </trans-unit>
+      <trans-unit id="4010">
+        <source>Editing the "%content%" %type% Menu Item</source>
+        <target>Bearbeiten Sie den Menüpunkt für %type% "%content%"</target>
       </trans-unit>
     </body>
   </file>

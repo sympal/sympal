@@ -1,8 +1,10 @@
 <div id="sf_admin_container">
   <?php if ($form->isNew()): ?>
-    <h1>Add the "<?php echo $content ?>" <?php echo $content['Type']['label'] ?> to your Menu</h1>
+    <h1><?php echo __('Add the "%content%" %type% to your Menu', array(
+      '%content%' => $content, '%type%' => $content['Type']['label'])) ?></h1>
   <?php else: ?>
-    <h1>Editing the "<?php echo $content ?>" <?php echo $content['Type']['label'] ?> Menu Item</h1>
+    <h1><?php echo __('Editing the "%content%" %type% Menu Item', array(
+      '%content%' => $content, '%type%' => $content['Type']['label'])) ?></h1>
   <?php endif; ?>
 
   <div id="sf_admin_content_menu_item">
@@ -16,8 +18,8 @@
         </div>
 
         <div class="black_bar">
-          <input type="submit" name="save" value="Save" />
-          <input type="button" name="cancel" value="Cancel" onClick="javascript: history.go(-1);" />
+          <input type="submit" name="save" value="<?php echo __('Save', array(), 'sf_admin') ?>" />
+          <input type="button" name="cancel" value="<?php echo __('Cancel', array(), 'sf_admin') ?>" onClick="javascript: history.go(-1);" />
         </div>
       </form>
     </div>
