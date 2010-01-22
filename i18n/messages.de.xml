@@ -1271,7 +1271,27 @@ neue Dateien hochladen und Ordner anlegen.</target>
       <trans-unit id="4030">
         <source>Editing Content titled %%title%%</source>
         <target></target>
-      </trans-unit>         
+      </trans-unit>
+      <trans-unit id="4040">
+        <source>Editing %%title%% site</source>
+        <target></target>
+      </trans-unit>           
+      <trans-unit id="4050">
+        <source>Username or E-Mail</source>
+        <target></target>
+      </trans-unit>       
+      <trans-unit id="4060">
+        <source>Remember</source>
+        <target></target>
+      </trans-unit>    
+      <trans-unit id="4070">
+        <source>Signin</source>
+        <target></target>
+      </trans-unit>    
+      <trans-unit id="4080">
+        <source>The username and/or password is invalid.</source>
+        <target></target>
+      </trans-unit>           
     </body>
   </file>
 </xliff>

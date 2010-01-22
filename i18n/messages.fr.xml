@@ -409,7 +409,7 @@ already available in Sympal.</source>
       </trans-unit>
       <trans-unit id="1430">
         <source>Required.</source>
-        <target>Erforderlich.</target>
+        <target>Ce champ est obligatoire.</target>
       </trans-unit>
       <trans-unit id="1440">
         <source>The item has not been saved due to some errors.</source>
@@ -1249,11 +1249,26 @@ et créer des répertoires.</target>
         <source>Editing Content titled %%title%%</source>
         <target>Édition du contenu nommé %%title%%</target>
       </trans-unit>       
-      <trans-unit id="4030">
+      <trans-unit id="4040">
         <source>Editing %%title%% site</source>
         <target>Édition du site %%title%%</target>
       </trans-unit>           
-      
+      <trans-unit id="4050">
+        <source>Username or E-Mail</source>
+        <target>Nom d'utilisateur ou E-Mail</target>
+      </trans-unit>       
+      <trans-unit id="4060">
+        <source>Remember</source>
+        <target>Se rappeler</target>
+      </trans-unit>    
+      <trans-unit id="4070">
+        <source>Signin</source>
+        <target>Se connecter</target>
+      </trans-unit>    
+      <trans-unit id="4080">
+        <source>The username and/or password is invalid.</source>
+        <target>Le nom d'utilisateur et/ou le mot de passe sont invalides.</target>
+      </trans-unit>            
     </body>
   </file>
 </xliff>

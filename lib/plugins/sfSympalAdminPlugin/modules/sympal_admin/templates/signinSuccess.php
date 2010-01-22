@@ -1,9 +1,7 @@
 <?php use_helper('I18N') ?>
 
 <div id="sympal_signin">
-  <h1>Signin</h1>
-
-  <?php use_helper('I18N') ?>
+  <h1><?php echo __('Signin'); ?></h1>
 
   <form action="<?php echo url_for('@sympal_admin') ?>" method="post">
     <table>
