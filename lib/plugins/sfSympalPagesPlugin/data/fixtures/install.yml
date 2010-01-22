@@ -5,53 +5,117 @@ sfSympalMenuItem:
     name: primary
     is_primary: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+    Translation:
+      en:
+        label: Home
+      fr:
+        label: Accueil
+<?php else: ?>
     label: Home
+<?php endif; ?>
     Site: Site_default
     custom_path: @homepage
     children:
       MenuItem_primary_register:
         name: Register
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Register
+          fr:
+            label: S'inscrire
+<?php else: ?>
         label: Register
+<?php endif; ?>        
         Site: Site_default
         RelatedContent: Content_Page_register
         requires_no_auth: true
       MenuItem_primary_signin:
         name: Signin
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Signin
+          fr:
+            label: Se connecter
+<?php else: ?>
         label: Signin
+<?php endif; ?>          
         Site: Site_default
         route: @sympal_signin
         requires_no_auth: true
       MenuItem_primary_signout:
         name: Signout
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Signout
+          fr:
+            label: Se déconnecter
+<?php else: ?>
         label: Signout
+<?php endif; ?>         
         route: @sympal_signout
         Site: Site_default
         requires_auth: true
       MenuItem_primary_home:
         name: Home
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Home
+          fr:
+            label: Accueil
+<?php else: ?>
         label: Home
+<?php endif; ?>          
         Site: Site_default
         RelatedContent: Content_Page_home
       MenuItem_primary_sample_page:
         name: Sample Page
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Sample Page
+          fr:
+            label: Page exemple
+<?php else: ?>
         label: Sample Page
+<?php endif; ?>         
         Site: Site_default
         RelatedContent: Content_Page_sample_page
       MenuItem_primary_sample_content_list:
         name: Sample Content List
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Sample Content List
+          fr:
+            label: Liste de contenu exemple
+<?php else: ?>
         label: Sample Content List
+<?php endif; ?>        
         Site: Site_default
         RelatedContent: Content_ContentList_sample_content_list
       MenuItem_primary_powered_by:
         name: Powered By
         date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Powered By
+          fr:
+            label: Propulsé par
+<?php else: ?>
         label: Powered By
+<?php endif; ?>          
         Site: Site_default
         children:
           MenuItem_primary_symfony:
@@ -87,7 +151,7 @@ sfSympalContent:
       en:
         i18n_slug: register
       fr:
-        i18n_slug: registre
+        i18n_slug: sinscrire
 <?php endif; ?>
   Content_Page_home:
     Type: ContentType_Page
@@ -117,7 +181,16 @@ sfSympalContentSlot:
   Sample_ContentList_slot_header:
     name: header
     type: Text
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+    Translation:
+      en:
+        value: This is a sample content list.
+      fr:
+        value: Ceci est un exemple de liste de contenu.
+<?php else: ?>
     value: This is a sample content list.
+<?php endif; ?>      
+
   Sample_Page_slot_body:
     name: body
     type: Markdown
@@ -145,6 +218,69 @@ sfSympalContentSlot:
   Home_slot_body:
     name: body
     type: Markdown
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+    Translation:
+      en:
+        value: |
+          Welcome
+          -------
+      
+          Welcome to your new installation of the Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> content management system. You can signin with the username **<?php echo sfSympalConfig::get('sympal_install_admin_username', null, 'admin') ?>** and password **<?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?>** to begin playing with Sympal!
+      
+          Lorem Text
+          ----------
+      
+          Morbi fringilla commodo ipsum. **Suspendisse volutpat** congue massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies euismod nisi. Gravida mollis, metus *lacus consequat* es.Vestibulum varius accumsan leo. Pellentesque rhoncus mauris a sapien. Proin tincidunt velit sit amet est. Nulla tempor ligula porttitor sapien.
+          Donec lorem mi fermentum at:
+
+          * Ut semsddper elisat sed nullateli
+          * Us ac nisi interdum fau
+          * Erdum fau utilotieu
+          * Betagor chaligonatu
+
+          Donec lorem mi
+          --------------
+      
+          luctus sympal
+          -------------
+      
+          Suspendisse pellentesque luctus sympal. [Sympal](http://www.sympalphp.org "Sympal") fusce sem lorem, convallis ut, dictum at, blandit eu, erat; Etiam et **nulla convallis** risus adipiscing consectetur. *Morbi velit massa*, dapibus at, pharetra at, auctor ornare, risus.
+
+          enim nisl
+          ---------
+      
+          Nunc lobortis, nulla et auctor ultricies, enim nisl *venenatis turpis*, quis pharetra lectus sapien fermentum mauris. Aliquam erat volutpat. Quisque laoreet nibh et magna. Praesent eros. Proin nec risus ac nisi interdum faucibus. **Maecenas fringilla**.             
+      fr:
+        value: |
+          Bienvenue
+          -------
+          
+          Bienvenue sur votre nouvelle installation du système de gestion de contenu Sympal <?php echo sfSympalConfig::getCurrentVersion() ?>. Vous pouvez vous connecter avec le nom d'utilisateur **<?php echo sfSympalConfig::get('sympal_install_admin_username', null, 'admin') ?>** et le mot de passe **<?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?>** pour commencer à jouer avec Sympal !
+      
+          Lorem Text
+          ----------
+      
+          Morbi fringilla commodo ipsum. **Suspendisse volutpat** congue massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies euismod nisi. Gravida mollis, metus *lacus consequat* es.Vestibulum varius accumsan leo. Pellentesque rhoncus mauris a sapien. Proin tincidunt velit sit amet est. Nulla tempor ligula porttitor sapien.
+          Donec lorem mi fermentum at:
+
+          * Ut semsddper elisat sed nullateli
+          * Us ac nisi interdum fau
+          * Erdum fau utilotieu
+          * Betagor chaligonatu
+
+          Donec lorem mi
+          --------------
+      
+          luctus sympal
+          -------------
+      
+          Suspendisse pellentesque luctus sympal. [Sympal](http://www.sympalphp.org "Sympal") fusce sem lorem, convallis ut, dictum at, blandit eu, erat; Etiam et **nulla convallis** risus adipiscing consectetur. *Morbi velit massa*, dapibus at, pharetra at, auctor ornare, risus.
+
+          enim nisl
+          ---------
+      
+          Nunc lobortis, nulla et auctor ultricies, enim nisl *venenatis turpis*, quis pharetra lectus sapien fermentum mauris. Aliquam erat volutpat. Quisque laoreet nibh et magna. Praesent eros. Proin nec risus ac nisi interdum faucibus. **Maecenas fringilla**.        
+<?php else: ?>
     value: |
       Welcome
       -------
@@ -174,14 +310,31 @@ sfSympalContentSlot:
       ---------
       
       Nunc lobortis, nulla et auctor ultricies, enim nisl *venenatis turpis*, quis pharetra lectus sapien fermentum mauris. Aliquam erat volutpat. Quisque laoreet nibh et magna. Praesent eros. Proin nec risus ac nisi interdum faucibus. **Maecenas fringilla**.
+<?php endif; ?>       
   Sample_page_slot_body:
     name: body
     type: Markdown
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+    Translation:
+      en:
+        value: This is a sample Sympal page.
+      fr:
+        value: Ceci est un exemple de page Sympal.
+<?php else: ?>
     value: This is a sample Sympal page.
+<?php endif; ?>    
   Register_slot_body:
     name: body
     type: Markdown
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+    Translation:
+      en:
+        value: Register a new user below.        
+      fr:
+        value: Inscrivez un nouvel utilisateur ci-dessous.
+<?php else: ?>
     value: Register a new user below.
+<?php endif; ?>     
 
 sfSympalContentList:
   sample_content_list:

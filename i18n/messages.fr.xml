@@ -32,7 +32,7 @@ download and install new plugins found on the web.</source>
       </trans-unit>
       <trans-unit id="80">
         <source>Go to Site Frontend</source>
-        <target>Aller sur la partie publique du site</target>
+        <target>Aller sur le site</target>
       </trans-unit>
       <trans-unit id="90">
         <source>My Dashboard</source>
@@ -819,7 +819,7 @@ the button above.</source>
       </trans-unit>
       <trans-unit id="2620">
         <source>Navigation</source>
-        <target>Naviguation</target>
+        <target>Navigation</target>
       </trans-unit>
       <trans-unit id="2640">
         <source>Signout</source>
@@ -1268,7 +1268,12 @@ et créer des répertoires.</target>
       <trans-unit id="4080">
         <source>The username and/or password is invalid.</source>
         <target>Le nom d'utilisateur et/ou le mot de passe sont invalides.</target>
+      </trans-unit>      
+      <trans-unit id="4090">
+        <source>The item was deleted successfully.</source>
+        <target>L'objet a été supprimé avec succès.</target>
       </trans-unit>            
+         
     </body>
   </file>
 </xliff>
