@@ -1234,12 +1234,26 @@ et créer des répertoires.</target>
       
       <trans-unit id="4000">
         <source>Add the "%content%" %type% to your Menu</source>
-        <target></target>
+        <target>Ajoutez le "%content%" %type% à votre menu</target>
       </trans-unit>
       <trans-unit id="4010">
         <source>Editing the "%content%" %type% Menu Item</source>
-        <target></target>
+        <target>Édition du menu "%content%" %type%</target>
       </trans-unit>
+      
+      <trans-unit id="4020">
+        <source>You are already registered.</source>
+        <target>Vous êtes déjà inscrit.</target>
+      </trans-unit> 
+      <trans-unit id="4030">
+        <source>Editing Content titled %%title%%</source>
+        <target>Édition du contenu nommé %%title%%</target>
+      </trans-unit>       
+      <trans-unit id="4030">
+        <source>Editing %%title%% site</source>
+        <target>Édition du site %%title%%</target>
+      </trans-unit>           
+      
     </body>
   </file>
 </xliff>

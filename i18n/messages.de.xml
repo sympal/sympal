@@ -1263,6 +1263,15 @@ neue Dateien hochladen und Ordner anlegen.</target>
         <source>Editing the "%content%" %type% Menu Item</source>
         <target>Bearbeiten Sie den Menüpunkt für %type% "%content%"</target>
       </trans-unit>
+
+      <trans-unit id="4020">
+        <source>You are already registered.</source>
+        <target></target>
+      </trans-unit>
+      <trans-unit id="4030">
+        <source>Editing Content titled %%title%%</source>
+        <target></target>
+      </trans-unit>         
     </body>
   </file>
 </xliff>

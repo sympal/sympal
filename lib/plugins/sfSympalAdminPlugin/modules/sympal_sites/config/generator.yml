@@ -36,5 +36,6 @@ generator:
             help: The meta keywords to use for pages in this site.
           meta_description:
             help: The meta description to use for pages in this site.
-      edit:    ~
+      edit:
+        title: Editing %%title%% site
       new:     ~
