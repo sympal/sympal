@@ -815,7 +815,7 @@ the button above.</source>
       </trans-unit>
       <trans-unit id="2600">
         <source>Showing %first% to %last% of %count% total results.</source>
-        <target>Affichage de %first% à %last% sur un total de %count% resultats.</target>
+        <target>Affichage des résulats %first% à %last% sur un total de %count%.</target>
       </trans-unit>
       <trans-unit id="2620">
         <source>Navigation</source>

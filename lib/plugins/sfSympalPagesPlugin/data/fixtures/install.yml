@@ -345,11 +345,35 @@ sfSympalContentList:
 
 sfSympalPage:
   register:
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?>
+    Translation:
+      en:
+        title: Register
+      fr:
+        title: S'inscrire
+<?php else: ?>
     title: Register
+<?php endif; ?>     
     Content: Content_Page_register
   home:
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?>
+    Translation:
+      en:
+        title: Home
+      fr:
+        title: Accueil
+<?php else: ?>
     title: Home
+<?php endif; ?>     
     Content: Content_Page_home
   sample_page:
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?>
+    Translation:
+      en:
+        title: Sample Page
+      fr:
+        title: Page exemple
+<?php else: ?>
     title: Sample Page
+<?php endif; ?>     
     Content: Content_Page_sample_page
