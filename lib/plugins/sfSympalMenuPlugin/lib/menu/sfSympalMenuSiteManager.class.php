@@ -64,15 +64,15 @@ class sfSympalMenuSiteManager
 
   protected function _getMenu($name, $showChildren = null, $class = null)
   {
-    if (!$name)
-    {
-      return false;
-    }
-
     if ($name instanceof sfSympalMenuItem)
     {
       $menuItem = $name;
-      $name = $this->_rootSlugs[$name['root_id']];
+      $name = $name['root_id'] && isset($this->_rootSlugs[$name['root_id']]) ? $this->_rootSlugs[$name['root_id']] : false;
+    }
+
+    if (!$name)
+    {
+      return false;
     }
 
     $cacheKey = 'SYMPAL_MENU_'.md5($name.var_export($showChildren, true).$class);

@@ -120,6 +120,10 @@ class sfSympalConfiguration
 
   public function filterTemplateParameters(sfEvent $event, $parameters)
   {
+    if (!$this->_sympalContext)
+    {
+      return $parameters;
+    }
     $parameters['sf_sympal_context'] = $this->_sympalContext;
     if ($content = $this->_sympalContext->getCurrentContent())
     {

@@ -23,14 +23,6 @@
     </table>
   </div>
 
-  <div id="plugins">
-    <h2>Choose Additional Plugins to Install</h2>
-
-    <table>
-      <?php echo $form['setup']['plugins'] ?>
-    </table>
-  </div>
-
   <br style="clear: both;" />
   <input type="submit" name="install_now" value="Install Now" />
 </form>

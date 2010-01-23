@@ -75,6 +75,7 @@ $browser->
 ;
 
 $browser->
+  get('/')->
   call('/change_language/fr')->
   with('response')->begin()->
     isRedirected()->
@@ -86,6 +87,7 @@ $browser->
 ;
 
 $browser->
+  get('/')->
   post('/change_language', array('language' => 'es'))->
   with('response')->begin()->
     isRedirected()->
