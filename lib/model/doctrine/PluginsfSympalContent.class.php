@@ -11,16 +11,25 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $_routeObject,
     $_mainMenuItem,
     $_editableSlotsExistOnPage = false;
-
+    
+  /**
+   * Initializes a new sfSympalContent for the given type
+   * 
+   * @param   mixed $type Specify either the name of the content type (e.g. sfSympalPage)
+   *                      or pass in a sfSympalContentType object
+   * 
+   * @return  sfSympalContent
+   */
   public static function createNew($type)
   {
     if (is_string($type))
     {
+      $typeString = $type;
       $type = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($type);
 
       if (!$type)
       {
-        throw new InvalidArgumentException(sprintf('Could not find Sympal Content Type named "%s"', $type));
+        throw new InvalidArgumentException(sprintf('Could not find Sympal Content Type named "%s"', $typeString));
       }
     }
 
