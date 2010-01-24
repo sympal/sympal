@@ -11,6 +11,8 @@ sfSympalMenuItem:
         label: Home
       fr:
         label: Accueil
+      de:
+        label: Startseite
 <?php else: ?>
     label: Home
 <?php endif; ?>
@@ -26,6 +28,8 @@ sfSympalMenuItem:
             label: Register
           fr:
             label: S'inscrire
+          de:
+            label: Registrieren
 <?php else: ?>
         label: Register
 <?php endif; ?>        
@@ -41,6 +45,8 @@ sfSympalMenuItem:
             label: Signin
           fr:
             label: Se connecter
+          de:
+            label: Einloggen
 <?php else: ?>
         label: Signin
 <?php endif; ?>          
@@ -56,6 +62,8 @@ sfSympalMenuItem:
             label: Signout
           fr:
             label: Se déconnecter
+          de:
+            label: Ausloggen
 <?php else: ?>
         label: Signout
 <?php endif; ?>         
@@ -71,6 +79,8 @@ sfSympalMenuItem:
             label: Home
           fr:
             label: Accueil
+          de:
+            label: Startseite
 <?php else: ?>
         label: Home
 <?php endif; ?>          
@@ -85,6 +95,8 @@ sfSympalMenuItem:
             label: Sample Page
           fr:
             label: Page exemple
+          de:
+            label: Beispielseite
 <?php else: ?>
         label: Sample Page
 <?php endif; ?>         
@@ -99,6 +111,8 @@ sfSympalMenuItem:
             label: Sample Content List
           fr:
             label: Liste de contenu exemple
+          de:
+            label: Beispiel-Contentliste
 <?php else: ?>
         label: Sample Content List
 <?php endif; ?>        
@@ -113,6 +127,8 @@ sfSympalMenuItem:
             label: Powered By
           fr:
             label: Propulsé par
+          de:
+            label: Powered By
 <?php else: ?>
         label: Powered By
 <?php endif; ?>          
@@ -152,6 +168,8 @@ sfSympalContent:
         i18n_slug: register
       fr:
         i18n_slug: sinscrire
+      de:
+        i18n_slug: registrieren
 <?php endif; ?>
   Content_Page_home:
     Type: ContentType_Page
@@ -187,6 +205,8 @@ sfSympalContentSlot:
         value: This is a sample content list.
       fr:
         value: Ceci est un exemple de liste de contenu.
+      de:
+        value: Das ist eine Beispiel-Contentliste.
 <?php else: ?>
     value: This is a sample content list.
 <?php endif; ?>      
@@ -279,7 +299,37 @@ sfSympalContentSlot:
           enim nisl
           ---------
       
-          Nunc lobortis, nulla et auctor ultricies, enim nisl *venenatis turpis*, quis pharetra lectus sapien fermentum mauris. Aliquam erat volutpat. Quisque laoreet nibh et magna. Praesent eros. Proin nec risus ac nisi interdum faucibus. **Maecenas fringilla**.        
+          Nunc lobortis, nulla et auctor ultricies, enim nisl *venenatis turpis*, quis pharetra lectus sapien fermentum mauris. Aliquam erat volutpat. Quisque laoreet nibh et magna. Praesent eros. Proin nec risus ac nisi interdum faucibus. **Maecenas fringilla**.
+      de:
+        value: |
+          Willkommen
+          ----------
+      
+          Willkommen zu Ihrer neuen Installation des Sympal <?php echo sfSympalConfig::getCurrentVersion() ?> Content-Management-System. Sie können sich mit dem Benutzernamen **<?php echo sfSympalConfig::get('sympal_install_admin_username', null, 'admin') ?>** und Passwort **<?php echo sfSympalConfig::get('sympal_install_admin_password', null, 'admin') ?>** einloggen und beginnen, mit Sympal zu arbeiten!
+      
+          Lorem Text
+          ----------
+      
+          Morbi fringilla commodo ipsum. **Suspendisse volutpat** congue massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies euismod nisi. Gravida mollis, metus *lacus consequat* es.Vestibulum varius accumsan leo. Pellentesque rhoncus mauris a sapien. Proin tincidunt velit sit amet est. Nulla tempor ligula porttitor sapien.
+          Donec lorem mi fermentum at:
+
+          * Ut semsddper elisat sed nullateli
+          * Us ac nisi interdum fau
+          * Erdum fau utilotieu
+          * Betagor chaligonatu
+
+          Donec lorem mi
+          --------------
+      
+          luctus sympal
+          -------------
+      
+          Suspendisse pellentesque luctus sympal. [Sympal](http://www.sympalphp.org "Sympal") fusce sem lorem, convallis ut, dictum at, blandit eu, erat; Etiam et **nulla convallis** risus adipiscing consectetur. *Morbi velit massa*, dapibus at, pharetra at, auctor ornare, risus.
+
+          enim nisl
+          ---------
+      
+          Nunc lobortis, nulla et auctor ultricies, enim nisl *venenatis turpis*, quis pharetra lectus sapien fermentum mauris. Aliquam erat volutpat. Quisque laoreet nibh et magna. Praesent eros. Proin nec risus ac nisi interdum faucibus. **Maecenas fringilla**.             
 <?php else: ?>
     value: |
       Welcome
@@ -320,6 +370,8 @@ sfSympalContentSlot:
         value: This is a sample Sympal page.
       fr:
         value: Ceci est un exemple de page Sympal.
+      de:
+        value: Das ist eine Beispielseite.
 <?php else: ?>
     value: This is a sample Sympal page.
 <?php endif; ?>    
@@ -332,6 +384,8 @@ sfSympalContentSlot:
         value: Register a new user below.        
       fr:
         value: Inscrivez un nouvel utilisateur ci-dessous.
+      en:
+        value: Registrieren Sie hier unten einen neuen Benutzer.        
 <?php else: ?>
     value: Register a new user below.
 <?php endif; ?>     
@@ -351,6 +405,8 @@ sfSympalPage:
         title: Register
       fr:
         title: S'inscrire
+      de:
+        title: Registrieren
 <?php else: ?>
     title: Register
 <?php endif; ?>     
@@ -362,6 +418,8 @@ sfSympalPage:
         title: Home
       fr:
         title: Accueil
+      de:
+        title: Startseite
 <?php else: ?>
     title: Home
 <?php endif; ?>     
@@ -373,6 +431,8 @@ sfSympalPage:
         title: Sample Page
       fr:
         title: Page exemple
+      de:
+        title: Beispielseite
 <?php else: ?>
     title: Sample Page
 <?php endif; ?>     

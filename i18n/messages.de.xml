@@ -1270,27 +1270,27 @@ neue Dateien hochladen und Ordner anlegen.</target>
       </trans-unit>
       <trans-unit id="4030">
         <source>Editing Content titled %%title%%</source>
-        <target></target>
+        <target>Inhalt bearbeiten mit dem Titel %%title%%</target>
       </trans-unit>
       <trans-unit id="4040">
         <source>Editing %%title%% site</source>
-        <target></target>
+        <target>Website %%title%% bearbeiten</target>
       </trans-unit>           
       <trans-unit id="4050">
         <source>Username or E-Mail</source>
-        <target></target>
+        <target>Benutzername oder E-Mail</target>
       </trans-unit>       
       <trans-unit id="4060">
         <source>Remember</source>
-        <target></target>
+        <target>Merken</target>
       </trans-unit>    
       <trans-unit id="4070">
         <source>Signin</source>
-        <target></target>
+        <target>Einloggen</target>
       </trans-unit>    
       <trans-unit id="4080">
         <source>The username and/or password is invalid.</source>
-        <target></target>
+        <target>Der Benutzername und/oder das Passwort ist ungültig.</target>
       </trans-unit>           
     </body>
   </file>
