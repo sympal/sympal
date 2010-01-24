@@ -76,11 +76,13 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
 
   public function addEditorHtml(sfEvent $event, $content)
   {
-    if ($event->getSubject()->getStatusCode() != 404)
+    $statusCode = $event->getSubject()->getStatusCode();
+    
+    if ($statusCode == 404 || $statusCode == 500)
     {
-      return str_replace('</body>', get_sympal_editor().'</body>', $content);
-    } else {
-      return $content;
+      //return $content;
     }
+    
+    return str_replace('</body>', get_sympal_editor().'</body>', $content);
   }
 }
