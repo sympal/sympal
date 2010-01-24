@@ -80,7 +80,7 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
     
     if ($statusCode == 404 || $statusCode == 500)
     {
-      //return $content;
+      return $content;
     }
     
     return str_replace('</body>', get_sympal_editor().'</body>', $content);
