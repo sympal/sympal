@@ -18,3 +18,9 @@
     </table>
   </form>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $('#signin_username').focus();
+  });
+</script>
