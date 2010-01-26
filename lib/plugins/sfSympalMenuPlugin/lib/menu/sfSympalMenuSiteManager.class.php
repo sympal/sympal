@@ -64,10 +64,9 @@ class sfSympalMenuSiteManager
 
   protected function _getMenu($name, $showChildren = null, $class = null)
   {
-    if ($name instanceof sfSympalMenuItem)
+    if (is_scalar($name) && isset($this->_rootSlugs[$name]))
     {
-      $menuItem = $name;
-      $name = $name['root_id'] && isset($this->_rootSlugs[$name['root_id']]) ? $this->_rootSlugs[$name['root_id']] : false;
+      $name = $this->_rootSlugs[$name];
     }
 
     if (!$name)
@@ -75,7 +74,7 @@ class sfSympalMenuSiteManager
       return false;
     }
 
-    $cacheKey = 'SYMPAL_MENU_'.md5($name.var_export($showChildren, true).$class);
+    $cacheKey = 'SYMPAL_MENU_'.md5((string) $name.var_export($showChildren, true).$class);
     if (isset($this->_menus[$cacheKey]))
     {
       return $this->_menus[$cacheKey];
@@ -111,22 +110,26 @@ class sfSympalMenuSiteManager
 
   protected function _buildMenu($name, $class)
   {
-    $rootId = array_search($name, (array) $this->_rootSlugs);
+    if ($name instanceof sfSympalMenuItem)
+    {
+      $menuItem = $name;
+      $rootId = $name['root_id'];
+      $name = (string) $name;
+    } else {
+      $rootId = array_search($name, (array) $this->_rootSlugs);
+    }
 
     if (!$rootId)
     {
       return false;
     }
+
     $rootMenuItem = $this->_rootMenuItems[$rootId];
 
     $class = $class ? $class:sfSympalConfig::get('menu_class', null, 'sfSympalMenuSite');
     $menu = new $class($name);
     $menu->setMenuItem($rootMenuItem);
 
-    if (!$rootId)
-    {
-      return false;
-    }
     $hierarchy = $this->_hierarchies[$rootId];
     $this->_buildMenuHierarchy($hierarchy, $menu);
 

@@ -18,12 +18,15 @@ class sfSympalMenuSite extends sfSympalMenu
 
   public function clearCache()
   {
-    return sfSympalConfiguration::getActive()->getCache()->remove($this->_cacheKey);
+    if ($cache = sfSympalConfiguration::getActive()->getCache())
+    {
+      return $cache->remove($this->_cacheKey);
+    }
   }
 
-  public function findMenuItem(sfSympalMenuItem $menuItem)
+  public function findMenuItem($menuItem)
   {
-    if ($this->_menuItem['id'] == $menuItem->id)
+    if ($this->_menuItem['id'] == $menuItem['id'])
     {
       return $this;
     }
@@ -159,16 +162,19 @@ class sfSympalMenuSite extends sfSympalMenu
       $this->setCredentials(array('ManageContent'));
     }
 
+    $this->setLevel($this->_menuItem['level']);
+  }
+
+  public function isCurrent($bool = null)
+  {
     $currentMenuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
 
     if ($currentMenuItem && $currentMenuItem->exists())
     {
-      $this->isCurrent($this->_menuItem['id'] == $currentMenuItem['id']);
+      return $this->_menuItem['id'] == $currentMenuItem['id'];
     } else {
-      $this->isCurrent(false);
+      return false;
     }
-
-    $this->setLevel($this->_menuItem['level']);
   }
 
   public function getTopLevelParent()

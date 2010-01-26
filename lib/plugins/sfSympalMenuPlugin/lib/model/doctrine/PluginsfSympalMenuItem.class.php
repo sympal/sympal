@@ -130,7 +130,7 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
 
   public function getMenu()
   {
-    return sfSympalMenuSiteManager::getMenu($this);
+    return sfSympalMenuSiteManager::getMenu($this['root_id']);
   }
 
   public function getBreadcrumbs($subItem = null)
