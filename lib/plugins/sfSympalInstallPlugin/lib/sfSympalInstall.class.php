@@ -69,7 +69,11 @@ class sfSympalInstall
   {
     $this->_configuration->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array($this->_formatter->formatSection($section, $message, $size, $style))));
   }
-
+  
+  /**
+   * Actually runs the installation - this is the main entry point for
+   * installing sympal
+   */
   public function install()
   {
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.pre_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
@@ -156,6 +160,7 @@ class sfSympalInstall
       $return = false;
     }
     $conn->close();
+    
     return $return;
   }
 
@@ -169,6 +174,7 @@ class sfSympalInstall
       $return = false;
     }
     $conn->close();
+    
     return $return;
   }
 
@@ -187,7 +193,15 @@ class sfSympalInstall
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
     $task->run(array(), array('all-classes', '--application='.sfConfig::get('sf_app')));
   }
-
+  
+  /**
+   * Method called during a fresh install (or a force reload)
+   * 
+   * This method performs the following tasks:
+   *   * Writes the database dsn to databases.yml
+   *   * Creates the database
+   *   * Loads the install fixtures
+   */
   protected function _setupDatabase()
   {
     if (isset($this->_params['db_dsn']) && isset($this->_params['db_username']))
@@ -236,7 +250,13 @@ class sfSympalInstall
 
     $task->run(array(), $options);
   }
-
+  
+  /**
+   * Method called in a fresh install or a force reload install
+   * 
+   * This method simply calls the sympal:create-site task and creates
+   * a cache directory to store the minified css and js
+   */
   protected function _installSympal()
   {
     $task = new sfSympalCreateSiteTask($this->_dispatcher, $this->_formatter);

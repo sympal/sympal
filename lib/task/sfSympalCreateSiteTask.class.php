@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Task for creating a new sympal site.
+ * 
+ * This task performs the following things:
+ *  * creates the symfony application if it doesn't exist
+ *  * Calls the sympal:enable-for-app task, which performs the basic setup
+ *    that the application needs (actually modifies files) to be a sympal app
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  task
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalCreateSiteTask extends sfSympalBaseTask
 {
   protected function configure()
