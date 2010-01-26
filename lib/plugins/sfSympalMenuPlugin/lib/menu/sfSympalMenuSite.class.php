@@ -106,9 +106,42 @@ class sfSympalMenuSite extends sfSympalMenu
       $array['level'] = $menuItem->getLevel();
       $array['date_published'] = $menuItem->getDatePublished();
       unset($array['__children']);
+
+      if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
+      {
+        $array['Translation'] = $menuItem->Translation->toArray(false);
+      }
+
       return $array;
     }
     return $menuItem;
+  }
+
+  public function getLabel()
+  {
+    $label = null;
+    if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
+    {
+      $culture = sfContext::getInstance()->getUser()->getCulture();
+      if (isset($this->_menuItem['Translation'][$culture]['label']))
+      {
+        $label = $this->_menuItem['Translation'][$culture]['label'];
+      }
+      if (!$label && isset($this->_menuItem['Translation'][sfConfig::get('sf_default_culture')]['label']))
+      {
+        $label = $this->_menuItem['Translation'][sfConfig::get('sf_default_culture')]['label'];
+      }
+    } else {
+      if (isset($this->_menuItem['label']))
+      {
+        $label = $this->_menuItem['label'];
+      }
+    }
+    if (!$label)
+    {
+      $label = parent::getLabel();
+    }
+    return $label;
   }
 
   public function setMenuItem($menuItem)

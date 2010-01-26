@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(52, new lime_output_color());
+$t = new lime_test(53, new lime_output_color());
 
 $configuration->loadHelpers(array('Tag'));
 
@@ -154,7 +154,14 @@ $t->is((string) $menuItem, '- Home', 'Test sfSympalMenuItem::__toString()');
 $t->is($menuItem->getContent()->getHeaderTitle(), 'Home', 'Test sfSympalMenuItem::getHeaderTitle()');
 $t->is($menuItem->getLabel(), 'Home', 'Test sfSympalMenuItem::getLabel()');
 $t->is($menuItem->getItemRoute(), '@sympal_content_home', 'Test sfSympalMenuItem::getItemRoute()');
-$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'primary / Home', 'Test sfSympalBreadcrumbs::getPathAsString()');
+$t->is($menuItem->getBreadcrumbs()->getPathAsString(), '', 'Test sfSympalBreadcrumbs::getPathAsString() returns nothing for home');
+
+$menuItem = $table
+  ->createQuery('m')
+  ->where('m.slug = ?', 'sample-page')
+  ->fetchOne();
+
+$t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page', 'Test sfSympalBreadcrumbs::getPathAsString() returns nothing for home');
 
 $menuManager = sfSympalMenuSiteManager::getInstance();
 $menuManager->clear();
