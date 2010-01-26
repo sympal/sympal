@@ -34,10 +34,6 @@ class sfSympalAssetEditForm extends sfForm
     {
       $this->widgetSchema['width'] = new sfWidgetFormInput();
       $this->widgetSchema['height'] = new sfWidgetFormInput();
-    }
-
-    if ($this->_asset->isImage())
-    {
       $this->validatorSchema['width'] = new sfValidatorString(array('trim' => true));
       $this->validatorSchema['height'] = new sfValidatorString(array('trim' => true));
     }

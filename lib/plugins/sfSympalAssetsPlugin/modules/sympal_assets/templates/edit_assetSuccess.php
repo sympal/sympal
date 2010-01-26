@@ -41,10 +41,12 @@
         <?php echo $form['new_name'] ?>
         <input type="submit" value="<?php echo __('Save') ?>" />
 
-        <h2><?php echo __('Resize') ?></h2>
-        <?php echo $form['width'] ?> x 
-        <?php echo $form['height'] ?>
-        <input type="submit" value="<?php echo __('Save') ?>" />
+        <?php if ($asset->isImage()): ?>
+          <h2><?php echo __('Resize') ?></h2>
+          <?php echo $form['width'] ?> x 
+          <?php echo $form['height'] ?>
+          <input type="submit" value="<?php echo __('Save') ?>" />
+        <?php endif; ?>
       </form>
       
       <?php if ($asset->isImage()): ?>
