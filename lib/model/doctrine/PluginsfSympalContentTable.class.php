@@ -152,8 +152,8 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       ->leftJoin($alias.'.MenuItem m')
       ->leftJoin($alias.'.Links l')
       ->leftJoin($alias.'.Assets a')
+      ->leftJoin($alias.'.CreatedBy u')
       ->innerJoin($alias.'.Type t')
-      ->innerJoin($alias.'.CreatedBy u')
       ->innerJoin($alias.'.Site si')
       ->andWhere('si.slug = ?', $sympalContext->getSiteSlug());
 
