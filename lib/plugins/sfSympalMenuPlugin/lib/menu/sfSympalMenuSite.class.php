@@ -165,18 +165,6 @@ class sfSympalMenuSite extends sfSympalMenu
     $this->setLevel($this->_menuItem['level']);
   }
 
-  public function isCurrent($bool = null)
-  {
-    $currentMenuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
-
-    if ($currentMenuItem && $currentMenuItem->exists())
-    {
-      return $this->_menuItem['id'] == $currentMenuItem['id'];
-    } else {
-      return false;
-    }
-  }
-
   public function getTopLevelParent()
   {
     $obj = $this;
@@ -214,6 +202,18 @@ class sfSympalMenuSite extends sfSympalMenu
     }
   }
 
+  public function isCurrent($bool = null)
+  {
+    $currentMenuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
+
+    if ($currentMenuItem && $currentMenuItem->exists())
+    {
+      return $this->_menuItem['id'] == $currentMenuItem['id'];
+    } else {
+      return false;
+    }
+  }
+
   public function isCurrentAncestor()
   {
     $menuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
@@ -224,5 +224,10 @@ class sfSympalMenuSite extends sfSympalMenu
     }
 
     return false;
+  }
+
+  public function getDoctrineMenuItem()
+  {
+    return Doctrine_Core::getTable('sfSympalMenuItem')->find($this->_menuItem['id']);
   }
 }

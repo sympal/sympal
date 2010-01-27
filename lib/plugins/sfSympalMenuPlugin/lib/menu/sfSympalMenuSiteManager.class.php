@@ -17,6 +17,10 @@ class sfSympalMenuSiteManager
     if ($cache = $this->_getCache())
     {
       $this->_rootSlugs = $cache->get('SYMPAL_MENU_ROOT_SLUGS');
+      if (!is_array($this->_rootSlugs))
+      {
+        $this->initialize();
+      }
     }
   }
 
@@ -30,11 +34,42 @@ class sfSympalMenuSiteManager
     return self::$_instance;
   }
 
-  public function getHierarchies()
+  public function getMenus()
   {
-    $this->initialize();
+    $menus = array();
+    foreach ($this->_rootSlugs as $slug)
+    {
+      $menus[$slug] = $this->getMenu($slug);
+    }
+    return $menus;
+  }
 
-    return $this->_hierarchies;
+  public function findCurrentMenuItem($menu = null)
+  {
+    $currentUri = sfContext::getInstance()->getRequest()->getUri();
+
+    if (is_null($menu))
+    {
+      foreach ($this->getMenus() as $menu)
+      {
+        if ($found = $this->findCurrentMenuItem($menu))
+        {
+          return $found;
+        }
+      }
+    } else {
+      if ($menu->getUrl(array('absolute' => true)) === $currentUri)
+      {
+        return $menu->getDoctrineMenuItem();
+      }
+      foreach ($menu->getChildren() as $child)
+      {
+        if ($found = $this->findCurrentMenuItem($child))
+        {
+          return $found;
+        }
+      }
+    }
   }
 
   public function clear()

@@ -114,6 +114,11 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return $this->_route;
   }
 
+  public function getUrl(array $options = array())
+  {
+    return url_for($this->getRoute(), $options);
+  }
+
   public function setRoute($route)
   {
     $this->_route = $route;

@@ -27,6 +27,11 @@ class sfSympalContext
 
   public function getCurrentMenuItem()
   {
+    if (!$this->_currentMenuItem)
+    {
+      $this->_currentMenuItem = sfSympalMenuSiteManager::getInstance()->findCurrentMenuItem();
+    }
+
     return $this->_currentMenuItem;
   }
 
