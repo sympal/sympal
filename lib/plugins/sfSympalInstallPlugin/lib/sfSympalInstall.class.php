@@ -231,10 +231,10 @@ class sfSympalInstall
     $path = sfConfig::get('sf_data_dir').'/fixtures/install';
     if (is_dir($path))
     {
-      $fixtures = array();
-      $fixtures[] = $path;
-      $fixtures[] = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/data/fixtures/install.yml';
-      $fixtures[] = $this->_configuration->getPluginConfiguration('sfSympalUserPlugin')->getRootDir().'/data/fixtures/install.yml';
+      $fixtures = array(
+        $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/data/fixtures/install.yml',
+        $path
+      );
     } else {
       $fixtures = true;
     }
