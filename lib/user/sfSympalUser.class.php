@@ -10,10 +10,22 @@ class sfSympalUser extends sfGuardSecurityUser
   {
     if (is_null($this->_isEditMode))
     {
-      $this->_isEditMode = $this->isAuthenticated() && $this->hasCredential('ManageContent') ? true : false;
+      $this->_isEditMode = $this->isAuthenticated() && $this->hasCredential('ManageContent');
       $this->_isEditMode = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_is_edit_mode'), $this->_isEditMode)->getReturnValue();
     }
     return $this->_isEditMode;
+  }
+
+  public function signIn($user, $remember = false, $con = null)
+  {
+    $this->_isEditMode = null;
+    return parent::signIn($user, $remember, $con);
+  }
+
+  public function signOut()
+  {
+    $this->_isEditMode = null;
+    return parent::signOut();
   }
 
   public function hasAccessToContent($content)
