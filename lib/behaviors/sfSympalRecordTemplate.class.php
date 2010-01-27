@@ -2,7 +2,9 @@
 
 class sfSympalRecordTemplate extends Doctrine_Template
 {
-  protected $_eventName;
+  protected
+    $_eventName,
+    $_modelName;
 
   public function setInvoker(Doctrine_Record_Abstract $invoker)
   {
@@ -73,7 +75,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
   public function isI18ned()
   {
     $i18nedModels = sfSympalConfig::get('internationalized_models', null, array());
-    return sfSympalConfig::get('i18n') && isset($i18nedModels[$this->_table->getOption('name')]);
+    return sfSympalConfig::get('i18n') && isset($i18nedModels[$this->getModelName()]);
   }
 
   public function getI18nedFields()
@@ -81,7 +83,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
     if ($this->isI18ned())
     {
       $i18nedModels = sfSympalConfig::get('internationalized_models', null, array());
-      return $i18nedModels[$this->_table->getOption('name')];
+      return $i18nedModels[$this->getModelName()];
     } else {
       return array();
     }
@@ -90,7 +92,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
   public function isSluggable()
   {
     $sluggableModels = sfSympalConfig::get('sluggable_models', null, array());
-    return array_key_exists($this->_table->getOption('name'), $sluggableModels);
+    return array_key_exists($this->getModelName(), $sluggableModels);
   }
 
   public function getSluggableOptions()
@@ -98,7 +100,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
     if ($this->isSluggable())
     {
       $sluggableModels = sfSympalConfig::get('sluggable_models', null, array());
-      return $sluggableModels[$this->_table->getOption('name')] ? $sluggableModels[$this->_table->getOption('name')]:array();
+      return $sluggableModels[$this->getModelName()] ? $sluggableModels[$this->getModelName()]:array();
     } else {
       return array();
     }
@@ -106,6 +108,21 @@ class sfSympalRecordTemplate extends Doctrine_Template
 
   public function isContent()
   {
-    return $this->_table->getOption('name') == 'sfSympalContent' ? true:false;
+    return $this->getModelName() == 'sfSympalContent' ? true:false;
+  }
+
+  /**
+   * Hack for working around the ToPrfx and FromPrfx prefix used by migrations
+   *
+   * @return string $modelName
+   */
+  public function getModelName()
+  {
+    if (!$this->_modelName)
+    {
+      $this->_modelName = str_replace('ToPrfx', '', $this->_table->getOption('name'));
+      $this->_modelName = str_replace('FromPrfx' ,'', $this->_modelName);
+    }
+    return $this->_modelName;
   }
 }
