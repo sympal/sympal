@@ -81,8 +81,12 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
       if ($contentTypeTranslationTable->hasField($this->name))
       {
-        $form = new $contentTypeFormClassName($content->getRecord());
-        $form->useFields(array(sfContext::getInstance()->getUser()->getCulture()));
+        $form = new $contentTypeFormClassName($content->getRecord()); 
+        $i18nForm = $form->getEmbeddedForm($language = sfContext::getInstance()->getUser()->getCulture()); 
+        $i18nForm->useFields(array($this->name)); 
+        unset($form[$language]); 
+        $form->embedForm($language, $i18nForm); 
+        $form->useFields(array($language)); 
       }
     }
 
