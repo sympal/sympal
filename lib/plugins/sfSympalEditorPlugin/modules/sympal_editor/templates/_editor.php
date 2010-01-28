@@ -24,7 +24,7 @@
 
 <input type="hidden" id="sympal_base_url" value="<?php echo url_for('@homepage', 'absolute=true') ?>" />
 
-<?php if (isset($sf_sympal_content) && $sf_sympal_content): ?>
+<?php if ($loadInlineEditor): ?>
   <input type="hidden" id="sympal_save_slots_url" value="<?php echo url_for('@sympal_save_content_slots?content_id='.$sf_sympal_content->getId()) ?>" />
   <div class="sympal_inline_edit_bar_bottom_background"></div>
 <?php endif; ?>
@@ -32,7 +32,7 @@
 <div class="sympal_inline_edit_bar_container">
   <div class="sympal_inline_edit_bar sympal_form">
   
-    <?php if (isset($sf_sympal_content) && $sf_sympal_content): ?>
+    <?php if ($loadInlineEditor): ?>
       <div class="sympal_inline_edit_bar_publish">
         <?php if ($sf_sympal_content->getIsPublished()): ?>
           <?php echo link_to(image_tag('/sfSympalPlugin/images/published_icon.png', 'title='.__('Published on %date%', array('%date%' => format_date($sf_sympal_content->getDatePublished(), 'g'))).'. '.__('Click to unpublish content.')), '@sympal_unpublish_content?id='.$sf_sympal_content['id']) ?>
@@ -52,7 +52,7 @@
       <?php echo link_to(image_tag('/sfSympalPlugin/images/signout.png', 'title='.__('Signout')), '@sympal_signout', 'confirm='.__('Are you sure you want to signout?')) ?>
     </div>
 
-    <?php if (isset($sf_sympal_content) && $sf_sympal_content): ?>
+    <?php if ($loadInlineEditor): ?>
       <ul class="sympal_inline_edit_bar_big_buttons">
         <?php if (sfSympalConfig::isI18nEnabled()): ?>
           <li>
@@ -90,7 +90,7 @@
   </div>
 </div>
 
-<?php if (isset($sf_sympal_content) && $sf_sympal_content): ?>
+<?php if ($loadInlineEditor): ?>
   <div id="sympal_assets"></div>
   <div id="sympal_links"></div>
   <div id="sympal_dashboard"></div>

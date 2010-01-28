@@ -85,13 +85,12 @@ function get_sympal_breadcrumbs($menuItem, $subItem = null)
 function get_sympal_editor($menuItem = null, $content = null)
 {
   $sympalContext = sfSympalContext::getInstance();
-
-  $sympalContext->
+  $editorPluginConfigurartion = $sympalContext->
     getSymfonyContext()->
     getConfiguration()->
-    getPluginConfiguration('sfSympalEditorPlugin')->
-    loadEditorAssets()
-  ;
+    getPluginConfiguration('sfSympalEditorPlugin');
+
+  $editorPluginConfigurartion->loadEditorAssets();
 
   $content = $sympalContext->getCurrentContent();
   $menuItem = $sympalContext->getCurrentMenuItem();
@@ -106,7 +105,9 @@ function get_sympal_editor($menuItem = null, $content = null)
     ));
   }
 
-  return get_partial('sympal_editor/editor');
+  return get_partial('sympal_editor/editor', array(
+    'loadInlineEditor' => $editorPluginConfigurartion->shouldLoadInlineEditor()
+  ));
 }
 
 /**

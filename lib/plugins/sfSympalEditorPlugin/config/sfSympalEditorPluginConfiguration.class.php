@@ -14,13 +14,22 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
     $format = sfContext::getInstance()->getRequest()->getRequestFormat();
     $format = $format ? $format : 'html';
 
-    // Only load the editor if
-    // ... edit mode is on
-    // ... request format is html
-    return sfContext::getInstance()->getUser()->isEditMode()
-      && $format == 'html'
-      && !sfSympalConfig::get('page_cache', 'enabled')
-      && sfSympalConfig::get('inline_editing', 'enabled');
+    return sfContext::getInstance()->getUser()->isEditMode() && $format == 'html';
+  }
+
+  public function shouldLoadInlineEditor()
+  {
+    // Load inline editor if
+    // ...page caching is off
+    // ...and inline editing is enabled
+    // ...and we are editing a content record
+    // OR
+    // ...we are in the admin module
+    // ...and we are editing a content record
+    return (!sfSympalConfig::get('page_cache', 'enabled')
+      && sfSympalConfig::get('inline_editing', 'enabled')
+      && sfSympalContext::getInstance()->getCurrentContent())
+      || (sfSympalConfiguration::getActive()->isAdminModule() && sfSympalContext::getInstance()->getCurrentContent());
   }
 
   public function loadEditor(sfEvent $event)
