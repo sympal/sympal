@@ -2,11 +2,6 @@
 
 ### Bug Fixes and Improvements
 
-* Fix inline editing save to use one request instead one request per slot.
-* Enhance rss, xml formats to have a filter so we can customize what data is returned
-for each model and even for each different format type.
-* Make configuration web form only save changed values
-
 ### Performance
 
 #### Eliminate Joins
@@ -20,13 +15,6 @@ for each model and even for each different format type.
 * Test if loading content slots in another query is faster than left joining them in the main query.
 
 ### New Documentation Chapters
-
-* Themes
-* Content Templates
-* Redirects
-* Overriding Stylesheets and Javascripts
-* Asset Types
-* Content Lists
 
 ### I18N
 
