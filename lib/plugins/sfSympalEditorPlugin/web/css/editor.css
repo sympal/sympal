@@ -171,7 +171,7 @@ html {
   height: 30px;
   position: fixed;
   top: 0;
-  right: 60px;
+  right: 80px;
   margin: 0;
   padding: 0;
   z-index: 999999999;
@@ -191,10 +191,7 @@ html {
   list-style: none;
   color: #fff;
   margin: 0;
-  height: 30px;
-  padding-right: 8px;
-  padding-left: 8px;
-  padding-top: 8px;
+  padding: 8px;
   font-weight: normal;
   font-size: 12px;
 }
