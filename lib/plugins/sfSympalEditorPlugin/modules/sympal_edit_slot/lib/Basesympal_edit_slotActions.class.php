@@ -15,68 +15,60 @@ abstract class Basesympal_edit_slotActions extends sfActions
     $this->setLayout(false);
   }
 
-  protected function _getContentSlot(sfWebRequest $request)
-  {
-    $this->contentSlot = $this->getRoute()->getObject();
-    $this->content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
-    $this->contentSlot->setContentRenderedFor($this->content);
-
-    return $this->contentSlot;
-  }
-
-  protected function _getContentSlotForm(sfWebRequest $request)
-  {
-    $this->contentSlot = $this->_getContentSlot($request);
-
-    $this->form = $this->contentSlot->getEditForm();
-
-    return $this->form;
-  }
-
   public function executeChange_content_slot_type(sfWebRequest $request)
   {
-    $slotId = $request->getParameter('id');
-    $slot = $request->getParameter('sf_sympal_content_slot_'.$slotId);
-
-    $this->contentSlot = $this->_getContentSlot($request);
-    $this->contentSlot->setType($slot['type']);
+    $this->content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
+    $this->contentSlot = Doctrine_Core::getTable('sfSympalContentSlot')->find($request->getParameter('id'));
+    $this->contentSlot->setContentRenderedFor($this->content);
+    $this->contentSlot->setType($request->getParameter('type'));
     $this->contentSlot->save();
 
-    $this->form = $this->_getContentSlotForm($request);
+    $this->form = $this->contentSlot->getEditForm();
   }
 
-  public function executeEdit_slot(sfWebRequest $request)
+  public function executeSave_slots(sfWebRequest $request)
   {
-    $this->form = $this->_getContentSlotForm($request);
-  }
+    $this->contentSlots = array();
+    $this->failedContentSlots = array();
+    $errors = array();
 
-  public function executeSave_slot(sfWebrequest $request)
-  {
-    $this->form = $this->_getContentSlotForm($request);
-
-    $this->form->bind($request->getParameter($this->form->getName()));
-    if ($this->form->isValid())
+    $content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
+    $slotIds = $request->getParameter('slots');
+    foreach ($slotIds as $slotId)
     {
-      $this->form->save();
+      $contentSlot = Doctrine_Core::getTable('sfSympalContentSlot')->find($slotId);
+      $contentSlot->setContentRenderedFor($content);
+      $form = $contentSlot->getEditForm();
+      $form->bind($request->getParameter($form->getName()));
+      if ($form->isValid())
+      {
+        if ($request->getParameter('preview'))
+        {
+          $form->updateObject();
+        } else {
+          $form->save();
+        }
+        $this->contentSlots[] = $contentSlot;
+      } else {
+        $this->failedContentSlots[] = $contentSlot;
+        foreach ($form as $name => $field)
+        {
+          if ($field->hasError())
+          {
+            $errors[$contentSlot->getName()] = $field->getError();
+          }
+        }
+      }
     }
 
-    $this->setTemplate('preview_slot');
-  }
-
-  public function executePreview_slot(sfWebRequest $request)
-  {
-    $this->form = $this->_getContentSlotForm($request);
-    $this->contentSlot->resetRenderCache();
-
-    $this->form->bind($request->getParameter($this->form->getName()));
-    if ($this->form->isValid())
+    $this->errorString = null;
+    if ($errors)
     {
-      $this->form->updateObject();
-
-      $this->setTemplate('preview_slot');
-    } else {
-      exit((string) $this->form);
-      $this->setTemplate('edit_slot');
+      $this->errorString = count($errors).' error'.(count($errors) > 1 ? 's' : null).' occurred:\n\n';
+      foreach ($errors as $name => $error)
+      {
+        $this->errorString .= ' * '.$name.': '.$error.'\n';
+      }
     }
   }
 }

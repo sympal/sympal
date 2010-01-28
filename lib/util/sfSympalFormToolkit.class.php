@@ -91,16 +91,18 @@ class sfSympalFormToolkit
       return;
     }
 
+    $type = $contentSlot->type ? $contentSlot->type : 'Text';
+
     $widgetSchema = $form->getWidgetSchema();
     $validatorSchema = $form->getValidatorSchema();
 
     $contentSlotTypes = sfSympalConfig::get('content_slot_types', null, array());
-    $options = isset($contentSlotTypes[$contentSlot->type]) ? $contentSlotTypes[$contentSlot->type] : array();
+    $options = isset($contentSlotTypes[$type]) ? $contentSlotTypes[$type] : array();
 
-    $widgetClass = isset($options['widget_class']) ? $options['widget_class'] : 'sfWidgetFormSympal'.$contentSlot->type;
+    $widgetClass = isset($options['widget_class']) ? $options['widget_class'] : 'sfWidgetFormSympal'.$type;
     $widgetOptions = isset($options['widget_options']) ? $options['widget_options'] : array();
 
-    $validatorClass = isset($options['validator_class']) ? $options['validator_class'] : 'sfValidatorFormSympal'.$contentSlot->type;
+    $validatorClass = isset($options['validator_class']) ? $options['validator_class'] : 'sfValidatorFormSympal'.$type;
     $validatorOptions = isset($options['validator_options']) ? $options['validator_options'] : array();
 
     $widgetSchema['value'] = new $widgetClass($widgetOptions);

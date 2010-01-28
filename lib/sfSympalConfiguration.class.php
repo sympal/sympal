@@ -109,7 +109,7 @@ class sfSympalConfiguration
     $this->initializeTheme();
 
     $this->_projectConfiguration->loadHelpers(array(
-      'Sympal', 'SympalContentSlot', 'SympalMenu', 'SympalPager', 'I18N', 'Asset'
+      'Sympal', 'SympalContentSlot', 'SympalMenu', 'SympalPager', 'I18N', 'Asset', 'Url', 'Partial'
     ));
 
     if ($this->isAdminModule())
