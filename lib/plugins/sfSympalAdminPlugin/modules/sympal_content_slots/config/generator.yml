@@ -1,0 +1,23 @@
+generator:
+  class:                   <?php echo sfSympalConfig::getAdminGeneratorClass() ?> 
+  param:
+    model_class:           sfSympalContentSlot
+    theme:                 <?php echo sfSympalConfig::getAdminGeneratorTheme() ?> 
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_content_slots
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        display: [=name, type]
+      filter:
+        display: [name, type, content_list]
+      form:
+        class: sfSympalAdminContentSlotForm
+      edit:    ~
+      new:     ~

@@ -38,6 +38,14 @@ sympal_content_types:
     prefix_path:          admin/content/types
     with_wildcard_routes: true
 
+sympal_content_slots:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalContentSlot
+    module:               sympal_content_slots
+    prefix_path:          admin/content/slots
+    with_wildcard_routes: true
+
 sympal_sites:
   class:                  sfDoctrineRouteCollection
   options:

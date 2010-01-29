@@ -22,6 +22,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       $manageContent->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId());
     }
 
+    $manageContent->addChild('Slots', '@sympal_content_slots');
+
     $siteAdministration = $menu->getChild('Site Administration');
 
     $siteAdministration

@@ -12,6 +12,7 @@ all:
       sympal_admin: ~
       sympal_config: ~
       sympal_content: ~
+      sympal_content_slots: ~
       sympal_content_menu_item: ~
       sympal_content_types: ~
       sympal_dashboard: ~

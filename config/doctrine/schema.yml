@@ -150,9 +150,6 @@ sfSympalContentType:
 
 sfSympalContentSlot:
   actAs: [sfSympalRecordTemplate]
-  options:
-    symfony:
-      filter: false
   columns:
     is_column:
       type: boolean

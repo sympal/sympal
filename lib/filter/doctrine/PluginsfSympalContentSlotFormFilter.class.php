@@ -9,4 +9,18 @@
  */
 abstract class PluginsfSympalContentSlotFormFilter extends BasesfSympalContentSlotFormFilter
 {
+  public function setup()
+  {
+    parent::setup();
+
+    sfSympalFormToolkit::changeContentSlotTypeWidget($this, true);
+  }
+
+  public function addTypeColumnQuery(Doctrine_Query $query, $field, $value)
+  {
+    if ($value)
+    {
+      $query->andWhere('type = ?', $value);
+    }
+  }
 }

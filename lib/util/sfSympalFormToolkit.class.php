@@ -19,10 +19,35 @@ class sfSympalFormToolkit
     }
   }
 
-  public static function changeContentIdWidget(sfForm $form)
+  public static function changeContentSlotTypeWidget(sfForm $form, $blank = false)
   {
     $widgetSchema = $form->getWidgetSchema();
-    if ($widgetSchema['content_id'] instanceof sfWidgetFormDoctrineChoice)
+    $validatorSchema = $form->getValidatorSchema();
+    $slotTypes = (sfSympalConfig::get('content_slot_types', null, array()));
+    $choices = array();
+    if ($blank)
+    {
+      $choices[''] = '';
+    }
+    foreach ($slotTypes as $key => $value)
+    {
+      $choices[$key] = $value['label'];
+    }
+    $widgetSchema['type'] = new sfWidgetFormChoice(array('choices' => $choices));
+    $validatorSchema['type'] = new sfValidatorChoice(array('required' => false, 'choices' => array_keys($choices)));
+  }
+
+  public static function changeContentWidget(sfForm $form, $add = null)
+  {
+    $widgetSchema = $form->getWidgetSchema();
+    $validatorSchema = $form->getValidatorSchema();
+    if (is_null($add))
+    {
+      $key = isset($widgetSchema['content_id']) ? 'content_id' : 'content_list';
+    } else {
+      $key = $add;
+    }
+    if (isset($widgetSchema[$key]) || $add)
     {
       $q = Doctrine_Core::getTable('sfSympalContent')
         ->createQuery('c')
@@ -30,8 +55,15 @@ class sfSympalFormToolkit
         ->leftJoin('c.MenuItem m')
         ->where('c.site_id = ?', sfSympalContext::getInstance()->getSite()->getId())
         ->orderBy('m.root_id, m.lft');
-      $widgetSchema['content_id']->setOption('query', $q);
-      $widgetSchema['content_id']->setOption('method', 'getIndented');
+
+      if ($add)
+      {
+        $widgetSchema[$key] = new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent'));
+        $validatorSchema[$key] = new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent', 'required' => false));
+      }
+
+      $widgetSchema[$key]->setOption('query', $q);
+      $widgetSchema[$key]->setOption('method', 'getIndented');
     }
   }
 

@@ -67,14 +67,14 @@ class sfSympalForm extends sfSympalExtendClass
       sfSympalFormToolkit::changeThemeWidget($form);
     }
 
-    if (isset($form['content_id']))
-    {
-      sfSympalFormToolkit::changeContentIdWidget($form);
-    }
-
     if (isset($form['module']))
     {
       sfSympalFormToolkit::changeModuleWidget($form);
+    }
+
+    if (isset($form['content_id']) || isset($form['content_list']))
+    {
+      sfSympalFormToolkit::changeContentWidget($form);
     }
 
     foreach ($form as $name => $field)
