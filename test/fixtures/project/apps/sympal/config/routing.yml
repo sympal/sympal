@@ -21,3 +21,9 @@ go_back:
 change_layout:
   url: /test/change_layout
   param: { module: test, action: change_layout }
+redirect_route:
+  url: '/test/redirect/:parameter1'
+  param: { module: test, action: redirect }
+redirect_route2:
+  url: '/some/path/ok/:parameter2'
+  param: { module: test, action: redirect }

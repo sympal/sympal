@@ -22,4 +22,9 @@ class sfSympalTestFunctional extends sfTestFunctional
       end()
     ;
   }
+
+  public function clearCache()
+  {
+    return $this->get('/')->getContext()->getController()->getActionStack()->getLastEntry()->getActionInstance()->clearCache();
+  }
 }

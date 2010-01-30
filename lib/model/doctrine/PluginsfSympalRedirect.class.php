@@ -18,4 +18,44 @@ abstract class PluginsfSympalRedirect extends BasesfSympalRedirect
 
     $this->source = $this->source[0] == '/' ? $this->source : '/'.$this->source;
   }
+
+  public function getDestinationType()
+  {
+    if ($this->isDestinationUrl())
+    {
+      return 'url';
+    }
+    else if ($this->isDestinationRoute())
+    {
+      return 'route';
+    }
+    else if ($this->isDestinationPath())
+    {
+      return 'path';
+    }
+    else if ($this->isDestinationContent())
+    {
+      return 'content';
+    }
+  }
+
+  public function isDestinationUrl()
+  {
+    return substr($this->destination, 0, 3) ==='http' ? true : false;
+  }
+
+  public function isDestinationRoute()
+  {
+    return $this->destination && $this->destination[0] === '@' ? true : false;
+  }
+
+  public function isDestinationPath()
+  {
+    return $this->destination[0] === '/' ? true : false;
+  }
+
+  public function isDestinationContent()
+  {
+    return $this->content_id ? true : false;
+  }
 }

@@ -2,41 +2,69 @@
 
 class sfSympalRedirecter
 {
-  private $_actions;
+  private
+    $_actions,
+    $_redirect,
+    $_destinationRoute;
 
   public function __construct(sfActions $actions)
   {
     $this->_actions = $actions;
-  }
-
-  public function getRedirect()
-  {
-    return Doctrine_Core::getTable('sfSympalRedirect')
-      ->createQuery('r')
-      ->leftJoin('r.Content c')
-      ->leftJoin('c.Type t')
-      ->where('r.source = ?', $this->_actions->getRequest()->getPathInfo())
-      ->andWhere('r.site_id = ?', $this->_actions->getSympalContext()->getSite()->getId())
-      ->fetchOne();
+    $this->_redirect = Doctrine_Core::getTable('sfSympalRedirect')->find(
+      $this->_actions->getRequest()->getParameter('id')
+    );
   }
 
   public function redirect()
   {
-    if ($redirect = $this->getRedirect())
+    $this->_actions->redirect($this->_getUrlToRedirectTo());
+  }
+
+  private function _getDestinationRoute()
+  {
+    if (!$this->_destinationRoute)
     {
-      if ($destination = $redirect->getDestination())
+      if ($this->_redirect->isDestinationRoute())
       {
-        // If the destination is not a url or a symfony route then prefix
-        // it with the current requests pathinfo prefix
-        if ($destination[0] != '@' && substr($destination, 0, 3) != 'http')
-        {
-          $destination = trim($destination, '/');
-          $destination = $this->_actions->getRequest()->getPathInfoPrefix().'/'.$destination;
-        }
+        $routes = $this->_actions->getContext()->getRouting()->getRoutes();
+        $this->_destinationRoute = $routes[substr($this->_redirect->getDestination(), 1)];
       } else {
-        $destination = $redirect->getContent()->getUrl();
+        $this->_destinationRoute = new sfRoute($this->_redirect->destination);
       }
-      $this->_actions->redirect($destination);
     }
+    return $this->_destinationRoute;
+  }
+
+  private function _getDestinationParameters()
+  {
+    $parameters = array();
+    foreach (array_keys($this->_getDestinationRoute()->getRequirements()) as $name)
+    {
+      $parameters[$name] = $this->_actions->getRequest()->getParameter($name);
+    }
+    return $parameters;
+  }
+
+  private function _getUrlToRedirectTo()
+  {
+    switch ($this->_redirect->getDestinationType())
+    {
+      case 'url':
+        $destination = $this->_redirect->getDestination();
+      break;
+
+      case 'route':
+        $destination = $this->_actions->generateUrl(substr($this->_redirect->getDestination(), 1), $this->_getDestinationParameters());
+      break;
+
+      case 'path':
+        $destination = $this->_getDestinationRoute()->generate($this->_getDestinationParameters());
+      break;
+
+      case 'content':
+        $destination = $this->_redirect->getContent()->getUrl();
+      break;
+    }
+    return $destination;
   }
 }

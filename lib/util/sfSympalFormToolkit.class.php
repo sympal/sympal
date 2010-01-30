@@ -47,7 +47,7 @@ class sfSympalFormToolkit
     } else {
       $key = $add;
     }
-    if (isset($widgetSchema[$key]) || $add)
+    if ((isset($widgetSchema[$key]) && $widgetSchema[$key] instanceof sfWidgetFormDoctrineChoice) || $add)
     {
       $q = Doctrine_Core::getTable('sfSympalContent')
         ->createQuery('c')

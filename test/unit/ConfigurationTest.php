@@ -59,7 +59,7 @@ $corePlugins = array(
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins);
 
-$t->is($sympalConfiguration->getInstalledPlugins(), array(
+$t->is(array_values($sympalConfiguration->getInstalledPlugins()), array(
   'sfSympalBlogPlugin',
   'sfSympalCommentsPlugin',
   'sfSympalThemeTestPlugin'
@@ -69,7 +69,7 @@ $addonPlugins = $sympalConfiguration->getAddonPlugins();
 $t->is(in_array('sfSympalBlogPlugin', $addonPlugins), true);
 $t->is(in_array('sfSympalJwageThemePlugin', $addonPlugins), true);
 
-$t->is($sympalConfiguration->getOtherPlugins(), array(
+$t->is(array_values($sympalConfiguration->getOtherPlugins()), array(
   'sfSympalBlogPlugin',
   'sfSympalCommentsPlugin',
   'sfSympalThemeTestPlugin'

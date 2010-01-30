@@ -50,7 +50,6 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
     $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
     $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
-    $this->_dispatcher->connect('routing.load_configuration', array($this, 'listenToRoutingLoadConfiguration'));
 
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
     {
@@ -75,15 +74,6 @@ class sfSympalConfiguration
     {
       $event->getSubject()->getFilesystem()->remove(sfFinder::type('file')->ignore_version_control()->discard('.sf')->in($cacheDir));
     }
-  }
-
-  public function listenToRoutingLoadConfiguration(sfEvent $event)
-  {
-    // Append route at end to catch all
-    $event->getSubject()->appendRoute('sympal_default', new sfRoute('/*', array(
-      'module' => 'sympal_default',
-      'action' => 'default'
-    )));
   }
 
   /**
@@ -266,6 +256,10 @@ class sfSympalConfiguration
 
   public function isAdminModule()
   {
+    if (!$this->_symfonyContext)
+    {
+      return false;
+    }
     $module = $this->_symfonyContext->getRequest()->getParameter('module');
     $adminModules = sfSympalConfig::get('admin_modules');
     return array_key_exists($module, $adminModules);

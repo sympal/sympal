@@ -47,4 +47,9 @@ class testActions extends sfActions
   {
     $this->loadTheme('test');
   }
+
+  public function executeRedirect()
+  {
+    return sfView::NONE;
+  }
 }

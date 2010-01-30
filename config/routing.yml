@@ -1,4 +1,6 @@
-<?php echo sfSympalToolkit::getRoutesYaml() ?>
+<?php echo sfSympalToolkit::getContentRoutesYaml() ?>
+
+<?php echo sfSympalToolkit::getRedirectRoutesYaml() ?>
 
 sympal_change_language_form:
   url:   /change_language
