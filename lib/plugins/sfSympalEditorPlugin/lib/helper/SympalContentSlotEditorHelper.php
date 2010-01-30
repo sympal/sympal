@@ -20,7 +20,7 @@ function get_sympal_content_slot_editor(sfSympalContent $content, sfSympalConten
 </span>';
 }
 
-function get_sympal_inline_edit_bar_edit_buttons()
+function get_sympal_inline_edit_bar_buttons()
 {
   $sympalContext = sfSympalContext::getInstance();
   $content = $sympalContext->getCurrentContent();

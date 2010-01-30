@@ -38,7 +38,7 @@
       <?php endif; ?>
     </div>
 
-    <?php echo get_sympal_inline_edit_bar_edit_buttons() ?>
+    <?php echo get_sympal_inline_edit_bar_buttons() ?>
   </div>
 </div>
 
