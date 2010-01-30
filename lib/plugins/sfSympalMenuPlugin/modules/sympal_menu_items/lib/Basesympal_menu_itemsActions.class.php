@@ -26,7 +26,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
       $tree = $form->save();
 
-      $this->clearCache();
+      $this->clearMenuCache();
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $tree)));
 
@@ -142,6 +142,33 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     }
   }
 
+  protected function executeBatchDelete(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $records = Doctrine_Query::create()
+      ->from('sfSympalMenuItem')
+      ->whereIn('id', $ids)
+      ->execute();
+
+    foreach ($records as $record)
+    {
+      if ($record->getNode()->isValidNode())
+      {
+        $record->getNode()->delete();
+      }
+      else
+      {
+        $record->delete();
+      }
+    }
+
+    $this->clearMenuCache();
+
+    $this->getUser()->setFlash('notice', 'The selected items have been deleted successfully.');
+    $this->redirect('@sympal_menu_items');
+  }
+
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
@@ -157,6 +184,8 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     {
       $object->delete();
     }
+
+    $this->clearMenuCache();
 
     $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
 

@@ -18,6 +18,15 @@ class sfSympalActions extends sfSympalExtendClass
     $this->resetSympalRoutesCache();
   }
 
+  public function clearMenuCache()
+  {
+    $files = glob(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/SYMPAL_MENU_*.cache');
+    foreach ((array) $files as $file)
+    {
+      unlink($file);
+    }
+  }
+
   public function isAjax()
   {
     $request = $this->getRequest();
