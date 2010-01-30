@@ -19,7 +19,7 @@ class sfSympalContentActionLoader
     $this->_user = $actions->getUser();
     $this->_response = $actions->getResponse();
     $this->_request = $actions->getRequest();
-    $this->_dispatcher = $this->_dispatcher;
+    $this->_dispatcher = $this->_sympalContext->getSymfonyContext()->getConfiguration()->getEventDispatcher();
   }
 
   public function getContent()
