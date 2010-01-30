@@ -266,8 +266,9 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function publish()
   {
-    if ($menu = $this->getMenuItem())
+    if ($this->relatedExists('MenuItem'))
     {
+      $menu = $this->getMenuItem();
       $menu->publish();
     }
     $this->date_published = new Doctrine_Expression('NOW()');
@@ -277,8 +278,9 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function unpublish()
   {
-    if ($menu = $this->getMenuItem())
+    if ($this->relatedExists('MenuItem'))
     {
+      $menu = $this->getMenuItem();
       $menu->unpublish();
     }
     $this->date_published = null;
