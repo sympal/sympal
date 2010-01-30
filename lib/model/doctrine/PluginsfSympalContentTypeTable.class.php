@@ -4,16 +4,13 @@
  */
 class PluginsfSympalContentTypeTable extends sfSympalDoctrineTable
 {
-  protected $_findAllResults;
-
-  public function findAll($hydrationMode = null)
+  public function getAllContentTypes()
   {
-    if (!$this->_findAllResults)
-    {
-      $this->_findAllResults = $this->createQuery('dctrn_find')
-        ->orderBy('name ASC')
-        ->execute(array(), $hydrationMode);
-    }
-    return $this->_findAllResults;
+    $q = $this->createQuery('t')
+      ->orderBy('t.name ASC');
+
+    $q->enableSympalResultCache('sympal_get_content_types');
+
+    return $q->execute();
   }
 }

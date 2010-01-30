@@ -139,6 +139,8 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       }
     }
 
+    $q->enableSympalResultCache('sympal_get_content');
+
     return $q->fetchOne();
   }
 

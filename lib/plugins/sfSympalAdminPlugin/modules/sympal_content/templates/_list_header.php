@@ -1,4 +1,4 @@
-<?php $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll() ?>
+<?php $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes() ?>
 <div id="sympal_content_type_menu">
   <h3><?php echo __('Change Content Type') ?></h3>
   <ul>

@@ -144,6 +144,25 @@ all:
     # Enable and disable the elastic textareas
     elastic_textareas: true
 
+    # Enable and disable the orm cache globally or control individual queries
+    orm_cache:
+      enabled: true
+      result: false
+      lifetime: 86400
+      queries:
+        sympal_get_content_types:
+          enabled: true
+          lifetime: 86400
+        sympal_get_user:
+          enabled: true
+          lifetime: 86400
+        sympal_context_get_site:
+          enabled: true
+          lifetime: 86400
+        sympal_get_content:
+          enabled: true
+          lifetime: 86400
+
     # Configure Sympal page caching. Enabling this feature turns on page caching for all pages
     page_cache:
       super: false

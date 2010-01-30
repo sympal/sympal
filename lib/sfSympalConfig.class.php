@@ -2,6 +2,20 @@
 
 class sfSympalConfig extends sfConfig
 {
+  public static function shouldUseResultCache($key)
+  {
+    if (isset(self::$config['app_sympal_config_orm_cache']['queries'][$key]['enabled'])
+      && self::$config['app_sympal_config_orm_cache']['queries'][$key]['enabled']
+      && isset(self::$config['app_sympal_config_orm_cache']['result'])
+      && self::$config['app_sympal_config_orm_cache']['result']
+    )
+    {
+      return isset(self::$config['app_sympal_config_orm_cache']['queries'][$key]['lifetime']) ? self::$config['app_sympal_config_orm_cache']['queries'][$key]['lifetime'] : self::$config['app_sympal_config_orm_cache']['lifetime'];
+    } else {
+      return false;
+    }
+  }
+
   public static function getLanguageCodes()
   {
     return !empty(self::$config['app_sympal_config_language_codes']) ? self::$config['app_sympal_config_language_codes'] : array();

@@ -25,6 +25,16 @@ class sfSympalCache
     ));
   }
 
+  public static function getOrmCacheDriver()
+  {
+    if (extension_loaded('apc'))
+    {
+      return new Doctrine_Cache_Apc(array('prefix' => 'doctrine'));
+    } else {
+      return new Doctrine_Cache_Array();
+    }
+  }
+
   public function clear()
   {
     $this->_contentTypes = null;
@@ -139,7 +149,7 @@ class sfSympalCache
   {
     try {
       $typesArray = array();
-      $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->findAll();
+      $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
       foreach ($contentTypes as $contentType)
       {
         $typesArray[$contentType['id']] = $contentType['name'];

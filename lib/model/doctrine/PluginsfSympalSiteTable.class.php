@@ -4,16 +4,4 @@
  */
 class PluginsfSympalSiteTable extends sfSympalDoctrineTable
 {
-  protected $_byIdentifierCache = array();
-
-  public function findOneBySlug($slug)
-  {
-    if (!isset($this->_byIdentifierCache[$slug]))
-    {
-      $record = $this->findOneBy('slug', $slug);
-
-      $this->_byIdentifierCache[$slug] = $record;
-    }
-    return $this->_byIdentifierCache[$slug];
-  }
 }

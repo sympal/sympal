@@ -70,6 +70,7 @@ class sfSympalContext
       $this->_site =  Doctrine_Core::getTable('sfSympalSite')
         ->createQuery('s')
         ->where('s.slug = ?', $this->_siteSlug)
+        ->enableSympalResultCache('sympal_context_get_site')
         ->fetchOne();
     }
     return $this->_site;

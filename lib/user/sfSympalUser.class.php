@@ -67,4 +67,26 @@ class sfSympalUser extends sfGuardSecurityUser
   {
     return $this->getAttribute('sympal_current_theme');
   }
+
+  public function getGuardUser()
+  {
+    if (!$this->user && $id = $this->getAttribute('user_id', null, 'sfGuardSecurityUser'))
+    {
+      $q = Doctrine_Core::getTable('sfGuardUser')->createQuery('u')
+        ->where('u.id = ?', $id)
+        ->limit(1);
+
+      $q->enableSympalResultCache('sympal_get_user');
+
+      if (!$this->user = $q->fetchOne())
+      {
+        // the user does not exist anymore in the database
+        $this->signOut();
+
+        throw new sfException('The user does not exist anymore in the database.');
+      }
+    }
+
+    return $this->user;
+  }
 }

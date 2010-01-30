@@ -26,7 +26,14 @@ class sfSympalConfiguration
     $this->_doctrineManager = Doctrine_Manager::getInstance();
 
     $this->_initializeSymfonyConfig();
+    $this->_markClassesAsSafe();
+    $this->_connectEvents();
+    $this->_configureSuperCache();
+    $this->_configureDoctrine();
+  }
 
+  private function _markClassesAsSafe()
+  {
     sfOutputEscaper::markClassesAsSafe(array(
       'sfSympalContent',
       'sfSympalContentTranslation',
@@ -42,7 +49,10 @@ class sfSympalConfiguration
       'sfSympalServerCheckHtmlRenderer',
       'sfSympalSitemapGenerator'
     ));
+  }
 
+  private function _connectEvents()
+  {
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
     $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
     $this->_dispatcher->connect('controller.change_action', array($this, 'initializeTheme'));
@@ -50,19 +60,41 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
     $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
     $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
+    $this->_dispatcher->connect('task.cache.clear', array($this, 'listenToTaskCacheClear'));
+  }
 
+  private function _configureSuperCache()
+  {
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
     {
       $superCache = new sfSympalSuperCache($this);
       $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
     }
+  }
 
-    $this->_dispatcher->connect('task.cache.clear', array($this, 'listenToTaskCacheClear'));
-
+  private function _configureDoctrine()
+  {
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
+    $this->_configureDoctrineCache();    
+  }
+
+  private function _configureDoctrineCache()
+  {
+    if (sfSympalConfig::get('orm_cache', 'enabled', true))
+    {
+      $driver = sfSympalCache::getOrmCacheDriver();
+
+      $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CACHE, $driver);
+
+      if (sfSympalConfig::get('orm_cache', 'result', false))
+      {
+        $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE, $driver);
+        $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE_LIFESPAN, sfSympalConfig::get('orm_cache', 'lifetime', 86400));
+      }
+    }
   }
 
   public function listenToTaskCacheClear(sfEvent $event)
