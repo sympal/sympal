@@ -7,6 +7,41 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
     $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
+    $this->dispatcher->connect('context.load_factories', array($this, 'addAdminMenu'));
+  }
+
+  public function addAdminMenu()
+  {
+    if (sfContext::getInstance()->getUser()->isEditMode())
+    {
+      $this->loadAdminMenuAssets();
+
+      $this->dispatcher->connect('response.filter_content', array($this, 'addEditorHtml'));
+    }
+  }
+
+  public function loadAdminMenuAssets()
+  {
+    $response = sfContext::getInstance()->getResponse();
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
+  }
+
+  public function shouldLoadAdminMenu()
+  {
+    $format = sfContext::getInstance()->getRequest()->getRequestFormat();
+    $format = $format ? $format : 'html';
+
+    return sfContext::getInstance()->getUser()->isAuthenticated() && $format == 'html';
+  }
+
+  public function addEditorHtml(sfEvent $event, $content)
+  {
+    if ($this->shouldLoadAdminMenu())
+    {
+      $content = str_replace('</body>', get_sympal_admin_menu().'</body>', $content);
+    }
+    return $content;
   }
 
   public function loadAdminMenu(sfEvent $event)

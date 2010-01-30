@@ -74,5 +74,20 @@ function get_sympal_admin_menu_object()
 function get_sympal_admin_menu()
 {
   $menu = get_sympal_admin_menu_object();
+
+  $sympalContext = sfSympalContext::getInstance();
+  $contentRecord = $sympalContext->getCurrentContent();
+  $menuItem = $sympalContext->getCurrentMenuItem();
+
+  if ($contentRecord)
+  {
+    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(
+      new sfEvent($menu, 'sympal.load_editor', array(
+        'content' => $contentRecord,
+        'menuItem' => $menuItem
+      )
+    ));
+  }
+
   return get_partial('sympal_admin/menu', array('menu' => $menu));
 }

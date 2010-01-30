@@ -78,36 +78,11 @@ function get_sympal_breadcrumbs($menuItem, $subItem = null)
 /**
  * Get the floating sympal editor for the given MenuItem and Content instances
  *
- * @param MenuItem $menuItem 
- * @param Content $content 
  * @return string $html
  */
-function get_sympal_editor($menuItem = null, $content = null)
+function get_sympal_editor()
 {
-  $sympalContext = sfSympalContext::getInstance();
-  $editorPluginConfigurartion = $sympalContext->
-    getSymfonyContext()->
-    getConfiguration()->
-    getPluginConfiguration('sfSympalEditorPlugin');
-
-  $editorPluginConfigurartion->loadEditorAssets();
-
-  $content = $sympalContext->getCurrentContent();
-  $menuItem = $sympalContext->getCurrentMenuItem();
-
-  if ($content)
-  {
-    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(
-      new sfEvent(get_sympal_admin_menu_object(), 'sympal.load_editor', array(
-        'content' => $content,
-        'menuItem' => $menuItem
-      )
-    ));
-  }
-
-  return get_partial('sympal_editor/editor', array(
-    'loadInlineEditor' => $editorPluginConfigurartion->shouldLoadInlineEditor()
-  ));
+  return get_partial('sympal_editor/editor');
 }
 
 /**

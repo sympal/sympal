@@ -182,6 +182,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
     $this->getSympalContext()->getContentRenderer($this->sf_sympal_content)->render();
 
+    $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content', array('content' => $this->sf_sympal_content)));
+
     $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalEditorPlugin')->loadEditorAssets();
   }
 

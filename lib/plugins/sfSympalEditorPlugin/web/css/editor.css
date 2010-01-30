@@ -101,7 +101,7 @@ html {
   padding: 4px;
 }
 
-.sympal_inline_edit_bar_top_background {
+.sympal_top_bar_background {
   border-bottom: 1px solid #000;
   filter:alpha(opacity=80);
 	-moz-opacity: 0.80;
@@ -166,7 +166,7 @@ html {
   border: none;
 }
 
-.sympal_inline_edit_admin_menu
+.sympal_admin_menu
 {
   height: 30px;
   position: fixed;
@@ -177,14 +177,14 @@ html {
   z-index: 999999999;
 }
 
-.sympal_inline_edit_admin_menu ul
+.sympal_admin_menu ul
 {
   z-index: 999999999 !important;
   padding: 0;
   margin: 0;
 }
 
-.sympal_inline_edit_admin_menu ul li
+.sympal_admin_menu ul li
 {
   cursor: pointer;
   float: left;
@@ -196,18 +196,18 @@ html {
   font-size: 12px;
 }
 
-.sympal_inline_edit_admin_menu ul li:hover
+.sympal_admin_menu ul li:hover
 {
   background: #fff;
   color: #333;
 }
 
-.sympal_inline_edit_admin_menu ul li:hover a
+.sympal_admin_menu ul li:hover a
 {
   color: #333;
 }
 
-.sympal_inline_edit_admin_menu ul li a
+.sympal_admin_menu ul li a
 {
   display: block;
   text-decoration: none;
@@ -216,13 +216,13 @@ html {
   font-weight: normal;
 }
 
-.sympal_inline_edit_admin_menu ul li a:hover
+.sympal_admin_menu ul li a:hover
 {
   text-decoration: none;
   color: #333;
 }
 
-.sympal_inline_edit_admin_menu ul li ul
+.sympal_admin_menu ul li ul
 {
   margin: 0;
   padding: 0;
@@ -237,7 +237,7 @@ html {
   width: 200px;
 }
 
-.sympal_inline_edit_admin_menu ul li ul li
+.sympal_admin_menu ul li ul li
 {
   float: none;
   display: inline;
@@ -245,14 +245,14 @@ html {
   margin: 0;
 }
 
-.sympal_inline_edit_admin_menu ul li ul li a
+.sympal_admin_menu ul li ul li a
 {
   width: auto;
   color: #333;
   padding: 6px;
 }
 
-.sympal_inline_edit_admin_menu ul li ul li a:hover
+.sympal_admin_menu ul li ul li a:hover
 {
   text-decoration: none;
   background: #000;
@@ -356,52 +356,6 @@ html {
 	-moz-border-radius: 20px;
   -webkit-border-radius: 20px;
   border-radius: 20px;
-}
-
-#sfWebDebugBar .sfWebDebugMenu {
-  background: #000 !important;
-  visibility: hidden;
-}
-
-#sfWebDebugBar {
-  border-bottom: none;
-  background: none !important;  
-  position: fixed;
-  left: 0;
-  top: 5px !important;
-  height: 0;
-}
-
-#sfWebDebugSymfonyVersion
-{
-  margin-left: 0pt;
-  padding-top: 1px;
-  padding-right: 4px;
-  padding-bottom: 1px;
-  padding-left: 4px;
-  background-color: #333 !important;
-  color: #ffffff;
-}
-
-#sfWebDebugBar .sfWebDebugMenu li
-{
-  color: #fff !important;
-}
-
-.sfWebDebugInfo, .sfWebDebugInfo td
-{
-  background: none !important;
-  color: #fff !important;
-}
-
-.sfWebDebugInfo a, .sfWebDebugInfo td a
-{
-  color: #fff !important;
-}
-
-#sfWebDebug .sfWebDebugTop
-{
-  top: 30px !important;
 }
 
 #sympal_ask_confirmation {
