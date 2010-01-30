@@ -25,7 +25,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalRenderingPlugin',
       'sfSympalAdminPlugin',
       'sfSympalEditorPlugin',
-      'sfSympalAssetsPlugin'
+      'sfSympalAssetsPlugin',
+      'sfSympalContentSyntaxPlugin',
     );
 
   public

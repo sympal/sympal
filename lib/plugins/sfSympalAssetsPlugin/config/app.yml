@@ -29,6 +29,11 @@ all:
           extensions: [txt]
         tarball:
           extensions: [tar, gz, zip, bzip, gzip, rar, 7z]
+    
+    content_syntax_types:
+      asset:
+        replacer_class:    sfSympalContentSyntaxAssetReplacer
+    
   sfImageTransformPlugin:
     mime_type:
       auto_detect: true

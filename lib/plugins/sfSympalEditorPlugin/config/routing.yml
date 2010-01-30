@@ -9,7 +9,3 @@ sympal_change_content_slot_type:
 sympal_editor_links:
   url:   /editor/links
   param: { module: sympal_editor, action: links }
-
-sympal_editor_objects:
-  url:   /editor/objects
-  param: { module: sympal_editor, action: objects }

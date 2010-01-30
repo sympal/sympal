@@ -48,11 +48,6 @@ function get_sympal_inline_edit_bar_buttons()
       isEditModeButton(true)->
       setInputClass('toggle_sympal_links')
     ;
-
-    $menu->addChild('Objects', '@sympal_editor_objects')->
-      isEditModeButton(true)->
-      setInputClass('toggle_sympal_objects')
-    ;
   }
 
   sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(

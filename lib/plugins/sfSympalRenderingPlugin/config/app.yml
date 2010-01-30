@@ -1,0 +1,5 @@
+all:
+  sympal_config:
+    content_syntax_types:
+      link:
+        replacer_class:    sfSympalContentSyntaxLinkReplacer
