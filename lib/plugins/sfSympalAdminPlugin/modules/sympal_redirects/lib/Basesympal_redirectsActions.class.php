@@ -13,6 +13,18 @@ require_once dirname(__FILE__).'/sympal_redirectsGeneratorHelper.class.php';
  */
 abstract class Basesympal_redirectsActions extends autoSympal_redirectsActions
 {
+  public function preExecute()
+  {
+    parent::preExecute();
+
+    $this->getContext()->getEventDispatcher()->connect('admin.save_object', array($this, 'listenToAdminSaveObject'));
+  }
+
+  public function listenToAdminSaveObject(sfEvent $event)
+  {
+    $this->clearCache();
+  }
+
   public function executeCreate(sfWebRequest $request)
   {
     $this->form = $this->configuration->getForm();

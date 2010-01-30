@@ -58,7 +58,7 @@ class sfSympalRedirecter
       break;
 
       case 'path':
-        $destination = $this->_getDestinationRoute()->generate($this->_getDestinationParameters());
+        $destination = $this->_actions->getRequest()->getPathInfoPrefix().$this->_getDestinationRoute()->generate($this->_getDestinationParameters());
       break;
 
       case 'content':

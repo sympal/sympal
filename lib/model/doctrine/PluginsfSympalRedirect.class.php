@@ -39,6 +39,16 @@ abstract class PluginsfSympalRedirect extends BasesfSympalRedirect
     }
   }
 
+  public function getDestinationValue()
+  {
+    return $this->getDestinationType() == 'content' ? $this->content_id : $this->destination;
+  }
+
+  public function getDestinationText()
+  {
+    return sprintf('Redirecting to %s "%s"', $this->getDestinationType(), $this->getDestinationValue());
+  }
+
   public function isDestinationUrl()
   {
     return substr($this->destination, 0, 3) ==='http' ? true : false;
@@ -51,7 +61,7 @@ abstract class PluginsfSympalRedirect extends BasesfSympalRedirect
 
   public function isDestinationPath()
   {
-    return $this->destination[0] === '/' ? true : false;
+    return isset($this->destination[0]) && $this->destination[0] === '/' ? true : false;
   }
 
   public function isDestinationContent()

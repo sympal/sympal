@@ -15,7 +15,7 @@ generator:
       actions: ~
       fields:  ~
       list:
-        display: [source, destination, content_id]
+        display: [=source, destination_text]
       filter:
         display: [source, destination, content_id]
       form:
