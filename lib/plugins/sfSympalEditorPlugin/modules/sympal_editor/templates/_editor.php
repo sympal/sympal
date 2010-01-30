@@ -43,6 +43,8 @@
     </div>
 
     <ul class="sympal_inline_edit_bar_big_buttons">
+      <li><div class="sympal_inline_edit_loading"></div></li>
+
       <?php if (sfSympalConfig::isI18nEnabled()): ?>
         <li>
           <?php
@@ -58,6 +60,7 @@
           </form>
         </li>
       <?php endif; ?>
+
       <li><input type="button" class="toggle_dashboard_menu" value="<?php echo __('Dashboard') ?>" rel="<?php echo url_for('@sympal_dashboard') ?>" /></li>
 
       <?php if ($sf_sympal_content->getEditableSlotsExistOnPage()): ?>

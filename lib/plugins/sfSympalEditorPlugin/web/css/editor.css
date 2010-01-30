@@ -414,3 +414,11 @@ html {
   cursor: pointer;
   display: none;
 }
+
+li .sympal_inline_edit_loading {
+  background: url(../../sfSympalPlugin/images/loading_circle.gif) no-repeat 0 2px;
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+  display: none;
+}
