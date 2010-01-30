@@ -9,7 +9,8 @@ class sfSympalContentActionLoader
     $_response,
     $_request,
     $_content,
-    $_menuItem;
+    $_menuItem,
+    $_dispatcher;
 
   public function __construct(sfActions $actions)
   {
@@ -18,6 +19,7 @@ class sfSympalContentActionLoader
     $this->_user = $actions->getUser();
     $this->_response = $actions->getResponse();
     $this->_request = $actions->getRequest();
+    $this->_dispatcher = $this->_dispatcher;
   }
 
   public function getContent()
@@ -71,7 +73,7 @@ class sfSympalContentActionLoader
       }
     }
 
-    $this->_sympalContext->getSymfonyContext()->getConfiguration()->getEventDispatcher()->notify(new sfEvent($this, 'sympal.load_content', array('content' => $content)));
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.load_content', array('content' => $content)));
 
     return $content;    
   }
@@ -166,7 +168,7 @@ class sfSympalContentActionLoader
   private function _createSite()
   {
     chdir(sfConfig::get('sf_root_dir'));
-    $task = new sfSympalCreateSiteTask($this->_actions->getContext()->getEventDispatcher(), new sfFormatter());
+    $task = new sfSympalCreateSiteTask($this->_dispatcher, new sfFormatter());
     $task->run(array($this->_sympalContext->getSiteSlug()), array('no-confirmation' => true));
   }
 
