@@ -12,6 +12,8 @@ abstract class Basesympal_configActions extends sfActions
 {
   protected function _getForm()
   {
+    $this->checkFilePermissions();
+
     $class = sfSympalConfig::get('config_form_class', null, 'sfSympalConfigForm');
     $this->form = new $class();
     return $this->form;
