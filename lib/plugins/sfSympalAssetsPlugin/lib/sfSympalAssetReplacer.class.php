@@ -259,8 +259,8 @@ class sfSympalAssetReplacer
     if ($this->_replacementMap === null)
     {
       $map = array(
-        'link'   => array('sfSympalAssetReplacer' => '_replaceLinks'),
-        'asset'  => array('sfSympalAssetReplacer' => '_replaceAssets')
+        'link'   => array('sfSympalAssetReplacer', '_replaceLinks'),
+        'asset'  => array('sfSympalAssetReplacer', '_replaceAssets')
       );
       
       $dispatcher = sfContext::getInstance()->getConfiguration()->getEventDispatcher();
