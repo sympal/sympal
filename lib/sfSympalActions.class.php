@@ -20,7 +20,7 @@ class sfSympalActions extends sfSympalExtendClass
 
   public function clearMenuCache()
   {
-    $files = glob(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/SYMPAL_MENU_*.cache');
+    $files = glob(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/*/SYMPAL_MENU_*.cache');
     foreach ((array) $files as $file)
     {
       unlink($file);
