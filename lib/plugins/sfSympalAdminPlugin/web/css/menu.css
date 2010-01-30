@@ -1,3 +1,14 @@
+.sympal_signout_icon {
+  position: fixed;
+  top: 8px;
+  right: 10px;
+  z-index: 101;
+}
+
+.sympal_signout_icon img {
+  border: none;
+}
+
 .sympal_top_bar_background {
   border-bottom: 1px solid #000;
   filter:alpha(opacity=80);

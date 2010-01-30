@@ -7,6 +7,34 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
   public function initialize()
   {
     $this->dispatcher->connect('sympal.load_content', array($this, 'loadEditor'));
+    $this->dispatcher->connect('sympal.load_inline_edit_bar_buttons', array($this, 'loadInlineEditBarButtons'));
+  }
+
+  public function loadInlineEditBarButtons(sfEvent $event)
+  {
+    $menu = $event->getSubject();
+    
+    $menu->addChild('Save')->
+      isEditModeButton(true)->
+      setInputClass('sympal_save_content_slots')
+    ;
+
+    $menu->
+      addChild('Preview')->
+      isEditModeButton(true)->
+      setInputClass('sympal_preview_content_slots')
+    ;
+
+    $menu->
+      addChild('Enable Edit Mode')->
+      setInputClass('toggle_edit_mode')
+    ;
+
+    $menu->
+      addChild('Disable Edit Mode')->
+      isEditModeButton(true)->
+      setInputClass('sympal_disable_edit_mode')
+    ;
   }
 
   public function shouldLoadEditor()

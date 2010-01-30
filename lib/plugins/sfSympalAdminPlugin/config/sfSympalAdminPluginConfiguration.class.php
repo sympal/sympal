@@ -8,6 +8,17 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
     $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
     $this->dispatcher->connect('context.load_factories', array($this, 'addAdminMenu'));
+    $this->dispatcher->connect('sympal.load_inline_edit_bar_buttons', array($this, 'loadInlineEditBarButtons'));
+  }
+
+  public function loadInlineEditBarButtons(sfEvent $event)
+  {
+    $menu = $event->getSubject();
+
+    $menu->
+      addChild('Dashboard', '@sympal_dashboard')->
+      setInputClass('toggle_dashboard_menu')
+    ;
   }
 
   public function addAdminMenu()

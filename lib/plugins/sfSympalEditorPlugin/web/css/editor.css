@@ -259,20 +259,20 @@ html {
   color: #fff;
 }
 
-.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons {
   float: left;
   margin: 0;
   padding: 0;
 }
 
-.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li {
   float: left;
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
 
-.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li input {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li input {
   margin-right: 5px;
   padding: 3px !important;
   border: none !important;
@@ -286,11 +286,11 @@ html {
   font-size: 13px !important;
 }
 
-.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li input:hover {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li input:hover {
   color: #fff;
 }
 
-.sympal_inline_edit_bar ul.sympal_inline_edit_bar_big_buttons li a {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a {
   cursor: pointer;
 }
 
