@@ -382,6 +382,7 @@ html {
   padding: 10px;
   background: #ffc;
   border-bottom: 1px solid #ccc;
+  z-index: 100;
 }
 
 .sympal_content_slot_error {
