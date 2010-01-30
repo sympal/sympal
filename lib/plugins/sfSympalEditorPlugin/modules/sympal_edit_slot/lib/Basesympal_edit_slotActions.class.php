@@ -32,10 +32,11 @@ abstract class Basesympal_edit_slotActions extends sfActions
     $this->failedContentSlots = array();
     $this->errors = array();
 
-    $content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
-    $slotIds = $request->getParameter('slots');
+    $slotIds = $request->getParameter('slot_ids');
+    $contentIds = $request->getParameter('content_ids');
     foreach ($slotIds as $slotId)
     {
+      $content = Doctrine_Core::getTable('sfSympalContent')->find($contentIds[$slotId]);
       $contentSlot = Doctrine_Core::getTable('sfSympalContentSlot')->find($slotId);
       $contentSlot->setContentRenderedFor($content);
       $form = $contentSlot->getEditForm();

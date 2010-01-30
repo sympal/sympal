@@ -4,6 +4,7 @@
 
 <div class="sympal_content_slot_editor sympal_form">
   <form>
+    <input type="hidden" name="content_ids[<?php echo $contentSlot->getId() ?>]" value="<?php echo $contentSlot->getContentRenderedFor()->getId() ?>" />
     <?php if (!$contentSlot->is_column): ?>
       <a class="sympal_change_slot_type" onClick="return false;">>> <?php echo __('Change Slot Type') ?></a>
       <div class="sympal_change_slot_type_dropdown">
