@@ -102,15 +102,25 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   {
     if (!$this->_rendered)
     {
-      $contentSlotTypes = sfSympalConfig::get('content_slot_types');
-      $className = isset($contentSlotTypes[$this->type]['renderer']) ? $contentSlotTypes[$this->type]['renderer'] : 'sfSympalContentSlot'.$this->type.'Renderer';
-      
-      $renderer = new $className($this);
+      $renderer = $this->getSlotRenderer();
       $rendered = (string) $renderer;
   
       $this->_rendered = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.content_renderer.filter_slot_content'), $rendered)->getReturnValue();
     }
     return $this->_rendered;
+  }
+  
+  /**
+   * Returns an instance of the renderer class for this content slot
+   * 
+   * @return sfSympalContentSlotRenderer
+   */
+  public function getSlotRenderer()
+  {
+    $contentSlotTypes = sfSympalConfig::get('content_slot_types');
+    $className = isset($contentSlotTypes[$this->type]['renderer']) ? $contentSlotTypes[$this->type]['renderer'] : 'sfSympalContentSlot'.$this->type.'Renderer';
+    
+    return new $className($this);
   }
 
   public function setValue($value)
