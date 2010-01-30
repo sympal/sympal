@@ -10,7 +10,22 @@
   $('#sympal_content_slot_<?php echo $contentSlot->getId() ?> .editor input, #sympal_content_slot_<?php echo $contentSlot->getId() ?> .editor textarea').css('border', '1px solid #ccc');
 <?php endforeach; ?>
 
-<?php /* Output the error string if errors occurred */ ?>
-<?php if ($errorString): ?>
-  alert('<?php echo $errorString ?>');
+<?php /* Output the errors if errors occurred */ ?>
+<?php if (count($errors)): ?>
+  <!--- !Errors! ---> 
+
+  <?php
+  $errorString  = '<h2>'.count($errors).' Error'.(count($errors) > 1 ? 's' : null).' Occurred</h2>';
+  $errorString .= '<ul>';
+  foreach ($failedContentSlots as $slot)
+  {
+    $error = $errors[$slot->getName()];
+    $errorString .= '<li rel="'.$slot->getId().'" class="sympal_content_slot_error">'.__($slot->getName()).': '.__($error).'</li>';
+  }
+  $errorString .= '</ul>';
+  $errorString .= '<a id="close">'.__('Close').'</a>'
+  ?>
+  $('#sympal_slot_errors').html('<?php echo $errorString ?>');
+  $('#sympal_slot_errors').slideDown();
+  $('#sympal_slot_errors_icon').show();
 <?php endif; ?>

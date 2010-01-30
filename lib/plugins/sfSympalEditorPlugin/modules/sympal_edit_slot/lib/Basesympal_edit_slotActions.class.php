@@ -30,7 +30,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
   {
     $this->contentSlots = array();
     $this->failedContentSlots = array();
-    $errors = array();
+    $this->errors = array();
 
     $content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
     $slotIds = $request->getParameter('slots');
@@ -55,19 +55,9 @@ abstract class Basesympal_edit_slotActions extends sfActions
         {
           if ($field->hasError())
           {
-            $errors[$contentSlot->getName()] = $field->getError();
+            $this->errors[$contentSlot->getName()] = $field->getError();
           }
         }
-      }
-    }
-
-    $this->errorString = null;
-    if ($errors)
-    {
-      $this->errorString = count($errors).' error'.(count($errors) > 1 ? 's' : null).' occurred:\n\n';
-      foreach ($errors as $name => $error)
-      {
-        $this->errorString .= ' * '.$name.': '.$error.'\n';
       }
     }
   }

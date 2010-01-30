@@ -373,3 +373,38 @@ html {
 #sympal_ask_confirmation p {
   margin-bottom: 10px;
 }
+
+#sympal_slot_errors {
+  position: fixed;
+  top: 30px;
+  width: 100%;
+  display: none;
+  padding: 10px;
+  background: #ffc;
+  border-bottom: 1px solid #ccc;
+}
+
+.sympal_content_slot_error {
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#sympal_slot_errors #close {
+  border: 1px solid #ccc;
+  background: #ffc;
+  padding: 3px 3px 3px 23px;
+  background: #fff 3px 3px url(../../sfSympalPlugin/images/cancel.png) no-repeat;
+  cursor: pointer;
+}
+
+#sympal_slot_errors_icon {
+  background: url(../../sfSympalPlugin/images/error.png) no-repeat;
+  position: fixed;
+  top: 8px;
+  left: 30px;
+  z-index: 9999999;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: none;
+}
