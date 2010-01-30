@@ -203,6 +203,14 @@ all:
         form_renderer: sympal_edit_slot/slot_editor_renderer
         widget_options:
           config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
+    
+    # configure doctrine objects that can be inserted into slots
+    content_slot_objects: {}
+      #MyObjectSlot:
+      #  label: Label of My Object Slot
+      #  class: MyObjectSlotClass
+      #  template: myModule/template
+        
 
     # Enable and disable the check for upgrades via the web when on the Sympal dashboard
     check_for_upgrades_on_dashboard: false

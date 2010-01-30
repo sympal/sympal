@@ -2,7 +2,7 @@ html {
   margin-top: 30px;
 }
 
-#sympal_dashboard, #sympal_editor, #sympal_assets, #sympal_links , #sympal_assets {
+#sympal_dashboard, #sympal_editor, #sympal_assets, #sympal_links , #sympal_assets, #sympal_objects {
   background: #fff;
   padding: 12px;
   border: 1px solid #ccc;
@@ -321,6 +321,11 @@ html {
 
 .sympal_inline_edit_bar input.toggle_sympal_links {
   background: #f5f5f5 url(../../sfSympalPlugin/images/links_icon.gif) 2px 5px no-repeat !important;
+  text-indent: 15px;  
+}
+
+.sympal_inline_edit_bar input.toggle_sympal_objects {
+  background: #f5f5f5 url(../../sfSympalPlugin/images/file_icon.gif) 2px 5px no-repeat !important;
   text-indent: 15px;  
 }
 

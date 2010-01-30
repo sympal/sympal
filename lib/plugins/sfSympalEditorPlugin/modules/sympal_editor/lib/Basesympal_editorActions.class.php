@@ -46,4 +46,34 @@ class Basesympal_editorActions extends sfActions
       ->orderBy('m.root_id, m.lft ASC')
       ->execute();
   }
+  
+  /**
+   * Ajax action that populates the object choose on the editor toolbar
+   */
+  public function executeObjects(sfWebRequest $request)
+  {
+    $this->slotKeys = array_keys(sfSympalConfig::get('content_slot_objects', null, array()));
+    
+    if (count($this->slotKeys))
+    {
+      if (!$object_slug = $request->getParameter('slot_key'))
+      {
+        $this->slotKey = $this->slotKeys[0];
+      } else {
+        $this->slotKey = $object_slug;
+      }
+      
+      $config = sfSympalConfig::get('content_slot_objects', $this->slotKey);
+      $class = $config['class'];
+      
+      $tbl = Doctrine_Core::getTable($class);
+      
+      $q = (method_exists($tbl, 'getObjectSlotQuery')) ? $tbl->getObjectSlotQuery() : $tbl->createQuery();
+      $this->objects = $q->execute();
+    }
+    else
+    {
+      $this->slotKey = false;
+    }
+  }
 }

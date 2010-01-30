@@ -68,6 +68,7 @@
     <ul class="sympal_inline_edit_bar_big_buttons sympal_inline_edit_bar_buttons">
       <li><input type="button" class="toggle_sympal_assets" name="assets" rel="<?php echo url_for('@sympal_assets_select') ?>" value="<?php echo __('Assets') ?>" /></li>
       <li><input type="button" class="toggle_sympal_links" name="links" rel="<?php echo url_for('@sympal_editor_links') ?>" value="<?php echo __('Links') ?>" /></li>
+      <li><input type="button" class="toggle_sympal_objects" name="objects" rel="<?php echo url_for('@sympal_editor_objects') ?>" value="<?php echo __('Objects') ?>" /></li>
 
       <?php if ($sf_sympal_content->getEditableSlotsExistOnPage()): ?>
         <li><input type="button" class="sympal_save_content_slots" name="save" value="<?php echo __('Save') ?>" /></li>
@@ -80,6 +81,7 @@
 
 <div id="sympal_assets"></div>
 <div id="sympal_links"></div>
+<div id="sympal_objects"></div>
 <div id="sympal_dashboard"></div>
 <div id="sympal_slot_errors"></div>
 <div id="sympal_slot_errors_icon"></div>

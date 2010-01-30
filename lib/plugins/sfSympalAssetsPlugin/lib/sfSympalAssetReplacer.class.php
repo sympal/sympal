@@ -16,6 +16,16 @@ class sfSympalAssetReplacer
   private
     $_slot,
     $_content;
+  
+  /**
+   * Array of possible keys (e.g. asset, link) that should be searched
+   * for along with the callback that should be called to make that replacement
+   * 
+   * 'link'   => array('sfSympalAssetReplacer' => '_replaceLinks')
+   * 'asset'  => array('sfSympalAssetReplacer' => '_replaceAssets')
+   */
+  protected
+    $_replacementMap = null;
 
   public function __construct(sfSympalContentSlot $slot)
   {
@@ -26,6 +36,7 @@ class sfSympalAssetReplacer
   public static function listenToFilterSlotContent(sfEvent $event, $content)
   {
     $replacer = new self($event->getSubject());
+
     return $replacer->replace($content);
   }
 
@@ -35,22 +46,40 @@ class sfSympalAssetReplacer
     {
       $ids = $parsed['ids'];
       $replacements = $parsed['replacements'];
-
-      if (isset($ids['asset']) && $ids['asset'])
+      
+      $replacementKeys = array_keys($ids);
+      // iterate through all of the replacement types
+      foreach($replacementKeys as $key)
       {
-        $content = $this->_replaceAssets($ids['asset'], $replacements['asset'], $content);
-      }
-      if (isset($ids['link']) && $ids['link'])
-      {
-        $content = $this->_replaceLinks($ids['link'], $replacements['link'], $content);
+        $content = $this->handleReplacementCallback($key, $ids[$key], $replacements[$key], $content);
       }
     }
+
     return $content;
   }
-
+  
+  /**
+   * Handles the callbacks for each type of replacement and returns the
+   * filtered content
+   */
+  protected function handleReplacementCallback($key, $ids, $replacements, $content)
+  {
+    $map = $this->getReplacementMap();
+    $callback = $map[$key];
+    
+    return call_user_func($callback, $key, $ids, $replacements, $content, $this);
+  }
+  
+  /**
+   * Searches through the content and extracts out any matches. The return
+   * value is a formatted array of what needs to be replaced
+   */
   private function _parseSyntaxes($content)
   {
-    preg_match_all("/\[(link|asset):(.*?)\]/", $content, $matches);
+    // create the replacement string (e.g. link|asset|myObject)
+    $replacementString = implode('|', array_keys($this->getReplacementMap()));
+    
+    preg_match_all("/\[($replacementString):(.*?)\]/", $content, $matches);
 
     if (isset($matches[0]) && $matches[0])
     {
@@ -78,10 +107,13 @@ class sfSympalAssetReplacer
       return false;
     }
   }
-
-  private function _replaceAssets($ids, $replacements, $content)
+  
+  /**
+   * Handles the replacement of "asset" keys
+   */
+  public static function _replaceAssets($key, $ids, $replacements, $content, sfSympalAssetReplacer $replacer)
   {
-    if (array_diff($ids, $this->_content->Assets->getPrimaryKeys()) || array_diff($this->_content->Assets->getPrimaryKeys(), $ids))
+    if (array_diff($ids, $replacer->getContent()->Assets->getPrimaryKeys()) || array_diff($replacer->getContent()->Assets->getPrimaryKeys(), $ids))
     {
       $assetObjects = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery()
@@ -90,12 +122,12 @@ class sfSympalAssetReplacer
         ->execute();
       foreach ($assetObjects as $assetObject)
       {
-        $this->_content->Assets[] = $assetObject;
+        $replacer->getContent()->Assets[] = $assetObject;
       }
-      $this->_content->save();
+      $replacer->getContent()->save();
     }
 
-    $assetObjects = $this->_buildObjects($this->_content->Assets);
+    $assetObjects = self::_buildObjects($replacer->getContent()->Assets);
     foreach ($replacements as $replacement)
     {
       $assetObject = $assetObjects[$replacement['id']];
@@ -103,10 +135,13 @@ class sfSympalAssetReplacer
     }
     return $content;
   }
-
-  private function _replaceLinks($ids, $replacements, $content)
+  
+  /**
+   * Handles the replacement of "link" keys
+   */
+  public static function _replaceLinks($key, $ids, $replacements, $content, sfSympalAssetReplacer $replacer)
   {
-    if (array_diff($ids, $this->_content->Links->getPrimaryKeys()) || array_diff($this->_content->Links->getPrimaryKeys(), $ids))
+    if (array_diff($ids, $replacer->getContent()->Links->getPrimaryKeys()) || array_diff($replacer->getContent()->Links->getPrimaryKeys(), $ids))
     {
       $q = Doctrine_Core::getTable('sfSympalAsset')
         ->createQuery('c')
@@ -122,12 +157,12 @@ class sfSympalAssetReplacer
       $contentObjects = $q->execute();
       foreach ($contentObjects as $contentObject)
       {
-        $this->_content->Links[] = $contentObject;
+        $replacer->getContent()->Links[] = $contentObject;
       }
-      $this->_content->save();
+      $replacer->getContent()->save();
     }
 
-    $contentObjects = $this->_buildObjects($this->_content->Links);
+    $contentObjects = self::_buildObjects($replacer->getContent()->Links);
     foreach ($replacements as $replacement)
     {
       $contentObject = $contentObjects[$replacement['id']];
@@ -141,7 +176,7 @@ class sfSympalAssetReplacer
       }
       else
       {
-        $label = isset($replacement['options']['label']) ? $this->replace($replacement['options']['label']) : 'Link to content id #'.$replacement['id'];
+        $label = isset($replacement['options']['label']) ? $replacer->replace($replacement['options']['label']) : 'Link to content id #'.$replacement['id'];
         unset($replacement['options']['label']);
         
         $content = str_replace($replacement['replace'], link_to($label, $contentObject->getRoute(), $replacement['options']), $content);
@@ -149,14 +184,101 @@ class sfSympalAssetReplacer
     }
     return $content;
   }
-
-  private function _buildObjects(Doctrine_Collection $collection)
+  
+  /**
+   * Replaces objects, we can correspond to a wide-variety of keys
+   */
+  public static function _replaceObjects($key, $ids, $replacements, $content, sfSympalAssetReplacer $replacer)
+  {
+    $slotObjectConfig = sfSympalConfig::get('content_slot_objects', $key, array());
+    
+    // of we can't locate the key, just replace everything with nothing
+    if (!isset($slotObjectConfig['class']))
+    {
+      foreach($replacements as $replacement)
+      {
+        $content = str_replace($replacement['replace'], '', $content);
+      }
+      
+      return $content;
+    }
+    
+    $template = $slotObjectConfig['template'];
+    $class = $slotObjectConfig['class'];
+    
+    // retrieve the Doctrine_Collection of objects
+    $tbl = Doctrine_Core::getTable($class);
+    if (method_exists($tbl, 'fetchForSlot'))
+    {
+      $slotObjects = $tbl->fetchForSlot($ids);
+    }
+    else
+    {
+      $slotObjects = $tbl->createQuery('s')
+        ->whereIn('s.id', $ids)
+        ->execute();
+    }
+    
+    $slotObjects = self::_buildObjects($slotObjects);
+    foreach ($replacements as $replacement)
+    {
+      $slotObject = $slotObjects[$replacement['id']];
+      
+      $replacement['options'][$class] = $slotObject;
+      $ret = get_partial($template, $replacement['options']);
+      
+      $content = str_replace($replacement['replace'], $ret, $content);
+    }
+    
+    return $content;
+  }
+  
+  /**
+   * Remaps a doctrine collection so that the keys of the colleciton "array"
+   * are the ids of the underlying objects. This makes the collection
+   * easier to deal with then replacing objects
+   * 
+   * @return Doctrine_Collection
+   */
+  public static function _buildObjects(Doctrine_Collection $collection)
   {
     $objects = new Doctrine_Collection($collection->getTable());
     foreach ($collection as $key => $value)
     {
       $objects[$value->id] = $value;
     }
+
     return $objects;
+  }
+  
+  /**
+   * Retrieves all of the replacements and their associated callbacks
+   */
+  protected function getReplacementMap()
+  {
+    if ($this->_replacementMap === null)
+    {
+      $map = array(
+        'link'   => array('sfSympalAssetReplacer' => '_replaceLinks'),
+        'asset'  => array('sfSympalAssetReplacer' => '_replaceAssets')
+      );
+      
+      $dispatcher = sfContext::getInstance()->getConfiguration()->getEventDispatcher();
+      
+      $this->_replacementMap = $dispatcher->filter(
+        new sfEvent($this, 'sympal.asset_replacer.filter_map'),
+        $map
+      )->getReturnValue();
+    }
+    
+    return $this->_replacementMap;
+  }
+  
+  /**
+   * @return sfSympalContent
+   */
+  public function getContent()
+  {
+    return $this->_content;
   }
 }
