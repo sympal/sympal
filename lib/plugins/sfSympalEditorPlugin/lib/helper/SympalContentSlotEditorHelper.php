@@ -46,6 +46,7 @@ function get_sympal_inline_edit_bar_buttons()
   {
     $menu->addChild('Links', '@sympal_editor_links')->
       isEditModeButton(true)->
+      setShortcut('Ctrl+L')->
       setInputClass('toggle_sympal_links')
     ;
   }

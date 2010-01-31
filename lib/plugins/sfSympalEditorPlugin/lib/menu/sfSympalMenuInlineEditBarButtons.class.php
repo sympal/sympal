@@ -5,7 +5,14 @@ class sfSympalMenuInlineEditBarButtons extends sfSympalMenu
   protected
     $_isEditModeButton = false,
     $_inputClass,
-    $_isButton = true;
+    $_isButton = true,
+    $_shortcut;
+
+  public function setShortcut($shortcut)
+  {
+    $this->_shortcut = $shortcut;
+    return $this;
+  }
 
   public function setInputClass($class)
   {
@@ -39,9 +46,14 @@ class sfSympalMenuInlineEditBarButtons extends sfSympalMenu
       $class = $this->_isEditModeButton ? $this->_inputClass.' sympal_inline_edit_bar_edit_buttons' : $this->_inputClass;
       if ($this->_route)
       {
-        $html = '<input type="button" rel="'.url_for($this->_route).'" value="'.$this->renderLabel().'" class="'.$class.'" />';
+        $html = '<input title="'.$this->_shortcut.'" type="button" rel="'.url_for($this->_route).'" value="'.$this->renderLabel().'" class="'.$class.'" />';
       } else {
-        $html = '<input type="button" value="'.$this->renderLabel().'" class="'.$class.'" />';
+        $html = '<input title="'.$this->_shortcut.'" type="button" value="'.$this->renderLabel().'" class="'.$class.'" />';
+      }
+      
+      if ($this->_shortcut)
+      {
+        $html .= '<script type="text/javascript">$(function() { shortcut.add("'.$this->_shortcut.'", function() { $(\'.'.$this->_inputClass.'\').click(); }); });</script>';
       }
     } else {
       $html = parent::renderChildBody();

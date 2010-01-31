@@ -16,23 +16,27 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
     
     $menu->addChild('Save')->
       isEditModeButton(true)->
+      setShortcut('Ctrl+S')->
       setInputClass('sympal_save_content_slots')
     ;
 
     $menu->
       addChild('Preview')->
       isEditModeButton(true)->
+      setShortcut('Ctrl+Shift+S')->
       setInputClass('sympal_preview_content_slots')
     ;
 
     $menu->
       addChild('Enable Edit Mode')->
+      setShortcut('Ctrl+E')->
       setInputClass('toggle_edit_mode')
     ;
 
     $menu->
       addChild('Disable Edit Mode')->
       isEditModeButton(true)->
+      setShortcut('Ctrl+X')->
       setInputClass('sympal_disable_edit_mode')
     ;
   }
@@ -95,6 +99,9 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       // Fancybox
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
+
+      // Shortcuts
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
 
       $this->_editorAssetsLoaded = true;
     }

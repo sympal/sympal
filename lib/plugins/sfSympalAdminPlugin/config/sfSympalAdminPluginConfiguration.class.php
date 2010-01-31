@@ -17,6 +17,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $menu->
       addChild('Dashboard', '@sympal_dashboard')->
+      setShortcut('Ctrl+D')->
       setInputClass('toggle_dashboard_menu')
     ;
   }

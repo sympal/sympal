@@ -114,6 +114,7 @@ all:
           - /sfSympalPlugin/js/jQuery.cookie.js
           - /sfSympalPlugin/fancybox/jquery.fancybox.js
           - /sfSympalAdminPlugin/js/admin.js
+          - /sfSympalPlugin/js/shortcuts.js
         stylesheets:
           - /sfSympalPlugin/fancybox/jquery.fancybox.css
           - /sfSympalAdminPlugin/css/global.css
