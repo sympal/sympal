@@ -161,10 +161,11 @@ class sfSympalCache
   protected function _writeModulesCache()
   {
     $modules = array();
-    $plugins = $this->_sympalConfiguration->getPluginPaths();
-    $plugins['sfDoctrineGuardPlugin'] = $this->_projectConfiguration->getPluginConfiguration('sfDoctrineGuardPlugin')->getRootDir();
+    $paths = $this->_sympalConfiguration->getPluginPaths();
+    $paths['sfDoctrineGuardPlugin'] = $this->_projectConfiguration->getPluginConfiguration('sfDoctrineGuardPlugin')->getRootDir();
+    $paths['application'] = sfConfig::get('sf_app_dir');
 
-    foreach ($plugins as $plugin => $path)
+    foreach ($paths as $path)
     {
       $path = $path . '/modules';
       $find = glob($path . '/*');
