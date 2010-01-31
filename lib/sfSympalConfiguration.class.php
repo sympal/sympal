@@ -137,6 +137,7 @@ class sfSympalConfiguration
     if ($this->isAdminModule())
     {
       sfConfig::set('sf_login_module', 'sympal_admin');
+      $this->_projectConfiguration->loadHelpers(array('Admin'));
     }
   }
 

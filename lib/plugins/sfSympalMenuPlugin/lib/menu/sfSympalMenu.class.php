@@ -14,7 +14,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     $_requiresAuth     = null,
     $_requiresNoAuth   = null,
     $_showChildren     = true,
-    $_current          = false,
+    $_current          = null,
     $_currentObject    = null,
     $_options          = array(),
     $_children         = array(),
@@ -445,8 +445,70 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return __($this->getLabel());
   }
 
+  public function getBreadcrumbsArray($subItem = null)
+  {
+    $breadcrumbs = array();
+    $obj = $this;
+
+    if ($subItem)
+    {
+      if (!is_array($subItem))
+      {
+        $subItem = array((string) $subItem => null);
+      }
+      $subItem = array_reverse($subItem);
+      foreach ($subItem as $key => $value)
+      {
+        if (is_numeric($key))
+        {
+          $key = $value;
+          $value = null;
+        }
+        $breadcrumbs[(string) $key] = $value;
+      }
+    }
+
+    do {
+      $label = __($obj->getLabel());
+    	$breadcrumbs[$label] = $obj->getRoute();
+    } while ($obj = $obj->getParent());
+
+    return count($breadcrumbs) > 1 ? array_reverse($breadcrumbs):array();
+  }
+
+  public function getBreadcrumbs($subItem = null)
+  {
+    return sfSympalMenuBreadcrumbs::generate($this->getBreadcrumbsArray($subItem));
+  }
+
+  public function getCurrent()
+  {
+    if ($this->isCurrent())
+    {
+      return $this;
+    }
+    foreach ($this->_children as $child)
+    {
+      if ($current = $child->getCurrent())
+      {
+        return $current;
+      }
+    }
+    return false;
+  }
+
   public function isCurrent($bool = null)
   {
+    if (is_null($this->_current))
+    {
+      if ($this->getUrl(array('absolute' => true)) == sfContext::getInstance()->getRequest()->getUri())
+      {
+        $this->_current = true;
+        $this->getRoot()->setCurrentObject($this);
+        $this->_current = true;
+      }
+    }
+
     if (!is_null($bool))
     {
       $this->_current = $bool;

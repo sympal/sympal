@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalMenuAdminMenu extends sfSympalMenuSite
+class sfSympalMenuAdminMenu extends sfSympalMenu
 {
   public function renderChildBody()
   {

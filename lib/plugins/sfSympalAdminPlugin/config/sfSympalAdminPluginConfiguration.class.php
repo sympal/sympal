@@ -19,7 +19,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       $menu->
         addChild('Dashboard', '@sympal_dashboard')->
         setShortcut('Ctrl+D')->
-        setInputClass('toggle_dashboard_menu')
+        setInputClass('toggle_dashboard_menu')->
+        setCredentials('ViewDashboard')
       ;
     }
   }
@@ -46,6 +47,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
   public function addEditorHtml(sfEvent $event, $content)
   {
+    $this->configuration->loadHelpers(array('Admin'));
+
     $content = str_replace('</body>', get_sympal_admin_menu().'</body>', $content);
     return $content;
   }

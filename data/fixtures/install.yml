@@ -82,12 +82,12 @@ sfSympalContentType:
     name: ManageRedirects
   InsertAssets:
     name: InsertAssets
+  InsertLinks:
+    name: InsertLinks
   ManageAssets:
     name: ManageAssets
   InlineEditing:
     name: InlineEditing
-  InsertLinks:
-    name: InsertLinks
   ManagePlugins:
     name: ManagePlugins
   ManageMenus:
