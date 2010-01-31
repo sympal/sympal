@@ -28,6 +28,8 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
+    $databaseManager = new sfDatabaseManager($this->configuration);
+
     if (isset($options['download-new']) && $options['download-new'])
     {
       $upgrade = new sfSympalUpgradeFromWeb($this->configuration, $this->dispatcher, $this->formatter);
