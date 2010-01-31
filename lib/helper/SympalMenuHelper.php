@@ -41,7 +41,6 @@ function get_sympal_admin_menu_object()
     $sympalContext = sfSympalContext::getInstance();
     $siteTitle = $sympalContext->getSite()->getTitle();
     $menu = new sfSympalMenuAdminMenu('Sympal Admin');
-    $menu->setCredentials(array('ViewAdminBar'));
 
     if ($sympalContext->isAdminModule())
     {

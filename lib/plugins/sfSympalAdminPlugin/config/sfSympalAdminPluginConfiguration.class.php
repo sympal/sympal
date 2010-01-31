@@ -23,7 +23,10 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
   public function addAdminMenu()
   {
-    if (sfContext::getInstance()->getUser()->isEditMode())
+    $format = sfContext::getInstance()->getRequest()->getRequestFormat();
+    $format = $format ? $format : 'html';
+
+    if (sfContext::getInstance()->getUser()->hasCredential('ViewAdminBar') && $format == 'html')
     {
       $this->loadAdminMenuAssets();
 
@@ -38,20 +41,9 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
   }
 
-  public function shouldLoadAdminMenu()
-  {
-    $format = sfContext::getInstance()->getRequest()->getRequestFormat();
-    $format = $format ? $format : 'html';
-
-    return sfContext::getInstance()->getUser()->isAuthenticated() && $format == 'html';
-  }
-
   public function addEditorHtml(sfEvent $event, $content)
   {
-    if ($this->shouldLoadAdminMenu())
-    {
-      $content = str_replace('</body>', get_sympal_admin_menu().'</body>', $content);
-    }
+    $content = str_replace('</body>', get_sympal_admin_menu().'</body>', $content);
     return $content;
   }
 
