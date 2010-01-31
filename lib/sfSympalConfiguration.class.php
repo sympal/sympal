@@ -367,6 +367,12 @@ class sfSympalConfiguration
       } else {
         $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
       }
+
+      if ($disabledModules = sfSympalConfig::get('disabled_modules', null, array()))
+      {
+        $modules = array_diff($modules, $disabledModules);
+      }
+
       sfConfig::set('sf_enabled_modules', $modules);
     }
   }
