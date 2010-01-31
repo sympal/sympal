@@ -47,9 +47,12 @@ function get_sympal_admin_menu_object()
       $menu->addChild('Go to Site Frontend', '@homepage');
     }
 
-    $menu->addChild('My Dashboard', '@sympal_dashboard');
+    if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
+    {
+      $menu->addChild('My Dashboard', '@sympal_dashboard');
+    }
 
-    if (sfSympalConfig::get('page_cache', 'enabled'))
+    if (sfContext::getInstance()->getUser()->hasCredential('ClearCache'))
     {
       $menu->addChild('Clear Cache', '@sympal_clear_cache');
     }

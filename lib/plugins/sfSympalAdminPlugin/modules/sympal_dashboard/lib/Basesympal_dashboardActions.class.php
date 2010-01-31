@@ -64,7 +64,7 @@ abstract class Basesympal_dashboardActions extends sfActions
 
     $this->boxes['Content Types']
       ->setRoute('@sympal_content_types')
-      ->setCredentials(array('ManageContentSetup'));
+      ->setCredentials(array('ManageContentTypes'));
 
     $this->boxes['Users']
       ->setRoute('@sympal_users')
@@ -80,7 +80,7 @@ abstract class Basesympal_dashboardActions extends sfActions
 
     $this->boxes['Configuration']
       ->setRoute('@sympal_config')
-      ->setCredentials(array('ManageConfiguration'));
+      ->setCredentials(array('ManageSystemSettings'));
 
     $this->boxes['Sitemap']
       ->setRoute('@sympal_sitemap')
@@ -88,11 +88,11 @@ abstract class Basesympal_dashboardActions extends sfActions
 
     $this->boxes['Check for Updates']
       ->setRoute('@sympal_check_for_updates')
-      ->setCredentials(array('ManageSetup'));
+      ->setCredentials(array('UpdateManager'));
 
     $this->boxes['Check Server']
       ->setRoute('@sympal_check_server')
-      ->setCredentials(array('ManageSetup'));
+      ->setCredentials(array('ViewServerCheck'));
 
     $this->getContext()->getEventDispatcher()->notify(new sfEvent($this->boxes, 'sympal.load_dashboard'));
   }

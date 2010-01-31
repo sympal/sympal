@@ -13,13 +13,15 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
   public function loadInlineEditBarButtons(sfEvent $event)
   {
-    $menu = $event->getSubject();
-
-    $menu->
-      addChild('Dashboard', '@sympal_dashboard')->
-      setShortcut('Ctrl+D')->
-      setInputClass('toggle_dashboard_menu')
-    ;
+    if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
+    {
+      $menu = $event->getSubject();
+      $menu->
+        addChild('Dashboard', '@sympal_dashboard')->
+        setShortcut('Ctrl+D')->
+        setInputClass('toggle_dashboard_menu')
+      ;
+    }
   }
 
   public function addAdminMenu()
@@ -85,7 +87,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       ->setCredentials(array('ManageSites'));
 
     $administration->addChild('System Settings', '@sympal_config')
-      ->setCredentials(array('ManageConfiguration'));
+      ->setCredentials(array('ManageSystemSettings'));
   }
 
   public function loadConfigForm(sfEvent $event)

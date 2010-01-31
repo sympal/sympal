@@ -44,7 +44,7 @@ sfSympalContentType:
 <?php echo sfSympalConfig::get('group_model') ?>:
   AdministratorGroup:
     name: Administrator
-    Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
+    Permissions: [ViewDashboard, ManageSystemSettings, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
   RegisteredGroup:
     name: Registered
   GuestGroup:
@@ -57,13 +57,37 @@ sfSympalContentType:
     Permissions: [ViewDashboard, ManageUsers, ManageGroups, ManagePermissions]
   DeveloperGroup:
     name: Developer
-    Permissions: [ViewDashboard, ManageConfiguration, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions]
+    Permissions: [ViewDashboard, ManageSystemSettings, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, Developer]
 
 <?php echo sfSympalConfig::get('permission_model') ?>:
+  Developer:
+    name: Developer
+  ClearCache:
+    name: ClearCache
   ViewDashboard:
     name: ViewDashboard
+  ViewAdminBar:
+    name: ViewAdminBar
+  ViewServerCheck:
+    name: ViewServerCheck
+  UpdateManager:
+    name: UpdateManager
   ManageContent:
     name: ManageContent
+  PublishContent:
+    name: PublishContent
+  ManageSlots:
+    name: ManageSlots
+  ManageRedirects:
+    name: ManageRedirects
+  InsertAssets:
+    name: InsertAssets
+  ManageAssets:
+    name: ManageAssets
+  InlineEditing:
+    name: InlineEditing
+  InsertLinks:
+    name: InsertLinks
   ManagePlugins:
     name: ManagePlugins
   ManageMenus:
@@ -77,10 +101,8 @@ sfSympalContentType:
   ManageSites:
     name: ManageSites
   ManageContentSetup:
-    name: ManageContentSetup
-  ManageConfiguration:
-    name: ManageConfiguration
-  ViewDeveloperInformation:
-    name: ViewDeveloperInformation
-  ViewAdminBar:
-    name: ViewAdminBar
+    name: ManageContentTypes
+  ManageThemes:
+    name: ManageThemes
+  ManageSystemSettings:
+    name: ManageSystemSettings
