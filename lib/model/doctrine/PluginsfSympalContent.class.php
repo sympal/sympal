@@ -459,16 +459,25 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
+  public function hasCustomPath()
+  {
+    return $this->custom_path ? true : false;
+  }
+
   public function getRoutePath()
   {
-    if ($path = $this['custom_path'])
+    // If content has a custom path then lets use it
+    if ($this->hasCustomPath())
     {
+      $path = $this->custom_path;
       if ($path != '/')
       {
         $path .= '.:sf_format';
       }
       return $path;
     }
+    // If content has a custom module or action then we need a route for it
+    // so generate a path for this content to use in the route
     else if ($this->get('module', false) || $this->get('action', false))
     {
       $values = $this->_buildRouteValues();
@@ -476,26 +485,33 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       $values['sf_format'] = ':sf_format';
       return $this->getRouteObject()->generate($values);
     }
-    else if ($path = $this['Type']['route_path'])
+    // Otherwise fallback and get route path from the content type
+    else if ($path = $this->getType()->getRoutePath())
     {
       return $path;
     }
+    // Default if nothing else can be found
     else if ($this['slug'])
     {
       return '/content/:slug';
     }
   }
 
-  public function getRouteObject($path = null)
+  public function getRouteObject()
   {
     if (!$this->_routeObject)
     {
-      if (is_null($path))
+      // Generate a route object for this content only if it has a custom path
+      if ($this->hasCustomPath())
       {
-        $path = $this->getRoutePath();
+        $this->_routeObject = new sfRoute($this->getRoutePath(), array(
+          'sf_format' => 'html',
+          'sf_culture' => sfConfig::get('default_culture')
+        ));
+      // Otherwise get it from the content type
+      } else {
+        $this->_routeObject = $this->getType()->getRouteObject();
       }
-
-      $this->_routeObject = new sfRoute($path, array('sf_format' => 'html', 'sf_culture' => sfConfig::get('default_culture')));
     }
     return $this->_routeObject;
   }

@@ -5,6 +5,8 @@
  */
 abstract class PluginsfSympalContentType extends BasesfSympalContentType
 {
+  protected $_routeObject;
+
   public function __toString()
   {
     return (string) $this->getLabel();
@@ -43,6 +45,18 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
       $path .= '.:sf_format';
     }
     return $path;
+  }
+
+  public function getRouteObject()
+  {
+    if (!$this->_routeObject)
+    {
+      $this->_routeObject = new sfRoute($this->getRoutePath(), array(
+        'sf_format' => 'html',
+        'sf_culture' => sfConfig::get('default_culture')
+      ));
+    }
+    return $this->_routeObject;
   }
 
   public function getCustomModuleName()
