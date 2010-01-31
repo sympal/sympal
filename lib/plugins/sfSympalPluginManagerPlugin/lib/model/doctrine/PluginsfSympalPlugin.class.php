@@ -24,12 +24,18 @@ abstract class PluginsfSympalPlugin extends BasesfSympalPlugin
 
   public function getAuthorName()
   {
-    return $this->getAuthor()->getName();
+    if  ($author = $this->getAuthor())
+    {
+      return $author->getName();
+    }
   }
 
   public function getAuthorEmail()
   {
-    return $this->getAuthor()->getEmail();
+    if  ($author = $this->getAuthor())
+    {
+      return $author->getEmail();
+    }
   }
 
   public function isDownloaded()
