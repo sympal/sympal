@@ -34,12 +34,14 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   {
     if ($this->is_column)
     {
-      return $this->_getContentSlotColumnForm();
+      $form = $this->_getContentSlotColumnForm();
     } else {
       $contentSlotTypes = sfSympalConfig::get('content_slot_types');
       $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
-      return new $className($this);
+      $form = new $className($this);
     }
+    $form->getWidgetSchema()->setNameFormat('sf_sympal_content_slot_'.$this->id.'[%s]');
+    return $form;
   }
 
   protected function _getContentSlotColumnForm()
