@@ -60,6 +60,10 @@ sfSympalContentType:
     Permissions: [ViewDashboard, ManageSystemSettings, ManageContentSetup, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, Developer]
 
 <?php echo sfSympalConfig::get('permission_model') ?>:
+  CreateAssetDirectories:
+    name: CreateAssetDirectories
+  UploadAssets:
+    name: UploadAssets
   Developer:
     name: Developer
   ClearCache:

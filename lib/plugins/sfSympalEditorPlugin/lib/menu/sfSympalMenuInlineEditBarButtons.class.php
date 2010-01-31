@@ -17,6 +17,7 @@ class sfSympalMenuInlineEditBarButtons extends sfSympalMenu
   public function setInputClass($class)
   {
     $this->_inputClass = $class;
+    return $this;
   }
 
   public function isButton($bool = null)
