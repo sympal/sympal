@@ -211,6 +211,7 @@ class sfSympalToolkit
     requirements:
       sf_culture:  (%s)
       sf_format:   (%s)
+      sf_method:   [post, get]
 ';
 
       $routes = array();
