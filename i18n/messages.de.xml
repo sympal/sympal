@@ -1291,7 +1291,11 @@ neue Dateien hochladen und Ordner anlegen.</target>
       <trans-unit id="4080">
         <source>The username and/or password is invalid.</source>
         <target>Der Benutzername und/oder das Passwort ist ungültig.</target>
-      </trans-unit>           
+      </trans-unit>
+      <trans-unit id="4090">
+        <source>The item was deleted successfully.</source>
+        <target></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

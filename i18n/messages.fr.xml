@@ -226,7 +226,7 @@ download and install new plugins found on the web.</source>
       </trans-unit>
       <trans-unit id="580">
         <source>Browse, create, edit and delete your Sympal sites below! Manage your sites and switch between the current site and your other sites easily!</source>
-        <target>Parcourez, créez, éditez and supprimez vos sites Sympal ci-dessous. Gérez vos sites et passez d'un site à l'autre facilement !</target>
+        <target>Parcourez, créez, éditez et supprimez vos sites Sympal ci-dessous. Gérez vos sites et passez d'un site à l'autre facilement !</target>
       </trans-unit>
       <trans-unit id="590">
         <source>Description</source>
@@ -420,16 +420,16 @@ already available in Sympal.</source>
         <target>Liste des utilisateurs de Sympal</target>
       </trans-unit>
       <trans-unit id="1460">
-        <source>Nom d'utilisateur</source>
-        <target>Benutzername</target>
+        <source>Username</source>
+        <target>Nom d'utilisateur</target>
       </trans-unit>
       <trans-unit id="1470">
-        <source>Dernière connexion</source>
-        <target>Letzter Login</target>
+        <source>Last login</source>
+        <target>Dernière connexion</target>
       </trans-unit>
       <trans-unit id="1480">
-        <source>Nouveaux utilisateurs Sympal</source>
-        <target>Neuer Benutzer</target>
+        <source>New Sympal users</source>
+        <target>Nouveaux utilisateurs Sympal</target>
       </trans-unit>
       <trans-unit id="1490">
         <source>User Information</source>
