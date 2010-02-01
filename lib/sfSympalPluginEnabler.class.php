@@ -44,30 +44,6 @@ class sfSympalPluginEnabler
     $this->enableSympalCorePlugins(sfSympalPluginConfiguration::$dependencies);
   }
 
-  public function enableFrontendPlugins()
-  {
-    if (!$this->isSympalEnabled())
-    {
-      return false;
-    }
-
-    $this->_configuration->enablePlugins('sfDoctrinePlugin');
-    $this->_configuration->enablePlugins('sfSympalPlugin');
-    $this->_configuration->setPluginPath('sfSympalPlugin', $this->_sympalPluginPath);
-
-    $this->enableSympalCorePlugins(array(
-      'sfDoctrineGuardPlugin',
-      'sfFeed2Plugin',
-      'sfWebBrowserPlugin',
-      'sfSympalMenuPlugin',
-      'sfSympalPagesPlugin',
-      'sfSympalContentListPlugin',
-      'sfSympalDataGridPlugin',
-      'sfSympalUserPlugin',
-      'sfSympalRenderingPlugin',
-    ));
-  }
-
   public function enableSympalCorePlugins($plugins)
   {
     foreach ((array) $plugins as $plugin)
