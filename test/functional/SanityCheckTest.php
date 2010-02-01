@@ -3,7 +3,7 @@
 require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 
 $browser = new sfSympalTestFunctional(new sfBrowser());
-
+$browser->signInAsAdmin();
 $browser->get('/');
 
 // Make sure we can click each menu item in the menu

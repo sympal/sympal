@@ -99,10 +99,10 @@ class sfSympalPluginInfo
       $packageXmlPath = $downloadPath.'/package.xml';
       $readmePath = $downloadPath.'/README';
 
-      if (@file_get_contents($packageXmlPath))
+      if (sfSympalToolkit::fileGetContents($packageXmlPath))
       {
         $packageXml = simplexml_load_file($packageXmlPath);
-      } else if (@file_get_contents($packageXmlPath.'.tmpl')) {
+      } else if (sfSympalToolkit::fileGetContents($packageXmlPath.'.tmpl')) {
         $packageXml = simplexml_load_file($packageXmlPath.'.tmpl');
       }
 
@@ -112,7 +112,7 @@ class sfSympalPluginInfo
         $this->_plugin = array_merge($package, $this->_plugin);
       }
 
-      if ($readme = @file_get_contents($readmePath))
+      if ($readme = sfSympalToolkit::fileGetContents($readmePath))
       {
         $this->_plugin['readme'] = $readme;
       }

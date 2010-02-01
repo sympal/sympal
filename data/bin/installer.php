@@ -1,5 +1,16 @@
 <?php
 
+function fileGetContents($url)
+{
+  $ch = curl_init();
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_URL, $url);
+	$data = curl_exec($ch);
+	curl_close($ch);
+	return $data;
+}
+
 $classes = array(
   'sfSympalServerCheck',
   'sfSympalServerCheckRenderer',
@@ -8,7 +19,7 @@ $classes = array(
 );
 foreach ($classes as $file)
 {
-  $code = file_get_contents('http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk/lib/check/'.$file.'.class.php');
+  $code = fileGetContents('http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk/lib/check/'.$file.'.class.php');
   file_put_contents(sys_get_temp_dir().'/'.$file.'.class.php', $code);
   require sys_get_temp_dir().'/'.$file.'.class.php';
 }

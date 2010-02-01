@@ -130,7 +130,7 @@ class sfSympalPluginToolkit
             }
           }
         } else {
-          $html = file_get_contents($path);
+          $html = sfSympalToolkit::fileGetContents($path);
           preg_match_all("/sfSympal(.*)Plugin/", strip_tags($html), $matches);
           foreach ($matches[0] as $plugin)
           {
@@ -181,11 +181,11 @@ class sfSympalPluginToolkit
       {
         $branchSvnPath = $path.'/'.$pluginName.'/branches/'.$version;
         $trunkSvnPath = $path.'/'.$pluginName.'/trunk';
-        if (@file_get_contents($branchSvnPath) !== false || is_dir($branchSvnPath))
+        if (sfSympalToolkit::fileGetContents($branchSvnPath) !== false || is_dir($branchSvnPath))
         {
           $path = $branchSvnPath;
           break;
-        } else if (@file_get_contents($trunkSvnPath) !== false || is_dir($trunkSvnPath)) {
+        } else if (sfSympalToolkit::fileGetContents($trunkSvnPath) !== false || is_dir($trunkSvnPath)) {
           $path = $trunkSvnPath;
           break;
         } else if (is_dir($path)) {

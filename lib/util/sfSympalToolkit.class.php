@@ -2,6 +2,35 @@
 
 class sfSympalToolkit
 {
+  public static function fileGetContents($file)
+  {
+    if (substr($file, 0, 4) === 'http')
+    {
+      $ch = curl_init();
+    	curl_setopt($ch, CURLOPT_HEADER, 0);
+    	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    	curl_setopt($ch, CURLOPT_URL, $file);
+    	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+    	$data = curl_exec($ch);
+      $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+      if (curl_errno($ch) || !$data || $code == 404)
+    	{
+    	  return false;
+    	} else {
+      	curl_close($ch);
+      	return $data;
+      }
+    } else {
+      if (file_exists($file))
+      {
+        return file_get_contents($file);
+      } else {
+        return false;
+      }
+    }
+  }
+
   public static function loadHelpers($helpers)
   {
     sfApplicationConfiguration::getActive()->loadHelpers($helpers);

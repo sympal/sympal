@@ -6,10 +6,11 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
   {
     $this->logSection('sympal', sprintf('Downloading Sympal plugin "%s"', $this->_pluginName));
 
-    $success = true;
+    $success = false;
     try {
       $this->logSection('sympal', '...trying to download plugin via PEAR');
 
+      chdir(sfConfig::get('sf_root_dir'));
       $pluginInstall = new sfPluginInstallTask($this->_dispatcher, $this->_formatter);
       $ret = @$pluginInstall->run(array($this->_pluginName), array());
 
@@ -17,6 +18,8 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
       {
         $this->logSection('sympal', '...could not download plugin via PEAR', null, 'ERROR');
         $success = false;
+      } else {
+        $success = true;
       }
     } catch (Exception $e) {
       $success = false;
@@ -26,7 +29,6 @@ class sfSympalPluginManagerDownload extends sfSympalPluginManager
     if (!$success)
     {
       $this->logSection('sympal', 'Could not download plugin via PEAR! Trying alternative sources.');
-
       $path = sfSympalPluginToolkit::getPluginDownloadPath($this->_pluginName);
       if (is_dir($path))
       {

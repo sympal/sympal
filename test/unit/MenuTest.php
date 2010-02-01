@@ -110,6 +110,9 @@ class sfSympalMenuSiteTest extends sfSympalMenuSite
   }
 }
 
+$user = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(true);
+sfContext::getInstance()->getUser()->signIn($user);
+
 $manager = sfSympalMenuSiteManager::getInstance();
 $primaryMenu = $manager->getMenu('primary', false, 'sfSympalMenuSiteTest');
 $t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-blog" class="first">Blog</li><li id="primary-signout">Signout</li><li id="primary-home">Home</li><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list">Sample Content List</li><li id="primary-powered-by" class="last">Powered By</li></ul>', 'Test __toString()');
