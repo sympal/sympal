@@ -71,12 +71,17 @@ p {
   margin: 0 auto;
   padding: 0;
   width: 100%;
+  min-width: 900px;
+}
+
+#container #footer {
+  padding-top: 20px;
+  clear: both;
 }
 
 #container #footer p {
   text-align: center;
   font-size: 11px;
-  clear: both;
 }
 
 #content {

@@ -1,132 +1,65 @@
+body {
+  text-align: center;
+}
+
 #sympal-dashboard {
-  
+  background: #ccc;
+  -khtml-border-radius:0.75em;
+	-moz-border-radius: 0.75em;
+  -webkit-border-radius: 0.75em;
+  border-radius: 0.75em;
+  padding: 16px;
+  margin-right: 200px;
+  width: 90%;
+  border: 1px solid #aaa;
+  text-align: left;
+  margin: auto;
 }
 
-#sympal-dashboard #boxes {
-  width: 100%;
+#sympal-dashboard h1 {
+  color: #002970;
+  font-size: 25px;
 }
 
-#sympal-dashboard #boxes ul {
+#sympal-dashboard .sympal_dashboard_box {
+  float: left;
+  width: 175px;
+  background: #fff;
+  margin-right: 10px;
+  -khtml-border-radius:0.75em;
+	-moz-border-radius: 0.75em;
+  -webkit-border-radius: 0.75em;
+  border-radius: 0.75em;
+}
+
+#sympal-dashboard .sympal_dashboard_box h2 {
+  background: #1049A9;
+  color: #fff;
+  margin: 0;
+  padding: 10px;
+}
+
+#sympal-dashboard .sympal_dashboard_box ul {
   margin: 0;
   padding: 0;
 }
 
-#sympal-dashboard #boxes ul li {
-  float: left;
-  list-style-type: none;
-  height: 85px;
-  width: 160px;
-  margin-right: 5px;
-  border: 1px dotted #ccc;
-  text-align: center;
-  margin: 5px;
-  padding: 0;
-  padding-top: 10px;
-  background: #fff;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  -khtml-border-radius:0.4em;
-	-moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+#sympal-dashboard .sympal_dashboard_box ul li {
+  padding: 6px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-bottom: 1px solid #ccc;
 }
 
-#sympal-dashboard #boxes ul li a {
-  width: 100%;
-  height: 85px;
-  display: block;
+#sympal-dashboard .sympal_dashboard_box ul li a:hover {
   font-weight: bold;
-  text-decoration: none;
-  background: url(../images/default_dashboard_icon.png) no-repeat;
-  background-position: center;
 }
 
-#sympal-dashboard #boxes ul li a:hover {
-  color: #fff;
-  font-size: 15px;
-}
-
-#sympal-dashboard #boxes ul li:hover {
-  background: #375fc2;
-  border: 1px solid #333;
-  color: #fff;
-}
-
-#sympal-dashboard #boxes ul li:hover a {
-  color: white;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-sitemap a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -1295px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-manage-content a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -75px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-sites a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center 20px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-menu-manager a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -390px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-plugin-manager a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -505px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-content-types a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -620px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-content-templates a {
-  background: url(../images/content_templates.png) no-repeat;
-  background-position: center;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-users a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -750px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-groups a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -895px;
-}
-
-#sympal-dashboard #boxes ul li.create_content a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -175px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-permissions a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -1035px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-configuration a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -1175px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-assets-manager a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -275px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-check-for-updates a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -1400px;
-}
-
-#sympal-dashboard #boxes ul li#dashboard-boxes-check-server a {
-  background: url(../images/dashboard_sprite.gif) no-repeat;
-  background-position: center -1510px;
+#sympal-dashboard .sympal_dashboard_box ul li:before
+{
+  padding-top: 5px;
+  content: ' » ';
+  font-weight: bold;
+  font-size: 20px;
+  color: #1049A9;
 }

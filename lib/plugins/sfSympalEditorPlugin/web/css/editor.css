@@ -314,11 +314,6 @@ html {
   text-indent: 15px;  
 }
 
-.sympal_inline_edit_bar input.toggle_dashboard_menu {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/dashboard_icon.gif) 2px 4px no-repeat !important;
-  text-indent: 15px;  
-}
-
 .sympal_inline_edit_bar input.toggle_sympal_links {
   background: #f5f5f5 url(../../sfSympalPlugin/images/links_icon.gif) 2px 5px no-repeat !important;
   text-indent: 15px;  

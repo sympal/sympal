@@ -373,13 +373,20 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     {
       $id = Doctrine_Inflector::urlize($this->getName().'-menu');
       $html = '<ul'.($this->_ulClass ? ' class="'.$this->_ulClass.'"' : null).' id="'.$id.'">';
-      foreach ($this->_children as $child)
-      {
-        $html .= $child->renderChild();
-      }
+      $html .= $this->renderChildren();
       $html .= '</ul>';
       return $html;
     }
+  }
+
+  public function renderChildren()
+  {
+    $html = '';
+    foreach ($this->_children as $child)
+    {
+      $html .= $child->renderChild();
+    }
+    return $html;
   }
 
   public function renderChild()

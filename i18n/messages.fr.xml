@@ -31,7 +31,7 @@ download and install new plugins found on the web.</source>
         <target>Titre</target>
       </trans-unit>
       <trans-unit id="80">
-        <source>Go to Site Frontend</source>
+        <source>Go to Site</source>
         <target>Aller sur le site</target>
       </trans-unit>
       <trans-unit id="90">

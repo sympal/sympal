@@ -1,6 +1,6 @@
 <?php
 
-function get_sympal_admin_menu_object()
+function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
 {
   static $menu;
 
@@ -8,17 +8,17 @@ function get_sympal_admin_menu_object()
   {
     $sympalContext = sfSympalContext::getInstance();
     $siteTitle = $sympalContext->getSite()->getTitle();
-    $menu = new sfSympalMenuAdminMenu('Sympal Admin', '@sympal_dashboard');
+    $menu = new $class('Sympal Admin', '@sympal_dashboard');
 
     if ($sympalContext->isAdminModule())
     {
-      $menu->addChild('Go to Site Frontend', '@homepage');
+      $menu->addChild('Go to Site', '@homepage');
+    }
+    else if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
+    {
+      $menu->addChild('Go to Admin', '@sympal_dashboard');
     }
 
-    if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
-    {
-      $menu->addChild('My Dashboard', '@sympal_dashboard');
-    }
 
     if (sfContext::getInstance()->getUser()->hasCredential('ClearCache'))
     {

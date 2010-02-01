@@ -1,10 +1,5 @@
-<?php if ($isAjax): ?>
-  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalAdminPlugin/css/dashboard.css') ?>" />
-  <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalUpgradePlugin/css/upgrade.css') ?>" />
-<?php else: ?>
-  <?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/dashboard.css') ?>
-  <?php sympal_use_stylesheet('/sfSympalUpgradePlugin/css/upgrade.css') ?>
-<?php endif; ?>
+<?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/dashboard.css') ?>
+<?php sympal_use_stylesheet('/sfSympalUpgradePlugin/css/upgrade.css') ?>
 
 <?php if ($hasNewVersion): ?>
   <div class="sympal_new_version_box">
@@ -12,19 +7,15 @@
   </div>
 <?php endif; ?>
 
+<?php if ($sf_request->isXmlHttpRequest()): ?>
+  <p><?php echo link_to(__('Go to the Sympal admin area for your site.'), '@sympal_dashboard') ?></p>
+<?php endif; ?>
+
 <div id="sympal-dashboard">
-  <div id="boxes">
-    <h1><?php echo __('Sympal Dashboard') ?></h1>
+  <h1><?php echo __('Sympal Dashboard') ?></h1>
 
-    <p><?php echo __('Hello %name%! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.', array('%name%' => '<strong>'.$sf_user->getName().'</strong>')) ?></p>
+  <p><?php echo __('Hello %name%! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.', array('%name%' => '<strong>'.$sf_user->getName().'</strong>')) ?></p>
 
-    <?php if ($sf_request->isXmlHttpRequest()): ?>
-      <p><?php echo link_to(__('Go to the Sympal admin area for your site.'), '@sympal_dashboard') ?></p>
-    <?php endif; ?>
-
-    <?php echo $boxes->render() ?>
-  </div>
-  <?php if ($isAjax): ?>
-    <a class="sympal_close_menu"><?php echo __('Close') ?></a>
-  <?php endif; ?>
+  <?php echo get_sympal_admin_menu_object('sfSympalMenuDashboard') ?>
+  <br style="clear: left;" />
 </div>

@@ -40,7 +40,7 @@ neue Plugins einfach herunterladen und installieren.</target>
         <target>Titel</target>
       </trans-unit>
       <trans-unit id="80">
-        <source>Go to Site Frontend</source>
+        <source>Go to Site</source>
         <target>Zum Frontend wechseln</target>
       </trans-unit>
       <trans-unit id="90">

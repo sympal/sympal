@@ -8,29 +8,23 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
     $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
     $this->dispatcher->connect('context.load_factories', array($this, 'addAdminMenu'));
-    $this->dispatcher->connect('sympal.load_inline_edit_bar_buttons', array($this, 'loadInlineEditBarButtons'));
   }
 
-  public function loadInlineEditBarButtons(sfEvent $event)
+  public function shouldLoadAdminMenu()
   {
-    if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
-    {
-      $menu = $event->getSubject();
-      $menu->
-        addChild('Dashboard', '@sympal_dashboard')->
-        setShortcut('Ctrl+D')->
-        setInputClass('toggle_dashboard_menu')->
-        setCredentials('ViewDashboard')
-      ;
-    }
+    $context = sfContext::getInstance();
+    $request = $context->getRequest();
+    $format = $request->getRequestFormat();
+    $format = $format ? $format : 'html';
+
+    return $context->getUser()->hasCredential('ViewAdminBar')
+      && $format == 'html'
+      && $request->getParameter('module') !== 'sympal_dashboard';
   }
 
   public function addAdminMenu()
   {
-    $format = sfContext::getInstance()->getRequest()->getRequestFormat();
-    $format = $format ? $format : 'html';
-
-    if (sfContext::getInstance()->getUser()->hasCredential('ViewAdminBar') && $format == 'html')
+    if ($this->shouldLoadAdminMenu())
     {
       $this->loadAdminMenuAssets();
 
