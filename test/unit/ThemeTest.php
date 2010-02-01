@@ -52,5 +52,6 @@ $t->is($adminTheme->getStylesheets(), array(
 $t->is($adminTheme->getJavascripts(), array(
   '/sfSympalPlugin/js/jQuery.cookie.js',
   '/sfSympalPlugin/fancybox/jquery.fancybox.js',
-  '/sfSympalAdminPlugin/js/admin.js'
+  '/sfSympalAdminPlugin/js/admin.js',
+  '/sfSympalPlugin/js/shortcuts.js'
 ));
