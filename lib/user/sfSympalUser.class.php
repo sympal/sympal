@@ -83,6 +83,9 @@ class sfSympalUser extends sfGuardSecurityUser
         // the user does not exist anymore in the database
         $this->signOut();
 
+        // make sure that the session data is written
+        $this->shutdown();
+
         throw new sfException('The user does not exist anymore in the database.');
       }
     }
