@@ -2,6 +2,8 @@
 
 class sfSympalMenuDashboard extends sfSympalMenuAdminMenu
 {
+  protected $_dashboardTopLinks = '';
+
   public function render()
   {
     $html = '';
@@ -15,7 +17,15 @@ class sfSympalMenuDashboard extends sfSympalMenuAdminMenu
         $html .= $child->renderChildren();
         $html .= '</ul>';
         $html .= '</div>';
+      } else {
+        $this->_dashboardTopLinks .= '<div class="sympal_dashboard_top_link">';
+        $this->_dashboardTopLinks .= $child->renderLink();
+        $this->_dashboardTopLinks .= '</div>';
       }
+    }
+    if ($this->_dashboardTopLinks)
+    {
+      $html = '<div class="sympal_dashboard_top_links">'.$this->_dashboardTopLinks.'</div><div class="sympal_dashboard_boxes">'.$html.'</div>';
     }
     return $html;
   }

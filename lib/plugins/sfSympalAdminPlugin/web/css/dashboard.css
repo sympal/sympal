@@ -2,8 +2,8 @@ body {
   text-align: center;
 }
 
-#sympal-dashboard {
-  background: #ccc;
+#content {
+  background: #eee;
   -khtml-border-radius:0.75em;
 	-moz-border-radius: 0.75em;
   -webkit-border-radius: 0.75em;
@@ -21,6 +21,9 @@ body {
   font-size: 25px;
 }
 
+#sympal-dashboard #boxes {
+  
+}
 #sympal-dashboard .sympal_dashboard_box {
   float: left;
   width: 175px;
@@ -48,7 +51,7 @@ body {
   padding: 6px;
   padding-left: 12px;
   padding-right: 12px;
-  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 
 #sympal-dashboard .sympal_dashboard_box ul li a:hover {
@@ -62,4 +65,19 @@ body {
   font-weight: bold;
   font-size: 20px;
   color: #1049A9;
+}
+
+#sympal-dashboard .sympal_dashboard_boxes {
+  clear: left;
+  padding-top: 15px;
+}
+
+#sympal-dashboard .sympal_dashboard_top_links {
+  
+}
+
+#sympal-dashboard .sympal_dashboard_top_link {
+  display: inline;
+  margin-right: 10px;
+  float: left;
 }
