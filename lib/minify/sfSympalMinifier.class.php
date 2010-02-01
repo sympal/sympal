@@ -57,6 +57,7 @@ class sfSympalMinifier
           mkdir($dir, 0777, true);
         }
         file_put_contents($cachedPath, $minified);
+        chmod($cachedPath, 0777);
       }
     
       foreach ($this->_response->{'get'.$typeName.'s'}() as $file => $options)
