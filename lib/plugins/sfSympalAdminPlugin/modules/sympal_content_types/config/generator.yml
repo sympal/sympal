@@ -16,6 +16,10 @@ generator:
       list:
         display: [=label, description]
         layout: stacked
+        object_actions:
+          _edit: ~
+          _delete: ~
+          new: ~
       filter:
         class: false
       form:

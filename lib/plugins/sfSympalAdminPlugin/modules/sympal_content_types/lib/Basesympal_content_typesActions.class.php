@@ -13,4 +13,10 @@ class Basesympal_content_types_Actions extends autoSympal_content_typesActions
   {
     $this->clearCache();
   }
+
+  public function executeListNew(sfWebRequest $request)
+  {
+    $this->contentType = $this->getRoute()->getObject();
+    $this->redirect('@sympal_content_create_type?type='.$this->contentType->getSlug());
+  }
 }

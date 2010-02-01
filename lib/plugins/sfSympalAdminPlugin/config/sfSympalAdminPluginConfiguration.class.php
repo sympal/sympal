@@ -66,6 +66,10 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       ->addChild('Slots', '@sympal_content_slots')
       ->setCredentials(array('ManageSlots'));
 
+    $manageContent
+      ->addChild('XML Sitemap', '@sympal_sitemap')
+      ->setCredentials(array('ViewXmlSitemap'));
+
     $siteAdministration = $menu->getChild('Site Administration');
 
     $siteAdministration
@@ -89,6 +93,12 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $administration->addChild('System Settings', '@sympal_config')
       ->setCredentials(array('ManageSystemSettings'));
+
+    $administration->addChild('Check Server', '@sympal_check_server')
+      ->setCredentials(array('ViewServerCheck'));
+
+    $administration->addChild('Check for Updates', '@sympal_check_for_updates')
+      ->setCredentials(array('UpdateManager'));
   }
 
   public function loadConfigForm(sfEvent $event)

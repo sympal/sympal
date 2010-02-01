@@ -135,3 +135,6 @@ sfSympalContentType:
   ManageSystemSettings:
     name: ManageSystemSettings
     description: Access to change system settings.
+  ViewXmlSitemap:
+    name: ViewXmlSitemap
+    description: Show link to view XML Sitemap in admin menu.
