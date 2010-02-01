@@ -55,7 +55,7 @@ abstract class sfSympalContentSyntaxReplacer
     $objects = new Doctrine_Collection($collection->getTable());
     foreach ($collection as $key => $value)
     {
-      $objects[$value->id] = $value;
+      $objects[$value->slug] = $value;
     }
 
     return $objects;

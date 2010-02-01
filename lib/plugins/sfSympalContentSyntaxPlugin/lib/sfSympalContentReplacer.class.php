@@ -98,9 +98,9 @@ class sfSympalContentReplacer
         $typeKey = $types[$key];
         
         $e = explode(' ', $body);
-        $id = $e[0];
+        $slug = $e[0];
         
-        $replacements[$typeKey][$id] = array(
+        $replacements[$typeKey][$slug] = array(
           'options' => _parse_attributes(substr($body, strlen($e[0]))),
           'replace' => $matches[0][$key],
         );

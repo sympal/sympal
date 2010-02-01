@@ -10,8 +10,9 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $_route,
     $_routeObject,
     $_mainMenuItem,
-    $_editableSlotsExistOnPage = false;
-    
+    $_editableSlotsExistOnPage = false,
+    $_slotsByName = null;
+  
   /**
    * Initializes a new sfSympalContent for the given type
    * 
@@ -45,6 +46,19 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $content->$name = new $name();
 
     return $content;
+  }
+
+  public function construct()
+  {
+    foreach ($this->Slots as $slot)
+    {
+      $this->_slotsByName[$slot->name] = $slot;
+    }
+  }
+
+  public function getSlotsByName()
+  {
+    return $this->_slotsByName;
   }
 
   public function setEditableSlotsExistOnPage($bool)
@@ -99,19 +113,19 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function hasSlot($name)
   {
-    return isset($this->Slots[$name]) ? true : false;
+    return isset($this->_slotsByName[$name]) ? true : false;
   }
 
   public function hasSlots()
   {
-    return count($this->Slots) > 0 ? true : false;
+    return count($this->_slotsByName) > 0 ? true : false;
   }
 
   public function getSlot($name)
   {
     if ($this->hasSlot($name))
     {
-      return $this->Slots[$name];
+      return $this->_slotsByName[$name];
     }
     return null;
   }
@@ -516,7 +530,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->_routeObject;
   }
 
-  public function getRoute($routeString = null, $path = null)
+  public function getRoute()
   {
     if (!$this->_route)
     {
@@ -530,12 +544,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
         return $this->getRecord()->getRoute();
       }
 
-      if (is_null($routeString))
-      {
-        $routeString = $this->getRouteName();
-      }
-
-      $this->_route = $this->_fillRoute($routeString);
+      $this->_route = $this->_fillRoute($this->getRouteName());
     }
 
     return $this->_route;

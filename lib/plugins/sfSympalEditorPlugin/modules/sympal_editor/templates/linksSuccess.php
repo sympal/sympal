@@ -45,7 +45,7 @@
 
         <?php foreach ($content as $c): ?>
           <?php $menuItem = $c->getMenuItem() ?>
-          <li id="<?php echo $c->getId() ?>"<?php if ($menuItem): ?> style="margin-left: <?php echo ($menuItem->getLevel() - ($parentMenuNode ? $parentMenuNode->getLevel() : 1)) * 15 ?>px;"<?php endif; ?>>
+          <li id="<?php echo $c->getSlug() ?>"<?php if ($menuItem): ?> style="margin-left: <?php echo ($menuItem->getLevel() - ($parentMenuNode ? $parentMenuNode->getLevel() : 1)) * 15 ?>px;"<?php endif; ?>>
             <?php if (!$menuItem || $menuItem->getNode()->isLeaf()): ?>
               <?php echo image_tag('/sfSympalPlugin/images/page.png') ?>
             <?php else: ?>

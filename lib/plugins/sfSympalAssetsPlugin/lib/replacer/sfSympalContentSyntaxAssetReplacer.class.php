@@ -3,8 +3,8 @@
 /**
  * Class responsible for actually processing the asset syntaxes:
  * 
- * [asset:1]
- * [asset:1 alt="my cool image"]
+ * [asset:my_file.gif]
+ * [asset:my_file.gif alt="my cool image"]
  * 
  * @package     sfSympalAssetsPlugin
  * @subpackage  replacer
@@ -23,9 +23,9 @@ class sfSympalContentSyntaxAssetReplacer extends sfSympalContentSyntaxReplacer
     $assetObjects = $this->_getAssetObjects(array_keys($replacements));
     $assetObjects = self::_buildObjects($assetObjects);
     
-    foreach ($replacements as $id => $replacement)
+    foreach ($replacements as $slug => $replacement)
     {
-      $assetObject = $assetObjects[$id];
+      $assetObject = $assetObjects[$slug];
       $content = $assetObject->filterContent($content, $replacement['replace'], $replacement['options']);
     }
     
@@ -39,14 +39,17 @@ class sfSympalContentSyntaxAssetReplacer extends sfSympalContentSyntaxReplacer
    * we have access to a sfSympalContent object to which we'll want to
    * relate these sfSympalAsset objects
    */
-  protected function _getAssetObjects($ids)
+  protected function _getAssetObjects($slugs)
   {
     if ($this->_replacer instanceof sfSympalContentSlotReplacer)
     {
       $sympalContent = $this->_replacer->getContent();
-      if (array_diff($ids, $sympalContent->Assets->getPrimaryKeys()) || array_diff($sympalContent->Assets->getPrimaryKeys(), $ids))
+      $currentSlugs = $sympalContent->Assets->getSlugs();
+      asort($slugs);
+
+      if (array_diff($slugs, $currentSlugs) || array_diff($currentSlugs, $slugs))
       {
-        $assetObjects = $this->_getQueryForAssetObjects($ids)->execute();
+        $assetObjects = $this->_getQueryForAssetObjects($slugs)->execute();
         
         foreach ($assetObjects as $assetObject)
         {
@@ -60,7 +63,7 @@ class sfSympalContentSyntaxAssetReplacer extends sfSympalContentSyntaxReplacer
     }
     else
     {
-      return $this->_getQueryForAssetObjects($ids)->execute();
+      return $this->_getQueryForAssetObjects($slugs)->execute();
     }
   }
   
@@ -68,13 +71,14 @@ class sfSympalContentSyntaxAssetReplacer extends sfSympalContentSyntaxReplacer
    * Returns the query that should be used if we need to query out
    * and get a collection of sfSympalContent objects
    */
-  protected function _getQueryForAssetObjects($ids)
+  protected function _getQueryForAssetObjects($slugs)
   {
     $q = Doctrine_Core::getTable('sfSympalAsset')
       ->createQuery()
       ->from('sfSympalAsset a')
-      ->whereIn('a.id', array_unique($ids));
-    
+      ->whereIn('a.slug', array_unique($slugs))
+      ->orderBy('a.slug ASC');
+
     return $q;
   }
 }

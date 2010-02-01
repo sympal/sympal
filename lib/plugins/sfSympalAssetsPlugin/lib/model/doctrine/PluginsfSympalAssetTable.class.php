@@ -7,7 +7,7 @@ class PluginsfSympalAssetTable extends sfSympalDoctrineTable
   {
     return Doctrine_Core::getTable('sfSympalAsset')
       ->createQuery('a')
-      ->from('sfSympalAsset a INDEXBY a.name')
+      ->from('sfSympalAsset a')
       ->andWhere('a.path = ?', $path)
       ->execute();
   }

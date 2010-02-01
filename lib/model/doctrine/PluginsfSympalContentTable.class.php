@@ -150,14 +150,16 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
     $q = Doctrine_Query::create()
       ->from('sfSympalContent '.$alias)
       ->leftJoin($alias.'.Groups g')
-      ->leftJoin($alias.'.Slots s INDEXBY sl.name')
+      ->leftJoin($alias.'.Slots s')
       ->leftJoin($alias.'.MenuItem m')
       ->leftJoin($alias.'.Links l')
+      ->leftJoin('l.Type lt')
       ->leftJoin($alias.'.Assets a')
       ->leftJoin($alias.'.CreatedBy u')
       ->innerJoin($alias.'.Type t')
       ->innerJoin($alias.'.Site si')
-      ->andWhere('si.slug = ?', $sympalContext->getSiteSlug());
+      ->andWhere('si.slug = ?', $sympalContext->getSiteSlug())
+      ->orderBy('l.slug ASC, a.slug ASC');
 
     $user = sfContext::getInstance()->getUser();
 

@@ -3,8 +3,9 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(38, new lime_output_color());
+$t = new lime_test(17, new lime_output_color());
 
+// Setup sample content record and menu item to test with
 $user = new sfGuardUser();
 $user->first_name = 'test';
 $user->last_name = 'test';
@@ -21,117 +22,63 @@ $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal'
 $content->title = 'Testing this out';
 $content->save();
 
-$t->is($content->sfSympalPage instanceof sfSympalPage, true);
-$t->is($content->sfSympalPage->title, 'Testing this out');
-
 $menuItem = new sfSympalMenuItem();
 $menuItem->name = 'test';
 $menuItem->RelatedContent = $content;
 $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug('sympal');
 $menuItem->save();
-
 $content->save();
 
+// Test that $content was setup successfully
+$t->is($content->sfSympalPage instanceof sfSympalPage, true, 'Test that content type was instantiated properly');
+$t->is($content->sfSympalPage->title, 'Testing this out', 'Test that content type instance title was set from content record');
+
+// Query for new content
 $q = Doctrine_Core::getTable('sfSympalContent')
   ->getFullTypeQuery('sfSympalPage')
   ->andWhere('c.slug = ?', 'testing-this-out');
 
 $content = $q->fetchOne();
+$type = $content->getType();
+$site = $content->getSite();
 
-$t->is(isset($content['Type']), true);
-$t->is($content['Type']['name'], 'sfSympalPage');
-$t->is($content['Type']['label'], 'Page');
-$t->is(isset($content['Site']), true);
-$t->is($content['Site']['title'], 'Sympal');
-$t->is($content['Site']['slug'], 'sympal');
-$t->is(isset($content['sfSympalPage']), true);
-$t->is($content['slug'], 'testing-this-out');
+// Test type
+$t->is($type->getName(), 'sfSympalPage', 'Test content type name');
+$t->is($type->getLabel(), 'Page', 'Test content type label');
+
+// Test site
+$t->is($site->getTitle(), 'Sympal', 'Test site name');
+$t->is($site->getSlug(), 'sympal', 'Test site slug');
 
 $sfUser = sfContext::getInstance()->getUser();
 $sfUser->signIn($user);
 $sfUser->isEditMode(true);
 
-$content = $q->fetchOne();
+// Refresh content
+$content->refresh();
 
 $content->publish();
-$t->is(strtotime($content->date_published) > 0, true);
+$t->is(strtotime($content->date_published) > 0, true, 'Test content is published');
 
 $content->unpublish();
-$t->is(strtotime($content->date_published) > 0, false);
+$t->is(strtotime($content->date_published) > 0, false, 'Test content is unpublished');
+$t->is(strtotime($menuItem->date_published) > 0, false, 'Test menu item is unpublished');
 
-$content->date_published = new Doctrine_Expression('NOW()');
-$content->save();
-$content->free();
+$t->is($content->getTitle(), 'Testing this out', 'Test getting content type instance title from content');
+$t->is($content->getTemplateToRenderWith(), 'sympal_page/view', 'Test getTemplateToRenderWith()');
+$t->is($content->getHeaderTitle(), 'Testing this out', 'Test getHeaderTitle()');
+$t->is($content->getLayout(), null, 'Test getlayout()');
+$t->is($content->getRoute(), '@page?slug=testing-this-out', 'Test getRoute()');
 
-$content = $q->fetchOne();
-
-$t->is(strtotime($content->date_published) > 0, true);
-
-$menuItem = $content->getMenuItem();
-
-$t->is($menuItem->name, 'test');
-
-$page = $content->getRecord();
-$t->is($page instanceof sfSympalPage, true);
-$t->is($page->title, 'Testing this out');
-
-$template = $content->getTemplateToRenderWith();
-$t->is($template, 'sympal_page/view');
-
-$t->is($content->getTitle(), 'Testing this out');
-$t->is($content->getHeaderTitle(), 'Testing this out');
-
-$t->is($content->getLayout(), null);
-$t->is($content->getRoute(), '@page?slug=testing-this-out');
+// Test getting and adding of slots
+$t->is($content->getSlots()->count(), 0, 'Test we have 0 slots');
 
 get_sympal_content_slot($content, 'title', 'Text');
 get_sympal_content_slot($content, 'body', 'Markdown');
 get_sympal_content_slot($content, 'teaser', 'RawHtml');
 
-$content = $q->fetchOne();
+$content->refresh(true);
+$t->is($content->getSlots()->count(), 3, 'Test we have 3 slots');
 
-$slots = $content->getSlots();
-$slots['title']['value'] = 'Title value';
-$slots['body']['value'] = 'Body value';
-$slots['teaser']['value'] = "Body value<br />Testing";
-$slots->save();
-$content->save();
-
-$countBefore = count($slots);
-$slot = $content->getOrCreateSlot('title');
-$t->is($slot->name, 'title');
-$slot = $content->getOrCreateSlot('new');
-$t->is($slot->name, 'new');
-$t->is($slot->type, 'Text');
-
-$content = $q->fetchOne();
-
-$t->is(count($content->getSlots()), $countBefore + 1);
-
-$t->is($content->title, 'Title value');
-$t->is($slots['title']['value'], 'Title value');
-$t->is($slots['title']['type'], 'Text');
-$t->is($slots['title']['is_column'], true);
-$t->is($slots['body']['type'], 'Markdown');
-$t->is($slots['teaser']['type'], 'RawHtml');
-
-$t->is($slots['title']->render(), 'Title value');
-$t->is($slots['body']->render(), '<div class="sympal_markdown"><p>Body value</p>
-</div>');
-
-$slots['body']['value'] = "test";
-$t->is($slots['body']->render(), '<div class="sympal_markdown"><p>test</p>
-</div>');
-
-$slots->save();
-
-$slots[2]->type = 'MultiLineText';
-$t->is($slots['teaser']->render(), 'Body value<br />Testing');
-
-$content = sfSympalContent::createNew('sfSympalPage');
-
-$t->is($content->Type->name, 'sfSympalPage');
-$t->is(get_class($content->getRecord()), 'sfSympalPage');
-
-$content->title = 'test';
-$t->is($content->getRecord()->title, 'test');
+get_sympal_content_slot($content, 'title', 'Text');
+$t->is($content->getSlots()->count(), 3, 'Test we still have 3 slots');

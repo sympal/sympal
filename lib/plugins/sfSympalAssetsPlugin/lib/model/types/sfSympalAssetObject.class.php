@@ -25,7 +25,7 @@ class sfSympalAssetObject
 
   public function exists()
   {
-    return file_exists($this->getPath());
+    return $this->getPath() && file_exists($this->getPath());
   }
 
   public function getTypeFromExtension()

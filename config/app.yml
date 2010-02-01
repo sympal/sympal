@@ -274,6 +274,10 @@ all:
       sfSympalContentType:
         fields: [label]
         indexName: content_type_sluggable
+      sfSympalAsset:
+        fields: [path, name]
+        indexName: asset_sluggable
+        builder: [sfSympalAsset, slugBuilder]
 
     # Configure e-mail settings
     default_from_email_address: noreply@sympalphp.org

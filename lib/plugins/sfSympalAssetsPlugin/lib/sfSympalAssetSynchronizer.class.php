@@ -37,15 +37,29 @@ class sfSympalAssetSynchronizer
     $path = str_replace($this->_path, null, $dir);
 
     $exists = Doctrine_Core::getTable('sfSympalAsset')->findByPath($path);
+    $keys = array();
+    foreach ($exists as $asset)
+    {
+      $keys[$asset->getName()] = $asset;
+    }
 
     foreach ($files as $file)
     {
-      if (!isset($exists[$file]))
+      if (!isset($keys[$file]))
       {
         $assetObject = sfSympalAssetToolkit::createAssetObject($path.'/'.$file);
         $doctrineAsset = new sfSympalAsset();
         $doctrineAsset->setAssetObject($assetObject);
         $doctrineAsset->save();
+      }
+    }
+
+    // Remove assets that don't exist anymore on disk
+    foreach ($keys as $name => $asset)
+    {
+      if (!$asset->fileExists())
+      {
+        $asset->delete();
       }
     }
   }

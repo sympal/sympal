@@ -24,6 +24,14 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     $this->_rendered = null;
   }
 
+  public function postUpdate($event)
+  {
+    if ($this->_contentRenderedFor)
+    {
+      $this->_contentRenderedFor->deleteLinkAndAssetReferences();
+    }
+  }
+
   public function getSlotEditFormRenderer()
   {
     $contentSlotTypes = sfSympalConfig::get('content_slot_types');

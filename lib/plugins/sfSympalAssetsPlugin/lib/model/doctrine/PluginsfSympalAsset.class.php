@@ -50,7 +50,7 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
 
   public function getEmbedCode()
   {
-    return sprintf('[asset:%s]', $this->getId());
+    return sprintf('[asset:%s]', $this->getSlug());
   }
 
   public function getAssetObject()
@@ -98,6 +98,24 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
       mkdir($dir, 0777, true);
     }
     copy($this->getPath(), $dir.'/'.$this->getName());
+  }
+
+  public function fileExists()
+  {
+    return $this->getAssetObject()->exists();
+  }
+
+  public static function slugBuilder($text)
+  {
+    if (strpos($text, '.') !== false)
+    {
+      $e = explode('.', $text);
+      unset($e[count($e) - 1]);
+      $slug = implode('.', $e);
+    } else {
+      $slug = $text;
+    }
+    return Doctrine_Inflector::urlize($slug);
   }
 
   public function __call($method, $arguments)
