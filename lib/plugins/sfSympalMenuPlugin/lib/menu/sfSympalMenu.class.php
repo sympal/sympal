@@ -184,12 +184,23 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   public function getCredentials()
   {
-    return $this->_credentials;
+    $credentials = $this->_credentials;
+    foreach ($this->getChildren() as $child)
+    {
+      $credentials = array_merge($credentials, $child->getCredentials());
+    }
+    if ($credentials)
+    {
+      return array($credentials);
+    } else {
+      return array();
+    }
   }
 
   public function hasCredentials()
   {
-    return !empty($this->_credentials);
+    $credentials = $this->getCredentials();
+    return !empty($credentials);
   }
 
   public function showChildren($bool = null)
@@ -224,7 +235,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
       return false;
     }
 
-    return $user->hasCredential($this->_credentials);
+    return $user->hasCredential($this->getCredentials());
   }
 
   public function setLevel($level)
@@ -352,7 +363,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     {
       if ($child->checkUserAccess())
       {
-        $children[] = $child;
+        $children[] = true;
       }
     }
     return !empty($children);
