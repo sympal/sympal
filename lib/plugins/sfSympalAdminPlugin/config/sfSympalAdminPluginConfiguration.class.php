@@ -57,25 +57,29 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
     foreach ($contentTypes as $contentType)
     {
-      $manageContent->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId());
+      $manageContent
+        ->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId())
+        ->setCredentials(array('ManageContent'));
     }
 
-    $manageContent->addChild('Slots', '@sympal_content_slots');
+    $manageContent
+      ->addChild('Slots', '@sympal_content_slots')
+      ->setCredentials(array('ManageSlots'));
 
     $siteAdministration = $menu->getChild('Site Administration');
 
     $siteAdministration
       ->addChild('404 Redirects', '@sympal_redirects')
-      ->setCredentials(array('ManageContentSetup'));
+      ->setCredentials(array('ManageRedirects'));
 
     $siteAdministration
       ->addChild('Edit Site', '@sympal_sites_edit?id='.sfSympalContext::getInstance()->getSite()->getId())
-      ->setCredentials(array('ManageContentSetup'));
+      ->setCredentials(array('ManageSites'));
 
     $administration = $menu->getChild('Administration');
 
     $administration->addChild('Content Types', '@sympal_content_types')
-      ->setCredentials(array('ManageContentSetup'));
+      ->setCredentials(array('ManageContentTypes'));
 
     $administration->addChild('Themes', '@sympal_themes')
       ->setCredentials(array('ManageThemes'));
@@ -116,6 +120,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
   public function loadEditor(sfEvent $event)
   {
+    $user = sfContext::getInstance()->getUser();
+
     $this->configuration->loadHelpers(array('Asset', 'Partial', 'I18N'));
 
     $menu = $event->getSubject();
@@ -126,23 +132,34 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $user = sfContext::getInstance()->getUser();
     $request = sfContext::getInstance()->getRequest();
 
-    $contentEditor = $menu->getChild($content->getType()->getLabel() . ' Actions')
-      ->setCredentials(array('ManageContent'));
+    $contentEditor = $menu->getChild($content->getType()->getLabel() . ' Actions');
 
     if ($sympalConfiguration->isAdminModule())
     {
       $contentEditor->addChild(image_tag('/sf/sf_admin/images/list.png').' '.__('View '.$content->getType()->getLabel()), $content->getRoute());    
     }
 
-    $contentEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' '.__('Create New '.$content->getType()->getLabel()), '@sympal_content_create_type?type='.$content['Type']['slug']);
-    $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit '.$content->getType()->getLabel()), $content->getEditRoute());      
-    $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit Content Type'), '@sympal_content_types_edit?id='.$content->getType()->getId());      
+    $contentEditor
+      ->addChild(image_tag('/sf/sf_admin/images/add.png').' '.__('Create New '.$content->getType()->getLabel()), '@sympal_content_create_type?type='.$content['Type']['slug'])
+      ->setCredentials('ManageContent');
+
+    $contentEditor
+      ->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit '.$content->getType()->getLabel()), $content->getEditRoute())
+      ->setCredentials('ManageContent');
+
+    $contentEditor
+      ->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit Content Type'), '@sympal_content_types_edit?id='.$content->getType()->getId())
+      ->setCredentials('ManageMenus');
 
     if ($menuItem && $menuItem->exists())
     {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit Menu Item'), '@sympal_content_menu_item?id='.$content->getId());
+      $contentEditor
+        ->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit Menu Item'), '@sympal_content_menu_item?id='.$content->getId())
+        ->setCredentials('ManageMenus');  
     } else {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/add.png').' '.__('Add to Menu'), '@sympal_content_menu_item?id='.$content->getId());
+      $contentEditor
+        ->addChild(image_tag('/sf/sf_admin/images/add.png').' '.__('Add to Menu'), '@sympal_content_menu_item?id='.$content->getId())
+        ->setCredentials('ManageMenus');
     }
   }
 }
