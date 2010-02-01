@@ -2,6 +2,16 @@
 
 abstract class sfSympalBaseTask extends sfTaskExtraBaseTask
 {
+  public function isUnix()
+  {
+    return DIRECTORY_SEPARATOR == '/';
+  }
+
+  public function isWindows()
+  {
+    return !$this->isUnix();
+  }
+
   public function getSympalContext()
   {
     return sfSympalContext::getInstance();
