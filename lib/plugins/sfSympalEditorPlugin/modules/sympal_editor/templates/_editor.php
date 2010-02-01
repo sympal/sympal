@@ -40,6 +40,7 @@
       </div>
     <?php endif; ?>
 
+    <?php use_helper('SympalContentSlotEditor') ?>
     <?php echo get_sympal_inline_edit_bar_buttons() ?>
   </div>
 </div>
