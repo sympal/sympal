@@ -14,7 +14,8 @@ generator:
       actions: ~
       fields: ~
       list:
-        display: [=label]
+        display: [=label, description]
+        layout: stacked
       filter:
         class: false
       form:

@@ -45,16 +45,19 @@ sfSympalContentType:
   AdministratorGroup:
     name: Administrator
     description: Administrator group has access to all permissions but is not a super admin.
-    Permissions: [CreateAssetDirectories, UploadAssets, Developer, ClearCache, ViewDashboard, ViewAdminBar, ViewServerCheck, UpdateManager, PublishContent, ManageSlots, ManageRedirects, InsertAssets, InsertLinks, ManageAssets, InlineEditing, ManageContentTypes, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, ManageSites, ManageThemes, ManageSystemSettings]
+    Permissions: [CreateAssetDirectories, UploadAssets, ClearCache, ViewDashboard, ViewAdminBar, ViewServerCheck, UpdateManager, PublishContent, ManageSlots, ManageRedirects, InsertAssets, InsertLinks, ManageAssets, InlineEditing, ManageContentTypes, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, ManageSites, ManageThemes, ManageSystemSettings]
   ContentEditorGroup:
     name: ContentEditor
+    description: Content editor only has permission to manage and publish content.
     Permissions: [CreateAssetDirectories, UploadAssets, ViewAdminBar, ViewDashboard, ManageContent, ManageSlots, PublishContent, InsertAssets, InsertLinks, ManageAssets, InlineEditing, ManageMenus]
   SecurityManagerGroup:
     name: SecurityManager
+    description: "Security manager only has permission to manage users, groups and permissions."
     Permissions: [ViewDashboard, ManageUsers, ManageGroups, ManagePermissions]
   DeveloperGroup:
     name: Developer
-    Permissions: [ViewDashboard, ManageSystemSettings, ManageContentTypes, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, Developer]
+    description: Developer group has the same permissions as the Administrator group with some additional developer functionality.
+    Permissions: [CreateAssetDirectories, UploadAssets, Developer, ClearCache, ViewDashboard, ViewAdminBar, ViewServerCheck, UpdateManager, PublishContent, ManageSlots, ManageRedirects, InsertAssets, InsertLinks, ManageAssets, InlineEditing, ManageContentTypes, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, ManageSites, ManageThemes, ManageSystemSettings]
 
 <?php echo sfSympalConfig::get('permission_model') ?>:
   CreateAssetDirectories:
