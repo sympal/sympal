@@ -6,6 +6,21 @@ class sfSympalUser extends sfGuardSecurityUser
     $_forwarded  = false,
     $_isEditMode = null;
 
+  public function getEditCulture()
+  {
+    if ($editCulture = $this->getAttribute('sympal_edit_culture'))
+    {
+      return $editCulture;
+    } else {
+      return $this->getCulture();
+    }
+  }
+
+  public function setEditCulture($culture)
+  {
+    $this->setAttribute('sympal_edit_culture', $culture);
+  }
+
   public function doIsEditModeCheck()
   {
     $content = sfSympalContext::getInstance()->getCurrentContent();

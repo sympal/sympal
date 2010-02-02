@@ -71,7 +71,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       {
         $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
         $form = new $formClass($content);
-        $form->useFields(array(sfContext::getInstance()->getUser()->getCulture()));
+        $form->useFields(array(sfContext::getInstance()->getUser()->getEditCulture()));
       }      
     }
 
@@ -92,7 +92,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       if ($contentTypeTranslationTable->hasField($this->name))
       {
         $form = new $contentTypeFormClassName($content->getRecord()); 
-        $i18nForm = $form->getEmbeddedForm($language = sfContext::getInstance()->getUser()->getCulture()); 
+        $i18nForm = $form->getEmbeddedForm($language = sfContext::getInstance()->getUser()->getEditCulture()); 
         $i18nForm->useFields(array($this->name)); 
         unset($form[$language]); 
         $form->embedForm($language, $i18nForm); 

@@ -7,7 +7,7 @@ class sfSympalFormToolkit
     if (sfSympalConfig::isI18nEnabled($name))
     {
       $context = sfContext::getInstance();
-      $culture = $context->getUser()->getCulture();
+      $culture = $context->getUser()->getEditCulture();
       $form->embedI18n(array(strtolower($culture)));
       $widgetSchema = $form->getWidgetSchema();
       $context->getConfiguration()->loadHelpers(array('Helper'));

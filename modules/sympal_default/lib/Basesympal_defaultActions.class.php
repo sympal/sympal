@@ -28,6 +28,12 @@ class Basesympal_defaultActions extends sfActions
     return $this->redirect(str_replace('/'.$oldCulture.'/', '/'.$newCulture.'/', $this->getRequest()->getReferer($this->getUser()->getReferer('@homepage'))));
   }
 
+  public function executeChange_edit_language(sfWebRequest $request)
+  {
+    $this->getUser()->setEditCulture($request->getParameter('language'));
+    return $this->redirect(str_replace('/'.$oldCulture.'/', '/'.$newCulture.'/', $this->getRequest()->getReferer($this->getUser()->getReferer('@homepage'))));
+  }
+
   public function executeAsk_confirmation(sfWebRequest $request)
   {
     if ($this->isAjax())

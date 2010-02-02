@@ -34,14 +34,6 @@ function get_sympal_inline_edit_bar_buttons()
     isButton(false)
   ;
 
-  if (sfSympalConfig::isI18nEnabled())
-  {
-    $menu->
-      addChild(get_partial('sympal_default/change_language_form'))->
-      isButton(false)
-    ;
-  }
-
   if ($content->getEditableSlotsExistOnPage())
   {
     $menu->addChild('Links', '@sympal_editor_links')->

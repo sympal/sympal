@@ -171,5 +171,16 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
         ->addChild(image_tag('/sf/sf_admin/images/add.png').' '.__('Add to Menu'), '@sympal_content_menu_item?id='.$content->getId())
         ->setCredentials('ManageMenus');
     }
+
+    if (sfSympalConfig::isI18nEnabled())
+    {
+      foreach (sfSympalConfig::getLanguageCodes() as $code)
+      {
+        if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
+        {
+          $contentEditor->addChild(image_tag('/sfSympalPlugin/images/flags/'.strtolower($code).'.png').' Change to '.format_language($code), '@sympal_change_edit_language?language='.$code, 'title=Switch to '.format_language($code));
+        }
+      }
+    }
   }
 }
