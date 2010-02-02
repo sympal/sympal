@@ -195,7 +195,7 @@ class sfSympalAssetObject
 
   public function render($options = array())
   {
-    $options = array_merge(sfSympalConfig::get('assets', 'default_render_options', array()));
+    $options = array_merge(sfSympalConfig::get('assets', 'default_render_options', array()), $options);
     $options = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.assets.filter_render_options'), $options)->getReturnValue();
     if (isset($options['renderer']) && $options['renderer'])
     {
