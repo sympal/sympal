@@ -1,5 +1,8 @@
 all:
   sympal_config:
+    # Configure the default culture
+    default_culture: en
+
     # Configure whether or not to allow the theme to be changed with a 
     # parameter in the url named sf_sympal_theme. Example: ?sf_sympal_theme=wordpress_default
     # The value will also be remembered in the users session

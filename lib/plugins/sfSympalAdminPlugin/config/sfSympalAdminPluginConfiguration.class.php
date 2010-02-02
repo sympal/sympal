@@ -106,6 +106,15 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $form = $event->getSubject();
 
     $array = sfSympalFormToolkit::getThemeWidgetAndValidator();
+    
+    $languageForm = new sfFormLanguage(
+      sfContext::getInstance()->getUser(), 
+      array('languages' => sfSympalConfig::getLanguageCodes())
+    );
+    $widgetSchema = $languageForm->getWidgetSchema();
+    $validatorSchema = $languageForm->getValidatorSchema();
+
+    $form->addSetting(null, 'default_culture', 'Default Culture', $widgetSchema['language'], $validatorSchema['language']);
     $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
     $form->addSetting(null, 'default_theme', 'Default Theme', $array['widget'], $array['validator']);
     $form->addSetting(null, 'default_rendering_module', 'Default Rendering Module');
