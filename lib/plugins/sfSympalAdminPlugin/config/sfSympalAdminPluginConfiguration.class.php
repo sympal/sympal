@@ -105,18 +105,38 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   {
     $form = $event->getSubject();
 
-    $array = sfSympalFormToolkit::getThemeWidgetAndValidator();
-    
-    $languageForm = new sfFormLanguage(
-      sfContext::getInstance()->getUser(), 
-      array('languages' => sfSympalConfig::getLanguageCodes())
-    );
-    $widgetSchema = $languageForm->getWidgetSchema();
-    $validatorSchema = $languageForm->getValidatorSchema();
+    if (sfSympalConfig::isI18nEnabled())
+    {
+      $cultures = sfCultureInfo::getCultures(sfCultureInfo::NEUTRAL);
+      $languages = array();
+      foreach ($cultures as $key => $value)
+      {
+        $formatted = format_language($value);;
+        if ($formatted)
+        {
+          $languages[$value] = $formatted;
+        }
+      }
+      asort($languages);
+      $widget = new sfWidgetFormChoice(array('multiple' => true, 'choices' => $languages));
+      $validator = new sfValidatorChoice(array('multiple' => true, 'choices' => array_keys($languages)));
+      $form->addSetting(null, 'language_codes', 'Available Cultures', $widget, $validator);
 
-    $form->addSetting(null, 'default_culture', 'Default Culture', $widgetSchema['language'], $validatorSchema['language']);
+      $languageForm = new sfFormLanguage(
+        sfContext::getInstance()->getUser(), 
+        array('languages' => sfSympalConfig::getLanguageCodes())
+      );
+      $widgetSchema = $languageForm->getWidgetSchema();
+      $validatorSchema = $languageForm->getValidatorSchema();
+
+      $form->addSetting(null, 'default_culture', 'Default Culture', $widgetSchema['language'], $validatorSchema['language']);
+    }
+
     $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
+
+    $array = sfSympalFormToolkit::getThemeWidgetAndValidator();
     $form->addSetting(null, 'default_theme', 'Default Theme', $array['widget'], $array['validator']);
+
     $form->addSetting(null, 'default_rendering_module', 'Default Rendering Module');
     $form->addSetting(null, 'default_rendering_action', 'Default Rendering Action');
     $form->addSetting(null, 'recaptcha_public_key', 'Recaptcha Public Key');

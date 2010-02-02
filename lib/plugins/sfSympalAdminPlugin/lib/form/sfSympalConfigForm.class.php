@@ -115,6 +115,8 @@ class sfSympalConfigForm extends BaseForm
 
     $array = array();
     $array['all']['sympal_config'] = array();
+
+    // Add only the values that have changed from the old default values
     foreach ($new as $key => $value)
     {
       if ($value != $old[$key])
@@ -123,10 +125,22 @@ class sfSympalConfigForm extends BaseForm
       }
     }
 
-    return sfToolkit::arrayDeepMerge(
+    // Merge in existing values from the current app.yml file
+    $array = sfToolkit::arrayDeepMerge(
       sfYaml::load(sfConfig::get('sf_app_dir').'/config/app.yml'),
       $array
     );
+
+    // Remove values that don't exist anymore
+    foreach ($array['all']['sympal_config'] as $key => $value)
+    {
+      if (!array_key_exists($key, $new))
+      {
+        unset($array['all']['sympal_config'][$key]);
+      }
+    }
+
+    return $array;
   }
 
   public function getGroups()
