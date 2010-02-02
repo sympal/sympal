@@ -30,9 +30,10 @@ function render_content_date_published(sfSympalContent $content, $slot)
  * @param string $name The name of the slot
  * @param string $type The type of slot
  * @param string $renderFunction The function/callable used to render the value of slots which are columns
+ * @param array  $options Array of options for this slot
  * @return void
  */
-function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunction = null)
+function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunction = null, $options = array())
 {
   $slot = null;
   if ($name instanceof sfSympalContentSlot)
@@ -40,7 +41,7 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunctio
     $slot = $name;
     $name = $name->getName();
   } else {
-    $slot = $content->getOrCreateSlot($name, $type, $renderFunction);
+    $slot = $content->getOrCreateSlot($name, $type, $renderFunction, $options);
   }
 
   $slot->setContentRenderedFor($content);
@@ -49,7 +50,7 @@ function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunctio
   {
     use_helper('SympalContentSlotEditor');
 
-    return get_sympal_content_slot_editor($content, $slot);
+    return get_sympal_content_slot_editor($content, $slot, $options);
   } else {
     return $slot->render();
   }

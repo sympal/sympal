@@ -159,7 +159,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $contentSlotRef;
   }
 
-  public function getOrCreateSlot($name, $type = null, $renderFunction = null)
+  public function getOrCreateSlot($name, $type = null, $renderFunction = null, $options = array())
   {
     if (!$hasSlot = $this->hasSlot($name))
     {
@@ -177,6 +177,10 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       $slot->render_function = $renderFunction;
       $slot->name = $name;
       $slot->type = $type;
+      if (isset($options['default_value']))
+      {
+        $slot->value = $options['default_value'];
+      }
       $slot->save();
 
       $this->addSlot($slot);

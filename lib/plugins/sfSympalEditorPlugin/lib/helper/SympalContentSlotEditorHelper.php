@@ -1,6 +1,6 @@
 <?php
 
-function get_sympal_content_slot_editor(sfSympalContent $content, sfSympalContentSlot $slot)
+function get_sympal_content_slot_editor(sfSympalContent $content, sfSympalContentSlot $slot, $options = array())
 {
   $content->setEditableSlotsExistOnPage(true);
 
