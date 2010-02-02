@@ -91,6 +91,7 @@ class sfSympalMenuSite extends sfSympalMenu
       $array['all_permissions'] = $menuItem->getAllPermissions();
       $array['level'] = $menuItem->getLevel();
       $array['date_published'] = $menuItem->getDatePublished();
+      $array['html_attributes'] = _parse_attributes($menuItem->getHtmlAttributes());
       unset($array['__children']);
 
       if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
@@ -137,6 +138,7 @@ class sfSympalMenuSite extends sfSympalMenu
     $this->requiresAuth($this->_menuItem['requires_auth']);
     $this->requiresNoAuth($this->_menuItem['requires_no_auth']);
     $this->setCredentials($this->_menuItem['all_permissions']);
+    $this->setOptions($this->_menuItem['html_attributes']);
 
     // If not published yet then you must have certain credentials
     $datePublished = strtotime($this->_menuItem['date_published']);

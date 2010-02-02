@@ -52,6 +52,9 @@ sfSympalContent:
     template: string(255)
     module: string(255)
     action: string(255)
+    publicly_editable:
+      type: boolean
+      default: false
     page_title: string(255)
     meta_keywords: string(500)
     meta_description: string(500)
@@ -86,6 +89,12 @@ sfSympalContent:
       foreign: group_id
       refClass: sfSympalContentGroup
       foreignAlias: Content
+    EditGroups:
+      class: <?php echo sfSympalConfig::get('group_model') ?> 
+      local: content_id
+      foreign: group_id
+      refClass: sfSympalContentEditGroup
+      foreignAlias: EditContent
     Slots:
       class: sfSympalContentSlot
       refClass: sfSympalContentSlotRef
@@ -216,4 +225,29 @@ sfSympalContentGroup:
       class: <?php echo sfSympalConfig::get('group_model') ?> 
       local: group_id
       foreignAlias: ContentGroups
+      onDelete: CASCADE
+
+sfSympalContentEditGroup:
+  actAs: [sfSympalRecordTemplate]
+  options:
+    symfony:
+      form: false
+      filter: false
+  columns:
+    content_id:
+      primary: true
+      type: integer
+    group_id:
+      primary: true
+      type: integer
+  relations:
+    Content:
+      local: content_id
+      class: sfSympalContent
+      foreignAlias: ContentEditGroups
+      onDelete: CASCADE
+    Group:
+      class: <?php echo sfSympalConfig::get('group_model') ?> 
+      local: group_id
+      foreignAlias: ContentEditGroups
       onDelete: CASCADE

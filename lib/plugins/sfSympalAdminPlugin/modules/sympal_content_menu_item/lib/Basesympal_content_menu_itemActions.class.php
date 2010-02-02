@@ -35,7 +35,6 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
     $widgetSchema['parent_id']->setOption('add_empty', '');
     unset(
       $this->form['id'],
-      $this->form['is_primary'],
       $this->form['content_id'],
       $this->form['groups_list'],
       $this->form['permissions_list'],

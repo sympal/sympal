@@ -3,7 +3,6 @@
 sfSympalMenuItem:
   MenuItem_primary:
     name: primary
-    is_primary: true
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
 <?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
     Translation:

@@ -6,12 +6,26 @@ class sfSympalUser extends sfGuardSecurityUser
     $_forwarded  = false,
     $_isEditMode = null;
 
-  public function isEditMode()
+  public function doIsEditModeCheck()
   {
-    if (is_null($this->_isEditMode))
+    $content = sfSympalContext::getInstance()->getCurrentContent();
+    if (($content && $content->getPubliclyEditable())
+      || ($content && $content->getAllEditPermissions() && $this->hasCredential($content->getAllEditPermissions()))
+      || ($this->isAuthenticated() && $this->hasCredential('ManageContent'))
+    )
     {
-      $this->_isEditMode = $this->isAuthenticated() && $this->hasCredential('ManageContent');
-      $this->_isEditMode = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_is_edit_mode'), $this->_isEditMode)->getReturnValue();
+      $this->_isEditMode = true;
+    } else {
+      $this->_isEditMode = false;
+    }
+    $this->_isEditMode = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_is_edit_mode'), $this->_isEditMode)->getReturnValue();
+  }
+
+  public function isEditMode($forceCheckAgain = false)
+  {
+    if (is_null($this->_isEditMode) || $forceCheckAgain === true)
+    {
+      $this->doIsEditModeCheck();
     }
     return $this->_isEditMode;
   }

@@ -6,7 +6,8 @@
 abstract class PluginsfSympalContent extends BasesfSympalContent
 {
   protected
-    $_allPermissions,
+    $_allGroupsPermissions,
+    $_allEditGroupsPermissions,
     $_route,
     $_routeObject,
     $_mainMenuItem,
@@ -220,20 +221,26 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->getType()->getName();
   }
 
-  public function getAllPermissions()
+  public function getAllEditPermissions()
   {
-    if (!$this->_allPermissions)
+    return $this->getAllPermissions('EditGroups');
+  }
+
+  public function getAllPermissions($key = 'Groups')
+  {
+    $cacheKey = sprintf('_all%sPermissions', $key);
+    if (!$this->$cacheKey)
     {
-      $this->_allPermissions = array();
-      foreach ($this->Groups as $group)
+      $this->$cacheKey = array();
+      foreach ($this->$key as $group)
       {
         foreach ($group->Permissions as $permission)
         {
-          $this->_allPermissions[] = $permission->name;
+          $this->{$cacheKey}[] = $permission->name;
         }
       }
     }
-    return $this->_allPermissions;
+    return $this->$cacheKey;
   }
 
   public function __toString()

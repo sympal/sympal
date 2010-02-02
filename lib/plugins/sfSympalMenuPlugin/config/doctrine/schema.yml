@@ -12,12 +12,12 @@ sfSympalMenuItem:
       type: string(255)
       notnull: true
     root_id: integer
-    is_primary: boolean
     date_published: timestamp
     label: string(255)
     custom_path: string(255)
     requires_auth: boolean
     requires_no_auth: boolean
+    html_attributes: string(255)
     site_id:
       type: integer
       notnull: true
