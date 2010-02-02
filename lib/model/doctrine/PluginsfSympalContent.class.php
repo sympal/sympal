@@ -51,6 +51,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function construct()
   {
+    $this->populateSlotsByName();
+  }
+
+  public function populateSlotsByName()
+  {
+    $this->_slotsByName = array();
     foreach ($this->Slots as $slot)
     {
       $this->_slotsByName[$slot->name] = $slot;
