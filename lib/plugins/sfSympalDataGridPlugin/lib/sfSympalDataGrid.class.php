@@ -48,6 +48,11 @@ class sfSympalDataGrid
       throw new Doctrine_Exception('First argument should be either the name of a model or an existing Doctrine_Query object');
     }
     $this->_table = Doctrine_Core::getTable($this->_modelName);
+
+    if (!self::$_symfonyContext)
+    {
+      throw new sfException('In order to use the Sympal data grid you must set the Symfony context to use with setSymfonyContext()');
+    }
   }
 
   public static function setSymfonyContext(sfContext $symfonyContext)
@@ -61,6 +66,16 @@ class sfSympalDataGrid
     return $dataGrid;
   }
 
+  public function getFromSession($key)
+  {
+    return self::$_symfonyContext->getUser()->getAttribute($key, null, $this->getId());
+  }
+
+  public function setToSession($key, $value)
+  {
+    return self::$_symfonyContext->getUser()->setAttribute($key, $value, $this->getId());
+  }
+
   public function isSortable($bool = null)
   {
     if ($bool !== null)
@@ -71,9 +86,20 @@ class sfSympalDataGrid
     return $this->_isSortable;
   }
 
+  public function setDefaultSort($sort, $order = null)
+  {
+    $this->_sort = $sort;
+    if ($order)
+    {
+      $this->_order = $order;
+    }
+    return $this;
+  }
+
   public function setSort($sort, $order = null)
   {
     $this->_sort = $sort;
+    $this->setToSession('sort', $this->_sort);
     if ($order)
     {
       $this->setOrder($order);
@@ -89,6 +115,20 @@ class sfSympalDataGrid
   public function setOrder($order)
   {
     $this->_order = strtolower($order);
+    $this->setToSession('order', $this->_order);
+    return $this;
+  }
+
+  public function setDefaultOrder($order)
+  {
+    $this->_order = strtolower($order);
+    return $this;
+  }
+
+  public function setPage($page)
+  {
+    $this->setToSession('page', $page);
+    $this->_pager->setPage($page);
     return $this;
   }
 
@@ -333,6 +373,7 @@ class sfSympalDataGrid
 
     $this->_query->getSqlQuery(array(), false);
     $this->_pager->init();
+
     if (!$this->_columns)
     {
       $this->_populateDefaultColumns();
@@ -340,29 +381,52 @@ class sfSympalDataGrid
       $this->_initializeColumns();
     }
 
-    $request = self::$_symfonyContext->getRequest();
-
-    $dataGridRequestInfo = $request->getParameter($this->getId());
-    if (isset($dataGridRequestInfo['sort']) && $sort = $dataGridRequestInfo['sort'])
-    {
-      $this->_sort = $sort;
-    }
-    if (isset($dataGridRequestInfo['order']) && $order = $dataGridRequestInfo['order'])
-    {
-      $this->_order = $order;
-    }
-
-    if ($this->_sort)
-    {
-      $this->_query->addOrderBy($this->_sort.(isset($this->_order) ? ' '.$this->_order : null));
-    }
+    $this->_initializeSortingAndPaging();
 
     $this->_initialized = true;
 
     return $this;
   }
 
-  private function _initializeColumns()
+  public function getRecordColumnValue($record, $column)
+  {
+    $current = $record;
+    if (isset($column['dqlAlias']) && isset($this->_parents[$column['dqlAlias']]))
+    {
+      foreach ($this->_parents[$column['dqlAlias']] as $parent)
+      {
+        if (isset($current[$parent]))
+        {
+          $current = $current[$parent];
+        }
+      }
+    }
+    return $current[$column['fieldName']];
+  }
+
+  public function getSymfonyResource($module, $action = null, $variables = array())
+  {
+    if (strpos($module, '/'))
+    {
+      $variables = (array) $action;
+      $e = explode('/', $module);
+      list($module, $action) = $e;
+    }
+
+    self::$_symfonyContext->getConfiguration()->loadHelpers('Partial');
+    $controller = self::$_symfonyContext->getController();
+
+    if ($controller->componentExists($module, $action))
+    {
+      return get_component($module, $action, $variables);
+    } else {
+      return get_partial($module.'/'.$action, $variables);
+    }
+
+    throw new sfException('Could not find component or partial for the module "'.$module.'" and action "'.$action.'"');
+  }
+
+  protected function _initializeColumns()
   {
     foreach ($this->_columns as $name => $options)
     {
@@ -414,7 +478,7 @@ class sfSympalDataGrid
     }
   }
 
-  private function _populateDefaultColumns()
+  protected function _populateDefaultColumns()
   {
     $rootAlias = $this->_query->getRootAlias();
     $this->_columns = array();
@@ -428,42 +492,49 @@ class sfSympalDataGrid
     }
   }
 
-  public function getRecordColumnValue($record, $column)
+  protected function _populateFromSession()
   {
-    $current = $record;
-    if (isset($column['dqlAlias']) && isset($this->_parents[$column['dqlAlias']]))
+    if ($sort = $this->getFromSession('sort'))
     {
-      foreach ($this->_parents[$column['dqlAlias']] as $parent)
-      {
-        if (isset($current[$parent]))
-        {
-          $current = $current[$parent];
-        }
-      }
+      $this->setSort($sort);
     }
-    return $current[$column['fieldName']];
+    
+    if ($order = $this->getFromSession('order'))
+    {
+      $this->setOrder($order);
+    }
+
+    if ($page = $this->getFromSession('page'))
+    {
+      $this->setPage($page);
+    }
   }
 
-  public function getSymfonyResource($module, $action = null, $variables = array())
+  protected function _initializeSortingAndPaging()
   {
-    if (strpos($module, '/'))
+    $request = self::$_symfonyContext->getRequest();
+
+    $dataGridRequestInfo = $request->getParameter($this->getId());
+    if (isset($dataGridRequestInfo['sort']) && $sort = $dataGridRequestInfo['sort'])
     {
-      $variables = (array) $action;
-      $e = explode('/', $module);
-      list($module, $action) = $e;
+      $this->setSort($sort);
+    }
+    if (isset($dataGridRequestInfo['order']) && $order = $dataGridRequestInfo['order'])
+    {
+      $this->setOrder($order);
     }
 
-    self::$_symfonyContext->getConfiguration()->loadHelpers('Partial');
-    $controller = self::$_symfonyContext->getController();
-
-    if ($controller->componentExists($module, $action))
+    if (isset($dataGridRequestInfo['page']) && $dataGridRequestInfo['page'])
     {
-      return get_component($module, $action, $variables);
-    } else {
-      return get_partial($module.'/'.$action, $variables);
+      $this->setPage($dataGridRequestInfo['page']);
     }
 
-    throw new sfException('Could not find component or partial for the module "'.$module.'" and action "'.$action.'"');
+    $this->_populateFromSession();
+
+    if ($this->_sort)
+    {
+      $this->_query->addOrderBy($this->_sort.(isset($this->_order) ? ' '.$this->_order : null));
+    }
   }
 
   public function __call($method, $arguments)

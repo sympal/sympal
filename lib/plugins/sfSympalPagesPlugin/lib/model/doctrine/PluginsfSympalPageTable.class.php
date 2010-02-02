@@ -16,14 +16,14 @@ class PluginsfSympalPageTable extends sfSympalDoctrineTable
         ->addColumn('crt.title', 'renderer=sympal_page/data_grid_title')
         ->addColumn('c.date_published')
         ->addColumn('u.username', 'label=Created By')
-        ->setSort('crt.title');
+        ->setDefaultSort('crt.title');
       
     } else {
       return $dataGrid
         ->addColumn('cr.title', 'renderer=sympal_page/data_grid_title')
         ->addColumn('c.date_published')
         ->addColumn('u.username', 'label=Created By')
-        ->setSort('cr.title');
+        ->setDefaultSort('cr.title');
     }
   }
 }
