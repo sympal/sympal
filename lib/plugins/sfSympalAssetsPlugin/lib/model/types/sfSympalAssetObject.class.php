@@ -195,7 +195,14 @@ class sfSympalAssetObject
 
   public function render($options = array())
   {
-    if (isset($options['linked_thumbnail']))
+    $options = array_merge(sfSympalConfig::get('assets', 'default_render_options', array()));
+    $options = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.assets.filter_render_options'), $options)->getReturnValue();
+    if (isset($options['renderer']) && $options['renderer'])
+    {
+      $renderer = new $options['renderer']($this, $options);
+      return $renderer->render();
+    }
+    else if (isset($options['linked_thumbnail']))
     {
       return link_to($this->getThumbnailImage($options), $this->getUrl(), $options);
     }
