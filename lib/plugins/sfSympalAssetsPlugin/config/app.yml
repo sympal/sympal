@@ -8,6 +8,7 @@ all:
       originals_dir:          .originals
       thumbnails_max_width:   64
       thumbnails_max_height:  64
+      thumbnails_method:      fit
 
       file_types:                           # define file_types is usefull for displaying icons in browser
         document:                           # type of file (also used as default icon name)

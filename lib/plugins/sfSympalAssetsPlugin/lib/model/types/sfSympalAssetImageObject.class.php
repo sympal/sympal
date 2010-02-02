@@ -133,7 +133,9 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
       $thumb = new sfImage($this->getPath());
       $thumb->thumbnail(
         sfSympalConfig::get('assets', 'thumbnails_max_width', 64),
-        sfSympalConfig::get('assets', 'thumbnails_max_height', 64)
+        sfSympalConfig::get('assets', 'thumbnails_max_height', 64),
+        sfSympalConfig::get('assets', 'thumbnails_method', 'fit')
+        
       );
 
       $destinationDirectory = $this->getThumbnailDirectory();
