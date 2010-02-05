@@ -188,6 +188,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       $slot = $this->getSlot($name);
     }
 
+    if ($slot->type != $type)
+    {
+      $slot->type = $type;
+      $slot->save();
+    }
+
     $slot->setContentRenderedFor($this);
 
     return $slot;
