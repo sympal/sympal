@@ -228,11 +228,14 @@ class sfSympalMenuSiteManager
     {
       $this->_menuItems = Doctrine_Core::getTable('sfSympalMenuItem')->getMenuHierarchies();
 
-      foreach ($this->_menuItems as $menuItem)
+      if (count($this->_menuItems) > 0)
       {
-        $this->_rootSlugs[$menuItem['root_id']] = $menuItem['slug'];
-        $this->_rootMenuItems[$menuItem['root_id']] = $menuItem;
-        $this->_hierarchies[$menuItem['root_id']] = $menuItem['__children'];
+        foreach ($this->_menuItems as $menuItem)
+        {
+          $this->_rootSlugs[$menuItem['root_id']] = $menuItem['slug'];
+          $this->_rootMenuItems[$menuItem['root_id']] = $menuItem;
+          $this->_hierarchies[$menuItem['root_id']] = $menuItem['__children'];
+        }
       }
 
       if ($cache = $this->_getCache())
