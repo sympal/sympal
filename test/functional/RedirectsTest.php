@@ -28,6 +28,7 @@ $browser->clearCache();
 $browser->
   get('/test_redirect1/test1/ok/test2')->
   with('response')->begin()->
+    isStatusCode(301)->
     isRedirected()->
     followRedirect()->
   end()->
@@ -41,6 +42,7 @@ $browser->
 $browser->
   get('/test_redirect2')->
   with('response')->begin()->
+    isStatusCode(301)->
     isRedirected()->
     followRedirect()->
   end()->
@@ -56,6 +58,7 @@ $browser->
 $browser->
   get('/test_redirect3/test1/ok/test2')->
   with('response')->begin()->
+    isStatusCode(301)->
     isRedirected()->
     followRedirect()->
   end()->
