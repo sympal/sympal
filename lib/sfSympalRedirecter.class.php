@@ -17,7 +17,7 @@ class sfSympalRedirecter
 
   public function redirect()
   {
-    $this->_actions->redirect($this->_getUrlToRedirectTo());
+    $this->_actions->redirect($this->_getUrlToRedirectTo(), 301);
   }
 
   private function _getDestinationRoute()
