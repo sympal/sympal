@@ -192,12 +192,19 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     $credentials = $this->getCredentials();
     return !empty($credentials);
   }
-
+  
+  /**
+   * Returns and optionally sets whether or not this menu item should
+   * show its children. If the $bool argument is passed, the _showChildren
+   * property will be set
+   * 
+   * @param boolean $bool Whether to show children or not
+   */
   public function showChildren($bool = null)
   {
-    if (!is_null($bool))
+    if ($bool !== null)
     {
-      $this->_showChildren = $bool;
+      $this->_showChildren = (bool) $bool;
     }
 
     return $this->_showChildren;
