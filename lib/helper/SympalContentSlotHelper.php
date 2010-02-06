@@ -33,8 +33,13 @@ function render_content_date_published(sfSympalContent $content, $slot)
  * @param array  $options Array of options for this slot
  * @return void
  */
-function get_sympal_content_slot($content, $name, $type = 'Text', $renderFunction = null, $options = array())
+function get_sympal_content_slot($content, $name, $type = null, $renderFunction = null, $options = array())
 {
+  if ($type === null)
+  {
+    $type = 'Text';
+  }
+  
   $slot = null;
   if ($name instanceof sfSympalContentSlot)
   {
