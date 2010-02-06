@@ -87,7 +87,7 @@ class sfSympalMenuSiteManager
     $this->initialize();
   }
 
-  public static function getMenu($name, $showChildren = false, $class = null)
+  public static function getMenu($name, $showChildren = true, $class = null)
   {
     return self::getInstance()->_getMenu($name, $showChildren, $class);
   }
@@ -97,7 +97,7 @@ class sfSympalMenuSiteManager
     return sfSympalConfig::get('menu_cache', 'enabled', true) ? sfSympalConfiguration::getActive()->getCache() : false;
   }
 
-  protected function _getMenu($name, $showChildren = false, $class = null)
+  protected function _getMenu($name, $showChildren = true, $class = null)
   {
     if (is_scalar($name) && isset($this->_rootSlugs[$name]))
     {
@@ -134,10 +134,7 @@ class sfSympalMenuSiteManager
 
     if ($menu)
     {
-      if ($showChildren)
-      {
-        $menu->callRecursively('showChildren', $showChildren);
-      }
+      $menu->callRecursively('showChildren', $showChildren);
 
       $menu->setCacheKey($cacheKey);
     }
