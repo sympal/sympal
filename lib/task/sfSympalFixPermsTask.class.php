@@ -2,6 +2,9 @@
 
 class sfSympalFixPermsTask extends sfSympalBaseTask
 {
+  protected
+    $failed  = array();
+  
   protected function configure()
   {
     $this->aliases = array();
@@ -48,11 +51,18 @@ EOF;
     {
       if ($this->isUnix())
       {
-        if (is_dir($item))
+        try
         {
-          $this->getFilesystem()->execute('chmod -R 0777 '.$item);
-        } else {
-          $this->getFilesystem()->execute('chmod 0777 '.$item);          
+          if (is_dir($item))
+          {
+            $this->getFilesystem()->execute('chmod -R 0777 '.$item);
+          } else {
+            $this->getFilesystem()->execute('chmod 0777 '.$item);          
+          }
+        }
+        catch (RuntimeException $e)
+        {
+          $this->failed[] = $item;
         }
       } else {
         @$this->getFilesystem()->chmod($item, 0777);
@@ -63,6 +73,15 @@ EOF;
         @$this->getFilesystem()->chmod($dirFinder->in($items), 0777);
         @$this->getFilesystem()->chmod($fileFinder->in($items), 0666);
       }
+    }
+    
+    // note those files that failed
+    if (count($this->failed))
+    {
+      $this->logBlock(array_merge(
+        array('Permissions on the following file(s) or dir(s) could not be fixed:', ''),
+        array_map(create_function('$f', 'return \' - \'.sfDebug::shortenFilePath($f);'), $this->failed)
+      ), 'ERROR_LARGE');
     }
   }
 }
