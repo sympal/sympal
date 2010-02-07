@@ -32,11 +32,7 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
 
     if ($this->sort_column) 
     { 
-      $dataGrid->setDefaultSort($this->sort_column);
-      if ($this->sort_order)
-      {
-        $dataGrid->setDefaultSort($this->sort_order);
-      }
+      $dataGrid->setDefaultSort($this->sort_column, $this->sort_order);
     }
 
     $dataGrid->setMaxPerPage(($this->rows_per_page > 0 ? $this->rows_per_page : sfSympalConfig::get('rows_per_page', null, 10)));
