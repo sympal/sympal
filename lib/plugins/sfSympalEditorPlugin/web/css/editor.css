@@ -14,6 +14,11 @@ html {
   height: 400px;
   overflow: auto;
   z-index: 9999999;
+  color: #000;
+}
+#sympal_dashboard a, #sympal_editor a, #sympal_assets a, #sympal_links a , #sympal_assets a, #sympal_objects a
+{
+  color: #000;
 }
 
 .sympal_close_menu {
