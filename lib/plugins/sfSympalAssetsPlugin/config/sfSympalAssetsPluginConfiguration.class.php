@@ -17,7 +17,7 @@ class sfSympalAssetsPluginConfiguration extends sfPluginConfiguration
       $menu->
         addChild('Assets', '@sympal_assets_select')->
         isEditModeButton(true)->
-        setShortcut('Ctrl+A')->
+        setShortcut('Ctrl+Shift+A')->
         setInputClass('toggle_sympal_assets')->
         setCredentials('InsertAssets')
       ;
