@@ -2,18 +2,6 @@
 
 class Basesympal_contentActions extends autoSympal_contentActions
 {
-  public function preExecute()
-  {
-    parent::preExecute();
-
-    $this->getContext()->getEventDispatcher()->connect('admin.save_object', array($this, 'listenToAdminSaveObject'));
-  }
-
-  public function listenToAdminSaveObject(sfEvent $event)
-  {
-    $this->clearCache();
-  }
-
   protected function _publishContent(sfSympalContent $content, $publish = true)
   {
     $func = $publish ? 'publish':'unpublish';
@@ -213,8 +201,14 @@ class Basesympal_contentActions extends autoSympal_contentActions
     {
       $this->getUser()->setFlash('notice', $form->getObject()->isNew() ? 'The item was created successfully.' : 'The item was updated successfully.');
 
+      $originalCustomPath = $form->getObject()->getCustomPath();
       $content = $form->save();
       $id = $content->getId();
+
+      if ($originalCustomPath !== $form->getObject()->getCustomPath())
+      {
+        $this->clearCache();
+      }
 
       $this->dispatcher->notify(new sfEvent($this, 'admin.save_object', array('object' => $content)));
 
