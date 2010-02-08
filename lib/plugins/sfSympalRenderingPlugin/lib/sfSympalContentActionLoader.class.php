@@ -199,8 +199,14 @@ class sfSympalContentActionLoader
         {
           $this->_actions->forward('sympal_default', 'new_site');
         }
-
-        $this->_actions->forward404();
+        
+        $parameters = $this->_actions->getRoute()->getParameters();
+        $msg = sprintf(
+          'No %s record found that relates to sfSympalContent record id "%s"',
+          $parameters['sympal_content_type'],
+          $parameters['sympal_content_type_id']
+        );
+        $this->_actions->forward404($msg);
       }
     }
   }
