@@ -168,8 +168,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
     if (!$user->hasCredential('ManageContent'))
     {
-      $expr = new Doctrine_Expression('NOW()');
-      $q->andWhere($alias.'.date_published <= '.$expr);
+      $q = $this->addPublishedQuery($alias, $q);
     }
 
     if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot'))
@@ -190,6 +189,25 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
     $q = Doctrine_Core::getTable('sfSympalContent')
       ->getFullTypeQuery(sfContext::getInstance()->getRequest()->getAttribute('content_type'), 'r');
 
+    return $q;
+  }
+  
+  /**
+   * Adds the necessary where clause to only return published content
+   * 
+   * @param string          $alias  The alias to use to refer to sfSympalContent
+   * @param Doctrine_Query  $q      An optional query to add to
+   */
+  public function addPublishedQuery($alias = 'c', Doctrine_Query $q = null)
+  {
+    if ($q === null)
+    {
+      $q = $this->createQuery($alias);
+    }
+    
+    $expr = new Doctrine_Expression('NOW()');
+    $q->andWhere($alias.'.date_published <= '.$expr);
+    
     return $q;
   }
 }
