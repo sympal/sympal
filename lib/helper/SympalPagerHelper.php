@@ -8,12 +8,30 @@
  */
 function get_sympal_pager_header($pager)
 {
-  return '<div class="sympal_pager_header"><h3>'.
-    __('Showing %first% to %last% of %count% total results.', array(
+  if ($pager->getNbResults() == 0)
+  {
+    $txt = __('No results found.');
+  }
+  elseif ($pager->getNbResults() == 1)
+  {
+    $txt = __('One result found.');
+  }
+  elseif ($pager->getLastPage() == 1)
+  {
+    $txt = __('Showing all %count% total results.', array(
+      '%count%' => $pager->getNbResults(),
+    ));
+  }
+  else
+  {
+    $txt = __('Showing %first% to %last% of %count% total results.', array(
       '%first%' => $pager->getFirstIndice(),
       '%last%' => $pager->getLastIndice(),
-      '%count%' => $pager->getNbResults()
-    )).'</h3></div>';
+      '%count%' => $pager->getNbResults(),
+    ));
+  }
+  
+  return '<div class="sympal_pager_header"><h3>'.$txt.'</h3></div>';
 }
 
 /**
