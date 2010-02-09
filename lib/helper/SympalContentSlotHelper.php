@@ -20,7 +20,7 @@ function render_content_author(sfSympalContent $content, $slot)
 function render_content_date_published(sfSympalContent $content, $slot)
 {
   use_helper('Date');
-  return format_datetime($content->date_published);
+  return format_datetime($content->date_published, sfSympalConfig::get('date_published_format'));
 }
 
 /**
