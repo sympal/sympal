@@ -254,6 +254,7 @@ class sfSympalMenuSiteManager
     foreach ($hierarchy as $menuItem)
     {
       $new = $menu->addChild($menuItem->getSlug(), $menuItem->getItemRoute());
+      $new->setName($menuItem->getName());
       $new->setMenuItem($menuItem);
 
       if (isset($menuItem['__children']) && !empty($menuItem['__children']))
