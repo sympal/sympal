@@ -18,7 +18,7 @@ $t->is($dataGrid->getRows(), array(
   )
 ));
 
-$t->is($dataGrid->getPagerHeader(), '<div class="sympal_pager_header"><h3>Showing 1 to 1 of 1 total results.</h3></div>');
+$t->is($dataGrid->getPagerHeader(), '<div class="sympal_pager_header"><h3>One result found.</h3></div>');
 
 $dataGrid = sfSympalDataGrid::create('sfSympalContentType', 'c')
   ->setMaxPerPage(1)
