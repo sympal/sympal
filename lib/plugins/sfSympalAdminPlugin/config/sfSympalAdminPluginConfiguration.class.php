@@ -34,9 +34,13 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
   public function loadAdminMenuAssets()
   {
+    sfSympalToolkit::useJQuery();
+
     $response = sfContext::getInstance()->getResponse();
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
   }
 
   public function addEditorHtml(sfEvent $event, $content)

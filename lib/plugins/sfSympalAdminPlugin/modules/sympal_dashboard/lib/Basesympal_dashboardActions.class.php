@@ -12,10 +12,9 @@ abstract class Basesympal_dashboardActions extends sfActions
 {
   public function executeIndex()
   {
-    if ($this->isAjax = $this->isAjax())
-    {
-      $this->setLayout(false);
-    }
+    $response = $this->getResponse();
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
 
     if (sfSympalConfig::get('check_for_upgrades_on_dashboard', null, false))
     {

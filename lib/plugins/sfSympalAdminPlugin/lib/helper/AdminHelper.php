@@ -12,11 +12,11 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
 
     if ($sympalContext->isAdminModule())
     {
-      $menu->addChild('Go to Site', '@homepage');
+      $menu->addChild('Go to Site', '@homepage', 'id=sympal_go_to_switch');
     }
     else if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
     {
-      $menu->addChild('Go to Admin', '@sympal_dashboard');
+      $menu->addChild('Go to Admin', '@sympal_dashboard', 'id=sympal_go_to_switch');
     }
 
 
