@@ -401,7 +401,12 @@ class sfSympalDataGrid
         }
       }
     }
-    return isset($current[$column['fieldName']]) ? $current[$column['fieldName']] : null;
+
+    try {
+      return $current[$column['fieldName']];
+    } catch (Doctrine_Record_UnknownPropertyException $e) {
+      return null;
+    }
   }
 
   public function getSymfonyResource($module, $action = null, $variables = array())

@@ -467,13 +467,16 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     {
       if (!isset($options['class']))
       {
-        $options['class'] = '';
+        $class = '';
+      } else {
+        $class = $options['class'];
       }
-      $options['class'] .= ' current';
+      $class .= ' current';
       if ($currentAncestor)
       {
-        $options['class'] .= ' current_ancestor';
+        $class .= ' current_ancestor';
       }
+      $options['class'] = $class;
     }
 
     $html = link_to($this->renderLabel(), $this->getRoute(), $options);
