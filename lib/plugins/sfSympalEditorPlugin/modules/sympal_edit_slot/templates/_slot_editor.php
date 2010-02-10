@@ -6,7 +6,7 @@
   <form>
     <input type="hidden" name="content_ids[<?php echo $contentSlot->getId() ?>]" value="<?php echo $contentSlot->getContentRenderedFor()->getId() ?>" />
     <?php if (!$contentSlot->is_column): ?>
-      <a class="sympal_change_slot_type" onClick="return false;">>> <?php echo __('Change Slot Type') ?></a>
+      <a class="sympal_change_slot_type" onClick="return false;"><?php echo __('Change Slot Type') ?></a>
       <div class="sympal_change_slot_type_dropdown">
         <?php echo $form['type'] ?>
       </div>
