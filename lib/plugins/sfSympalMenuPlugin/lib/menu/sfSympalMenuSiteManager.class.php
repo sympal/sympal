@@ -16,9 +16,11 @@ class sfSympalMenuSiteManager
   {
     if ($cache = $this->_getCache())
     {
-      $this->_rootSlugs = $cache->get('SYMPAL_MENU_ROOT_SLUGS');
-      if (!is_array($this->_rootSlugs))
+      $cachedRootSlugs = $cache->get('SYMPAL_MENU_ROOT_SLUGS');
+      if (is_array($cachedRootSlugs))
       {
+        $this->_rootSlugs = $cachedRootSlugs;
+      } else {
         $this->initialize();
       }
     }
