@@ -156,6 +156,8 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $contentSlotRef->content_id = $this->id;
     $contentSlotRef->save();
 
+    $this->_slotsByName[$slot->name] = $slot;
+
     return $contentSlotRef;
   }
 
