@@ -69,7 +69,7 @@ class sfSympalTheme
   {
     foreach ($this->_configuration->getStylesheets() as $stylesheet)
     {
-      $this->_response->addStylesheet(sfSympalConfig::getAssetPath($stylesheet));
+      $this->_response->addStylesheet(sfSympalConfig::getAssetPath($stylesheet), 'last');
     }
   }
 
