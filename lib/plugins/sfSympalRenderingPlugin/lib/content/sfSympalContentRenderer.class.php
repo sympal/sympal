@@ -51,6 +51,7 @@ class sfSympalContentRenderer
 
   public function render()
   {
+    $this->_format = $this->_format ? $this->_format : 'html';
     $variables = $this->getRenderVariables();
 
     if ($this->_format == 'html')
@@ -80,19 +81,14 @@ class sfSympalContentRenderer
           $return = $event->getReturnValue();
         }
     }
-    if (isset($return))
+    if (isset($return) && $return)
     {
-      if ($return)
-      {
-        $response = $this->_symfonyContext->getResponse();
-        $response->setContent($return);
-        $response->send();
-        exit;
-      } else {
-        return $this;
-      }
+      $response = $this->_symfonyContext->getResponse();
+      $response->setContent($return);
+      $response->send();
+      exit;
     } else {
-      return $this;
+      throw new RuntimeException(sprintf('Unknown render format: "%s"', $this->_format));
     }
   }
 
