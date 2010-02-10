@@ -188,7 +188,7 @@ class sfSympalFormToolkit
 
   public static function getThemeWidgetAndValidator()
   {
-    $themes = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getThemes();
+    $themes = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getAvailableThemes();
     $options = array('' => '');
     foreach ($themes as $name => $theme)
     {

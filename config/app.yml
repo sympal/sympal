@@ -109,21 +109,29 @@ all:
     # Configure Sympal themes
     themes:
       default:
+        available: true
+        disabled: false
         layout: default
         stylesheets:
           - /sfSympalPlugin/css/default.css
 
       wordpress_default:
+        available: true
+        disabled: false
         layout: wordpress
         stylesheets:
           - /sfSympalPlugin/css/wordpress.css
 
       sympal:
+        available: true
+        disabled: false
         layout: sympal
         stylesheets:
           - /sfSympalPlugin/css/sympal.css
 
       admin:
+        available: false # Don't show in the list of available themes to switch to
+        disabled: false
         layout: admin
         admin_generator_class: sfSympalDoctrineGenerator
         admin_generator_theme: sympal_admin

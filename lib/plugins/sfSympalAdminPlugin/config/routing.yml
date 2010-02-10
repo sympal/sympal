@@ -108,6 +108,10 @@ sympal_themes:
   url:    /admin/themes
   param: { module: sympal_themes, action: index }
 
+sympal_themes_make_default:
+  url:    /admin/themes/make_default/:name/:site
+  param: { module: sympal_themes, action: make_default, site: 0 }
+
 sympal_themes_preview:
   url:    /admin/themes/:preview
   param: { module: sympal_themes, action: index }

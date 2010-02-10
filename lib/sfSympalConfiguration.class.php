@@ -11,7 +11,8 @@ class sfSympalConfiguration
     $_bootstrap,
     $_plugins = array(),
     $_modules = array(),
-    $_layouts = array(),
+    $_themes = null,
+    $_availableThemes = null,
     $_cache;
 
   public function __construct(sfEventDispatcher $dispatcher, ProjectConfiguration $projectConfiguration)
@@ -279,7 +280,36 @@ class sfSympalConfiguration
 
   public function getThemes()
   {
-    return sfSympalConfig::get('themes', null, array());
+    if ($this->_themes === null)
+    {
+      $themes = sfSympalConfig::get('themes', null, array());
+      foreach ($themes as $name => $theme)
+      {
+        if (isset($theme['disabled']) && $theme['disabled'] === true)
+        {
+          continue;
+        }
+        $this->_themes[$name] = $theme;
+      }
+    }
+    return $this->_themes;
+  }
+
+  public function getAvailableThemes()
+  {
+    if ($this->_availableThemes === null)
+    {
+      $themes = $this->getThemes();
+      foreach ($themes as $name => $theme)
+      {
+        if (!isset($theme['available']) || (isset($theme['available']) && $theme['available'] === false))
+        {
+          continue;
+        }
+        $this->_availableThemes[$name] = $theme;
+      }
+    }
+    return $this->_availableThemes;
   }
 
   public function getContentTemplates($model)
