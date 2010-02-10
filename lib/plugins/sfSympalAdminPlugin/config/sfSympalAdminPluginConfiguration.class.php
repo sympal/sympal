@@ -56,20 +56,23 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event->getSubject();
 
-    $changeLanguage = $menu->getChild('Change Language');
-    $currentCulture = strtolower(sfContext::getInstance()->getUser()->getCulture());
-    $codes = sfSympalConfig::getLanguageCodes();
-    foreach ($codes as $code)
+    if (sfSympalConfig::isI18nEnabled())
     {
-      $code = strtolower($code);
-      $formatted = format_language($code);
-      if (!$formatted)
+      $changeLanguage = $menu->getChild('Change Language');
+      $currentCulture = strtolower(sfContext::getInstance()->getUser()->getCulture());
+      $codes = sfSympalConfig::getLanguageCodes();
+      foreach ($codes as $code)
       {
-        $formatted = format_language($code, 'en');
-      }
-      if ($formatted)
-      {
-        $changeLanguage->addChild(image_tag('/sfSympalPlugin/images/flags/'.$code.'.png').' '.$formatted, '@sympal_change_language?language='.$code, 'title=Switch to '.$formatted);
+        $code = strtolower($code);
+        $formatted = format_language($code);
+        if (!$formatted)
+        {
+          $formatted = format_language($code, 'en');
+        }
+        if ($formatted)
+        {
+          $changeLanguage->addChild(image_tag('/sfSympalPlugin/images/flags/'.$code.'.png').' '.$formatted, '@sympal_change_language?language='.$code, 'title=Switch to '.$formatted);
+        }
       }
     }
 
@@ -234,7 +237,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       {
         if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
         {
-          $contentEditor->addChild(image_tag('/sfSympalPlugin/images/flags/'.strtolower($code).'.png').' Change to '.format_language($code), '@sympal_change_edit_language?language='.$code, 'title=Switch to '.format_language($code));
+          $contentEditor->addChild(image_tag('/sfSympalPlugin/images/flags/'.strtolower($code).'.png').' Edit '.format_language($code), '@sympal_change_edit_language?language='.$code, 'title=Switch to '.format_language($code));
         }
       }
     }
