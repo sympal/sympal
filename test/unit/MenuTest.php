@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(53, new lime_output_color());
+$t = new lime_test(55, new lime_output_color());
 
 $configuration->loadHelpers(array('Tag'));
 
@@ -81,8 +81,12 @@ $t->is((string) $menu['Root 3'], '<ul id="root-3-menu"><li id="test-menu-with-ro
 $menu['Root 3']['With Route']->setOption('target', '_BLANK');
 $t->is((string) $menu['Root 3'], '<ul id="root-3-menu"><li id="test-menu-with-route" class="first last"><a target="_BLANK" href="http://www.google.com">With Route</a></li></ul>', 'Test __toString() with a target option');
 
+$t->is($menu['Root 3']->hasChildren(), true, 'Test hasChildren() on Root 3');
+
 $menu['Root 3']['With Route']->requiresAuth(true);
 $t->is((string) $menu['Root 3'], '', 'Test requiresAuth()');
+$t->is($menu['Root 3']->hasChildren(), false, 'Test hasChildren() on Root 3 when user has no access to With Route');
+
 $user = sfContext::getInstance()->getUser();
 $user->setAuthenticated(true);
 $t->is($user->isAuthenticated(), true, 'Test isAuthenticated()');

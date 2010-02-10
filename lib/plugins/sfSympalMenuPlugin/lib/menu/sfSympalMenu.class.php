@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Base menu item in sympal
+ * 
+ * @package     sfSympalMenuPlugin
+ * @subpackage  menu
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 {
   protected
@@ -352,18 +361,26 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
     return $this->_children[$name];
   }
-
+  
+  /**
+   * Returns whether or not this menu items has viewable children
+   * 
+   * This menu MAY have children, but this will return false if the current
+   * user does not have access to vew any of those items
+   * 
+   * @return boolean;
+   */
   public function hasChildren()
   {
-    $children = array();
     foreach ($this->_children as $child)
     {
       if ($child->checkUserAccess())
       {
-        $children[] = true;
+        return true;
       }
     }
-    return !empty($children);
+    
+    return false;
   }
 
   public function __toString()
