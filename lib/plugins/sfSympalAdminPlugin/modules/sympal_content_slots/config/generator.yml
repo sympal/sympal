@@ -14,7 +14,7 @@ generator:
       actions: ~
       fields:  ~
       list:
-        display: [=name, type]
+        display: [_name, type]
       filter:
         display: [name, type, content_list]
       form:
