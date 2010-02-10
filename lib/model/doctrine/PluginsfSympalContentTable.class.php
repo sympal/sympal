@@ -166,7 +166,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
     $user = sfContext::getInstance()->getUser();
 
-    if (!$user->hasCredential('ManageContent'))
+    if (!$user->isEditMode())
     {
       $q = $this->addPublishedQuery($alias, $q);
     }

@@ -3,6 +3,7 @@
 class sfSympalMenuSite extends sfSympalMenu
 {
   protected 
+    $_contentRouteObject = null,
     $_menuItem = null,
     $_cacheKey = null;
 
@@ -131,8 +132,22 @@ class sfSympalMenuSite extends sfSympalMenu
     return $label;
   }
 
+  public function getRoute()
+  {
+    if ($this->_contentRouteObject)
+    {
+      return $this->_contentRouteObject->getRoute();
+    } else {
+      return parent::getRoute();
+    }
+  }
+
   public function setMenuItem($menuItem)
   {
+    if ($content = $menuItem->getRelatedContent())
+    {
+      $this->_contentRouteObject = $content->getContentRouteObject();
+    }
     $this->_menuItem = $this->_prepareMenuItem($menuItem);
     $this->setRoute($this->_menuItem['item_route']);
     $this->requiresAuth($this->_menuItem['requires_auth']);

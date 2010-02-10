@@ -125,12 +125,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->roots = $table->getTree()->fetchRoots();
   }
 
-  public function executeView()
-  {
-    $this->menuItem = $this->getRoute()->getObject();
-    $this->redirect($this->menuItem->getItemRoute());
-  }
-
   public function executeEdit(sfWebRequest $request)
   {
     $this->sf_sympal_menu_item = $this->_getMenuItem($request);

@@ -16,7 +16,7 @@ generator:
       fields: ~
       form:
         display:
-          "Content": [TypeForm, custom_path, date_published, slug]
+          "Content": [TypeForm, custom_path, date_published, slug, i18n_slug]
           "Settings": [content_type_id, created_by_id, groups_list, edit_groups_list, publicly_editable]
           "Rendering Options": [template, theme, module, action]
           "Search Engine Optimization": [page_title, meta_keywords, meta_description]

@@ -12,7 +12,8 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $_routeObject,
     $_mainMenuItem,
     $_editableSlotsExistOnPage = false,
-    $_slotsByName = null;
+    $_slotsByName = null,
+    $_contentRouteObject = null;
   
   /**
    * Initializes a new sfSympalContent for the given type
@@ -204,6 +205,18 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   public function hasField($name)
   {
     $result = $this->_table->hasField($name);
+    if (!$result)
+    {
+      $className = get_class($this);
+      if (sfSympalConfig::isI18nEnabled($className))
+      {
+        $table = Doctrine_Core::getTable($className.'Translation');
+        if ($table->hasField($name))
+        {
+          $result = true;
+        }
+      }
+    }
     if (!$result)
     {
       $className = $this->getType()->getName();
@@ -482,135 +495,43 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->getId().'-'.$this->getSlug();
   }
 
-  public function getRouteName()
-  {
-    if ($this->get('custom_path', false) || $this->get('module', false) || $this->get('action', false))
-    {
-      return '@sympal_content_' . $this->getUnderscoredSlug();
-    }
-    else if ($this['Type']['default_path'])
-    {
-      return $this['Type']['route_name'];
-    }
-    else if ($this['slug'])
-    {
-      return '@sympal_content_view';
-    }
-  }
-
   public function hasCustomPath()
   {
     return $this->custom_path ? true : false;
   }
 
-  public function getRoutePath()
+  public function getContentRouteObject()
   {
-    // If content has a custom path then lets use it
-    if ($this->hasCustomPath())
+    if (!$this->_contentRouteObject)
     {
-      $path = $this->custom_path;
-      if ($path != '/')
-      {
-        $path .= '.:sf_format';
-      }
-      return $path;
+      $this->_contentRouteObject = new sfSympalContentRouteObject($this);
     }
-    // If content has a custom module or action then we need a route for it
-    // so generate a path for this content to use in the route
-    else if ($this->get('module', false) || $this->get('action', false))
-    {
-      $values = $this->_buildRouteValues();
-      $values['sf_culture'] = ':sf_culture';
-      $values['sf_format'] = ':sf_format';
-      return $this->getRouteObject()->generate($values);
-    }
-    // Otherwise fallback and get route path from the content type
-    else if ($path = $this->getType()->getRoutePath())
-    {
-      return $path;
-    }
-    // Default if nothing else can be found
-    else if ($this['slug'])
-    {
-      return '/content/:slug';
-    }
-  }
-
-  public function getRouteObject()
-  {
-    if (!$this->_routeObject)
-    {
-      // Generate a route object for this content only if it has a custom path
-      if ($this->hasCustomPath())
-      {
-        $this->_routeObject = new sfRoute($this->getRoutePath(), array(
-          'sf_format' => 'html',
-          'sf_culture' => sfConfig::get('default_culture')
-        ));
-      // Otherwise get it from the content type
-      } else {
-        $this->_routeObject = $this->getType()->getRouteObject();
-      }
-    }
-    return $this->_routeObject;
+    return $this->_contentRouteObject;
   }
 
   public function getRoute()
   {
-    if (!$this->_route)
-    {
-      if (!$this->exists() || !$this['slug'])
-      {
-        return false;
-      }
+    return $this->getContentRouteObject()->getRoute();
+  }
 
-      if (method_exists($this->getContentTypeClassName(), 'getRoute'))
-      {
-        return $this->getRecord()->getRoute();
-      }
+  public function getRoutePath()
+  {
+    return $this->getContentRouteObject()->getRoutePath();
+  }
 
-      $this->_route = $this->_fillRoute($this->getRouteName());
-    }
+  public function getRouteName()
+  {
+    return $this->getContentRouteObject()->getRouteName();
+  }
 
-    return $this->_route;
+  public function getRouteObject()
+  {
+    return $this->getContentRouteObject()->getRouteObject();
   }
 
   public function getEvaluatedRoutePath()
   {
-    $values = $this->_buildRouteValues();
-    $values['sf_culture'] = sfContext::getInstance()->getUser()->getCulture();
-    return $this->getRouteObject()->generate($values);
-  }
-
-  protected function _fillRoute($route)
-  {
-    $values = $this->_buildRouteValues();
-    if (!empty($values))
-    {
-      return $route.'?'.http_build_query($values);
-    } else {
-      return $route;
-    }
-  }
-
-  protected function _buildRouteValues()
-  {
-    $variables = $this->getRouteObject()->getVariables();
-    $isI18nEnabled = sfSympalConfig::isI18nEnabled();
-
-    $values = array();
-    foreach (array_keys($variables) as $name)
-    {
-      if ($isI18nEnabled && $name == 'slug' && $this->hasField('i18n_slug') && $i18nSlug = $this->i18n_slug)
-      {
-        $values[$name] = $i18nSlug;
-      } else if ($this->hasField($name)) {
-        $values[$name] = $this->$name;
-      } else if (method_exists($this, $method = 'get'.sfInflector::camelize($name))) {
-        $values[$name] = $this->$method();
-      }
-    }
-    return $values;
+    return $this->getContentRouteObject()->getEvaluatedRoutePath();
   }
 
   public function trySettingTitleProperty($value)

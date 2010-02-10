@@ -122,7 +122,7 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
       $content = $this->getContent();
       if ($content instanceof sfSympalContent)
       {
-        $route = $this->getContent()->getRoute();
+        $route = $content->getRoute();
       }
     }
     return $route;
