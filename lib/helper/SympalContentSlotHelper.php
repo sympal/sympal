@@ -14,13 +14,18 @@ function get_sympal_content_property($content, $name)
 
 function render_content_author(sfSympalContent $content, $slot)
 {
-  return $content->CreatedBy->username;
+  return $content->created_by_id ? $content->CreatedBy->username : 'nobody';
 }
 
 function render_content_date_published(sfSympalContent $content, $slot)
 {
-  use_helper('Date');
-  return format_datetime($content->date_published, sfSympalConfig::get('date_published_format'));
+  if ($content->date_published)
+  {
+    use_helper('Date');
+    return format_datetime($content->date_published, sfSympalConfig::get('date_published_format'));
+  } else {
+    return '0000-00-00';
+  }
 }
 
 /**

@@ -401,7 +401,7 @@ class sfSympalDataGrid
         }
       }
     }
-    return $current[$column['fieldName']];
+    return isset($current[$column['fieldName']]) ? $current[$column['fieldName']] : null;
   }
 
   public function getSymfonyResource($module, $action = null, $variables = array())

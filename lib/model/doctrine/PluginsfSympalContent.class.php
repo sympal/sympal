@@ -469,12 +469,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function getAuthorName()
   {
-    return $this->getCreatedBy()->getName();
+    return $this->getCreatedById() ? $this->getCreatedBy()->getName() : null;
   }
 
   public function getAuthorEmail()
   {
-    return $this->getCreatedBy()->getEmailAddress();
+    return $this->getCreatedById() ? $this->getCreatedBy()->getEmailAddress() : null;
   }
 
   public function getUniqueId()
