@@ -86,26 +86,6 @@ function get_sympal_editor()
 }
 
 /**
- * Get icons for changing languages
- *
- * @return string $html
- */
-function get_change_language_icons()
-{
-  $icons = array();
-  foreach (sfSympalConfig::getLanguageCodes() as $code)
-  {
-    if (sfContext::getInstance()->getUser()->getCulture() == $code)
-    {
-      $icons[] = image_tag('/sfSympalPlugin/images/flags/'.strtolower($code).'.png');
-    } else {
-      $icons[] = link_to(image_tag('/sfSympalPlugin/images/flags/'.strtolower($code).'.png'), '@sympal_change_language?language='.$code, 'title=Switch to '.format_language($code));
-    }
-  }
-  return implode(' ', $icons);
-}
-
-/**
  * Returns the url to a gravatar image based on the given email address
  * 
  * @param string $emailAddress The email address to lookup in gravatar

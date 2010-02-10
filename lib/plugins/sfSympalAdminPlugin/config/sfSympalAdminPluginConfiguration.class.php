@@ -38,6 +38,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $response = sfContext::getInstance()->getResponse();
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/change_language.css'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
@@ -54,6 +55,24 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   public function loadAdminMenu(sfEvent $event)
   {
     $menu = $event->getSubject();
+
+    $changeLanguage = $menu->getChild('Change Language');
+    $currentCulture = strtolower(sfContext::getInstance()->getUser()->getCulture());
+    $codes = sfSympalConfig::getLanguageCodes();
+    foreach ($codes as $code)
+    {
+      $code = strtolower($code);
+      $formatted = format_language($code);
+      if (!$formatted)
+      {
+        $formatted = format_language($code, 'en');
+      }
+      if ($formatted)
+      {
+        $changeLanguage->addChild(image_tag('/sfSympalPlugin/images/flags/'.$code.'.png').' '.$formatted, '@sympal_change_language?language='.$code, 'title=Switch to '.$formatted);
+      }
+    }
+
     $manageContent = $menu->getChild('Content');
 
     $user = sfContext::getInstance()->getUser();
@@ -115,7 +134,11 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       $languages = array();
       foreach ($cultures as $key => $value)
       {
-        $formatted = format_language($value);;
+        $formatted = format_language($value);
+        if (!$formatted)
+        {
+          $formatted = format_language($value, 'en');
+        }
         if ($formatted)
         {
           $languages[$value] = $formatted;

@@ -21,14 +21,12 @@ body {
   font-size: 25px;
 }
 
-#sympal-dashboard #boxes {
-  
-}
 #sympal-dashboard .sympal_dashboard_box {
   float: left;
   width: 175px;
   background: #fff;
   margin-right: 10px;
+  margin-top: 20px;
   -khtml-border-radius:0.75em;
 	-moz-border-radius: 0.75em;
   -webkit-border-radius: 0.75em;
@@ -69,7 +67,6 @@ body {
 
 #sympal-dashboard .sympal_dashboard_boxes {
   clear: left;
-  padding-top: 15px;
 }
 
 #sympal-dashboard .sympal_dashboard_top_links {
