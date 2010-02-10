@@ -337,3 +337,7 @@ label.required:after
 #sympal_signin h1 {
   font-size: 24px;
 }
+
+#sf_admin_configuration label {
+  width: 300px;
+}
