@@ -3,6 +3,7 @@
 class sfSympalMenuSiteManager
 {
   protected
+    $_currentUri = null,
     $_menus = array(),
     $_menuItems = array(),
     $_rootSlugs = array(),
@@ -14,6 +15,7 @@ class sfSympalMenuSiteManager
 
   public function __construct()
   {
+    $this->_currentUri = sfContext::getInstance()->getRequest()->getUri();
     if ($cache = $this->_getCache())
     {
       $cachedRootSlugs = $cache->get('SYMPAL_MENU_ROOT_SLUGS');
@@ -48,8 +50,6 @@ class sfSympalMenuSiteManager
 
   public function findCurrentMenuItem($menu = null)
   {
-    $currentUri = sfContext::getInstance()->getRequest()->getUri();
-
     if (is_null($menu))
     {
       foreach ($this->getMenus() as $menu)
@@ -60,7 +60,7 @@ class sfSympalMenuSiteManager
         }
       }
     } else {
-      if ($menu->getUrl(array('absolute' => true)) === $currentUri)
+      if ($menu->getUrl(array('absolute' => true)) === $this->_currentUri)
       {
         return $menu->getDoctrineMenuItem();
       }

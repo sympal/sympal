@@ -79,6 +79,7 @@ abstract class PluginsfSympalMenuItemForm extends BasesfSympalMenuItemForm
       $this['rgt'],
       $this['level']
     );
+    $this->validatorSchema['slug']->setOption('required', true);
   }
   
   public function updateParentIdColumn($parentId)
