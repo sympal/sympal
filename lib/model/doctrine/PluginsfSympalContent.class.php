@@ -190,7 +190,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       $slot = $this->getSlot($name);
     }
 
-    if ($slot->type != $type)
+    if ($type != null && $slot->type != $type)
     {
       $slot->type = $type;
       $slot->save();
