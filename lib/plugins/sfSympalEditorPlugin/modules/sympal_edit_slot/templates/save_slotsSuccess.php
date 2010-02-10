@@ -6,7 +6,7 @@
 
 <?php /* Updated rendered value of successfully content slots and removed red border */ ?>
 <?php foreach ($contentSlots as $contentSlot): ?>
-  $('#sympal_content_slot_<?php echo $contentSlot->getId() ?> .value').html('<?php echo str_replace("\n", '\n', addslashes($contentSlot->render())) ?>');
+  $('#sympal_content_slot_<?php echo $contentSlot->getId() ?> .value').html('<?php echo str_replace("'", "\\'", str_replace("\n", ' ', addslashes($contentSlot->render()))); ?>');
   $('#sympal_content_slot_<?php echo $contentSlot->getId() ?> .editor input, #sympal_content_slot_<?php echo $contentSlot->getId() ?> .editor textarea').css('border', '1px solid #ccc');
 <?php endforeach; ?>
 
