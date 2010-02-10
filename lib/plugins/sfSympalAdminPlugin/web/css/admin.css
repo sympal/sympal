@@ -209,6 +209,7 @@ ul.error_list li
 	-moz-border-radius: 0.4em;
   -webkit-border-radius: 0.4em;
   border-radius: 0.4em;
+  color: #333;
 }
 
 #content input:hover, #content input:focus, #content select:hover, #content select:focus, #content textarea:hover, #content textarea:focus {
