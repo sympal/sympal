@@ -5,6 +5,11 @@ prod:
 
 all:
   sympal_config:
+    # Configure what forms and date fields should be replaced by jQuery rich date
+    rich_date_forms:
+      sfSympalContentForm: [date_published]
+      sfSympalMenuItemForm: [date_published]
+
     # Configure the default culture
     default_culture: en
     

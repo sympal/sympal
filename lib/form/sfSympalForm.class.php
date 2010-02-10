@@ -77,12 +77,17 @@ class sfSympalForm extends sfSympalExtendClass
       sfSympalFormToolkit::changeContentWidget($form);
     }
 
-    foreach ($form as $name => $field)
+    $richDateForms = sfSympalConfig::get('rich_date_forms');
+    $formClass = get_class($form);
+    if (isset($richDateForms[$formClass]))
     {
-      $widget = $field->getWidget();
-      if ($widget instanceof sfWidgetFormDateTime || $widget instanceof sfWidgetFormDate)
+      foreach ($form as $name => $field)
       {
-        sfSympalFormToolkit::changeDateWidget($name, $form);
+        $widget = $field->getWidget();
+        if (in_array($name, $richDateForms[$formClass]) && ($widget instanceof sfWidgetFormDateTime || $widget instanceof sfWidgetFormDate))
+        {
+          sfSympalFormToolkit::changeDateWidget($name, $form);
+        }
       }
     }
   }
