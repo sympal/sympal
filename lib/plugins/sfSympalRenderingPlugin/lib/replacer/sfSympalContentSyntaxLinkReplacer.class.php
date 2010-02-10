@@ -36,7 +36,7 @@ class sfSympalContentSyntaxLinkReplacer extends sfSympalContentSyntaxReplacer
       }
       else
       {
-        $label = isset($replacement['options']['label']) ? $this->_replacer->replace($replacement['options']['label']) : 'Link to content '.$slug;
+        $label = isset($replacement['options']['label']) ? $this->_replacer->replace($replacement['options']['label']) : null;
         unset($replacement['options']['label']);
         
         $content = str_replace($replacement['replace'], link_to($label, $contentObject->getRoute(), $replacement['options']), $content);
