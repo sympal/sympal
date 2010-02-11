@@ -139,6 +139,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       }
     }
 
+    $q->orderBy('l.slug ASC, a.slug ASC');
     $q->enableSympalResultCache('sympal_get_content');
 
     return $q->fetchOne();
@@ -160,11 +161,9 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       ->leftJoin($alias.'.Assets a')
       ->leftJoin($alias.'.CreatedBy u')
       ->innerJoin($alias.'.Type t')
-      ->innerJoin($alias.'.Site si')
       // Don't use param to work around Doctrine pgsql bug
       // with limit subquery and number of params
-      ->andWhere(sprintf("si.slug = '%s'", $sympalContext->getSiteSlug()))
-      ->orderBy('l.slug ASC, a.slug ASC');
+      ->innerJoin(sprintf($alias.".Site si WITH si.slug = '%s'", $sympalContext->getSiteSlug()));
 
     $user = sfContext::getInstance()->getUser();
 

@@ -8,6 +8,11 @@ class Basesympal_contentActions extends autoSympal_contentActions
     return $content->$func();
   }
 
+  protected function addSortQuery($query)
+  {
+    $query->addOrderBy('m.root_id ASC, m.lft ASC');
+  }
+
   public function executeBatchPublish(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
