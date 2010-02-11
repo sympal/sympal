@@ -24,10 +24,10 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
       $menu->addChild('Clear Cache', '@sympal_clear_cache');
     }
 
-    $menu->addChild('Content', null, array('label' => 'Site Content'));
-    $menu->addChild('Site Administration', null, array('label' => 'Site Setup'));
-    $menu->addChild('Security', null, array('label' => 'Users & Security'));
-    $menu->addChild('Administration', null, array('label' => 'Global Setup'));
+    $menu->addChild('Content', '@sympal_content', array('label' => 'Site Content'));
+    $menu->addChild('Site Administration', '@sympal_sites_edit?id='.$sympalContext->getSite()->getId(), array('label' => 'Site Setup'));
+    $menu->addChild('Security', '@sympal_users', array('label' => 'Users & Security'));
+    $menu->addChild('Administration', '@sympal_sites', array('label' => 'Global Setup'));
 
     sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_admin_menu'));
 
