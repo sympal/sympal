@@ -55,6 +55,11 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $this->populateSlotsByName();
   }
 
+  public function isPublished()
+  {
+    return $this->date_published && strtotime($this->date_published) <= time() ? true : false;
+  }
+
   public function populateSlotsByName()
   {
     $this->_slotsByName = array();

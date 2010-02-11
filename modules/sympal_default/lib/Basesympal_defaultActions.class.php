@@ -2,6 +2,11 @@
 
 class Basesympal_defaultActions extends sfActions
 {
+  public function executeUnpublished_content(sfWebRequest $request)
+  {
+    
+  }
+
   public function executeSitemap(sfWebRequest $request)
   {
     $this->setLayout(false);

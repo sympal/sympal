@@ -167,11 +167,6 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
     $user = sfContext::getInstance()->getUser();
 
-    if (!$user->isEditMode())
-    {
-      $q = $this->addPublishedQuery($alias, $q);
-    }
-
     if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot'))
     {
       $q->leftJoin('s.Translation slt');

@@ -9,6 +9,11 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
     $_label = null,
     $_allPermissions;
 
+  public function isPublished()
+  {
+    return $this->date_published && strtotime($this->date_published) <= time() ? true : false;
+  }
+
   public function getAllPermissions()
   {
     if (!$this->_allPermissions)

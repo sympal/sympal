@@ -72,7 +72,6 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
     $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
     $this->_dispatcher->connect('task.cache.clear', array($this, 'listenToTaskCacheClear'));
-    $this->_dispatcher->connect('sympal.load_content', array($this, 'listenToSympalLoadContent'));
   }
 
   /**
@@ -122,17 +121,6 @@ class sfSympalConfiguration
         $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE_LIFESPAN, sfSympalConfig::get('orm_cache', 'lifetime', 86400));
       }
     }
-  }
-
-  /**
-   * Listen to sympal.load_content event and force a reload of isEditMode()
-   *
-   * @param sfEvent $event
-   * @return void
-   */
-  public function listenToSympalLoadContent(sfEvent $event)
-  {
-    sfContext::getInstance()->getUser()->isEditMode(true);
   }
 
   /**

@@ -45,6 +45,7 @@ class sfSympalContentActionLoader
   public function loadContent()
   {
     $content = $this->getContent();
+    $this->_handleIsPublished($content);
     $this->_handleForward404($content);
     $this->_user->checkContentSecurity($content);
 
@@ -170,6 +171,21 @@ class sfSympalContentActionLoader
     chdir(sfConfig::get('sf_root_dir'));
     $task = new sfSympalCreateSiteTask($this->_dispatcher, new sfFormatter());
     $task->run(array($this->_sympalContext->getSiteSlug()), array('no-confirmation' => true));
+  }
+
+  private function _handleIsPublished($record)
+  {
+    if (!$record->isPublished() && !$this->_user->isEditMode())
+    {
+      if (sfSympalConfig::get('unpublished_content', 'forward_404'))
+      {
+        $this->_actions->forward404('Content has not been published yet!');
+      }
+      else if ($forwardTo = sfSympalConfig::get('unpublished_content', 'forward_to'))
+      {
+        $this->_actions->forward($forwardTo[0], $forwardTo[1]);
+      }
+    }
   }
 
   private function _handleForward404($record)
