@@ -66,7 +66,7 @@ class sfSympalConfiguration
   {
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
     $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
-    $this->_dispatcher->connect('controller.change_action', array($this, 'initializeTheme'));
+    $this->_dispatcher->connect('controller.change_action', array($this, 'listenToControllerChangeAction'));
     $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
     $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
     $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
@@ -123,6 +123,12 @@ class sfSympalConfiguration
     }
   }
 
+  public function listenToControllerChangeAction(sfEvent $event)
+  {
+    $this->initializeTheme();
+    $this->_checkOnline();
+  }
+
   /**
    * Listen to clear cache task event so we can clear the web cache folder
    *
@@ -157,8 +163,7 @@ class sfSympalConfiguration
     $this->_sympalContext = sfSympalContext::createInstance($this->_symfonyContext, $this);
 
     $this->_enableModules();
-
-    $this->_checkSympalInstall();
+    $this->_checkInstalled();
 
     $this->initializeTheme();
 
@@ -546,7 +551,7 @@ class sfSympalConfiguration
    *
    * @return void
    */
-  private function _checkSympalInstall()
+  private function _checkInstalled()
   {
     $sfContext = sfContext::getInstance();
     $request = $sfContext->getRequest();
@@ -576,6 +581,25 @@ class sfSympalConfiguration
     if (sfConfig::get('sf_environment') == 'dev' && !$this->_sympalContext->getSite() && $sfContext->getRequest()->getPathInfo() != '/')
     {
       $sfContext->getController()->redirect('@homepage');
+    }
+  }
+
+  /**
+   * Check if Sympal is not online and act accordingly
+   *
+   * @return void
+   */
+  private function _checkOnline()
+  {
+    static $onlineChecked;
+    if (sfSympalConfig::get('offline', 'enabled', false) && !$onlineChecked)
+    {
+      $onlineChecked = true;
+      $this->_symfonyContext->getController()->forward(
+        sfSympalConfig::get('offline', 'module'),
+        sfSympalConfig::get('offline', 'action')
+      );
+      throw new sfStopException();
     }
   }
 

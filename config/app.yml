@@ -5,6 +5,12 @@ prod:
 
 all:
   sympal_config:
+    # Configure whether or not the Sympal system is online
+    offline:
+      enabled: false
+      module: sympal_default
+      action: offline
+
     # Configure what to do when you access some content that is not published yet
     unpublished_content:
       forward_to: [sympal_default, unpublished_content]
