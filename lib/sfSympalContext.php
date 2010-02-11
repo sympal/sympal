@@ -259,7 +259,7 @@ class sfSympalContext
    * @param string $format Optional format to render
    * @return sfSympalContentRenderer $renderer
    */
-  public function getContentRenderer(sfSympalContent $content, $format = 'html')
+  public function getContentRenderer(sfSympalContent $content, $format = null)
   {
     return new sfSympalContentRenderer($this, $content, $format);
   }
