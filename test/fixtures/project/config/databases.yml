@@ -4,6 +4,7 @@ all:
     param:
       #dsn: 'sqlite:///%SF_DATA_DIR%/test.sqlite'
       dsn: 'mysql://root:@localhost/sympal'
+      #dsn: 'pgsql://postgres:postgres@localhost/sympal'
       #username: root
 
 test:

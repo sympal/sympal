@@ -161,7 +161,9 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       ->leftJoin($alias.'.CreatedBy u')
       ->innerJoin($alias.'.Type t')
       ->innerJoin($alias.'.Site si')
-      ->andWhere('si.slug = ?', $sympalContext->getSiteSlug())
+      // Don't use param to work around Doctrine pgsql bug
+      // with limit subquery and number of params
+      ->andWhere(sprintf("si.slug = '%s'", $sympalContext->getSiteSlug()))
       ->orderBy('l.slug ASC, a.slug ASC');
 
     $user = sfContext::getInstance()->getUser();

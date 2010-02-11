@@ -56,7 +56,7 @@ generator:
         table_method: getAdminGenQuery
         title: Manage Content
         display: [_title, _is_published]
-        sort: ['m.root_id, m.lft', 'asc']
+        sort: ['m.root_id asc, m.lft']
         batch_actions:
           _delete:
           publish:
