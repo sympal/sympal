@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Call this method in your layouts before stylesheets and javascripts html
+ * are included. It will minify all your files and use them instead in production.
+ * Configurable in your config/app.yml
+ *
+ * @return void
+ */
 function sympal_minify()
 {
   if (sfSympalConfig::get('minifier', 'enabled', true))
@@ -12,21 +19,49 @@ function sympal_minify()
   }
 }
 
+/**
+ * Shortcut helper method to use jquery in your code
+ *
+ * @param array $plugins Optional array of jQuery plugins to load
+ * @return void
+ */
 function sympal_use_jquery($plugins = array())
 {
   sfSympalToolkit::useJQuery($plugins);
 }
 
+/**
+ * Helper method for using a Sympal javascript file.
+ *
+ * @param string $path 
+ * @param string $position 
+ * @return void
+ */
 function sympal_use_javascript($path, $position = 'last')
 {
   return use_javascript(sfSympalConfig::getAssetPath($path), $position);
 }
 
+/**
+ * Helper method for using a Sympal stylesheet file
+ *
+ * @param string $path 
+ * @param string $position 
+ * @return void
+ */
 function sympal_use_stylesheet($path, $position = 'last')
 {
   return use_stylesheet(sfSympalConfig::getAssetPath($path), $position);
 }
 
+/**
+ * Link to another Sympal site
+ *
+ * @param string $site 
+ * @param string $name 
+ * @param string $path 
+ * @return string $html
+ */
 function sympal_link_to_site($site, $name, $path = null)
 {
   $request = sfContext::getInstance()->getRequest();

@@ -1,30 +1,54 @@
 <?php
 
+/**
+ * Class responsible for rendering the results of a sfSympalServerCheck instance
+ * to HTML.
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalServerCheckHtmlRenderer extends sfSympalServerCheckRenderer
 {
+  /**
+   * Render the results to HTML
+   *
+   * @return string $html
+   */
   public function render()
   {
     return
-    sprintf('<h1>Sympal %s Server Check</h1>', sfSympalConfig::getCurrentVersion()).
-    '<div class="clearfix">'.
-    sprintf('<div class="half">%s%s%s</div>',
-    $this->_renderTable('server'),
-    $this->_renderTable('symfony'),
-    $this->_renderTable('php config')
-    ).
-    sprintf('<div class="half">%s</div>', $this->_renderTable('php_extensions')).
-    '</div>';
+      sprintf('<h1>Sympal %s Server Check</h1>', sfSympalConfig::getCurrentVersion()).
+      '<div class="clearfix">'.
+      sprintf('<div class="half">%s%s%s</div>',
+      $this->_renderTable('server'),
+      $this->_renderTable('symfony'),
+      $this->_renderTable('php config')
+      ).
+      sprintf('<div class="half">%s</div>', $this->_renderTable('php_extensions')).
+      '</div>';
   }
 
+  /**
+   * Render a HTML table for given check space name
+   *
+   * @param string $name
+   * @return $html
+   */
   protected function _renderTable($name)
   {
     return
-    '<table>'.
-    sprintf('<thead><tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr></thead>', ucfirst($name), 'Sympal requirement', 'Server state', 'Diagnostic').
-    sprintf('<tbody>%s</tbody>', $this->_renderRows($this->_check->getCheckspace($name))).
-    '</table>';
+      '<table>'.
+      sprintf('<thead><tr><th>%s</th><th>%s</th><th>%s</th><th>%s</th></tr></thead>', ucfirst($name), 'Sympal requirement', 'Server state', 'Diagnostic').
+      sprintf('<tbody>%s</tbody>', $this->_renderRows($this->_check->getCheckspace($name))).
+      '</table>';
   }
 
+  /**
+   * Render a given array of checks as HTML table rows
+   *
+   * @param array $checks
+   * @return string $html
+   */
   protected function _renderRows(array $checks)
   {
     $html = '';
@@ -42,6 +66,12 @@ class sfSympalServerCheckHtmlRenderer extends sfSympalServerCheckRenderer
     return $html;
   }
 
+  /**
+   * Render the diagnostic value HTML for a single check
+   *
+   * @param sfSympalServerCheckUnit $unit 
+   * @return string $html
+   */
   protected function _renderDiagnostic(sfSympalServerCheckUnit $unit)
   {
     $icons = array(

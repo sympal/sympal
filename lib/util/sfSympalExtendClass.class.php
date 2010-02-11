@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class which gives you the ability to extend another class through the use of Symfony __call() events
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalExtendClass implements ArrayAccess
 {
   protected $_subject;

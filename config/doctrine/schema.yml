@@ -1,3 +1,5 @@
+# sfSympalPlugin Core Doctrine Schema
+
 sfSympalSite:
   actAs: [sfSympalRecordTemplate]
   columns:

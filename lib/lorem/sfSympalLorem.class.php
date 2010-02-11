@@ -1,19 +1,40 @@
 <?php
 
+/**
+ * Class responsible for generating paragraphs of lorem ipsum text used for
+ * dummy content in a CMS
+ *
+ * Original code borrowed from www.diem-project.org
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalLorem
 {
   protected static
     $_loremText,
     $_markdownLoremText;
 
+  /**
+   * Get specified number of lorem markdown paragraphs
+   *
+   * @param integer $nbParagraphs 
+   * @return string $markdown
+   */
   public static function getMarkdownLorem($nbParagraphs = 1)
   {
-    return str_repeat(self::getMarkdownLoremText(), $nbParagraphs);
+    return str_repeat(self::_getMarkdownLoremText(), $nbParagraphs);
   }
 
+  /**
+   * Get big body of lorem ipsum text
+   *
+   * @param integer $nbParagraphs 
+   * @return string $text
+   */
   public static function getBigLorem($nbParagraphs = null)
   {
-    $lorem = self::getLoremText();
+    $lorem = self::_getLoremText();
 
     if (null === $nbParagraphs)
     {
@@ -29,6 +50,13 @@ class sfSympalLorem
     return implode("\n", $paragraphs);
   }
 
+  /**
+   * Get little body of lorem ipsum text
+   *
+   * @param integer $nbCarac Number of characters
+   * @param integer $maxNbCarac Max number of characters
+   * @return string $text
+   */
   public static function getLittleLorem($nbCarac = null, $maxNbCarac = 255)
   {
     if (!$nbCarac)
@@ -43,7 +71,12 @@ class sfSympalLorem
     return substr($paragraph, rand(0, strlen($paragraph)-$nbCarac), $nbCarac);
   }
 
-  protected static function getLoremText()
+  /**
+   * Get all the lorem text
+   *
+   * @return string $text
+   */
+  protected static function _getLoremText()
   {
     if (null === self::$_loremText)
     {
@@ -53,7 +86,12 @@ class sfSympalLorem
     return self::$_loremText;
   }
 
-  protected static function getMarkdownLoremText()
+  /**
+   * Get all the markdown lorem text
+   *
+   * @return string $markdown
+   */
+  protected static function _getMarkdownLoremText()
   {
     if (null === self::$_markdownLoremText)
     {
@@ -62,5 +100,4 @@ class sfSympalLorem
 
     return self::$_markdownLoremText;
   }
-
 }

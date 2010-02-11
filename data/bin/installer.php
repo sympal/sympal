@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Sympal Symfony installer script.
+ *
+ * Run the following command to generate a new project with the Sympal installer.
+ *
+ *     $ php /path/to/symfony generate:project sympal --installer=/path/to/installer.php
+ *
+ * It will setup a base Sympal project for you to start working with.
+ *
+ */
+
 function fileGetContents($url)
 {
   $ch = curl_init();

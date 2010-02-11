@@ -1,7 +1,20 @@
 <?php
 
+/**
+ * Custom Sympal Doctrine_Table class to allow us to add custom Sympal
+ * functionality to all Doctrine tables in Sympal.
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalDoctrineTable extends Doctrine_Table
 {
+  /**
+   * Get the id of a record from this tables identity map
+   *
+   * @param mixed $id
+   * @return mixed $record
+   */
   public function getFromIdentityMap($id)
   {
     $id = (array) $id;

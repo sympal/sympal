@@ -33,6 +33,11 @@ class sfSympalConfiguration
     $this->_configureDoctrine();
   }
 
+  /**
+   * Mark necessary Sympal classes as safe
+   *
+   * @return void
+   */
   private function _markClassesAsSafe()
   {
     sfOutputEscaper::markClassesAsSafe(array(
@@ -52,6 +57,11 @@ class sfSympalConfiguration
     ));
   }
 
+  /**
+   * Connect to various events required by Sympal
+   *
+   * @return void
+   */
   private function _connectEvents()
   {
     $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
@@ -65,6 +75,11 @@ class sfSympalConfiguration
     $this->_dispatcher->connect('sympal.load_content', array($this, 'listenToSympalLoadContent'));
   }
 
+  /**
+   * Configure super cache if enabled
+   *
+   * @return void
+   */
   private function _configureSuperCache()
   {
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
@@ -74,6 +89,11 @@ class sfSympalConfiguration
     }
   }
 
+  /**
+   * Configure the Doctrine manager for Sympal
+   *
+   * @return void
+   */
   private function _configureDoctrine()
   {
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
@@ -83,6 +103,11 @@ class sfSympalConfiguration
     $this->_configureDoctrineCache();    
   }
 
+  /**
+   * Configure Doctrine cache if it is enabled
+   *
+   * @return void
+   */
   private function _configureDoctrineCache()
   {
     if (sfSympalConfig::get('orm_cache', 'enabled', true))
@@ -99,11 +124,23 @@ class sfSympalConfiguration
     }
   }
 
+  /**
+   * Listen to sympal.load_content event and force a reload of isEditMode()
+   *
+   * @param sfEvent $event
+   * @return void
+   */
   public function listenToSympalLoadContent(sfEvent $event)
   {
     sfContext::getInstance()->getUser()->isEditMode(true);
   }
 
+  /**
+   * Listen to clear cache task event so we can clear the web cache folder
+   *
+   * @param sfEvent $event 
+   * @return void
+   */
   public function listenToTaskCacheClear(sfEvent $event)
   {
     $event->getSubject()->logSection('sympal', 'Clearing web cache folder');
@@ -148,6 +185,13 @@ class sfSympalConfiguration
     }
   }
 
+  /**
+   * Filter Symfony template parameters and add some references to some variables
+   *
+   * @param sfEvent $event 
+   * @param array $parameters
+   * @return array $parameters
+   */
   public function filterTemplateParameters(sfEvent $event, $parameters)
   {
     if (!$this->_sympalContext)
@@ -166,31 +210,51 @@ class sfSympalConfiguration
     return $parameters;
   }
 
+  /**
+   * Get the Doctrine_Manager instance
+   *
+   * @return Doctrine_Manager $manager
+   */
   public function getDoctrineManager()
   {
     return $this->_doctrineManager;
   }
 
+  /**
+   * Get the sfSympalCache instance
+   *
+   * @return sfSympalCache $cache
+   */
   public function getCache()
   {
     return $this->_cache;
   }
 
+  /**
+   * Get the current sfSympalContext instance
+   *
+   * @return sfSympalContext $sympalContext
+   */
   public function getSympalContext()
   {
     return $this->_sympalContext;
   }
 
-  public function getContentTypes()
-  {
-    return $this->_cache->getContentTypes();
-  }
-
+  /**
+   * Get the current ProjectConfiguration instance
+   *
+   * @return ProjectConfiguration $projectConfiguration
+   */
   public function getProjectConfiguration()
   {
     return $this->_projectConfiguration;
   }
 
+  /**
+   * Get array of required plugins for Sympal
+   *
+   * @return array $requiredPlugins
+   */
   public function getRequiredPlugins()
   {
     $requiredPlugins = array();
@@ -206,11 +270,21 @@ class sfSympalConfiguration
     return array_values(array_unique($requiredPlugins));
   }
 
+  /**
+   * Get array of core Sympal plugins
+   *
+   * @return array $corePlugins
+   */
   public function getCorePlugins()
   {
     return sfSympalPluginConfiguration::$dependencies;
   }
 
+  /**
+   * Get array of plugins which contain a content type
+   *
+   * @return array $contentTypePlugins
+   */
   public function getContentTypePlugins()
   {
     $contentTypePlugins = array();
@@ -227,21 +301,41 @@ class sfSympalConfiguration
     return $contentTypePlugins;
   }
 
+  /**
+   * Get array of plugins that are downloaded and installed to your project
+   *
+   * @return array $installedPlugins
+   */
   public function getInstalledPlugins()
   {
     return $this->getOtherPlugins();
   }
 
+  /**
+   * Get array of available addon plugins
+   *
+   * @return array $addonPlugins
+   */
   public function getAddonPlugins()
   {
     return sfSympalPluginToolkit::getAvailablePlugins();
   }
 
+  /**
+   * Get array of other plugins that are not required
+   *
+   * @return array $otherPlugins
+   */
   public function getOtherPlugins()
   {
     return array_diff($this->getPlugins(), $this->getRequiredPlugins());
   }
 
+  /**
+   * Get array of all manageable plugins that can be downloaded, installed, uninstalled, etc.
+   *
+   * @return array $allManageablePlugins
+   */
   public function getAllManageablePlugins()
   {
     $plugins = array_merge($this->getAddonPlugins(), $this->getInstalledPlugins());
@@ -250,11 +344,21 @@ class sfSympalConfiguration
     return $plugins;
   }
 
+  /**
+   * Get array of all installed plugins
+   *
+   * @return array $plugins
+   */
   public function getPlugins()
   {
     return array_keys($this->getPluginPaths());
   }
 
+  /**
+   * Get paths to all Sympal plugins
+   *
+   * @return array $pluginPaths
+   */
   public function getPluginPaths()
   {
     if (!$this->_plugins)
@@ -274,16 +378,31 @@ class sfSympalConfiguration
     return $this->_plugins;
   }
 
+  /**
+   * Get array of all modules
+   *
+   * @return array $modules
+   */
   public function getModules()
   {
     return $this->getCache()->getModules();
   }
 
+  /**
+   * Get array of all layouts
+   *
+   * @return array $layouts
+   */
   public function getLayouts()
   {
     return $this->getCache()->getLayouts();
   }
 
+  /**
+   * Get array of all themes that are not disabled.
+   *
+   * @return array $themes
+   */
   public function getThemes()
   {
     if ($this->_themes === null)
@@ -301,6 +420,11 @@ class sfSympalConfiguration
     return $this->_themes;
   }
 
+  /**
+   * Get array of all themes that are not disabled and available for selection
+   *
+   * @return array $availableThemes
+   */
   public function getAvailableThemes()
   {
     if ($this->_availableThemes === null)
@@ -318,11 +442,22 @@ class sfSympalConfiguration
     return $this->_availableThemes;
   }
 
+  /**
+   * Get array of configured content templates for a given moel name
+   *
+   * @param string $model
+   * @return array $contentTemplates
+   */
   public function getContentTemplates($model)
   {
     return sfSympalConfig::get($model, 'content_templates', array());
   }
 
+  /**
+   * Check if we are inside an admin module
+   *
+   * @return boolean
+   */
   public function isAdminModule()
   {
     if (!$this->_symfonyContext)
@@ -334,6 +469,11 @@ class sfSympalConfiguration
     return array_key_exists($module, $adminModules);
   }
 
+  /**
+   * Get the theme to use for the current request
+   *
+   * @return string $theme
+   */
   public function getThemeForRequest()
   {
     $request = $this->_symfonyContext->getRequest();
@@ -373,6 +513,11 @@ class sfSympalConfiguration
     return sfSympalConfig::get('default_theme');
   }
 
+  /**
+   * Initialize the theme for the current request
+   *
+   * @return void
+   */
   public function initializeTheme()
   {
     if (!$this->_symfonyContext->getRequest()->isXmlHttpRequest())
@@ -381,18 +526,11 @@ class sfSympalConfiguration
     }
   }
 
-  public function checkPluginDependencies()
-  {
-    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
-    {
-      if (strpos($pluginName, 'sfSympal') !== false)
-      {
-        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
-        sfSympalPluginToolkit::checkPluginDependencies($pluginName, $dependencies);
-      }
-    }
-  }
-
+  /**
+   * Handle the enabling of modules. Either enables all modules or only the configured modules.
+   *
+   * @return void
+   */
   private function _enableModules()
   {
     if (sfSympalConfig::get('enable_all_modules', null, true))
@@ -414,6 +552,12 @@ class sfSympalConfiguration
     }
   }
 
+  /**
+   * Check if Sympal is installed and redirect to installer if not.
+   * Do some other install checks as well.
+   *
+   * @return void
+   */
   private function _checkSympalInstall()
   {
     $sfContext = sfContext::getInstance();
@@ -447,6 +591,11 @@ class sfSympalConfiguration
     }
   }
 
+  /**
+   * Initialize some sfConfig values for Sympal
+   *
+   * @return void
+   */
   private function _initializeSymfonyConfig()
   {
     sfConfig::set('sf_cache', sfSympalConfig::get('page_cache', 'enabled', false));
@@ -483,6 +632,11 @@ class sfSympalConfiguration
     sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
   }
 
+  /**
+   * Get the active sfSympalConfiguration instance
+   *
+   * @return sfSympalConfiguration $sympalConfiguration
+   */
   public static function getActive()
   {
     return sfApplicationConfiguration::getActive()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();

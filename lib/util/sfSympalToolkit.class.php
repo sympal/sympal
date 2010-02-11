@@ -1,7 +1,19 @@
 <?php
 
+/**
+ * Toolkit class for general Sympal helper methods
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalToolkit
 {
+  /**
+   * Helper method for getting file contents from http locations without using file_get_contents()
+   *
+   * @param string $file 
+   * @return string $contents
+   */
   public static function fileGetContents($file)
   {
     if (substr($file, 0, 4) === 'http')
@@ -31,32 +43,69 @@ class sfSympalToolkit
     }
   }
 
+  /**
+   * Load the given helpers
+   *
+   * @param string $helpers 
+   * @return void
+   */
   public static function loadHelpers($helpers)
   {
     sfApplicationConfiguration::getActive()->loadHelpers($helpers);
   }
 
+  /**
+   * Use the given stylesheet
+   *
+   * @param string $stylesheet 
+   * @param string $position 
+   * @return void
+   */
   public static function useStylesheet($stylesheet, $position = 'last')
   {
     return sfContext::getInstance()->getResponse()->addStylesheet(sfSympalConfig::getAssetPath($stylesheet), $position);
   }
 
+  /**
+   * Use the given javascript
+   *
+   * @param string $stylesheet 
+   * @param string $position 
+   * @return void
+   */
   public static function useJavascript($stylesheet, $position = 'last')
   {
     return sfContext::getInstance()->getResponse()->addJavascript(sfSympalConfig::getAssetPath($javascript), $position);
   }
 
+  /**
+   * Use jQuery in your project
+   *
+   * @param array $plugins Optional array of jQuery plugins to load
+   * @return void
+   */
   public static function useJQuery($plugins = array())
   {
     self::loadHelpers('jQuery');
     jq_add_plugins_by_name($plugins);
   }
 
+  /**
+   * Render a formatted exception message
+   *
+   * @param Exception $e 
+   * @return string $html
+   */
   public static function renderException(Exception $e)
   {
     return get_partial('sympal_default/exception', array('e' => $e));
   }
 
+  /**
+   * Get the default application by find the first app in the apps directory
+   *
+   * @return string $appName
+   */
   public static function getDefaultApplication()
   {
     $apps = glob(sfConfig::get('sf_root_dir').'/apps/*');
@@ -75,6 +124,12 @@ class sfSympalToolkit
     return 'sympal';
   }
 
+  /**
+   * Check all the requirements for installing Sympal
+   *
+   * @return void
+   * @throws sfException if a requirement is not met
+   */
   public static function checkRequirements()
   {
     $user = sfContext::getInstance()->getUser();
@@ -104,6 +159,14 @@ class sfSympalToolkit
     }
   }
 
+  /**
+   * Get a symfony resource (partial or component)
+   *
+   * @param string $module 
+   * @param string $action 
+   * @param array $variables 
+   * @return string $html
+   */
   public static function getSymfonyResource($module, $action = null, $variables = array())
   {
     if (strpos($module, '/'))
@@ -129,6 +192,12 @@ class sfSympalToolkit
 
   protected static $_helperAutoloadCache = null;
 
+  /**
+   * Autoload the helper file for a helper function
+   *
+   * @param string $functionName
+   * @return void
+   */
   public static function autoloadHelper($functionName)
   {
     if (is_null(self::$_helperAutoloadCache))
@@ -143,6 +212,14 @@ class sfSympalToolkit
     }
   }
 
+  /**
+   * Check if a module and action exist
+   *
+   * @param string $moduleName 
+   * @param string $actionName 
+   * @return void
+   * @author Jonathan Wage
+   */
   public static function moduleAndActionExists($moduleName, $actionName)
   {
     $modulePath = sfConfig::get('sf_apps_dir').'/'.sfConfig::get('sf_app').'/modules/'.$moduleName.'/actions/actions.class.php';
@@ -154,6 +231,11 @@ class sfSympalToolkit
     }
   }
 
+  /**
+   * Get all available language codes/flags
+   *
+   * @return array $codes
+   */
   public static function getAllLanguageCodes()
   {
     $flags = sfFinder::type('file')
@@ -168,6 +250,11 @@ class sfSympalToolkit
     return $codes;
   }
 
+  /**
+   * Get the redirect routes yaml for the routing.yml
+   *
+   * @return string $yaml
+   */
   public static function getRedirectRoutesYaml()
   {
     $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/redirect_routes.cache.yml';
@@ -212,6 +299,11 @@ class sfSympalToolkit
     } catch (Exception $e) { }
   }
 
+  /**
+   * Get the content routes yaml
+   *
+   * @return string $yaml
+   */
   public static function getContentRoutesYaml()
   {
     $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/content_routes.cache.yml';

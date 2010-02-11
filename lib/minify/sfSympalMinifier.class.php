@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class responsible for minifying the stylesheets and javascripts for the given
+ * sfWebResponse and sfRequest instances
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalMinifier
 {
   private
@@ -12,18 +19,36 @@ class sfSympalMinifier
     $this->_request = $request;
   }
 
+  /**
+   * Start the minification process
+   *
+   * @return void
+   */
   public function minify()
   {
     $this->_minifyFiles($this->_response->getJavascripts(), 'js');
     $this->_minifyFiles($this->_response->getStylesheets(), 'css');
   }
 
+  /**
+   * Check if a file is minifiable
+   *
+   * @param string $file
+   * @return boolean
+   */
   private function _isMinifiable($file)
   {
     $exclude = sfSympalConfig::get('minifier', 'exclude', array());
     return !in_array($file, $exclude);
   }
 
+  /**
+   * Minify an array of js/css files
+   *
+   * @param array $files The array of files to minify
+   * @param string $type The type of files. Either js or css
+   * @return void
+   */
   private function _minifyFiles(array $files, $type)
   {
     if ($files)
@@ -72,11 +97,26 @@ class sfSympalMinifier
     }
   }
 
+  /**
+   * Minify some javascript code
+   *
+   * @todo Actually make this minify the JS :)
+   * @param string $javascript 
+   * @param string $path 
+   * @return string $javascript
+   */
   private function _minifyJavascript($javascript, $path)
   {
     return $javascript;
   }
 
+  /**
+   * Minify some css
+   *
+   * @param string $stylesheet 
+   * @param string $path 
+   * @return string $stylesheet
+   */
   private function _minifyStylesheet($stylesheet, $path)
   {
     $stylesheet = $this->_fixCssPaths($stylesheet, $path);
@@ -89,6 +129,15 @@ class sfSympalMinifier
     );
   }
 
+  /**
+   * Fix the paths to urls in the css since the css file will be in a different location
+   * we need the urls to be absolute and not relative. This function will adjust the 
+   * given css and fix the urls.
+   *
+   * @param string $content
+   * @param string $path 
+   * @return string $content
+   */
   private function _fixCssPaths($content, $path)
   {
     if (preg_match_all("/url\(\s?[\'|\"]?(.+)[\'|\"]?\s?\)/ix", $content, $urlMatches))

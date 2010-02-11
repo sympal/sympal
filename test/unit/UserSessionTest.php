@@ -11,7 +11,7 @@ $content = Doctrine_Core::getTable('sfSympalContent')
   ->andWhere('c.slug = ?', 'home')
   ->fetchOne();
 
-$t->is($user->hasAccessToContent($content), true);
+$t->is($user->hasAccessToViewContent($content), true);
 
 $group = new sfGuardGroup();
 $group->name = 'SpecialGroup';
@@ -23,7 +23,7 @@ $content->save();
 $admin = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(1);
 $user->signIn($admin);
 
-$t->is($user->hasAccessToContent($content), true);
+$t->is($user->hasAccessToViewContent($content), true);
 $t->is($user->isEditMode(), true);
 
 $t->is($user->isSuperAdmin(), true);

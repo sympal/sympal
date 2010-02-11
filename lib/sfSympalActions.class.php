@@ -1,7 +1,18 @@
 <?php
 
+/**
+ * Class responsible for adding new methods to your sfActions instances
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalActions extends sfSympalExtendClass
 {
+  /**
+   * Shortcut to reset the sympal routes cache from your actions
+   *
+   * @return void
+   */
   public function resetSympalRoutesCache()
   {
     // Reset the routes cache incase of the url changing or a custom url was added
@@ -9,6 +20,12 @@ class sfSympalActions extends sfSympalExtendClass
       ->getSympalConfiguration()->getCache()->resetRouteCache();
   }
 
+  /**
+   * Shortcut to the clear cache task from your actions
+   *
+   * @param array $options 
+   * @return void
+   */
   public function clearCache(array $options = array())
   {
     chdir(sfConfig::get('sf_root_dir'));
@@ -18,6 +35,11 @@ class sfSympalActions extends sfSympalExtendClass
     $this->resetSympalRoutesCache();
   }
 
+  /**
+   * Clear the menu cache from your actions
+   *
+   * @return void
+   */
   public function clearMenuCache()
   {
     $files = glob(sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/*/SYMPAL_MENU_*.cache');
@@ -27,17 +49,33 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
+  /**
+   * Check if this request is an ajax request
+   *
+   * @return boolean
+   */
   public function isAjax()
   {
     $request = $this->getRequest();
     return $request->isXmlHttpRequest() || $request->getParameter('is_ajax');
   }
 
+  /**
+   * Get the current sfSympalContext instance from your actions
+   *
+   * @return sfSympalContext $sympalContext
+   */
   public function getSympalContext()
   {
     return sfSympalContext::getInstance();
   }
 
+  /**
+   * Check that the file permissions are ok for the Sympal project from your actions
+   *
+   * @param array $items Array of files and/or directories to check
+   * @return boolean
+   */
   public function checkFilePermissions($items = null)
   {
     if ($items === null)
@@ -92,41 +130,81 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
+  /**
+   * Get instance of the sfSympalContentActionLoader for loading and rendering content
+   *
+   * @return sfSympalContentActionLoader
+   */
   public function getSympalContentActionLoader()
   {
     return $this->getSympalContext()->getSympalContentActionLoader($this->getSubject());
   }
 
+  /**
+   * Load the given Sympal theme
+   *
+   * @param string $name 
+   * @return void
+   */
   public function loadTheme($name)
   {
-    return $this->getSympalContext()->loadTheme($name);
+    $this->getSympalContext()->loadTheme($name);
   }
 
+  /**
+   * Load a theme and if none given load the default theme
+   *
+   * @param string $name
+   * @return void
+   */
   public function loadThemeOrDefault($name)
   {
     if ($name)
     {
-      return $this->getSympalContext()->loadTheme($name);
+      $this->getSympalContext()->loadTheme($name);
     } else {
-      return $this->getSympalContext()->loadTheme(sfSympalConfig::get('default_theme'));
+      $this->getSympalContext()->loadTheme(sfSympalConfig::get('default_theme'));
     }
   }
 
+  /**
+   * Load the default theme from your actions
+   *
+   * @return void
+   */
   public function loadDefaultTheme()
   {
     $this->loadTheme(sfSympalConfig::get('default_theme'));
   }
 
+  /**
+   * Load the admin theme from your actions
+   *
+   * @return void
+   */
   public function loadAdminTheme()
   {
     $this->loadTheme(sfSympalConfig::get('admin_theme', null, 'admin'));
   }
 
+  /**
+   * Load the theme for the current site
+   *
+   * @return void
+   */
   public function loadSiteTheme()
   {
     $this->loadThemeOrDefault($this->getSympalContext()->getSite()->getTheme());
   }
 
+  /**
+   * Ask a for confirmation step from your actions
+   *
+   * @param string $title 
+   * @param string $message 
+   * @param array $variables
+   * @return void
+   */
   public function askConfirmation($title, $message, $variables = array())
   {
     $e = explode('/', $message);
@@ -165,6 +243,13 @@ class sfSympalActions extends sfSympalExtendClass
     }
   }
 
+  /**
+   * Forward to a given route with the array of parameters to be put in the request
+   *
+   * @param string $route
+   * @param array $params
+   * @return void
+   */
   public function forwardToRoute($route, $params = array())
   {
     $full = $route;
@@ -209,11 +294,21 @@ class sfSympalActions extends sfSympalExtendClass
     $this->forward($params['module'], $params['action']);
   }
 
+  /**
+   * Go back to the referrer.
+   *
+   * @return void
+   */
   public function goBack()
   {
     $this->redirect($this->getRequest()->getReferer());
   }
 
+  /**
+   * Refresh the current uri
+   *
+   * @return void
+   */
   public function refresh()
   {
     $this->redirect($this->getRequest()->getUri());

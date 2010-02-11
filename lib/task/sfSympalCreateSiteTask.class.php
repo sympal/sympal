@@ -37,7 +37,7 @@ class sfSympalCreateSiteTask extends sfSympalBaseTask
 The [sympal:create-site|INFO] task will create a new Sympal site in the database
 and generate the according symfony application.
 
-  [./sympal:create-site|INFO]
+  [./sympal:create-site my_site|INFO]
 EOF;
   }
 

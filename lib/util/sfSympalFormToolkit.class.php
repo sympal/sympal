@@ -1,7 +1,20 @@
 <?php
 
+/**
+ * Toolkit for form helper methods
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalFormToolkit
 {
+  /**
+   * Embed i18n to the given form if it is enabled
+   *
+   * @param string $name 
+   * @param sfForm $form 
+   * @return void
+   */
   public static function embedI18n($name, sfForm $form)
   {
     if (sfSympalConfig::isI18nEnabled($name))
@@ -19,6 +32,13 @@ class sfSympalFormToolkit
     }
   }
 
+  /**
+   * Change the content slot type widget to be a dropdown
+   *
+   * @param sfForm $form 
+   * @param boolean $blank Add a blank option
+   * @return void
+   */
   public static function changeContentSlotTypeWidget(sfForm $form, $blank = false)
   {
     $widgetSchema = $form->getWidgetSchema();
@@ -37,6 +57,13 @@ class sfSympalFormToolkit
     $validatorSchema['type'] = new sfValidatorChoice(array('required' => false, 'choices' => array_keys($choices)));
   }
 
+  /**
+   * Change the content choice widget to be a formatted/indented list
+   *
+   * @param sfForm $form 
+   * @param boolean $add Add a new widget instead of trying replacing
+   * @return void
+   */
   public static function changeContentWidget(sfForm $form, $add = null)
   {
     $widgetSchema = $form->getWidgetSchema();
@@ -67,6 +94,12 @@ class sfSympalFormToolkit
     }
   }
 
+  /**
+   * Change the widget for choosing a module
+   *
+   * @param sfForm $form 
+   * @return void
+   */
   public static function changeModuleWidget(sfForm $form)
   {
     $modules = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getModules();
@@ -86,6 +119,13 @@ class sfSympalFormToolkit
     ));
   }
 
+  /**
+   * Change date widgets to jquery rich date widget
+   *
+   * @param string $name
+   * @param sfForm $form 
+   * @return void
+   */
   public static function changeDateWidget($name, sfForm $form)
   {
     sfSympalToolkit::useJQuery(array('ui'));
@@ -95,6 +135,12 @@ class sfSympalFormToolkit
     $widgetSchema[$name] = new sfWidgetFormJQueryDate();
   }
 
+  /**
+   * Embed recaptcha to a form
+   *
+   * @param sfForm $form 
+   * @return void
+   */
   public static function embedRecaptcha(sfForm $form)
   {
     $publicKey = sfSympalConfig::get('recaptcha_public_key');
@@ -116,6 +162,13 @@ class sfSympalFormToolkit
     ));
   }
 
+  /**
+   * Change the content slot form value widget
+   *
+   * @param sfSympalContentSlot $contentSlot 
+   * @param sfForm $form 
+   * @return void
+   */
   public static function changeContentSlotValueWidget(sfSympalContentSlot $contentSlot, sfForm $form)
   {
     if ($contentSlot->is_column)
@@ -142,6 +195,12 @@ class sfSympalFormToolkit
     $validatorSchema['value'] = new $validatorClass($validatorOptions);
   }
 
+  /**
+   * Change theme widget to be dropdown of themes
+   *
+   * @param sfForm $form 
+   * @return void
+   */
   public static function changeThemeWidget(sfForm $form)
   {
     $array = self::getThemeWidgetAndValidator();
@@ -150,6 +209,12 @@ class sfSympalFormToolkit
     $form->setValidator('theme', $array['validator']);
   }
 
+  /**
+   * Change template widget to be dropdown of templates
+   *
+   * @param sfForm $form 
+   * @return void
+   */
   public static function changeTemplateWidget(sfForm $form)
   {
     $array = self::getTemplateWidgetAndValidator($form);
@@ -158,6 +223,12 @@ class sfSympalFormToolkit
     $form->setValidator('template', $array['validator']);
   }
 
+  /**
+   * Get the content templates widget and validator
+   *
+   * @param sfForm $form 
+   * @return array $widgetAndValidator
+   */
   public static function getTemplateWidgetAndValidator(sfForm $form)
   {
     $object = $form->getObject();
@@ -186,6 +257,11 @@ class sfSympalFormToolkit
     return array('widget' => $widget, 'validator' => $validator);
   }
 
+  /**
+   * Get the theme and widget validator
+   *
+   * @return array $widgetAndValidator
+   */
   public static function getThemeWidgetAndValidator()
   {
     $themes = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getAvailableThemes();

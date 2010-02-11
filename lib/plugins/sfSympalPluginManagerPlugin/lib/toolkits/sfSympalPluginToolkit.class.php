@@ -11,32 +11,6 @@ class sfSympalPluginToolkit
     }
   }
 
-  public static function checkPluginDependencies($pluginName, $dependencies)
-  {
-    $context = sfContext::getInstance();
-    $configuration = $context->getConfiguration();
-    $pluginConfiguration = $configuration->getPluginConfiguration($pluginName);
-
-    $plugins = $configuration->getPlugins();
-
-    $dependencies = (array) $dependencies;
-    foreach ($dependencies as $dependency)
-    {
-      if (!in_array($dependency, $plugins))
-      {
-        throw new sfException(
-          sprintf(
-            'Dependency check failed for "%s". Missing plugin named "%s".'."\n\n".
-            'The following plugins are required: %s',
-            $pluginConfiguration->getName(),
-            $dependency,
-            implode(', ', $dependencies)
-          )
-        );
-      }
-    }
-  }
-
   public static function getRequiredPlugins()
   {
     $requiredPlugins = array();

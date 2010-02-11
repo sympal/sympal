@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class responsible for rendering the results of a sfSympalServerCheck instance
+ * to the command line from a Symfony sfTask instance
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalServerCheckCliRenderer extends sfSympalServerCheckRenderer
 {
   protected
@@ -9,11 +16,22 @@ class sfSympalServerCheckCliRenderer extends sfSympalServerCheckRenderer
     $_warnings,
     $_checks;
 
+  /**
+   * Set the task that this class is rendering for
+   *
+   * @param sfTask $task 
+   * @return void
+   */
   public function setTask(sfTask $task)
   {
     $this->_task = $task;
   }
 
+  /**
+   * Render all the results
+   *
+   * @return void
+   */
   public function render()
   {
     $this->_task->logBlock('Checking server requirements for Symfony & Sympal', 'INFO_LARGE');
@@ -60,6 +78,12 @@ class sfSympalServerCheckCliRenderer extends sfSympalServerCheckRenderer
     }
   }
 
+  /**
+   * Render the results header
+   *
+   * @param string $space The check space name
+   * @return string $head
+   */
   protected function _renderHead($space)
   {
     return $this->_task->logBlock($this->_renderLine(array_map('strtoupper', array(
@@ -70,6 +94,12 @@ class sfSympalServerCheckCliRenderer extends sfSympalServerCheckRenderer
     ))), 'COMMENT_LARGE');
   }
 
+  /**
+   * Render an individual check
+   *
+   * @param sfSympalServerCheckUnit $unit 
+   * @return void
+   */
   protected function _renderCheck(sfSympalServerCheckUnit $unit)
   {
     $line = $this->_renderLine(array(
@@ -95,13 +125,19 @@ class sfSympalServerCheckCliRenderer extends sfSympalServerCheckRenderer
     }
   }
 
+  /**
+   * Render a line from an array of values
+   *
+   * @param array $values 
+   * @return string $line
+   */
   protected function _renderLine(array $values)
   {
     $text = '';
 
     foreach($values as $index => $value)
     {
-      $text.= str_repeat(' ', max(0, $this->_rowWidth[$index] - strlen($value))).$value;
+      $text .= str_repeat(' ', max(0, $this->_rowWidth[$index] - strlen($value))).$value;
     }
 
     return $text;

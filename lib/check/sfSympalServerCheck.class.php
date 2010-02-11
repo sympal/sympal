@@ -1,7 +1,19 @@
 <?php
 
+/**
+ * Class responsible for performing a check on the server to ensure Sympal can run
+ * properly and that all settings and configurations are satisfactory.
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalServerCheck
 {
+  /**
+   * The array of checks to perform
+   *
+   * @var array
+   */
   protected $_checks;
 
   const WARNING = 1;
@@ -9,10 +21,15 @@ class sfSympalServerCheck
 
   public function __construct()
   {
-    $this->_checks = $this->createChecks();
+    $this->_checks = $this->_createChecks();
   }
 
-  protected function createChecks()
+  /**
+   * Create the array of checks to be ran
+   *
+   * @return array $checks
+   */
+  protected function _createChecks()
   {
     return array(
       'server' => array(
@@ -54,11 +71,22 @@ class sfSympalServerCheck
     );
   }
 
+  /**
+   * Get the checks for a given checkspace
+   *
+   * @param string $name
+   * @return array $checks
+   */
   public function getCheckspace($name)
   {
     return $this->_checks[$name];
   }
 
+  /**
+   * Get every checkspace and all checks
+   *
+   * @return array $checks
+   */
   public function getChecks()
   {
     return $this->_checks;

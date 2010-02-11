@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * Sympal cache helper class which handles caching some common information compiled
+ * about this Sympal project.
+ *
+ *  * Doctrine ORM Cache Driver
+ *  * Routes
+ *  * Layouts
+ *  * Modules
+ *  * Content Types
+ *  * Helpers
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalCache
 {
   protected
@@ -9,6 +23,14 @@ class sfSympalCache
     $_modules = null,
     $_layouts = null;
 
+  /**
+   * Instantiate the sfSympalCache instance and prime the cache for this Sympal
+   * project
+   *
+   * @see sfSympalConfiguration
+   * @see sfSympalPluginConfiguration
+   * @param sfSympalConfiguration $sympalConfiguration
+   */
   public function __construct(sfSympalConfiguration $sympalConfiguration)
   {
     $this->_sympalConfiguration = $sympalConfiguration;
@@ -18,6 +40,13 @@ class sfSympalCache
     $this->primeCache();
   }
 
+  /**
+   * Configured default callable in config/app.yml to return the 
+   * sfCache driver to use to store cache entries for the passed sfSympalCache instance
+   *
+   * @param sfSympalCache $cache
+   * @return sfCache $driver A instance of a sfCache driver
+   */
   public static function getCacheDriver(sfSympalCache $cache)
   {
     return new sfFileCache(
@@ -25,6 +54,11 @@ class sfSympalCache
     ));
   }
 
+  /**
+   * Get the Doctrine cache driver to use for Doctrine query and result cache
+   *
+   * @return Doctrine_Cache_Driver $driver
+   */
   public static function getOrmCacheDriver()
   {
     if (extension_loaded('apc'))
@@ -35,6 +69,11 @@ class sfSympalCache
     }
   }
 
+  /**
+   * Clear the cache and force it to be primed again
+   *
+   * @return void
+   */
   public function clear()
   {
     $this->_contentTypes = null;
@@ -44,15 +83,20 @@ class sfSympalCache
     $this->_cacheDriver->set('primed', false);
   }
 
+  /**
+   * Prime the cache for this sfSympalCache instance
+   *
+   * @param boolean $force Force it to prime the cache regardless of whether or not it has been primed already
+   * @return void
+   */
   public function primeCache($force = false)
   {
     if ($this->_cacheDriver->has('primed') && !$force)
     {
-      return true;
+      return;
     }
 
     $this->clear();
-    $this->_writeContentTypesCache();
     $this->_writeHelperAutoloadCache();
     $this->_writeModulesCache();
     $this->_writeLayoutsCache();
@@ -60,6 +104,11 @@ class sfSympalCache
     $this->_cacheDriver->set('primed', true);
   }
 
+  /**
+   * Reset the routing cache
+   *
+   * @return void
+   */
   public function resetRouteCache()
   {
     $cachePath = sfConfig::get('sf_cache_dir').'/'.sfConfig::get('sf_app').'/'.sfConfig::get('sf_environment').'/routes.cache.yml';
@@ -79,6 +128,11 @@ class sfSympalCache
     $context->getRouting()->loadConfiguration();
   }
 
+  /**
+   * Get the cached layouts array
+   *
+   * @return array $layouts
+   */
   public function getLayouts()
   {
     if ($this->_layouts === null)
@@ -89,6 +143,11 @@ class sfSympalCache
     return $this->_layouts;
   }
 
+  /**
+   * Get the cached modules array
+   *
+   * @return array $modules
+   */
   public function getModules()
   {
     if ($this->_modules === null)
@@ -99,16 +158,11 @@ class sfSympalCache
     return $this->_modules;
   }
 
-  public function getContentTypes()
-  {
-    if ($this->_contentTypes === null)
-    {
-      $this->_contentTypes = $this->get('content_types');
-    }
-
-    return $this->_contentTypes;
-  }
-
+  /**
+   * Get the cached helper methods and paths
+   *
+   * @return array $helpers
+   */
   public function getHelperAutoload()
   {
     if ($this->_helperAutoload === null)
@@ -119,6 +173,11 @@ class sfSympalCache
     return $this->_helperAutoload;
   }
 
+  /**
+   * Write the helper autoaload cache
+   *
+   * @return void
+   */
   protected function _writeHelperAutoloadCache()
   {
     $cache = array();
@@ -145,19 +204,11 @@ class sfSympalCache
     $this->set('helper_autoload', $cache);
   }
 
-  protected function _writeContentTypesCache()
-  {
-    try {
-      $typesArray = array();
-      $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
-      foreach ($contentTypes as $contentType)
-      {
-        $typesArray[$contentType['id']] = $contentType['name'];
-      }
-      $this->set('content_types', $typesArray);
-    } catch (Exception $e) {}
-  }
-
+  /**
+   * Find all modules that exist in this project and application and cache the array
+   *
+   * @return void
+   */
   protected function _writeModulesCache()
   {
     $modules = array();
@@ -185,6 +236,11 @@ class sfSympalCache
     $this->set('modules', $modules);
   }
 
+  /**
+   * Find all the layouts that exist for this project and application and cache the array
+   *
+   * @return void
+   */
   protected function _writeLayoutsCache()
   {
     $layouts = array();
@@ -220,26 +276,45 @@ class sfSympalCache
     $this->set('layouts', $layoutsCache);
   }
 
+  /**
+   * @see sfCache::remove()
+   */
   public function remove($key)
   {
     return $this->_cacheDriver->remove($key);
   }
 
+  /**
+   * @see sfCache::set()
+   */
   public function set($key, $data, $lifeTime = null)
   {
     return $this->_cacheDriver->set($key, serialize($data), $lifeTime);
   }
 
+  /**
+   * @see sfCache::has()
+   */
   public function has($key)
   {
     return $this->_cacheDriver->has($key);
   }
 
+  /**
+   * @see sfCache::get()
+   */
   public function get($key)
   {
     return unserialize($this->_cacheDriver->get($key));
   }
 
+  /**
+   * Forward any unknown method calls to the sfCache driver instance
+   *
+   * @param string $method
+   * @param array $arguments
+   * @return mixed $return
+   */
   public function __call($method, $arguments)
   {
     return call_user_func_array(array($this->_cacheDriver, $method), $arguments);

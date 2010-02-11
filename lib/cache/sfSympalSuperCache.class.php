@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Class to handle writing the super cache files by filtering the symfony
+ * response content.
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalSuperCache
 {
   private $_sympalConfiguration;
@@ -9,6 +16,14 @@ class sfSympalSuperCache
     $this->_sympalConfiguration = $sympalConfiguration;
   }
 
+  /**
+   * Listen to the response.filter_content event and cache the content for
+   * the Sympal super caching
+   *
+   * @param sfEvent $event 
+   * @param string $content 
+   * @return $content
+   */
   public function listenToResponseFilterContent(sfEvent $event, $content)
   {
     $symfonyContext = sfContext::getInstance();

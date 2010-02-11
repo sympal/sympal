@@ -12,11 +12,25 @@ function get_sympal_content_property($content, $name)
   return $content->$name;
 }
 
+/**
+ * Render the author of a content record
+ *
+ * @param sfSympalContent $content 
+ * @param string $slot 
+ * @return string $author
+ */
 function render_content_author(sfSympalContent $content, $slot)
 {
   return $content->created_by_id ? $content->CreatedBy->username : 'nobody';
 }
 
+/**
+ * Render the date published for a content record
+ *
+ * @param sfSympalContent $content 
+ * @param string $slot 
+ * @return string $datePublished
+ */
 function render_content_date_published(sfSympalContent $content, $slot)
 {
   if ($content->date_published)

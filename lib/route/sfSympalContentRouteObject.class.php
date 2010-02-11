@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Class responsible for generating the route information for a sfSympalContent
+ * instance. Abstracted to this class so it can be used standalone and cached 
+ * alone from the sfSympalContent instance
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalContentRouteObject
 {
   protected
@@ -14,6 +22,12 @@ class sfSympalContentRouteObject
     $this->compile($content);
   }
 
+  /**
+   * Compile all the information for the given sfSympalContent instance
+   *
+   * @param sfSympalContent $content
+   * @return void
+   */
   public function compile(sfSympalContent $content)
   {
     $this->_routeName = $this->_buildRouteName($content);
@@ -22,6 +36,11 @@ class sfSympalContentRouteObject
     $this->_routeValues = $this->_buildRouteValues($content);
   }
 
+  /**
+   * Get the complete route for content
+   *
+   * @return string $route
+   */
   public function getRoute()
   {
     $values = $this->getCultureRouteValues();
@@ -34,26 +53,53 @@ class sfSympalContentRouteObject
     }
   }
 
+  /**
+   * Get the name of the route.
+   *
+   * @return string $routeName
+   */
   public function getRouteName()
   {
     return $this->_routeName;
   }
 
+  /**
+   * Get the route path. i.e. /route/path/:slug
+   *
+   * @return void
+   * @author Jonathan Wage
+   */
   public function getRoutePath()
   {
     return $this->_routePath;
   }
 
+  /**
+   * Get the sfRoute object that represents this route path
+   *
+   * @return sfRoute $routeObject
+   */
   public function getRouteObject()
   {
     return $this->_routeObject;
   }
 
+  /**
+   * Get the array of values used to generates routes for this content
+   *
+   * @return array $routeValues
+   */
   public function getRouteValues()
   {
     return $this->_routeValues;
   }
 
+  /**
+   * Get the array of values for the current culture used to generate routes for this content
+   *
+   * @param string $culture Optional culture to return, otherwise it uses the current culture
+   * @return array $routeValues
+   */
   public function getCultureRouteValues($culture = null)
   {
     if ($culture === null)
@@ -63,6 +109,11 @@ class sfSympalContentRouteObject
     return $culture && isset($this->_routeValues[$culture]) ? $this->_routeValues[$culture] : current($this->_routeValues);
   }
 
+  /**
+   * Get the current culture
+   *
+   * @return string $culture
+   */
   public function getCurrentCulture()
   {
     if ($user = sfContext::getInstance()->getUser())
@@ -73,6 +124,12 @@ class sfSympalContentRouteObject
     }
   }
 
+  /**
+   * Get the evaluated route path. i.e. if you have /route/path/:slug
+   * and your slug value was `my_slug` the evaluated route path would be /route/path/my_slug
+   *
+   * @return string $evaluatedRoutePath
+   */
   public function getEvaluatedRoutePath()
   {
     $values = $this->getCultureRouteValues();
@@ -80,6 +137,12 @@ class sfSympalContentRouteObject
     return $this->getRouteObject()->generate($values);
   }
 
+  /**
+   * Build the array of all culture values for the given content record
+   *
+   * @param sfSympalContent $content 
+   * @return array $routeValues
+   */
   protected function _buildRouteValues(sfSympalContent $content)
   {
     $variables = $this->getRouteObject()->getVariables();
@@ -109,6 +172,12 @@ class sfSympalContentRouteObject
     return $values;
   }
 
+  /**
+   * Build the route name for the given content record
+   *
+   * @param sfSympalContent $content 
+   * @return string $routeName
+   */
   protected function _buildRouteName(sfSympalContent $content)
   {
     if ($content->get('custom_path', false) || $content->get('module', false) || $content->get('action', false))
@@ -125,6 +194,12 @@ class sfSympalContentRouteObject
     }
   }
 
+  /**
+   * Build the sfRoute object for the given content record
+   *
+   * @param sfSympalContent $content 
+   * @return sfRoute $routeObject
+   */
   protected function _buildRouteObject(sfSympalContent $content)
   {
     // Generate a route object for this content only if it has a custom path
@@ -140,6 +215,12 @@ class sfSympalContentRouteObject
     }
   }
 
+  /**
+   * Build the route path for the given content record
+   *
+   * @param sfSympalContent $content 
+   * @return string $routePath
+   */
   protected function _buildRoutePath(sfSympalContent $content)
   {
     // If content has a custom path then lets use it

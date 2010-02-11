@@ -1,5 +1,11 @@
 <?php
 
+/**
+ * Class responsible for enabling, disabling and overriding Sympal plugins
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalPluginEnabler
 {
   private
@@ -13,6 +19,11 @@ class sfSympalPluginEnabler
     $this->_sympalPluginPath = realpath(dirname(__FILE__).'/..');
   }
 
+  /**
+   * Check whether or not Sympal is enabled for the current application
+   *
+   * @return boolean
+   */
   public function isSympalEnabled()
   {
     if ($this->_isSympalEnabled === null)
@@ -30,6 +41,11 @@ class sfSympalPluginEnabler
     return $this->_isSympalEnabled;
   }
 
+  /**
+   * Enable all Sympal plugins
+   *
+   * @return boolean Returns false if Sympal is not enabled
+   */
   public function enableSympalPlugins()
   {
     if (!$this->isSympalEnabled())
@@ -44,6 +60,12 @@ class sfSympalPluginEnabler
     $this->enableSympalCorePlugins(sfSympalPluginConfiguration::$dependencies);
   }
 
+  /**
+   * Enable an array of Sympal core plugins
+   *
+   * @param array $plugins
+   * @return void
+   */
   public function enableSympalCorePlugins($plugins)
   {
     foreach ((array) $plugins as $plugin)
@@ -53,6 +75,12 @@ class sfSympalPluginEnabler
     }
   }
 
+  /**
+   * Disable an array of Sympal core plugins
+   *
+   * @param array $plugins
+   * @return void
+   */
   public function disableSympalCorePlugins($plugins)
   {
     foreach ((array) $plugins as $plugin)
@@ -62,6 +90,14 @@ class sfSympalPluginEnabler
     }
   }
 
+  /**
+   * Override a Sympal plugin with a new plugin
+   *
+   * @param string $plugin 
+   * @param string $newPlugin 
+   * @param string $newPluginPath 
+   * @return void
+   */
   public function overrideSympalPlugin($plugin, $newPlugin, $newPluginPath = null)
   {
     $this->_configuration->disablePlugins($plugin);

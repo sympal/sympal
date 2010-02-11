@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Doctrine record filter which notifies Symfony events to allow you to easily
+ * add new functionality to a Doctrine model through the use of Symfony filter events.
+ *
+ * @package sfSympalPlugin
+ * @author Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalRecordEventFilter extends Doctrine_Record_Filter
 {
   public function init()
