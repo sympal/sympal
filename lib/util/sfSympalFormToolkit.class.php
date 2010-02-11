@@ -219,8 +219,11 @@ class sfSympalFormToolkit
   {
     $array = self::getTemplateWidgetAndValidator($form);
 
-    $form->setWidget('template', $array['widget']);
-    $form->setValidator('template', $array['validator']);
+    if ($array)
+    {
+      $form->setWidget('template', $array['widget']);
+      $form->setValidator('template', $array['validator']);
+    }
   }
 
   /**
@@ -231,14 +234,13 @@ class sfSympalFormToolkit
    */
   public static function getTemplateWidgetAndValidator(sfForm $form)
   {
-    $object = $form->getObject();
-    if ($object instanceof sfSympalContent)
+    if ($form instanceof sfSympalContentForm)
     {
-      $type = $object->getType()->getSlug();
-    } else if ($object instanceof sfSympalContentType) {
-      $type = $object->getSlug();
+      $type = $form->getObject()->getType()->getSlug();
+    } else if ($form instanceof sfSympalContentTypeForm) {
+      $type = $form->getObject()->getSlug();
     } else {
-      throw new InvalidArgumentException('Form must be an instance of sfSympalContentForm or sfSympalContentTypeForm');
+      return false;
     }
 
     $templates = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getContentTemplates($type);

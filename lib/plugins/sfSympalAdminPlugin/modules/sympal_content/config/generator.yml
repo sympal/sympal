@@ -65,7 +65,7 @@ generator:
             action: unpublish
             label: Un-Publish
       filter:
-        class: sfSympalAdminGenSearchForm
+        class: sfSympalAdminGenContentSearchForm
       edit:
         title: "Editing Content titled %%title%%"
         actions:

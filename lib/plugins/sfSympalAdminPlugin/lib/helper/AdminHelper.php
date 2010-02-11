@@ -7,7 +7,6 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
   if (!$menu)
   {
     $sympalContext = sfSympalContext::getInstance();
-    $siteTitle = $sympalContext->getSite()->getTitle();
     $menu = new $class('Sympal Admin', '@sympal_dashboard');
 
     if ($sympalContext->isAdminModule())
@@ -25,8 +24,8 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
       $menu->addChild('Clear Cache', '@sympal_clear_cache');
     }
 
-    $menu->addChild('Content', null, array('label' => $siteTitle.' Content'));
-    $menu->addChild('Site Administration', null, array('label' => $siteTitle.' Setup'));
+    $menu->addChild('Content', null, array('label' => 'Site Content'));
+    $menu->addChild('Site Administration', null, array('label' => 'Site Setup'));
     $menu->addChild('Security', null, array('label' => 'Users & Security'));
     $menu->addChild('Administration', null, array('label' => 'Global Setup'));
 

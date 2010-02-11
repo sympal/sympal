@@ -145,61 +145,6 @@ ul.error_list li
   background: none;
 }
 
-#content #sympal_content_type_menu {
-  background-color: #ffffff;
-  width: 200px;
-  position: absolute;
-  top: 50px;
-  right: 40px;
-  z-index: 101;
-}
-
-#content #sympal_content_type_menu h3 {
-  background-color: #ffffff;
-  text-align: center;
-  font-weight: bold;
-  font-size: 16px;
-  color: #333333;
-  margin: 0;
-  padding: 6px;
-  cursor: pointer;
-}
-
-#content #sympal_content_type_menu h3:hover {
-  background: #333333;
-  color: #ffffff;
-}
-
-#content #sympal_content_type_menu ul {
-  background-color: #333333;
-  margin: 0;
-  padding: 0;
-  display: none;
-}
-
-#content #sympal_content_type_menu ul li {
-  color: #fff;
-  font-weight: bold;
-  margin: 0;
-  padding: 0;
-  text-align: left;
-}
-
-#content #sympal_content_type_menu ul li:hover {
-  color: #333;
-  background: #fff;
-}
-
-#content #sympal_content_type_menu ul li:hover a {
-  color: #333;
-}
-
-#content #sympal_content_type_menu ul li a {
-  display: block;
-  padding: 8px;
-  color: #fff;
-}
-
 #content input, #content select, #content textarea {
 	padding: 0.40em;
 	border:1px solid #ddd;

@@ -78,3 +78,43 @@ body {
   margin-right: 10px;
   float: left;
 }
+
+#sympal-dashboard-left {
+  margin-right: 325px;
+}
+
+#sympal-dashboard-right {
+  background: #ccc;
+  -khtml-border-radius:0.75em;
+	-moz-border-radius: 0.75em;
+  -webkit-border-radius: 0.75em;
+  border-radius: 0.75em;
+  border: 1px solid #aaa;
+  width: 300px;
+  float: right;
+  padding: 8px;
+}
+
+#sympal-dashboard-right ul, #sympal-dashboard-right ul li {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+#sympal-dashboard-right ul li {
+  padding: 6px;
+  border-bottom: 1px solid #ccc;
+}
+
+#sympal-dashboard-right ul li label {
+  display: block;
+  padding: 0 1em 3px 0;
+  float: left;
+  text-align: left;
+  width: 90%;
+  color: #002970;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+}

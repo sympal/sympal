@@ -47,17 +47,28 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     if (!$this->contentType)
     {
-      if (is_numeric($type))
+      if ($type)
       {
-        $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($type);
+        if (is_numeric($type))
+        {
+          $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($type);
+        } else {
+          $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByNameOrSlug($type, $type);
+        }
+        $this->getUser()->setAttribute('content_type_id', $this->contentType->id);
+        $this->getRequest()->setAttribute('content_type', $this->contentType);
       } else {
-        $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByNameOrSlug($type, $type);
+        $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($this->getUser()->getAttribute('content_type_id'));
       }
-      $this->getUser()->setAttribute('content_type_id', $this->contentType->id);
-      $this->getRequest()->setAttribute('content_type', $this->contentType);
     }
 
     return $this->contentType;
+  }
+
+  public function executeFilter(sfWebRequest $request)
+  {
+    $this->contentType = $this->_getContentType($request->getParameter('type'), $request);
+    parent::executeFilter($request);
   }
 
   public function executeList_type(sfWebRequest $request)
@@ -71,12 +82,20 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
   public function executeIndex(sfWebRequest $request)
   {
+    if ($request->hasParameter('published'))
+    {
+      $filters = $this->getFilters();
+      $filters['is_published'] = $request->getParameter('published');
+      $this->setFilters($filters);
+      $this->redirect('@sympal_content');
+    }
     $type = $this->getUser()->getAttribute('content_type_id', sfSympalConfig::get('default_admin_list_content_type', null, 'sfSympalPage'));
     $this->contentType = $this->_getContentType($type, $request);
 
     $this->getResponse()->setTitle('Sympal Admin / '.$this->contentType->getLabel());
 
     parent::executeIndex($request);
+    
   }
 
   public function executeDelete_route(sfWebRequest $request)

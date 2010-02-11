@@ -13,6 +13,11 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
   public function getFullTypeQuery($type, $alias = 'c', $contentTypeId = null)
   {
+    if (is_numeric($type))
+    {
+      $type = Doctrine_Core::getTable('sfSympalContentType')->find($type);
+    }
+
     if ($type instanceof sfSympalContentType)
     {
       $table = $type->getTable();
@@ -183,7 +188,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
   public function getAdminGenQuery($q)
   {
     $q = Doctrine_Core::getTable('sfSympalContent')
-      ->getFullTypeQuery(sfContext::getInstance()->getRequest()->getAttribute('content_type'), 'r');
+      ->getFullTypeQuery(sfContext::getInstance()->getUser()->getAttribute('content_type_id'), 'r');
 
     return $q;
   }

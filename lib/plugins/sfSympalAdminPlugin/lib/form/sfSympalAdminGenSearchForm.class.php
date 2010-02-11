@@ -37,7 +37,7 @@ class sfSympalAdminGenSearchForm extends sfFormFilterDoctrine
   public function setup()
   {
     $this->widgetSchema['search'] = new sfWidgetFormInputText();
-    $this->validatorSchema['search'] = new sfValidatorString();
+    $this->validatorSchema['search'] = new sfValidatorString(array('required' => false));
 
     $this->widgetSchema->setHelp('search', 'Enter keywords to search by. Wildcards (*) are supported.');
 
