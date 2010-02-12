@@ -20,6 +20,9 @@
   	</div>
   	<?php $menu = get_sympal_menu('primary') ?>
   	<div id="sidebar">
+  	  <h2><?php echo __('Search') ?></h2>
+  	  <?php echo get_partial('sympal_search/form') ?>
+
       <?php if (has_slot('sympal_right_sidebar')): ?>
         <?php echo get_slot('sympal_right_sidebar') ?>
       <?php endif; ?>

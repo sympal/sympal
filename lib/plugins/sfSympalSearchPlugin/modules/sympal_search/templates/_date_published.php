@@ -1,0 +1,1 @@
+<?php echo format_date($record->getDatePublished(), sfSympalConfig::get('date_published_format')) ?>

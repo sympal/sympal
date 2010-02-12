@@ -177,4 +177,17 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   {
     return trim(strip_tags($this->render()));
   }
+
+  public function save(Doctrine_Connection $conn = null)
+  {
+    $result = parent::save($conn);
+
+    // When a slot is saved and we have some content set lets update the search index
+    if ($this->_contentRenderedFor)
+    {
+      sfSympalSearch::getInstance()->updateSearchIndex($this->_contentRenderedFor);
+    }
+
+    return $result;
+  }
 }

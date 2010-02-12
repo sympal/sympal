@@ -60,4 +60,9 @@ abstract class sfSympalBaseTask extends sfTaskExtraBaseTask
     $task = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $task->run(array(), $options);
   }
+
+  public function createContext(ProjectConfiguration $configuration)
+  {
+    return sfContext::createInstance($configuration);
+  }
 }

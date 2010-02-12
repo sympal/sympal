@@ -1,0 +1,7 @@
+sympal_admin_search:
+  url:   /admin/search
+  param: { module: sympal_search, action: admin_search }
+
+sympal_frontend_search:
+  url:   /search
+  param: { module: sympal_search, action: frontend_search }

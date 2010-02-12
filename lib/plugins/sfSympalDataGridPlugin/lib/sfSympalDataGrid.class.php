@@ -11,6 +11,7 @@ class sfSympalDataGrid
     $_table,
     $_query,
     $_pager,
+    $_results,
     $_sort,
     $_order = 'asc',
     $_columns = array(),
@@ -303,13 +304,27 @@ class sfSympalDataGrid
     return $this->getSymfonyResource($this->_renderingModule.'/pager_navigation', $params);
   }
 
+  public function getResults($hydrationMode = null)
+  {
+    if (!$this->_results)
+    {
+      $this->_results = $this->_pager->getResults($hydrationMode);
+    }
+    return $this->_results;
+  }
+
+  public function setResults($results)
+  {
+    $this->_results = $results;
+  }
+
   public function getRows($hydrationMode = null)
   {
     $this->init();
 
     $rows = array();
 
-    $results = $this->_pager->getResults($hydrationMode);
+    $results = $this->getResults($hydrationMode);
     foreach ($results as $result)
     {
       $rows[] = $this->getRow($result);

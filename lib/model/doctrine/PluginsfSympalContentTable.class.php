@@ -4,6 +4,11 @@
  */
 class PluginsfSympalContentTable extends sfSympalDoctrineTable
 {
+  public function createSearchQuery($alias = 'c')
+  {
+    return $this->addPublishedQuery($alias, $this->getBaseQuery($alias));
+  }
+
   public function getTypeQuery($typeName, $alias = 'c')
   {
     Doctrine_Core::initializeModels(array($typeName));

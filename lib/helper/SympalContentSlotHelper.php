@@ -35,7 +35,7 @@ function render_content_date_published(sfSympalContent $content, $slot)
 {
   if ($content->date_published)
   {
-    use_helper('Date');
+    sfSympalToolkit::loadHelpers('Date');
     return format_datetime($content->date_published, sfSympalConfig::get('date_published_format'));
   } else {
     return '0000-00-00';

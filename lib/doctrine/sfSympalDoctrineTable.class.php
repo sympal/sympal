@@ -25,4 +25,14 @@ class sfSympalDoctrineTable extends Doctrine_Table
     }
     return false;
   }
+
+  public function search($query)
+  {
+    return sfSympalSearch::getInstance()->search($this->getOption('name'), $query);
+  }
+
+  public function getSearchQuery($query)
+  {
+    return sfSympalSearch::getInstance()->getDoctrineSearchQuery($this->getOption('name'), $query);
+  }
 }

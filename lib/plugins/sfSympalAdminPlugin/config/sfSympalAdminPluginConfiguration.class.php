@@ -77,6 +77,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     }
 
     $manageContent = $menu->getChild('Content');
+    $manageContent->addChild('Search', '@sympal_admin_search');
 
     $user = sfContext::getInstance()->getUser();
 

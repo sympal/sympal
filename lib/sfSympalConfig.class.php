@@ -10,6 +10,16 @@
 class sfSympalConfig extends sfConfig
 {
   /**
+   * Get the array of searchable models
+   *
+   * @return array $models
+   */
+  public static function getSearchableModels()
+  {
+    return array('sfSympalContent');
+  }
+
+  /**
    * Check whether a Doctrine query result cache key should use result cache or not
    *
    * @param string $key 

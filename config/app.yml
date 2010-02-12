@@ -54,6 +54,7 @@ all:
       sympal_plugin_manager: ~
       sympal_assets: ~
       sympal_upgrade: ~
+      sympal_search: ~
 
     # Minify css and javascript
     minifier:

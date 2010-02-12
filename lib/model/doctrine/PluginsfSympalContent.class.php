@@ -416,6 +416,12 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
+  public function getTeaser()
+  {
+    use_helper('Text');
+    return truncate_text(strip_tags($this->getFeedDescription()), 200);
+  }
+
   public function getFormatData($format)
   {
     $method = 'get'.ucfirst($format).'FormatData';
@@ -738,5 +744,49 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   public function getContentGroups()
   {
     return $this->_get('ContentGroups');
+  }
+
+  public function save(Doctrine_Connection $conn = null)
+  {
+    $result = parent::save($conn);
+    sfSympalSearch::getInstance()->updateSearchIndex($this);
+    return $result;
+  }
+
+  public function delete(Doctrine_Connection $conn = null)
+  {
+    $index = sfSympalSearch::getInstance()->getIndex();
+    foreach ($index->find('pk:'.$this->getId()) as $hit)
+    {
+      $index->delete($hit->id);
+    }
+    return parent::delete($conn);
+  }
+
+  public function getSearchData()
+  {
+    $searchData = array();
+    $data = $this->toArray(false);
+    foreach ($data as $key => $value)
+    {
+      if (is_scalar($value))
+      {
+        $searchData[$key] = $value;
+      }
+    }
+    $data = $this->getRecord()->toArray(false);
+    foreach ($data as $key => $value)
+    {
+      if (is_scalar($value))
+      {
+        $searchData[$key] = $value;
+      }
+    }
+    foreach ($this->getSlots() as $slot)
+    {
+      $slot->setContentRenderedFor($this);
+      $searchData[$slot->getName()] = $slot->render();
+    }
+    return $searchData;
   }
 }
