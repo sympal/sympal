@@ -19,6 +19,7 @@ class sfSympalInstallTask extends sfSympalBaseTask
       new sfCommandOption('db-password', null, sfCommandOption::PARAMETER_OPTIONAL, 'The database password.'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
       new sfCommandOption('force-reinstall', null, sfCommandOption::PARAMETER_NONE, 'Force re-installation'),
+      new sfCommandOption('build-classes', null, sfCommandOption::PARAMETER_OPTIONAL, 'Build all classes', true),
       new sfCommandOption('env', null, sfCommandOption::PARAMETER_REQUIRED, 'The environment', 'dev'),
     ));
 
@@ -110,9 +111,9 @@ EOF;
     }
     if (isset($options['force-reinstall']) && $options['force-reinstall'])
     {
-      $install->setForceReinstall(true);
+      $install->setOption('force_reinstall', true);
     }
-
+    $install->setOption('build_classes', (bool) $options['build-classes']);
     $install->install();
 
     $this->log(null);

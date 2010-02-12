@@ -77,7 +77,7 @@ abstract class Basesympal_installActions extends sfActions
         chdir(sfConfig::get('sf_root_dir'));
         $install = new sfSympalInstall($this->getContext()->getConfiguration(), $this->getContext()->getEventDispatcher(), $formatter);
         $install->setParams($params);
-        $install->setForceReinstall(true);
+        $install->setOption('force_reinstall', true);
         $install->install();
       } catch (Exception $e) {
         $this->getUser()->setFlash('error', $e->getMessage());

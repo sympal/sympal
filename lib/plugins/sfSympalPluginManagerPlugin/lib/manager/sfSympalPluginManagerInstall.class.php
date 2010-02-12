@@ -6,7 +6,8 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     'create_tables' => true,
     'load_data' => true,
     'publish_assets' => true,
-    'uninstall_first' => true
+    'uninstall_first' => true,
+    'clear_cache' => true
   );
 
   public function install()
@@ -36,7 +37,10 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
         $this->_publishAssets();
       }
 
-      $this->_clearCache();
+      if ($this->getOption('clear_cache'))
+      {
+        $this->_clearCache();
+      }
 
       sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);
     } catch (Exception $e) {
@@ -77,15 +81,6 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
   protected function _loadData()
   {
-    $installFixtures = $this->_pluginConfig->getRootDir().'/data/fixtures/install';
-    if (is_dir($installFixtures))
-    {
-      $this->logSection('sympal', sprintf('...loading plugin installation data fixtures from: "%s"', $installFixtures), null, 'COMMENT');
-
-      $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
-      $task->run(array($installFixtures), array('application' => sfConfig::get('sf_app')));
-    }
-
     $installVars = array();
 
     if ($this->_contentTypeName)

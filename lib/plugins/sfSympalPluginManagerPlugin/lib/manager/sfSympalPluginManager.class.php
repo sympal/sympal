@@ -144,10 +144,23 @@ class sfSympalPluginManager
       throw new InvalidArgumentException('Invalid ContentType');
     }
 
+    $superAdmin = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(1);
+    if (!$superAdmin)
+    {
+      throw new sfException('Could not find a super admin user');
+    }
+
+    $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
+    $site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug($siteSlug);
+    if (!$site)
+    {
+      throw new sfException(sprintf('Could not find site with slug "%s"', $siteSlug));
+    }
+
     $content = new sfSympalContent();
     $content->Type = $contentType;
-    $content->CreatedBy = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(1);
-    $content->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
+    $content->CreatedBy = $superAdmin;
+    $content->Site = $site;
     $content->date_published = new Doctrine_Expression('NOW()');
 
     $name = $contentType['name'];

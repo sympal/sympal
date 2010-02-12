@@ -7,7 +7,10 @@ class sfSympalInstall
     $_dispatcher,
     $_formatter,
     $_application = 'sympal',
-    $_forceReinstall = false,
+    $_options = array(
+      'force_reinstall' => false,
+      'build_classes' => true
+    ),
     $_params = array(
       'db_dsn' => null,
       'db_username' => null,
@@ -28,6 +31,26 @@ class sfSympalInstall
     {
       $this->_application = $app;
     }
+  }
+
+  public function getOption($key)
+  {
+    return $this->_options[$key];
+  }
+
+  public function getOptions()
+  {
+    return $this->_options;
+  }
+
+  public function setOption($key, $value)
+  {
+    $this->_options[$key] = $value;
+  }
+
+  public function setOptions(array $options)
+  {
+    $this->_options = $options;
   }
 
   public function setApplication($application)
@@ -60,11 +83,6 @@ class sfSympalInstall
     $this->_params = $params;
   }
 
-  public function setForceReinstall($bool)
-  {
-    $this->_forceReinstall = $bool;
-  }
-
   public function logSection($section, $message, $size = null, $style = 'INFO')
   {
     $this->_configuration->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array($this->_formatter->formatSection($section, $message, $size, $style))));
@@ -80,49 +98,34 @@ class sfSympalInstall
 
     sfSympalConfig::set('installing', true);
 
-    // Prepare the installation parameters
+    $this->_createWebCacheDirectory();
     $this->_prepareParams();
 
-    // Build all classes
-    $this->_buildAllClasses();
+    if ($this->getOption('build_classes'))
+    {
+      $this->_buildAllClasses();
+    }
 
     $dbExists = $this->checkSympalDatabaseExists();
 
     // If database does not exist or we are forcing a reinstall then lets do a full install
-    if (!$dbExists || $this->_forceReinstall)
+    if (!$dbExists || $this->getOption('force_reinstall'))
     {
-      // Setup/create the Sympal database
       $this->_setupDatabase();
-
-      // Install Sympal to the database
-      $this->_installSympal();
-
-      // Run installation procss for any addon plugins
-      $this->_installAddonPlugins();
-
-      // Execute post install execute
-      $this->_executePostInstallSql();
-
-      // Execute post install hooks
-      $this->_executePostInstallHooks();
-    // If db exists and site does not exist then lets create the site
-    } else if ($dbExists && !$this->checkSympalSiteExists()) {
+      $this->_loadData();
       $this->_createSite();
+      $this->_installAddonPlugins();
+      $this->_executePostInstallSql();
+      $this->_executePostInstallHooks();
+      $this->_publishAssets();
+      $this->_clearCache();
+      $this->_primeCache();
+
     // Delete site and recreate it
     } else {
       Doctrine_Manager::connection()->execute('delete from sf_sympal_site where slug = ?', array($this->_application));
       $this->_createSite();
-    }
-
-    if (!$dbExists || $this->_forceReinstall)
-    {
-      // Publish plugin assets
-      $this->_publishAssets();
-
-      // Clear the cache
       $this->_clearCache();
-
-      // Prime the cache
       $this->_primeCache();
     }
 
@@ -132,10 +135,16 @@ class sfSympalInstall
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.post_install', array('configuration' => $this->_configuration, 'dispatcher' => $this->_dispatcher, 'formatter' => $this->_formatter)));
 
-    if (!$dbExists || $this->_forceReinstall)
+    // Run fix permissions to ensure a 100% ready to go environment
+    $this->_fixPerms();
+  }
+
+  protected function _createWebCacheDirectory()
+  {
+    $dir = sfConfig::get('sf_web_dir').'/cache';
+    if (!is_dir($dir))
     {
-      // Run fix permissions to ensure a 100% ready to go environment
-      $this->_fixPerms();
+      mkdir($dir, 0777, true);
     }
   }
 
@@ -178,7 +187,7 @@ class sfSympalInstall
     return $return;
   }
 
-  private function _createSite()
+  protected function _createSite()
   {
     chdir(sfConfig::get('sf_root_dir'));
     $task = new sfSympalCreateSiteTask($this->_dispatcher, $this->_formatter);
@@ -228,6 +237,20 @@ class sfSympalInstall
       }
     }
 
+    sfSympalConfig::set('site_slug', $this->_application);
+    $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
+    $options = array(
+      'db' => true,
+      'no-confirmation' => true,
+      'and-load' => false,
+      'application' => $this->_application
+    );
+
+    $task->run(array(), $options);
+  }
+
+  protected function _getDataFixtures()
+  {
     $path = sfConfig::get('sf_data_dir').'/fixtures/install';
     if (is_dir($path))
     {
@@ -238,37 +261,21 @@ class sfSympalInstall
     } else {
       $fixtures = true;
     }
+    return $fixtures;
+  }
 
+  protected function _loadData($append = true)
+  {
     sfSympalConfig::set('site_slug', $this->_application);
-    $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
-    $options = array(
-      'all' => true,
-      'no-confirmation' => true,
-      'and-load' => $fixtures,
-      'application' => $this->_application
-    );
-
-    $task->run(array(), $options);
+    $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
+    $fixtures = $this->_getDataFixtures();
+    if (!is_array($fixtures))
+    {
+      $fixtures = array();
+    }
+    $task->run($fixtures, array('append' => $append, 'application' => $this->_application));
   }
   
-  /**
-   * Method called in a fresh install or a force reload install
-   * 
-   * This method simply calls the sympal:create-site task and creates
-   * a cache directory to store the minified css and js
-   */
-  protected function _installSympal()
-  {
-    $task = new sfSympalCreateSiteTask($this->_dispatcher, $this->_formatter);
-    $task->run(array('application' => $this->_application), array('no-confirmation' => true));  
-
-    $dir = sfConfig::get('sf_web_dir').'/cache';
-    if (!is_dir($dir))
-    {
-      mkdir($dir, 0777, true);
-    }
-  }
-
   protected function _installAddonPlugins()
   {
     $this->logSection('sympal', '...installing addon plugins', null, 'COMMENT');
@@ -277,7 +284,19 @@ class sfSympalInstall
     foreach ($plugins as $plugin)
     {
       $manager = sfSympalPluginManager::getActionInstance($plugin, 'install', $this->_configuration, $this->_formatter);
+
+      // Don't need to publish assets, sympal install does this at the end
       $manager->setOption('publish_assets', false);
+
+      // Don't need to clear cache, sympal install does this at the end
+      $manager->setOption('clear_cache', false);
+
+      // Don't need to uninstall first on sympal install
+      $manager->setOption('uninstall_first', false);
+
+      // Don't need to create tables as the sympal install already did this
+      $manager->setOption('create_tables', false);
+
       $manager->install();
     }
   }

@@ -45,8 +45,8 @@ class sfSympalContentActionLoader
   public function loadContent()
   {
     $content = $this->getContent();
-    $this->_handleIsPublished($content);
     $this->_handleForward404($content);
+    $this->_handleIsPublished($content);
     $this->_user->checkContentSecurity($content);
 
     $this->_loadMetaData($this->_response);
