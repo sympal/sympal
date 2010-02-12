@@ -80,6 +80,11 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->executeIndex($request);
   }
 
+  public function executeContent_types_index(sfWebRequest $request)
+  {
+    $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
+  }
+
   public function executeIndex(sfWebRequest $request)
   {
     if ($request->hasParameter('published'))

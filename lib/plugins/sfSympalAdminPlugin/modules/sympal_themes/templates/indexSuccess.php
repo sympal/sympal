@@ -1,5 +1,10 @@
 <h1><?php echo __('Themes') ?></h1>
 
+<?php echo get_sympal_breadcrumbs(array(
+  'Dashboard' => '@sympal_dashboard',
+  'Themes' => '@sympal_themes',
+)) ?>
+
 <div id="sf_admin_container">
   <div id="sf_admin_content">
     <div class="sf_admin_list">

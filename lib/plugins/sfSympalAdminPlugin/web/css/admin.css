@@ -287,3 +287,62 @@ label.required:after
 #sf_admin_configuration label {
   width: 300px;
 }
+
+#sympal_breadcrumbs {
+  margin-bottom: 15px;
+}
+
+#sympal_breadcrumbs ul
+{
+  font: 11px Arial, Helvetica, sans-serif;
+  background-image: url('../../sfSympalPlugin/images/bc_bg.png');
+  background-repeat: repeat-x;
+  height: 30px;
+  line-height: 30px;
+  color: #9b9b9b;
+  border: solid 1px #cacaca;
+  width: 100%;
+  overflow: hidden;
+  margin: 0px;
+  padding: 0px;
+}
+
+#sympal_breadcrumbs li
+{
+  list-style-type: none;
+  float: left;
+  padding-left: 10px;
+}
+
+#sympal_breadcrumbs li a:hover
+{
+  color: #35acc5;
+}
+
+#sympal_breadcrumbs li.first
+{
+  background: url('../../sfSympalPlugin/images/home.png') no-repeat;
+  background-position: center;
+  text-indent: -9999;
+  font-size: 0;
+  width: 30px;
+}
+
+#sympal_breadcrumbs li.first a
+{
+  text-indent: -9999;
+  font-size: 0;
+  width: 20px;
+}
+
+#sympal_breadcrumbs li a
+{
+  height: 30px;
+  display: block;
+  background-image: url('../../sfSympalPlugin/images/bc_separator.png');
+  background-repeat: no-repeat;
+  background-position: right;
+  padding-right: 15px;
+  text-decoration: none;
+  color: #454545;
+}

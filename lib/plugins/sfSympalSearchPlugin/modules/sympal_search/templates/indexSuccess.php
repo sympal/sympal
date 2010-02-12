@@ -1,5 +1,20 @@
 <?php use_helper('SympalPager') ?>
 
+<?php if ($sf_request->getParameter('action') == 'admin_search'): ?>
+  <?php if ($q = $sf_request->getParameter('q')): ?>
+    <?php echo get_sympal_breadcrumbs(array(
+      'Dashboard' => '@sympal_dashboard',
+      'Search' => '@'.$sf_context->getRouting()->getCurrentRouteName(),
+      sprintf('Searching for "%s"', $q) => null
+    )) ?>
+  <?php else: ?>
+    <?php echo get_sympal_breadcrumbs(array(
+      'Dashboard' => '@sympal_dashboard',
+      'Search' => '@'.$sf_context->getRouting()->getCurrentRouteName()
+    )) ?>
+  <?php endif; ?>
+<?php endif; ?>
+
 <h1>Search</h1>
 
 <?php echo get_partial('sympal_search/form') ?>

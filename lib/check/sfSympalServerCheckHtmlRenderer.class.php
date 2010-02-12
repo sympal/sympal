@@ -17,7 +17,6 @@ class sfSympalServerCheckHtmlRenderer extends sfSympalServerCheckRenderer
   public function render()
   {
     return
-      sprintf('<h1>Sympal %s Server Check</h1>', sfSympalConfig::getCurrentVersion()).
       '<div class="clearfix">'.
       sprintf('<div class="half">%s%s%s</div>',
       $this->_renderTable('server'),

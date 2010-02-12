@@ -4,6 +4,12 @@
 <div id="sf_admin_container">
   <h1><?php echo $title = __('Manage '.$contentType->getLabel().' Content', array(), 'messages'); $sf_response->setTitle($title); ?></h1>
 
+  <?php echo get_sympal_breadcrumbs(array(
+    'Dashboard' => '@sympal_dashboard',
+    'Site Content' => '@sympal_content_types_index',
+    $contentType->getLabel() => '@sympal_content_list_type?type='.$contentType->getSlug() 
+  )) ?>
+
   <div id="sf_admin_header">
     <?php include_partial('sympal_content/list_header', array('pager' => $pager)) ?>
   </div>

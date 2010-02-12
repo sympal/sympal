@@ -1,9 +1,13 @@
-<h1>Sympal Plugin Manager</h1>
+<h1><?php echo __('Sympal plugin manager') ?></h1>
+
+<?php echo get_sympal_breadcrumbs(array(
+  'Dashboard' => '@sympal_dashboard',
+  'Plugin Manager' => '@sympal_plugin_manager',
+  $sf_sympal_plugin->getTitle() => null
+)) ?>
 
 <div id="sympal_plugin_manager">
   <div id="view">
-    <?php echo link_to(__('Back to Plugins'), '@sympal_plugin_manager') ?>
-
     <div id="header">
       <?php echo image_tag($sf_sympal_plugin->getImage(), 'align=right') ?>
 

@@ -1,3 +1,11 @@
+<h1><?php echo __('Sympal Server Check') ?></h1>
+
+<?php echo get_sympal_breadcrumbs(array(
+  'Dashboard' => '@sympal_dashboard',
+  'Global Setup' => '@sympal_sites',
+  'Check Server' => '@sympal_server_check',
+)) ?>
+
 <div id="sympal_server_check">
   <?php echo $renderer->render() ?>
 </div>

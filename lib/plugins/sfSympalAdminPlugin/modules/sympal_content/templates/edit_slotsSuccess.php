@@ -1,6 +1,14 @@
 <div id="sf_admin_container">
   <h1>Editing "<?php echo $sf_sympal_content ?>" Slots</h1>
 
+  <?php echo get_sympal_breadcrumbs(array(
+    'Dashboard' => '@sympal_dashboard',
+    'Site Content' => '@sympal_content_types_index',
+    $sf_sympal_content->getType()->getLabel() => '@sympal_content_list_type?type='.$sf_sympal_content->getType()->getSlug(),
+    'Editing '.$sf_sympal_content->getTitle() => $sf_sympal_content->getEditRoute(),
+    'Editing Slots' => null
+  )) ?>
+
   <div id="sf_admin_content">
     <div class="sf_admin_form">
       <?php foreach ($sf_sympal_content->getSlots() as $slot): ?>

@@ -9,6 +9,11 @@
 
 <h1><?php echo __('Sympal Assets Manager') ?></h1>
 
+<?php echo get_sympal_breadcrumbs(array(
+  'Dashboard' => '@sympal_dashboard',
+  'Assets' => '@sympal_Assets'
+)) ?>
+
 <p><?php echo __('Manage your Sympal project assets below! An asset in Sympal is
 any type of file from a PDF document to an image or a video. Upload new assets, create 
 directories to store your assets, rename and move your assets and embed or link

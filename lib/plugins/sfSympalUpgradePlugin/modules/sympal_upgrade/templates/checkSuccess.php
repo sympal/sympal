@@ -53,5 +53,10 @@ upgrade tasks.
 <?php else: ?>
   <h1>No Updates Found</h1>
 
+  <?php echo get_sympal_breadcrumbs(array(
+    'Dashboard' => '@sympal_dashboard',
+    'Check for Updates' => null
+  )) ?>
+
   <p>Your Sympal installation is already up to date at <?php echo $currentVersion ?>!</p>
 <?php endif; ?>

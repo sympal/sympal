@@ -54,8 +54,16 @@ sympal_sites:
     prefix_path:          admin/sites
     with_wildcard_routes: true
 
+sympal_redirects:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalRedirect
+    module:               sympal_redirects
+    prefix_path:          admin/redirects
+    with_wildcard_routes: true
+
 sympal_content_menu_item:
-  url:    /admin/content/:id/menu
+  url:    /admin/content/manage/:id/menu
   param: { module: sympal_content_menu_item, action: index }
   class: sfDoctrineRoute
   options:
@@ -69,27 +77,23 @@ sympal_content:
   options:
     model:                sfSympalContent
     module:               sympal_content
-    prefix_path:          admin/content
+    prefix_path:          admin/content/manage
     with_wildcard_routes: true
+
+sympal_content_types_index:
+  url:  /admin/content
+  param: { module: sympal_content, action: content_types_index }
 
 sympal_content_edit_slots:
   url:  /admin/content/:id/edit_slots
   param: { module: sympal_content, action: edit_slots }
 
-sympal_redirects:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalRedirect
-    module:               sympal_redirects
-    prefix_path:          admin/redirects
-    with_wildcard_routes: true
-
 sympal_content_create_type:
-  url:    /admin/content/create/:type
+  url:    /admin/content/manage/create/:type
   param:  { module: sympal_content, action: create_type }
 
 sympal_content_list_type:
-  url:    /admin/content/list/:type
+  url:    /admin/content/manage/type/:type
   param: { module: sympal_content, action: list_type }
 
 sympal_admin_save_nested_set:
