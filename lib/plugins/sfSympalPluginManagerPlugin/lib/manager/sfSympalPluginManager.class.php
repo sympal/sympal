@@ -195,14 +195,10 @@ class sfSympalPluginManager
   {
     $this->logSection('sympal', sprintf('...saving menu item "%s"', $menuItem));
 
-    $root = Doctrine_Core::getTable('sfSympalMenuItem')->findOneBySlug(sfSympalConfig::get('default_install_content_type_menu', null, 'primary'));
-    if (!$root)
+    if ($menu = Doctrine_Core::getTable('sfSympalMenuItem')->getPluginInstallMenu())
     {
-      $root = Doctrine_Core::getTable('sfSympalMenuItem')->findOneByIsPrimary(true);
-    }
-    if ($root)
-    {
-      $menuItem->getNode()->insertAsLastChildOf($root);
+      $this->logSection('sympal', sprintf('...inserting as last child of "%s"', $menu->getLabel()));
+      $menuItem->getNode()->insertAsLastChildOf($menu);
     }
   }
 

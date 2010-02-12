@@ -1,6 +1,6 @@
 <?php
 
-class sfSympalPluginInstallTask extends sfBaseTask
+class sfSympalPluginInstallTask extends sfSympalBaseTask
 {
   protected function configure()
   {
@@ -34,8 +34,7 @@ EOF;
       return 1;
     }
 
-    $databaseManager = new sfDatabaseManager($this->configuration);
-
+    $this->createContext($this->configuration);
     $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'install', $this->configuration, $this->formatter);
     $pluginManager->install();
   }

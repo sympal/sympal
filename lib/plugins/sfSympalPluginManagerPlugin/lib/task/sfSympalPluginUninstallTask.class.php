@@ -27,8 +27,6 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $databaseManager = new sfDatabaseManager($this->configuration);
-
     if (!$options['no-confirmation'] && !$this->askConfirmation(array('This command will uninstall and remove the sympal plugin named '.sfSympalPluginToolkit::getLongPluginName($arguments['name']), 'Are you sure you want to proceed? (y/N)'), 'QUESTION_LARGE', false))
     {
       $this->logSection('sympal', 'Plugin uninstall aborted');
@@ -36,6 +34,7 @@ EOF;
       return 1;
     }
 
+    $this->createContext($this->configuration);
     $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'uninstall', $this->configuration, $this->formatter);
     $pluginManager->uninstall($options['delete']);
   }
