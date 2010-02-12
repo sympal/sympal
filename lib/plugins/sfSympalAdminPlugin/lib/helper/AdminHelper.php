@@ -21,7 +21,7 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
 
     if (sfContext::getInstance()->getUser()->hasCredential('ClearCache'))
     {
-      $menu->addChild('Clear Cache', '@sympal_clear_cache');
+      $menu->addChild('Clear Cache', '@sympal_clear_cache', 'id=sympal_clear_cache_fancybox');
     }
 
     $menu->addChild('Content', '@sympal_content', array('label' => 'Site Content'));

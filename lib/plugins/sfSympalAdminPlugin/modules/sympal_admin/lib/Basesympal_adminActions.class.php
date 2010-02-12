@@ -12,9 +12,33 @@ abstract class Basesympal_adminActions extends sfActions
 {
   public function executeClear_cache(sfWebRequest $request)
   {
-    $this->clearCache();
-    $this->getUser()->setFlash('notice', 'Cache cleared successfully!');
-    $this->redirect($this->getUser()->getReferer($request->getReferer()));
+    $this->types = array(
+      'config',
+      'i18n',
+      'routing',
+      'module',
+      'template',
+      'menu'
+    );
+    if ($type = $request->getParameter('type'))
+    {
+      switch ($type)
+      {
+        case 'config':
+        case 'i18n':
+        case 'routing':
+          $this->resetSympalRoutesCache();
+        case 'module':
+        case 'template':
+          $this->clearCache(array('type' => $type));
+        break;
+        case 'menu':
+          $this->clearMenuCache();
+        break;
+      }
+      $msg = 'Clearing '.$type.' cache...';
+      return $this->renderText($msg);
+    }
   }
 
   public function executeSignin($request)
