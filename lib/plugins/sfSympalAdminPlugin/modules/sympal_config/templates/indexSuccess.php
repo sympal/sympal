@@ -13,7 +13,7 @@
         <?php echo $form->renderHiddenFields() ?>
         <?php foreach ($groups as $group): ?>
           <fieldset id="sf_fieldset_config_<?php echo strtolower($group) ?>">
-            <h2><?php echo ucwords(sfInflector::humanize(str_replace('-', '_', preg_replace('/sfSympal(.*)Plugin/', '$1', $group)))) ?></h2>
+            <h2 class="sf_fieldset_h2"><?php echo ucwords(sfInflector::humanize(str_replace('-', '_', preg_replace('/sfSympal(.*)Plugin/', '$1', $group)))) ?></h2>
             <?php echo $form->renderGroup($group) ?>
           </fieldset>
         <?php endforeach; ?>

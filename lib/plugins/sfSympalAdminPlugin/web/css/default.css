@@ -212,7 +212,7 @@
   color: #fff;
 }
 
-#sf_admin_container fieldset h2
+#sf_admin_container fieldset h2.sf_fieldset_h2
 {
   text-shadow: #4E89D5 1px 1px 1px;
   padding: 3px;
@@ -228,7 +228,7 @@
   background: url(../images/expand.gif) no-repeat 10px 8px;
 }
 
-#sf_admin_container fieldset h2:hover {
+#sf_admin_container fieldset h2.sf_fieldset_h2:hover {
   text-shadow: #fff 0px 0px 3px;
 }
 
