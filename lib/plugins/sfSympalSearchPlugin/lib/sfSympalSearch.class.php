@@ -52,7 +52,12 @@ class sfSympalSearch
     // store job primary key to identify it in the search results
     $doc->addField(Zend_Search_Lucene_Field::Keyword('pk', $this->_getRecordSearchPrimaryKey($record)));
 
-    $data = $record->getSearchData();
+    if (method_exists($record, 'getSearchData'))
+    {
+      $data = $record->getSearchData();
+    } else {
+      $data = $record->toArray(false);
+    }
     foreach ($data as $key => $value)
     {
       $doc->addField(Zend_Search_Lucene_Field::UnStored($key, $value, 'utf-8'));
