@@ -766,20 +766,27 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
   public function getSearchData()
   {
     $searchData = array();
-    $data = $this->toArray(false);
-    foreach ($data as $key => $value)
+    $clone = clone $this;
+    $data = $clone->toArray(false);
+    if ($data)
     {
-      if (is_scalar($value))
+      foreach ($data as $key => $value)
       {
-        $searchData[$key] = $value;
+        if (is_scalar($value))
+        {
+          $searchData[$key] = $value;
+        }
       }
     }
-    $data = $this->getRecord()->toArray(false);
-    foreach ($data as $key => $value)
+    $data = $clone->getRecord()->toArray(false);
+    if ($data)
     {
-      if (is_scalar($value))
+      foreach ($data as $key => $value)
       {
-        $searchData[$key] = $value;
+        if (is_scalar($value))
+        {
+          $searchData[$key] = $value;
+        }
       }
     }
     foreach ($this->getSlots() as $slot)

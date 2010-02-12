@@ -156,7 +156,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       $value = $this->getValue();
     }
 
-    if (sfSympalContext::getInstance()->shouldLoadFrontendEditor() && !$value)
+    if (sfSympalContext::hasInstance() && sfSympalContext::getInstance()->shouldLoadFrontendEditor() && !$value)
     {
       $rawValue = __($this->getDefaultValue());
     }

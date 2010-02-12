@@ -553,6 +553,11 @@ class sfSympalConfiguration
    */
   private function _checkInstalled()
   {
+    // Don't run this if we are under the cli
+    if (PHP_SAPI == 'cli')
+    {
+      return;
+    }
     $sfContext = sfContext::getInstance();
     $request = $sfContext->getRequest();
 
