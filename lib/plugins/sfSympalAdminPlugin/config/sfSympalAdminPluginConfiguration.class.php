@@ -39,9 +39,13 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $response = sfContext::getInstance()->getResponse();
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/change_language.css'));
+
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
+
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
   }
 
   public function addEditorHtml(sfEvent $event, $content)
