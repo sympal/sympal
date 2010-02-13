@@ -12,7 +12,7 @@ class sfSympalMenuDashboard extends sfSympalMenuAdminMenu
       if ($child->hasChildren())
       {
         $html .= '<div class="sympal_dashboard_box">';
-        $html .= '<h2>'.$child->renderLabel().'</h2>';
+        $html .= '<h2>'.$child->renderLink().'</h2>';
         $html .= '<ul>';
         $html .= $child->renderChildren();
         $html .= '</ul>';

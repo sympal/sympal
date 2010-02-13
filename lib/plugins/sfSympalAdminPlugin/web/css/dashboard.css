@@ -40,6 +40,10 @@ body {
   padding: 10px;
 }
 
+#sympal-dashboard .sympal_dashboard_box h2 a {
+  color: #fff;
+}
+
 #sympal-dashboard .sympal_dashboard_box ul {
   margin: 0;
   padding: 0;
