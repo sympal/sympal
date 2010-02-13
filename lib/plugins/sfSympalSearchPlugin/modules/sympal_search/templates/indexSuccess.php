@@ -1,5 +1,7 @@
 <?php use_helper('SympalPager') ?>
 
+<h1>Search</h1>
+
 <?php if ($sf_request->getParameter('action') == 'admin_search'): ?>
   <?php if ($q = $sf_request->getParameter('q')): ?>
     <?php echo get_sympal_breadcrumbs(array(
@@ -14,8 +16,6 @@
     )) ?>
   <?php endif; ?>
 <?php endif; ?>
-
-<h1>Search</h1>
 
 <?php echo get_partial('sympal_search/form') ?>
 
