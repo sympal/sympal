@@ -62,7 +62,7 @@ class sfSympalMenuSiteManager
     } else {
       if ($menu->getUrl(array('absolute' => true)) === $this->_currentUri)
       {
-        return $menu->getDoctrineMenuItem();
+        return $menu->getMenuItem();
       }
       foreach ($menu->getChildren() as $child)
       {

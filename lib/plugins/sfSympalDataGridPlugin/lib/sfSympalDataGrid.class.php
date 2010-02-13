@@ -387,7 +387,6 @@ class sfSympalDataGrid
     }
 
     $this->_query->getSqlQuery(array(), false);
-    $this->_pager->init();
 
     if (!$this->_columns)
     {
@@ -397,6 +396,8 @@ class sfSympalDataGrid
     }
 
     $this->_initializeSortingAndPaging();
+
+    $this->_pager->init();
 
     $this->_initialized = true;
 

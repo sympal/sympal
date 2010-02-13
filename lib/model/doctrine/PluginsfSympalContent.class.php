@@ -13,7 +13,8 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $_mainMenuItem,
     $_editableSlotsExistOnPage = false,
     $_slotsByName = null,
-    $_contentRouteObject = null;
+    $_contentRouteObject = null,
+    $_updateSearchIndex = true;
   
   /**
    * Initializes a new sfSympalContent for the given type
@@ -746,19 +747,34 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->_get('ContentGroups');
   }
 
+  public function disableSearchIndexUpdateForSave()
+  {
+    $this->_updateSearchIndex = false;
+  }
+
   public function save(Doctrine_Connection $conn = null)
   {
     $result = parent::save($conn);
-    sfSympalSearch::getInstance()->updateSearchIndex($this);
+
+    if ($this->_updateSearchIndex)
+    {
+      sfSympalSearch::getInstance()->updateSearchIndex($this);
+    }
+
+    $this->_updateSearchIndex = true;
+
     return $result;
   }
 
   public function delete(Doctrine_Connection $conn = null)
   {
-    $index = sfSympalSearch::getInstance()->getIndex();
-    foreach ($index->find('pk:'.$this->getId()) as $hit)
+    if ($this->_updateSearchIndex)
     {
-      $index->delete($hit->id);
+      $index = sfSympalSearch::getInstance()->getIndex();
+      foreach ($index->find('pk:'.$this->getId()) as $hit)
+      {
+        $index->delete($hit->id);
+      }
     }
     return parent::delete($conn);
   }

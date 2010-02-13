@@ -23,7 +23,7 @@
   <?php echo $dataGrid->getPagerHeader() ?>
 
   <?php if ($dataGrid->count()): ?>
-    <?php echo $dataGrid->getPagerNavigation(url_for('@'.$sf_context->getRouting()->getCurrentRouteName())) ?>
+    <?php echo $dataGrid->getPagerNavigation(url_for('@'.$sf_context->getRouting()->getCurrentRouteName().'?q='.$sf_request->getParameter('q'))) ?>
 
     <div id="sf_admin_container">
       <div id="sf_admin_content">

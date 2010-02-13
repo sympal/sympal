@@ -135,6 +135,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   public function loadConfigForm(sfEvent $event)
   {
     $form = $event->getSubject();
+    $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
 
     if (sfSympalConfig::isI18nEnabled())
     {
@@ -166,8 +167,6 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
       $form->addSetting(null, 'default_culture', 'Default Culture', $widgetSchema['language'], $validatorSchema['language']);
     }
-
-    $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
 
     $array = sfSympalFormToolkit::getThemeWidgetAndValidator();
     $form->addSetting(null, 'default_theme', 'Default Theme', $array['widget'], $array['validator']);

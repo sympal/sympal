@@ -461,26 +461,30 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   public function renderLink()
   {
-    $options = $this->getOptions();
-    $currentAncestor = $this->isCurrentAncestor();
-    if  ($this->isCurrent() || $currentAncestor)
+    if ($route = $this->getRoute())
     {
-      if (!isset($options['class']))
+      $options = $this->getOptions();
+      $currentAncestor = $this->isCurrentAncestor();
+      if  ($this->isCurrent() || $currentAncestor)
       {
-        $class = '';
-      } else {
-        $class = $options['class'];
+        if (!isset($options['class']))
+        {
+          $class = '';
+        } else {
+          $class = $options['class'];
+        }
+        $class .= ' current';
+        if ($currentAncestor)
+        {
+          $class .= ' current_ancestor';
+        }
+        $options['class'] = $class;
       }
-      $class .= ' current';
-      if ($currentAncestor)
-      {
-        $class .= ' current_ancestor';
-      }
-      $options['class'] = $class;
+      
+      $html = link_to($this->renderLabel(), $route, $options);
+    } else {
+      $html = $this->renderLabel();
     }
-
-    $html = link_to($this->renderLabel(), $this->getRoute(), $options);
-
     return $html;
   }
 

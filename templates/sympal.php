@@ -56,27 +56,28 @@
   </div>
   <!-- end left column -->
 
-  <?php if (has_slot('sympal_right_sidebar') || $subMenu): ?>
-    <!-- right column -->
-    <div id="column_right">
-     <br />
-     <div class="roundedbox">
-      <div class="roundedbox_head"><div></div></div>
-      <div class="roundedbox_body">
-        <?php if (has_slot('sympal_right_sidebar')): ?>
-          <?php echo get_slot('sympal_right_sidebar') ?>
-        <?php endif; ?>
+  <!-- right column -->
+  <div id="column_right">
+   <br />
+   <div class="roundedbox">
+    <div class="roundedbox_head"><div></div></div>
+    <div class="roundedbox_body">
+      <h2>Search</h2>
+      <?php echo get_partial('sympal_search/form') ?>
 
-        <?php if ($subMenu): ?>
-          <div id="sympal_sub_menu">
-            <?php echo $subMenu ?>
-          </div>
-        <?php endif; ?>
-      </div>
-     </div>
+      <?php if (has_slot('sympal_right_sidebar')): ?>
+        <?php echo get_slot('sympal_right_sidebar') ?>
+      <?php endif; ?>
+
+      <?php if ($subMenu): ?>
+        <div id="sympal_sub_menu">
+          <?php echo $subMenu ?>
+        </div>
+      <?php endif; ?>
     </div>
-    <!-- end right column -->
-  <?php endif; ?>
+   </div>
+  </div>
+  <!-- end right column -->
 
   <br style="clear: both;" />
 

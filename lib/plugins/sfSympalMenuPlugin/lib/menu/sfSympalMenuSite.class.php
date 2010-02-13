@@ -4,7 +4,7 @@ class sfSympalMenuSite extends sfSympalMenu
 {
   protected 
     $_contentRouteObject = null,
-    $_menuItem = null,
+    $_menuItemArray = null,
     $_cacheKey = null;
 
   public function setCacheKey($cacheKey)
@@ -27,7 +27,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
   public function findMenuItem($menuItem)
   {
-    if ($this->_menuItem['id'] == $menuItem['id'])
+    if ($this->_menuItemArray['id'] == $menuItem['id'])
     {
       return $this;
     }
@@ -41,9 +41,9 @@ class sfSympalMenuSite extends sfSympalMenu
     return false;
   }
 
-  public function getMenuItem()
+  public function getMenuItemArray()
   {
-    return $this->_menuItem;
+    return $this->_menuItemArray;
   }
 
   public function getBreadcrumbsArray($subItem = null)
@@ -53,7 +53,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
     if ($subItem)
     {
-      if ($subItem instanceof sfSympalContent && $this->_menuItem['content_id'] == $subItem->id)
+      if ($subItem instanceof sfSympalContent && $this->_menuItemArray['content_id'] == $subItem->id)
       {
         $subItem = array();
       }
@@ -111,18 +111,18 @@ class sfSympalMenuSite extends sfSympalMenu
     if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
     {
       $culture = sfContext::getInstance()->getUser()->getCulture();
-      if (isset($this->_menuItem['Translation'][$culture]['label']))
+      if (isset($this->_menuItemArray['Translation'][$culture]['label']))
       {
-        $label = $this->_menuItem['Translation'][$culture]['label'];
+        $label = $this->_menuItemArray['Translation'][$culture]['label'];
       }
-      if (!$label && isset($this->_menuItem['Translation'][sfConfig::get('sf_default_culture')]['label']))
+      if (!$label && isset($this->_menuItemArray['Translation'][sfConfig::get('sf_default_culture')]['label']))
       {
-        $label = $this->_menuItem['Translation'][sfConfig::get('sf_default_culture')]['label'];
+        $label = $this->_menuItemArray['Translation'][sfConfig::get('sf_default_culture')]['label'];
       }
     } else {
-      if (isset($this->_menuItem['label']))
+      if (isset($this->_menuItemArray['label']))
       {
-        $label = $this->_menuItem['label'];
+        $label = $this->_menuItemArray['label'];
       }
     }
     if (!$label)
@@ -148,21 +148,21 @@ class sfSympalMenuSite extends sfSympalMenu
     {
       $this->_contentRouteObject = $content->getContentRouteObject();
     }
-    $this->_menuItem = $this->_prepareMenuItem($menuItem);
-    $this->setRoute($this->_menuItem['item_route']);
-    $this->requiresAuth($this->_menuItem['requires_auth']);
-    $this->requiresNoAuth($this->_menuItem['requires_no_auth']);
-    $this->setCredentials($this->_menuItem['all_permissions']);
-    $this->setOptions($this->_menuItem['html_attributes']);
+    $this->_menuItemArray = $this->_prepareMenuItem($menuItem);
+    $this->setRoute($this->_menuItemArray['item_route']);
+    $this->requiresAuth($this->_menuItemArray['requires_auth']);
+    $this->requiresNoAuth($this->_menuItemArray['requires_no_auth']);
+    $this->setCredentials($this->_menuItemArray['all_permissions']);
+    $this->setOptions($this->_menuItemArray['html_attributes']);
 
     // If not published yet then you must have certain credentials
-    $datePublished = strtotime($this->_menuItem['date_published']);
+    $datePublished = strtotime($this->_menuItemArray['date_published']);
     if (!$datePublished || $datePublished > time())
     {
       $this->setCredentials(array('ManageContent'));
     }
 
-    $this->setLevel($this->_menuItem['level']);
+    $this->setLevel($this->_menuItemArray['level']);
   }
 
   public function getTopLevelParent()
@@ -183,7 +183,7 @@ class sfSympalMenuSite extends sfSympalMenu
   {
     foreach ($this->_children as $child)
     {
-      if ($child->_menuItem['id'] == $menuItem['id'] && $child->getChildren())
+      if ($child->_menuItemArray['id'] == $menuItem['id'] && $child->getChildren())
       {
         $result = $child;
       } else if ($n = $child->getMenuItemSubMenu($menuItem)) {
@@ -194,7 +194,6 @@ class sfSympalMenuSite extends sfSympalMenu
       {
         $class = $result->getParent() ? get_class($result->getParent()):get_class($result);
         $instance = new $class($child->getName());
-        $instance->setMenuItem($menuItem);
         $instance->setChildren($result->getChildren());
 
         return $instance;
@@ -208,7 +207,7 @@ class sfSympalMenuSite extends sfSympalMenu
 
     if ($currentMenuItem && $currentMenuItem->exists())
     {
-      return $this->_menuItem['id'] == $currentMenuItem['id'];
+      return $this->_menuItemArray['id'] == $currentMenuItem['id'];
     } else {
       return false;
     }
@@ -217,7 +216,7 @@ class sfSympalMenuSite extends sfSympalMenu
   public function isCurrentAncestor()
   {
     $menuItem = sfSympalContext::getInstance()->getCurrentMenuItem();
-    if ($menuItem && $this->_menuItem)
+    if ($menuItem && $this->_menuItemArray)
     {
       $this->_currentObject = $this->findMenuItem($menuItem);
       return parent::isCurrentAncestor();
@@ -226,8 +225,8 @@ class sfSympalMenuSite extends sfSympalMenu
     return false;
   }
 
-  public function getDoctrineMenuItem()
+  public function getMenuItem()
   {
-    return Doctrine_Core::getTable('sfSympalMenuItem')->find($this->_menuItem['id']);
+    return Doctrine_Core::getTable('sfSympalMenuItem')->find($this->_menuItemArray['id']);
   }
 }

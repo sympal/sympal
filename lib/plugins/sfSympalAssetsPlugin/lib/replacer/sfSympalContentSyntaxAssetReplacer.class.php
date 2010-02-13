@@ -55,7 +55,7 @@ class sfSympalContentSyntaxAssetReplacer extends sfSympalContentSyntaxReplacer
         {
           $sympalContent->Assets[] = $assetObject;
         }
-        
+        $sympalContent->disableSearchIndexUpdateForSave();
         $sympalContent->save();
       }
 

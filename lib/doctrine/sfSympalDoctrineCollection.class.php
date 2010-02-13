@@ -20,7 +20,7 @@ class sfSympalDoctrineCollection extends Doctrine_Collection
     $all = array();
     foreach ($this as $key => $value)
     {
-      $all[] = $value->get($field);
+      $all[] = $value->get($fieldName);
     }
     return $all;
   }

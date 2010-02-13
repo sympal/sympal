@@ -69,7 +69,7 @@ class sfSympalContentSyntaxLinkReplacer extends sfSympalContentSyntaxReplacer
         {
           $sympalContent->Links[] = $contentObject;
         }
-        
+        $sympalContent->disableSearchIndexUpdateForSave();
         $sympalContent->save();
       }
 
