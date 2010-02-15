@@ -14,7 +14,7 @@ class sfSympalPluginInfo
 
   public static function synchronizeDatabase()
   {
-    $plugins = sfSympalPluginToolkit::getAvailablePlugins();
+    $plugins = sfSympalPluginToolkit::getDownloadablePlugins();
     foreach ($plugins as $plugin)
     {
       $plugin = new sfSympalPluginInfo($plugin);

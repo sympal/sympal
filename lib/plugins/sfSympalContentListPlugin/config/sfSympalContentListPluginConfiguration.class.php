@@ -17,8 +17,8 @@ class sfSympalContentListPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
-    new sfSympalContentListFilterVariablesListener( $this->dispatcher );
-    new sfSympalContentListUnknownFormatListener(   $this->dispatcher );
+    new sfSympalContentListFilterVariablesListener($this->dispatcher, $this);
+    new sfSympalContentListUnknownFormatListener($this->dispatcher, $this);
   }
 
 }

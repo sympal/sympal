@@ -18,7 +18,6 @@ abstract class Basesympal_plugin_managerActions extends autoSympal_plugin_manage
 
     $this->addonPlugins = $sympalConfiguration->getAllManageablePlugins();
     $this->corePlugins = $sympalConfiguration->getCorePlugins();
-    $this->installedPlugins = $sympalConfiguration->getInstalledPlugins();
 
     $this->checkFilePermissions();
   }

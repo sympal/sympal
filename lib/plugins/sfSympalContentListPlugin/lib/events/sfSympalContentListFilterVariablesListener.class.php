@@ -1,4 +1,5 @@
 <?php
+
 class sfSympalContentListFilterVariablesListener extends sfSympalListener
 {
   public function getEventName()
@@ -6,7 +7,7 @@ class sfSympalContentListFilterVariablesListener extends sfSympalListener
     return 'sympal.content_renderer.filter_variables';
   }
 
-  public static function run(sfEvent $event, $variables)
+  public function run(sfEvent $event, $variables)
   {
     $content = $variables['content'];
     if ($content->getType()->getName() == 'sfSympalContentList')

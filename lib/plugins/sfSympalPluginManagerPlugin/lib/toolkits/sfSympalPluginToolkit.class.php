@@ -54,6 +54,14 @@ class sfSympalPluginToolkit
     return is_dir(self::getPluginPath($pluginName)) ? true:false;
   }
 
+  public static function isPluginDownloadable($name)
+  {
+    $pluginName = self::getLongPluginName($name);
+    $availablePlugins = self::getDownloadablePlugins();
+
+    return in_array($availablePlugins, $pluginName);
+  }
+
   public static function getLongPluginName($name)
   {
     if (strstr($name, 'sfSympal'))
@@ -80,7 +88,7 @@ class sfSympalPluginToolkit
     }
   }
 
-  public static function getAvailablePluginPaths()
+  public static function getDownloadablePluginPaths()
   {
     $cachePath = sfConfig::get('sf_cache_dir').'/sympal/plugins.cache';
     if (!file_exists($cachePath))
@@ -134,9 +142,9 @@ class sfSympalPluginToolkit
     return $available;
   }
 
-  public static function getAvailablePlugins()
+  public static function getDownloadablePlugins()
   {
-    return array_keys(self::getAvailablePluginPaths());
+    return array_keys(self::getDownloadablePluginPaths());
   }
 
   public static function getPluginDownloadPath($name)
@@ -147,7 +155,7 @@ class sfSympalPluginToolkit
     $e = explode('.', SYMFONY_VERSION);
     $version = $e[0].'.'.$e[1];
 
-    $paths = self::getAvailablePluginPaths();
+    $paths = self::getDownloadablePluginPaths();
     $path = '';
     foreach ($paths as $pathPluginName => $path)
     {
@@ -174,13 +182,5 @@ class sfSympalPluginToolkit
     } else {
       throw new sfException('Could not find download path for '.$pluginName);
     }
-  }
-
-  public static function isPluginAvailable($name)
-  {
-    $pluginName = self::getLongPluginName($name);
-    $availablePlugins = self::getAvailablePlugins();
-
-    return in_array($availablePlugins, $pluginName);
   }
 }
