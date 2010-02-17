@@ -240,15 +240,6 @@ EOF;
   file_put_contents($settingsFilename, $settings);
 }
 
-$command = sprintf(
-  '%s "%s" %s',
-  sfToolkit::getPhpCli(),
-  sfConfig::get('sf_root_dir').'/symfony',
-  'sympal:enable-for-app '.$application
-);
-$this->logBlock($command, 'INFO');
-$this->getFilesystem()->execute($command);
-
 // execute sympal installation
 $command = sprintf(
   '%s "%s" %s',
