@@ -90,12 +90,6 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
    */
   private function _checkInstalled()
   {
-    // Don't run this if we are under the cli
-    if (PHP_SAPI == 'cli')
-    {
-      return;
-    }
-
     $request = $this->_symfonyContext->getRequest();
 
     // Prepare the symfony application is it has not been prepared yet
