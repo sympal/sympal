@@ -41,6 +41,7 @@ $requiredPlugins = array(
   'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin',
   'sfSympalContentSyntaxPlugin',
+  'sfSympalSearchPlugin'
 );
 
 $t->is($sympalConfiguration->getRequiredPlugins(), $requiredPlugins, '->getRequiredPlugins() returns the correct array');
@@ -67,6 +68,7 @@ $corePlugins = array(
   'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin',
   'sfSympalContentSyntaxPlugin',
+  'sfSympalSearchPlugin'
 );
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins, '->getCorePlugins() returns the correct array');
