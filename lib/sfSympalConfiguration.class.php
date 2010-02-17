@@ -246,26 +246,6 @@ class sfSympalConfiguration
   }
 
   /**
-   * Get array of required plugins for Sympal
-   *
-   * @return array $requiredPlugins
-   */
-  public function getRequiredPlugins()
-  {
-    $requiredPlugins = array();
-    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
-    {
-      if (strpos($pluginName, 'sfSympal') !== false)
-      {
-        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
-        $requiredPlugins = array_merge($requiredPlugins, $dependencies);
-      }
-    }
-
-    return array_values(array_unique($requiredPlugins));
-  }
-
-  /**
    * Get array of core Sympal plugins
    *
    * @return array $corePlugins
@@ -303,7 +283,9 @@ class sfSympalConfiguration
    */
   public function getDownloadedPlugins()
   {
-    return array_diff($this->getPlugins(), $this->getRequiredPlugins());
+    $downloadedPlugins = array_diff($this->getPlugins(), $this->getCorePlugins());
+    unset($downloadedPlugins[array_search('sfSympalPlugin', $downloadedPlugins)]);
+    return $downloadedPlugins;
   }
 
   /**

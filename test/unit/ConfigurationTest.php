@@ -13,7 +13,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(22, new lime_output_color());
+$t = new lime_test(24, new lime_output_color());
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
@@ -42,34 +42,6 @@ $pluginPaths = $sympalConfiguration->getPluginPaths();
 $t->is(is_array($pluginPaths), true, '->getPluginPaths() returns array'); 
 $t->is(isset($pluginPaths['sfSympalBlogPlugin']), true, '->getPluginPaths() includes sfSympalBlogPlugin'); 
 $t->is($pluginPaths['sfSympalBlogPlugin'], sfConfig::get('sf_plugins_dir').'/sfSympalBlogPlugin', '->getPluginPaths() returns correct path as value of array');
- 	
-$requiredPlugins = array(
-  'sfSympalPlugin',
-  'sfSympalUserPlugin',
-  'sfFormExtraPlugin',
-  'sfDoctrineGuardPlugin',
-  'sfTaskExtraPlugin',
-  'sfFeed2Plugin',
-  'sfWebBrowserPlugin',
-  'sfJqueryReloadedPlugin',
-  'sfThumbnailPlugin',
-  'sfImageTransformPlugin',
-  'sfSympalMenuPlugin',
-  'sfSympalPluginManagerPlugin',
-  'sfSympalPagesPlugin',
-  'sfSympalContentListPlugin',
-  'sfSympalDataGridPlugin',
-  'sfSympalInstallPlugin',
-  'sfSympalUpgradePlugin',
-  'sfSympalRenderingPlugin',
-  'sfSympalAdminPlugin',
-  'sfSympalEditorPlugin',
-  'sfSympalAssetsPlugin',
-  'sfSympalContentSyntaxPlugin',
-  'sfSympalSearchPlugin'
-);
-
-$t->is($sympalConfiguration->getRequiredPlugins(), $requiredPlugins, '->getRequiredPlugins() returns the correct array');
 
 $corePlugins = array(
   'sfDoctrineGuardPlugin',
@@ -137,3 +109,8 @@ $t->is($contentTypePlugins, array(
  
 $allManageablePlugins = $sympalConfiguration->getAllManageablePlugins(); 
 $t->is(in_array('sfSympalBlogPlugin', $allManageablePlugins), true, '->getAllManageablePlugins() returns the correct array of plugins');
+
+$plugins = $sympalConfiguration->getProjectConfiguration()->getPlugins();
+$t->is($plugins[0], 'sfDoctrinePlugin', 'Test sfDoctrinePlugin is loaded first');
+$t->is($plugins[1], 'sfSympalPlugin', 'Test sfSympalPlugin is loaded second');
+$t->is(in_array('sfSympalBlogPlugin', $plugins), true, 'Test that additional downloaded plugins are loaded');

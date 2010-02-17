@@ -48,16 +48,26 @@ class sfSympalPluginEnabler
    */
   public function enableSympalPlugins()
   {
+    $this->_configuration->enablePlugins('sfDoctrinePlugin');
+
     if (!$this->isSympalEnabled())
     {
       return false;
     }
 
-    $this->_configuration->enablePlugins('sfDoctrinePlugin');
     $this->_configuration->enablePlugins('sfSympalPlugin');
     $this->_configuration->setPluginPath('sfSympalPlugin', $this->_sympalPluginPath);
 
     $this->enableSympalCorePlugins(sfSympalPluginConfiguration::$dependencies);
+
+    $plugins = $this->_configuration->getPlugins();
+    $finder = sfFinder::type('dir')->maxdepth(0)->ignore_version_control(false)->follow_link()->name('*Plugin');
+    foreach ($finder->in(sfConfig::get('sf_plugins_dir')) as $path)
+    {
+      $plugins[] = basename($path);
+    }
+    sort($plugins);
+    $this->_configuration->setPlugins($plugins);
   }
 
   /**
