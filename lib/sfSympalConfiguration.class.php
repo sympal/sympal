@@ -290,7 +290,7 @@ class sfSympalConfiguration
       $manager = new sfSympalPluginManager($plugin, $this->_projectConfiguration, new sfFormatter());
       if ($contentType = $manager->getContentTypeForPlugin())
       {
-        $contentTypePlugins[$plugin] = $plugin;
+        $contentTypePlugins[] = $plugin;
       }
     }
     return $contentTypePlugins;

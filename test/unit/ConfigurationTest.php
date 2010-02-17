@@ -13,11 +13,36 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(9, new lime_output_color());
+$t = new lime_test(22, new lime_output_color());
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
 
+$themes = $sympalConfiguration->getThemes(); 
+$t->is(isset($themes['default']), true, '->getThemes() includes default theme'); 
+ 
+$availableThemes = $sympalConfiguration->getAvailableThemes(); 
+$t->is(isset($themes['admin']), 'admin', '->getAvailableThemes() does not include admin theme'); 
+ 
+$contentTemplates = $sympalConfiguration->getContentTemplates('page'); 
+$t->is(isset($contentTemplates['default_view']), true, '->getContentTemplates() returns default_view for page'); 
+$t->is(isset($contentTemplates['register']), true, '->getContentTemplates() returns register for page'); 
+ 
+sfContext::getInstance()->getRequest()->setParameter('module', 'sympal_dashboard'); 
+$t->is($sympalConfiguration->isAdminModule(), true, '->isAdminModule() returns true for admin module'); 
+ 
+sfContext::getInstance()->getRequest()->setParameter('module', 'sympal_content_renderer'); 
+$t->is($sympalConfiguration->isAdminModule(), false, '->isAdminModule() returns false for non-admin module'); 
+ 
+$plugins = $sympalConfiguration->getPlugins(); 
+$t->is(is_array($plugins), true, '->getPlugins() returns array'); 
+$t->is(in_array('sfSympalBlogPlugin', $plugins), true, '->getPlugins() includes sfSympalBlogPlugin'); 
+ 
+$pluginPaths = $sympalConfiguration->getPluginPaths(); 
+$t->is(is_array($pluginPaths), true, '->getPluginPaths() returns array'); 
+$t->is(isset($pluginPaths['sfSympalBlogPlugin']), true, '->getPluginPaths() includes sfSympalBlogPlugin'); 
+$t->is($pluginPaths['sfSympalBlogPlugin'], sfConfig::get('sf_plugins_dir').'/sfSympalBlogPlugin', '->getPluginPaths() returns correct path as value of array');
+ 	
 $requiredPlugins = array(
   'sfSympalPlugin',
   'sfSympalUserPlugin',
@@ -102,3 +127,13 @@ $t->is(in_array('sympal_content_renderer', $modules), true, '->getModules() retu
 
 $layouts = $sympalConfiguration->getLayouts();
 $t->is(in_array('sympal', $layouts), true, '->getLayouts() returns an array with "sympal" as one of its entries');
+
+$contentTypePlugins = $sympalConfiguration->getContentTypePlugins(); 
+$t->is($contentTypePlugins, array( 
+  'sfSympalBlogPlugin', 
+  'sfSympalPagesPlugin', 
+  'sfSympalContentListPlugin' 
+), '->getContentTypePlugins() returns the correct array of plugins with content typed defined'); 
+ 
+$allManageablePlugins = $sympalConfiguration->getAllManageablePlugins(); 
+$t->is(in_array('sfSympalBlogPlugin', $allManageablePlugins), true, '->getAllManageablePlugins() returns the correct array of plugins');
