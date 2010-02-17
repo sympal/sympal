@@ -86,7 +86,6 @@ $this->logSection('sympal', '...adding Sympal code to ProjectConfiguration');
 $manipulator = sfClassManipulator::fromFile(sfConfig::get('sf_config_dir').'/ProjectConfiguration.class.php');
 $manipulator->wrapMethod('setup', '', 'require_once(dirname(__FILE__).\'/../plugins/sfSympalPlugin/config/sfSympalPluginConfiguration.class.php\');');
 $manipulator->wrapMethod('setup', '', 'sfSympalPluginConfiguration::enableSympalPlugins($this);');
-$manipulator->wrapMethod('setup', '', '$this->enableAllPluginsExcept(\'sfPropelPlugin\');');
 $manipulator->save();
 
 $this->logSection('sympal', '...downloading sfSympalPlugin');
