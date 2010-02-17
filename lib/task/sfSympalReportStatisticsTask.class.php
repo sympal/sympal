@@ -27,7 +27,7 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $plugins = sfSympalPluginToolkit::getDownloadablePlugins();
+    $plugins = sfSympalPluginToolkit::getAvailablePlugins();
 
     $api = new sfSympalPluginApi();
     if ($api->getUsername() && $api->getPassword())

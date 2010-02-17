@@ -49,10 +49,6 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    // Make sure the application is enabled and prepared for sympal before we try and install
-    $task = new sfSympalEnableForAppTask($this->dispatcher, $this->formatter);
-    $task->run(array($arguments['application']), array());
-
     $this->createContext($this->configuration);
 
     $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);

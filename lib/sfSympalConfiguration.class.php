@@ -9,85 +9,28 @@ class sfSympalConfiguration
     $_symfonyContext,
     $_doctrineManager,
     $_bootstrap,
-    $_plugins,
-    $_pluginPaths,
-    $_allManageablePlugins,
-    $_contentTypePlugins,
-    $_requiredPlugins,
-    $_modules,
-    $_themes,
-    $_availableThemes,
+    $_plugins = array(),
+    $_modules = array(),
+    $_themes = null,
+    $_availableThemes = null,
     $_cache;
 
-  public function __construct(ProjectConfiguration $projectConfiguration)
+  public function __construct(sfEventDispatcher $dispatcher, ProjectConfiguration $projectConfiguration)
   {
     // We disable Symfony autoload again feature because it is too slow in dev mode
     // If you introduce a new class when using sympal you just must clear your
     // cache manually
     sfAutoloadAgain::getInstance()->unregister();
 
+    $this->_dispatcher = $dispatcher;
     $this->_projectConfiguration = $projectConfiguration;
-    $this->_dispatcher = $projectConfiguration->getEventDispatcher();
     $this->_doctrineManager = Doctrine_Manager::getInstance();
 
     $this->_initializeSymfonyConfig();
     $this->_markClassesAsSafe();
+    $this->_connectEvents();
     $this->_configureSuperCache();
     $this->_configureDoctrine();
-
-    new sfSympalContextLoadFactoriesListener($this->_dispatcher, $this);
-  }
-
-  /**
-   * Set the project configuration instance for sympal
-   *
-   * @param ProjectConfiguration $projectConfiguration 
-   * @return void
-   */
-  public function setProjectConfiguration(ProjectConfiguration $projectConfiguration)
-  {
-    $this->_projectConfiguration = $projectConfiguration;
-  }
-
-  /**
-   * Initialize some sfConfig values for Sympal
-   *
-   * @return void
-   */
-  private function _initializeSymfonyConfig()
-  {
-    sfConfig::set('sf_cache', sfSympalConfig::get('page_cache', 'enabled', false));
-    sfConfig::set('sf_default_culture', sfSympalConfig::get('default_culture', null, 'en'));
-    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalAdminPlugin'));
-
-    sfConfig::set('app_sf_guard_plugin_success_signin_url', sfSympalConfig::get('success_signin_url'));
-
-    if (sfConfig::get('sf_login_module') == 'default')
-    {
-      sfConfig::set('sf_login_module', 'sympal_auth');
-      sfConfig::set('sf_login_action', 'signin');
-    }
-
-    if (sfConfig::get('sf_secure_module') == 'default')
-    {
-      sfConfig::set('sf_secure_module', 'sympal_auth');
-      sfConfig::set('sf_secure_action', 'secure');
-    }
-
-    if (sfConfig::get('sf_error_404_module') == 'default')
-    {
-      sfConfig::set('sf_error_404_module', 'sympal_default');
-      sfConfig::set('sf_error_404_action', 'error404');
-    }
-
-    if (sfConfig::get('sf_module_disabled_module') == 'default')
-    {
-      sfConfig::set('sf_module_disabled_module', 'sympal_default');
-      sfConfig::set('sf_module_disabled_action', 'disabled');
-    }
-
-    sfConfig::set('sf_jquery_path', sfSympalConfig::get('jquery_reloaded', 'path'));
-    sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
   }
 
   /**
@@ -112,6 +55,23 @@ class sfSympalConfiguration
       'sfSympalServerCheckHtmlRenderer',
       'sfSympalSitemapGenerator'
     ));
+  }
+
+  /**
+   * Connect to various events required by Sympal
+   *
+   * @return void
+   */
+  private function _connectEvents()
+  {
+    $this->_dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
+    $this->_dispatcher->connect('component.method_not_found', array(new sfSympalActions(), 'extend'));
+    $this->_dispatcher->connect('controller.change_action', array($this, 'listenToControllerChangeAction'));
+    $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
+    $this->_dispatcher->connect('form.method_not_found', array(new sfSympalForm(), 'extend'));
+    $this->_dispatcher->connect('form.post_configure', array('sfSympalForm', 'listenToFormPostConfigure'));
+    $this->_dispatcher->connect('form.filter_values', array('sfSympalForm', 'listenToFormFilterValues'));
+    $this->_dispatcher->connect('task.cache.clear', array($this, 'listenToTaskCacheClear'));
   }
 
   /**
@@ -163,19 +123,84 @@ class sfSympalConfiguration
     }
   }
 
-  public function setCache(sfSympalCache $cache)
+  public function listenToControllerChangeAction(sfEvent $event)
   {
-    $this->_cache = $cache;
+    $this->initializeTheme();
+    $this->_checkOnline();
   }
 
-  public function setSymfonyContext(sfContext $symfonyContext)
+  /**
+   * Listen to clear cache task event so we can clear the web cache folder
+   *
+   * @param sfEvent $event 
+   * @return void
+   */
+  public function listenToTaskCacheClear(sfEvent $event)
   {
-    $this->_symfonyContext = $symfonyContext;
+    $event->getSubject()->logSection('sympal', 'Clearing web cache folder');
+
+    $cacheDir = sfConfig::get('sf_web_dir').'/cache';
+    if (is_dir($cacheDir))
+    {
+      $event->getSubject()->getFilesystem()->remove(sfFinder::type('file')->ignore_version_control()->discard('.sf')->in($cacheDir));
+    }
   }
 
-  public function setSympalContext(sfSympalContext $sympalContext)
+  /**
+   * Callable attached to Symfony event context.load_factories. When this event
+   * is triggered we also create the Sympal context.
+   */
+  public function bootstrap(sfEvent $event)
   {
-    $this->_sympalContext = $sympalContext;
+    $this->_projectConfiguration = $event->getSubject()->getConfiguration();
+
+    $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
+    $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
+
+    $this->_cache = new sfSympalCache($this);
+
+    $this->_symfonyContext = $event->getSubject();
+    $this->_sympalContext = sfSympalContext::createInstance($this->_symfonyContext, $this);
+
+    $this->_enableModules();
+    $this->_checkInstalled();
+
+    $this->initializeTheme();
+
+    $this->_projectConfiguration->loadHelpers(array(
+      'Sympal', 'SympalContentSlot', 'SympalMenu', 'SympalPager', 'I18N', 'Asset', 'Url', 'Partial'
+    ));
+
+    if ($this->isAdminModule())
+    {
+      sfConfig::set('sf_login_module', 'sympal_admin');
+      $this->_projectConfiguration->loadHelpers(array('Admin'));
+    }
+  }
+
+  /**
+   * Filter Symfony template parameters and add some references to some variables
+   *
+   * @param sfEvent $event 
+   * @param array $parameters
+   * @return array $parameters
+   */
+  public function filterTemplateParameters(sfEvent $event, $parameters)
+  {
+    if (!$this->_sympalContext)
+    {
+      return $parameters;
+    }
+    $parameters['sf_sympal_context'] = $this->_sympalContext;
+    if ($content = $this->_sympalContext->getCurrentContent())
+    {
+      $parameters['sf_sympal_content'] = $content;
+    }
+    if ($menuItem = $this->_sympalContext->getCurrentMenuItem())
+    {
+      $parameters['sf_sympal_menu_item'] = $menuItem;
+    }
+    return $parameters;
   }
 
   /**
@@ -209,16 +234,6 @@ class sfSympalConfiguration
   }
 
   /**
-   * Get the current sfContext instance
-   *
-   * @return sfContext $symfonyContext
-   */
-  public function getSymfonyContext()
-  {
-    return $this->_symfonyContext;
-  }
-
-  /**
    * Get the current ProjectConfiguration instance
    *
    * @return ProjectConfiguration $projectConfiguration
@@ -235,21 +250,17 @@ class sfSympalConfiguration
    */
   public function getRequiredPlugins()
   {
-    if ($this->_requiredPlugins === null)
+    $requiredPlugins = array();
+    foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
     {
-      $this->_requiredPlugins = array();
-      foreach ($this->_projectConfiguration->getPlugins() as $pluginName)
+      if (strpos($pluginName, 'sfSympal') !== false)
       {
-        if (strpos($pluginName, 'sfSympal') !== false)
-        {
-          $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
-          $this->_requiredPlugins = array_merge($this->_requiredPlugins, $dependencies);
-        }
+        $dependencies = sfSympalPluginToolkit::getPluginDependencies($pluginName);
+        $requiredPlugins = array_merge($requiredPlugins, $dependencies);
       }
-
-      $this->_requiredPlugins =  array_values(array_unique($this->_requiredPlugins));
     }
-    return $this->_requiredPlugins;
+
+    return array_values(array_unique($requiredPlugins));
   }
 
   /**
@@ -269,31 +280,28 @@ class sfSympalConfiguration
    */
   public function getContentTypePlugins()
   {
-    if ($this->_contentTypePlugins === null)
+    $contentTypePlugins = array();
+    $plugins = $this->getPluginPaths();
+
+    foreach ($plugins as $plugin => $path)
     {
-      $contentTypePlugins = array();
-      $plugins = $this->getPluginPaths();
-      $formatter = new sfFormatter();
-      foreach ($plugins as $plugin => $path)
+      $manager = new sfSympalPluginManager($plugin, $this->_projectConfiguration, new sfFormatter());
+      if ($contentType = $manager->getContentTypeForPlugin())
       {
-        $manager = new sfSympalPluginManager($plugin, $this->_projectConfiguration, $formatter);
-        if ($contentType = $manager->getContentTypeForPlugin())
-        {
-          $this->_contentTypePlugins[] = $plugin;
-        }
+        $contentTypePlugins[$plugin] = $plugin;
       }
     }
-    return $this->_contentTypePlugins;
+    return $contentTypePlugins;
   }
 
   /**
-   * Get array of plugins that are downloaded and available in your project
+   * Get array of plugins that are downloaded and installed to your project
    *
    * @return array $installedPlugins
    */
-  public function getDownloadedPlugins()
+  public function getInstalledPlugins()
   {
-    return array_diff($this->getPlugins(), $this->getRequiredPlugins());
+    return $this->getOtherPlugins();
   }
 
   /**
@@ -301,9 +309,19 @@ class sfSympalConfiguration
    *
    * @return array $addonPlugins
    */
-  public function getDownloadablePlugins()
+  public function getAddonPlugins()
   {
-    return sfSympalPluginToolkit::getDownloadablePlugins();
+    return sfSympalPluginToolkit::getAvailablePlugins();
+  }
+
+  /**
+   * Get array of other plugins that are not required
+   *
+   * @return array $otherPlugins
+   */
+  public function getOtherPlugins()
+  {
+    return array_diff($this->getPlugins(), $this->getRequiredPlugins());
   }
 
   /**
@@ -313,12 +331,10 @@ class sfSympalConfiguration
    */
   public function getAllManageablePlugins()
   {
-    if ($this->_allManageablePlugins === null)
-    {
-      $this->_allManageablePlugins = array_merge($this->getDownloadablePlugins(), $this->getDownloadedPlugins());
-      $this->_allManageablePlugins = array_unique($this->_allManageablePlugins);
-    }
-    return $this->_allManageablePlugins;
+    $plugins = array_merge($this->getAddonPlugins(), $this->getInstalledPlugins());
+    $plugins = array_unique($plugins);
+
+    return $plugins;
   }
 
   /**
@@ -328,11 +344,7 @@ class sfSympalConfiguration
    */
   public function getPlugins()
   {
-    if ($this->_plugins === null)
-    {
-      $this->_plugins = array_keys($this->getPluginPaths());
-    }
-    return $this->_plugins;
+    return array_keys($this->getPluginPaths());
   }
 
   /**
@@ -342,21 +354,21 @@ class sfSympalConfiguration
    */
   public function getPluginPaths()
   {
-    if ($this->_pluginPaths === null)
+    if (!$this->_plugins)
     {
       $configuration = ProjectConfiguration::getActive();
       $pluginPaths = $configuration->getAllPluginPaths();
-      $this->_pluginPaths = array();
+      $this->_plugins = array();
       foreach ($pluginPaths as $pluginName => $path)
       {
         if (strpos($pluginName, 'sfSympal') !== false)
         {
-          $this->_pluginPaths[$pluginName] = $path;
+          $this->_plugins[$pluginName] = $path;
         }
       }
     }
 
-    return $this->_pluginPaths;
+    return $this->_plugins;
   }
 
   /**
@@ -505,6 +517,136 @@ class sfSympalConfiguration
     {
       $this->_sympalContext->loadTheme($this->getThemeForRequest());
     }
+  }
+
+  /**
+   * Handle the enabling of modules. Either enables all modules or only the configured modules.
+   *
+   * @return void
+   */
+  private function _enableModules()
+  {
+    if (sfSympalConfig::get('enable_all_modules', null, true))
+    {
+      $modules = sfConfig::get('sf_enabled_modules', array());
+      if (sfSympalConfig::get('enable_all_modules'))
+      {
+        $modules = array_merge($modules, $this->getModules());
+      } else {
+        $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
+      }
+
+      if ($disabledModules = sfSympalConfig::get('disabled_modules', null, array()))
+      {
+        $modules = array_diff($modules, $disabledModules);
+      }
+
+      sfConfig::set('sf_enabled_modules', $modules);
+    }
+  }
+
+  /**
+   * Check if Sympal is installed and redirect to installer if not.
+   * Do some other install checks as well.
+   *
+   * @return void
+   */
+  private function _checkInstalled()
+  {
+    // Don't run this if we are under the cli
+    if (PHP_SAPI == 'cli')
+    {
+      return;
+    }
+    $sfContext = sfContext::getInstance();
+    $request = $sfContext->getRequest();
+
+    // Prepare the symfony application is it has not been prepared yet
+    if (!$sfContext->getUser() instanceof sfSympalUser)
+    {
+      chdir(sfConfig::get('sf_root_dir'));
+      $task = new sfSympalEnableForAppTask($this->_dispatcher, new sfFormatter());
+      $task->run(array($this->_projectConfiguration->getApplication()), array());
+
+      $sfContext->getController()->redirect('@homepage');
+    }
+
+    // Redirect to install module if...
+    //  not in test environment
+    //  sympal has not been installed
+    //  module is not already sympal_install
+    if (sfConfig::get('sf_environment') != 'test' && !sfSympalConfig::get('installed') && $request->getParameter('module') != 'sympal_install')
+    {
+      $sfContext->getController()->redirect('@sympal_install');
+    }
+
+    // Redirect to homepage if no site record exists so we can prompt the user to create
+    // a site record for this application
+    // This check is only ran in dev mode
+    if (sfConfig::get('sf_environment') == 'dev' && !$this->_sympalContext->getSite() && $sfContext->getRequest()->getPathInfo() != '/')
+    {
+      $sfContext->getController()->redirect('@homepage');
+    }
+  }
+
+  /**
+   * Check if Sympal is not online and act accordingly
+   *
+   * @return void
+   */
+  private function _checkOnline()
+  {
+    static $onlineChecked;
+    if (sfSympalConfig::get('offline', 'enabled', false) && !$onlineChecked)
+    {
+      $onlineChecked = true;
+      $this->_symfonyContext->getController()->forward(
+        sfSympalConfig::get('offline', 'module'),
+        sfSympalConfig::get('offline', 'action')
+      );
+      throw new sfStopException();
+    }
+  }
+
+  /**
+   * Initialize some sfConfig values for Sympal
+   *
+   * @return void
+   */
+  private function _initializeSymfonyConfig()
+  {
+    sfConfig::set('sf_cache', sfSympalConfig::get('page_cache', 'enabled', false));
+    sfConfig::set('sf_default_culture', sfSympalConfig::get('default_culture', null, 'en'));
+    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalAdminPlugin'));
+
+    sfConfig::set('app_sf_guard_plugin_success_signin_url', sfSympalConfig::get('success_signin_url'));
+
+    if (sfConfig::get('sf_login_module') == 'default')
+    {
+      sfConfig::set('sf_login_module', 'sympal_auth');
+      sfConfig::set('sf_login_action', 'signin');
+    }
+
+    if (sfConfig::get('sf_secure_module') == 'default')
+    {
+      sfConfig::set('sf_secure_module', 'sympal_auth');
+      sfConfig::set('sf_secure_action', 'secure');
+    }
+
+    if (sfConfig::get('sf_error_404_module') == 'default')
+    {
+      sfConfig::set('sf_error_404_module', 'sympal_default');
+      sfConfig::set('sf_error_404_action', 'error404');
+    }
+
+    if (sfConfig::get('sf_module_disabled_module') == 'default')
+    {
+      sfConfig::set('sf_module_disabled_module', 'sympal_default');
+      sfConfig::set('sf_module_disabled_action', 'disabled');
+    }
+
+    sfConfig::set('sf_jquery_path', sfSympalConfig::get('jquery_reloaded', 'path'));
+    sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
   }
 
   /**

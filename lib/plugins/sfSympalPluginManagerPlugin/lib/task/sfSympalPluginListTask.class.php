@@ -22,7 +22,7 @@ EOF;
 
   protected function execute($arguments = array(), $options = array())
   {
-    $plugins = sfSympalPluginToolkit::getDownloadablePlugins();
+    $plugins = sfSympalPluginToolkit::getAvailablePlugins();
 
     if (isset($options['search']) && $options['search'])
     {

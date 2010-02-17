@@ -1,5 +1,4 @@
 <?php
-
 class sfSympalContentListUnknownFormatListener extends sfSympalListener
 {
   public function getEventName()
@@ -7,7 +6,7 @@ class sfSympalContentListUnknownFormatListener extends sfSympalListener
     return 'sympal.content_renderer.unknown_format';
   }
 
-  public function run(sfEvent $event)
+  public static function run(sfEvent $event)
   {
     if (isset($event['pager']))
     {

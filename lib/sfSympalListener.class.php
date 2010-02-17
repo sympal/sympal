@@ -1,5 +1,4 @@
 <?php
-
 /**
  * A listener is an object that will react on an event which fired
  * by the dispatcher at predefined conditions.
@@ -12,14 +11,10 @@
  * to register it.
  *
  * @author Maxim Tsepkov <azrael.com@gmail.com>
- * @author Jonathan H. Wage <jonwage@gmail.com>
  */
+
 abstract class sfSympalListener
 {
-  protected
-    $_dispatcher,
-    $_invoker;
-
   /**
    * Must return event name to connect to.
    * It can be a string for one event or an array of strings for multiple events.
@@ -33,26 +28,24 @@ abstract class sfSympalListener
    * @param sfSympalListener $listener
    * @return null
    */
-  public function __construct(sfEventDispatcher $dispatcher, $invoker)
+  public function __construct(sfEventDispatcher $dispatcher)
   {
-    $this->_dispatcher = $dispatcher;
-    $this->_invoker = $invoker;
-
     if (is_array($this->getEventName()))
     {
       foreach($this->getEventName() as $name)
       {
-        $this->_dispatcher->connect($name, array($this, $this->getEntryMethod()));
+        $dispatcher->connect($name, array($this, $this->getEntryMethod()));
       }
     }
     else
     {
-      $this->_dispatcher->connect($this->getEventName(), array($this, $this->getEntryMethod()));
+      $dispatcher->connect($this->getEventName(), array($this, $this->getEntryMethod()));
     }
   }
 
   /**
    * This method can be overloaded if entry point into the class should be changed.
+   * Note that call_user_func() that Symfony dispatcher uses call this method as static.
    *
    * @return string
    */

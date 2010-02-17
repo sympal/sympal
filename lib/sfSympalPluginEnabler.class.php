@@ -58,17 +58,6 @@ class sfSympalPluginEnabler
     $this->_configuration->setPluginPath('sfSympalPlugin', $this->_sympalPluginPath);
 
     $this->enableSympalCorePlugins(sfSympalPluginConfiguration::$dependencies);
-
-    // Enable all plugins
-    $allPlugins = array_keys($this->_configuration->getAllPluginPaths());
-    $allPlugins = array_merge(
-      $this->_configuration->getPlugins(), 
-      sfSympalPluginConfiguration::$dependencies,
-      $allPlugins
-    );
-    $allPlugins = array_unique($allPlugins);
-    $this->_configuration->setPlugins($allPlugins);
-    $this->_configuration->disablePlugins('sfPropelPlugin');
   }
 
   /**

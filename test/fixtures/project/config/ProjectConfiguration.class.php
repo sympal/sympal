@@ -19,6 +19,8 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     require_once(dirname(__FILE__).'/../../../../config/sfSympalPluginConfiguration.class.php');
     sfSympalPluginConfiguration::enableSympalPlugins($this);
+
+    $this->enableAllPluginsExcept('sfPropelPlugin');
   }
 
   public function setupPlugins()
