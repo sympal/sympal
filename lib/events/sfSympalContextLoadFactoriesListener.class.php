@@ -13,9 +13,6 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
 
   public function run(sfEvent $event)
   {
-    $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
-    $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
-
     $this->_symfonyContext = $event->getSubject();
     $this->_invoker->setProjectConfiguration($this->_symfonyContext->getConfiguration());
 
