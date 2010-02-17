@@ -35,8 +35,6 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $this->createContext($this->configuration);
-
     if ($this->configuration instanceof sfApplicationConfiguration && !$options['all'])
     {
       $this->sites = Doctrine_Core::getTable('sfSympalSite')
@@ -54,7 +52,6 @@ EOF;
       if (!$this->configuration instanceof sfApplicationConfiguration || $options['all'])
       {
         $this->configuration = $this->createConfiguration($site->slug, $options['env']);
-        $this->createContext($this->configuration);
       }
 
       $this->logSection('sympal', sprintf('Indexing models for site "%s"', sfConfig::get('sf_app')));

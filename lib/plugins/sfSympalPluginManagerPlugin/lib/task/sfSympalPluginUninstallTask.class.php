@@ -34,7 +34,6 @@ EOF;
       return 1;
     }
 
-    $this->createContext($this->configuration);
     $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'uninstall', $this->configuration, $this->formatter);
     $pluginManager->uninstall($options['delete']);
   }

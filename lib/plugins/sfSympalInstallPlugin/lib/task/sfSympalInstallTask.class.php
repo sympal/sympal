@@ -49,8 +49,6 @@ EOF;
    */
   protected function execute($arguments = array(), $options = array())
   {
-    $this->createContext($this->configuration);
-
     $install = new sfSympalInstall($this->configuration, $this->dispatcher, $this->formatter);
     $install->setApplication($arguments['application']);
 

@@ -808,7 +808,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     foreach ($this->getSlots() as $slot)
     {
       $slot->setContentRenderedFor($this);
-      $searchData[$slot->getName()] = $slot->render();
+      $searchData[$slot->getName()] = $slot->getValue();
     }
     return $searchData;
   }
