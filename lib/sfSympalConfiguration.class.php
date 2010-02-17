@@ -176,6 +176,8 @@ class sfSympalConfiguration
       sfConfig::set('sf_login_module', 'sympal_admin');
       $this->_projectConfiguration->loadHelpers(array('Admin'));
     }
+
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.load'));
   }
 
   /**
