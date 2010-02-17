@@ -73,27 +73,3 @@ $browser->
     matches('/Test Layout/')->
   end()
 ;
-
-$browser->
-  get('/')->
-  call('/change_language/fr')->
-  with('response')->begin()->
-    isRedirected()->
-    followRedirect()->
-  end()->
-  with('user')->begin()->
-    isCulture('fr')->
-  end()
-;
-
-$browser->
-  get('/')->
-  post('/change_language', array('language' => 'es'))->
-  with('response')->begin()->
-    isRedirected()->
-    followRedirect()->
-  end()->
-  with('user')->begin()->
-    isCulture('es')->
-  end()
-;

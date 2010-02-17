@@ -1,7 +1,6 @@
 all:
   sympal_config:
     breadcrumbs_separator: ' / '
-    language_codes: [en, fr, es]
     plugin_api:
       username: test
       password: test

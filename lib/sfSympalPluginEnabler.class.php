@@ -61,13 +61,14 @@ class sfSympalPluginEnabler
     $this->enableSympalCorePlugins(sfSympalPluginConfiguration::$dependencies);
 
     $plugins = $this->_configuration->getPlugins();
+    $foundPlugins = array();
     $finder = sfFinder::type('dir')->maxdepth(0)->ignore_version_control(false)->follow_link()->name('*Plugin');
     foreach ($finder->in(sfConfig::get('sf_plugins_dir')) as $path)
     {
-      $plugins[] = basename($path);
+      $foundPlugins[] = basename($path);
     }
+    $plugins = array_merge($plugins, $foundPlugins);
     $plugins = array_unique($plugins);
-    sort($plugins);
     $this->_configuration->setPlugins($plugins);
   }
 
