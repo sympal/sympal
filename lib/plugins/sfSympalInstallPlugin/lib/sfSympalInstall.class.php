@@ -280,7 +280,7 @@ class sfSympalInstall
   {
     $this->logSection('sympal', '...installing addon plugins', null, 'COMMENT');
 
-    $plugins = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getOtherPlugins();
+    $plugins = $this->_configuration->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration()->getDownloadedPlugins();
     foreach ($plugins as $plugin)
     {
       $manager = sfSympalPluginManager::getActionInstance($plugin, 'install', $this->_configuration, $this->_formatter);

@@ -299,9 +299,9 @@ class sfSympalConfiguration
    *
    * @return array $installedPlugins
    */
-  public function getInstalledPlugins()
+  public function getDownloadedPlugins()
   {
-    return $this->getOtherPlugins();
+    return array_diff($this->getPlugins(), $this->getRequiredPlugins());
   }
 
   /**
@@ -309,19 +309,9 @@ class sfSympalConfiguration
    *
    * @return array $addonPlugins
    */
-  public function getAddonPlugins()
+  public function getDownloadablePlugins()
   {
-    return sfSympalPluginToolkit::getAvailablePlugins();
-  }
-
-  /**
-   * Get array of other plugins that are not required
-   *
-   * @return array $otherPlugins
-   */
-  public function getOtherPlugins()
-  {
-    return array_diff($this->getPlugins(), $this->getRequiredPlugins());
+    return sfSympalPluginToolkit::getDownloadablePlugins();
   }
 
   /**
@@ -331,7 +321,7 @@ class sfSympalConfiguration
    */
   public function getAllManageablePlugins()
   {
-    $plugins = array_merge($this->getAddonPlugins(), $this->getInstalledPlugins());
+    $plugins = array_merge($this->getDownloadablePlugins(), $this->getDownloadedPlugins());
     $plugins = array_unique($plugins);
 
     return $plugins;

@@ -73,25 +73,25 @@ $corePlugins = array(
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins, '->getCorePlugins() returns the correct array');
 
-$installedPlugins = array_values($sympalConfiguration->getInstalledPlugins());
+$installedPlugins = array_values($sympalConfiguration->getDownloadedPlugins());
 sort($installedPlugins); // sort the plugins - don't depend on file system to return with consistent order
 $t->is($installedPlugins, array(
   'sfSympalBlogPlugin',
   'sfSympalCommentsPlugin',
   'sfSympalThemeTestPlugin'
-), '->getInstalledPlugins() returns the correct array of installed, non-core plugins');
+), '->getDownloadedPlugins() returns the correct array of installed, non-core plugins');
 
-$addonPlugins = $sympalConfiguration->getAddonPlugins();
-$t->is(in_array('sfSympalBlogPlugin', $addonPlugins), true, '->getAddonPlugins() returns an array which includes sfSympalBlogPlugin');
-$t->is(in_array('sfSympalJwageThemePlugin', $addonPlugins), true, '->getAddonPlugins() returns an array which includes sfSympalJwageThemePlugin');
+$addonPlugins = $sympalConfiguration->getDownloadablePlugins();
+$t->is(in_array('sfSympalBlogPlugin', $addonPlugins), true, '->getDownloadablePlugins() returns an array which includes sfSympalBlogPlugin');
+$t->is(in_array('sfSympalJwageThemePlugin', $addonPlugins), true, '->getDownloadablePlugins() returns an array which includes sfSympalJwageThemePlugin');
 
-$otherPlugins = array_values($sympalConfiguration->getOtherPlugins());
+$otherPlugins = array_values($sympalConfiguration->getDownloadedPlugins());
 sort($otherPlugins); // sort the plugins - don't depend on file system to return with consistent order
 $t->is($otherPlugins, array(
   'sfSympalBlogPlugin',
   'sfSympalCommentsPlugin',
   'sfSympalThemeTestPlugin'
-), '->getOtherPlugins() returns the correct array of installed, non-core plugins (equivalent to getInstalledPlugins())');
+), '->getDownloadedPlugins() returns the correct array of installed, non-core plugins (equivalent to getDownloadedPlugins())');
 
 
 $pluginPaths = $sympalConfiguration->getPluginPaths();
