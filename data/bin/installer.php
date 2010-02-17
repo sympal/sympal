@@ -218,7 +218,6 @@ if (count($cultures) > 0)
 {
   $this->logSection('i18n', 'enabling i18n in Sympal with cultures: '.implode(', ', $cultures));
 
-  $out = $err = null;
   $command = sprintf(
     '%s "%s" %s',
     sfToolkit::getPhpCli(),
@@ -241,8 +240,16 @@ EOF;
   file_put_contents($settingsFilename, $settings);
 }
 
+$command = sprintf(
+  '%s "%s" %s',
+  sfToolkit::getPhpCli(),
+  sfConfig::get('sf_root_dir').'/symfony',
+  'sympal:enable-for-app '.$application
+);
+$this->logBlock($command, 'INFO');
+$this->getFilesystem()->execute($command);
+
 // execute sympal installation
-$out = $err = null;
 $command = sprintf(
   '%s "%s" %s',
   sfToolkit::getPhpCli(),
@@ -250,7 +257,7 @@ $command = sprintf(
   'sympal:install '.$application.' --force-reinstall --email-address="'.$emailAddress.'" --username="'.$username.'" --password="'.$password.'" --no-confirmation --db-dsn="'.$db['dsn'].'" --db-username="'.$db['username'].'" --db-password="'.$db['password'].'" --first-name="'.$firstName.'" --last-name="'.$lastName.'"'
 );
 $this->logBlock($command, 'INFO');
-$this->getFilesystem()->execute($command, $out, $err);
+$this->getFilesystem()->execute($command);
 
 // fix permission for common directories
 $fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);

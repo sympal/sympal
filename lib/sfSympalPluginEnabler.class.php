@@ -66,6 +66,7 @@ class sfSympalPluginEnabler
     {
       $plugins[] = basename($path);
     }
+    $plugins = array_unique($plugins);
     sort($plugins);
     $this->_configuration->setPlugins($plugins);
   }
