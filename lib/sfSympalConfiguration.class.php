@@ -32,9 +32,21 @@ class sfSympalConfiguration
 
     $this->_initializeSymfonyConfig();
     $this->_markClassesAsSafe();
-    $this->_connectEvents();
     $this->_configureSuperCache();
     $this->_configureDoctrine();
+
+    new sfSympalContextLoadFactoriesListener($this->_dispatcher, $this);
+  }
+
+  /**
+   * Set the project configuration instance for sympal
+   *
+   * @param ProjectConfiguration $projectConfiguration 
+   * @return void
+   */
+  public function setProjectConfiguration(ProjectConfiguration $projectConfiguration)
+  {
+    $this->_projectConfiguration = $projectConfiguration;
   }
 
   /**
@@ -100,23 +112,6 @@ class sfSympalConfiguration
       'sfSympalServerCheckHtmlRenderer',
       'sfSympalSitemapGenerator'
     ));
-  }
-
-  /**
-   * Connect to various events required by Sympal
-   *
-   * @return void
-   */
-  private function _connectEvents()
-  {
-    new sfSympalContextLoadFactoriesListener($this->_dispatcher, $this);
-    new sfSympalComponentMethodNotFoundListener($this->_dispatcher, $this);
-    new sfSympalControllerChangeActionListener($this->_dispatcher, $this);
-    new sfSympalTemplateFilterParametersListener($this->_dispatcher, $this);
-    new sfSympalFormMethodNotFoundListener($this->_dispatcher, $this);
-    new sfSympalFormPostConfigureListener($this->_dispatcher, $this);
-    new sfSympalFormFilterValuesListener($this->_dispatcher, $this);
-    new sfSympalTaskClearCacheListener($this->_dispatcher, $this);
   }
 
   /**

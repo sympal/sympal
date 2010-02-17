@@ -17,8 +17,12 @@ class sfSympalContentListPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
+    $this->dispatcher->connect('sympal.load', array($this, 'listenToSympalLoad'));
+  }
+
+  public function listenToSympalLoad()
+  {
     new sfSympalContentListFilterVariablesListener($this->dispatcher, $this);
     new sfSympalContentListUnknownFormatListener($this->dispatcher, $this);
   }
-
 }

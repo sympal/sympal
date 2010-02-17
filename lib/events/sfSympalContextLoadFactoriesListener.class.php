@@ -17,11 +17,12 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
     $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
 
     $this->_symfonyContext = $event->getSubject();
-    $this->_invoker->setCache(new sfSympalCache($this->_invoker));
-    $this->_invoker->setSymfonyContext($this->_symfonyContext);
+    $this->_invoker->setProjectConfiguration($this->_symfonyContext->getConfiguration());
 
     $this->_sympalContext = sfSympalContext::createInstance($this->_symfonyContext, $this->_invoker);
     $this->_invoker->setSympalContext($this->_sympalContext);
+    $this->_invoker->setSymfonyContext($this->_symfonyContext);
+    $this->_invoker->setCache(new sfSympalCache($this->_invoker));
 
     $this->_enableModules();
     $this->_checkInstalled();
@@ -45,7 +46,17 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
       $helpers[] = 'Admin';
     }
 
-    $this->_invoker->getProjectConfiguration()->loadHelpers($helpers);    
+    $this->_invoker->getProjectConfiguration()->loadHelpers($helpers);
+
+    new sfSympalComponentMethodNotFoundListener($this->_dispatcher, $this->_invoker);
+    new sfSympalControllerChangeActionListener($this->_dispatcher, $this->_invoker);
+    new sfSympalTemplateFilterParametersListener($this->_dispatcher, $this->_invoker);
+    new sfSympalFormMethodNotFoundListener($this->_dispatcher, $this->_invoker);
+    new sfSympalFormPostConfigureListener($this->_dispatcher, $this->_invoker);
+    new sfSympalFormFilterValuesListener($this->_dispatcher, $this->_invoker);
+    new sfSympalTaskClearCacheListener($this->_dispatcher, $this->_invoker);
+
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.load'));
   }
 
   /**
