@@ -9,4 +9,14 @@
  */
 abstract class PluginsfSympalSiteForm extends BasesfSympalSiteForm
 {
+  public function setup()
+  {
+    parent::setup();
+
+    // Don't allow editing of slug if we're dealing with an already existing site/application
+    if (!$this->isNew())
+    {
+      unset($this['slug']);
+    }
+  }
 }
