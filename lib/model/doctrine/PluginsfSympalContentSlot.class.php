@@ -149,28 +149,12 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   {
     if ($this->is_column)
     {
-      $value = $this->_contentRenderedFor->get($this->name);
+      return $this->_contentRenderedFor->get($this->name);
     }
     else
     {
-      $value = $this->getValue();
+      return $this->getValue();
     }
-
-    if (sfSympalContext::hasInstance() && sfSympalContext::getInstance()->shouldLoadFrontendEditor() && !$value)
-    {
-      $rawValue = __($this->getDefaultValue());
-    }
-    else
-    {
-      $rawValue = $value;
-    }
-
-    return $rawValue;
-  }
-
-  public function getDefaultValue()
-  {
-    return '[Double click to enable inline edit mode.]';
   }
 
   public function hasValue()
