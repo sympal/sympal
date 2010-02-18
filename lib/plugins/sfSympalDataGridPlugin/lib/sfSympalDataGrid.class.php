@@ -2,7 +2,7 @@
 
 sfApplicationConfiguration::getActive()->loadHelpers(array('Date', 'Tag'));
 
-class sfSympalDataGrid
+class sfSympalDataGrid implements Iterator, Countable
 {
   protected
     $_id,
@@ -16,9 +16,11 @@ class sfSympalDataGrid
     $_order = 'asc',
     $_columns = array(),
     $_parents = array(),
+    $_rows,
     $_renderingModule = 'sympal_data_grid',
     $_isSortable = true,
-    $_initialized = false;
+    $_initialized = false,
+    $_hydrationMode;
 
   protected static $_symfonyContext;
 
@@ -198,7 +200,7 @@ class sfSympalDataGrid
 
   public function getColumn($name)
   {
-    $this->init();
+    $this->_init();
 
     if (!isset($this->_columns[$name]))
     {
@@ -283,7 +285,7 @@ class sfSympalDataGrid
 
   public function getPagerHeader()
   {
-    $this->init();
+    $this->_init();
 
     $params = array(
       'dataGrid' => $this
@@ -294,7 +296,7 @@ class sfSympalDataGrid
 
   public function getPagerNavigation($url)
   {
-    $this->init();
+    $this->_init();
 
     $params = array(
       'dataGrid' => $this,
@@ -304,11 +306,22 @@ class sfSympalDataGrid
     return $this->getSymfonyResource($this->_renderingModule.'/pager_navigation', $params);
   }
 
-  public function getResults($hydrationMode = null)
+  public function setHydrationMode($hydrationMode)
+  {
+    $this->_hydrationMode = $hydrationMode;
+  }
+
+  public function getHydrationMode()
+  {
+    return $this->_hydrationMode;
+  }
+
+  public function getResults()
   {
     if (!$this->_results)
     {
-      $this->_results = $this->_pager->getResults($hydrationMode);
+      $this->_init();
+      $this->_results = $this->_pager->getResults($this->_hydrationMode);
     }
     return $this->_results;
   }
@@ -318,30 +331,37 @@ class sfSympalDataGrid
     $this->_results = $results;
   }
 
-  public function getRows($hydrationMode = null)
+  public function getRows()
   {
-    $this->init();
-
-    $rows = array();
-
-    $results = $this->getResults($hydrationMode);
-    foreach ($results as $result)
-    {
-      $rows[] = $this->getRow($result);
-      if (is_object($result))
-      {
-        $result->free();
-        unset($result);
-      }
-    }
-    if (is_object($results))
-    {
-      $results->free();
-    }
-    return $rows;
+    $this->_init();
+    return $this->_rows;
   }
 
-  public function getRow($record)
+  protected function _buildRows()
+  {
+    if ($this->_rows === null)
+    {
+      $this->_rows = array();
+
+      $results = $this->getResults();
+      foreach ($results as $result)
+      {
+        $this->_rows[] = $this->_buildRow($result);
+        if (is_object($result))
+        {
+          $result->free();
+          unset($result);
+        }
+      }
+      if (is_object($results))
+      {
+        $results->free();
+      }
+    }
+    return $this->_rows;
+  }
+
+  protected function _buildRow($record)
   {
     $row = array();
     foreach ($this->_columns as $column)
@@ -367,24 +387,25 @@ class sfSympalDataGrid
     return $row;
   }
 
-  public function render($hydrationMode = null)
+  public function render()
   {
-    $this->init();
+    $this->_init();
 
     $params = array();
     $params['dataGrid'] = $this;
     $params['pager'] = $this->_pager;
-    $params['hydrationMode'] = $hydrationMode;
 
     return $this->getSymfonyResource($this->_renderingModule.'/list', $params);
   }
 
-  public function init()
+  protected function _init()
   {
     if ($this->_initialized)
     {
       return $this;
     }
+
+    $this->_initialized = true;
 
     $this->_query->getSqlQuery(array(), false);
 
@@ -398,8 +419,7 @@ class sfSympalDataGrid
     $this->_initializeSortingAndPaging();
 
     $this->_pager->init();
-
-    $this->_initialized = true;
+    $this->_buildRows();
 
     return $this;
   }
@@ -556,6 +576,48 @@ class sfSympalDataGrid
     {
       $this->_query->addOrderBy($this->_sort.(isset($this->_order) ? ' '.$this->_order : null));
     }
+  }
+
+  public function current()
+  {
+    $this->_init();
+    return current($this->_rows);
+  }
+
+  public function next()
+  {
+    $this->_init();
+    return next($this->_rows);
+  }
+
+  public function key()
+  {
+    $this->_init();
+    return key($this->_rows);
+  }
+
+  public function rewind()
+  {
+    $this->_init();
+    return reset($this->_rows);
+  }
+
+  public function valid()
+  {
+    $this->_init();
+    return $this->current() !== false;
+  }
+
+  public function count()
+  {
+    $this->_init();
+    return count($this->_rows);
+  }
+
+  public function getDql()
+  {
+    $this->_init();
+    return $this->_pager->getQuery()->getDql();
   }
 
   public function __call($method, $arguments)
