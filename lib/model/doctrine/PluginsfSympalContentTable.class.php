@@ -157,7 +157,6 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
 
   public function getBaseQuery($alias = 'c')
   {
-    $sympalContext = sfSympalContext::getInstance();
     $q = Doctrine_Query::create()
       ->from('sfSympalContent '.$alias)
       ->leftJoin($alias.'.Groups g')
@@ -173,9 +172,7 @@ class PluginsfSympalContentTable extends sfSympalDoctrineTable
       ->innerJoin($alias.'.Type t')
       // Don't use param to work around Doctrine pgsql bug
       // with limit subquery and number of params
-      ->innerJoin(sprintf($alias.".Site si WITH si.slug = '%s'", $sympalContext->getSiteSlug()));
-
-    $user = sfContext::getInstance()->getUser();
+      ->innerJoin(sprintf($alias.".Site si WITH si.slug = '%s'", sfConfig::get('sf_app')));
 
     if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot'))
     {

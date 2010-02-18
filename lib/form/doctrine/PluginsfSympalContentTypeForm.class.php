@@ -13,7 +13,7 @@ abstract class PluginsfSympalContentTypeForm extends BasesfSympalContentTypeForm
   {
     parent::setup();
 
-    $plugins = sfSympalContext::getInstance()->getSympalConfiguration()->getContentTypePlugins();
+    $plugins = $this->getSympalContext()->getSympalConfiguration()->getContentTypePlugins();
     $plugins = array_combine($plugins, $plugins);
     $plugins = array_merge(array('' => ''), $plugins);
 

@@ -2,6 +2,11 @@
 
 class sfSympalForm extends sfSympalExtendClass
 {
+  public function getSympalContext($site = null)
+  {
+    return sfSympalContext::getInstance($site);
+  }
+
   public function getRequiredFields(sfValidatorSchema $validatorSchema = null, $format = null)
   {
     if ($validatorSchema === null)

@@ -47,7 +47,7 @@ class PluginsfSympalMenuItemTable extends sfSympalDoctrineTable
       ->addSelect('c.id, c.custom_path, c.slug, c.date_published')
       ->leftJoin('c.Type ct')
       ->addSelect('ct.id, ct.name, ct.default_path, ct.slug')
-      ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
+      ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
       ->orderBy('m.root_id, m.lft ASC');
 
     if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
