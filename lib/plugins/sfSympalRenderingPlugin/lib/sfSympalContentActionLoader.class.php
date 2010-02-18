@@ -36,12 +36,6 @@ class sfSympalContentActionLoader
     return $this->_content;
   }
 
-  public function getContentRenderer()
-  {
-    $content = $this->loadContent();
-    return $this->_sympalContext->getContentRenderer($content, $this->_request->getRequestFormat());
-  }
-
   public function loadContent()
   {
     $content = $this->getContent();
@@ -81,7 +75,9 @@ class sfSympalContentActionLoader
 
   public function loadContentRenderer()
   {
-    $renderer = $this->getContentRenderer();
+    $content = $this->loadContent();
+    $renderer = $this->_sympalContext->getContentRenderer($content, $this->_request->getRequestFormat());
+
     if ($renderer->getFormat() != 'html')
     {
       sfConfig::set('sf_web_debug', false);

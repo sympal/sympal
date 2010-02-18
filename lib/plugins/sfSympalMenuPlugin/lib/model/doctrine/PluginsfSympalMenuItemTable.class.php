@@ -9,7 +9,7 @@ class PluginsfSympalMenuItemTable extends sfSympalDoctrineTable
   {
     return $this->createQuery('m')
       ->select('m.*')
-      ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
+      ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
       ->orderBy('m.root_id ASC')
       ->limit(1)
       ->fetchOne();
@@ -19,7 +19,7 @@ class PluginsfSympalMenuItemTable extends sfSympalDoctrineTable
   {
     $menu = $this->createQuery('m')
       ->select('m.*')
-      ->innerJoin('m.Site s WITH s.slug = ?', sfSympalContext::getInstance()->getSiteSlug())
+      ->innerJoin('m.Site s WITH s.slug = ?', sfConfig::get('sf_app'))
       ->where('m.slug = ?', sfSympalConfig::get('default_install_content_type_menu', null, 'primary'))
       ->fetchOne();
     if (!$menu)

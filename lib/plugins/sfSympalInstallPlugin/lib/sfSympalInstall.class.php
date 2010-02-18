@@ -237,7 +237,6 @@ class sfSympalInstall
       }
     }
 
-    sfSympalConfig::set('site_slug', $this->_application);
     $task = new sfDoctrineBuildTask($this->_dispatcher, $this->_formatter);
     $options = array(
       'db' => true,
@@ -266,7 +265,7 @@ class sfSympalInstall
 
   protected function _loadData($append = true)
   {
-    sfSympalConfig::set('site_slug', $this->_application);
+    sfConfig::set('sf_app', $this->_application);
     $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
     $fixtures = $this->_getDataFixtures();
     if (!is_array($fixtures))

@@ -133,7 +133,7 @@ class sfSympalToolkit
   public static function checkRequirements()
   {
     $user = sfContext::getInstance()->getUser();
-    $app = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
+    $app = sfConfig::get('sf_app');
     if (!$user instanceof sfSympalUser)
     {
       throw new sfException('myUser class located in '.sfConfig::get('sf_root_dir').'/apps/'.$app.'/myUser.class.php must extend sfSympalUser');
@@ -274,7 +274,7 @@ class sfSympalToolkit
 ';
 
       $routes = array();
-      $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
+      $siteSlug = sfConfig::get('sf_app');
 
       $redirects = Doctrine::getTable('sfSympalRedirect')
         ->createQuery('r')
@@ -336,7 +336,7 @@ class sfSympalToolkit
 ';
 
       $routes = array();
-      $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
+      $siteSlug = sfConfig::get('sf_app');
 
       $contents = Doctrine::getTable('sfSympalContent')
         ->createQuery('c')

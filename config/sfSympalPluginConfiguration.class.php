@@ -49,7 +49,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
-    $this->sympalConfiguration = new sfSympalConfiguration($this->dispatcher, $this->configuration);
+    $this->sympalConfiguration = new sfSympalConfiguration($this->configuration);
   }
 
   /**

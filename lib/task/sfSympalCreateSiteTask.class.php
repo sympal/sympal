@@ -62,9 +62,6 @@ EOF;
     $this->_generateApplication($arguments['site']);
     $this->_prepareApplication($arguments['site']);
 
-    $this->configuration = $this->createConfiguration($arguments['site'], 'dev');
-    $context = sfContext::createInstance($this->configuration);
-
     $databaseManager = new sfDatabaseManager($this->configuration);
     $site = $this->_getOrCreateSite($arguments, $options);
   }

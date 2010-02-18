@@ -83,10 +83,7 @@ class sfSympalContentRenderer
     }
     if (isset($return) && $return)
     {
-      $response = $this->_symfonyContext->getResponse();
-      $response->setContent($return);
-      $response->send();
-      exit;
+      return $return;
     } else {
       throw new RuntimeException(sprintf('Unknown render format: "%s"', $this->_format));
     }

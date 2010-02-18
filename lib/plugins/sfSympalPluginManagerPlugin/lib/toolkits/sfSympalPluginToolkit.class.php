@@ -54,6 +54,14 @@ class sfSympalPluginToolkit
     return is_dir(self::getPluginPath($pluginName)) ? true:false;
   }
 
+  public static function isPluginDownloadable($name) 
+ 	{ 
+ 	  $pluginName = self::getLongPluginName($name); 
+ 	  $availablePlugins = self::getDownloadablePlugins(); 
+ 	
+ 	  return in_array($availablePlugins, $pluginName); 
+ 	}
+
   public static function getLongPluginName($name)
   {
     if (strstr($name, 'sfSympal'))
@@ -174,13 +182,5 @@ class sfSympalPluginToolkit
     } else {
       throw new sfException('Could not find download path for '.$pluginName);
     }
-  }
-
-  public static function isPluginAvailable($name)
-  {
-    $pluginName = self::getLongPluginName($name);
-    $availablePlugins = self::getDownloadablePlugins();
-
-    return in_array($availablePlugins, $pluginName);
   }
 }

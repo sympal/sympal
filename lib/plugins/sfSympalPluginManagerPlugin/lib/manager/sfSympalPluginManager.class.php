@@ -150,7 +150,7 @@ class sfSympalPluginManager
       throw new sfException('Could not find a super admin user');
     }
 
-    $siteSlug = sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app'));
+    $siteSlug = sfConfig::get('sf_app');
     $site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug($siteSlug);
     if (!$site)
     {
@@ -194,7 +194,7 @@ class sfSympalPluginManager
   {
     $menuItem = new sfSympalMenuItem();
     $menuItem->name = $name;
-    $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('app_sympal_config_site_slug', sfConfig::get('sf_app')));
+    $menuItem->Site = Doctrine_Core::getTable('sfSympalSite')->findOneBySlug(sfConfig::get('sf_app'));
     $menuItem->date_published = new Doctrine_Expression('NOW()');
 
     $this->_setDoctrineProperties($menuItem, $properties);
