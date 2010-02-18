@@ -8,7 +8,7 @@
       </tr>
     </thead>
     <tbody>
-      <?php foreach ($dataGrid->getRows($hydrationMode) as $row): ?>
+      <?php foreach ($dataGrid->getRows() as $row): ?>
         <tr>
           <?php foreach ($row as $value): ?>
             <td><?php echo $value ?></td>
