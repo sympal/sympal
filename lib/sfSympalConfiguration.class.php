@@ -129,16 +129,7 @@ class sfSympalConfiguration
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
     $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
-    $this->_configureDoctrineCache();
-  }
 
-  /**
-   * Configure Doctrine cache if it is enabled
-   *
-   * @return void
-   */
-  private function _configureDoctrineCache()
-  {
     if (sfSympalConfig::get('orm_cache', 'enabled', true))
     {
       $driver = sfSympalCache::getOrmCacheDriver();
@@ -153,16 +144,34 @@ class sfSympalConfiguration
     }
   }
 
+  /**
+   * Set the sfSympalCache instance for this sympal configuration instance
+   *
+   * @param sfSympalCache $cache 
+   * @return void
+   */
   public function setCache(sfSympalCache $cache)
   {
     $this->_cache = $cache;
   }
 
+  /**
+   * Set the symfony context for this sympal configuration instance
+   *
+   * @param sfContext $symfonyContext 
+   * @return void
+   */
   public function setSymfonyContext(sfContext $symfonyContext)
   {
     $this->_symfonyContext = $symfonyContext;
   }
 
+  /**
+   * Set the sympal context for this sympal configuration instance
+   *
+   * @param sfSympalContext $sympalContext 
+   * @return void
+   */
   public function setSympalContext(sfSympalContext $sympalContext)
   {
     $this->_sympalContext = $sympalContext;
@@ -225,7 +234,7 @@ class sfSympalConfiguration
    */
   public function getCorePlugins()
   {
-    return sfSympalPluginConfiguration::$dependencies;
+    return sfSympalPluginConfiguration::$corePlugins;
   }
 
   /**

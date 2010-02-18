@@ -11,35 +11,6 @@ class sfSympalPluginToolkit
     }
   }
 
-  public static function getRequiredPlugins()
-  {
-    $requiredPlugins = array();
-
-    $context = sfContext::getInstance();
-    $configuration = $context->getConfiguration();
-
-    $plugins = $configuration->getPlugins();
-    foreach ($plugins as $plugin)
-    {
-      $dependencies = sfSympalPluginToolkit::getPluginDependencies($plugin);
-      $requiredPlugins = array_merge($requiredPlugins, $dependencies);
-    }
-
-    $requiredPlugins = array_unique($requiredPlugins);
-
-    return $requiredPlugins;
-  }
-
-  public static function getPluginDependencies($pluginName)
-  {
-    try {
-      $refClass = new ReflectionClass($pluginName.'Configuration');
-      return $refClass->getStaticPropertyValue('dependencies');
-    } catch (Exception $e) {
-      return array();
-    }
-  }
-
   public static function isPluginInstalled($plugin)
   {
     $pluginName = sfSympalPluginToolkit::getLongPluginName($plugin);

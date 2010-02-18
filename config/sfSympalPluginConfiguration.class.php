@@ -8,11 +8,10 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   const VERSION = '1.0.0-ALPHA3';
 
   /**
-   * Array of plugins sfSympalPlugin depends on. Used to autoenabled
-   * all the plugins that make up sfSympalPlugin functionality as a whole.
+   * Array of all the core Sympal plugins
    */
   public static
-    $dependencies = array(
+    $corePlugins = array(
       'sfDoctrineGuardPlugin',
       'sfFormExtraPlugin',
       'sfTaskExtraPlugin',

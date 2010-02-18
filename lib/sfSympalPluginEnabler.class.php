@@ -58,7 +58,7 @@ class sfSympalPluginEnabler
     $this->_configuration->enablePlugins('sfSympalPlugin');
     $this->_configuration->setPluginPath('sfSympalPlugin', $this->_sympalPluginPath);
 
-    $this->enableSympalCorePlugins(sfSympalPluginConfiguration::$dependencies);
+    $this->enableSympalCorePlugins(sfSympalPluginConfiguration::$corePlugins);
 
     $plugins = $this->_configuration->getPlugins();
     $foundPlugins = array();
