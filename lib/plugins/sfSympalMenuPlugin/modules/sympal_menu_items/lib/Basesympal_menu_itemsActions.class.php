@@ -118,13 +118,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->redirect($request->getReferer());
   }
 
-  public function executeSitemap()
-  {
-    $table = Doctrine_Core::getTable('sfSympalMenuItem');
-    $this->menuItem = $table->findOneBySlug('sitemap');
-    $this->roots = $table->getTree()->fetchRoots();
-  }
-
   public function executeEdit(sfWebRequest $request)
   {
     $this->sf_sympal_menu_item = $this->_getMenuItem($request);
