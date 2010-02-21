@@ -15,7 +15,7 @@ class sfSympalSearch
     return self::$_instance;
   }
 
-  private function _getIndex()
+  public function getIndex()
   {
     if (!$this->_index)
     {
@@ -39,7 +39,7 @@ class sfSympalSearch
 
   public function updateSearchIndex(Doctrine_Record $record)
   {
-    $index = $this->_getIndex();
+    $index = $this->getIndex();
 
     // remove existing entries
     foreach ($index->find('pk:'.$this->_getRecordSearchPrimaryKey($record)) as $hit)
@@ -70,7 +70,7 @@ class sfSympalSearch
 
   public function getDoctrineSearchQuery($model, $query)
   {
-    $hits = $this->_getIndex()->find((string) $query);
+    $hits = $this->getIndex()->find((string) $query);
 
     $pks = array();
     foreach ($hits as $hit)
