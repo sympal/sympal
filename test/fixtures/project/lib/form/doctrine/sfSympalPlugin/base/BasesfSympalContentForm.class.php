@@ -39,6 +39,7 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
       'edit_groups_list'   => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
       'links_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent')),
       'assets_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset')),
+      'comments_list'      => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment')),
     ));
 
     $this->setValidators(array(
@@ -66,6 +67,7 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
       'edit_groups_list'   => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
       'links_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent', 'required' => false)),
       'assets_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset', 'required' => false)),
+      'comments_list'      => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_sympal_content[%s]');
@@ -111,6 +113,11 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
       $this->setDefault('assets_list', $this->object->Assets->getPrimaryKeys());
     }
 
+    if (isset($this->widgetSchema['comments_list']))
+    {
+      $this->setDefault('comments_list', $this->object->Comments->getPrimaryKeys());
+    }
+
   }
 
   protected function doSave($con = null)
@@ -120,6 +127,7 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
     $this->saveEditGroupsList($con);
     $this->saveLinksList($con);
     $this->saveAssetsList($con);
+    $this->saveCommentsList($con);
 
     parent::doSave($con);
   }
@@ -311,6 +319,44 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
     if (count($link))
     {
       $this->object->link('Assets', array_values($link));
+    }
+  }
+
+  public function saveCommentsList($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!isset($this->widgetSchema['comments_list']))
+    {
+      // somebody has unset this widget
+      return;
+    }
+
+    if (null === $con)
+    {
+      $con = $this->getConnection();
+    }
+
+    $existing = $this->object->Comments->getPrimaryKeys();
+    $values = $this->getValue('comments_list');
+    if (!is_array($values))
+    {
+      $values = array();
+    }
+
+    $unlink = array_diff($existing, $values);
+    if (count($unlink))
+    {
+      $this->object->unlink('Comments', array_values($unlink));
+    }
+
+    $link = array_diff($values, $existing);
+    if (count($link))
+    {
+      $this->object->link('Comments', array_values($link));
     }
   }
 

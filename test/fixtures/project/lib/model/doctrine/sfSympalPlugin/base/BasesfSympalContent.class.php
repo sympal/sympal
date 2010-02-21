@@ -36,6 +36,8 @@
  * @property sfSympalMenuItem $MenuItem
  * @property Doctrine_Collection $Assets
  * @property Doctrine_Collection $sfSympalContentAssets
+ * @property Doctrine_Collection $Comments
+ * @property Doctrine_Collection $ContentComments
  * 
  * @method integer             getSiteId()                Returns the current record's "site_id" value
  * @method integer             getContentTypeId()         Returns the current record's "content_type_id" value
@@ -68,6 +70,8 @@
  * @method sfSympalMenuItem    getMenuItem()              Returns the current record's "MenuItem" value
  * @method Doctrine_Collection getAssets()                Returns the current record's "Assets" collection
  * @method Doctrine_Collection getSfSympalContentAssets() Returns the current record's "sfSympalContentAssets" collection
+ * @method Doctrine_Collection getComments()              Returns the current record's "Comments" collection
+ * @method Doctrine_Collection getContentComments()       Returns the current record's "ContentComments" collection
  * @method sfSympalContent     setSiteId()                Sets the current record's "site_id" value
  * @method sfSympalContent     setContentTypeId()         Sets the current record's "content_type_id" value
  * @method sfSympalContent     setLastUpdatedById()       Sets the current record's "last_updated_by_id" value
@@ -99,6 +103,8 @@
  * @method sfSympalContent     setMenuItem()              Sets the current record's "MenuItem" value
  * @method sfSympalContent     setAssets()                Sets the current record's "Assets" collection
  * @method sfSympalContent     setSfSympalContentAssets() Sets the current record's "sfSympalContentAssets" collection
+ * @method sfSympalContent     setComments()              Sets the current record's "Comments" collection
+ * @method sfSympalContent     setContentComments()       Sets the current record's "ContentComments" collection
  * 
  * @package    sympal
  * @subpackage model
@@ -250,6 +256,15 @@ abstract class BasesfSympalContent extends sfDoctrineRecord
              'foreign' => 'asset_id'));
 
         $this->hasMany('sfSympalContentAsset as sfSympalContentAssets', array(
+             'local' => 'id',
+             'foreign' => 'content_id'));
+
+        $this->hasMany('sfSympalComment as Comments', array(
+             'refClass' => 'sfSympalContentComment',
+             'local' => 'content_id',
+             'foreign' => 'comment_id'));
+
+        $this->hasMany('sfSympalContentComment as ContentComments', array(
              'local' => 'id',
              'foreign' => 'content_id'));
 

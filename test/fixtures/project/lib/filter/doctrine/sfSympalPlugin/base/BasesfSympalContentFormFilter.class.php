@@ -36,6 +36,7 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
       'edit_groups_list'   => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
       'links_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent')),
       'assets_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset')),
+      'comments_list'      => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment')),
     ));
 
     $this->setValidators(array(
@@ -62,6 +63,7 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
       'edit_groups_list'   => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
       'links_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent', 'required' => false)),
       'assets_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset', 'required' => false)),
+      'comments_list'      => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment', 'required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('sf_sympal_content_filters[%s]');
@@ -153,6 +155,22 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
           ->andWhereIn('sfSympalContentAsset.asset_id', $values);
   }
 
+  public function addCommentsListColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values))
+    {
+      return;
+    }
+
+    $query->leftJoin('r.sfSympalContentComment sfSympalContentComment')
+          ->andWhereIn('sfSympalContentComment.comment_id', $values);
+  }
+
   public function getModelName()
   {
     return 'sfSympalContent';
@@ -185,6 +203,7 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
       'edit_groups_list'   => 'ManyKey',
       'links_list'         => 'ManyKey',
       'assets_list'        => 'ManyKey',
+      'comments_list'      => 'ManyKey',
     );
   }
 }

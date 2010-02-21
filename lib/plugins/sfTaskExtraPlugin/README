@@ -1,0 +1,13 @@
+This plugin adds the following tasks to the symfony CLI:
+
+  * `generate:controller`:    Generates a new front controller in the web directory
+  * `generate:plugin`:        Generates a new plugin
+  * `generate:plugin-module`: Generates a new module in a plugin
+  * `generate:test`:          Generates a new unit test stub script
+  * `plugin:package`:         Create a plugin PEAR package
+  * `subversion:set-props`:   Sets typical Subversion properties
+  * `test:plugin`:            Launches a plugin test suite
+
+Use the `symfony help` command for details on each task:
+
+    $ php symfony help generate:controller
