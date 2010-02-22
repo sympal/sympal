@@ -2,7 +2,7 @@
 
 if (!isset($_SERVER['SYMFONY']))
 {
-    throw new RuntimeException('Could not find symfony core libraries.');
+  throw new RuntimeException('Could not find symfony core libraries.');
 }
 
 require_once $_SERVER['SYMFONY'].'/autoload/sfCoreAutoload.class.php';
