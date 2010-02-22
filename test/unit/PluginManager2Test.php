@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(15, new lime_output_color());
+$t = new lime_test(25, new lime_output_color());
 
 $configuration->loadHelpers(array('I18N'));
 
@@ -27,19 +27,21 @@ function installPlugin($name, $t)
   $t->is($menuItem instanceof sfSympalMenuItem, true, 'Test menu item to sample content list was created.');
 }
 
-function uninstallPlugin($name, $t)
+function uninstallPlugin($name, $t, $delete = true)
 {
   $manager = sfSympalPluginManager::getActionInstance($name, 'uninstall');
-  $manager->uninstall(true);
+  $manager->uninstall($delete);
 
-  $t->is(file_exists(sfConfig::get('sf_plugins_dir').'/'.$name), false, 'Test plugin was was deleted');
-  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/model/doctrine/'.$name), false, 'Test plugin models were deleted');
-  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/form/doctrine/'.$name), false, 'Test plugin forms were deleted');
-  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/filter/doctrine/'.$name), false, 'Test plugin form filters were deleted');
-  $t->is(file_exists(sfConfig::get('sf_web_dir').'/'.$name), false, 'Test plugin assets symlink was removed');
+  $t->is(file_exists(sfConfig::get('sf_plugins_dir').'/'.$name), !$delete, 'Test plugin was was deleted');
+  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/model/doctrine/'.$name), !$delete, 'Test plugin models were deleted');
+  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/form/doctrine/'.$name), !$delete, 'Test plugin forms were deleted');
+  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/filter/doctrine/'.$name), !$delete, 'Test plugin form filters were deleted');
+  $t->is(file_exists(sfConfig::get('sf_web_dir').'/'.$name), !$delete, 'Test plugin assets symlink was removed');
 }
 
+uninstallPlugin('sfSympalBlogPlugin', $t, false);
 installPlugin('sfSympalBlogPlugin', $t);
 
 installPlugin('sfSympalEventPlugin', $t);
 uninstallPlugin('sfSympalEventPlugin', $t);
+uninstallPlugin('sfSympalObjectReplacerPlugin', $t);

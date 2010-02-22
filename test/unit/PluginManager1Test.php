@@ -28,5 +28,5 @@ function downloadPlugin($name, $t)
   $t->is(file_exists(sfConfig::get('sf_plugins_dir').'/'.$name), true, 'Test that the plugin exists and was downloaded');
 }
 
-downloadPlugin('sfSympalBlogPlugin', $t);
+downloadPlugin('sfSympalObjectReplacerPlugin', $t);
 generatePlugin('Event', 'Event', $t);
