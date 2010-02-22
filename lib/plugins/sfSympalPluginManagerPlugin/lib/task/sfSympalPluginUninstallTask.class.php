@@ -34,6 +34,7 @@ EOF;
       return 1;
     }
 
+    $databaseManager = new sfDatabaseManager($this->configuration);
     $pluginManager = sfSympalPluginManager::getActionInstance($arguments['name'], 'uninstall', $this->configuration, $this->formatter);
     $pluginManager->uninstall($options['delete']);
   }
