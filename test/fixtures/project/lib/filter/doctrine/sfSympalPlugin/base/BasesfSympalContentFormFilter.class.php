@@ -31,9 +31,9 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
       'created_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'updated_at'         => new sfWidgetFormFilterDate(array('from_date' => new sfWidgetFormDate(), 'to_date' => new sfWidgetFormDate(), 'with_empty' => false)),
       'slug'               => new sfWidgetFormFilterInput(),
-      'slots_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot')),
       'groups_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
       'edit_groups_list'   => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
+      'slots_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot')),
       'links_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent')),
       'assets_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset')),
       'comments_list'      => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment')),
@@ -58,9 +58,9 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
       'created_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'updated_at'         => new sfValidatorDateRange(array('required' => false, 'from_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 00:00:00')), 'to_date' => new sfValidatorDateTime(array('required' => false, 'datetime_output' => 'Y-m-d 23:59:59')))),
       'slug'               => new sfValidatorPass(array('required' => false)),
-      'slots_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot', 'required' => false)),
       'groups_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
       'edit_groups_list'   => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
+      'slots_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot', 'required' => false)),
       'links_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent', 'required' => false)),
       'assets_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset', 'required' => false)),
       'comments_list'      => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment', 'required' => false)),
@@ -73,22 +73,6 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
     $this->setupInheritance();
 
     parent::setup();
-  }
-
-  public function addSlotsListColumnQuery(Doctrine_Query $query, $field, $values)
-  {
-    if (!is_array($values))
-    {
-      $values = array($values);
-    }
-
-    if (!count($values))
-    {
-      return;
-    }
-
-    $query->leftJoin('r.sfSympalContentSlotRef sfSympalContentSlotRef')
-          ->andWhereIn('sfSympalContentSlotRef.content_slot_id', $values);
   }
 
   public function addGroupsListColumnQuery(Doctrine_Query $query, $field, $values)
@@ -121,6 +105,22 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
 
     $query->leftJoin('r.sfSympalContentEditGroup sfSympalContentEditGroup')
           ->andWhereIn('sfSympalContentEditGroup.group_id', $values);
+  }
+
+  public function addSlotsListColumnQuery(Doctrine_Query $query, $field, $values)
+  {
+    if (!is_array($values))
+    {
+      $values = array($values);
+    }
+
+    if (!count($values))
+    {
+      return;
+    }
+
+    $query->leftJoin('r.sfSympalContentSlotRef sfSympalContentSlotRef')
+          ->andWhereIn('sfSympalContentSlotRef.content_slot_id', $values);
   }
 
   public function addLinksListColumnQuery(Doctrine_Query $query, $field, $values)
@@ -198,9 +198,9 @@ abstract class BasesfSympalContentFormFilter extends BaseFormFilterDoctrine
       'created_at'         => 'Date',
       'updated_at'         => 'Date',
       'slug'               => 'Text',
-      'slots_list'         => 'ManyKey',
       'groups_list'        => 'ManyKey',
       'edit_groups_list'   => 'ManyKey',
+      'slots_list'         => 'ManyKey',
       'links_list'         => 'ManyKey',
       'assets_list'        => 'ManyKey',
       'comments_list'      => 'ManyKey',

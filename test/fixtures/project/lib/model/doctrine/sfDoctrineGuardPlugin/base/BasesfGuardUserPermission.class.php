@@ -22,7 +22,7 @@
  * @package    sympal
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
+ * @version    SVN: $Id: Builder.php 7200 2010-02-21 09:37:37Z beberlei $
  */
 abstract class BasesfGuardUserPermission extends sfDoctrineRecord
 {
