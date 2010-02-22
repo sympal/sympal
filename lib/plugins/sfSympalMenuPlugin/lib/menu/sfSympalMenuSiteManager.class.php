@@ -89,7 +89,7 @@ class sfSympalMenuSiteManager
     $this->initialize();
   }
 
-  public static function getMenu($name, $showChildren = true, $class = null)
+  public static function getMenu($name, $showChildren = null, $class = null)
   {
     return self::getInstance()->_getMenu($name, $showChildren, $class);
   }
@@ -99,8 +99,12 @@ class sfSympalMenuSiteManager
     return sfSympalConfig::get('menu_cache', 'enabled', true) ? sfSympalConfiguration::getActive()->getCache() : false;
   }
 
-  protected function _getMenu($name, $showChildren = true, $class = null)
+  protected function _getMenu($name, $showChildren = null, $class = null)
   {
+    if ($showChildren === null)
+    {
+      $showChildren = true;
+    }
     if (is_scalar($name) && isset($this->_rootSlugs[$name]))
     {
       $name = $this->_rootSlugs[$name];
