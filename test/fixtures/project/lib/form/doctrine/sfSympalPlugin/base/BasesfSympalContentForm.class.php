@@ -34,9 +34,9 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
       'created_at'         => new sfWidgetFormDateTime(),
       'updated_at'         => new sfWidgetFormDateTime(),
       'slug'               => new sfWidgetFormInputText(),
+      'slots_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot')),
       'groups_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
       'edit_groups_list'   => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup')),
-      'slots_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot')),
       'links_list'         => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent')),
       'assets_list'        => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset')),
       'comments_list'      => new sfWidgetFormDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment')),
@@ -62,9 +62,9 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
       'created_at'         => new sfValidatorDateTime(),
       'updated_at'         => new sfValidatorDateTime(),
       'slug'               => new sfValidatorString(array('max_length' => 255, 'required' => false)),
+      'slots_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot', 'required' => false)),
       'groups_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
       'edit_groups_list'   => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfGuardGroup', 'required' => false)),
-      'slots_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContentSlot', 'required' => false)),
       'links_list'         => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalContent', 'required' => false)),
       'assets_list'        => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalAsset', 'required' => false)),
       'comments_list'      => new sfValidatorDoctrineChoice(array('multiple' => true, 'model' => 'sfSympalComment', 'required' => false)),
@@ -88,6 +88,11 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
   {
     parent::updateDefaultsFromObject();
 
+    if (isset($this->widgetSchema['slots_list']))
+    {
+      $this->setDefault('slots_list', $this->object->Slots->getPrimaryKeys());
+    }
+
     if (isset($this->widgetSchema['groups_list']))
     {
       $this->setDefault('groups_list', $this->object->Groups->getPrimaryKeys());
@@ -96,11 +101,6 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
     if (isset($this->widgetSchema['edit_groups_list']))
     {
       $this->setDefault('edit_groups_list', $this->object->EditGroups->getPrimaryKeys());
-    }
-
-    if (isset($this->widgetSchema['slots_list']))
-    {
-      $this->setDefault('slots_list', $this->object->Slots->getPrimaryKeys());
     }
 
     if (isset($this->widgetSchema['links_list']))
@@ -122,14 +122,52 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
 
   protected function doSave($con = null)
   {
+    $this->saveSlotsList($con);
     $this->saveGroupsList($con);
     $this->saveEditGroupsList($con);
-    $this->saveSlotsList($con);
     $this->saveLinksList($con);
     $this->saveAssetsList($con);
     $this->saveCommentsList($con);
 
     parent::doSave($con);
+  }
+
+  public function saveSlotsList($con = null)
+  {
+    if (!$this->isValid())
+    {
+      throw $this->getErrorSchema();
+    }
+
+    if (!isset($this->widgetSchema['slots_list']))
+    {
+      // somebody has unset this widget
+      return;
+    }
+
+    if (null === $con)
+    {
+      $con = $this->getConnection();
+    }
+
+    $existing = $this->object->Slots->getPrimaryKeys();
+    $values = $this->getValue('slots_list');
+    if (!is_array($values))
+    {
+      $values = array();
+    }
+
+    $unlink = array_diff($existing, $values);
+    if (count($unlink))
+    {
+      $this->object->unlink('Slots', array_values($unlink));
+    }
+
+    $link = array_diff($values, $existing);
+    if (count($link))
+    {
+      $this->object->link('Slots', array_values($link));
+    }
   }
 
   public function saveGroupsList($con = null)
@@ -205,44 +243,6 @@ abstract class BasesfSympalContentForm extends BaseFormDoctrine
     if (count($link))
     {
       $this->object->link('EditGroups', array_values($link));
-    }
-  }
-
-  public function saveSlotsList($con = null)
-  {
-    if (!$this->isValid())
-    {
-      throw $this->getErrorSchema();
-    }
-
-    if (!isset($this->widgetSchema['slots_list']))
-    {
-      // somebody has unset this widget
-      return;
-    }
-
-    if (null === $con)
-    {
-      $con = $this->getConnection();
-    }
-
-    $existing = $this->object->Slots->getPrimaryKeys();
-    $values = $this->getValue('slots_list');
-    if (!is_array($values))
-    {
-      $values = array();
-    }
-
-    $unlink = array_diff($existing, $values);
-    if (count($unlink))
-    {
-      $this->object->unlink('Slots', array_values($unlink));
-    }
-
-    $link = array_diff($values, $existing);
-    if (count($link))
-    {
-      $this->object->link('Slots', array_values($link));
     }
   }
 
