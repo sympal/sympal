@@ -1,0 +1,9 @@
+[submodule "plugins/sfSympalBlogPlugin"]
+	path = plugins/sfSympalBlogPlugin
+	url = git@github.com:weaverryan/sfSympalBlogPlugin.git
+[submodule "plugins/sfSympalCommentsPlugin"]
+	path = plugins/sfSympalCommentsPlugin
+	url = git@github.com:weaverryan/sfSympalCommentsPlugin.git
+[submodule "plugins/sfSympalTagsPlugin"]
+	path = plugins/sfSympalTagsPlugin
+	url = git@github.com:weaverryan/sfSympalTagsPlugin.git
