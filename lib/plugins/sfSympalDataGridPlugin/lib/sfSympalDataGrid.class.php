@@ -209,6 +209,36 @@ class sfSympalDataGrid implements Iterator, Countable
     return $this->_columns[$name];
   }
 
+  public function removeColumn($name) 
+  {
+    if ( ! $this->_columns)
+    {
+      $this->_populateDefaultColumns();
+    }
+    unset($this->_columns[$name]);
+  }
+
+  public function setDisplayColumns($columns = array()) 
+  {
+    if ( ! $this->_columns)
+    {
+      $this->_populateDefaultColumns();
+    }
+
+    if ( ! is_array($columns))
+    {
+      $columns = array($columns);
+    }
+
+    foreach(array_keys($this->_columns) as $column)
+    {
+      if(!in_array($column, $columns))
+      {
+        unset($this->_columns[$column]);
+      }
+    }
+  }
+
   public function hasColumn($name)
   {
     return isset($this->_column[$name]);
