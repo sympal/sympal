@@ -1,22 +1,22 @@
 <?php
 
+/**
+ * Called internally when you have a slot on the page and you're
+ * in edit mode. this adds the actual editor/form for that slot
+ */
 function get_sympal_content_slot_editor(sfSympalContent $content, sfSympalContentSlot $slot, $options = array())
 {
   $content->setEditableSlotsExistOnPage(true);
-
   $slot->setContentRenderedFor($content);
-
-  $name = $slot->getName();
-  $isColumn = $slot->getIsColumn();
 
   $form = $slot->getEditForm();
 
   $renderedValue = $slot->render();
   if (!$renderedValue && sfSympalContext::getInstance()->shouldLoadFrontendEditor())
   {
-    $renderedValue = __('[Double click to enable inline edit mode.]');
+    $renderedValue = __('[click to edit.]');
   }
-
+  
   return '
 <span title="'.__('[Double click to enable inline edit mode.]').'" id="sympal_content_slot_'.$slot->getId().'" class="sympal_content_slot">
   <input type="hidden" class="content_slot_id" value="'.$slot->getId().'" />
