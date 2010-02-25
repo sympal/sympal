@@ -161,6 +161,10 @@ class sfSympalToolkit
 
   /**
    * Get a symfony resource (partial or component)
+   * 
+   * This basically looks first for a component defined by the given module
+   * and action. If one doesn't exist, it then looks for a partial matching
+   * the module and action pair.
    *
    * @param string $module 
    * @param string $action 
