@@ -33,4 +33,20 @@ abstract class PluginsfSympalContentSlotForm extends BasesfSympalContentSlotForm
       sfSympalFormToolkit::changeContentSlotValueWidget($this->object, $this);
     }
   }
+  
+  public function getStylesheets()
+  {
+    return array(
+      '/sfSympalPlugin/markitup/skins/markitup/style.css' => '',
+      '/sfSympalPlugin/markitup/sets/markdown/style.css' => '',
+    );
+  }
+  
+  public function getJavascripts()
+  {
+    return array(
+      '/sfSympalPlugin/markitup/jquery.markitup.js',
+      '/sfSympalPlugin/markitup/sets/markdown/set.js',
+    );
+  }
 }
