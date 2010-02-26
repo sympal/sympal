@@ -19,6 +19,7 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
     $this->_symfonyContext = $event->getSubject();
     $this->_invoker->setCache(new sfSympalCache($this->_invoker));
     $this->_invoker->setSymfonyContext($this->_symfonyContext);
+    $this->_invoker->setProjectConfiguration($this->_symfonyContext->getConfiguration());
 
     $this->_sympalContext = sfSympalContext::createInstance($this->_symfonyContext, $this->_invoker);
     $this->_invoker->setSympalContext($this->_sympalContext);
