@@ -94,7 +94,10 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       // Fancybox
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
-
+      
+      // Ajax form submission
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.form.js'));
+      
       // Shortcuts
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
 

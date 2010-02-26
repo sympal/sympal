@@ -23,14 +23,15 @@ sympal_content_slot_form:
     action: slot_form
   requirements:
     sf_method: [get]
+
 sympal_save_content_slot:
-  url:   /save_content_slot/:id
+  url:   /save_content_slot/:id/:content_id
   class: sfDoctrineRoute
   options:
     type:   object
     model:  sfSympalContentSlot
   param:
     module: sympal_edit_slot
-    action: save_slot
+    action: slot_save
   requirements:
-    sf_method: [put]
+    sf_method: [post]
