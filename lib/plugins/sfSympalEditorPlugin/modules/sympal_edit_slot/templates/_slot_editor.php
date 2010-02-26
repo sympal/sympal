@@ -7,7 +7,10 @@
 <div class="sympal_slot_editor" id="sympal_slot_editor_<?php echo $contentSlot->id ?>">
   <?php echo get_sympal_slot_form_tag($form, $contentSlot) ?>
     <?php echo $form->renderHiddenFields() ?>
-    <?php echo sfSympalToolkit::getSymfonyResource($contentSlot->getSlotEditFormRenderer(), array('contentSlot' => $contentSlot, 'form' => $form)) ?>
+    
+    <div class="form_body">
+      <?php echo sfSympalToolkit::getSymfonyResource($contentSlot->getSlotEditFormRenderer(), array('contentSlot' => $contentSlot, 'form' => $form)) ?>
+    </div>
     
     <input type="submit" value="save" />
   </form>
