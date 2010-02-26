@@ -228,6 +228,17 @@ class sfSympalConfiguration
   }
 
   /**
+   * Set the project configuration instance to use
+   *
+   * @param ProjectConfiguration $projectConfiguration 
+   * @return void
+   */
+  public function setProjectConfiguration(ProjectConfiguration $projectConfiguration)
+  {
+    $this->_projectConfiguration = $projectConfiguration;
+  }
+
+  /**
    * Get array of core Sympal plugins
    *
    * @return array $corePlugins
