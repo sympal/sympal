@@ -1,0 +1,158 @@
+= Jquery Plug-In =
+
+The `sfJqueryReloadedPlugin` offers helpers that integrate the [http://www.jquery.com/ Jquery] Javascript framework.
+
+== Support ==
+Please contact the [http://groups.google.com/group/sfjqueryreloadedplugin sfJqueryReloadedPlugin Google group]. That is the best place to report bugs. Some of the maintainers may also be found in the 
+`#symfony` channel @ Freenode IRC.
+
+== Licence ==
+This plugin is licensed under the MIT license. For the full copyright and license information, please view the LICENSE file that was distributed with this source code.
+
+== Introduction ==
+
+Symfony 1.0 offered a set of PHP helper functions which invoked popular AJAX functionality, such as forms that update particular page elements rather than the entire page, autocomplete/typeahead, and the like. However, these helpers were built on Prototype, while jQuery has since become a clearly superior JavaScript library. Also, in Symfony 1.2 these helpers were deprecated and in Symfony 1.4 they are gone. sfJqueryReloadedPlugin is a reimplementation of these helper functions that uses the jQuery library instead of Prototype.
+
+Just make sure you import the helper group `jQuery` with a `use_helper` call:
+
+{{{
+use_helper('jQuery');
+}}}
+
+And give each helper call a `jq_` prefix.
+
+So the classic prototype helper call:
+
+{{{
+<?php echo link_to_remote(....);?>
+}}}
+
+Becomes:
+
+{{{
+<?php echo jq_link_to_remote(....);?>
+}}}
+
+== Installation ==
+
+  * Install the plugin
+{{{
+$ symfony $ symfony plugin:install sfJqueryReloadedPlugin   
+}}}
+
+Note that you can also check it out as an svn external from:
+
+{{{
+http://svn.symfony-project.com/plugins/sfJqueryReloadedPlugin/1.2/trunk
+}}}
+
+  * Optional: change jquery_web_dir in setting.yml if you are
+  not using the traditional symbolic link to the webdir of the plugin
+  (or copying the plugin's /web folder to a folder called sfJqueryPlugin
+  in your web dir, which will also work automatically with our defaults).
+{{{   
+    all:
+     .settings:
+        jquery_web_dir:      /sfJqueryPlugin
+}}}                                
+  * Optional: within that folder's /js/ subfolder you might have a different
+  version of jquery other than a minimized 1.3.1 which is what
+  you currently get if you allow the plugin to supply it. This can be a relative path
+  if the file is located in a different folder.
+{{{   
+    all:
+     .settings:
+        jquery_core:      jquery-1.3.1.min.js
+}}}                                
+  * Optional: specify different versions of the ui and autocomplete plugins, which would be looked for in the /js/plugins/ subfolder of your jquery_web_dir. Again, you can use relative paths relative to that location in web space if they are in a different place.
+{{{
+    all:
+     .settings:
+        jquery_sortable: jquery-ui-1.7.2.custom.min.js
+        jquery_autocomplete: jquery.autocomplete.min.js
+}}}
+
+If you are running your websites under Microsoft Windows, you also have to manually copy the {{{./web}}} 
+directory of the plugin in the {{{%SF_ROOT_DIR%/web}}} directory of your project
+and rename it to {{{sfJqueryReloadedPlugin}}}. (The ./symfony plugin:publish-assets task should be able to do this for you.)
+
+== Basic syntax ==
+
+=== Declaring the helper in templates ===
+
+ * Inside a template
+{{{
+<?php use_helper('jQuery') ?>
+}}}
+
+ * In `settings.yml`, for all modules
+{{{
+standard_helpers:       [..., jQuery]
+}}}
+
+When you use functions that require jQuery plugins, specifically
+`jq_sortable_element` and `jq_input_auto_complete_tag`, the appropriate
+JavaScript files are automatically added. However, if you are attempting
+to do this from your `layout.php` (including via a component or
+partial referenced by `layout.php` rather than an action template),
+it will not work because `get_javascripts()` has already been invoked.
+To resolve this issue, call:
+
+{{{
+<?php jq_add_plugins_by_name(array('sortable', 'autocomplete')) ?>
+}}}
+
+At the top of your `layout.php` file, or just add the js files for the
+plugins you need directly to your project's `view.yml` file. The first
+solution is more maintainable because it means you don't have to pay
+close attention when we update to a newer release of a plugin.
+
+=== Using Jquery methods ===
+
+To use Jquery methods, refer to ''Chapter 11'' of the classic Symfony 1.0 documentation [http://www.symfony-project.com/book/1_0/11-Ajax-Integration Ajax Integration]. All helper functions described in that chapter can be used with the '''jq_''' prefix. 
+
+Note that jQuery and Prototype select elements differently. In cases where selecting just one element is the only thing that makes sense, the helper functions automatically prepend a '''#''' so that the selector behaves as it would in Prototype.
+
+== jQuery Helpers documentation ==
+
+ * `jq_periodically_call_remote($options = array())`
+ * `jq_link_to_function($name, $function, $html_options = array())`
+ * `jq_link_to_remote($name, $options = array(), $html_options = array())`
+ * `jq_update_element_function($element_id, $options = array())`
+ * `jq_form_remote_tag($options = array(), $options_html = array())`
+ * `jq_submit_to_remote($name, $value, $options = array(), $options_html = array())`
+ * `jq_javascript_tag($content)`
+ * `jq_visual_effect($effect, $element_id = false, $js_options = array())` 
+ * `jq_add_plugins_by_name($options = array())`  
+ * `jq_sortable_element($selector, $options)` (tom@punkave.com)
+ * `jq_input_auto_complete_tag($name, $value, $url, $tag_options = array(), $completion_options = array()) (bruno.adele@jesuislibre.org) 
+ * function jq_draggable_element($selector, $options = array())
+ * function jq_drop_receiving_element($selector, $options = array())
+
+These are the methods currently supported by sfJqueryReloadedPlugin. Also see the source for newer and more experimental implementations. Future changes may integrate more functions.
+
+== Using JSON ==
+
+It is possible to use JSON responses with sfJqueryReloadedPlugin. Be sure to read
+[http://trac.symfony-project.com/wiki/AjaxAndJSON#jsonwithoutheader JSON Without Header] and consider:
+{{{
+<?php echo jq_link_to_remote(image_tag('icons/delete.png'),
+                             array('url'      => '@delete')),
+                                   'dataType' => 'json',
+                                   'success'  => 'leaveGroup(request)')) ?>
+}}}
+
+== TODO ==
+
+ * Add unit tests
+ * Use `sprintf` for string manipulation
+ * Implement the rest of the Javascript Helper:
+
+    * draggable_element
+    * drop_receiving_element
+    * input_in_place_editor_tag
+
+== Changelog ==
+
+See the [http://www.symfony-project.org/plugins/sfJqueryReloadedPlugin?tab=Changelog official changelog on the Symfony plugins site].
+

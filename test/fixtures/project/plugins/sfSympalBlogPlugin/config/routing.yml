@@ -1,0 +1,11 @@
+# sfSympalBlogPlugin routing
+
+sympal_blog_month:
+  url: /blog/:m/:y
+  param: { module: sympal_blog, action: month }
+  requirements:
+    m:    \d+
+    y:    \d+
+sympal_blog_tag:
+  url: /blog/tags/:tag
+  param: { module: sympal_blog, action: tag }

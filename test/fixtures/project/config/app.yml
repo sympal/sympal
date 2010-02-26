@@ -1,0 +1,10 @@
+all:
+  sympal_config:
+    sfSympalBlogPlugin:
+      installed: true
+    sfSympalCommentsPlugin:
+      installed: true
+    sfSympalThemeTestPlugin:
+      installed: true
+    installed: true
+    current_version: 1.0.0-ALPHA3

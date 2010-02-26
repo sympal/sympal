@@ -1,0 +1,33 @@
+generator:
+  class:                   <?php echo sfSympalConfig::getAdminGeneratorClass() ?> 
+  param:
+    model_class:           sfSympalComment
+    theme:                 <?php echo sfSympalConfig::getAdminGeneratorTheme() ?> 
+    non_verbose_templates: true
+    with_show:             false
+    singular:              ~
+    plural:                ~
+    route_prefix:          sympal_comments
+    with_doctrine_route:     1
+
+    config:
+      actions: ~
+      fields:  ~
+      list:
+        batch_actions:
+          _delete:
+          approve:
+            action: approve
+            label: Approve
+          deny:
+            action: deny
+            label: Deny
+          pending:
+            action: pending
+            label: Pending
+        display: [=name, status]
+        actions: []
+      filter:  ~
+      form:    ~
+      edit:    ~
+      new:     ~

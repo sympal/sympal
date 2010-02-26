@@ -1,0 +1,19 @@
+all:
+  sympal_config:
+    blog-post:
+      enable_comments: true
+      content_templates:
+        default_view:
+          template: sympal_blog/view
+      sidebar:
+        # The widgets (and the order) that will be displayed. Defaults to ALL widgets
+        #display:      [latest_posts, top_authors, monthly_history]
+        widgets:
+          latest_posts: sympal_blog/latest_posts
+          top_authors:  sympal_blog/top_authors
+          monthly_history: sympal_blog/monthly_history
+          #my_sidebar_widget: template: my_module/sidebar
+    content-list:
+      content_templates:
+        blog_post_list:
+          template: sympal_blog/list
