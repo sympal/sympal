@@ -34,3 +34,19 @@ function get_sympal_inline_edit_bar_buttons()
 
   return $menu->render();
 }
+
+/**
+ * Returns the form tag for the form that saves a content slot
+ * 
+ * @param sfForm              $form         The form object for this slot
+ * @param sfSympalContentSlot $contentSlot  The content slot that is being modified
+ */
+function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot)
+{
+  $url = url_for('sympal_save_content_slot', array(
+    'id' => $contentSlot->id,
+    'content_id' => $contentSlot->getContentRenderedFor()->id,
+  ));
+  
+  return $form->renderFormTag($url, array('method' => 'post'));
+}

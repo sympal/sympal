@@ -63,19 +63,60 @@ abstract class Basesympal_edit_slotActions extends sfActions
     }
   }
   
+  /**
+   * Called via ajax to load in the form that represents the given slot
+   */
   public function executeSlot_form(sfWebRequest $request)
   {
-    $this->contentSlot = $this->getRoute()->getObject();
-    
-    $content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
-    $this->forward404Unless($content);
-    
-    $this->contentSlot->setContentRenderedFor($content);
+    $this->contentSlot = $this->setupContentSlot($request);
     
     $this->form = $this->contentSlot->getEditForm();
     
     $this->renderPartial('sympal_edit_slot/slot_editor');
     
     return sfView::NONE;
+  }
+  
+  /**
+   * Handles the form submit for a given slot
+   */
+  public function executeSlot_save(sfWebRequest $request)
+  {
+    $this->contentSlot = $this->setupContentSlot($request);
+    
+    $this->form = $this->contentSlot->getEditForm();
+    $this->form->bind($request->getParameter($this->form->getName()));
+    
+    if ($this->form->isValid())
+    {
+      $this->form->save();
+      
+      $this->getUser()->setFlash('notice', 'Slot saved', false);
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'There was an error saving your slot', false);
+    }
+    
+    $this->renderPartial('sympal_edit_slot/slot_editor');
+    
+    return sfView::NONE;
+  }
+  
+  /**
+   * For the slot_form and slot_save, this sets up and retrieves the content
+   * slot in question
+   * 
+   * @return sfSympalContentSlot
+   */
+  protected function setupContentSlot(sfWebRequest $request)
+  {
+    $content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
+    $this->forward404Unless($content);
+    
+    $contentSlot = $this->getRoute()->getObject();
+    $contentSlot->setContentRenderedFor($content);
+    
+    return $contentSlot;
   }
 }
