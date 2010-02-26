@@ -51,12 +51,26 @@ a.edit_slot_button:hover {
 	background:#ffffcc;
 }
 .sympal_slot_editor form input, .sympal_content_slot_editor textarea {
-  width: 98% !important;
+  width: 400px;
+  display: block;
 }
 
 /**
  * Messages
  */
+#sympal_slot_flash {
+  position: absolute;
+}
 .sympal_notice, .sympal_error {
+  background: #c5c5c5;
+  filter:alpha(opacity=90);
+  -moz-opacity:0.9;
+  opacity:0.9;
+  width: 100%;
+  display: block;
+  padding: 5px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
   color: #000;
 }
