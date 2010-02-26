@@ -68,7 +68,7 @@ all:
       enabled: true
       default_column_form: sfSympalInlineEditContentColumnForm
       default_slot_form: sfSympalInlineEditContentSlotForm
-      default_form_renderer: sympal_edit_slot/slot_editor_renderer
+      default_form_renderer: sympal_edit_slot/slot_editor_form
 
     # Configure the default rendering module and action
     default_rendering_module: sympal_content_renderer
@@ -226,19 +226,19 @@ all:
       Text:
         label: Single Line of Text
         form: sfSympalInlineEditContentSlotForm
-        form_renderer: sympal_edit_slot/slot_editor_renderer
+        form_renderer: sympal_edit_slot/slot_editor_form
       RawHtml:
         label: Raw HTML
         form: sfSympalInlineEditContentSlotForm
-        form_renderer: sympal_edit_slot/slot_editor_renderer
+        form_renderer: sympal_edit_slot/slot_editor_form
       Markdown:
         label: Markdown Editor
         form: sfSympalInlineEditContentSlotForm
-        form_renderer: sympal_edit_slot/slot_editor_renderer
+        form_renderer: sympal_edit_slot/slot_editor_form
       TinyMCE:
         label: TinyMCE Rich Text Editor
         form: sfSympalInlineEditContentSlotForm
-        form_renderer: sympal_edit_slot/slot_editor_renderer
+        form_renderer: sympal_edit_slot/slot_editor_form
         widget_options:
           config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
         

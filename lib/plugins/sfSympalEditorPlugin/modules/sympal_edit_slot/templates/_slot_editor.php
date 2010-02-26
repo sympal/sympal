@@ -2,18 +2,21 @@
 <?php sympal_use_javascript('/sfSympalPlugin/js/jQuery.form.js') ?>
 <?php sympal_use_javascript('/sfSympalEditorPlugin/js/editor.js') ?>
 
-<div class="sympal_content_slot_editor sympal_form">
-  <form>
-    <input type="hidden" name="content_ids[<?php echo $contentSlot->getId() ?>]" value="<?php echo $contentSlot->getContentRenderedFor()->getId() ?>" />
-    <?php if (!$contentSlot->is_column): ?>
-      <a class="sympal_change_slot_type" onClick="return false;"><?php echo __('Change Slot Type') ?></a>
-      <div class="sympal_change_slot_type_dropdown">
-        <?php echo $form['type'] ?>
-      </div>
-    <?php endif; ?>
+<?php include_javascripts_for_form($form) ?>
+<?php include_stylesheets_for_form($form) ?>
 
-    <span class="sympal_content_slot_editor_form">
-      <?php echo get_partial('sympal_edit_slot/slot_editor_form', array('form' => $form, 'contentSlot' => $contentSlot)) ?>
-    </span>
+<div class="sympal_slot_editor" id="sympal_slot_editor_<?php echo $contentSlot->id ?>">
+  <?php echo $form->renderFormTag(url_for('sympal_save_content_slot', $contentSlot), array('method' => 'put')) ?>
+    <?php echo $form->renderHiddenFields() ?>
+    <?php echo sfSympalToolkit::getSymfonyResource($contentSlot->getSlotEditFormRenderer(), array('contentSlot' => $contentSlot, 'form' => $form)) ?>
   </form>
 </div>
+
+
+<script type="text/javascript">
+<?php if (sfSympalConfig::get('elastic_textareas', null, true)) :?>
+$(function() {
+  $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').elastic();
+});
+<?php endif; ?>
+</script>

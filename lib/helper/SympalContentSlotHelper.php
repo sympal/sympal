@@ -45,14 +45,14 @@ function render_content_date_published(sfSympalContent $content, $slot)
 /**
  * Get Sympal content slot value
  *
- * @param Content $content  The Content instance
+ * @param sfSympalContent $content  The Content instance
  * @param string $name The name of the slot
  * @param string $type The type of slot
  * @param string $renderFunction The function/callable used to render the value of slots which are columns
  * @param array  $options Array of options for this slot
  * @return void
  */
-function get_sympal_content_slot($content, $name, $type = null, $renderFunction = null, $options = array())
+function get_sympal_content_slot(sfSympalContent $content, $name, $type = null, $renderFunction = null, $options = array())
 {
   if ($type === null)
   {
@@ -69,12 +69,21 @@ function get_sympal_content_slot($content, $name, $type = null, $renderFunction 
   }
 
   $slot->setContentRenderedFor($content);
-
+  
+  /**
+   * Either render the raw value or the editor for the slot
+   */
   if (sfSympalContext::getInstance()->shouldLoadFrontendEditor())
   {
-    use_helper('SympalContentSlotEditor');
-
-    return get_sympal_content_slot_editor($content, $slot, $options);
+    $anchor = link_to('edit', 'sympal_content_slot_form',
+    array(
+      'id' => $slot->id,
+      'content_id' => $content->id
+    ), array(
+      'class' => 'edit_slot_button',
+    ));
+    
+    return '<span class="edit_slot_wrapper">'.$anchor.'<span class="edit_slot_content">'.$slot->render().'</span></span>';
   } else {
     return $slot->render();
   }
