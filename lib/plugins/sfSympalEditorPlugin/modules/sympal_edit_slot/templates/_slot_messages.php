@@ -7,3 +7,9 @@
     <div class="sympal_error"><?php echo $sf_user->getFlash('error') ?></div>
   <?php endif; ?>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    setTimeout("jQuery('#sympal_slot_flash').hide()", 3000);
+  });
+</script>
