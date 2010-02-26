@@ -1,0 +1,57 @@
+.edit_slot_wrapper {
+  position: relative;
+}
+
+a.edit_slot_button {
+  position: absolute;
+  z-index: 100;
+  
+  font-size: 14px;
+  display: none;
+  background: #c5c5c5;
+  padding: 3px 10px;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  filter:alpha(opacity=90);
+  -moz-opacity:0.9;
+  opacity:0.9;
+  color: #000;
+  font-weight: bold;
+  
+  top: 0;
+  left: 0;
+}
+a.edit_slot_button:hover {
+  color: #000;
+}
+.edit_slot_content {
+
+}
+
+.sympal_slot_editor form input,
+.sympal_slot_editor form select,
+.sympal_slot_editor form textarea {
+	padding: 0.40em;
+	border:1px solid #ddd;
+	background: #fafafa;
+	font:bold 0.95em arial, sans-serif;
+	-khtml-border-radius:0.4em;
+	-moz-border-radius: 0.4em;
+  -webkit-border-radius: 0.4em;
+  border-radius: 0.4em;
+  color: #333
+}
+
+.sympal_slot_editor form input:hover,
+.sympal_slot_editor form input:focus,
+.sympal_slot_editor form select:hover,
+.sympal_slot_editor form select:focus,
+.sympal_slot_editor form textarea:hover,
+.sympal_slot_editor form textarea:focus {
+	border-color:#c5c5c5;
+	background:#ffffcc;
+}
+
+.sympal_slot_editor form input, .sympal_content_slot_editor textarea {
+  width: 98% !important;
+}

@@ -62,4 +62,20 @@ abstract class Basesympal_edit_slotActions extends sfActions
       }
     }
   }
+  
+  public function executeSlot_form(sfWebRequest $request)
+  {
+    $this->contentSlot = $this->getRoute()->getObject();
+    
+    $content = Doctrine_Core::getTable('sfSympalContent')->find($request->getParameter('content_id'));
+    $this->forward404Unless($content);
+    
+    $this->contentSlot->setContentRenderedFor($content);
+    
+    $this->form = $this->contentSlot->getEditForm();
+    
+    $this->renderPartial('sympal_edit_slot/slot_editor');
+    
+    return sfView::NONE;
+  }
 }
