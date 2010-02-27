@@ -17,7 +17,7 @@
 <script type="text/javascript">
   jQuery(document).ready(function(){
     jQuery('#sympal_slot_wrapper_<?php echo $contentSlot->id ?> form').ajaxForm({
-      target: '#sympal_slot_wrapper_<?php echo $contentSlot->id ?> .form_body',
+      target: '#sympal_slot_form_<?php echo $contentSlot->id ?> .form_body',
       beforeSubmit: sympalPreSlotSubmit,
       success: sympalSlotSubmitSuccess
     });

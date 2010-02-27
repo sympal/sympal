@@ -49,5 +49,11 @@ function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot
     'content_id' => $contentSlot->getContentRenderedFor()->id,
   ));
   
-  return $form->renderFormTag($url, array('method' => 'post', 'class' => $editMode));
+  $options = array(
+    'method' => 'post',
+    'class' => $editMode,
+    'id' => 'sympal_slot_form_'.$contentSlot->id,
+  );
+  
+  return $form->renderFormTag($url, $options);
 }

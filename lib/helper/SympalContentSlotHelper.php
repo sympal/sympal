@@ -133,7 +133,7 @@ function _get_sympal_content_slot($name, $options = array())
     }
     
     $inlineContent = sprintf(
-      '<a href="#sympal_slot_wrapper_%s form" class="sympal_slot_button %s">edit</a>',
+      '<a href="#sympal_slot_wrapper_%s .sympal_slot_form" class="sympal_slot_button %s">edit</a>',
       $slot->id,
       $options['edit_mode']
     );
