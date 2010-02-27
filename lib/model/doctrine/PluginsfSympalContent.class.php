@@ -167,9 +167,18 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
     return $contentSlotRef;
   }
-
-  public function getOrCreateSlot($name, $type = null, $renderFunction = null, $options = array())
+  
+  /**
+   * Retrieves or creates an sfSympalContentSlot object with the given
+   * name for this sfSympalContent object
+   * 
+   * @return sfSympalContent
+   */
+  public function getOrCreateSlot($name, $options = array())
   {
+    $type = isset($options['type']) ? $options['type'] : null;
+    $renderFunction = isset($options['render_function']) ? $options['render_function'] : null;
+    
     if (!$hasSlot = $this->hasSlot($name))
     {
       $isColumn = $this->hasField($name) ? true : false;

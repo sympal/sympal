@@ -111,6 +111,11 @@ all:
           template: sympal_page/view
         register:
           template: sympal_register/page_template
+      content_slots:
+        title:
+          type:     Text
+        body:
+          type:     Markdown
     content-list:
       default_rendering_module: ~
       default_rendering_action: ~
