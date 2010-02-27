@@ -112,6 +112,19 @@ function _get_sympal_content_slot($name, $options = array())
    */
   if (sfSympalContext::getInstance()->shouldLoadFrontendEditor())
   {
+    /*
+     * Give the slot a default value if it's blank.
+     * 
+     * @todo Move this somewhere where it can be specified on a type-by-type
+     * basis (e.g., if we had an "image" content slot, it might say
+     * "Click to choose image"
+     */
+    $renderedValue = $slot->render();
+    if (!$renderedValue && sfSympalContext::getInstance()->shouldLoadFrontendEditor())
+    {
+      $renderedValue = __('[Hover over and click edit to change.]');
+    }
+    
     $anchor = link_to('edit', 'sympal_content_slot_form',
     array(
       'id' => $slot->id,
@@ -120,7 +133,7 @@ function _get_sympal_content_slot($name, $options = array())
       'class' => 'edit_slot_button',
     ));
     
-    return '<span class="edit_slot_wrapper">'.$anchor.'<span class="edit_slot_content">'.$slot->render().'</span></span>';
+    return '<span class="edit_slot_wrapper">'.$anchor.'<span class="edit_slot_content">'.$renderedValue.'</span></span>';
   } else {
     return $slot->render();
   }
