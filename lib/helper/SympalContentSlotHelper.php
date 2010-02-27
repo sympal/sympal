@@ -91,6 +91,9 @@ function _get_sympal_content_slot($name, $options = array())
     $content = sfSympalContext::getInstance()->getCurrentContent();
   }
   
+  // mark this content record as having content slots
+  $content->setEditableSlotsExistOnPage(true);
+  
   // merge the default config for this slot into the given config
   $slotOptions = sfSympalConfig::get($content->Type->slug, 'content_slots', array());
   if (isset($slotOptions[$name]))
