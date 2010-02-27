@@ -12,7 +12,8 @@
       <?php echo sfSympalToolkit::getSymfonyResource($contentSlot->getSlotEditFormRenderer(), array('contentSlot' => $contentSlot, 'form' => $form)) ?>
     </div>
     
-    <input type="submit" value="save" />
+    <input type="submit" value="save" class="submit" />
+    <?php echo image_tag('/sfSympalPlugin/images/loading_circle.gif', array('alt' => 'loading...', 'class' => 'loading_anim')) ?>
   </form>
 </div>
 

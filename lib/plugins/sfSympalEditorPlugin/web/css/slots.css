@@ -62,6 +62,15 @@ a.edit_slot_button:hover {
   display: block;
 }
 
+.sympal_slot_editor form input.submit {
+  display: inline;
+  width: auto;
+}
+
+.sympal_slot_editor form img.loading_anim {
+  display: none;
+}
+
 /**
  * Messages
  */

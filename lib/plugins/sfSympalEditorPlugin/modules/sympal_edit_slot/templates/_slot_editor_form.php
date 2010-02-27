@@ -18,7 +18,8 @@
   jQuery(document).ready(function(){
     jQuery('#sympal_slot_editor_<?php echo $contentSlot->id ?> form').ajaxForm({
       target: '#sympal_slot_editor_<?php echo $contentSlot->id ?> .form_body',
-      beforeSubmit: sympalPreSlotSubmit
+      beforeSubmit: sympalPreSlotSubmit,
+      success: sympalSlotSubmitSuccess
     });
   });
 </script>
