@@ -99,6 +99,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
     }
     
     $this->renderPartial('sympal_edit_slot/slot_editor_form');
+    $this->renderPartial('sympal_edit_slot/slot_save_update');
     
     return sfView::NONE;
   }
