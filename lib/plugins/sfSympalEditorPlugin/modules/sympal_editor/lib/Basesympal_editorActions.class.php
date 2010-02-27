@@ -1,7 +1,21 @@
 <?php
 
+/**
+ * Actions class handling global, frontend-editing actions
+ * 
+ * @package     sfSympalEditorPlugin
+ * @subpackage  actions
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-02-27
+ * @version     svn:$Id$ $Author$
+ */
 class Basesympal_editorActions extends sfActions
 {
+  /**
+   * Handles the publishing of content - handles the request from the
+   * frontend publish/unpublish button
+   */
   public function executePublish_content(sfWebRequest $request)
   {
     $this->askConfirmation(
@@ -15,6 +29,10 @@ class Basesympal_editorActions extends sfActions
     $this->redirect($request->getParameter('redirect_url'));
   }
 
+  /**
+   * Handles the publishing of content - handles the request from the
+   * frontend publish/unpublish button
+   */
   public function executeUnpublish_content(sfWebRequest $request)
   {
     $this->askConfirmation(
@@ -27,7 +45,10 @@ class Basesympal_editorActions extends sfActions
     $this->getUser()->setFlash('notice', 'Content un-published successfully!');
     $this->redirect($request->getParameter('redirect_url'));
   }
-
+  
+  /**
+   * Renders the "Link Browser" used to add link "markup" to your content
+   */
   public function executeLinks(sfWebRequest $request)
   {
     $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')
