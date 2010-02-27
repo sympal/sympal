@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Plugin configuration class for the frontend editor plugin
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  config
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-02-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
 {
   private $_editorAssetsLoaded = false;
@@ -9,36 +19,18 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_content', array($this, 'loadEditor'));
     $this->dispatcher->connect('sympal.load_inline_edit_bar_buttons', array($this, 'loadInlineEditBarButtons'));
   }
-
+  
+  /**
+   * Listens to the sympal.load_inline_edit_bar_buttons, which allows for
+   * adding buttons to the frontend editing menu
+   * 
+   * @param sfEvent $event
+   */
   public function loadInlineEditBarButtons(sfEvent $event)
   {
     $menu = $event->getSubject();
     
-    $menu->addChild('Save')->
-      isEditModeButton(true)->
-      setShortcut('Ctrl+S')->
-      setInputClass('sympal_save_content_slots')
-    ;
-
-    $menu->
-      addChild('Preview')->
-      isEditModeButton(true)->
-      setShortcut('Ctrl+Shift+S')->
-      setInputClass('sympal_preview_content_slots')
-    ;
-
-    $menu->
-      addChild('Enable Edit Mode')->
-      setShortcut('Ctrl+E')->
-      setInputClass('toggle_edit_mode')
-    ;
-
-    $menu->
-      addChild('Disable Edit Mode')->
-      isEditModeButton(true)->
-      setShortcut('Ctrl+Shift+X')->
-      setInputClass('sympal_disable_edit_mode')
-    ;
+    // add menus here if we have any later
   }
 
   public function shouldLoadEditor()
