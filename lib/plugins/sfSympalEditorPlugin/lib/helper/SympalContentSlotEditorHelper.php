@@ -10,11 +10,6 @@ function get_sympal_inline_edit_bar_buttons()
   $menu = new sfSympalMenuInlineEditBarButtons('Inline Edit Bar Buttons');
   $menu->setUlClass('sympal_inline_edit_bar_buttons');
 
-  $menu->
-    addChild('<div class="sympal_inline_edit_loading"></div>')->
-    isButton(false)
-  ;
-
   if ($content->getEditableSlotsExistOnPage())
   {
     $menu->addChild('Links', '@sympal_editor_links')->
