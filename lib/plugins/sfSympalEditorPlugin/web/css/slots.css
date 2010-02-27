@@ -58,13 +58,13 @@ a.edit_slot_button:hover {
 	background:#ffffcc;
 }
 .sympal_slot_editor form input, .sympal_content_slot_editor textarea {
-  width: 400px;
+  width: 98% !important;
   display: block;
 }
 
 .sympal_slot_editor form input.submit {
   display: inline;
-  width: auto;
+  width: auto !important;
 }
 
 .sympal_slot_editor form img.loading_anim {
