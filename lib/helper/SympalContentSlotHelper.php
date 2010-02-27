@@ -133,22 +133,25 @@ function _get_sympal_content_slot($name, $options = array())
     }
     
     $inlineContent = sprintf(
-      '<a href="#edit_slot_form_%s" class="edit_slot_button %s">edit</a>',
+      '<a href="#sympal_slot_wrapper_%s form" class="sympal_slot_button %s">edit</a>',
       $slot->id,
       $options['edit_mode']
     );
     
-    $inlineContent .= sprintf('<span class="edit_slot_content">%s</span>', $renderedValue);
+    $inlineContent .= sprintf('<span class="sympal_slot_content">%s</span>', $renderedValue);
     
     // render the form inline if this is in-place editing
     $form = $slot->getEditForm();
     $inlineContent .= sprintf(
-      '<span class="edit_slot_form" id="edit_slot_form_%s">%s</span>',
-      $slot->id,
-      get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot))
+      '<span class="sympal_slot_form">%s</span>',
+      get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot, 'options' => $options))
     );
     
-    return '<span class="edit_slot_wrapper">'.$inlineContent.'</span>';
+    return sprintf(
+      '<span class="sympal_slot_wrapper" id="sympal_slot_wrapper_%s">%s</span>',
+      $slot->id,
+      $inlineContent
+    );
   } else {
     return $slot->render();
   }

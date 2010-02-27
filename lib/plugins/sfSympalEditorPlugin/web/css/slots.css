@@ -1,10 +1,10 @@
 /*
  * Inline slot wrapping styles
  */
-.edit_slot_wrapper {
+.sympal_slot_wrapper {
   position: relative;
 }
-a.edit_slot_button {
+a.sympal_slot_button {
   position: absolute;
   z-index: 100;
   top: 0;
@@ -21,23 +21,23 @@ a.edit_slot_button {
   -moz-opacity:0.9;
   opacity:0.9;
 }
-a.edit_slot_button:hover {
+a.sympal_slot_button:hover {
   color: #000;
 }
 
 /*
  * surrounds the inline form
  */
-.edit_slot_form {
+.sympal_slot_form {
   display: none;
 }
 
 /**
  * General form styles for slots
  */
-.sympal_slot_editor form input,
-.sympal_slot_editor form select,
-.sympal_slot_editor form textarea {
+.sympal_slot_wrapper form input,
+.sympal_slot_wrapper form select,
+.sympal_slot_wrapper form textarea {
 	padding: 0.40em;
 	border:1px solid #ddd;
 	background: #fafafa;
@@ -48,26 +48,26 @@ a.edit_slot_button:hover {
   border-radius: 0.4em;
   color: #333
 }
-.sympal_slot_editor form input:hover,
-.sympal_slot_editor form input:focus,
-.sympal_slot_editor form select:hover,
-.sympal_slot_editor form select:focus,
-.sympal_slot_editor form textarea:hover,
-.sympal_slot_editor form textarea:focus {
+.sympal_slot_wrapper form input:hover,
+.sympal_slot_wrapper form input:focus,
+.sympal_slot_wrapper form select:hover,
+.sympal_slot_wrapper form select:focus,
+.sympal_slot_wrapper form textarea:hover,
+.sympal_slot_wrapper form textarea:focus {
 	border-color:#c5c5c5;
 	background:#ffffcc;
 }
-.sympal_slot_editor form input, .sympal_content_slot_editor textarea {
+.sympal_slot_wrapper form input, .sympal_content_slot_editor textarea {
   width: 98% !important;
   display: block;
 }
 
-.sympal_slot_editor form input.submit {
+.sympal_slot_wrapper form input.button {
   display: inline;
   width: auto !important;
 }
 
-.sympal_slot_editor form img.loading_anim {
+.sympal_slot_wrapper form img.loading_anim {
   display: none;
 }
 

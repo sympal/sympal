@@ -4,16 +4,14 @@
 <?php include_javascripts_for_form($form) ?>
 <?php include_stylesheets_for_form($form) ?>
 
-<div class="sympal_slot_editor" id="sympal_slot_editor_<?php echo $contentSlot->id ?>">
-  <?php echo get_sympal_slot_form_tag($form, $contentSlot) ?>
-    <?php echo $form->renderHiddenFields() ?>
-    
-    <div class="form_body">
-      <?php echo sfSympalToolkit::getSymfonyResource($contentSlot->getSlotEditFormRenderer(), array('contentSlot' => $contentSlot, 'form' => $form)) ?>
-    </div>
-    
-    <input type="submit" value="save" class="submit" />
-    <?php echo image_tag('/sfSympalPlugin/images/loading_circle.gif', array('alt' => 'loading...', 'class' => 'loading_anim')) ?>
-  </form>
-</div>
-
+<?php echo get_sympal_slot_form_tag($form, $contentSlot, $options['edit_mode']) ?>
+  <?php echo $form->renderHiddenFields() ?>
+  
+  <div class="form_body">
+    <?php echo sfSympalToolkit::getSymfonyResource($contentSlot->getSlotEditFormRenderer(), array('contentSlot' => $contentSlot, 'form' => $form)) ?>
+  </div>
+  
+  <input type="button" value="cancel" class="button cancel" />
+  <input type="submit" value="save" class="button" />
+  <?php echo image_tag('/sfSympalPlugin/images/loading_circle.gif', array('alt' => 'loading...', 'class' => 'loading_anim')) ?>
+</form>

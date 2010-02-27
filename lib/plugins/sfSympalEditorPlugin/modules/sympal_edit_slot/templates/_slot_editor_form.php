@@ -16,8 +16,8 @@
 
 <script type="text/javascript">
   jQuery(document).ready(function(){
-    jQuery('#sympal_slot_editor_<?php echo $contentSlot->id ?> form').ajaxForm({
-      target: '#sympal_slot_editor_<?php echo $contentSlot->id ?> .form_body',
+    jQuery('#sympal_slot_wrapper_<?php echo $contentSlot->id ?> form').ajaxForm({
+      target: '#sympal_slot_wrapper_<?php echo $contentSlot->id ?> .form_body',
       beforeSubmit: sympalPreSlotSubmit,
       success: sympalSlotSubmitSuccess
     });
@@ -27,7 +27,7 @@
 <script type="text/javascript">
 <?php if (sfSympalConfig::get('elastic_textareas', null, true)) :?>
 $(function() {
-  $('#sympal_content_slot_<?php echo $contentSlot->getId() ?>_editor_form textarea').elastic();
+  $('#sympal_slot_wrapper_<?php echo $contentSlot->getId() ?> form textarea').elastic();
 });
 <?php endif; ?>
 </script>
