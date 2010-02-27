@@ -1,4 +1,4 @@
-/**
+/*
  * Inline slot wrapping styles
  */
 .edit_slot_wrapper {
@@ -23,6 +23,13 @@ a.edit_slot_button {
 }
 a.edit_slot_button:hover {
   color: #000;
+}
+
+/*
+ * surrounds the inline form
+ */
+.edit_slot_form {
+  display: none;
 }
 
 /**

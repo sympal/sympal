@@ -77,6 +77,7 @@ function get_sympal_content_slot()
  *  * type            The rendering type to use for this slot (e.g. Markdown)
  *  * render_function The function/callable used to render the value of slots which are columns
  *  * default_value   A default value to give this slot the first time it's created
+ *  * edit_mode       How to edit this slot (in-place (default), popup)
  */
 function _get_sympal_content_slot($name, $options = array())
 {
@@ -97,6 +98,7 @@ function _get_sympal_content_slot($name, $options = array())
     $options = array_merge($slotOptions[$name], $options);
   }
   
+  // retrieve the slot
   if ($name instanceof sfSympalContentSlot)
   {
     $slot = $name;
@@ -112,6 +114,11 @@ function _get_sympal_content_slot($name, $options = array())
    */
   if (sfSympalContext::getInstance()->shouldLoadFrontendEditor())
   {
+    // merge in some edit defaults
+    $options = array_merge(array(
+      'edit_mode' => 'in-place',
+    ), $options);
+    
     /*
      * Give the slot a default value if it's blank.
      * 
@@ -125,15 +132,23 @@ function _get_sympal_content_slot($name, $options = array())
       $renderedValue = __('[Hover over and click edit to change.]');
     }
     
-    $anchor = link_to('edit', 'sympal_content_slot_form',
-    array(
-      'id' => $slot->id,
-      'content_id' => $content->id
-    ), array(
-      'class' => 'edit_slot_button',
-    ));
+    $inlineContent = sprintf(
+      '<a href="#edit_slot_form_%s" class="edit_slot_button %s">edit</a>',
+      $slot->id,
+      $options['edit_mode']
+    );
     
-    return '<span class="edit_slot_wrapper">'.$anchor.'<span class="edit_slot_content">'.$renderedValue.'</span></span>';
+    $inlineContent .= sprintf('<span class="edit_slot_content">%s</span>', $renderedValue);
+    
+    // render the form inline if this is in-place editing
+    $form = $slot->getEditForm();
+    $inlineContent .= sprintf(
+      '<span class="edit_slot_form" id="edit_slot_form_%s">%s</span>',
+      $slot->id,
+      get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot))
+    );
+    
+    return '<span class="edit_slot_wrapper">'.$inlineContent.'</span>';
   } else {
     return $slot->render();
   }
