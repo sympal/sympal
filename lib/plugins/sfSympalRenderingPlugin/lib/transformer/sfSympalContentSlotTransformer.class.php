@@ -141,7 +141,7 @@ class sfSympalContentSlotTransformer
     $tokenReplacements = array();
     foreach ($this->_tokenCallbacks as $token => $tokenCallback)
     {
-      $tokenReplacements[$token] = call_user_func_array($tokenCallback['callbacl'], $tokenCallback['args']);
+      $tokenReplacements[$token] = call_user_func_array($tokenCallback['callback'], $tokenCallback['args']);
     }
     
     return $tokenReplacements;

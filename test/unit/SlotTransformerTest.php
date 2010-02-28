@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(11, new lime_output_color());
+$t = new lime_test(14, new lime_output_color());
 
 // mock class
 class sfSympalContentSlotTransformerTest extends sfSympalContentSlotTransformer
@@ -26,9 +26,24 @@ class myUnitTestTransformer
   {
     return 'testing';
   }
+  
   public static function transform2($content, sfSympalContentSlotTransformer $transformer)
   {
     return str_replace('Markdown', 'Markup', $content);
+  }
+  
+  public static function transform3($content, sfSympalContentSlotTransformer $transformer)
+  {
+    $arg1 = 'HT';
+    $arg2 = 'ML';
+    $transformer->addTokenCallback('%language%', array('myUnitTestTransformer', 'languageCallback'), array($arg1, $arg2));
+    
+    return str_replace('Markdown', '%language%', $content);
+  }
+  
+  public static function languageCallback($arg1, $arg2)
+  {
+    return $arg1.$arg2;
   }
 }
 
@@ -99,11 +114,17 @@ $t->info('  2.3 - Transformer will change "Markdown" to "Markup"');
 sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform2'));
 test_transformer_return($t, $transformer, '__Some Markup Content__', array(), '__Some Markup Content__');
 
-/*
+
 $t->info('  2.4 - Transformer will include a callback wildcard');
 sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform3'));
-test_transformer_return($t, $transformer, '__Some Markup Content__', array(), '__Some Markdown Content__');
-*/
+$tokenCallbacks = array(
+  '%language%' => array(
+    'callback'  => array('myUnitTestTransformer', 'languageCallback'),
+    'args'      => array('HT', 'ML')
+  ),
+);
+test_transformer_return($t, $transformer, '__Some %language% Content__', $tokenCallbacks, '__Some HTML Content__');
+
 
 // tests the return values of a run in the transformer
 function test_transformer_return(lime_test $t, sfSympalContentSlotTransformerTest $transformer, $transformedContent, $tokenCallbacks, $result)
