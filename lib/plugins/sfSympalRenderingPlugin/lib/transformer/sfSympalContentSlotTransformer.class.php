@@ -75,7 +75,7 @@ class sfSympalContentSlotTransformer
     
     foreach ($this->getTransformerCallbacks() as $callback)
     {
-      call_user_func($callback, $this);
+      $this->setTransformedContent(call_user_func($callback, $this->getTransformedContent(), $this));
     }
   }
   

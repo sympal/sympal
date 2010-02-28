@@ -23,12 +23,15 @@ class sfSympalContentSlotReplacer extends sfSympalContentReplacer
   }
   
   /*
-   * Responds to the sympal.content_renderer.filter_slot_content filter
-   * event. This creates a new replacer and returns the processed content
+   * The main transformer method that is called if a slot type is processed
+   * via the "replacer" transformer.
+   * 
+   * @param string $content The raw content to be processed
+   * @param sfSympalContentSlotTransformer $transformer
    */
-  public static function listenToFilterSlotContent(sfEvent $event, $content)
+  public static function transformSlotContent($content, sfSympalContentSlotTransformer $transformer)
   {
-    $replacer = new self($event->getSubject()->getContentRenderedFor());
+    $replacer = new self($transformer->getContentSlot()->getContentRenderedFor());
     
     return $replacer->replace($content);
   }

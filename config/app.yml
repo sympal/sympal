@@ -253,7 +253,7 @@ all:
         transformers:  [replacer]
           
     slot_transformers:
-      replacer:       [sfSympalContentSlotReplacer, replace]
+      replacer:       [sfSympalContentSlotReplacer, transformSlotContent]
       markdown:       [sfSympalMarkdownRenderer, convertToHtml]
         
 

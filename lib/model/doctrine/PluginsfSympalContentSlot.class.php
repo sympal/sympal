@@ -114,8 +114,9 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     {
       $renderer = $this->getSlotRenderer();
       $rendered = (string) $renderer;
-  
-      $this->_rendered = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.content_renderer.filter_slot_content'), $rendered)->getReturnValue();
+      
+      $transformer = new sfSympalContentSlotTransformer($this);
+      $this->_rendered = $transformer->render();
     }
     return $this->_rendered;
   }
