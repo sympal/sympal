@@ -26,6 +26,3 @@
 <div id="sympal_assets"></div>
 <div id="sympal_links"></div>
 <div id="sympal_objects"></div>
-
-<div id="sympal_slot_errors"></div>
-<div id="sympal_slot_errors_icon"></div>
