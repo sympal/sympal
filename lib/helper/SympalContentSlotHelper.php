@@ -1,36 +1,6 @@
 <?php
 
 /**
- * Render the author of a content record
- *
- * @param sfSympalContent $content 
- * @param string $slot 
- * @return string $author
- */
-function render_content_author(sfSympalContent $content, $slot)
-{
-  return $content->created_by_id ? $content->CreatedBy->username : 'nobody';
-}
-
-/**
- * Render the date published for a content record
- *
- * @param sfSympalContent $content 
- * @param string $slot 
- * @return string $datePublished
- */
-function render_content_date_published(sfSympalContent $content, $slot)
-{
-  if ($content->date_published)
-  {
-    sfSympalToolkit::loadHelpers('Date');
-    return format_datetime($content->date_published, sfSympalConfig::get('date_published_format'));
-  } else {
-    return '0000-00-00';
-  }
-}
-
-/**
  * Include a content slot in your template.
  * 
  * This maintains backwards compatibility.

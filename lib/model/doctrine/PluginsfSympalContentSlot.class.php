@@ -126,6 +126,27 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   }
   
   /**
+   * Retrieves the value that should be used for rendering and transforming.
+   * 
+   * Specifically, this looks for a getXXXSlotValue() method, where XXX
+   * is the camelized name of the slot, on the content object
+   * 
+   * For example, I might want to transform the created_at_id column value
+   * to an actual username. This checks for the hook which would do that
+   */
+  public function getValueForRendering()
+  {
+    $method = sprintf('get%sSlotValue', sfInflector::camelize($this->name));
+    
+    if (method_exists($this->getContentRenderedFor(), $method))
+    {
+      return $this->getContentRenderedFor()->$method($this);
+    }
+    
+    return $this->getRawValue();
+  }
+  
+  /**
    * Returns an instance of the renderer class for this content slot
    * 
    * @return sfSympalContentSlotRenderer

@@ -814,4 +814,32 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
     return $searchData;
   }
+  
+  /**
+   * Used by sfSympalContentSlot to render the created_at_id slot value
+   * 
+   * @see sfSympalContentSlot::getValueForRendering()
+   * @return string
+   */
+  public function getCreatedByIdSlotValue(sfSympalContentSlot $slot)
+  {
+    return $this->created_by_id ? $this->CreatedBy->username : 'nobody';
+  }
+  
+  /**
+   * Used by sfSympalContentSlot to render the date_published slot value
+   * 
+   * @see sfSympalContentSlot::getValueForRendering()
+   * @return string
+   */
+  public function getDatePublishedSlotValue(sfSympalContentSlot $slot)
+  {
+    if ($this->date_published)
+    {
+      sfSympalToolkit::loadHelpers('Date');
+      return format_datetime($this->date_published, sfSympalConfig::get('date_published_format'));
+    } else {
+      return '0000-00-00';
+    }
+  }
 }
