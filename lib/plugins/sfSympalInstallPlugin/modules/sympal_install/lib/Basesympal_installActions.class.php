@@ -88,20 +88,8 @@ abstract class Basesympal_installActions extends sfActions
       $user = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByUsername($values['user']['username']);
       $this->getUser()->signin($user);
 
-      if ($values['setup']['plugins'])
-      {
-        $plugins = $values['setup']['plugins'];
-        foreach ($plugins as $plugin)
-        {
-          $manager = sfSympalPluginManager::getActionInstance($plugin, 'download', $this->getContext()->getConfiguration(), $formatter);
-          $manager->download();
-        }
-        $this->getUser()->setAttribute('sympal_install_plugins', $plugins);
-        $this->redirect('@sympal_install_plugins');
-      } else {
-        $this->getUser()->setFlash('notice', 'Sympal installed successfully!');
-        $this->redirect('@sympal_dashboard');
-      }
+      $this->getUser()->setFlash('notice', 'Sympal installed successfully!');
+      $this->redirect('@sympal_dashboard');
     }
   }
 
