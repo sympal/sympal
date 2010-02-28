@@ -23,6 +23,6 @@
   </div>
 </div>
 
-<div id="sympal_assets"></div>
-<div id="sympal_links"></div>
-<div id="sympal_objects"></div>
+<div id="sympal_assets" class="sympal_inline_edit_bar_area"></div>
+<div id="sympal_links" class="sympal_inline_edit_bar_area"></div>
+<div id="sympal_objects" class="sympal_inline_edit_bar_area"></div>

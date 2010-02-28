@@ -1,6 +1,11 @@
 <?php
 
-
+/**
+ * Renders the inline edit menu, which consists of buttons such as the
+ * assets and links buttons
+ * 
+ * @return string
+ */
 function get_sympal_inline_edit_bar_buttons()
 {
   $sympalContext = sfSympalContext::getInstance();
