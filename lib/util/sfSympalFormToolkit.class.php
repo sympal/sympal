@@ -53,7 +53,11 @@ class sfSympalFormToolkit
     {
       $choices[$key] = $value['label'];
     }
-    $widgetSchema['type'] = new sfWidgetFormChoice(array('choices' => $choices));
+    
+    // make hidden for now, we'll probably bring this back at some point
+    //$widgetSchema['type'] = new sfWidgetFormChoice(array('choices' => $choices));
+    $widgetSchema['type'] = new sfWidgetFormInputHidden();
+    
     $validatorSchema['type'] = new sfValidatorChoice(array('required' => false, 'choices' => array_keys($choices)));
   }
 
