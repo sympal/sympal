@@ -65,7 +65,7 @@
   position: fixed;
   bottom: 2px;
   right: 10px;
-  z-index: 101;
+  z-index: 9999999;
 }
 
 .sympal_inline_edit_bar_publish {
