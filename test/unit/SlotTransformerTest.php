@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(5, new lime_output_color());
+$t = new lime_test(11, new lime_output_color());
 
 // mock class
 class sfSympalContentSlotTransformerTest extends sfSympalContentSlotTransformer
@@ -19,15 +19,29 @@ class sfSympalContentSlotTransformerTest extends sfSympalContentSlotTransformer
   }
 }
 
+// class for test transformer callbacks
+class myUnitTestTransformer
+{
+  public static function transform1(sfSympalContentSlotTransformer $transformer)
+  {
+    $transformer->setTransformedContent('testing');
+  }
+  public static function transform2(sfSympalContentSlotTransformer $transformer)
+  {
+    $content = $transformer->getTransformedContent();
+    $content = str_replace('Markdown', 'Markup', $content);
+    
+    $transformer->setTransformedContent($content);
+  }
+}
+
 $content = Doctrine_Query::create()->from('sfSympalContent')->fetchOne();
 
 
 $contentSlot = $content->getOrCreateSlot('body', array(
   'type' => 'Markdown',
 ));
-$contentSlot->value = '
-Some Markdown Content
-=====================';
+$contentSlot->value = '__Some Markdown Content__';
 $contentSlot->save();
 
 $transformer = new sfSympalContentSlotTransformerTest($contentSlot);
@@ -68,4 +82,32 @@ try
 catch (sfException $e)
 {
   $t->pass('Exception thrown');
+}
+
+
+/*
+ * Test the transformation process
+ */
+
+$t->info('2 - Test the transformation process');
+$t->info('  2.1 - Setup a unit_test transformer');
+$markdownConfig['transformers'] = array('unit_test');
+sfSympalConfig::set('content_slot_types', 'Markdown', $markdownConfig);
+
+$t->info('  2.2 - First transformer should always return static text "testing"');
+sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform1'));
+test_transformer_return($t, $transformer, 'testing', array(), 'testing');
+
+$t->info('  2.3 - Transformer will change "Markdown" to "Markup"');
+sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform2'));
+test_transformer_return($t, $transformer, '__Some Markup Content__', array(), '__Some Markdown Content__');
+
+
+// tests the return values of a run in the transformer
+function test_transformer_return(lime_test $t, sfSympalContentSlotTransformerTest $transformer, $transformedContent, $tokenCallbacks, $result)
+{
+  $result = $transformer->render();
+  $t->is($transformer->getProp('_transformedContent'), $transformedContent, sprintf('->_transformedContent set to "%s"', $transformedContent));
+  $t->is($transformer->getProp('_tokenCallbacks'), $tokenCallbacks, '->_tokenCallbacks matches');
+  $t->is($result, $result, sprintf('The end result is "%s"', $result));
 }

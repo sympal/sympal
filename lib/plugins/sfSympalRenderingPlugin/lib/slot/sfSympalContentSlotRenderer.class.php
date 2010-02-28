@@ -1,5 +1,26 @@
 <?php
 
+/**
+ * Utility class that renders an sfSympalContentSlot object
+ * 
+ * The main job of this class is to get the raw value of the slot in
+ * the correct way. This means looking at the render_function value
+ * on the slot.
+ * 
+ * Normally, the return value will just be the value of the slot. In the
+ * case of column slots, this will be the value of the column sharing
+ * the slot's name on the actual content type object.
+ * 
+ * Transformations on the raw value (e.g. converting markdown to html)
+ * should be done via transformers
+ * 
+ * @package     sfSympalRenderingPlugin
+ * @subpackage  renderer
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-02-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalContentSlotRenderer
 {
   protected
