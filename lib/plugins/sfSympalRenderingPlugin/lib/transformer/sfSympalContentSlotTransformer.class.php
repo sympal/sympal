@@ -4,8 +4,14 @@
  * Handles the processing of an sfSympalContentSlot through its transformers
  * 
  * This takes in a sfSympalContentSlot object and outputs the fully
- * transformed content representing that slot. This also handles caching
- * of the transformation process
+ * transformed content representing that slot.
+ * 
+ * This class is setup for a tokenized system that would allow for the
+ * caching of the overall transformation process, while still keeping
+ * dynamic pieces outside of anything that would go into the cache. The
+ * cache system is not currently in place, pending more discussion. The
+ * transformations themselves would need to be intelligent enough to return
+ * the content and tokenCallbacks in the correct way so that caching is possible.
  * 
  * @package     sfSympalRenderingPlugin
  * @subpackage  transformer
