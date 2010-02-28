@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Menu system that represents the inline edit buttons appearing on the frontend
+ * 
+ * This menu appears in the lower-right corner of the frontend while
+ * editing content inline. This holds tools that assist in inline editing
+ * 
+ * @package     sfSympalEditorPlugin
+ * @subpackage  menu
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-02-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalMenuInlineEditBarButtons extends sfSympalMenu
 {
   protected
