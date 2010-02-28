@@ -224,6 +224,7 @@ all:
       #  label: Label of My Slot Type
       #  renderer: sfSympalContentSlotMySlotRenderer
       #  form: MySlotForm (defaults to sfSympalInlineEditContentSlotForm)
+      #  form_renderer: some_module/form_partial
       #  widget_class: MySlotTypeWidget (defaults to sfWidgetFormSympalMySlotType)
       #  widget_options: []
       #  validator_class: MySlotTypeValidator (defaults to sfValidatorFormSympalMySlotType)
@@ -232,20 +233,28 @@ all:
         label: Single Line of Text
         form: sfSympalInlineEditContentSlotForm
         form_renderer: sympal_edit_slot/slot_editor_form
+        transformers:  [replacer]
       RawHtml:
         label: Raw HTML
         form: sfSympalInlineEditContentSlotForm
         form_renderer: sympal_edit_slot/slot_editor_form
+        transformers:  [replacer]
       Markdown:
         label: Markdown Editor
         form: sfSympalInlineEditContentSlotForm
         form_renderer: sympal_edit_slot/slot_editor_form
+        transformers:  [replacer, markdown]
       TinyMCE:
         label: TinyMCE Rich Text Editor
         form: sfSympalInlineEditContentSlotForm
         form_renderer: sympal_edit_slot/slot_editor_form
         widget_options:
           config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
+        transformers:  [replacer]
+          
+    slot_transformers:
+      replacer:       [sfSympalContentSlotReplacer, replace]
+      markdown:       [sfSympalMarkdownRenderer, convertToHtml]
         
 
     # Enable and disable the check for upgrades via the web when on the Sympal dashboard
