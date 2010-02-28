@@ -222,7 +222,6 @@ all:
     content_slot_types:
       #MySlotType:
       #  label: Label of My Slot Type
-      #  renderer: sfSympalContentSlotRenderer
       #  form: MySlotForm (defaults to sfSympalInlineEditContentSlotForm)
       #  form_renderer: some_module/form_partial
       #  widget_class: MySlotTypeWidget (defaults to sfWidgetFormSympalMySlotType)

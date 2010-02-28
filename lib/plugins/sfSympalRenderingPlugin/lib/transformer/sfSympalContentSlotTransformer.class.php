@@ -71,7 +71,7 @@ class sfSympalContentSlotTransformer
    */
   protected function process()
   {
-    $this->setTransformedContent($this->getContentSlot()->render());
+    $this->setTransformedContent($this->getContentSlot()->getRawValue());
     
     foreach ($this->getTransformerCallbacks() as $callback)
     {

@@ -1,18 +1,6 @@
 <?php
 
 /**
- * Get a Sympal Content instance property
- *
- * @param Content $content 
- * @param string $name 
- * @return mixed $value
- */
-function get_sympal_content_property($content, $name)
-{
-  return $content->$name;
-}
-
-/**
  * Render the author of a content record
  *
  * @param sfSympalContent $content 
@@ -75,7 +63,6 @@ function get_sympal_content_slot()
  * Available options include
  *  * content         An sfSympalContent instance to render the slot for
  *  * type            The rendering type to use for this slot (e.g. Markdown)
- *  * render_function The function/callable used to render the value of slots which are columns
  *  * default_value   A default value to give this slot the first time it's created
  *  * edit_mode       How to edit this slot (in-place (default), popup)
  */
@@ -170,14 +157,13 @@ function _get_sympal_content_slot($name, $options = array())
  * @param sfSympalContent $content  The Content instance
  * @param string $name The name of the slot
  * @param string $type The type of slot
- * @param string $renderFunction The function/callable used to render the value of slots which are columns
+ * @param string $renderFunction This is completely deprecated - use transformers to replace
  * @param array  $options Array of options for this slot
  * @return void
  */
 function get_sympal_content_slot2(sfSympalContent $content, $name, $type = null, $renderFunction = null, $options = array())
 {
   $options['content'] = $content;
-  $options['render_function'] = $renderFunction;
   $options['type'] = $type;
   
   return _get_sympal_content_slot($name, $options);

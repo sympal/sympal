@@ -107,17 +107,21 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
     return $form;
   }
-
+  
+  /**
+   * Renders this slot, which uses the slot's renderer class and runs
+   * it through the transformers
+   * 
+   * @return string
+   */
   public function render()
   {
     if (!$this->_rendered)
     {
-      $renderer = $this->getSlotRenderer();
-      $rendered = (string) $renderer;
-      
       $transformer = new sfSympalContentSlotTransformer($this);
       $this->_rendered = $transformer->render();
     }
+
     return $this->_rendered;
   }
   
