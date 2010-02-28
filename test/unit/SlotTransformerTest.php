@@ -22,16 +22,13 @@ class sfSympalContentSlotTransformerTest extends sfSympalContentSlotTransformer
 // class for test transformer callbacks
 class myUnitTestTransformer
 {
-  public static function transform1(sfSympalContentSlotTransformer $transformer)
+  public static function transform1($content, sfSympalContentSlotTransformer $transformer)
   {
-    $transformer->setTransformedContent('testing');
+    return 'testing';
   }
-  public static function transform2(sfSympalContentSlotTransformer $transformer)
+  public static function transform2($content, sfSympalContentSlotTransformer $transformer)
   {
-    $content = $transformer->getTransformedContent();
-    $content = str_replace('Markdown', 'Markup', $content);
-    
-    $transformer->setTransformedContent($content);
+    return str_replace('Markdown', 'Markup', $content);
   }
 }
 
@@ -68,7 +65,7 @@ $markdownConfig['transformers'] = array('replacer', 'markdown');
 sfSympalConfig::set('content_slot_types', 'Markdown', $markdownConfig);
 
 $callbacks = $transformer->getTransformerCallbacksTest();
-$t->is($callbacks[0], array('sfSympalContentSlotReplacer', 'replace'), 'The first transformer matches the correct callback');
+$t->is($callbacks[0], array('sfSympalContentSlotReplacer', 'transformSlotContent'), 'The first transformer matches the correct callback');
 
 $t->info('  1.3 - Using an invalid transformer throws an exception');
 $markdownConfig['transformers'] = array('fake_transformer');
@@ -100,14 +97,19 @@ test_transformer_return($t, $transformer, 'testing', array(), 'testing');
 
 $t->info('  2.3 - Transformer will change "Markdown" to "Markup"');
 sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform2'));
-test_transformer_return($t, $transformer, '__Some Markup Content__', array(), '__Some Markdown Content__');
+test_transformer_return($t, $transformer, '__Some Markup Content__', array(), '__Some Markup Content__');
 
+/*
+$t->info('  2.4 - Transformer will include a callback wildcard');
+sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform3'));
+test_transformer_return($t, $transformer, '__Some Markup Content__', array(), '__Some Markdown Content__');
+*/
 
 // tests the return values of a run in the transformer
 function test_transformer_return(lime_test $t, sfSympalContentSlotTransformerTest $transformer, $transformedContent, $tokenCallbacks, $result)
 {
-  $result = $transformer->render();
+  $transformerResult = $transformer->render();
   $t->is($transformer->getProp('_transformedContent'), $transformedContent, sprintf('->_transformedContent set to "%s"', $transformedContent));
   $t->is($transformer->getProp('_tokenCallbacks'), $tokenCallbacks, '->_tokenCallbacks matches');
-  $t->is($result, $result, sprintf('The end result is "%s"', $result));
+  $t->is($transformerResult, $result, sprintf('The end result is "%s"', $result));
 }
