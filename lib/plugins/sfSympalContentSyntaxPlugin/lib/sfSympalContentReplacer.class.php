@@ -26,7 +26,7 @@ class sfSympalContentReplacer
   public function replace($content)
   {
     if ($parsed = $this->_parseSyntaxes($content))
-    {      
+    {
       // iterate through all of the replacement types
       foreach($parsed as $type => $replacements)
       {
@@ -63,10 +63,10 @@ class sfSympalContentReplacer
    * Returned syntax will look like this:
    *   array(
    *     'link' => array(
-   *       3 => array('options' => array(), 'replace' => '[link:3]'),
-   *       5 => array('options' => array('option' => 'value'), 'replace' => '[link:5 option=value]'),
+   *       'some-page' => array('options' => array(), 'replace' => '[link:some-page]'),
+   *       'other-page' => array('options' => array('option' => 'value'), 'replace' => '[link:other-page option=value]'),
    *     ), asset => array(
-   *       10 => array('options' => array(), 'replace' => '[asset:10]'),
+   *       'my-asset' => array('options' => array(), 'replace' => '[asset:my-asset]'),
    *     ),
    *   )
    * 
