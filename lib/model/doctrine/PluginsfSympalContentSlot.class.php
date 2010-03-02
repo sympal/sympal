@@ -142,6 +142,10 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     {
       return $this->getContentRenderedFor()->$method($this);
     }
+    elseif (method_exists($this->getContentRenderedFor()->getRecord(), $method))
+    {
+      return $this->getContentRenderedFor()->getRecord()->$method($this);
+    }
     
     return $this->getRawValue();
   }
