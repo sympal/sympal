@@ -107,17 +107,47 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
     return $form;
   }
-
+  
+  /**
+   * Renders this slot, which uses the slot's renderer class and runs
+   * it through the transformers
+   * 
+   * @return string
+   */
   public function render()
   {
     if (!$this->_rendered)
     {
-      $renderer = $this->getSlotRenderer();
-      $rendered = (string) $renderer;
-  
-      $this->_rendered = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.content_renderer.filter_slot_content'), $rendered)->getReturnValue();
+      $transformer = new sfSympalContentSlotTransformer($this);
+      $this->_rendered = $transformer->render();
     }
+
     return $this->_rendered;
+  }
+  
+  /**
+   * Retrieves the value that should be used for rendering and transforming.
+   * 
+   * Specifically, this looks for a getXXXSlotValue() method, where XXX
+   * is the camelized name of the slot, on the content object
+   * 
+   * For example, I might want to transform the created_at_id column value
+   * to an actual username. This checks for the hook which would do that
+   */
+  public function getValueForRendering()
+  {
+    $method = sprintf('get%sSlotValue', sfInflector::camelize($this->name));
+    
+    if (method_exists($this->getContentRenderedFor(), $method))
+    {
+      return $this->getContentRenderedFor()->$method($this);
+    }
+    elseif (method_exists($this->getContentRenderedFor()->getRecord(), $method))
+    {
+      return $this->getContentRenderedFor()->getRecord()->$method($this);
+    }
+    
+    return $this->getRawValue();
   }
   
   /**
@@ -128,7 +158,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   public function getSlotRenderer()
   {
     $contentSlotTypes = sfSympalConfig::get('content_slot_types');
-    $className = isset($contentSlotTypes[$this->type]['renderer']) ? $contentSlotTypes[$this->type]['renderer'] : 'sfSympalContentSlot'.$this->type.'Renderer';
+    $className = isset($contentSlotTypes[$this->type]['renderer']) ? $contentSlotTypes[$this->type]['renderer'] : 'sfSympalContentSlotRenderer';
     
     return new $className($this);
   }
