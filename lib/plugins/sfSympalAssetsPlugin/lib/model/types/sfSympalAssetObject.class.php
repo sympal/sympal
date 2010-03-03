@@ -15,7 +15,7 @@ class sfSympalAssetObject
   public function __construct($filePath)
   {
     $this->_filePath = $filePath;    
-    $this->_rootPath = sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir', '/uploads');
+    $this->_rootPath = sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir', DIRECTORY_SEPARATOR.'uploads');
 
     if ($this->getTypeFromExtension() != $this->_type && $this->_type !== 'file')
     {
@@ -64,7 +64,7 @@ class sfSympalAssetObject
 
   public function getPath()
   {
-    return realpath($this->_rootPath.'/'.$this->getFilePath());
+    return realpath($this->_rootPath.DIRECTORY_SEPARATOR.$this->getFilePath());
   }
 
   public function getRelativePath()
@@ -123,7 +123,7 @@ class sfSympalAssetObject
   {
     if (!$this->_original)
     {
-      $original = sfSympalAssetToolkit::createAssetObject($this->getRelativePathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir').'/'.$this->getName());
+      $original = sfSympalAssetToolkit::createAssetObject($this->getRelativePathDirectory().DIRECTORY_SEPARATOR.sfSympalConfig::get('assets', 'originals_dir').DIRECTORY_SEPARATOR.$this->getName());
       if ($original->exists())
       {
         $this->_original = $original;
@@ -169,12 +169,12 @@ class sfSympalAssetObject
 
   public function rename($newName)
   {
-    $this->move($this->getPathDirectory().'/'.$newName);
+    $this->move($this->getPathDirectory().DIRECTORY_SEPARATOR.$newName);
   }
 
   public function moveTo($path)
   {
-    $this->move($path.'/'.$this->getName());
+    $this->move($path.DIRECTORY_SEPARATOR.$this->getName());
   }
 
   public function move($newPath)
@@ -184,7 +184,7 @@ class sfSympalAssetObject
     $this->setNewPath($newPath);
     if ($original)
     {
-      $original->move($this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir').'/'.$this->getName());
+      $original->move($this->getPathDirectory().DIRECTORY_SEPARATOR.sfSympalConfig::get('assets', 'originals_dir').DIRECTORY_SEPARATOR.$this->getName());
     }
   }
 
