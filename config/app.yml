@@ -222,11 +222,11 @@ all:
     content_slot_types:
       #MySlotType:
       #  label: Label of My Slot Type
-      #  form: MySlotForm                        default: sfSympalInlineEditContentSlotForm)
+      #  form: MySlotForm                        default: sfSympalInlineEditContentSlotForm
       #  form_renderer: some_module/form_partial default: sympal_edit_slot/slot_editor_form
-      #  widget_class: MySlotTypeWidget          default: sfWidgetFormSympalXXXXXXType)
+      #  widget_class: MySlotTypeWidget          default: sfWidgetFormSympalXXXXXXType
       #  widget_options: []
-      #  validator_class: MySlotTypeValidator    default: sfValidatorFormSympalXXXXXXType)
+      #  validator_class: MySlotTypeValidator    default: sfValidatorFormSympalXXXXXXType
       #  validator_options: []
       Text:
         label: Single Line of Text
