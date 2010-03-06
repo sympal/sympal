@@ -172,7 +172,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
    * Retrieves or creates an sfSympalContentSlot object with the given
    * name for this sfSympalContent object
    * 
-   * @return sfSympalContent
+   * @return sfSympalContentSlot
    */
   public function getOrCreateSlot($name, $options = array())
   {
