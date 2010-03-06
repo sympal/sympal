@@ -12,6 +12,6 @@
   </div>
   
   <input type="submit" value=<?php echo __("Save"); ?> class="button" />
-  <input type="button" value=<?php echo __("Cancel"); ?> class="button cancel" />
+  <input type="button" value=<?php echo __("Quit"); ?> class="button cancel" />
   <?php echo image_tag('/sfSympalPlugin/images/loading_circle.gif', array('alt' => 'loading...', 'class' => 'loading_anim')) ?>
 </form>

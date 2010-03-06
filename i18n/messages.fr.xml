@@ -1280,6 +1280,10 @@ et créer des répertoires.</target>
       <trans-unit>
         <source>Setup</source>
         <target>Configuration</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Quit</source>
+        <target>Quitter</target>
       </trans-unit>            
     </body>
   </file>
