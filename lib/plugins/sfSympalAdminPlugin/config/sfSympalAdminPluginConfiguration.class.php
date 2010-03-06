@@ -241,7 +241,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       {
         if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
         {
-          $contentEditor->addChild(__('Edit').format_language($code), '@sympal_change_edit_language?language='.$code, 'title=Switch to '.format_language($code));
+          $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title=Switch to '.format_language($code));
         }
       }
     }

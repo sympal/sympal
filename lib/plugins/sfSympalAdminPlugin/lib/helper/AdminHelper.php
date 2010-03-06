@@ -44,6 +44,8 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
         )
       ));
     }
+
+    $menu->addChild('Signout', '@sympal_signout', array('title' => 'Signout shortcut: Ctrl+Q', 'confirm' => ''.__('Are you sure you want to signout?').'','label' => 'Signout'));
   }
 
   return $menu;
