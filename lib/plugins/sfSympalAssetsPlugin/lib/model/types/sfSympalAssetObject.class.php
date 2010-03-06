@@ -20,7 +20,13 @@ class sfSympalAssetObject
     $_doctrineAsset,
     $_original,
     $_type = 'file';
-
+    
+  /**
+   * Class constructor
+   * 
+   * @param string $filePath The relative filepath of the asset
+   *                         (e.g. my_file.jpg for SF_ROOT_DIR/web/uploads/my_file.jpg)
+   */
   public function __construct($filePath)
   {
     $this->_filePath = $filePath;    
@@ -212,7 +218,12 @@ class sfSympalAssetObject
   {
     $this->move($path.DIRECTORY_SEPARATOR.$this->getName());
   }
-
+  
+  /**
+   * Move this asset to a new location
+   * 
+   * @param string $newPath The absolute new path for this object
+   */
   public function move($newPath)
   {
     $original = $this->getOriginal();
