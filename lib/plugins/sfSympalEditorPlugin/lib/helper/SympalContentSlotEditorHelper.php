@@ -19,7 +19,7 @@ function get_sympal_inline_edit_bar_buttons()
   {
     $menu->addChild('Links', '@sympal_editor_links')->
       isEditModeButton(true)->
-      setShortcut('Ctrl+L')->
+      setShortcut('Ctrl+Shift+L')->
       setInputClass('toggle_sympal_links')->
       setCredentials('InsertLinks')
     ;

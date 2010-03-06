@@ -57,10 +57,6 @@ a.sympal_slot_button:hover {
 	border-color:#c5c5c5;
 	background:#ffffcc;
 }
-.sympal_slot_form input, .sympal_content_slot_editor textarea {
-  width: 98% !important;
-  display: block;
-}
 
 .sympal_slot_form input.button {
   display: inline;
