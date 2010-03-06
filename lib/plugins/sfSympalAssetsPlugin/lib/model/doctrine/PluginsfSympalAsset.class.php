@@ -10,6 +10,16 @@
  * @author     ##NAME## <##EMAIL##>
  * @version    SVN: $Id: Builder.php 6820 2009-11-30 17:27:49Z jwage $
  */
+
+/**
+ * Doctrine_Record class representing an asset object
+ * 
+ * @package     sfSympalAssetsPlugin
+ * @subpackage  Doctrine_Record
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-06
+ * @version     svn:$Id$ $Author$
+ */
 abstract class PluginsfSympalAsset extends BasesfSympalAsset
 {
   private $_assetObject;
@@ -52,13 +62,22 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
   {
     return sprintf('[asset:%s]', $this->getSlug());
   }
-
+  
+  /**
+   * Returns an sfSympalAssetObject instance that represents this asset
+   * 
+   * The actual subclass of sfSympalAssetObject will depend on the type
+   * of this file, as determined by its extension
+   * 
+   * @return sfSympalAssetObject
+   */
   public function getAssetObject()
   {
     if (!$this->_assetObject)
     {
       $this->_assetObject = sfSympalAssetToolkit::createAssetObject($this->path.'/'.$this->name);
     }
+
     return $this->_assetObject;
   }
 
@@ -104,7 +123,12 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
   {
     return $this->getAssetObject()->exists();
   }
-
+  
+  /**
+   * Builds a string slug based on the filename
+   * 
+   * @return string
+   */
   public static function slugBuilder($text)
   {
     if (strpos($text, '.') !== false)
@@ -115,6 +139,7 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
     } else {
       $slug = $text;
     }
+
     return Doctrine_Inflector::urlize($slug);
   }
 
