@@ -123,16 +123,32 @@ class sfSympalAssetObject
     $extension = $this->getExtension();
     return $withExtension && $extension ? $this->_name.'.'.$extension : $this->_name;
   }
-
+  
+  /**
+   * Returns the filesize of this file divided by the round variable
+   * 
+   * @example
+   * $kilobyteSize = $asset->getSize(1000);
+   * 
+   * @param double $round A number used to divide the byte size
+   * @return double
+   */
   public function getSize($round = 1000)
   {
     if (!$this->_size)
     {
       $this->_size = filesize($this->getPath());
     }
+
     return $round >= 1 ? round($this->_size / $round) : $this->_size;
   }
 
+  /**
+   * Returns an sfSympalAssetObject instance representing an original
+   * copy of this asset (if one exists)
+   * 
+   * @return sfSympalAssetObject
+   */
   public function getOriginal()
   {
     if (!$this->_original)
@@ -143,6 +159,7 @@ class sfSympalAssetObject
         $this->_original = $original;
       }
     }
+
     return $this->_original;
   }
 
