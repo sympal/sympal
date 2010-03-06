@@ -1273,7 +1273,14 @@ et créer des répertoires.</target>
         <source>The item was deleted successfully.</source>
         <target>L'objet a été supprimé avec succès.</target>
       </trans-unit>            
-         
+      <trans-unit>
+        <source>Clear Cache</source>
+        <target>Vider le cache</target>
+      </trans-unit>            
+      <trans-unit>
+        <source>Setup</source>
+        <target>Configuration</target>
+      </trans-unit>            
     </body>
   </file>
 </xliff>
