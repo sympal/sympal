@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Asset object representing an image
+ * 
+ * @package     sfSympalAssetsPlugin
+ * @subpackage  type
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-06
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalAssetImageObject extends sfSympalAssetFileObject
 {
   protected
@@ -40,6 +49,12 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     return $thumb->saveAs($this->getPath());
   }
 
+  /**
+   * Crops this image
+   * 
+   * This replaces the actual image file with the cropped version
+   * @return boolean The success of the cropping
+   */
   public function cropImage($x, $y, $w, $h)
   {
     $targetWidth = $w;
@@ -54,6 +69,7 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
   	imagecopyresampled($destR ,$imgR, 0, 0, $x, $y, $targetWidth, $targetHeight, $w, $h);
 
     $func = 'image'.$type;
+
   	return $func($destR, $this->getPath(), $quality);
   }
 

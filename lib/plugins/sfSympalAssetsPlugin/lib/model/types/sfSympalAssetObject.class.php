@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Class that represents an uploaded asset - assists in rendering of that asset
+ * 
+ * @package     sfSympalAssetPlugin
+ * @subpackage  asset
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-06
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalAssetObject
 {
   protected
@@ -192,7 +201,15 @@ class sfSympalAssetObject
   {
     $this->_filePath = str_replace($this->_rootPath, null, $path);
   }
-
+  
+  /**
+   * Renders the asset, using a variety of options and taking into account
+   * the type of this object
+   * 
+   * @param array $options Rendering options, which include:
+   *   * renderer - A class that will entirely handle the rendering of this asset
+   *   * linked_thumbnail - 
+   */
   public function render($options = array())
   {
     $options = array_merge(sfSympalConfig::get('assets', 'default_render_options', array()), $options);
@@ -252,7 +269,15 @@ class sfSympalAssetObject
   {
     return image_tag($this->getIcon(), $options);
   }
-
+  
+  /**
+   * Returns an image tag to a thumbnail that represents this asset
+   * 
+   * This may just be an icon representing the file type, or an actual
+   * thumbnail (if this asset is actually an image)
+   * 
+   * @return string The image tag
+   */
   public function getThumbnailImage($options = array())
   {
     return image_tag($this->getThumbnailUrl(), $options);

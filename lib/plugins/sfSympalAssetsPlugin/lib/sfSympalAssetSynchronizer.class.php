@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Responsible for creating sfSympalAsset records for any uploaded asset
+ * 
+ * @package     sfSympalAssetPlugin
+ * @subpackage  util
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-06
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalAssetSynchronizer
 {
   private $_dispatcher;
