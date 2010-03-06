@@ -26,6 +26,7 @@ class sfSympalAssetObject
     $this->_filePath = $filePath;    
     $this->_rootPath = sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir', DIRECTORY_SEPARATOR.'uploads');
 
+    // make sure an object isn't initialized with the wrong type subclass
     if ($this->getTypeFromExtension() != $this->_type && $this->_type !== 'file')
     {
       throw new sfException(sprintf('The file "%s" is not a %s', $file, $this->_type));
@@ -47,9 +48,13 @@ class sfSympalAssetObject
     return $this->_type;
   }
 
+  /**
+   * Whether or not this object is an image
+   * @return boolean
+   */
   public function isImage()
   {
-    return false;
+    return ($this->getType() == 'image');
   }
 
   public function isFile()
@@ -213,7 +218,7 @@ class sfSympalAssetObject
    * 
    * @param array $options Rendering options, which include:
    *   * renderer - A class that will entirely handle the rendering of this asset
-   *   * linked_thumbnail - 
+   *   * linked_thumbnail - A link to this asset with a thumbnail or icon as its body
    */
   public function render($options = array())
   {
