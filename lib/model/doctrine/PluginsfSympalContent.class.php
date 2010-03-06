@@ -839,7 +839,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       sfSympalToolkit::loadHelpers('Date');
       return format_datetime($this->date_published, sfSympalConfig::get('date_published_format'));
     } else {
-      return '0000-00-00';
+      return 'unpublished';
     }
   }
 }
