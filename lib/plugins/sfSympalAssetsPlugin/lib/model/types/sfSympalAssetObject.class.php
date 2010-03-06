@@ -158,7 +158,12 @@ class sfSympalAssetObject
   {
     return true;
   }
-
+  
+  /**
+   * Retrieves the sfSympalAsset object that represents this asset.
+   * 
+   * @return sfSympalAsset
+   */
   public function getDoctrineAsset()
   {
     if (!$this->_doctrineAsset)

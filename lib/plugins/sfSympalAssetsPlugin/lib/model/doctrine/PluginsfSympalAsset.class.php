@@ -80,7 +80,13 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
 
     return $this->_assetObject;
   }
-
+  
+  /**
+   * Assigns an sfSympalAssetObject to this record.
+   * 
+   * Used primarily internally for a one-to-one relationship between
+   * sfSympalAsset and sfSympalAssetObject
+   */
   public function setAssetObject($assetObject)
   {
     $this->_assetObject = $assetObject;
