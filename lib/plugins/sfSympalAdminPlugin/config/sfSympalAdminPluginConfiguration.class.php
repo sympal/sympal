@@ -75,7 +75,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
         }
         if ($formatted)
         {
-          $changeLanguage->addChild(image_tag('/sfSympalPlugin/images/flags/'.$code.'.png').' '.$formatted, '@sympal_change_language?language='.$code, 'title=Switch to '.$formatted);
+          $changeLanguage->addChild($formatted, '@sympal_change_language?language='.$code, 'title=Switch to '.$formatted);
         }
       }
     }
