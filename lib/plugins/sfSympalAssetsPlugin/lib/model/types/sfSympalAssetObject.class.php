@@ -269,7 +269,12 @@ class sfSympalAssetObject
       return $this->getEmbed($options);
     }
   }
-
+  
+  /**
+   * Returns an image tag to an icon that represents this file type
+   * 
+   * @return string
+   */
   public function getIconImage($options = array())
   {
     return image_tag($this->getIcon(), $options);

@@ -109,12 +109,15 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
   {
     $this->getAssetObject()->save();
   }
-
+  
   public function postInsert($event)
   {
     $this->copyOriginal();
   }
-
+  
+  /**
+   * Copies the raw image to an "originals" directory
+   */
   public function copyOriginal()
   {
     $dir = $this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'originals_dir');

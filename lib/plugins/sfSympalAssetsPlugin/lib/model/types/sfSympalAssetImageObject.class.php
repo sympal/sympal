@@ -42,10 +42,16 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     return $dimensions[1];
   }
 
+  /**
+   * Resizes this image
+   * 
+   * This will replace this image file with the resized version
+   */
   public function resize($width, $height)
   {
     $thumb = new sfImage($this->getOriginal()->getPath());
     $thumb->thumbnail($width, $height);
+
     return $thumb->saveAs($this->getPath());
   }
 

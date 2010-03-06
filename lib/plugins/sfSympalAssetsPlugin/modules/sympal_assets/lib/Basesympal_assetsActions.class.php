@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Actions class for manipulation of assets
+ * 
+ * @package     sfSympalAssetsPlugin
+ * @subpackage  actions
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-06
+ * @version     svn:$Id$ $Author$
+ */
 class Basesympal_assetsActions extends sfActions
 {
   public function preExecute()
