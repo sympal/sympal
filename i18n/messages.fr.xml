@@ -1284,7 +1284,11 @@ et créer des répertoires.</target>
       <trans-unit>
         <source>Quit</source>
         <target>Quitter</target>
-      </trans-unit>            
+      </trans-unit>
+      <trans-unit>
+        <source>Edit </source>
+        <target>Éditer </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
