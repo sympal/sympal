@@ -91,12 +91,24 @@ class sfSympalAssetObject
   {
     return realpath($this->_rootPath.DIRECTORY_SEPARATOR.$this->getFilePath());
   }
-
+  
+  /**
+   * Returns the path to the image relative to the upload directory
+   * SF_ROOT_DIR/web/uploads/assets/my_file.txt => /assets/my_file.txt
+   * 
+   * @return string
+   */
   public function getRelativePath()
   {
     return str_replace($this->getRootPath(), null, $this->getPath());
   }
 
+  /**
+   * Returns the directory name relative to the uploads directory
+   * SF_ROOT_DIR/web/uploads/assets/my_file.txt => /assets
+   * 
+   * @return string
+   */
   public function getRelativePathDirectory()
   {
     if ($this->getRootPath() == $this->getPathDirectory())
