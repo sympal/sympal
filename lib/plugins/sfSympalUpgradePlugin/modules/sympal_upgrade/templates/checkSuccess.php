@@ -5,8 +5,8 @@
 <h1>Upgrade to <?php echo $latestVersion ?></h1>
 
 <div class="sympal_new_version_box">
-  A new version of Sympal was detected! Read below for directions on how to upgrade
-  from your current version of <?php echo $currentVersion ?> to <?php echo $latestVersion ?>.
+<?php echo sprintf(__('A new version of Sympal was detected! Read below for directions on how to upgrade from your current version of %s to %s.'), $currentVersion, $latestVersion); ?>
+
 </div>
 
 <?php echo sfSympalMarkdownRenderer::convertToHtml("
@@ -51,12 +51,12 @@ upgrade tasks.
 </p>
 
 <?php else: ?>
-  <h1>No Updates Found</h1>
+<h1> <?php echo __('No Updates Found'); ?></h1>
 
   <?php echo get_sympal_breadcrumbs(array(
     'Dashboard' => '@sympal_dashboard',
     'Check for Updates' => null
   )) ?>
 
-  <p>Your Sympal installation is already up to date at <?php echo $currentVersion ?>!</p>
+  <p><?php echo sprintf(__('Your Sympal installation is already up to date at %s!'), $currentVersion); ?></p>
 <?php endif; ?>

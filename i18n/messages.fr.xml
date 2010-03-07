@@ -31,17 +31,12 @@ download and install new plugins found on the web.</source>
         <target>Titre</target>
       </trans-unit>
       <trans-unit id="80">
-        <source>Go to Site</source>
-        <target>Aller sur le site</target>
+        <source>Go to %s</source>
+        <target>Aller sur %s</target>
       </trans-unit>
       <trans-unit id="90">
         <source>My Dashboard</source>
         <target>Mon tableau de bord</target>
-      </trans-unit>
-      <!-- FIXME -->
-      <trans-unit id="100">
-        <source>Frontend Content</source>
-        <target></target>
       </trans-unit>
       <trans-unit id="110">
         <source>Content List</source>
@@ -1392,6 +1387,27 @@ et créer des répertoires.</target>
       <trans-unit>
         <source>Un-Published: %s Content %s</source>
         <target>Non-publié : %s -> %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create New</source>
+        <target>Créer un nouveau</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Your Sympal installation is already up to date at %s!</source>
+        <target>Votre installation de Sympa est déjà à jour (%s) !</target>
+      </trans-unit>
+
+      <trans-unit>
+        <source>Sympal requires that some files and folders are writeable in your project. The file "%s" specifically is not writeable. Run the sympal:fix-perms task to fix or manually adjust the permissions.</source>
+        <target>Plusieurs fichiers et répertoires doivent être accessibles en écriture pour que Sympal puisse fonctionner. %s par exemple.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>No Updates Found</source>
+        <target>Pas de mise à jour trouvée</target>
+      </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
       </trans-unit>
     </body>
   </file>
