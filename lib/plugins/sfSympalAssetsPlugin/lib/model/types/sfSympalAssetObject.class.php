@@ -122,7 +122,13 @@ class sfSympalAssetObject
   {
     return $this->_rootPath;
   }
-
+  
+  /**
+   * Returns the filename for this asset
+   * 
+   * @param boolean $withExtension Whether or not to return the filename with the extension
+   * @return string The filename
+   */
   public function getName($withExtension = true)
   {
     $this->_name = pathinfo($this->_filePath, PATHINFO_FILENAME);
