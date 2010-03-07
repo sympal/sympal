@@ -81,7 +81,7 @@ class sfSympalAssetToolkit
   {
     $dir = '/sfSympalAssetsPlugin/images/icons';
     $path = self::getIconsPath();
-    if (file_exists(sfConfig::get('sf_web_dir').'/'.$path.'/'.$extension.'.png'))
+    if (file_exists($path.'/'.$extension.'.png'))
     {
       return $dir.'/'.$extension.'.png';
     }
@@ -92,7 +92,13 @@ class sfSympalAssetToolkit
   {
     return sfSympalConfig::get('assets', 'file_types', array());
   }
-
+  
+  /**
+   * Returns the absolute path to the directory that holds the file
+   * types icons
+   * 
+   * @return string
+   */
   public static function getIconsPath()
   {
     if (!self::$iconsPath)
