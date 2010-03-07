@@ -1350,8 +1350,24 @@ et créer des répertoires.</target>
         <target>Aller à </target>
       </trans-unit>
       <trans-unit>
-        <source></source>
-        <target></target>
+        <source>Site Content</source>
+        <target>Contenu du site</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Yes</source>
+        <target>Oui</target>
+      </trans-unit>
+      <trans-unit>
+        <source>No</source>
+        <target>Non</target>
+      </trans-unit>
+      <trans-unit>
+        <source>All</source>
+        <target>~</target>
+      </trans-unit>
+      <trans-unit>
+        <source>You must at least select one item.</source>
+        <target>Vous devez au moins sélectionner une ligne.</target>
       </trans-unit>
     </body>
   </file>
