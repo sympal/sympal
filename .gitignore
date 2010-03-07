@@ -5,5 +5,6 @@ test/fixtures/project/log/*
 !test/fixtures/project/data/fixtures
 !test/fixtures/project/data/fresh_test_db.sqlite
 test/fixtures/project/web/sfDoctrinePlugin
+test/fixtures/project/web/uploads
 
 base
