@@ -1289,6 +1289,14 @@ et créer des répertoires.</target>
         <source>Edit </source>
         <target>Éditer </target>
       </trans-unit>
+      <trans-unit>
+        <source>Switch to </source>
+        <target>Changer pour </target>
+      </trans-unit>
+      <trans-unit>
+        <source>Are you sure you want to delete this directory?</source>
+        <target>Êtes-vous sûr de vouloir supprimer ce dossier ?</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
