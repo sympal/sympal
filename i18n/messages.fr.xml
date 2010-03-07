@@ -50,11 +50,6 @@ download and install new plugins found on the web.</source>
         <source>Assets</source>
         <target>Médias</target>
       </trans-unit>
-      <!-- FIXME -->
-      <trans-unit id="140">
-        <source>Frontend Setup</source>
-        <target></target>
-      </trans-unit>
       <trans-unit id="150">
         <source>404 Redirects</source>
         <target>Redirections 404</target>
@@ -66,11 +61,6 @@ download and install new plugins found on the web.</source>
       <trans-unit id="170">
         <source>Menus</source>
         <target>Menus</target>
-      </trans-unit>
-      <!-- FIXME -->
-      <trans-unit id="180">
-        <source>Users &amp; Security</source>
-        <target>Utilisateurs &amp; Sécurité</target>
       </trans-unit>
       <trans-unit id="190">
         <source>Users</source>
@@ -108,7 +98,6 @@ download and install new plugins found on the web.</source>
         <source>Plugin Manager</source>
         <target>Gestionnaire de plugin</target>
       </trans-unit>
-      <!-- FIXME -->
       <trans-unit id="280">
         <source>Manage the configuration of your Sympal project from the
   easy to use web form below. The different functionalities added by Sympal
@@ -1404,6 +1393,10 @@ et créer des répertoires.</target>
       <trans-unit>
         <source>No Updates Found</source>
         <target>Pas de mise à jour trouvée</target>
+      </trans-unit>
+      <trans-unit>
+        <source>New</source>
+        <target>Nouveau</target>
       </trans-unit>
       <trans-unit>
         <source></source>
