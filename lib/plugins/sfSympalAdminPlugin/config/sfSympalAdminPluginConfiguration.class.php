@@ -241,9 +241,29 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       {
         if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
         {
-          $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title=Switch to '.format_language($code));
+          $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title='.__('Switch to ').''.format_language($code));
         }
       }
     }
+
+    if($user->hasCredential('PublishContent'))
+    {
+      if($content->getIsPublished())
+      {
+        $contentEditor
+          ->addChild(__('Unpublish'), '@sympal_unpublish_content?id='.$content['id'], 'title='.__('Published on %date%', array('%date%' => format_date($content->getDatePublished(), 'g'))).'. '.__('Click to unpublish content.'));
+      }
+      elseif($content->getIsPublishInTheFuture())
+      {
+        $contentEditor
+          ->addChild(__('Unpublish'), '@sympal_unpublish_content?id='.$content['id'], 'title='.__('Will publish on %date%', array('%date%' => format_date($content->getDatePublished(), 'g'))).'. '.__('Click to unpublish content.'));
+      }
+      else
+      {
+        $contentEditor
+          ->addChild(__('Publish'), '@sympal_publish_content?id='.$content['id'], 'title='.__('Has not been published yet.'.__('Click to publish content.')));
+      }
+    } 
+  
   }
 }
