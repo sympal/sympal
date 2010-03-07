@@ -25,7 +25,6 @@ class sfSympalAssetSynchronizer
     $this->synchronizeDirectory($this->_path);
 
     $dirs = sfFinder::type('dir')
-      ->relative()
       ->prune('.*')
       ->discard('.*')
       ->relative()
