@@ -261,7 +261,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       else
       {
         $contentEditor
-          ->addChild(__('Publish'), '@sympal_publish_content?id='.$content['id'], 'title='.__('Has not been published yet.'.__('Click to publish content.')));
+          ->addChild(__('Publish'), '@sympal_publish_content?id='.$content['id'], 'title='.__('Has not been published yet. '.__('Click to publish content.')));
       }
     } 
   

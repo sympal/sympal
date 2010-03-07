@@ -1297,6 +1297,22 @@ et créer des répertoires.</target>
         <source>Are you sure you want to delete this directory?</source>
         <target>Êtes-vous sûr de vouloir supprimer ce dossier ?</target>
       </trans-unit>
+      <trans-unit>
+        <source>Unpublish</source>
+        <target>Dé-publier</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Menu Item</source>
+        <target>Édition du menu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create New Menu Item</source>
+        <target>Création d'un nouveau menu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Has not been published yet. </source>
+        <target>N'a pas encore été publié. </target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
