@@ -19,7 +19,7 @@ class sfSympalAssetObject
     $_icon,
     $_doctrineAsset,
     $_original,
-    $_type = 'file';
+    $_type = null;
     
   /**
    * Class constructor
@@ -31,12 +31,22 @@ class sfSympalAssetObject
   {
     $this->_filePath = $filePath;    
     $this->_rootPath = sfConfig::get('sf_web_dir').sfSympalConfig::get('assets', 'root_dir', DIRECTORY_SEPARATOR.'uploads');
-
+    
     // make sure an object isn't initialized with the wrong type subclass
+    $type = $this->getTypeFromExtension();
     if ($this->getTypeFromExtension() != $this->_type && $this->_type !== 'file')
     {
-      throw new sfException(sprintf('The file "%s" is not a %s', $file, $this->_type));
+      throw new sfException(sprintf('The file "%s" is not a %s', $filePath, $this->_type));
     }
+    
+    /*
+     *  Set the type
+     * 
+     * This is important because multiple types could all have the same
+     * class. The above line makes sure that the type is legit for this
+     * class, now we make sure that the type is set correctly
+     */
+    $this->_type = $type;
   }
 
   public function exists()
@@ -61,11 +71,6 @@ class sfSympalAssetObject
   public function isImage()
   {
     return ($this->getType() == 'image');
-  }
-
-  public function isFile()
-  {
-    return false;
   }
 
   public function getIcon()
@@ -233,14 +238,25 @@ class sfSympalAssetObject
   public function move($newPath)
   {
     $original = $this->getOriginal();
+
+    mkdir(dirname($newPath), 0777, true);
     rename($this->getPath(), $newPath);
     $this->setNewPath($newPath);
+
     if ($original)
     {
       $original->move($this->getPathDirectory().DIRECTORY_SEPARATOR.sfSympalConfig::get('assets', 'originals_dir').DIRECTORY_SEPARATOR.$this->getName());
     }
   }
-
+  
+  /**
+   * Ssets a new path for this asset. The path is relative to the
+   * uploads directory.
+   * 
+   * To move or rename an asset, use move() or rename()
+   * 
+   * @param string $path The relative path to set as the asset
+   */
   public function setNewPath($path)
   {
     $this->_filePath = str_replace($this->_rootPath, null, $path);
