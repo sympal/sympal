@@ -124,6 +124,11 @@ class sfSympalAssetObject
     return $this->_filePath;
   }
 
+  /**
+   * Returns the url to this assets
+   * 
+   * @return string
+   */
   public function getUrl()
   {
     $request = sfContext::getInstance()->getRequest();
@@ -162,7 +167,7 @@ class sfSympalAssetObject
    * @param double $round A number used to divide the byte size
    * @return double
    */
-  public function getSize($round = 1000)
+  public function getSize($round = 1024)
   {
     if (!$this->_size)
     {
