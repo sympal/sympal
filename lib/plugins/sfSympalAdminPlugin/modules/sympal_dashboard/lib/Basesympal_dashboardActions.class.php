@@ -35,10 +35,10 @@ abstract class Basesympal_dashboardActions extends sfActions
     $this->indicators->addChild(sprintf(__('Users: %s'), $numUsers), '@sympal_users');
 
     $numSites = Doctrine_Core::getTable('sfSympalSite')->count();
-    $this->indicators->addChild(sprintf('Sites: %s', $numSites), '@sympal_sites');
+    $this->indicators->addChild(sprintf(__('Sites: %s'), $numSites), '@sympal_sites');
 
     $numContentTypes = Doctrine_Core::getTable('sfSympalContentType')->count();
-    $this->indicators->addChild(sprintf('Content Types: %s', $numContentTypes), '@sympal_content_types');
+    $this->indicators->addChild(sprintf(__('Content Types: %s'), $numContentTypes), '@sympal_content_types');
 
     $contentTypes = Doctrine::getTable('sfSympalContentType')->getAllContentTypes();
     foreach ($contentTypes as $contentType)
@@ -49,7 +49,7 @@ abstract class Basesympal_dashboardActions extends sfActions
         ->andWhere('c.content_type_id = ?', $contentType->getId())
         ->count();
       $this->indicators->addChild(
-        sprintf('Published: %s Content %s', $contentType->getLabel(), $numPublishedContent),
+        sprintf(__('Published: %s Content %s'), $contentType->getLabel(), $numPublishedContent),
         '@sympal_content_list_type?type='.$contentType->getId().'&published=1'
       );
 
@@ -59,7 +59,7 @@ abstract class Basesympal_dashboardActions extends sfActions
         ->andWhere('c.content_type_id = ?', $contentType->getId())
         ->count();
       $this->indicators->addChild(
-        sprintf('Un-Published: %s Content %s', $contentType->getLabel(), $numUnPublishedContent),
+        sprintf(__('Un-Published: %s Content %s'), $contentType->getLabel(), $numUnPublishedContent),
         '@sympal_content_list_type?type='.$contentType->getId().'&published=0'
       );
     }

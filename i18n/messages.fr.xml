@@ -908,8 +908,8 @@ the button above.</source>
         <target>Tableau de bord Sympal</target>
       </trans-unit>
       <trans-unit id="2900">
-        <source>Hello %name%! Welcome to your Sympal Dashboard. Below you can navigate the functionality and administer your site.</source>
-        <target>Bonjour %name% ! Bienvenue sur votre tableau de bord Sympal. Vous pouvez administrer votre site grâce aux fonctionnaités ci-dessous.</target>
+        <source>Hello %name%! Welcome to your Sympal Dashboard.</source>
+        <target>Bonjour %name% ! Bienvenue sur votre tableau de bord Sympal.</target>
       </trans-unit>
       <trans-unit id="2910">
         <source>Go to the Sympal admin area for your site.</source>
@@ -1368,6 +1368,30 @@ et créer des répertoires.</target>
       <trans-unit>
         <source>You must at least select one item.</source>
         <target>Vous devez au moins sélectionner une ligne.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Here is a list of indicators for your installation:</source>
+        <target>Voici une liste d'indicateur pour votre installation :</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Users: %s</source>
+        <target>Utilisateurs : %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sites: %s</source>
+        <target>Sites : %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content Types: %s</source>
+        <target>Types de contenu : %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Published: %s Content %s</source>
+        <target>Publié : %s -> %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Un-Published: %s Content %s</source>
+        <target>Non-publié : %s -> %s</target>
       </trans-unit>
     </body>
   </file>
