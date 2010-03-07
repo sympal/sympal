@@ -264,6 +264,13 @@
   border-radius: 20px;
 }
 
+/*
+ * Hide edit mode buttons
+ */
+.sympal_inline_edit_bar_edit_buttons {
+  display: none;
+}
+
 #sympal_ask_confirmation {
   padding: 12px;
   background: #ffc;

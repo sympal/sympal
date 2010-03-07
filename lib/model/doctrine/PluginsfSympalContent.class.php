@@ -172,7 +172,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
    * Retrieves or creates an sfSympalContentSlot object with the given
    * name for this sfSympalContent object
    * 
-   * @return sfSympalContent
+   * @return sfSympalContentSlot
    */
   public function getOrCreateSlot($name, $options = array())
   {
@@ -839,7 +839,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       sfSympalToolkit::loadHelpers('Date');
       return format_datetime($this->date_published, sfSympalConfig::get('date_published_format'));
     } else {
-      return '0000-00-00';
+      return 'unpublished';
     }
   }
 }
