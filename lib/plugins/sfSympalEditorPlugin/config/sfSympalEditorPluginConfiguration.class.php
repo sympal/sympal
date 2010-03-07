@@ -38,7 +38,7 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
     ;
     
     $menu->
-      addChild('Cancel')->
+      addChild('Quit')->
       isEditModeButton(true)->
       setShortcut('Ctrl+Shift+X')->
       setInputClass('sympal_disable_edit_mode')
