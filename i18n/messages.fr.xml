@@ -1313,6 +1313,46 @@ et créer des répertoires.</target>
         <source>Has not been published yet. </source>
         <target>N'a pas encore été publié. </target>
       </trans-unit>
+      <trans-unit>
+        <source>Powered by %1% %2%</source>
+        <target>Réalisé avec %1% %2%</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Make Global Default</source>
+        <target>Thème global par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Previewing "%1%" Theme</source>
+        <target>Prévisualisation du thème "%1%"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>You are previewing the %1% theme. Go back to the %2%.</source>
+        <target>Vous prévisualisez le thème %1%. Revenir à la %2%.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>list of themes</source>
+        <target>liste des thèmes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Make %1% Default</source>
+        <target>Thème par défaut pour %1%</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Remove %1% Default</source>
+        <target>Enlever ce thème pour %1%</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Changed language successfully!</source>
+        <target>Langage changé avec succès !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Go to %s</source>
+        <target>Aller à </target>
+      </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
