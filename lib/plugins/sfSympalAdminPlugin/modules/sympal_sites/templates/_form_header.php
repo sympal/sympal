@@ -8,6 +8,6 @@
   <?php echo get_sympal_breadcrumbs(array(
     'Dashboard' => '@sympal_dashboard',
     'Sites' => '@sympal_sites',
-    sprintf('Editing Site "%s"', $form->getObject()->getTitle()) => null
+    sprintf(__('Editing Site "%s"'), $form->getObject()->getTitle()) => null
   )) ?>
 <?php endif; ?>

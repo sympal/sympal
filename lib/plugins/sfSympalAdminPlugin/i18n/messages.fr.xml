@@ -21,6 +21,18 @@
         <target>La vidange du cache est terminée.</target>
       </trans-unit>
       <trans-unit>
+        <source>Editing </source>
+        <target>Edition </target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Site "%s"</source>
+        <target>Edition du site "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Content Type "%s"</source>
+        <target>Edition du type de contenu "%s"</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>
