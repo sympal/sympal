@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Content un-published successfully!</source>
+        <target>Contenu dé-publié avec succès !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content published successfully!</source>
+        <target>Contenu publié avec succès !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Slot saved</source>
+        <target>Slot enregistré</target>
+      </trans-unit>
+      <trans-unit>
+        <source>There was an error saving your slot</source>
+        <target>Il y a eu une erreur pendant l'enregistrement</target>
+      </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

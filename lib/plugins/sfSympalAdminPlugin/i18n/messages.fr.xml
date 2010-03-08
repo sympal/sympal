@@ -53,6 +53,14 @@
         <target>Le thème a été changé avec succès !</target>
       </trans-unit>
       <trans-unit>
+        <source>Editing Slot "%s"</source>
+        <target>Edition du slot "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Showing all %count% total results.</source>
+        <target>Les %count% résultats sont affichés.</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>
