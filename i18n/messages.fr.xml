@@ -1399,6 +1399,14 @@ et créer des répertoires.</target>
         <target>Nouveau</target>
       </trans-unit>
       <trans-unit>
+        <source>Default culture</source>
+        <target>Langage par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Language codes</source>
+        <target>Codes langage</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>
