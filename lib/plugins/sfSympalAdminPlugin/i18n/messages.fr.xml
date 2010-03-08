@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Clearing Cache</source>
+        <target>Vidange du cache</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Starting cache clearing process...</source>
+        <target>Début du processus de vidange du cache...</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Clearing %s cache...</source>
+        <target>Vidange du cache "%s"...</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Cache clearing process is finished.</source>
+        <target>La vidange du cache est terminée.</target>
+      </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -20,6 +20,7 @@ abstract class Basesympal_adminActions extends sfActions
       'template',
       'menu'
     );
+
     if ($type = $request->getParameter('type'))
     {
       switch ($type)
@@ -36,7 +37,7 @@ abstract class Basesympal_adminActions extends sfActions
           $this->clearMenuCache();
         break;
       }
-      $msg = 'Clearing '.$type.' cache...';
+      $msg = sprintf(__('Clearing %s cache...'), $type);
       return $this->renderText($msg);
     }
   }

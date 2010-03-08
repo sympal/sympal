@@ -1,9 +1,3 @@
-<script type="text/javascript">
-  $(function() {
-    $('#sympal_clear_cache_fancybox').fancybox();
-  });
-</script>
-
 <?php sympal_use_jquery() ?>
 <?php sympal_use_javascript('/sfSympalPlugin/fancybox/jquery.fancybox.js') ?>
 <?php sympal_use_stylesheet('/sfSympalPlugin/fancybox/jquery.fancybox.css') ?>
