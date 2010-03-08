@@ -33,6 +33,26 @@
         <target>Edition du type de contenu "%s"</target>
       </trans-unit>
       <trans-unit>
+        <source>Sympal / Preview</source>
+        <target>Sympal / Prévisualisation</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal / Themes</source>
+        <target>Sympal / Thèmes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>This action will change the default theme to "%s" for the "%s" site.</source>
+        <target>Cette action changera le thème par défaut vers "%s" pour le site "%s".</target>
+      </trans-unit>
+      <trans-unit>
+        <source>This action will change the global default theme to "%s"</source>
+        <target>Cette action changera le thème global par défaut vers "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Theme successfully changed!</source>
+        <target>Le thème a été changé avec succès !</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>

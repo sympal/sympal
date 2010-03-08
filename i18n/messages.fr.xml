@@ -1407,6 +1407,14 @@ et créer des répertoires.</target>
         <target>Codes langage</target>
       </trans-unit>
       <trans-unit>
+        <source>[Hover over and click edit to change.]</source>
+        <target>[Cliquer ici pour éditer]</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit</source>
+        <target>Editer</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>
