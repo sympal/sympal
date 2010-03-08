@@ -20,8 +20,8 @@ generator:
       form:
         class: sfGuardUserAdminForm
         display:
-          "User Information": [username, password, password_again, is_active, is_super_admin]
-          "Profile Information": [first_name, last_name, email_address]
+          "User Information": [username, email_address, password, password_again, is_active, is_super_admin]
+          "Profile Information": [first_name, last_name]
           "Security Credentials": [groups_list, permissions_list]
       edit:
       new:     ~
