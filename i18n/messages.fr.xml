@@ -769,9 +769,9 @@ the button above.</source>
         <source>The meta description to use for this content record.</source>
         <target>La description à utiliser dans les meta-tags pour ce contenu.</target>
       </trans-unit>
-      <trans-unit id="2530">
+      <trans-unit>
         <source>Create New Content List</source>
-        <target>Créer une nouvelle liste de contenu</target>
+        <target>Nouvelle liste de contenu</target>
       </trans-unit>
       <trans-unit id="2540">
         <source>Double click to enable inline edit mode.</source>
