@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Create New User</source>
+        <target>Création d'un utilistateur</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create New Group</source>
+        <target>Création d'un nouveau groupe</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create New Permission</source>
+        <target>Création d'une permission</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Group "%s"</source>
+        <target>Edition du groupe "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing User "%s"</source>
+        <target>Edition de l'utilisateur "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Permission "%s"</source>
+        <target>Edition de la permission "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
