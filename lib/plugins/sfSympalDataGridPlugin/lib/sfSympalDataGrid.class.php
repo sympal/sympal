@@ -530,8 +530,11 @@ class sfSympalDataGrid implements Iterator, Countable
 
       if ( ! isset($column['label']))
       {
-        $column['label'] = sfInflector::humanize($column['fieldName']);
+        $column['label'] = __(sfInflector::humanize($column['fieldName']));
       }
+
+      //
+      $column['label'] = __($column['label']);
 
       if (isset($column['parent']) && isset($column['relation']))
       {

@@ -1050,9 +1050,9 @@ Vous n'avez plus qu'ensuite à les insérer dans votre contenu.</target>
         <source>Edit slots</source>
         <target>Éditer les slots</target>
       </trans-unit>
-      <trans-unit id="3360">
+      <trans-unit>
         <source>View</source>
-        <target>Vue</target>
+        <target>Voir</target>
       </trans-unit>
       <trans-unit id="3370">
         <source>Close</source>
