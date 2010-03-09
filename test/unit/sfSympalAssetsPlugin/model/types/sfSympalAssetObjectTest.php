@@ -4,7 +4,7 @@ $app = 'sympal';
 $refresh_assets = true;
 require_once(dirname(__FILE__).'/../../../../bootstrap/unit.php');
 
-$t = new lime_test(29);
+$t = new lime_test(30);
 
 // initialize some asset objects
 $sync = new sfSympalAssetSynchronizer($configuration->getEventDispatcher());
@@ -61,8 +61,28 @@ $t->is(file_exists(dirname($oldPath).'/.originals/sympalphp.png'), false, 'The o
 
 
 $t->info('3 - Perform a delete operation');
-$oldPath = $asset->getPath();
-$asset->delete();
-$t->is($asset->exists(), false, '->exists() returns false');
+$oldPath = $asset2->getPath();
+$asset2->delete();
+$t->is($asset2->exists(), false, '->exists() returns false');
 $t->is(file_exists($oldPath), false, 'The old file path does not exist');
 $t->is(file_exists(dirname($oldPath).'/.originals/sympal info.txt'), false, 'The old original file path does not exist');
+
+
+$t->info('4 - Test the render() method');
+
+// a test rendering class
+class testRenderer
+{
+  public function __construct(sfSympalAssetObject $asset, $options)
+  {
+  }
+  
+  public function render()
+  {
+    return 'rendered';
+  }
+}
+
+$t->is($asset->render(array('renderer' => 'testRenderer')), 'rendered', 'Passing a "renderer" options uses a different rendering class');
+
+// linked_thumbnail
