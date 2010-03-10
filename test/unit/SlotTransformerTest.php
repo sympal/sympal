@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(14, new lime_output_color());
+$t = new lime_test(14);
 
 // mock class
 class sfSympalContentSlotTransformerTest extends sfSympalContentSlotTransformer
