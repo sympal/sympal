@@ -9,6 +9,18 @@
         <target>Recherche pour "%s"</target>
       </trans-unit>
       <trans-unit>
+        <source>Search Result</source>
+        <target>Résultats de recherche</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal Search / </source>
+        <target>Recherche Sympal / </target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal Search</source>
+        <target>Recherche Sympal</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>

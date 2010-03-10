@@ -60,6 +60,20 @@
         <source>Showing all %count% total results.</source>
         <target>Les %count% résultats sont affichés.</target>
       </trans-unit>
+      <!-- sympal_redirects -->
+      <trans-unit>
+        <source>Create New Redirect</source>
+        <target>Nouvelle redirection</target>
+      </trans-unit>
+      <!-- sympal_admin -->
+      <trans-unit>
+        <source>Sympal Server Check</source>
+        <target>Vérification du serveur</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal Admin / Check Server</source>
+        <target>Sympal Admin / Vérification du serveur</target>
+      </trans-unit>
       <trans-unit>
         <source></source>
         <target></target>

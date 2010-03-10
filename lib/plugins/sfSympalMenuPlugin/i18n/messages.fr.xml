@@ -9,6 +9,10 @@
         <target>Anglais</target>
       </trans-unit>
       <trans-unit>
+        <source>~ (object is at root level)</source>
+        <target>~ (élément racine)</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>

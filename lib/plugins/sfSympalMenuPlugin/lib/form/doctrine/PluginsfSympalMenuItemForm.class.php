@@ -34,7 +34,7 @@ abstract class PluginsfSympalMenuItemForm extends BasesfSympalMenuItemForm
 
     $this->widgetSchema['parent_id'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'sfSympalMenuItem',
-      'add_empty' => '~ (object is at root level)',
+      'add_empty' => __('~ (object is at root level)'),
       'order_by' => array('root_id, lft', ''),
       'query' => $q,
       'method' => 'getIndentedName'
