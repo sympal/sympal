@@ -184,6 +184,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       $type = $type ? $type : 'Text';
 
       $slot = new sfSympalContentSlot();
+      $slot->setContentRenderedFor($this);
       $slot->is_column = $isColumn;
 
       $slot->name = $name;
