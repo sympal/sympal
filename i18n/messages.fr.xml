@@ -21,26 +21,6 @@
         <target>Activer ?</target>
       </trans-unit>
       <trans-unit>
-        <source>Enable Super Cache?</source>
-        <target>Activer le Super-Cache?</target>
-      </trans-unit>
-      <trans-unit>
-        <source>With layout?</source>
-        <target>Avec layout ?</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Lifetime</source>
-        <target>Durée de vie</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Enable Comments</source>
-        <target>Activer les commentaires</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Default Status</source>
-        <target>Statut par défaut</target>
-      </trans-unit>
-      <trans-unit>
         <source>Enabled</source>
         <target>Activer</target>
       </trans-unit>
@@ -71,11 +51,6 @@
       <trans-unit>
         <source>Page title</source>
         <target>Titre de la page</target>
-      </trans-unit>
-      <!-- FIXME -->
-      <trans-unit>
-        <source>English Page title</source>
-        <target>Titre de la page en anglais</target>
       </trans-unit>
       <trans-unit>
         <source>The meta page title to use for pages in this site.</source>

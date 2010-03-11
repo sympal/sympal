@@ -6,6 +6,26 @@
     <body>
       <!-- admin -->
       <trans-unit>
+        <source>Enable Super Cache?</source>
+        <target>Activer le Super-Cache?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>With layout?</source>
+        <target>Avec layout ?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Lifetime</source>
+        <target>Durée de vie</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Enable Comments</source>
+        <target>Activer les commentaires</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Default Status</source>
+        <target>Statut par défaut</target>
+      </trans-unit>
+      <trans-unit>
         <source>Clearing Cache</source>
         <target>Vidange du cache</target>
       </trans-unit>
