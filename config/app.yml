@@ -303,6 +303,7 @@ all:
       sfSympalContent: [i18n_slug, page_title, meta_keywords, meta_description]
       sfSympalContentSlot: [value]
       sfSympalMenuItem: [label]
+      sfSympalContentList: [title]
       sfSympalPage: [title]
       sfSympalSite: [page_title, meta_keywords, meta_description]
 
