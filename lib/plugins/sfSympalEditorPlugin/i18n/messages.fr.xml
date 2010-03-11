@@ -21,6 +21,47 @@
         <target>Il y a eu une erreur pendant l'enregistrement</target>
       </trans-unit>
       <trans-unit>
+        <source>[Hover over and click edit to change.]</source>
+        <target>[Cliquer ici pour éditer]</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit</source>
+        <target>Editer</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Double click to enable inline edit mode.</source>
+        <target>Double cliquez pour activer l'édition en ligne.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change Slot Type</source>
+        <target>Changer le type de slot</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Single Line of Text</source>
+        <target>Une ligne de texte</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Raw HTML</source>
+        <target>HTML</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Markdown Editor</source>
+        <target>Éditeur "Markdown"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>TinyMCE Rich Text Editor</source>
+        <target>Éditeur de texte avancé TinyMCE</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Links</source>
+        <target>Liens</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Save</source>
+        <target>Sauvegarder</target>
+      </trans-unit>
+
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>

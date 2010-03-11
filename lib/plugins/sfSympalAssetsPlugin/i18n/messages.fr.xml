@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Assets Manager</source>
+        <target>Médiathèque</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal Assets Manager</source>
+        <target>Médiathèque Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Manage your Sympal project assets below! An asset in Sympal is
+any type of file from a PDF document to an image or a video. Upload new assets, create
+directories to store your assets, rename and move your assets and embed or link
+to them in your content.</source>
+        <target>Gérer votre médiathèque Sympal ci-dessous ! Un média dans Sympal
+peut être n'importe quel type de fichier, d'un document PDF, à une image en passant par une vidéo.
+Vous pouvez envoyer de nouveaux médias, créer des répertoires pour stocker vos médias, renommer ou déplacer vos médias.
+Vous n'avez plus qu'ensuite à les insérer dans votre contenu.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Upload an Asset</source>
+        <target>Envoyer un média</target>
+      </trans-unit>
+      <trans-unit>
+        <source>File</source>
+        <target>Fichier</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Upload</source>
+        <target>Envoyer</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create a New Directory</source>
+        <target>Créer un nouveau répertoire</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Directory deleted successfully.</source>
+        <target>Répertoire supprimé avec succès.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Asset Browser</source>
+        <target>Médiathèque</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Browse your assets below and insert them into the currently focused editor by
+just clicking the asset you want to insert. You can control where the asset is
+inserted by positioning the cursor in the editor. You may also upload new assets
+and create directories below.</source>
+        <target>Parcourez vos médias ci-dessous et insérez les dans l'éditeur courant
+en cliquant sur le média que vous souhaitez insérer. Vous pouvez contrôler où le média sera inséré
+en positionnant le curseur dans l'éditeur. Vous pouvez aussi envoyer de nouveaux médias
+et créer des répertoires.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Delete directory "%dir%"</source>
+        <target>Supprimer le répertoire "%dir%"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit file "%file%"</source>
+        <target>Éditer le fichier "%file%"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Delete file "%file%"</source>
+        <target>Supprimer le fichier "%file%"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Upload an Asset</source>
+        <target>Envoyer un média</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create</source>
+        <target>Créer</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create a New Directory</source>
+        <target>Créer un nouveau répertoire</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Upload Asset</source>
+        <target>Envoyer un média</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create Directory</source>
+        <target>Créer un répertoire</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Asset "%asset%"</source>
+        <target>Édition du média "%asset%"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Upload New File</source>
+        <target>Envoyer un nouveau fichier</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Rename</source>
+        <target>Renommer</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Resize</source>
+        <target>Retailler</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Current Crop</source>
+        <target>Recadrage actuel</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Crop Original Image</source>
+        <target>Recadrer l'image originale</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Save Crop</source>
+        <target>Sauvegarder le recadrage</target>
+      </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

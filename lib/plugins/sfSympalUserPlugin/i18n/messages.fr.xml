@@ -29,6 +29,106 @@
         <target>Edition de la permission "%s"</target>
       </trans-unit>
       <trans-unit>
+        <source>Sympal users List</source>
+        <target>Liste des utilisateurs de Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Username</source>
+        <target>Nom d'utilisateur</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Last login</source>
+        <target>Dernière connexion</target>
+      </trans-unit>
+      <trans-unit>
+        <source>New Sympal users</source>
+        <target>Nouveaux utilisateurs Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>User Information</source>
+        <target>Information utilisateur</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Password again</source>
+        <target>Retapez votre mot de passe</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Is active</source>
+        <target>Est actif</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Is super admin</source>
+        <target>Est super administrateur</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Profile Information</source>
+        <target>Information du profil</target>
+      </trans-unit>
+      <trans-unit>
+        <source>First name</source>
+        <target>Prénom</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Last name</source>
+        <target>Nom</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Email address</source>
+        <target>Adresse email</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Security Credentials</source>
+        <target>Accréditations de sécurité</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal groups List</source>
+        <target>Liste des groupes Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit Sympal groups</source>
+        <target>Éditer les groupes Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Group Information</source>
+        <target>Information du groupe</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Associated Records</source>
+        <target>Enregistrements associés</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Menu items list</source>
+        <target>Liste des entrées du menu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content list</source>
+        <target>Liste de contenu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>New Sympal groups</source>
+        <target>Nouveaux groupes Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal permissions List</source>
+        <target>Liste des permissions Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit Sympal permissions</source>
+        <target>Éditer les permissions Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Permission Information</source>
+        <target>Information sur les permissions</target>
+      </trans-unit>
+      <trans-unit>
+        <source>New Sympal permissions</source>
+        <target>Nouvelles permissions Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal redirects List</source>
+        <target>Liste des redirections Sympal</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>
