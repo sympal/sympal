@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>English</source>
+        <target>Anglais</target>
+      </trans-unit>
+      <trans-unit>
+        <source>~ (object is at root level)</source>
+        <target>~ (élément racine)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit menu item</source>
+        <target>Éditer le menu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Menu Item</source>
+        <target>Menu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Enter the name of the menu item. There is an optional label that can be entered which has priority over the name.</source>
+        <target>Saisissez le nom de du menu. Il y a un libellé optionnel qui peu être saisi, il est prioritaire sur le nom.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Enter the menu item label.</source>
+        <target>Entrez le libellé.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Choose the content record this menu item maps to.</source>
+        <target>Choisissez le contenu associé à ce menu.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Custom path</source>
+        <target>Chemin personnalisé</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Enter the custom path that this menu item maps to. It can be a URL or a symfony route.</source>
+        <target>Veuillez entrer le chemin associé à ce menu. Ca peut être une URL ou une route Symfony.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Is primary</source>
+        <target>De premier niveau</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Check if this menu item is the root of your primary menu. You must have at least one primary menu.</source>
+        <target>Ce menu est-il un menu de premier niveau. Vous devez avoir au moins un menu de premier niveau.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Select the date this menu item is to be published. This can be a date in the future and the menu item will not be available until that date.</source>
+        <target>Veuillez sélectionner la date de publication de cette entrée du menu. Cette date peut se trouver dans le futur : le menu ne sera pas disponible avant cette date</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Position</source>
+        <target>Position</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Child of</source>
+        <target>Enfant de</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Select the parent the menu item is associated with.</source>
+        <target>Sélectionner le menu parent.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Position menu item</source>
+        <target>Position du menu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Position before or after?</source>
+        <target>Positionné avant ou après ?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Before</source>
+        <target>Avant</target>
+      </trans-unit>
+      <trans-unit>
+        <source>After</source>
+        <target>Après</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Requires auth</source>
+        <target>Requiert d'être authentifié</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Check if this menu item requires the user to be authenticated in order to be visible.</source>
+        <target>Est-ce que ce menu a besoin que l'utilisateur soit authentifié pour être visible ?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Requires no auth</source>
+        <target>Ne requiert pas d'être authentifié</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Check if this menu item requires the user not be authenticated in order to be visible.</source>
+        <target>Est-ce que ce menu a besoin que l'utilisateur ne soit pas authentifié pour être visible ?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Select the groups this menu item is restricted to.</source>
+        <target>Sélectionnez les groupes auxquels ce menu est restreint.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>New menu item</source>
+        <target>Nouveau menu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Adjust Order</source>
+        <target>Réordonner</target>
+      </trans-unit>
+
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

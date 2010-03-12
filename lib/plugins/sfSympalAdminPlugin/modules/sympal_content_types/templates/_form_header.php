@@ -8,6 +8,6 @@
   <?php echo get_sympal_breadcrumbs(array(
     'Dashboard' => '@sympal_dashboard',
     'Content Types' => '@sympal_content_types',
-    sprintf('Editing Content Type "%s"', $form->getObject()->getLabel()) => null
+    sprintf(__('Editing Content Type "%s"'), $form->getObject()->getLabel()) => null
   )) ?>
 <?php endif; ?>

@@ -75,7 +75,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
         }
         if ($formatted)
         {
-          $changeLanguage->addChild(image_tag('/sfSympalPlugin/images/flags/'.$code.'.png').' '.$formatted, '@sympal_change_language?language='.$code, 'title=Switch to '.$formatted);
+          $changeLanguage->addChild(ucwords($formatted), '@sympal_change_language?language='.$code, 'title='.__('Switch to ').''.$formatted);
         }
       }
     }
@@ -209,29 +209,29 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     if ($sympalConfiguration->isAdminModule())
     {
-      $contentEditor->addChild(image_tag('/sf/sf_admin/images/list.png').' '.__('View '.$content->getType()->getLabel()), $content->getRoute());    
+      $contentEditor->addChild(__('View ').$content->getType()->getLabel(), $content->getRoute());    
     }
 
     $contentEditor
-      ->addChild(image_tag('/sf/sf_admin/images/add.png').' '.__('Create New '.$content->getType()->getLabel()), '@sympal_content_create_type?type='.$content['Type']['slug'])
+      ->addChild(__('Create New ').$content->getType()->getLabel(), '@sympal_content_create_type?type='.$content['Type']['slug'])
       ->setCredentials('ManageContent');
 
     $contentEditor
-      ->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit '.$content->getType()->getLabel()), $content->getEditRoute())
+      ->addChild(__('Edit ').$content->getType()->getLabel(), $content->getEditRoute())
       ->setCredentials('ManageContent');
 
     $contentEditor
-      ->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit Content Type'), '@sympal_content_types_edit?id='.$content->getType()->getId())
+      ->addChild(__('Edit Content Type'), '@sympal_content_types_edit?id='.$content->getType()->getId())
       ->setCredentials('ManageMenus');
 
     if ($menuItem && $menuItem->exists())
     {
       $contentEditor
-        ->addChild(image_tag('/sf/sf_admin/images/edit.png').' '.__('Edit Menu Item'), '@sympal_content_menu_item?id='.$content->getId())
+        ->addChild(__('Edit Menu Item'), '@sympal_content_menu_item?id='.$content->getId())
         ->setCredentials('ManageMenus');  
     } else {
       $contentEditor
-        ->addChild(image_tag('/sf/sf_admin/images/add.png').' '.__('Add to Menu'), '@sympal_content_menu_item?id='.$content->getId())
+        ->addChild(__('Add to Menu'), '@sympal_content_menu_item?id='.$content->getId())
         ->setCredentials('ManageMenus');
     }
 
@@ -241,9 +241,29 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       {
         if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
         {
-          $contentEditor->addChild(image_tag('/sfSympalPlugin/images/flags/'.strtolower($code).'.png').' Edit '.format_language($code), '@sympal_change_edit_language?language='.$code, 'title=Switch to '.format_language($code));
+          $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title='.__('Switch to ').''.format_language($code));
         }
       }
     }
+
+    if($user->hasCredential('PublishContent'))
+    {
+      if($content->getIsPublished())
+      {
+        $contentEditor
+          ->addChild(__('Unpublish'), '@sympal_unpublish_content?id='.$content['id'], 'title='.__('Published on %date%', array('%date%' => format_date($content->getDatePublished(), 'g'))).'. '.__('Click to unpublish content.'));
+      }
+      elseif($content->getIsPublishInTheFuture())
+      {
+        $contentEditor
+          ->addChild(__('Unpublish'), '@sympal_unpublish_content?id='.$content['id'], 'title='.__('Will publish on %date%', array('%date%' => format_date($content->getDatePublished(), 'g'))).'. '.__('Click to unpublish content.'));
+      }
+      else
+      {
+        $contentEditor
+          ->addChild(__('Publish'), '@sympal_publish_content?id='.$content['id'], 'title='.__('Has not been published yet. '.__('Click to publish content.')));
+      }
+    } 
+  
   }
 }

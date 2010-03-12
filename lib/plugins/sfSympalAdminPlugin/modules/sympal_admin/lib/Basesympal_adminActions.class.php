@@ -20,6 +20,7 @@ abstract class Basesympal_adminActions extends sfActions
       'template',
       'menu'
     );
+
     if ($type = $request->getParameter('type'))
     {
       switch ($type)
@@ -36,7 +37,7 @@ abstract class Basesympal_adminActions extends sfActions
           $this->clearMenuCache();
         break;
       }
-      $msg = 'Clearing '.$type.' cache...';
+      $msg = sprintf(__('Clearing %s cache...'), $type);
       return $this->renderText($msg);
     }
   }
@@ -107,7 +108,7 @@ abstract class Basesympal_adminActions extends sfActions
 
   public function executeCheck_server(sfWebRequest $request)
   {
-    $this->getResponse()->setTitle('Sympal Admin / Check Server');
+    $this->getResponse()->setTitle(__('Sympal Admin / Check Server'));
 
     $check = new sfSympalServerCheck();
     $this->renderer = new sfSympalServerCheckHtmlRenderer($check);

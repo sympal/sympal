@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Content un-published successfully!</source>
+        <target>Contenu dé-publié avec succès !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content published successfully!</source>
+        <target>Contenu publié avec succès !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Slot saved</source>
+        <target>Slot enregistré</target>
+      </trans-unit>
+      <trans-unit>
+        <source>There was an error saving your slot</source>
+        <target>Il y a eu une erreur pendant l'enregistrement</target>
+      </trans-unit>
+      <trans-unit>
+        <source>[Hover over and click edit to change.]</source>
+        <target>[Cliquer ici pour éditer]</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit</source>
+        <target>Editer</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Double click to enable inline edit mode.</source>
+        <target>Double cliquez pour activer l'édition en ligne.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change Slot Type</source>
+        <target>Changer le type de slot</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Single Line of Text</source>
+        <target>Une ligne de texte</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Raw HTML</source>
+        <target>HTML</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Markdown Editor</source>
+        <target>Éditeur "Markdown"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>TinyMCE Rich Text Editor</source>
+        <target>Éditeur de texte avancé TinyMCE</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Links</source>
+        <target>Liens</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Save</source>
+        <target>Sauvegarder</target>
+      </trans-unit>
+
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

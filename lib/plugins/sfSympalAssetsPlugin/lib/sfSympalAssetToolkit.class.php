@@ -1,12 +1,28 @@
 <?php
 
+/**
+ * Toolkit class for anything related to assets
+ *
+ * @package     sfSympalAssetsPlugin
+ * @subpackage  util
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-06
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalAssetToolkit
 {
   public static $iconsPath;
 
+  /**
+   * Returns the correct sfSympalAssetObject instance based on the extension
+   * of the asset's filename
+   *
+   * @return sfSympalAssetObject
+   */
   public static function createAssetObject($file)
   {
     $class = self::getClassFromExtension(self::getExtensionFromFile($file));
+
     return new $class($file);
   }
 
@@ -14,6 +30,7 @@ class sfSympalAssetToolkit
   {
     $type = self::getTypeFromExtension($extension);
     $types = self::getFileTypes();
+
     return isset($types[$type]['class']) ? $types[$type]['class'] : 'sfSympalAssetFileObject';
   }
 
@@ -55,11 +72,16 @@ class sfSympalAssetToolkit
     return strtolower(substr(strrchr($file, '.'), 1));
   }
 
+  /**
+   * Returns an icon representing the file type of this asset
+   *
+   * @retun string the web-path to the icon
+   */
   public static function getIconFromExtension($extension)
   {
     $dir = '/sfSympalAssetsPlugin/images/icons';
     $path = self::getIconsPath();
-    if (file_exists(sfConfig::get('sf_web_dir').'/'.$path.'/'.$extension.'.png'))
+    if (file_exists($path.'/'.$extension.'.png'))
     {
       return $dir.'/'.$extension.'.png';
     }
@@ -71,6 +93,12 @@ class sfSympalAssetToolkit
     return sfSympalConfig::get('assets', 'file_types', array());
   }
 
+  /**
+   * Returns the absolute path to the directory that holds the file
+   * types icons
+   *
+   * @return string
+   */
   public static function getIconsPath()
   {
     if (!self::$iconsPath)

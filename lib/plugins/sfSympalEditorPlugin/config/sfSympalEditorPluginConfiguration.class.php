@@ -30,7 +30,19 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
   {
     $menu = $event->getSubject();
     
-    // add menus here if we have any later
+    $menu->
+      addChild('Save')->
+      isEditModeButton(true)->
+      setShortcut('Ctrl+Shift+S')->
+      setInputClass('sympal_save_content_slots')
+    ;
+    
+    $menu->
+      addChild('Quit')->
+      isEditModeButton(true)->
+      setShortcut('Ctrl+Shift+X')->
+      setInputClass('sympal_disable_edit_mode')
+    ;
   }
 
   public function shouldLoadEditor()

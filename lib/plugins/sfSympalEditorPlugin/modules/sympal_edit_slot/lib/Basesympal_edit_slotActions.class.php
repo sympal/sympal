@@ -91,11 +91,11 @@ abstract class Basesympal_edit_slotActions extends sfActions
     {
       $this->form->save();
       
-      $this->getUser()->setFlash('notice', 'Slot saved', false);
+      $this->getUser()->setFlash('notice', __('Slot saved'), false);
     }
     else
     {
-      $this->getUser()->setFlash('error', 'There was an error saving your slot', false);
+      $this->getUser()->setFlash('error', __('There was an error saving your slot'), false);
     }
     
     $this->renderPartial('sympal_edit_slot/slot_editor_form');

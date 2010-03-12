@@ -10,6 +10,6 @@
     'Dashboard' => '@sympal_dashboard',
     'Site Content' => '@sympal_content_types_index',
     'Slots' => '@sympal_content_slots',
-    sprintf('Editing Slot "%s"', $sf_sympal_content_slot->getName()) => null
+    sprintf(__('Editing Slot "%s"'), $sf_sympal_content_slot->getName()) => null
   )) ?>
 <?php endif; ?>

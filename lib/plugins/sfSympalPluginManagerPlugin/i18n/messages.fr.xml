@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Sympal plugin manager List</source>
+        <target>Liste du gestionnaire de plugin Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Manage the Sympal plugins in this project below! You can easily
+download and install new plugins found on the web.</source>
+        <target>Gérez les plugins du projet ci-dessous! Vous pouvez facilement télécharger et installer de nouveaux plugins à partir du web.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Plugin</source>
+        <target>Plugin</target>
+      </trans-unit>
+      <trans-unit>
+        <source>The name of the plugin that contains the content type.</source>
+        <target>Le nom du plugin contenant le type de contenu.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Uninstall</source>
+        <target>Désinstaller</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Re-Install</source>
+        <target>Réinstaller</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Install</source>
+        <target>Installer</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Homepage</source>
+        <target>Page d'accueil</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Ticketing</source>
+        <target>Ticket</target>
+      </trans-unit>
+      <trans-unit>
+        <source>No Plugins Found</source>
+        <target>Aucun plugin trouvé</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Back to Plugins</source>
+        <target>Retour aux plugins</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Plugin Actions</source>
+        <target>Actions de plugin</target>
+      </trans-unit>
+
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,12 +1,13 @@
-<h1>Clearing Cache</h1>
+<h1><?php echo __("Clearing Cache"); ?></h1>
 
 <div id="sympal_clear_cache_log">
   <ul>
-    <li>Starting cache clearing process...</li>
+    <li><?php echo __('Starting cache clearing process...'); ?></li>
   </ul>
 </div>
 
 <script type="text/javascript">
+
   var types = new Array();
 
   <?php foreach ($types as $key => $type): ?>
@@ -26,4 +27,5 @@
   {
     clearCache(types[i]);
   }
+
 </script>

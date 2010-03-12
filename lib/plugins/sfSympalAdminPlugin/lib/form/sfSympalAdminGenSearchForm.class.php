@@ -13,7 +13,7 @@ class sfSympalAdminGenSearchForm extends sfFormFilterDoctrine
     $columns = $table->getColumns();
     foreach ($columns as $name => $column)
     {
-      if (isset($column['primary']) || $column['type'] == 'integer') {
+      if (isset($column['primary']) || $column['type'] != 'string') {
         continue;
       }
       $operator = strpos($values, '*') !== false ? 'LIKE' : '=';

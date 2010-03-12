@@ -1,16 +1,5 @@
 html {
-  margin-top: 30px;
-}
-
-.sympal_signout_icon {
-  position: fixed;
-  top: 8px;
-  right: 10px;
-  z-index: 101;
-}
-
-.sympal_signout_icon img {
-  border: none;
+  margin-top: 30px !important;
 }
 
 .sympal_top_bar_background {
@@ -33,7 +22,7 @@ html {
   height: 30px;
   position: fixed;
   top: 0;
-  right: 80px;
+  right: 40px;
   margin: 0;
   padding: 0;
   z-index: 999999999;

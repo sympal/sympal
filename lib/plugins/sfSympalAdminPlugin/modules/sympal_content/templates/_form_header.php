@@ -12,6 +12,6 @@
     'Dashboard' => '@sympal_dashboard',
     'Site Content' => '@sympal_content_types_index',
     $contentType->getLabel() => '@sympal_content_list_type?type='.$contentType->getSlug(),
-    'Editing '.$sf_sympal_content->getTitle() => $sf_sympal_content->getEditRoute()
+    __('Editing ').$sf_sympal_content->getTitle() => $sf_sympal_content->getEditRoute()
   )) ?>
 <?php endif; ?>

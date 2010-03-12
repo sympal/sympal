@@ -11,7 +11,7 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
 
     if ($sympalContext->isAdminModule())
     {
-      $menu->addChild(sprintf('Go to %s', $sympalContext->getSite()->getTitle()), '@homepage', 'id=sympal_go_to_switch');
+      $menu->addChild(sprintf(__('Go to %s'), $sympalContext->getSite()->getTitle()), '@homepage', 'id=sympal_go_to_switch');
     }
     else if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
     {
@@ -44,6 +44,9 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
         )
       ));
     }
+
+    $menu->
+      addChild('Signout', '@sympal_signout', array('title' => 'Ctrl+Q', 'confirm' => ''.__('Are you sure you want to signout?').'','label' => 'Signout'));
   }
 
   return $menu;

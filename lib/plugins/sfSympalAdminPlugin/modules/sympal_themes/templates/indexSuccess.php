@@ -11,7 +11,7 @@
       <table cellspacing="0">
         <thead>
           <tr>
-            <th width="100%">Name</th>
+            <th width="100%"><?php echo __('Name'); ?></th>
             <th></th>
             <th></th>
             <th></th>
