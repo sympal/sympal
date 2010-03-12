@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(17, new lime_output_color());
+$t = new lime_test(17);
 
 // Setup sample content record and menu item to test with
 $user = new sfGuardUser();

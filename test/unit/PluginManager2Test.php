@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 
-$t = new lime_test(25, new lime_output_color());
+$t = new lime_test(25);
 
 $configuration->loadHelpers(array('I18N'));
 
