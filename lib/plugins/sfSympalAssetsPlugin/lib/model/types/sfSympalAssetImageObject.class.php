@@ -2,7 +2,7 @@
 
 /**
  * Asset object representing an image
- * 
+ *
  * @package     sfSympalAssetsPlugin
  * @subpackage  type
  * @author      Jonathan H. Wage <jonwage@gmail.com>
@@ -19,10 +19,10 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
   protected
     $_dimensions = null,
     $_thumbnails = array();
-  
+
   protected
     $_type = 'image';
-  
+
   /**
    * @see getimagesize()
    */
@@ -34,8 +34,8 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     }
     return $this->_dimensions;
   }
-  
-  
+
+
   public function getWidth()
   {
     $dimensions = $this->getDimensions();
@@ -50,7 +50,7 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
   /**
    * Resizes this image
-   * 
+   *
    * This will replace this image file with the resized version
    */
   public function resize($width, $height, $method = null)
@@ -63,7 +63,7 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
   /**
    * Crops this image
-   * 
+   *
    * This replaces the actual image file with the cropped version
    * @return boolean The success of the cropping
    */
@@ -84,15 +84,15 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
   	return $func($destR, $this->getPath(), $quality);
   }
-  
+
   /**
    * Retrieves an sfSympalAssetImageObject representing a thumbnail version
    * of this image
-   * 
+   *
    * @param integer $width The width for the thumbnail
    * @param integer $height The height for the thumbnail
    * @param string $method The method for thumbnailing (fit, scale, inflate, deflate, left, right, top, bottom, center)
-   * 
+   *
    * @return sfSympalAssetImageObject
    */
   public function getThumbnail($width = null, $height = null, $method = null)
@@ -100,9 +100,9 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     $width = ($width === null) ? sfSympalConfig::get('assets', 'thumbnails_max_width', 64) : $width;
     $height = ($height === null) ? sfSympalConfig::get('assets', 'thumbnails_max_height', 64) : $height;
     $method = ($method === null) ? sfSympalConfig::get('assets', 'thumbnails_method', 'fit') : $method;
-    
+
     $thumbnailKey = $width.'_'.$height.'_'.$method;
-    
+
     if (!isset($this->_thumbnails[$thumbnailKey]))
     {
       $thumbnailPath = $this->getThumbnailDirectory($width, $height, $method).'/'.$this->getName();
@@ -111,7 +111,7 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
         // the thumbnail file doesn't exist, create it
         $this->_generateThumbnail($width, $height, $method);
       }
-      
+
       $thumbnail = new self(
         $this->getRelativePathDirectory()
         .'/'.sfSympalConfig::get('assets', 'thumbnails_dir')
@@ -131,11 +131,11 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
     return $this->_thumbnails[$thumbnailKey];
   }
-  
+
   /**
    * Returns the url to a thumbnail of this image with the given width,
    * height, and thumbnailing method
-   * 
+   *
    * @see sfSympalAssetImageObject::getThumbnail()
    * @return string
    */
@@ -150,10 +150,10 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
       return null;
     }
   }
-  
+
   /**
    * In addition to moving this image, all the thumbnails must all be moved
-   * 
+   *
    * @see sfSympalAssetObject::move()
    */
   public function move($newPath)
@@ -162,21 +162,21 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
     $thumbnails = $this->getAllThumbnails();
 
     parent::move($newPath);
-    
+
     foreach ($thumbnails as $thumbnail)
     {
       $newPath = str_replace($originalPathDirectory, dirname($newPath), $thumbnail->getPath());
       $thumbnail->move($newPath);
     }
   }
-  
+
   /**
    * Also takes care of deleting the associated thumbnails of this image
-   * 
+   *
    * @see sfSympalAssetObject::delete()
    */
   public function delete()
-  {    
+  {
     foreach ($this->getAllThumbnails() as $thumbnail)
     {
       $thumbnail->delete();
@@ -193,30 +193,30 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
   /**
    * Returns the absolute dir path for a thumbnail based on the width,
    * height and thumbnailing method
-   * 
+   *
    * @return string
    */
   public function getThumbnailDirectory($width, $height, $method)
   {
     $rootThumbnailDir = $this->getPathDirectory().'/'.sfSympalConfig::get('assets', 'thumbnails_dir', '.thumbnails');
-    
+
     return $rootThumbnailDir.'/'.$this->getThumbnailSubdirectory($width, $height, $method);
   }
-  
+
   /**
    * Returns the subdirectory path inside the thumbnails directory for
    * a thumbnail based on its width, height and method
-   * 
+   *
    * @return string (e.g. 200/200/fit)
    */
   protected function getThumbnailSubdirectory($width, $height, $method)
   {
     return $width.'/'.$height.'/'.$method;
   }
-  
+
   /**
    * Generates and saves a thumbnail version of this image
-   * 
+   *
    * @param array $options An array of thumbnailing options.
    * @return boolean The success/failure of the operation
    */
@@ -256,41 +256,41 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
       return false;
     }
   }
-  
+
   /**
    * Called when the related sfSympalAsset object is inserted or updated.
-   * 
+   *
    * This ensures that we have the "default" thumbnail already generated
    */
   public function save()
   {
     $this->getThumbnail();
   }
-  
+
   /**
    * Returns an array of sfSympalAssetImageObjects representing all the
    * thumbnails that relate back to this image.
-   * 
+   *
    * This is could be a filesystem-intensive, so it should only be used
    * when needing to perform some operation or on the backend
-   * 
+   *
    * @return array The array of sfSympalImageObject instances
    */
   public function getAllThumbnails()
   {
     $thumbnailDir = sfSympalConfig::get('assets', 'thumbnails_dir', '.thumbnails');
-    
+
     $thumbnails = sfFinder::type('file')
       ->name($this->getName())
       ->relative()
       ->in($this->getPathDirectory().'/'.$thumbnailDir);
-    
+
     $thumbnailObjects = array();
     foreach ($thumbnails as $thumbnail)
     {
       $thumbnailObjects[] = new self($this->getRelativePathDirectory().'/'.$thumbnailDir.'/'.$thumbnail);
     }
-    
+
     return $thumbnailObjects;
   }
 }

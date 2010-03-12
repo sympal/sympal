@@ -16,11 +16,11 @@ abstract class Basesympal_themesActions extends sfActions
 
     if ($preview = $request->getParameter('preview'))
     {
-      $this->getResponse()->setTitle(sprintf('Sympal Admin / Previewing %s', $preview));
+      $this->getResponse()->setTitle(sprintf(__('Sympal Admin / Previewing %s'), $preview));
       $this->loadTheme($preview);
       $this->setTemplate('preview');
     } else {
-      $this->getResponse()->setTitle(sprintf('Sympal Admin / Themes'));
+      $this->getResponse()->setTitle(sprintf(__('Sympal Admin / Themes')));
     }
   }
 
@@ -31,7 +31,7 @@ abstract class Basesympal_themesActions extends sfActions
     if ($request->getParameter('site'))
     {
       $site = $this->getSympalContext()->getSite();
-      $this->askConfirmation('Are you sure?', sprintf('This action will change the default theme to "%s" for the "%s" site.', $theme, $site->getTitle()));
+      $this->askConfirmation(__('Are you sure?'), sprintf(__('This action will change the default theme to "%s" for the "%s" site.'), $theme, $site->getTitle()));
       if ($site->getTheme() == $theme)
       {
         $site->setTheme(null);
@@ -40,12 +40,12 @@ abstract class Basesympal_themesActions extends sfActions
       }
       $site->save();
     } else {
-      $this->askConfirmation('Are you sure?', sprintf('This action will change the global default theme to "%s"', $theme));
+      $this->askConfirmation(__('Are you sure?'), sprintf(__('This action will change the global default theme to "%s"'), $theme));
       sfSympalConfig::writeSetting('default_theme', $theme);
     }
 
     $this->clearCache();
-    $this->getUser()->setFlash('notice', 'Theme successfully changed!');
+    $this->getUser()->setFlash('notice', __('Theme successfully changed!'));
 
     $this->redirect('@sympal_themes');
   }

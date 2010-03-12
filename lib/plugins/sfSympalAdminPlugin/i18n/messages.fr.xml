@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <!-- admin -->
+      <trans-unit>
+        <source>Enable Super Cache?</source>
+        <target>Activer le Super-Cache?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>With layout?</source>
+        <target>Avec layout ?</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Lifetime</source>
+        <target>Durée de vie</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Enable Comments</source>
+        <target>Activer les commentaires</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Default Status</source>
+        <target>Statut par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Clearing Cache</source>
+        <target>Vidange du cache</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Starting cache clearing process...</source>
+        <target>Début du processus de vidange du cache...</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Clearing %s cache...</source>
+        <target>Vidange du cache "%s"...</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Cache clearing process is finished.</source>
+        <target>La vidange du cache est terminée.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing </source>
+        <target>Edition </target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Site "%s"</source>
+        <target>Edition du site "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Content Type "%s"</source>
+        <target>Edition du type de contenu "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal / Preview</source>
+        <target>Sympal / Prévisualisation</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal / Themes</source>
+        <target>Sympal / Thèmes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>This action will change the default theme to "%s" for the "%s" site.</source>
+        <target>Cette action changera le thème par défaut vers "%s" pour le site "%s".</target>
+      </trans-unit>
+      <trans-unit>
+        <source>This action will change the global default theme to "%s"</source>
+        <target>Cette action changera le thème global par défaut vers "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Theme successfully changed!</source>
+        <target>Le thème a été changé avec succès !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Editing Slot "%s"</source>
+        <target>Edition du slot "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Showing all %count% total results.</source>
+        <target>Les %count% résultats sont affichés.</target>
+      </trans-unit>
+      <!-- sympal_redirects -->
+      <trans-unit>
+        <source>Create New Redirect</source>
+        <target>Nouvelle redirection</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Manage a list of URLs to redirect in case of URL changing or old URLs that you
+would like to point to something new. This is useful for maintaining search
+engine optimization.</source>
+        <target>Gérez une liste d'URLs de redirection en cas de changement d'URL ou d'ancienne URL que vous souhaitez faire pointer vers un nouvel emplacement. C'est utile dans un but d'optimisation pour les moteurs de recherche (SEO)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>New Sympal redirects</source>
+        <target>Nouvelles redirections Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>The source path to redirect. Example: /some_page</source>
+        <target>Le chemin source à rediriger. Exemple : /une_page</target>
+      </trans-unit>
+      <trans-unit>
+        <source>The destination to redirect to: Example: /new_url, @some_route or http://www.someurl.com</source>
+        <target>Destination de la redirection. Exemple : /nouvelle_url ou http://www.uneadresse.com</target>
+      </trans-unit>
+      <trans-unit>
+        <source>The content record to redirect to instead of a manual entered destination above.</source>
+        <target>Le contenu vers lequel rediriger au lieu d'entrer une destination à la main</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit Sympal redirects</source>
+        <target>Éditer les redirections Sympal</target>
+      </trans-unit>
+
+      <!-- sympal_admin -->
+      <trans-unit>
+        <source>Sympal Server Check</source>
+        <target>Vérification du serveur</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal Admin / Check Server</source>
+        <target>Sympal Admin / Vérification du serveur</target>
+      </trans-unit>
+      <!-- templates -->
+      <trans-unit>
+        <source>Powered by %1% %2%</source>
+        <target>Réalisé avec %1% %2%</target>
+      </trans-unit>
+      <!-- sympal_themes -->
+      <trans-unit>
+        <source>Preview the available themes in this Sympal project. Click a
+theme name below to see what it looks like!</source>
+        <target>Prévisualiser les thèmes disponibles pour ce projet Sympal. Cliquez sur le nom d'un thème ci-dessous pour voir à quoi il ressemble !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal Admin / Themes</source>
+        <target>Sympal administration / Thèmes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Default theme</source>
+        <target>Thème par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Themes</source>
+        <target>Thèmes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Default</source>
+        <target>Standard</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Wordpress default</source>
+        <target>Wordpress standard</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Make Global Default</source>
+        <target>Thème global par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Previewing "%1%" Theme</source>
+        <target>Prévisualisation du thème "%1%"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>You are previewing the %1% theme. Go back to the %2%.</source>
+        <target>Vous prévisualisez le thème %1%. Revenir à la %2%.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>list of themes</source>
+        <target>liste des thèmes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Make %1% Default</source>
+        <target>Thème par défaut pour %1%</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Remove %1% Default</source>
+        <target>Enlever ce thème pour %1%</target>
+      </trans-unit>
+      <!-- sympal_dashboard -->
+      <trans-unit>
+        <source>Sympal Dashboard</source>
+        <target>Tableau de bord Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Hello %name%! Welcome to your Sympal Dashboard.</source>
+        <target>Bonjour %name% ! Bienvenue sur votre tableau de bord Sympal.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Rows per page</source>
+        <target>Lignes par page</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Default rendering module</source>
+        <target>Module de rendu par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Default rendering action</source>
+        <target>Action de rendu par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Recaptcha public key</source>
+        <target>Clé publique pour le ReCaptcha</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Recaptcha private key</source>
+        <target>Clé privée pour le ReCaptcha</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Breadcrumbs separator</source>
+        <target>Séparateur de menus (breadcrumbs)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Default from email address</source>
+        <target>Adresse email de provenance par défaut</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Enable markdown editor</source>
+        <target>Éditeur "Markdown"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sympal Admin / Settings</source>
+        <target>Administration Sympal / Paramètres</target>
+      </trans-unit>
+
+      <trans-unit>
+        <source>Elastic textareas</source>
+        <target>Champs textes élastiques</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Check for upgrades on dashboard</source>
+        <target>Vérifiez les mises à jour sur le tableau de bord</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Username or API Key</source>
+        <target>Nom d'utilisateur ou clé d'API</target>
+      </trans-unit>
+
+      <trans-unit>
+        <source>Manage the configuration of your Sympal project from the
+  easy to use web form below. The different functionalities added by Sympal
+  plugins may add settings here for you to control.</source>
+        <target>Gérez la configuration de votre projet Sympal à partir du forumaire ci-dessous. Les différentes fonctionnalités ajoutées par les plugins Sympal peuvent ajouter des paramètres dans ce formulaire pour que vous puissiez les contrôler.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Here is a list of indicators for your installation:</source>
+        <target>Voici une liste d'indicateur pour votre installation :</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Users: %s</source>
+        <target>Utilisateurs : %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sites: %s</source>
+        <target>Sites : %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content Types: %s</source>
+        <target>Types de contenu : %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Published: %s Content %s</source>
+        <target>Publié : %s -> %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Un-Published: %s Content %s</source>
+        <target>Non-publié : %s -> %s</target>
+      </trans-unit>
+      <!-- admin menu -->
+      <trans-unit>
+        <source>Signout</source>
+        <target>Se déconnecter</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Dashboard</source>
+        <target>Tableau de bord</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Go to %s</source>
+        <target>Aller sur %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>My Dashboard</source>
+        <target>Mon tableau de bord</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content List</source>
+        <target>Liste de contenu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Assets</source>
+        <target>Médias</target>
+      </trans-unit>
+      <trans-unit>
+        <source>404 Redirects</source>
+        <target>Redirections 404</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit Site</source>
+        <target>Éditer le site</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Menus</source>
+        <target>Menus</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Users</source>
+        <target>Utilisateurs</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Groups</source>
+        <target>Groupes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Permissions</source>
+        <target>Permissions</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Global Setup</source>
+        <target>Configuration globale</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content Types</source>
+        <target>Types de contenu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Themes</source>
+        <target>Thèmes</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Sites</source>
+        <target>Sites</target>
+      </trans-unit>
+      <trans-unit>
+        <source>System Settings</source>
+        <target>Paramètres système</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Plugin Manager</source>
+        <target>Gestionnaire de plugin</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Clear Cache</source>
+        <target>Vider le cache</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Setup</source>
+        <target>Configuration</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Quit</source>
+        <target>Quitter</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Switch to </source>
+        <target>Changer pour </target>
+      </trans-unit>
+      <trans-unit>
+        <source>Go to %s</source>
+        <target>Aller à </target>
+      </trans-unit>
+      <trans-unit>
+        <source>Site Content</source>
+        <target>Contenu du site</target>
+      </trans-unit>
+
+      <!-- admin filters -->
+      <trans-unit>
+        <source>Search</source>
+        <target>Recherche</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Enter keywords to search by. Wildcards (*) are supported.</source>
+        <target>Veuillez saisir les mots-clés à recherche. Le caractère générique (*) est supporté.</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Yes</source>
+        <target>Oui</target>
+      </trans-unit>
+      <trans-unit>
+        <source>No</source>
+        <target>Non</target>
+      </trans-unit>
+      <trans-unit>
+        <source>All</source>
+        <target>~</target>
+      </trans-unit>
+      <trans-unit>
+        <source>You must at least select one item.</source>
+        <target>Vous devez au moins sélectionner une ligne.</target>
+      </trans-unit>
+      <!-- sympal_sites -->
+      <trans-unit>
+        <source>Sympal sites List</source>
+        <target>Liste des sites Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Browse, create, edit and delete your Sympal sites below! Manage your sites and switch between the current site and your other sites easily!</source>
+        <target>Parcourez, créez, éditez et supprimez vos sites Sympal ci-dessous. Gérez vos sites et passez d'un site à l'autre facilement !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Switch site</source>
+        <target>Changer de site</target>
+      </trans-unit>
+      <trans-unit>
+        <source>New Sympal sites</source>
+        <target>Nouveaux sites Sympal</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Site Information</source>
+        <target>Information sur le site</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Slug</source>
+        <target>Identifiant textuel (slug)</target>
+      </trans-unit>
+      <trans-unit>
+        <source>The text slug identifier that represents this site.</source>
+        <target>L'identifiant textuel (slug) représentant ce site.</target>
+      </trans-unit>
+
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Your Sympal installation is already up to date at %s!</source>
+        <target>Votre installation de Sympa est déjà à jour (%s) !</target>
+      </trans-unit>
+      <trans-unit>
+        <source>No Updates Found</source>
+        <target>Pas de mise à jour trouvée</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Continuing will ewexute the following Sympal upgrade tasks:</source>
+        <target>Les tâches suivantes seront effectuées :</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Do you wish to continue?</source>
+        <target>Voulez-vous continuer ?</target>
+      </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

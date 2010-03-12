@@ -2,7 +2,7 @@
 
 /**
  * Toolkit class for anything related to assets
- * 
+ *
  * @package     sfSympalAssetsPlugin
  * @subpackage  util
  * @author      Jonathan H. Wage <jonwage@gmail.com>
@@ -12,11 +12,11 @@
 class sfSympalAssetToolkit
 {
   public static $iconsPath;
-  
+
   /**
    * Returns the correct sfSympalAssetObject instance based on the extension
    * of the asset's filename
-   * 
+   *
    * @return sfSympalAssetObject
    */
   public static function createAssetObject($file)
@@ -71,10 +71,10 @@ class sfSympalAssetToolkit
   {
     return strtolower(substr(strrchr($file, '.'), 1));
   }
-  
+
   /**
    * Returns an icon representing the file type of this asset
-   * 
+   *
    * @retun string the web-path to the icon
    */
   public static function getIconFromExtension($extension)
@@ -92,11 +92,11 @@ class sfSympalAssetToolkit
   {
     return sfSympalConfig::get('assets', 'file_types', array());
   }
-  
+
   /**
    * Returns the absolute path to the directory that holds the file
    * types icons
-   * 
+   *
    * @return string
    */
   public static function getIconsPath()

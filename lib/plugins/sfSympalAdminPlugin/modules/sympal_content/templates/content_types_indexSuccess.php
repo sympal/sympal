@@ -11,7 +11,7 @@
       <table cellspacing="0">
         <thead>
           <tr>
-            <th>Name</th>
+            <th><?php echo __('Name'); ?></th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -23,7 +23,7 @@
                 <small><?php echo $contentType->getDescription() ?></small>
               </td>
 
-              <td><?php echo link_to(image_tag('/sf/sf_admin/images/add.png').' Create New', '@sympal_content_create_type?type='.$contentType->getSlug()) ?></td>
+              <td><?php echo link_to(image_tag('/sf/sf_admin/images/add.png').' '.__('Create New'), '@sympal_content_create_type?type='.$contentType->getSlug()) ?></td>
             </tr>
           <?php endforeach; ?>
         </tbody>

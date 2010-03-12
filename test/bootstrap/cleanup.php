@@ -16,7 +16,7 @@ if (isset($refresh_assets) && ($refresh_assets))
 {
   $uploadDir = dirname(__FILE__).'/../fixtures/project/web/uploads';
   sfToolkit::clearDirectory($uploadDir);
-  
+
   $finder = new sfFinder();
   $filesystem = new sfFilesystem();
   $filesystem->mirror(dirname(__FILE__).'/../fixtures/assets', $uploadDir, $finder);

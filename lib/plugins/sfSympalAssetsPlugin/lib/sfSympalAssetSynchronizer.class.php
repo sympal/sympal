@@ -2,7 +2,7 @@
 
 /**
  * Responsible for creating sfSympalAsset records for any uploaded asset
- * 
+ *
  * @package     sfSympalAssetPlugin
  * @subpackage  util
  * @author      Jonathan H. Wage <jonwage@gmail.com>

@@ -46,8 +46,6 @@
 }
 
 .sympal_inline_edit_bar_bottom_background {
-  border-top: 1px solid #000;
-  background: #333 !important;
   filter:alpha(opacity=80);
 	-moz-opacity: 0.80;
 	-khtml-opacity: 0.80;
@@ -97,7 +95,7 @@
   height: 30px;
   position: fixed;
   top: 0;
-  right: 80px;
+  right: 30px;
   margin: 0;
   padding: 0;
   z-index: 999999999;
@@ -286,4 +284,13 @@
 
 #sympal_ask_confirmation p {
   margin-bottom: 10px;
+}
+
+.markItUp {
+  border: 0 none !important;
+}
+
+.markItUpContainer {
+  background: none !important;
+  border: 0 none !important;
 }

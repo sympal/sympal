@@ -50,6 +50,6 @@ function check_asset_values(lime_test $t, sfSympalAsset $asset, $values)
 {
   $savedValues = $asset->toArray();
   unset($savedValues['id']);
-  
+
   $t->is($savedValues, $values, sprintf('The asset "%s" has the correct values', $values['name']));
 }

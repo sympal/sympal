@@ -19,9 +19,9 @@ abstract class Basesympal_searchActions extends sfActions
       $this->dataGrid = sfSympalDataGrid::create($query)
         ->addColumn('a.title', 'renderer=sympal_search/title label=Search Result');
 
-      $this->getResponse()->setTitle('Sympal Search / '.$q);
+      $this->getResponse()->setTitle(__('Sympal Search / ').$q);
     } else {
-      $this->getResponse()->setTitle('Sympal Search');
+      $this->getResponse()->setTitle(__('Sympal Search'));
     }
   }
 

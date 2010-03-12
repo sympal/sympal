@@ -76,7 +76,7 @@ class testRenderer
   public function __construct(sfSympalAssetObject $asset, $options)
   {
   }
-  
+
   public function render()
   {
     return 'rendered';
