@@ -29,16 +29,16 @@ abstract class Basesympal_dashboardActions extends sfActions
       $this->hasNewVersion = false;
     }
 
-    $this->indicators = new sfSympalMenu('Sympal Indicators');
+    $this->dashboardRight = new sfSympalMenu('Sympal Dashboard Right');
 
     $numUsers = Doctrine_Core::getTable('sfGuardUser')->count();
-    $this->indicators->addChild(sprintf(__('Users: %s'), $numUsers), '@sympal_users');
+    $this->dashboardRight->addChild(sprintf('<label>Users</label> %s', $numUsers), '@sympal_users');
 
     $numSites = Doctrine_Core::getTable('sfSympalSite')->count();
-    $this->indicators->addChild(sprintf(__('Sites: %s'), $numSites), '@sympal_sites');
+    $this->dashboardRight->addChild(sprintf('<label>Sites</label> %s', $numSites), '@sympal_sites');
 
     $numContentTypes = Doctrine_Core::getTable('sfSympalContentType')->count();
-    $this->indicators->addChild(sprintf(__('Content Types: %s'), $numContentTypes), '@sympal_content_types');
+    $this->dashboardRight->addChild(sprintf('<label>Content Types</label> %s', $numContentTypes), '@sympal_content_types');
 
     $contentTypes = Doctrine::getTable('sfSympalContentType')->getAllContentTypes();
     foreach ($contentTypes as $contentType)
@@ -48,8 +48,8 @@ abstract class Basesympal_dashboardActions extends sfActions
         ->where('c.date_published < NOW()')
         ->andWhere('c.content_type_id = ?', $contentType->getId())
         ->count();
-      $this->indicators->addChild(
-        sprintf(__('Published: %s Content %s'), $contentType->getLabel(), $numPublishedContent),
+      $this->dashboardRight->addChild(
+        sprintf('<label>Published %s Content</label> %s', $contentType->getLabel(), $numPublishedContent),
         '@sympal_content_list_type?type='.$contentType->getId().'&published=1'
       );
 
@@ -58,12 +58,12 @@ abstract class Basesympal_dashboardActions extends sfActions
         ->where('c.date_published >= NOW() OR c.date_published IS NULL')
         ->andWhere('c.content_type_id = ?', $contentType->getId())
         ->count();
-      $this->indicators->addChild(
-        sprintf(__('Un-Published: %s Content %s'), $contentType->getLabel(), $numUnPublishedContent),
+      $this->dashboardRight->addChild(
+        sprintf('<label>Un-Published %s Content</label> %s', $contentType->getLabel(), $numUnPublishedContent),
         '@sympal_content_list_type?type='.$contentType->getId().'&published=0'
       );
     }
 
-    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this->indicators, 'sympal.load_indicators'));
+    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this->dashboardRight, 'sympal.load_dashboard_right'));
   }
 }
