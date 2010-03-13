@@ -192,8 +192,15 @@ class sfSympalFormToolkit
     $validatorOptions = isset($options['validator_options']) ? $options['validator_options'] : array();
     $validatorOptions['required'] = false;
 
-    $widgetSchema[$fieldName] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
-    $validatorSchema[$fieldName] = new $validatorClass($validatorOptions);
+    if ($widgetClass)
+    {
+      $widgetSchema[$fieldName] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
+    }
+    
+    if ($validatorClass)
+    {
+      $validatorSchema[$fieldName] = new $validatorClass($validatorOptions);
+    }
   }
 
   /**
