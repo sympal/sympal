@@ -32,26 +32,51 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     }
   }
 
+  /**
+   * Returns the "resource" used to render the form fields for a slog.
+   * 
+   * A resource is a module/action that can represent a component or
+   * a partial
+   * 
+   * @return string
+   */
   public function getSlotEditFormRenderer()
   {
     $contentSlotTypes = sfSympalConfig::get('content_slot_types');
     return isset($contentSlotTypes[$this->type]['form_renderer']) ? $contentSlotTypes[$this->type]['form_renderer'] : sfSympalConfig::get('inline_editing', 'default_form_renderer', 'sympal_edit_slot/slot_editor_renderer');
   }
 
+  /**
+   * Retrieves the form class that will be used to edit this slot
+   * 
+   * @return sfForm
+   */
   public function getEditForm()
   {
     if ($this->is_column)
     {
       $form = $this->_getContentSlotColumnForm();
-    } else {
+    }
+    else
+    {
       $contentSlotTypes = sfSympalConfig::get('content_slot_types');
       $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
       $form = new $className($this);
     }
     $form->getWidgetSchema()->setNameFormat('sf_sympal_content_slot_'.$this->id.'[%s]');
+
     return $form;
   }
 
+  /**
+   * Retrieves the form class used to edit slot for "column slots".
+   * 
+   * Solumn slots are defined as those whose value is actually stored as
+   * a column on either the sfSympalContent model or the model of the
+   * content type
+   * 
+   * @return sfForm
+   */
   protected function _getContentSlotColumnForm()
   {
     $content = $this->getContentRenderedFor();
