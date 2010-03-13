@@ -15,11 +15,11 @@
 <?php endif; ?>
 
 <script type="text/javascript">
-  jQuery(document).ready(function(){
-    jQuery('#sympal_slot_wrapper_<?php echo $contentSlot->id ?> form').ajaxForm({
-      target: '#sympal_slot_form_<?php echo $contentSlot->id ?> .form_body',
-      beforeSubmit: sympalPreSlotSubmit,
-      success: sympalSlotSubmitSuccess
+  jQuery(document).ready(function(){    
+    jQuery('#sympal_slot_wrapper_<?php echo $contentSlot->id ?> form').submit(function(){
+      sympal_slot_form_submit(jQuery(this))
+      
+      return false;
     });
   });
 </script>
