@@ -169,19 +169,16 @@ class sfSympalFormToolkit
   /**
    * Change the content slot form value widget
    *
-   * @param sfSympalContentSlot $contentSlot 
-   * @param sfForm $form 
+   * @param string $type The type of the widget
+   * @param sfForm $form The form whose slot will be modified
+   * @param string $fieldName The name of the "slot" field on the form
    * @return void
    */
-  public static function changeContentSlotValueWidget(sfSympalContentSlot $contentSlot, sfForm $form)
+  public static function changeContentSlotValueWidget($type = 'Text', sfForm $form, $fieldName = 'value')
   {
-    if ($contentSlot->is_column)
-    {
-      return;
-    }
-
-    $type = $contentSlot->type ? $contentSlot->type : 'Text';
-
+    // in case the type is blank
+    $type = ($type) ? $type : 'Text';
+    
     $widgetSchema = $form->getWidgetSchema();
     $validatorSchema = $form->getValidatorSchema();
 
@@ -195,8 +192,8 @@ class sfSympalFormToolkit
     $validatorOptions = isset($options['validator_options']) ? $options['validator_options'] : array();
     $validatorOptions['required'] = false;
 
-    $widgetSchema['value'] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
-    $validatorSchema['value'] = new $validatorClass($validatorOptions);
+    $widgetSchema[$fieldName] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
+    $validatorSchema[$fieldName] = new $validatorClass($validatorOptions);
   }
 
   /**

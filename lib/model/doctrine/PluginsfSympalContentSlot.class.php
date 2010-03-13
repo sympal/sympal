@@ -56,6 +56,15 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     if ($this->is_column)
     {
       $form = $this->_getContentSlotColumnForm();
+      
+      /*
+       * For "column" slots, the widget and validator of the type are
+       * not set automatically in the form itself (as opposed to true
+       * slots who use sfSympalContentSlotForm, where the widget and
+       * validator are setup automatically. This is a shortcoming. We
+       * manually set the widget and validator here for content slots
+       */
+      sfSympalFormToolkit::changeContentSlotValueWidget($this->type, $form, $this->name);
     }
     else
     {
