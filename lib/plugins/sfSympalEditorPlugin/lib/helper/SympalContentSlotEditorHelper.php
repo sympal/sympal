@@ -75,7 +75,7 @@ function get_sympal_content_slot_editor($content, $slot, $options = array())
   $slotOptions = sfSympalConfig::get($slot->getContentRenderedFor()->Type->slug, 'content_slots', array());
   if (isset($slotOptions[$slot->name]))
   {
-    $options = array_merge($slotOptions[$name], $options);
+    $options = array_merge($slotOptions[$slot->name], $options);
   }
   
   // merge in some edit defaults
