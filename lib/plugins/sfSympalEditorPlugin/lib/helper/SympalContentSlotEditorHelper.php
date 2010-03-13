@@ -57,3 +57,67 @@ function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot
   
   return $form->renderFormTag($url, $options);
 }
+
+/**
+ * Renders an edit form for a slot
+ * 
+ * @param sfSympalContent $content The content on which the slot should be rendered
+ * @param sfSympalContentSlot $slot The slot to render in a form
+ * @param array $options An options array. Available options include:
+ *   * edit_mode
+ * 
+ */
+function get_sympal_content_slot_editor($content, $slot, $options = array())
+{
+  $slot->setContentRenderedFor($content);
+    
+  // merge the default config for this slot into the given config
+  $slotOptions = sfSympalConfig::get($slot->getContentRenderedFor()->Type->slug, 'content_slots', array());
+  if (isset($slotOptions[$slot->name]))
+  {
+    $options = array_merge($slotOptions[$name], $options);
+  }
+  
+  // merge in some edit defaults
+  $options = array_merge(array(
+    'edit_mode' => 'in-place',
+  ), $options);
+  
+  /*
+   * Give the slot a default value if it's blank.
+   * 
+   * @todo Move this somewhere where it can be specified on a type-by-type
+   * basis (e.g., if we had an "image" content slot, it might say
+   * "Click to choose image"
+   */
+  $renderedValue = $slot->render();
+  if (!$renderedValue)
+  {
+    $renderedValue = __('[Hover over and click edit to change.]');
+  }
+  
+  $inlineContent = sprintf(
+    '<a href="#sympal_slot_wrapper_%s .sympal_slot_form" class="sympal_slot_button %s">'.__('Edit').'</a>',
+    $slot->id,
+    $options['edit_mode']
+  );
+  
+  $inlineContent .= sprintf('<span class="sympal_slot_content">%s</span>', $renderedValue);
+  
+  // render the form inline if this is in-place editing
+  $form = $slot->getEditForm();
+  $inlineContent .= sprintf(
+    '<span class="sympal_slot_form">%s</span>',
+    get_partial('sympal_edit_slot/slot_editor', array(
+      'form' => $form,
+      'contentSlot' => $slot,
+      'editMode' => $options['edit_mode'],
+    ))
+  );
+  
+  return sprintf(
+    '<span class="sympal_slot_wrapper" id="sympal_slot_wrapper_%s">%s</span>',
+    $slot->id,
+    $inlineContent
+  );
+}

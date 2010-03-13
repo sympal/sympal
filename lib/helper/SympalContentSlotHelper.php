@@ -74,45 +74,12 @@ function _get_sympal_content_slot($name, $options = array())
    */
   if (sfSympalContext::getInstance()->shouldLoadFrontendEditor())
   {
-    // merge in some edit defaults
-    $options = array_merge(array(
-      'edit_mode' => 'in-place',
-    ), $options);
-    
-    /*
-     * Give the slot a default value if it's blank.
-     * 
-     * @todo Move this somewhere where it can be specified on a type-by-type
-     * basis (e.g., if we had an "image" content slot, it might say
-     * "Click to choose image"
-     */
-    $renderedValue = $slot->render();
-    if (!$renderedValue && sfSympalContext::getInstance()->shouldLoadFrontendEditor())
-    {
-      $renderedValue = __('[Hover over and click edit to change.]');
-    }
-    
-    $inlineContent = sprintf(
-      '<a href="#sympal_slot_wrapper_%s .sympal_slot_form" class="sympal_slot_button %s">'.__('Edit').'</a>',
-      $slot->id,
-      $options['edit_mode']
-    );
-    
-    $inlineContent .= sprintf('<span class="sympal_slot_content">%s</span>', $renderedValue);
-    
-    // render the form inline if this is in-place editing
-    $form = $slot->getEditForm();
-    $inlineContent .= sprintf(
-      '<span class="sympal_slot_form">%s</span>',
-      get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot, 'options' => $options))
-    );
-    
-    return sprintf(
-      '<span class="sympal_slot_wrapper" id="sympal_slot_wrapper_%s">%s</span>',
-      $slot->id,
-      $inlineContent
-    );
-  } else {
+    use_helper('SympalContentSlotEditor');
+
+    return get_sympal_content_slot_editor($content, $slot, $options);
+  }
+  else
+  {
     return $slot->render();
   }
 }
