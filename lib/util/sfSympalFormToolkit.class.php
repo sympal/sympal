@@ -174,14 +174,13 @@ class sfSympalFormToolkit
    * @param string $fieldName The name of the "slot" field on the form
    * @return void
    */
-  public static function changeContentSlotValueWidget($type = 'Text', sfForm $form, $fieldName = 'value')
+  public static function changeContentSlotValueWidget(sfSympalContentSlot $slot, sfForm $form)
   {
     // in case the type is blank
-    $type = ($type) ? $type : 'Text';
+    $type = ($slot->type) ? $slot->type : 'Text';
     
     $widgetSchema = $form->getWidgetSchema();
     $validatorSchema = $form->getValidatorSchema();
-
     $contentSlotTypes = sfSympalConfig::get('content_slot_types', null, array());
     $options = isset($contentSlotTypes[$type]) ? $contentSlotTypes[$type] : array();
 
@@ -191,15 +190,24 @@ class sfSympalFormToolkit
     $validatorClass = isset($options['validator_class']) ? $options['validator_class'] : 'sfValidatorFormSympal'.$type;
     $validatorOptions = isset($options['validator_options']) ? $options['validator_options'] : array();
     $validatorOptions['required'] = false;
-
-    if ($widgetClass)
-    {
-      $widgetSchema[$fieldName] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
-    }
     
-    if ($validatorClass)
+    /*
+     * Setup the widget and validator: 3 cases:
+     *   1) widget_class & is validator_class are not false, so we setup widget/validator using those
+     *   2) widget_class & validator_class ARE false, the slot is a column - get the widget/validator from the content form
+     *   3) All else fails, leave widget & validator alone
+     */
+    if ($widgetClass && $validatorClass)
     {
-      $validatorSchema[$fieldName] = new $validatorClass($validatorOptions);
+      $widgetSchema['value'] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
+      $validatorSchema['value'] = new $validatorClass($validatorOptions);
+    }
+    elseif ($slot->is_column)
+    {
+      $contentForm = $slot->getContentSlotColumnForm();
+      
+      $form->mergeForm($contentForm);
+      unset($form['value']);
     }
   }
 

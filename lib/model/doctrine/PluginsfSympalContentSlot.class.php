@@ -64,6 +64,70 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   }
   
   /**
+   * Retrieves the form class used to edit slot for "column slots".
+   * 
+   * This is used by sfSympalFormToolkit::changeContentSlotValueWidget()
+   * to extract the widget & validator out so we can put it into the 
+   * content slot form
+   * 
+   * @return sfForm
+   */
+  public function getContentSlotColumnForm()
+  {
+    $content = $this->getContentRenderedFor();
+    $contentTable = $content->getTable();
+
+    if ($contentTable->hasField($this->name))
+    {
+      $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
+      $form = new $formClass($content);
+      $form->useFields(array($this->name));
+    }
+
+    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
+    {
+      $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
+      if ($contentTranslationTable->hasField($this->name))
+      {
+        $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
+        $form = new $formClass($content);
+        $form->useFields(array(sfContext::getInstance()->getUser()->getEditCulture()));
+      }      
+    }
+
+    $contentTypeClassName = $content->getContentTypeClassName();
+    $contentTypeFormClassName = sfSympalConfig::get($contentTypeClassName, 'default_inline_editing_column_form', $contentTypeClassName.'Form');
+    $contentTypeTable = Doctrine_Core::getTable($contentTypeClassName);
+    if ($contentTypeTable->hasField($this->name))
+    {
+      $form = new $contentTypeFormClassName($content->getRecord());
+      $form->useFields(array($this->name));
+    }
+
+    if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
+    {
+      $contentTypeTranslationClassName = $contentTypeClassName.'Translation';
+      $contentTypeTranslationFormClassName = sfSympalConfig::get($contentTypeTranslationClassName, 'default_inline_editing_column_form', $contentTypeTranslationClassName.'Form');
+      $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
+      if ($contentTypeTranslationTable->hasField($this->name))
+      {
+        $form = new $contentTypeFormClassName($content->getRecord()); 
+        $i18nForm = $form->getEmbeddedForm($language = sfContext::getInstance()->getUser()->getEditCulture()); 
+        $i18nForm->useFields(array($this->name)); 
+        unset($form[$language]); 
+        $form->embedForm($language, $i18nForm); 
+        $form->useFields(array($language)); 
+      }
+    }
+
+    if (!$form)
+    {
+      throw new InvalidArgumentException('Invalid content slot');
+    }
+
+    return $form;
+  }
+  /**
    * Renders this slot, which uses the slot's renderer class and runs
    * it through the transformers
    * 
