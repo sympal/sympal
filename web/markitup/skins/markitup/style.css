@@ -12,7 +12,6 @@
 	text-decoration:none;
 }
 .markItUp  {
-	width:700px;
 	margin:5px 0 5px 0;
 	border:5px solid #F5F5F5;	
 }
@@ -20,13 +19,13 @@
 	border:1px solid #3C769D;	
 	background:#FFF url(images/bg-container.png) repeat-x top left;
 	padding:5px 5px 2px 5px;
-	font:11px Verdana, Arial, Helvetica, sans-serif;
+	font:14px Verdana, Arial, Helvetica, sans-serif;
 }
 .markItUpEditor {
-	font:12px 'Courier New', Courier, monospace;
+	font:14px 'Courier New', Courier, monospace;
 	padding:5px 5px 5px 35px;
 	border:3px solid #3C769D;
-	width:643px;
+	width: 92%;
 	height:320px;
 	background-image:url(images/bg-editor.png);
 	background-repeat:no-repeat;
