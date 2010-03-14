@@ -205,9 +205,11 @@ class sfSympalFormToolkit
     elseif ($slot->is_column)
     {
       $contentForm = $slot->getContentSlotColumnForm();
+      $contentWidgetSchema = $contentForm->getWidgetSchema();
+      $contentValidatorSchema = $contentForm->getValidatorSchema();
       
-      $form->mergeForm($contentForm);
-      unset($form['value']);
+      $widgetSchema['value'] = $contentForm->getWidgetSchema()->offsetGet($slot->name);
+      $validatorSchema['value'] = $contentForm->getValidatorSchema()->offsetGet($slot->name);
     }
   }
 
