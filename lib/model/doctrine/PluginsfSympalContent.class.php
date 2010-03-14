@@ -176,12 +176,19 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
    */
   public function getOrCreateSlot($name, $options = array())
   {
-    $type = isset($options['type']) ? $options['type'] : null;
-    
     if (!$hasSlot = $this->hasSlot($name))
     {
       $isColumn = $this->hasField($name) ? true : false;
-      $type = $type ? $type : 'Text';
+      
+      // if type isn't specified, give it a type of Column or Text
+      if (isset($options['type']))
+      {
+        $type = $options['type'];
+      }
+      else
+      {
+        $type = $isColumn ? 'Column' : 'Text';
+      }
       
       if (!$isColumn && $type == 'Column')
       {
