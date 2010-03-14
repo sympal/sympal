@@ -1,6 +1,11 @@
-markItUp! 1.1.5
+markItUp! 1.1.6
 
 CHANGE LOG
+markItUp! 1.1.6 2010-01-12
+- Improved: Ajax requests are now asynchronous
+- Fixed: Double empty line problem with preview and parsers
+- Fixed: IE8 now close the preview properly
+
 markItUp! 1.1.5 2009-05-01
 - Modified: http://drupal.org/project/wysiwyg compatibility
 - Modified: Alt/Ctrl/Alt+Tab are now disabled
