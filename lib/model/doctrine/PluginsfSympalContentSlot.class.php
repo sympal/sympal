@@ -53,91 +53,12 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
    */
   public function getEditForm()
   {
-    if ($this->is_column)
-    {
-      $form = $this->_getContentSlotColumnForm();
-      
-      /*
-       * For "column" slots, the widget and validator of the type are
-       * not set automatically in the form itself (as opposed to true
-       * slots who use sfSympalContentSlotForm, where the widget and
-       * validator are setup automatically. This is a shortcoming. We
-       * manually set the widget and validator here for content slots
-       */
-      sfSympalFormToolkit::changeContentSlotValueWidget($this->type, $form, $this->name);
-    }
-    else
-    {
-      $contentSlotTypes = sfSympalConfig::get('content_slot_types');
-      $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
-      $form = new $className($this);
-    }
+    $contentSlotTypes = sfSympalConfig::get('content_slot_types');
+    $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
+    
+    $form = new $className($this);
+    $form->setDefault('value', $this->getRawValue());
     $form->getWidgetSchema()->setNameFormat('sf_sympal_content_slot_'.$this->id.'[%s]');
-
-    return $form;
-  }
-
-  /**
-   * Retrieves the form class used to edit slot for "column slots".
-   * 
-   * Solumn slots are defined as those whose value is actually stored as
-   * a column on either the sfSympalContent model or the model of the
-   * content type
-   * 
-   * @return sfForm
-   */
-  protected function _getContentSlotColumnForm()
-  {
-    $content = $this->getContentRenderedFor();
-    $contentTable = $content->getTable();
-
-    if ($contentTable->hasField($this->name))
-    {
-      $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
-      $form = new $formClass($content);
-      $form->useFields(array($this->name));
-    }
-
-    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
-    {
-      $contentTranslationTable = Doctrine::getTable('sfSympalContentTranslation');
-      if ($contentTranslationTable->hasField($this->name))
-      {
-        $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
-        $form = new $formClass($content);
-        $form->useFields(array(sfContext::getInstance()->getUser()->getEditCulture()));
-      }      
-    }
-
-    $contentTypeClassName = $content->getContentTypeClassName();
-    $contentTypeFormClassName = sfSympalConfig::get($contentTypeClassName, 'default_inline_editing_column_form', $contentTypeClassName.'Form');
-    $contentTypeTable = Doctrine_Core::getTable($contentTypeClassName);
-    if ($contentTypeTable->hasField($this->name))
-    {
-      $form = new $contentTypeFormClassName($content->getRecord());
-      $form->useFields(array($this->name));
-    }
-
-    if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
-    {
-      $contentTypeTranslationClassName = $contentTypeClassName.'Translation';
-      $contentTypeTranslationFormClassName = sfSympalConfig::get($contentTypeTranslationClassName, 'default_inline_editing_column_form', $contentTypeTranslationClassName.'Form');
-      $contentTypeTranslationTable = Doctrine_Core::getTable($contentTypeTranslationClassName);
-      if ($contentTypeTranslationTable->hasField($this->name))
-      {
-        $form = new $contentTypeFormClassName($content->getRecord()); 
-        $i18nForm = $form->getEmbeddedForm($language = sfContext::getInstance()->getUser()->getEditCulture()); 
-        $i18nForm->useFields(array($this->name)); 
-        unset($form[$language]); 
-        $form->embedForm($language, $i18nForm); 
-        $form->useFields(array($language)); 
-      }
-    }
-
-    if (!$form)
-    {
-      throw new InvalidArgumentException('Invalid content slot');
-    }
 
     return $form;
   }
@@ -204,14 +125,18 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
   public function setValue($value)
   {
+    $this->_rendered = null;
+    
     if ($this->is_column)
     {
       $name = $this->name;
-      $this->_contentRenderedFor->$name = $value;
-    }
 
-    $this->_rendered = null;
-    return $this->_set('value', $value);
+      return $this->_contentRenderedFor->$name = $value;
+    }
+    else
+    {
+      return $this->_set('value', $value);
+    }
   }
 
   public function getRawValue()
