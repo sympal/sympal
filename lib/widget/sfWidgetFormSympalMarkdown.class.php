@@ -27,7 +27,7 @@ class sfWidgetFormSympalMarkdown extends sfWidgetFormTextarea
     $javascript = sprintf("
 <script type=\"text/javascript\">
   $(document).ready(function(){
-    jQuery('#%s').markItUp(mySettings);
+    jQuery('#%s:not(.markItUpEditor)').markItUp(mySettings);
   });
 </script>
     ",
@@ -36,6 +36,9 @@ class sfWidgetFormSympalMarkdown extends sfWidgetFormTextarea
     return $widget.$javascript;
   }
   
+  /**
+   * @see sfWidget
+   */
   public function getStylesheets()
   {
     return array(
@@ -44,6 +47,9 @@ class sfWidgetFormSympalMarkdown extends sfWidgetFormTextarea
     );
   }
   
+  /**
+   * @see sfWidget
+   */
   public function getJavascripts()
   {
     return array(
