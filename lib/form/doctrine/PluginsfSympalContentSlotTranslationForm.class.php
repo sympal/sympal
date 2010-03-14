@@ -15,7 +15,7 @@ abstract class PluginsfSympalContentSlotTranslationForm extends BasesfSympalCont
 
     if (isset($this['value']))
     {
-      sfSympalFormToolkit::changeContentSlotValueWidget($this->object->sfSympalContentSlot, $this);
+      sfSympalFormToolkit::changeContentSlotValueWidget($this->object->sfSympalContentSlot->type, $this);
     }
   }
 }

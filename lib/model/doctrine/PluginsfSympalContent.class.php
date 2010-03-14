@@ -182,6 +182,11 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     {
       $isColumn = $this->hasField($name) ? true : false;
       $type = $type ? $type : 'Text';
+      
+      if (!$isColumn && $type == 'Column')
+      {
+        throw new sfException('Cannot set a non-column slot to type "Column"');
+      }
 
       $slot = new sfSympalContentSlot();
       $slot->setContentRenderedFor($this);
@@ -198,12 +203,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
       $this->addSlot($slot);
     } else {
       $slot = $this->getSlot($name);
-    }
-
-    if ($type != null && $slot->type != $type)
-    {
-      $slot->type = $type;
-      $slot->save();
     }
 
     $slot->setContentRenderedFor($this);

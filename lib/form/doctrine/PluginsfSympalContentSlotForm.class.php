@@ -29,7 +29,7 @@ abstract class PluginsfSympalContentSlotForm extends BasesfSympalContentSlotForm
     if (isset($this['value']))
     {
       $this->useFields(array('value', 'type'));
-      sfSympalFormToolkit::changeContentSlotValueWidget($this->object, $this);
+      sfSympalFormToolkit::changeContentSlotValueWidget($this->object->type, $this);
     }
   }
 }

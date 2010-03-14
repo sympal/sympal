@@ -73,9 +73,9 @@ $t->is($content->getRoute(), '@page?slug=testing-this-out', 'Test getRoute()');
 // Test getting and adding of slots
 $t->is($content->getSlots()->count(), 0, 'Test we have 0 slots');
 
-get_sympal_content_slot($content, 'title', 'Text');
-get_sympal_content_slot($content, 'body', 'Markdown');
-get_sympal_content_slot($content, 'teaser', 'RawHtml');
+get_sympal_content_slot('title', array('type' => 'Text', 'content' => $content));
+get_sympal_content_slot('body', array('type' => 'Markdown', 'content' => $content));
+get_sympal_content_slot('teaser', array('type' => 'RawHtml', 'content' => $content));
 
 $content->refresh(true);
 $t->is($content->getSlots()->count(), 3, 'Test we have 3 slots');

@@ -66,9 +66,10 @@ all:
     # Configure some defaults for inline editing
     inline_editing:
       enabled: true
-      default_column_form: sfSympalInlineEditContentColumnForm
-      default_slot_form: sfSympalInlineEditContentSlotForm
+      default_column_form:   sfSympalInlineEditContentColumnForm
+      default_slot_form:     sfSympalInlineEditContentSlotForm
       default_form_renderer: sympal_edit_slot/slot_editor_form
+      default_edit_mode:     popup         # in-place or popup
 
     # Configure the default rendering module and action
     default_rendering_module: sympal_content_renderer
@@ -242,6 +243,12 @@ all:
         widget_options:
           config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
         transformers:  [replacer]
+      
+      # special slot type for "column" slots where the widget/validator from the content or content type form are used instead of those listed here
+      Column:
+        label:  Column Slot Type
+        widget_class:    false
+        validator_class: false
 
     slot_transformers:
       replacer:       [sfSympalContentSlotReplacer, transformSlotContent]

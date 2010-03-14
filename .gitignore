@@ -7,3 +7,4 @@ test/fixtures/project/log/*
 test/fixtures/project/web/sfDoctrinePlugin
 test/fixtures/project/web/uploads
 *.swp
+base
