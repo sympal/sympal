@@ -41,17 +41,14 @@ class sfSympalContentSlotTransformer
    */
   protected $_tokenCallbacks = array();
   
-  protected $_options = array();
-  
   /**
    * Class constructor
    * 
    * @param sfSympalContentSlot $contentSlot The content slot that will be transformed
    */
-  public function __construct(sfSympalContentSlot $contentSlot, $options = array())
+  public function __construct(sfSympalContentSlot $contentSlot)
   {
     $this->_contentSlot = $contentSlot;
-    $this->_options = $options;
   }
   
   /**
@@ -186,10 +183,5 @@ class sfSympalContentSlotTransformer
   public function getContentSlot()
   {
     return $this->_contentSlot;
-  }
-  
-  public function getOption($name, $default = null)
-  {
-    return isset($this->_options[$name]) ? $this->_options[$name] : $default;
   }
 }

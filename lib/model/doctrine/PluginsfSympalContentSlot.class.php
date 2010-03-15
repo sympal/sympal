@@ -55,9 +55,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   {
     $contentSlotTypes = sfSympalConfig::get('content_slot_types');
     $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
-    $formOptions = isset($contentSlotTypes[$this->type]['form_options']) ? $contentSlotTypes[$this->type]['form_options'] : array();
     
-    $form = new $className($this, $formOptions);
+    $form = new $className($this);
     $form->setDefault('value', $this->getRawValue());
     $form->getWidgetSchema()->setNameFormat('sf_sympal_content_slot_'.$this->id.'[%s]');
 
@@ -140,9 +139,8 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     {
       $slotTypeConfig = sfSympalConfig::get('content_slot_types', $this->type, array());
       $rendererClass = isset($slotTypeConfig['renderer']) ? $slotTypeConfig['renderer'] : 'sfSympalContentSlotTransformer';
-      $rendererOptions = isset($slotTypeConfig['renderer_options']) ? $slotTypeConfig['renderer_options'] : array();
       
-      $renderer = new $rendererClass($this, $rendererOptions);
+      $renderer = new $rendererClass($this);
       $this->_rendered = $renderer->render($this->getRawValue());
     }
 
