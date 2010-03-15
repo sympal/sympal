@@ -229,6 +229,7 @@ all:
       #  widget_options: []
       #  validator_class: MySlotTypeValidator    default: sfValidatorFormSympalXXXXXXType
       #  validator_options: []
+      #  transformers:    []
       Text:
         label: Single Line of Text
         transformers:  [replacer]
