@@ -41,23 +41,32 @@ class sfSympalContentSlotTransformer
    */
   protected $_tokenCallbacks = array();
   
+  protected $_options = array();
+  
   /**
    * Class constructor
    * 
    * @param sfSympalContentSlot $contentSlot The content slot that will be transformed
    */
-  public function __construct(sfSympalContentSlot $contentSlot)
+  public function __construct(sfSympalContentSlot $contentSlot, $options = array())
   {
     $this->_contentSlot = $contentSlot;
+    $this->_options = $options;
   }
   
   /**
    * The public-facing method that will return the transformed content
    * 
+   * @param The value to transform
    * @return string The transformed content
    */
-  public function render()
+  public function render($value)
   {
+    if ($value !== null)
+    {
+      $this->setTransformedContent($value);
+    }
+    
     $this->process();
     
     $replacements = $this->getTokenReplacementValues();
@@ -77,8 +86,6 @@ class sfSympalContentSlotTransformer
    */
   protected function process()
   {
-    $this->setTransformedContent($this->getContentSlot()->getValueForRendering());
-    
     foreach ($this->getTransformerCallbacks() as $callback)
     {
       $this->setTransformedContent(call_user_func($callback, $this->getTransformedContent(), $this));
@@ -179,5 +186,10 @@ class sfSympalContentSlotTransformer
   public function getContentSlot()
   {
     return $this->_contentSlot;
+  }
+  
+  public function getOption($name, $default = null)
+  {
+    return isset($this->_options[$name]) ? $this->_options[$name] : $default;
   }
 }
