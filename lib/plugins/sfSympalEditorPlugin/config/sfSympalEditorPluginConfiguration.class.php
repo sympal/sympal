@@ -83,6 +83,9 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.cookie.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.elastic.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.Jcrop.min.js'));
+      
+      // load in the metadata plugin
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.metadata.js'));
 
       // Load tinymce
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/tiny_mce/tiny_mce.js'));
