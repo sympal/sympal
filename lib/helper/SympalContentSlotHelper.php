@@ -63,8 +63,11 @@ function _get_sympal_content_slot($name, $options = array())
   {
     $slot = $name;
     $name = $name->getName();
-  } else {
+  }
+  else
+  {
     $slot = $content->getOrCreateSlot($name, $options);
+    unset($options['default_value']);
   }
   
   $slot->setContentRenderedFor($content);

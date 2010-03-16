@@ -40,9 +40,8 @@ function get_sympal_inline_edit_bar_buttons()
  * 
  * @param sfForm  $form The form object for this slot
  * @param sfSympalContentSlot $contentSlot The content slot that is being modified
- * @param string $editMode The edit mode (e.g. in-place) for this form
  */
-function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot, $editMode)
+function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot)
 {
   $url = url_for('sympal_save_content_slot', array(
     'id' => $contentSlot->id,
@@ -51,7 +50,6 @@ function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot
   
   $options = array(
     'method' => 'post',
-    'class' => $editMode,
     'id' => 'sympal_slot_form_'.$contentSlot->id,
   );
   
@@ -97,15 +95,15 @@ function get_sympal_content_slot_editor($content, $slot, $options = array())
   }
   
   $inlineContent = sprintf(
-    '<a href="#sympal_slot_wrapper_%s .sympal_slot_form" class="sympal_slot_button %s">'.__('Edit').'</a>',
-    $slot->id,
-    $options['edit_mode']
+    '<a href="%s" class="sympal_slot_button">'.__('Edit').'</a>',
+    url_for('sympal_content_slot_form', array('id' => $slot->id, 'content_id' => $slot->getContentRenderedFor()->id))
   );
   
   $inlineContent .= sprintf('<span class="sympal_slot_content">%s</span>', $renderedValue);
   
   return sprintf(
-    '<span class="sympal_slot_wrapper" id="sympal_slot_wrapper_%s">%s</span>',
+    '<span class="sympal_slot_wrapper %s" id="sympal_slot_wrapper_%s">%s</span>',
+    htmlentities(json_encode($options)),
     $slot->id,
     $inlineContent
   );
