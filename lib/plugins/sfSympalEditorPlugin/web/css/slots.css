@@ -28,6 +28,9 @@ a.sympal_slot_button:hover {
 /**
  * General form styles for slots
  */
+.sympal_slot_form {
+  color: #000;
+}
 .sympal_slot_form input,
 .sympal_slot_form select,
 .sympal_slot_form textarea {
@@ -54,10 +57,6 @@ a.sympal_slot_button:hover {
 .sympal_slot_form input.button {
   display: inline;
   width: auto !important;
-}
-
-.sympal_slot_form img.loading_anim {
-  display: none;
 }
 
 /**
