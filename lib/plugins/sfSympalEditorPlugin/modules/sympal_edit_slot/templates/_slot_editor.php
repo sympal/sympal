@@ -12,7 +12,7 @@
 <?php include_javascripts_for_form($form) ?>
 <?php include_stylesheets_for_form($form) ?>
 
-<?php echo get_sympal_slot_form_tag($form, $contentSlot, $editMode) ?>
+<?php echo get_sympal_slot_form_tag($form, $contentSlot) ?>
   <?php echo $form->renderHiddenFields() ?>
   
   <div class="form_body">
