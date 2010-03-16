@@ -4,7 +4,7 @@ class sfSympalTaskClearCacheListener extends sfSympalListener
 {
   public function getEventName()
   {
-    return 'task.clear_cache';
+    return 'task.cache.clear';
   }
 
   public function run(sfEvent $event)
