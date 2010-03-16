@@ -78,6 +78,18 @@ abstract class Basesympal_edit_slotActions extends sfActions
   }
   
   /**
+   * Renders an individual slot
+   */
+  public function executeSlot_view(sfWebRequest $request)
+  {
+    $this->contentSlot = $this->setupContentSlot($request);
+    
+    $this->renderText($this->contentSlot->render());
+    
+    return sfView::NONE;
+  }
+  
+  /**
    * Handles the form submit for a given slot
    */
   public function executeSlot_save(sfWebRequest $request)

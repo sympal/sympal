@@ -80,6 +80,7 @@ function get_sympal_content_slot_editor($content, $slot, $options = array())
   // merge in some edit defaults
   $options = array_merge(array(
     'edit_mode' => sfSympalConfig::get('inline_editing', 'default_edit_mode'),
+    'view_url'  => url_for('sympal_content_slot_view', array('id' => $slot->id, 'content_id' => $slot->getContentRenderedFor()->id)),
   ), $options);
   
   /*

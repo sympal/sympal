@@ -24,6 +24,19 @@ sympal_content_slot_form:
   requirements:
     sf_method: [get]
 
+sympal_content_slot_view:
+  url:   /content_slot_view/:id/:content_id
+  class: sfDoctrineRoute
+  options:
+    type:   object
+    model:  sfSympalContentSlot
+    columns: [id]
+  param:
+    module: sympal_edit_slot
+    action: slot_view
+  requirements:
+    sf_method: [get]
+
 sympal_save_content_slot:
   url:   /save_content_slot/:id/:content_id
   class: sfDoctrineRoute
