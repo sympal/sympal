@@ -104,17 +104,6 @@ function get_sympal_content_slot_editor($content, $slot, $options = array())
   
   $inlineContent .= sprintf('<span class="sympal_slot_content">%s</span>', $renderedValue);
   
-  // render the form inline if this is in-place editing
-  $form = $slot->getEditForm();
-  $inlineContent .= sprintf(
-    '<span class="sympal_slot_form">%s</span>',
-    get_partial('sympal_edit_slot/slot_editor', array(
-      'form' => $form,
-      'contentSlot' => $slot,
-      'editMode' => $options['edit_mode'],
-    ))
-  );
-  
   return sprintf(
     '<span class="sympal_slot_wrapper" id="sympal_slot_wrapper_%s">%s</span>',
     $slot->id,
