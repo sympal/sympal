@@ -14,6 +14,7 @@
 
 <?php echo get_sympal_slot_form_tag($form, $contentSlot) ?>
   <?php echo $form->renderHiddenFields() ?>
+  <?php echo $form->renderGlobalErrors() ?>
   
   <div class="form_body">
     <?php echo sfSympalToolkit::getSymfonyResource($contentSlot->getSlotEditFormRenderer(), array('contentSlot' => $contentSlot, 'form' => $form)) ?>
