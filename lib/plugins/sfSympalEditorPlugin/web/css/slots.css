@@ -25,13 +25,6 @@ a.sympal_slot_button:hover {
   color: #000;
 }
 
-/*
- * surrounds the inline form
- */
-.sympal_slot_form {
-  display: none;
-}
-
 /**
  * General form styles for slots
  */

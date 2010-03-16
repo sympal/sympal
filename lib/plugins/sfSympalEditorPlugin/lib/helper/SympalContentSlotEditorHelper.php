@@ -49,8 +49,9 @@ function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot
   ));
   
   $options = array(
-    'method' => 'post',
-    'id' => 'sympal_slot_form_'.$contentSlot->id,
+    'method'  => 'post',
+    'id'      => 'sympal_slot_form_'.$contentSlot->id,
+    'class'   => 'sympal_slot_form',
   );
   
   return $form->renderFormTag($url, $options);
