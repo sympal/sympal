@@ -11,7 +11,6 @@
   display: none;
   width: 600px;
   height: 400px;
-  overflow: auto;
   z-index: 9999999;
   color: #000;
 }
