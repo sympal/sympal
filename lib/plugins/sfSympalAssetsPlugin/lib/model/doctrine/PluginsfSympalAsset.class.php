@@ -62,6 +62,20 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
   {
     return sprintf('[asset:%s]', $this->getSlug());
   }
+  
+  /**
+   * Returns an array of default "options" to be added when an asset
+   * is embedded (to eventually create strings like [asset:slug var=value]
+   * 
+   * @todo Hook this system up with the slot object system, and use the
+   * defaults from the slot object in question as the default params
+   */
+  public function getEmbedOptions($jsonEncode = false)
+  {
+    $options = array('alt' => $this->name);
+    
+    return $jsonEncode ? json_encode($options) : $options;
+  }
 
   /**
    * Returns an sfSympalAssetObject instance that represents this asset

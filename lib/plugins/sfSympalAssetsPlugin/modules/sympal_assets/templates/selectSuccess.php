@@ -46,7 +46,7 @@ and create directories below.') ?>
     <?php endforeach ?>
 
     <?php foreach($assets as $asset): ?>
-      <li id="<?php echo $asset->getSlug() ?>" title="<?php echo $asset->getName() ?>" class="asset">
+      <li id="sympal_asset_<?php echo $asset->getSlug() ?>" title="<?php echo $asset->getName() ?>" class="asset">
         <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/edit.png'), array(
             'url' => url_for('sympal_assets_edit_asset', $asset),
             'update' => 'sympal_assets_container',
@@ -63,7 +63,10 @@ and create directories below.') ?>
           )
         ) ?>
 
-        <?php echo link_to($asset->getName(), $asset->getUrl(), 'class=insert title='.$asset->getEmbedCode()) ?>
+        <?php echo link_to($asset->getName(), $asset->getUrl(), array(
+          'class' => sprintf('insert %s', $asset->getEmbedOptions(true)),
+          'title' => $asset->slug,
+        )) ?>
 
         <?php if ($asset->isImage()): ?>
           <?php echo image_tag($asset->getUrl(), 'class="preview" style="display: none;"') ?>
