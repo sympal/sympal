@@ -60,7 +60,7 @@
 .sympal_inline_edit_bar_container {
   font-weight: bold;
   position: fixed;
-  bottom: 2px;
+  bottom: 10px;
   right: 10px;
   z-index: 9999999;
 }
@@ -195,9 +195,9 @@
   list-style-type: none;
 }
 
-.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li input {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a {
   margin-right: 5px;
-  padding: 3px !important;
+  padding: 3px 10px !important;
   border: none !important;
   cursor: pointer;
   -khtml-border-radius: 5px;
@@ -209,35 +209,35 @@
   font-size: 13px !important;
 }
 
-.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li input:hover {
+.sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a:hover {
   color: #fff;
 }
 
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a {
-  cursor: pointer;
+  background-color: #333;
 }
 
-.sympal_inline_edit_bar input.toggle_sympal_assets {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/insert_asset.gif) 2px 4px no-repeat !important;
+.sympal_inline_edit_bar a.toggle_sympal_assets {
+  background: #333 url(../../sfSympalPlugin/images/insert_asset.gif) 2px 4px no-repeat !important;
   text-indent: 15px;  
 }
 
-.sympal_inline_edit_bar input.toggle_sympal_links {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/links_icon.gif) 2px 5px no-repeat !important;
+.sympal_inline_edit_bar a.toggle_sympal_links {
+  background: #333 url(../../sfSympalPlugin/images/links_icon.gif) 2px 5px no-repeat !important;
   text-indent: 15px;  
 }
 
-.sympal_inline_edit_bar input.toggle_sympal_objects {
-  background: #f5f5f5 url(../../sfSympalPlugin/images/file_icon.gif) 2px 5px no-repeat !important;
+.sympal_inline_edit_bar a.toggle_sympal_objects {
+  background: #333 url(../../sfSympalPlugin/images/file_icon.gif) 2px 5px no-repeat !important;
   text-indent: 15px;  
 }
 
-.sympal_inline_edit_bar input, .sympal_inline_edit_bar select {
+.sympal_inline_edit_bar a, .sympal_inline_edit_bar select {
   padding: 2px !important;
   margin-right: 5px;
 }
 
-.sympal_inline_edit_bar input:hover {
+.sympal_inline_edit_bar a:hover {
   background-color: #375fc2 !important;
   color: #ffffff;
 }
