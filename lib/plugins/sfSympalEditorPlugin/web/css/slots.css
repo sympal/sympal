@@ -59,6 +59,10 @@ a.sympal_slot_button:hover {
   width: auto !important;
 }
 
+.sympal_slot_form a {
+  color: #000;
+}
+
 /**
  * Messages
  */
