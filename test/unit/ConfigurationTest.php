@@ -50,7 +50,6 @@ $corePlugins = array(
   'sfFeed2Plugin',
   'sfWebBrowserPlugin',
   'sfJqueryReloadedPlugin',
-  'sfThumbnailPlugin',
   'sfImageTransformPlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
