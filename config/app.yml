@@ -69,7 +69,7 @@ all:
       default_column_form:   sfSympalInlineEditContentColumnForm
       default_slot_form:     sfSympalInlineEditContentSlotForm
       default_form_renderer: sympal_edit_slot/slot_editor_form
-      default_edit_mode:     popup         # in-place or popup
+      default_edit_mode:     popup         # inline or popup
 
     # Configure the default rendering module and action
     default_rendering_module: sympal_content_renderer

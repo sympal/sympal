@@ -34,7 +34,7 @@ function get_sympal_content_slot()
  *  * content         An sfSympalContent instance to render the slot for
  *  * type            The rendering type to use for this slot (e.g. Markdown)
  *  * default_value   A default value to give this slot the first time it's created
- *  * edit_mode       How to edit this slot (in-place (default), popup)
+ *  * edit_mode       How to edit this slot (popup (default), inline)
  */
 function _get_sympal_content_slot($name, $options = array())
 {
