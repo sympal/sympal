@@ -241,6 +241,8 @@ all:
         transformers:  [replacer, markdown]
       TinyMCE:
         label: TinyMCE Rich Text Editor
+        widget_options:
+          config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
         transformers:  [replacer]
       
       # special slot type for "column" slots where the widget/validator from the content or content type form are used instead of those listed here
