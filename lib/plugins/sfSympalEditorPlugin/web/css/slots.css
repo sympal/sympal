@@ -65,7 +65,7 @@ a.sympal_slot_button:hover {
 #sympal_slot_flash {
   position: absolute;
   z-index: 100;
-  right: 0;
+  right: 10px;
 }
 .sympal_notice, .sympal_error {
   background: #c5c5c5;
