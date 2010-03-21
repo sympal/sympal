@@ -38,14 +38,26 @@ EOF;
     $code = file_get_contents($path.'/lib/myUser.class.php');
     file_put_contents($path.'/lib/myUser.class.php', str_replace('class myUser extends sfBasicSecurityUser',  'class myUser extends sfSympalUser', $code));
     $this->logSection('sympal', '...modifying myUser to extends sfSympalUser', null, 'COMMENT');
-
-    $path = sfConfig::get('sf_app_dir').'/config/routing.yml';
-    $array = sfYaml::load($path);
-    unset($array['homepage'], $array['default'], $array['default_index']);
-    file_put_contents($path, sfYaml::dump($array));
-
-    $this->logSection('sympal', '...removing default application default routes', null, 'COMMENT');
+    
+    $this->removeRoutes();
 
     $this->clearCache();
+  }
+  
+  /**
+   * Removes excess routes from the app's routing.yml file
+   */
+  protected function removeRoutes()
+  {
+    $this->logSection('sympal', sprintf('...removing default routes for app "%s"', sfConfig::get('sf_app')), null, 'COMMENT');
+    $path = sfConfig::get('sf_app_dir').'/config/routing.yml';
+    
+    // don't do anything if the routing.yml file has been removed
+    if (file_exists($path))
+    {
+      $array = sfYaml::load($path);
+      unset($array['homepage'], $array['default'], $array['default_index']);
+      file_put_contents($path, sfYaml::dump($array));
+    }
   }
 }
