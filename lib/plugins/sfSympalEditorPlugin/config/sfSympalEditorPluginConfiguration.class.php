@@ -114,6 +114,7 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       // Load the core javascript and some slot type javascript
       // @todo The slot type javascript needs to be brought in dynamically
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/slots/markdown.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/chooser.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/core.js'));
 
       $this->_editorAssetsLoaded = true;

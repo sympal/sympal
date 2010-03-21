@@ -10,6 +10,4 @@
   </div>
 </div>
 
-<div id="sympal_assets" class="sympal_inline_edit_bar_area"></div>
-<div id="sympal_links" class="sympal_inline_edit_bar_area"></div>
-<div id="sympal_objects" class="sympal_inline_edit_bar_area"></div>
+<div id="sympal_chooser_container" class="sympal_inline_edit_bar_area"></div>

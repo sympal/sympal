@@ -60,9 +60,9 @@ class sfSympalMenuInlineEditBarButtons extends sfSympalMenu
       $class = $this->_isEditModeButton ? $this->_inputClass.' sympal_inline_edit_bar_edit_buttons' : $this->_inputClass;
       if ($this->_route)
       {
-        $html = '<input title="'.$this->_shortcut.'" type="button" rel="'.url_for($this->_route).'" value="'.$this->renderLabel().'" class="'.$class.'" />';
+        $html = '<a title="'.$this->_shortcut.'" type="button" href="'.url_for($this->_route).'" class="'.$class.'">'.$this->renderLabel().'</a>';
       } else {
-        $html = '<input title="'.$this->_shortcut.'" type="button" value="'.$this->renderLabel().'" class="'.$class.'" />';
+        $html = '<a title="'.$this->_shortcut.'" type="button" class="'.$class.'">'.$this->renderLabel().'</a>';
       }
       
       if ($this->_shortcut)
