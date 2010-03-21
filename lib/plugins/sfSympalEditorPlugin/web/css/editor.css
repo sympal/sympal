@@ -198,7 +198,7 @@
 
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a {
   margin-right: 5px;
-  padding: 3px 10px !important;
+  padding: 3px 6px !important;
   border: none !important;
   cursor: pointer;
   -khtml-border-radius: 5px;
@@ -208,6 +208,7 @@
   border: 1px solid #333 !important;
   font-weight: normal !important;
   font-size: 13px !important;
+  display: block;
 }
 
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a:hover {
@@ -228,13 +229,7 @@
   text-indent: 15px;  
 }
 
-.sympal_inline_edit_bar a.toggle_sympal_objects {
-  background: #333 url(../../sfSympalPlugin/images/file_icon.gif) 2px 5px no-repeat !important;
-  text-indent: 15px;  
-}
-
 .sympal_inline_edit_bar a, .sympal_inline_edit_bar select {
-  padding: 2px !important;
   margin-right: 5px;
 }
 
