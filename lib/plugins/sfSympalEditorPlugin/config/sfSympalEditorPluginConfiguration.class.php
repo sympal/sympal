@@ -112,9 +112,12 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       // Shortcuts
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
       
-      // Load the core javascript and some slot type javascript
+      // Load the individual slot javsascripts
       // @todo The slot type javascript needs to be brought in dynamically
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/slots/markdown.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/slots/tinymce.js'));
+      
+      // Load the core javascript
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/chooser.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/core.js'));
 
