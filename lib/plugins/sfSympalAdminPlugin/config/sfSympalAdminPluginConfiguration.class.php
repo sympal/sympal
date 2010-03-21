@@ -38,7 +38,6 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $response = sfContext::getInstance()->getResponse();
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
-    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/change_language.css'));
 
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
