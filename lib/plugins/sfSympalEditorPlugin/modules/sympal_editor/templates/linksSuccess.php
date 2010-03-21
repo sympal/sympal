@@ -30,12 +30,13 @@
     </ul>
   </div>
 
-  <div id="links">
+  <div id="links_chooser">
     <h2><?php echo $contentType->getLabel() ?> <?php echo __('Links') ?></h2>
     <ul>
       <?php if ($content->count()): ?>
 
         <?php $menuItem = $content[0]->getMenuItem() ?>
+        <?php $parentMenuNode = false; ?>
         <?php if ($menuItem && $parentMenuNode = sfSympalMenuSiteManager::getMenu('primary')->findMenuItem($menuItem)->getParent()): ?>
           <li>
             <?php echo image_tag('/sfSympalPlugin/images/folder.png') ?>
@@ -51,8 +52,11 @@
             <?php else: ?>
               <?php echo image_tag('/sfSympalPlugin/images/folder.png') ?>
             <?php endif; ?>
-
-            <a href="#link"><?php echo $c ?></a>
+            
+            <a href="#" title="<?php echo $c->slug ?>" class="insert <?php echo htmlentities(json_encode(array('label' => (string) $c))) ?>">
+              <?php echo $c ?>
+            </a>
+            
           </li>
         <?php endforeach; ?>
       <?php else: ?>
