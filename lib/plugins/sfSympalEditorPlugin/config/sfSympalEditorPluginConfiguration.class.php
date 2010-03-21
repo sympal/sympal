@@ -98,7 +98,7 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/css/editor.css'));
       
       // Load the js and css for the slot editing
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/slots.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/slot.js'));
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/css/slots.css'));
 
       // Fancybox
