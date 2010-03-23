@@ -48,6 +48,8 @@ class sfSympalAdminGenSearchForm extends sfFormFilterDoctrine
     $this->setupInheritance();
 
     parent::setup();
+    
+    $this->disableLocalCSRFProtection();
   }
 
   public function getFields()
