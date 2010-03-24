@@ -5,6 +5,7 @@ class sfSympalEventListTask extends sfSympalBaseTask
   protected function configure()
   {
     $this->addArguments(array(
+      new sfCommandArgument('application', sfCommandArgument::REQUIRED, 'The application.'),
       new sfCommandArgument('url', sfCommandArgument::OPTIONAL, 'The url to check for available events'),
     ));
 
@@ -65,7 +66,7 @@ EOF;
       }
     } else {
       $dispatcher = new sfSympalEventListerDispatcher();
-      $configuration = ProjectConfiguration::getApplicationConfiguration('sympal', 'dev', true, null, $dispatcher);
+      $configuration = ProjectConfiguration::getApplicationConfiguration($arguments['application'], 'dev', true, null, $dispatcher);
       $context = sfContext::createInstance($configuration);
 
       $user = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->findOneByIsSuperAdmin(true);
