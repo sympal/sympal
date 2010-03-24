@@ -7,7 +7,7 @@
   <?php echo image_tag('/sfSympalPlugin/images/page.png') ?>
 <?php endif; ?>
 
-<?php echo link_to($sf_sympal_content, $sf_sympal_content->getEditRoute()) ?>
+<?php echo link_to($sf_sympal_content, $sf_sympal_content->getRoute()) ?>
 
 <br/>
 
