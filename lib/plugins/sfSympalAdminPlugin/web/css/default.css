@@ -67,6 +67,10 @@
   border-bottom: 1px solid #eee;
 }
 
+#sf_admin_container .sf_admin_filter table tbody tr td {
+  background: #eee;
+}
+
 #sf_admin_container table tfoot tr th
 {
   color: #fff;
@@ -129,6 +133,8 @@
 
 #sf_admin_bar
 {
+  position: absolute;
+  top: 1;
 }
 
 .sf_admin_pagination
@@ -314,6 +320,11 @@
 .sf_admin_filter
 {
   display: none;
+  border: 2px solid #999;
+  background: #eee;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
 }
 
 .sf_admin_no_result
