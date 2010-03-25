@@ -123,9 +123,32 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return $this->_route;
   }
 
+  /**
+   * Generates the url to this menu item based on the route
+   * 
+   * In case the route is totally invalid, this catches the exception
+   * and sends to the raw string
+   * 
+   * @TODO Find a more explicit way to log if the route is invalid
+   * 
+   * @param array $options Options to pass to the url_for method
+   */
   public function getUrl(array $options = array())
   {
-    return url_for($this->getRoute(), $options);
+    try
+    {
+      return url_for($this->getRoute(), $options);
+    }
+    catch (sfConfigurationException $e)
+    {
+      sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(
+        new sfEvent($this, 'application.log', array(
+          sprintf('Cannot generate a menu url for "%s"', $this->getRoute())
+        ))
+      );
+      
+      return $this->getRoute();
+    }
   }
 
   public function setRoute($route)
