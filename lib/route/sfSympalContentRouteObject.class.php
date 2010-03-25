@@ -149,6 +149,11 @@ class sfSympalContentRouteObject
     $isI18nEnabled = sfSympalConfig::isI18nEnabled();
 
     $languageCodes = $isI18nEnabled ? sfSympalConfig::getLanguageCodes() : array($this->getCurrentCulture());
+    if (!is_array($languageCodes))
+    {
+      throw new sfException(sprintf('Language codes is not an array: "%s" given', $languageCodes));
+    }
+    
     $values = array();
     foreach ($languageCodes as $code)
     {
