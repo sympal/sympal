@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Unit test for the sfSympalDataGrid class
+ * 
+ * @package     sfSympalDataGridPlugin
+ * @subpackage  test
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-24
+ * @version     svn:$Id$ $Author$
+ */
+
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 

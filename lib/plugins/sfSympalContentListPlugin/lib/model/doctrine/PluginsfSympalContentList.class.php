@@ -15,14 +15,20 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       if ($q instanceof sfSympalDataGrid)
       {
         $dataGrid = $q;
-      } else if ($q instanceof sfDoctrinePager || $q instanceof Doctrine_Query_Abstract) {
+      }
+      else if ($q instanceof sfDoctrinePager || $q instanceof Doctrine_Query_Abstract)
+      {
         $dataGrid = sfSympalDataGrid::create($q);
-      } else {
+      }
+      else
+      {
         throw new sfException(sprintf('ContentList table_method must return an instance of sfSympalDataGrid, sfDoctrinePager or Doctrine_Query_Abstract. An instance of "%s" was returned.', get_class($q)));
       }
-    } else {
+    }
+    else
+    {
       $pager = new sfDoctrinePager('sfSympalContent');
-      $pager->setQuery($this->_buildQuery($request));
+      $pager->setQuery($this->_buildQuery());
 
       $dataGrid = sfSympalDataGrid::create($pager)
         ->addColumn('c.title', 'renderer=sympal_data_grid/default_title')
@@ -42,14 +48,18 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
     return $dataGrid;
   }
 
-  private function _buildQuery(sfWebRequest $request)
+  private function _buildQuery()
   {
     $table = Doctrine_Core::getTable('sfSympalContent');
 
-    if ($this->dql_query) {
+    if ($this->dql_query)
+    {
       $q = $table->createQuery()->query($this->dql_query);
-    } else {
+    }
+    else
+    {
       $q = $table->getFullTypeQuery($this->ContentType->name);
+      $q = $table->addPublishedQuery('c', $q);
     }
 
     return $q;
