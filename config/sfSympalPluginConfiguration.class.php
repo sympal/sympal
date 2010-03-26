@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Main Plugin configuration class for sympal.
+ * 
+ * This is responsible for loading in plugins that are core to sympal
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  config
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalPluginConfiguration extends sfPluginConfiguration
 {
   /**
@@ -9,6 +20,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
   /**
    * Array of all the core Sympal plugins
+   * 
+   * A core plugin is one that lives in the lib/plugins directory of sfSympalPlugin.
+   * A core plugin will be enabled automatically
    */
   public static
     $corePlugins = array(
@@ -51,7 +65,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   }
 
   /**
-   * Shortcut method to enable all Sympal plugins for the given ProjectConfniguration
+   * Shortcut method to enable all Sympal plugins for the given ProjectConfiguration
    *
    * Returns an instance of sfSympalPluginEnabler which allows you to enable
    * disable and override any plugins with a convenient API.

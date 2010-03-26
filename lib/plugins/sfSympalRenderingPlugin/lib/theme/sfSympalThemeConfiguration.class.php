@@ -1,9 +1,29 @@
 <?php
 
+/**
+ * This class represents a "theme".
+ * 
+ * This wraps the configuration of a theme so it can be easily accessed.
+ * 
+ * @package     sfSympalRenderingPlugin
+ * @subpackage  theme
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-03-25
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalThemeConfiguration
 {
+  /**
+   * @var array
+   */
   protected $_configuration;
 
+  /**
+   * Class constructor
+   * 
+   * @param array $configuration The raw array of configuration from app.yml
+   */
   public function __construct($configuration)
   {
     $this->_configuration = $configuration;
