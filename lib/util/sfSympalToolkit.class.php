@@ -333,14 +333,20 @@ class sfSympalToolkit
     type: object
     method: getContent
     allow_empty: true
-    requirements:
-      sf_culture:  (%s)
-      sf_format:   (%s)
-      sf_method:   [post, get]
+  requirements:
+    sf_culture:  (%s)
+    sf_format:   (%s)
+    sf_method:   [post, get]
 ';
 
       $routes = array();
       $siteSlug = sfConfig::get('sf_app');
+      
+      if (!sfContext::hasInstance())
+      {
+        $configuration = ProjectConfiguration::getApplicationConfiguration(sfConfig::get('sf_app'), 'prod', false);
+        sfContext::createInstance($configuration);
+      }
 
       $contents = Doctrine::getTable('sfSympalContent')
         ->createQuery('c')
@@ -410,7 +416,13 @@ class sfSympalToolkit
 
       $routes = implode("\n", $routes);
       file_put_contents($cachePath, $routes);
+
       return $routes;
-    } catch (Exception $e) {}
+    }
+    catch (Exception $e)
+    {
+      // for now, I'd like to not obfuscate the errors - rather reportthem
+      throw $e;
+    }
   }
 }
