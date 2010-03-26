@@ -61,6 +61,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     if (sfSympalConfig::isI18nEnabled())
     {
+      $this->configuration->loadHelpers(array('Partial', 'I18N'));
       $changeLanguage = $menu->getChild('Change Language');
       $currentCulture = strtolower(sfContext::getInstance()->getUser()->getCulture());
       $codes = sfSympalConfig::getLanguageCodes();
