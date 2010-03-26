@@ -45,6 +45,14 @@ class sfSympalThemeConfiguration
     return isset($this->_configuration['callables']) ? $this->_configuration['callables'] : array();
   }
 
+  /**
+   * Calculates the location of the layout, which could live in several locations.
+   * 
+   * Specifically, the layout file for a theme could live in any "templates"
+   * file found in the application dir or any enabled plugins
+   * 
+   * @param string $layout The optional layout to look for (defaults to this theme's name)
+   */
   protected function _findLayoutPath($layout = null)
   {
     if ($layout === null)
@@ -58,7 +66,7 @@ class sfSympalThemeConfiguration
 
     if (!$path)
     {
-      throw new InvalidArgumentException(sprintf('Could not find layout path for theme "%s"', $layout));
+      throw new InvalidArgumentException(sprintf('Could not find layout "%s" in any "templates" directories. You may need to clear your cache.', $layout));
     }
 
     if (!sfToolkit::isPathAbsolute($path))
