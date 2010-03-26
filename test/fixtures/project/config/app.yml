@@ -7,4 +7,6 @@ all:
     sfSympalThemeTestPlugin:
       installed: true
     installed: true
-    current_version: 1.0.0-ALPHA3
+    current_version: 1.0.0-ALPHA1
+    upgrade_version_history:
+      - 0.7.0__2
