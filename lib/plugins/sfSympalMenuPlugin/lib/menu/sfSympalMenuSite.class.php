@@ -137,7 +137,9 @@ class sfSympalMenuSite extends sfSympalMenu
     if ($this->_contentRouteObject)
     {
       return $this->_contentRouteObject->getRoute();
-    } else {
+    }
+    else
+    {
       return parent::getRoute();
     }
   }

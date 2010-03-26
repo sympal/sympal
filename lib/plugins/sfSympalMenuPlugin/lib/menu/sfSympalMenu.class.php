@@ -408,9 +408,12 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   public function __toString()
   {
-    try {
+    try
+    {
       return (string) $this->render();
-    } catch (Exception $e) {
+    }
+    catch (Exception $e)
+    {
       return $e->getMessage();
     }
   }
@@ -423,6 +426,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
       $html = '<ul'.($this->_ulClass ? ' class="'.$this->_ulClass.'"' : null).' id="'.$id.'">';
       $html .= $this->renderChildren();
       $html .= '</ul>';
+
       return $html;
     }
   }
@@ -504,8 +508,24 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
         $options['class'] = $class;
       }
       
-      $html = link_to($this->renderLabel(), $route, $options);
-    } else {
+      // proteted against an invalid url (e.g. myModule/myAction, which doesnt exist)
+      try
+      {
+        $html = link_to($this->renderLabel(), $route, $options);
+      }
+      catch (sfConfigurationException $e)
+      {
+        sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(
+          new sfEvent($this, 'application.log', array(
+            sprintf('Cannot generate a menu url for "%s"', $this->getRoute())
+          ))
+        );
+        
+        $html = $this->renderLabel();
+      }
+    }
+    else
+    {
       $html = $this->renderLabel();
     }
     return $html;
