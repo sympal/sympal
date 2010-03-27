@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Plugin configuration for the admin plugin
+ * 
+ * Hooks up to several events related to editors and menus
+ * 
+ * @package     sfSympalAdminPlugin
+ * @subpackage  config
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()
