@@ -18,7 +18,6 @@ class sfSympalCache
 {
   protected
     $_sympalConfiguration,
-    $_contentTypes = null,
     $_helperAutoload = null,
     $_modules = null,
     $_layouts = null;
@@ -78,7 +77,6 @@ class sfSympalCache
    */
   public function clear()
   {
-    $this->_contentTypes = null;
     $this->_helperAutoload = null;
     $this->_modules = null;
     $this->_layouts = null;
@@ -176,7 +174,10 @@ class sfSympalCache
   }
 
   /**
-   * Write the helper autoaload cache
+   * Write the helper autoload cache
+   * 
+   * This caches an array of function names (e.g. url_for) and the file
+   * that contains that method (e.g. UrlHelper.php)
    *
    * @return void
    */

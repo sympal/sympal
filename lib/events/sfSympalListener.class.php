@@ -11,6 +11,8 @@
  * sfSympalListener, define methods getEventName() and run() then create an instance
  * to register it.
  *
+ * @package     sfSympalPlugin
+ * @subpackage  listener
  * @author Maxim Tsepkov <azrael.com@gmail.com>
  * @author Jonathan H. Wage <jonwage@gmail.com>
  */

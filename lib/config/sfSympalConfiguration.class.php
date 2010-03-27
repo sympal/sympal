@@ -316,6 +316,8 @@ class sfSympalConfiguration
 
   /**
    * Get paths to all Sympal plugins
+   * 
+   * A Sympal plugin is defined as any that contains "sfSympal" in its name
    *
    * @return array $pluginPaths
    */
@@ -323,8 +325,7 @@ class sfSympalConfiguration
   {
     if ($this->_pluginPaths === null)
     {
-      $configuration = ProjectConfiguration::getActive();
-      $pluginPaths = $configuration->getAllPluginPaths();
+      $pluginPaths = $this->getProjectConfiguration()->getAllPluginPaths();
       $this->_pluginPaths = array();
       foreach ($pluginPaths as $pluginName => $path)
       {

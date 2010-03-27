@@ -1,20 +1,37 @@
 <?php
 
+/**
+ * Handles all the sympal functionality that needs to fire on the context.load_factories event
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  listener
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalContextLoadFactoriesListener extends sfSympalListener
 {
   private
     $_symfonyContext,
     $_sympalContext;
 
+  /**
+   * @see sfSympalListener
+   */
   public function getEventName()
   {
     return 'context.load_factories';
   }
 
+  /**
+   * The callback on the context.load_factories event.
+   * 
+   * The subject is sfContext and the invoker (in normal cases) will
+   * be sfSympalConfiguration
+   */
   public function run(sfEvent $event)
   {
-    $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
-    $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
+    $this->_initiateUserTable();
 
     $this->_symfonyContext = $event->getSubject();
     $this->_invoker->setCache(new sfSympalCache($this->_invoker));
@@ -56,6 +73,19 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
     new sfSympalFormMethodNotFoundListener($this->_dispatcher, $this->_invoker);
     new sfSympalFormPostConfigureListener($this->_dispatcher, $this->_invoker);
     new sfSympalFormFilterValuesListener($this->_dispatcher, $this->_invoker);
+  }
+  
+  /**
+   * Initiates the user model and throws the sympal.user.set_table_definition event.
+   * 
+   * Ths idea is that the user model hasn't been loaded yet, so it'll be
+   * loaded here for the first time, and this allows a hook into its
+   * table definition.
+   */
+  protected _initiateUserTable()
+  {
+    $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
+    $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
   }
 
   /**
