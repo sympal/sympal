@@ -43,29 +43,11 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
     $this->_checkInstalled();
 
     $this->_invoker->initializeTheme();
-
-    $helpers = array(
-      'Sympal',
-      'SympalContentSlot',
-      'SympalMenu',
-      'SympalPager',
-      'I18N',
-      'Asset',
-      'Url',
-      'Partial'
-    );
-
-    if ($this->_invoker->isAdminModule())
-    {
-      sfConfig::set('sf_login_module', 'sympal_admin');
-      $helpers[] = 'Admin';
-    }
-
-    $this->_invoker->getProjectConfiguration()->loadHelpers($helpers);
+    
+    $this->_loadHelpers();
 
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.load'));
 
-    new sfSympalContextLoadFactoriesListener($this->_dispatcher, $this->_invoker);
     new sfSympalComponentMethodNotFoundListener($this->_dispatcher, $this->_invoker);
     new sfSympalControllerChangeActionListener($this->_dispatcher, $this->_invoker);
     new sfSympalTemplateFilterParametersListener($this->_dispatcher, $this->_invoker);
@@ -85,6 +67,31 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
   {
     $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
     $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
+  }
+
+  /**
+   * Loads default helpers needed by sympal
+   */
+  protected function _loadHelpers()
+  {
+    $helpers = array(
+      'Sympal',
+      'SympalContentSlot',
+      'SympalMenu',
+      'SympalPager',
+      'I18N',
+      'Asset',
+      'Url',
+      'Partial'
+    );
+
+    if ($this->_invoker->isAdminModule())
+    {
+      sfConfig::set('sf_login_module', 'sympal_admin');
+      $helpers[] = 'Admin';
+    }
+
+    $this->_invoker->getProjectConfiguration()->loadHelpers($helpers);
   }
 
   /**
