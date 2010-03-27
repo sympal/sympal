@@ -64,7 +64,9 @@ class sfSympalCache
     if (extension_loaded('apc'))
     {
       return new Doctrine_Cache_Apc(array('prefix' => 'doctrine'));
-    } else {
+    }
+    else
+    {
       return new Doctrine_Cache_Array();
     }
   }

@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Task that upgrades your project from one version of sympal to the next
+ * 
+ * @package     sfSympalUpgradePlugin
+ * @subpackage  task
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalUpgradeTask extends sfTaskExtraBaseTask
 {
   protected function configure()
