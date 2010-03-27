@@ -125,7 +125,7 @@ class sfSympalConfiguration
   {
     if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
     {
-      $superCache = new sfSympalSuperCache($this);
+      $superCache = new sfSympalSuperCache();
       $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
     }
   }

@@ -3,21 +3,22 @@
 /**
  * Class to handle writing the super cache files by filtering the symfony
  * response content.
+ * 
+ * The only requirement to use this class is to hook listenToResponseFilterContent()
+ * up to the response.filter_content event. This is done automatically
+ * in sfSympalConfiguration if page_cache_super is enabled
  *
  * @package sfSympalPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
  */
 class sfSympalSuperCache
 {
-  private $_sympalConfiguration;
-
-  public function __construct(sfSympalConfiguration $sympalConfiguration)
+  public function __construct()
   {
-    $this->_sympalConfiguration = $sympalConfiguration;
   }
 
   /**
-   * Listen to the response.filter_content event and cache the content for
+   * Listen to the response.filter_content event and caches the content for
    * the Sympal super caching
    *
    * @param sfEvent $event 
@@ -78,6 +79,7 @@ class sfSympalSuperCache
       }
       umask($current_umask);
     }
+
     return $content;
   }
 }
