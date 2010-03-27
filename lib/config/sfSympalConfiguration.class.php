@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Main configuration class for sympal
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  config
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalConfiguration
 {
   protected
@@ -7,7 +17,6 @@ class sfSympalConfiguration
     $_projectConfiguration,
     $_sympalContext,
     $_symfonyContext,
-    $_doctrineManager,
     $_bootstrap,
     $_plugins,
     $_pluginPaths,
@@ -21,14 +30,15 @@ class sfSympalConfiguration
 
   public function __construct(ProjectConfiguration $projectConfiguration)
   {
-    // We disable Symfony autoload again feature because it is too slow in dev mode
-    // If you introduce a new class when using sympal you just must clear your
-    // cache manually
+    /*
+     * We disable Symfony autoload again feature because it is too slow in dev mode
+     * If you introduce a new class when using sympal you just must clear your
+     * cache manually
+     */
     sfAutoloadAgain::getInstance()->unregister();
 
     $this->_projectConfiguration = $projectConfiguration;
     $this->_dispatcher = $projectConfiguration->getEventDispatcher();
-    $this->_doctrineManager = Doctrine_Manager::getInstance();
 
     $this->_initializeSymfonyConfig();
     $this->_markClassesAsSafe();
@@ -125,21 +135,22 @@ class sfSympalConfiguration
    */
   private function _configureDoctrine()
   {
-    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
-    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
-    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
-    $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
+    $doctrineManager = Doctrine_Manager::getInstance();
+    $doctrineManager->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
+    $doctrineManager->setAttribute(Doctrine_Core::ATTR_TABLE_CLASS, 'sfSympalDoctrineTable');
+    $doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
+    $doctrineManager->setAttribute(Doctrine_Core::ATTR_COLLECTION_CLASS, 'sfSympalDoctrineCollection');
 
     if (sfSympalConfig::get('orm_cache', 'enabled', true))
     {
       $driver = sfSympalCache::getOrmCacheDriver();
 
-      $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CACHE, $driver);
+      $doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CACHE, $driver);
 
       if (sfSympalConfig::get('orm_cache', 'result', false))
       {
-        $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE, $driver);
-        $this->_doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE_LIFESPAN, sfSympalConfig::get('orm_cache', 'lifetime', 86400));
+        $doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE, $driver);
+        $doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE_LIFESPAN, sfSympalConfig::get('orm_cache', 'lifetime', 86400));
       }
     }
   }
@@ -185,16 +196,6 @@ class sfSympalConfiguration
   public function getSymfonyContext()
   {
     return $this->_symfonyContext;
-  }
-
-  /**
-   * Get the Doctrine_Manager instance
-   *
-   * @return Doctrine_Manager $manager
-   */
-  public function getDoctrineManager()
-  {
-    return $this->_doctrineManager;
   }
 
   /**
