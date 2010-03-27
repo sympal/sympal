@@ -259,11 +259,9 @@ all:
     # Enable and disable the check for upgrades via the web when on the Sympal dashboard
     check_for_upgrades_on_dashboard: false
 
-    # Whether or not to enable all modules found in your project
-    enable_all_modules: true
-
-    # Array of modules to disable
-    disabled_modules: []
+    enable_all_modules: true     # Whether or not to enable all modules found in your project
+    disabled_modules:   []       # Array of modules to disable (these will be disabled even if enable_all_modules is true)
+    enabled_modules:    []       # If enable_all_modules is false, these modules will be enabled
 
     # Callback to retrieve the cache driver used for storing various Sympal cache entries
     get_cache_driver_callback: [sfSympalCache, getCacheDriver]

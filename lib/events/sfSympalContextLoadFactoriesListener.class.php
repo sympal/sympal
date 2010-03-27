@@ -89,29 +89,31 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
   }
 
   /**
-   * Handle the enabling of modules. Either enables all modules or only the configured modules.
+   * Handle the enabling of modules.
+   * 
+   * Either enables all modules or only modules defined by enabled_modules.
+   * In either case, the modules in disabled_modules are disabled
    *
    * @return void
    */
   private function _enableModules()
   {
-    if (sfSympalConfig::get('enable_all_modules', null, true))
+    $modules = sfConfig::get('sf_enabled_modules', array());
+    if (sfSympalConfig::get('enable_all_modules'))
     {
-      $modules = sfConfig::get('sf_enabled_modules', array());
-      if (sfSympalConfig::get('enable_all_modules'))
-      {
-        $modules = array_merge($modules, $this->_invoker->getCache()->getModules());
-      } else {
-        $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
-      }
-
-      if ($disabledModules = sfSympalConfig::get('disabled_modules', null, array()))
-      {
-        $modules = array_diff($modules, $disabledModules);
-      }
-
-      sfConfig::set('sf_enabled_modules', $modules);
+      $modules = array_merge($modules, $this->_invoker->getCache()->getModules());
     }
+    else
+    {
+      $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
+    }
+
+    if ($disabledModules = sfSympalConfig::get('disabled_modules', null, array()))
+    {
+      $modules = array_diff($modules, $disabledModules);
+    }
+
+    sfConfig::set('sf_enabled_modules', $modules);
   }
 
   /**
