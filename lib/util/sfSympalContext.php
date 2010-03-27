@@ -238,6 +238,11 @@ class sfSympalContext
   public function setTheme($theme)
   {
     $this->_theme = $theme;
+    if ($theme != $this->_theme)
+    {
+      $this->_previousTheme = $this->_theme;
+      $this->_theme = $theme;
+    }
   }
 
   /**
@@ -249,12 +254,7 @@ class sfSympalContext
   public function loadTheme($name = null)
   {
     $theme = $name ? $name : $this->_theme;
-
-    if ($theme != $this->_theme)
-    {
-      $this->_previousTheme = $this->_theme;
-      $this->setTheme($theme);
-    }
+    $this->setTheme($theme);
 
     if ($themeObj = $this->getThemeObject($theme))
     {
