@@ -63,7 +63,9 @@ class sfSympalConfig extends sfConfig
     if ($name === null)
     {
       return isset(self::$config['app_sympal_config_'.$group]) ? self::$config['app_sympal_config_'.$group] : $default;
-    } else {
+    }
+    else
+    {
       return isset(self::$config['app_sympal_config_'.$group][$name]) ? self::$config['app_sympal_config_'.$group][$name] : $default;
     }
   }

@@ -26,8 +26,7 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
   /**
    * The callback on the context.load_factories event.
    * 
-   * The subject is sfContext and the invoker (in normal cases) will
-   * be sfSympalConfiguration
+   * The subject is sfContext and the invoker is sfSympalConfiguration
    */
   public function run(sfEvent $event)
   {
