@@ -1,9 +1,29 @@
 <?php
 
+/**
+ * Represents a theme
+ * 
+ * @package     sfSympalRenderingPlugin
+ * @subpackage  theme
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalTheme
 {
+  /**
+   * Whether or not this theme has been loaded 
+   * @see load()
+   * 
+   * @var boolean
+   */
   protected
-    $_isLoaded = false,
+    $_isLoaded = false;
+  
+  /**
+   * Dependencies needed by this class
+   */
+  protected
     $_sympalContext,
     $_configuration,
     $_request,
@@ -42,6 +62,9 @@ class sfSympalTheme
     return $this->_configuration->getJavascripts();
   }
 
+  /**
+   * Loads a theme - effectively making it active
+   */
   public function load()
   {
     // Change the layout
@@ -94,8 +117,17 @@ class sfSympalTheme
     }
   }
 
+  /**
+   * Unloads this theme by removing its stylesheets and javascripts
+   */
   public function unload()
   {
+    // if we're not loaded, no need to unload
+    if (!$this->_isLoaded)
+    {
+      return;
+    }
+    
     // Set the loaded flag to false
     $this->_isLoaded = false;
 
@@ -122,6 +154,9 @@ class sfSympalTheme
     }
   }
 
+  /**
+   * Changes the current layout to the layout of this theme
+   */
   public function changeLayout()
   {
     $info = pathinfo($this->_configuration->getLayoutPath());

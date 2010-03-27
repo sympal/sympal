@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This class represents a "theme".
+ * This class represents the configuration for a "theme".
  * 
  * This wraps the configuration of a theme so it can be easily accessed.
  * 
