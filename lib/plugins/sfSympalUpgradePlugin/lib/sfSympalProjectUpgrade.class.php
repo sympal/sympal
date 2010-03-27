@@ -86,6 +86,10 @@ class sfSympalProjectUpgrade extends sfSympalUpgrade
     $this->_runUpgrades();
   }
 
+  /**
+   * Runs the individual upgrade objects in the versions directory, which
+   * upgrade this project iteratively to the current version
+   */
   protected function _runUpgrades()
   {
     $upgrades = $this->getUpgrades();

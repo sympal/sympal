@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Base class for individual upgrade scripts
+ * 
+ * Individual upgrade scripts extend this class, which adds functionality.
+ * The doUpgrade() task is executed on the subclasses.
+ * 
+ * @package     sfSympalUpgradePlugin
+ * @subpackage  upgrade
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 abstract class sfSympalVersionUpgrade extends sfSympalUpgrade
 {
   protected

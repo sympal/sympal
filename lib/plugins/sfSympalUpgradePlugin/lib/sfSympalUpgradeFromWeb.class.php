@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Upgrade class handling the download
+ * 
+ * @package     sfSympalUpgradePlugin
+ * @subpackage  task
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan.weaver@iostudio.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
 {
   private
@@ -56,23 +66,34 @@ class sfSympalUpgradeFromWeb extends sfSympalProjectUpgrade
     return $commands;
   }
 
+  /**
+   * Downloads and unpackages the new code
+   * 
+   * This should be run before upgrade() (else upgrade won't run the new code).
+   */
   public function download()
   {
-    $this->logSection('sympal', 'Updating Sympal code...');
+    $this->logSection('sympal', 'Downloading and installing Sympal code...');
 
     $commands = $this->getUpgradeCommands();
-    try {
+    try
+    {
       $result = $this->_filesystem->execute(implode('; ', $commands));
-    } catch (Exception $e) {
-      throw new sfException('A problem occurred updating Sympal code.');
+    }
+    catch (Exception $e)
+    {
+      throw new sfException('A problem occurred updating the Sympal code: ' . (string) $e);
     }
 
     $this->logSection('sympal', 'Sympal code updated successfully...');
   }
 
+  /**
+   * Runs the upgrade and then writes the latest version to config
+   */
   protected function _doUpgrade()
   {
-    $this->_runUpgrades();
+    parent::_doUpgrade();
     sfSympalConfig::writeSetting('current_version', $this->getLatestVersion());
   }
 

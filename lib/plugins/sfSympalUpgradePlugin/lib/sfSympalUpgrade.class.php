@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Base upgrade class
+ * 
+ * @package     sfSympalUpgradePlugin
+ * @subpackage  upgrade
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 abstract class sfSympalUpgrade
 {
   protected
