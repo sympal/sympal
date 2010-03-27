@@ -1,0 +1,3 @@
+[submodule "lib/plugins/sfSympalThemePlugin"]
+	path = lib/plugins/sfSympalThemePlugin
+	url = git://github.com/weaverryan/sfSympalThemePlugin.git
