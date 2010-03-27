@@ -13,7 +13,7 @@
         <target>Pas de mise à jour trouvée</target>
       </trans-unit>
       <trans-unit>
-        <source>Continuing will ewexute the following Sympal upgrade tasks:</source>
+        <source>Continuing will execute the following Sympal upgrade tasks:</source>
         <target>Les tâches suivantes seront effectuées :</target>
       </trans-unit>
       <trans-unit>
