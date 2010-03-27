@@ -113,4 +113,19 @@ abstract class sfSympalVersionUpgrade extends sfSympalUpgrade
   {
     return sfFinder::type('dir')->maxdepth(0)->relative()->in(sfConfig::get('sf_apps_dir'));
   }
+  
+  /**
+   * Returns all of the directories that contain doctrine models
+   * 
+   * @return array
+   */
+  protected function _getDoctrineModelDirectories()
+  {
+    return array_merge(
+      glob(sfConfig::get('sf_plugins_dir').'/*/lib/model/doctrine'),
+      array(
+        sfConfig::get('sf_lib_dir').'/model/doctrine',
+      )
+    );
+  }
 }
