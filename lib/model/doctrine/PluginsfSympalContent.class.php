@@ -555,13 +555,22 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->getContentRouteObject()->getEvaluatedRoutePath();
   }
 
+  /**
+   * Used by plugin install to attempt to set some "title" value to the
+   * default string. This is like the opposite of __toString()
+   * 
+   * @param string $value The value to set to the "title" field
+   */
   public function trySettingTitleProperty($value)
   {
     foreach (array('title', 'name', 'subject', 'header') as $name)
     {
-      try {
+      try
+      {
         $this->$name = $value;
-      } catch (Exception $e) {}
+      } catch (Exception $e)
+      {
+      }
     }
   }
 
