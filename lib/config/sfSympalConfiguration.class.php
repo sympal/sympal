@@ -92,6 +92,8 @@ class sfSympalConfiguration
 
   /**
    * Mark necessary Sympal classes as safe
+   * 
+   * These classes won't be wrapped with the output escaper
    *
    * @return void
    */
