@@ -3,6 +3,8 @@
 /**
  * Context class for a Sympal instance
  * 
+ * There is one Sympal instance for "site" (i.e. application)
+ * 
  * This manages things such as
  *   * The current sfSympalSite object
  *   * The current menu item

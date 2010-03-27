@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Listener class for controller.change_action
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  events
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalControllerChangeActionListener extends sfSympalListener
 {
   private

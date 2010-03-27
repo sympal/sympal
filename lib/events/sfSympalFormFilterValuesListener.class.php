@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * Listener for the form.filter_values event
+ * 
+ * Ensures that the recaptcha values are set correctly
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  events
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalFormFilterValuesListener extends sfSympalListener
 {
   public function getEventName()

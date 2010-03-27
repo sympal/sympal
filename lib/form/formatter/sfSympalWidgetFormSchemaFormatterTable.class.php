@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Sympal extension of the table form formatter to add a "required" class
+ * to the label of required fields
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  widget
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalWidgetFormSchemaFormatterTable extends sfWidgetFormSchemaFormatterTable
 {
   protected
