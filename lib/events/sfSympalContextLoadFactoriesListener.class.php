@@ -81,7 +81,7 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
    * loaded here for the first time, and this allows a hook into its
    * table definition.
    */
-  protected _initiateUserTable()
+  protected function _initiateUserTable()
   {
     $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
     $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
