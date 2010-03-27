@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class PluginsfSympalAssetTable extends sfSympalDoctrineTable
+class PluginsfSympalAssetTable extends Doctrine_Table
 {
   public function findByPath($path)
   {

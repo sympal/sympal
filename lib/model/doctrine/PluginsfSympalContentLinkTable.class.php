@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class PluginsfSympalContentLinkTable extends sfSympalDoctrineTable
+class PluginsfSympalContentLinkTable extends Doctrine_Table
 {
 
 }

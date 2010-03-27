@@ -1,7 +1,7 @@
 <?php
 /**
  */
-class PluginsfSympalContentEditGroupTable extends sfSympalDoctrineTable
+class PluginsfSympalContentEditGroupTable extends Doctrine_Table
 {
 
 }

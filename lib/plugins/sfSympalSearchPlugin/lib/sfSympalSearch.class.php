@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Base search managing class for sympal
+ * 
+ * @package     sfSympalSearchPlugin
+ * @subpackage  search
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-26
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalSearch
 {
   private static $_instance;

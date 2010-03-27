@@ -14,7 +14,7 @@ abstract class Basesympal_searchActions extends sfActions
   {
     if ($q = $request->getParameter('q'))
     {
-      $query = Doctrine_Core::getTable('sfSympalContent')->getSearchQuery($q);
+      $query = sfSympalSearch::getInstance()->getDoctrineSearchQuery('sfSympalContent', $q);
 
       $this->dataGrid = sfSympalDataGrid::create($query)
         ->addColumn('a.title', 'renderer=sympal_search/title label=Search Result');
