@@ -46,7 +46,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalEditorPlugin',
       'sfSympalAssetsPlugin',
       'sfSympalContentSyntaxPlugin',
-      'sfSympalSearchPlugin'
+      'sfSympalSearchPlugin',
+      'sfSympalThemePlugin',
     );
 
   /**

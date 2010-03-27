@@ -46,7 +46,9 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
     
     $this->_loadHelpers();
 
-    $this->_dispatcher->notify(new sfEvent($this, 'sympal.load'));
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.load', array(
+      'sympal_context' => $this->_sympalContext,
+    )));
 
     new sfSympalComponentMethodNotFoundListener($this->_dispatcher, $this->_invoker);
     new sfSympalControllerChangeActionListener($this->_dispatcher, $this->_invoker);

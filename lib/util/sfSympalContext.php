@@ -3,15 +3,23 @@
 /**
  * Context class for a Sympal instance
  * 
- * There is one Sympal instance for "site" (i.e. application)
+ * A Sympal "context" is a singleton with respect to an individual sfSympalSite
+ * record. This is very similar to sfContext, which is a singleton with respect
+ * to each symfony app.
+ * 
+ * If some object has a dependency on a symfony app but NOT an sfSympalSite
+ * record, then it should be handled by sfContext. If it DOES have a
+ * dependency on the current sfSympalSite record, it'll be handled here
+ * on the sfSympalContext instance.
  * 
  * This manages things such as
  *   * The current sfSympalSite object
  *   * The current menu item
- *   * The current theme
+ *   * The current content object (sfSympalContent)
  * 
  * @package     sfSympalPlugin
  * @subpackage  util
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
  * @author      Ryan Weaver <ryan@thatsquality.com>
  * @since       2010-03-27
  * @version     svn:$Id$ $Author$
@@ -33,11 +41,6 @@ class sfSympalContext
   protected
     $_currentMenuItem,
     $_currentContent;
-  
-  protected
-    $_previousTheme,
-    $_theme,
-    $_themeObjects = array();
 
   public function __construct(sfSympalConfiguration $sympalConfiguration, sfContext $symfonyContext)
   {
@@ -152,53 +155,6 @@ class sfSympalContext
   }
 
   /**
-   * Get the current theme
-   *
-   * @return string $theme
-   */
-  public function getTheme()
-  {
-    return $this->_theme;
-  }
-
-  /**
-   * Get the theme object for the current theme or a given theme name
-   *
-   * @param string $name 
-   * @return sfSympalTheme $theme
-   */
-  public function getThemeObject($name = null)
-  {
-    $theme = $name ? $name : $this->_theme;
-    if (!isset($this->_themeObjects[$theme]))
-    {
-      $configurationArray = sfSympalConfig::get('themes', $theme);
-      if (!$configurationArray)
-      {
-        throw new sfException(sprintf('Cannot load them "%s" - no configuration found'));
-      }
-      $configurationArray['name'] = $theme;
-
-      $configurationClass = isset($configurationArray['config_class']) ? $configurationArray['class'] : 'sfSympalThemeConfiguration';
-      $themeClass = isset($configurationArray['theme_class']) ? $configurationArray['theme_class'] : 'sfSympalTheme';
-      $configuration = new $configurationClass($configurationArray);
-      $this->_themeObjects[$theme] = new $themeClass($this, $configuration);
-    }
-
-    return isset($this->_themeObjects[$theme]) ? $this->_themeObjects[$theme] : false;
-  }
-
-  /**
-   * Get array of all instantiated theme objects
-   *
-   * @return array $themeObjects
-   */
-  public function getThemeObjects()
-  {
-    return $this->_themeObjects;
-  }
-
-  /**
    * Shortcut to check if we are inside an admin module
    *
    * @return boolean
@@ -206,62 +162,6 @@ class sfSympalContext
   public function isAdminModule()
   {
     return $this->_sympalConfiguration->isAdminModule();
-  }
-
-  /**
-   * Get the previous theme object that was loaded
-   *
-   * @return sfSympalTheme $theme
-   */
-  public function getPreviousTheme()
-  {
-    return $this->getThemeObject($this->_previousTheme);
-  }
-
-  /**
-   * Unload the previous theme object that was loaded
-   *
-   * @return void
-   */
-  public function unloadPreviousTheme()
-  {
-    if ($previousTheme = $this->getPreviousTheme())
-    {
-      $previousTheme->unload();
-    }
-  }
-
-  /**
-   * Set the current theme name
-   *
-   * @param string $theme 
-   * @return void
-   */
-  public function setTheme($theme)
-  {
-    $this->_theme = $theme;
-    if ($theme != $this->_theme)
-    {
-      $this->_previousTheme = $this->_theme;
-      $this->_theme = $theme;
-    }
-  }
-
-  /**
-   * Load a given theme or the current configured theme in ->_theme
-   *
-   * @param string $name Optional theme name to load
-   * @return void
-   */
-  public function loadTheme($name = null)
-  {
-    $theme = $name ? $name : $this->_theme;
-    $this->setTheme($theme);
-
-    if ($themeObj = $this->getThemeObject($theme))
-    {
-      $themeObj->load();
-    }
   }
 
   /**
