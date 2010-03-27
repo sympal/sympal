@@ -66,10 +66,11 @@ class sfSympalUser extends sfGuardSecurityUser
    */
   public function isEditMode($forceCheckAgain = false)
   {
-    if (is_null($this->_isEditMode) || $forceCheckAgain === true)
+    if ($this->_isEditMode === null || $forceCheckAgain === true)
     {
       $this->doIsEditModeCheck();
     }
+
     return $this->_isEditMode;
   }
 

@@ -125,7 +125,7 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
   {
     $request = $this->_symfonyContext->getRequest();
 
-    // Prepare the symfony application is it has not been prepared yet
+    // Prepare the symfony application if it has not been prepared yet
     if (!$this->_symfonyContext->getUser() instanceof sfSympalUser)
     {
       chdir(sfConfig::get('sf_root_dir'));
@@ -135,19 +135,28 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
       $this->_symfonyContext->getController()->redirect('@homepage');
     }
 
-    // Redirect to install module if...
-    //  not in test environment
-    //  sympal has not been installed
-    //  module is not already sympal_install
-    if (sfConfig::get('sf_environment') != 'test' && !sfSympalConfig::get('installed') && $request->getParameter('module') != 'sympal_install')
+    /*
+     * Redirect to install module if...
+     *   * not in test environment
+     *   * sympal has not been installed
+     *   * module is not already sympal_install
+     */
+    if (sfConfig::get('sf_environment') != 'test'
+        && !sfSympalConfig::get('installed')
+        && $request->getParameter('module') != 'sympal_install')
     {
       $this->_symfonyContext->getController()->redirect('@sympal_install');
     }
 
-    // Redirect to homepage if no site record exists so we can prompt the user to create
-    // a site record for this application
-    // This check is only ran in dev mode
-    if (sfConfig::get('sf_environment') == 'dev' && !$this->_sympalContext->getSite() && $this->_symfonyContext->getRequest()->getPathInfo() != '/')
+    /*
+     * Redirect to homepage if no site record exists so we can prompt the
+     * user to create a site record for this application.
+     * 
+     * This check is only ran in dev mode
+     */
+    if (sfConfig::get('sf_environment') == 'dev'
+        && !$this->_sympalContext->getSite()
+        && $this->_symfonyContext->getRequest()->getPathInfo() != '/')
     {
       $this->_symfonyContext->getController()->redirect('@homepage');
     }
