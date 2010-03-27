@@ -171,6 +171,10 @@ class sfSympalContext
     if (!isset($this->_themeObjects[$theme]))
     {
       $configurationArray = sfSympalConfig::get('themes', $theme);
+      if (!$configurationArray)
+      {
+        throw new sfException(sprintf('Cannot load them "%s" - no configuration found'));
+      }
       $configurationArray['name'] = $theme;
 
       $configurationClass = isset($configurationArray['config_class']) ? $configurationArray['class'] : 'sfSympalThemeConfiguration';
@@ -244,12 +248,17 @@ class sfSympalContext
    */
   public function loadTheme($name = null)
   {
-    $this->_previousTheme = $this->_theme;
     $theme = $name ? $name : $this->_theme;
-    $this->setTheme($theme);
-    if ($theme = $this->getThemeObject($theme))
+
+    if ($theme != $this->_theme)
     {
-      $theme->load();
+      $this->_previousTheme = $this->_theme;
+      $this->setTheme($theme);
+    }
+
+    if ($themeObj = $this->getThemeObject($theme))
+    {
+      $themeObj->load();
     }
   }
 
