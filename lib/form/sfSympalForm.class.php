@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Effectively acts as an extension of sfForm
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  form
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @since       2010-03-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalForm extends sfSympalExtendClass
 {
-  public function getSympalContext($site = null)
-  {
-    return sfSympalContext::getInstance($site);
-  }
-
   public function getRequiredFields(sfValidatorSchema $validatorSchema = null, $format = null)
   {
     if ($validatorSchema === null)
