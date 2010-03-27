@@ -1,5 +1,19 @@
 <?php
 
+/**
+ * Context class for a Sympal instance
+ * 
+ * This manages things such as
+ *   * The current sfSympalSite object
+ *   * The current menu item
+ *   * The current theme
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  util
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-03-27
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalContext
 {
   protected static
@@ -8,12 +22,17 @@ class sfSympalContext
 
   protected
     $_site,
-    $_siteSlug,
+    $_siteSlug;
+  
+  protected
     $_sympalConfiguration,
-    $_symfonyContext,
+    $_symfonyContext;
+  
+  protected
     $_currentMenuItem,
-    $_currentContent,
-    $_currentSite,
+    $_currentContent;
+  
+  protected
     $_previousTheme,
     $_theme,
     $_themeObjects = array();
@@ -106,6 +125,7 @@ class sfSympalContext
         ->enableSympalResultCache('sympal_context_get_site')
         ->fetchOne();
     }
+
     return $this->_site;
   }
 
@@ -158,6 +178,7 @@ class sfSympalContext
       $configuration = new $configurationClass($configurationArray);
       $this->_themeObjects[$theme] = new $themeClass($this, $configuration);
     }
+
     return isset($this->_themeObjects[$theme]) ? $this->_themeObjects[$theme] : false;
   }
 
