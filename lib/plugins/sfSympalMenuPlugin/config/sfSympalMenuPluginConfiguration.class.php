@@ -5,6 +5,7 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
   public function initialize()
   {
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
+    $this->dispatcher->connect('sympal.load', array($this, 'bootstrap'));
   }
 
   public function loadAdminMenu(sfEvent $event)
@@ -12,5 +13,16 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
     $event->getSubject()
       ->getChild('Site Administration')
       ->addChild('Menus', '@sympal_menu_items')->setCredentials(array('ManageMenus'));
+  }
+
+  /**
+   * Listens to the sympal.load event
+   */
+  public function bootstrap(sfEvent $event)
+  {
+    $helpers = array(
+      'SympalMenu',
+    );
+    $event->getSubject()->getApplicationConfiguration()->loadHelpers($helpers);
   }
 }

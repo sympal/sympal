@@ -14,11 +14,15 @@ class sfSympalContentPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()
   {
-    $this->dispatcher->connect('sympal.load_configuration', array($this, 'configureSympal'));
+    $this->dispatcher->connect('sympal.load', array($this, 'configureSympal'));
+    
+    // extend sfSympalConfiguration via sfSympalContentConfiguration
+    $configuration = new sfSympalContentConfiguration();
+    $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
   }
 
   /**
-   * Listens to sympal.load_configuration and performs configuration on Sympal
+   * Listens to sympal.load and performs configuration on Sympal
    * 
    * @see sfSympalConfiguration
    */
@@ -27,6 +31,8 @@ class sfSympalContentPluginConfiguration extends sfPluginConfiguration
     $this->_initializeSymfonyConfig();
     $this->_markClassesAsSafe();
     $this->_configureSuperCache();
+    
+    $event->getSubject()->getApplicationConfiguration()->loadHelpers('SympalContentSlot');
   }
   
   /**
@@ -108,18 +114,5 @@ class sfSympalContentPluginConfiguration extends sfPluginConfiguration
       $superCache = new sfSympalSuperCache();
       $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
     }
-  }
-
-  /**
-   * @TODO - Reimplement this, this is from sfSympalConfiguration
-   * 
-   * Get array of configured content templates for a given moel name
-   *
-   * @param string $model
-   * @return array $contentTemplates
-   */
-  public function getContentTemplates($model)
-  {
-    return sfSympalConfig::get($model, 'content_templates', array());
   }
 }

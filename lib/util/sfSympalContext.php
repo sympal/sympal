@@ -198,7 +198,8 @@ class sfSympalContext
   {
     if (!$this->_currentMenuItem)
     {
-      $this->_currentMenuItem = sfSympalMenuSiteManager::getInstance()->findCurrentMenuItem();
+      $uri = $this->getService('request')->getUri();
+      $this->_currentMenuItem = $this->getService('menu_manager')->findMenuItemByUri($uri);
     }
 
     return $this->_currentMenuItem;
@@ -324,6 +325,11 @@ class sfSympalContext
     return $this->_symfonyContext;
   }
 
+  public function getApplicationConfiguration()
+  {
+    return $this->getSympalConfiguration()->getProjectConfiguration();
+  }
+
   /**
    * Get a sfSympalContentRenderer instance for a given sfSympalContent instance
    *
@@ -334,17 +340,6 @@ class sfSympalContext
   public function getContentRenderer(sfSympalContent $content, $format = null)
   {
     return new sfSympalContentRenderer($this, $content, $format);
-  }
-
-  /**
-   * Get a sfSympalContentActionLoader instance for a given sfActions instance
-   *
-   * @param sfActions $actions 
-   * @return sfSympalContentActionLoader $loader
-   */
-  public function getSympalContentActionLoader(sfActions $actions)
-  {
-    return new sfSympalContentActionLoader($actions);
   }
 
   /**

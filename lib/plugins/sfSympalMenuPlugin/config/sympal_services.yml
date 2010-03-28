@@ -1,0 +1,10 @@
+parameters:
+  
+  menu_manager.class:         sfSympalMenuSiteManager        # Responsible for managing site menus
+  
+services:
+
+  menu_manager:
+    class:                    %menu_manager.class%
+    shared:                   true
+    arguments:                [@cache_manager]

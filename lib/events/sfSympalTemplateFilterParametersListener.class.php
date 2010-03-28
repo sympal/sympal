@@ -26,10 +26,8 @@ class sfSympalTemplateFilterParametersListener extends sfSympalListener
    */
   public function run(sfEvent $event, $parameters)
   {
-    if (!$sympalContext = $this->_invoker->getSympalContext())
-    {
-      return $parameters;
-    }
+    $sympalContext = $this->_invoker;
+
     $parameters['sf_sympal_context'] = $sympalContext;
 
     if ($content = $sympalContext->getCurrentContent())
@@ -37,7 +35,7 @@ class sfSympalTemplateFilterParametersListener extends sfSympalListener
       $parameters['sf_sympal_content'] = $content;
     }
 
-    if ($menuItem = $sympalContext->getCurrentMenuItem())
+    if ($menuItem = $sympalContext->getService('menu_manager'))
     {
       $parameters['sf_sympal_menu_item'] = $menuItem;
     }

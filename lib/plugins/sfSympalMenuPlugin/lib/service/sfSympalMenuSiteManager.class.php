@@ -3,7 +3,9 @@
 class sfSympalMenuSiteManager
 {
   protected
-    $_currentUri = null,
+    $_cacheManager;
+  
+  protected
     $_menus = array(),
     $_menuItems = array(),
     $_rootSlugs = array(),
@@ -11,11 +13,10 @@ class sfSympalMenuSiteManager
     $_hierarchies = array(),
     $_initialized = false;
 
-  protected static $_instance;
-
-  public function __construct()
+  public function __construct(sfSympalCacheManager $cacheManager = null)
   {
-    $this->_currentUri = sfContext::getInstance()->getRequest()->getUri();
+    $this->_cacheManager = $cacheManager;
+    
     if ($cache = $this->_getCache())
     {
       $cachedRootSlugs = $cache->get('SYMPAL_MENU_ROOT_SLUGS');
@@ -28,14 +29,12 @@ class sfSympalMenuSiteManager
     }
   }
 
+  /**
+   * @deprecated
+   */
   public static function getInstance()
   {
-    if (!self::$_instance)
-    {
-      $className = sfConfig::get('app_sympal_config_menu_manager_class');
-      self::$_instance = new $className();
-    }
-    return self::$_instance;
+    throw new sfException("Method is deprecated. Use ->getService('menu_manager') on sfSympalContext");
   }
 
   public function getMenus()
@@ -48,25 +47,25 @@ class sfSympalMenuSiteManager
     return $menus;
   }
 
-  public function findCurrentMenuItem($menu = null)
+  public function findMenuItemByUri($uri, $menu = null)
   {
     if (is_null($menu))
     {
       foreach ($this->getMenus() as $menu)
       {
-        if ($found = $this->findCurrentMenuItem($menu))
+        if ($found = $this->findMenuItemByUri($uri, $menu))
         {
           return $found;
         }
       }
     } else {
-      if ($menu->getUrl(array('absolute' => true)) === $this->_currentUri)
+      if ($menu->getUrl(array('absolute' => true)) === $uri)
       {
         return $menu->getMenuItem();
       }
       foreach ($menu->getChildren() as $child)
       {
-        if ($found = $this->findCurrentMenuItem($child))
+        if ($found = $this->findMenuItemByUri($uri, $child))
         {
           return $found;
         }
@@ -91,12 +90,15 @@ class sfSympalMenuSiteManager
 
   public static function getMenu($name, $showChildren = null, $class = null)
   {
-    return self::getInstance()->_getMenu($name, $showChildren, $class);
+    return sfSympalContext::getInstance()->getService('menu_manager')->_getMenu($name, $showChildren, $class);
   }
 
+  /**
+   * @return sfSympalCacheManager
+   */
   protected function _getCache()
   {
-    return sfSympalConfig::get('menu_cache', 'enabled', true) ? sfSympalConfiguration::getActive()->getCache() : false;
+    return sfSympalConfig::get('menu_cache', 'enabled', true) ? $this->_cacheManager : false;
   }
 
   protected function _getMenu($name, $showChildren = null, $class = null)

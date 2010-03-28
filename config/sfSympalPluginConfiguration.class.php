@@ -33,6 +33,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfWebBrowserPlugin',
       'sfJqueryReloadedPlugin',
       'sfImageTransformPlugin',
+      'sfSympalContentPlugin',
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
       'sfSympalPagesPlugin',
