@@ -41,12 +41,75 @@ class sfSympalContext
   protected
     $_currentMenuItem,
     $_currentContent;
+  
+  protected
+    $_serviceContainer;
 
+  /**
+   * Class constructor
+   * 
+   * @param sfSympalConfiguration $sympalConfiguration The Sympal configuration
+   * @param sfContext $symfonyContext The symfony context
+   */
   public function __construct(sfSympalConfiguration $sympalConfiguration, sfContext $symfonyContext)
   {
-    $this->_siteSlug = $symfonyContext->getConfiguration()->getApplication();
     $this->_sympalConfiguration = $sympalConfiguration;
     $this->_symfonyContext = $symfonyContext;
+    
+    $this->initialize();
+  }
+
+  /**
+   * Initializes sympal
+   */
+  protected function initialize()
+  {
+    // load the service container instance
+    $this->loadServiceContainer();
+  }
+
+  /**
+   * Loads Sympal's service container
+   * 
+   * @link http://components.symfony-project.org/dependency-injection/trunk/book/06-Speed
+   */
+  protected function loadServiceContainer()
+  {
+    require_once $this->getSymfonyContext()
+      ->getConfiguration()
+      ->getPluginConfiguration('sfSympalPlugin')
+      ->getRootDir() . '/lib/vendor/service_container/lib/sfServiceContainerAutoloader.php';
+    sfServiceContainerAutoloader::register();
+    
+    $app = $this->getSymfonyContext()->getConfiguration()->getApplication();
+    $name = 'sfSympal'.$app.'ServiceContainer';
+    $path = sfConfig::get('sf_app_cache_dir').'/'.$name.'.php';
+
+    if (!sfConfig::get('sf_debug') && file_exists($path))
+    {
+      require_once $path;
+      $this->_serviceContainer = new $name();
+    }
+    else
+    {
+      // build the service container dynamically
+      $this->_serviceContainer = new sfServiceContainerBuilder();
+      $loader = new sfServiceContainerLoaderFileYaml($this->_serviceContainer);
+      
+      $configPaths = $this->getSymfonyContext()->getConfiguration()->getConfigPaths('config/sympal_services.yml');
+      $loader->load($configPaths);
+      
+      // if not in debug, write the service container to file
+      if (!sfConfig::get('sf_debug'))
+      {
+        $dumper = new sfServiceContainerDumperPhp($this->_serviceContainer);
+
+        file_put_contents($path, $dumper->dump(array(
+          'class'       => $name,
+          'base_class'  => sfSympalConfig::get('service_container', 'base_class', 'sfServiceContainer'),
+        )));
+      }
+    }
   }
 
   /**
