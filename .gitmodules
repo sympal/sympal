@@ -1,3 +1,6 @@
 [submodule "lib/plugins/sfSympalThemePlugin"]
 	path = lib/plugins/sfSympalThemePlugin
 	url = git://github.com/weaverryan/sfSympalThemePlugin.git
+[submodule "lib/vendor/service"]
+	path = lib/vendor/service
+	url = git://github.com/fabpot/dependency-injection.git
