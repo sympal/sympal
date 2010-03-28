@@ -82,7 +82,7 @@ class sfSympalConfig extends sfConfig
    */
   public static function set($group, $name, $value = null)
   {
-    if (is_null($value))
+    if ($value === null)
     {
       self::$config['app_sympal_config_'.$group] = $name;
     }
@@ -176,17 +176,22 @@ class sfSympalConfig extends sfConfig
    */
   public static function writeSetting($group, $name, $value = null, $application = false)
   {
-    if (is_null($value))
+    // make sure we know our original values so we can call set later
+    $originalName = $name;
+    $originalValue = $value;
+
+    if ($value === null)
     {
       $value = $name;
-      $name = $group;
-      $group = null;
+      $name = null;
     }
 
     if ($application)
     {
       $path = sfConfig::get('sf_app_dir').'/config/app.yml';
-    } else {
+    }
+    else
+    {
       $path = sfConfig::get('sf_config_dir').'/app.yml';
     }
 
@@ -196,15 +201,16 @@ class sfSympalConfig extends sfConfig
     }
     $array = (array) sfYaml::load(file_get_contents($path));
 
-    if (is_null($group))
+    if ($name === null)
     {
-      $array['all']['sympal_config'][$name] = $value;
-    } else {
+      $array['all']['sympal_config'][$group] = $value;
+    }
+    else
+    {
       $array['all']['sympal_config'][$group][$name] = $value;
     }
 
-    self::set($group, $name, $value);
-
+    sfSympalConfig::set($group, $originalName, $originalValue);
     file_put_contents($path, sfYaml::dump($array, 4));
   }
 }
