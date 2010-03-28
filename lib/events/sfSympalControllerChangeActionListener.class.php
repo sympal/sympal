@@ -21,7 +21,6 @@ class sfSympalControllerChangeActionListener extends sfSympalListener
 
   public function run(sfEvent $event)
   {
-    $this->_invoker->initializeTheme();
     $this->_checkOnlineConfiguration();
   }
 
@@ -39,6 +38,7 @@ class sfSympalControllerChangeActionListener extends sfSympalListener
         sfSympalConfig::get('offline', 'module'),
         sfSympalConfig::get('offline', 'action')
       );
+
       throw new sfStopException();
     }
   }

@@ -14,10 +14,12 @@
  * @package sfSympalPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
  */
-class sfSympalCache
+class sfSympalCacheManager
 {
   protected
-    $_sympalConfiguration,
+    $_dispatcher;
+  
+  protected
     $_helperAutoload = null,
     $_modules = null,
     $_layouts = null;
@@ -30,11 +32,10 @@ class sfSympalCache
    * @see sfSympalPluginConfiguration
    * @param sfSympalConfiguration $sympalConfiguration
    */
-  public function __construct(sfSympalConfiguration $sympalConfiguration)
+  public function __construct(sfEventDispatcher $dispatcher, sfCache $cacheDriver)
   {
-    $this->_sympalConfiguration = $sympalConfiguration;
-    $this->_projectConfiguration = $sympalConfiguration->getProjectConfiguration();
-    $this->_cacheDriver = call_user_func_array(sfSympalConfig::get('get_cache_driver_callback'), array($this));
+    $this->_dispatcher = $dispatcher;
+    $this->_cacheDriver = $cacheDriver;
 
     $this->primeCache();
   }
@@ -85,6 +86,9 @@ class sfSympalCache
 
   /**
    * Prime the cache for this sfSympalCache instance
+   * 
+   * Notifies the sympal.cache.prime event, allowing for any class to
+   * hook in to the cache prime
    *
    * @param boolean $force Force it to prime the cache regardless of whether or not it has been primed already
    * @return void
@@ -97,9 +101,15 @@ class sfSympalCache
     }
 
     $this->clear();
-    $this->_writeHelperAutoloadCache();
-    $this->_writeModulesCache();
-    $this->_writeLayoutsCache();
+    
+    /**
+     * @TODO reimplement this in the proper location
+     */
+    //$this->_writeHelperAutoloadCache();
+    //$this->_writeModulesCache();
+    //$this->_writeLayoutsCache();
+    
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.cache.prime'));
 
     $this->_cacheDriver->set('primed', true);
   }
@@ -135,6 +145,7 @@ class sfSympalCache
    */
   public function getLayouts()
   {
+    throw new sfException('@TODO - Must be reimplemented');
     if ($this->_layouts === null)
     {
       $this->_layouts = $this->get('layouts');
@@ -144,27 +155,13 @@ class sfSympalCache
   }
 
   /**
-   * Get the cached modules array
-   *
-   * @return array $modules
-   */
-  public function getModules()
-  {
-    if ($this->_modules === null)
-    {
-      $this->_modules = $this->get('modules');
-    }
-
-    return $this->_modules;
-  }
-
-  /**
    * Get the cached helper methods and paths
    *
    * @return array $helpers
    */
   public function getHelperAutoload()
   {
+    throw new sfException('@TODO Needs to be reimplemented');
     if ($this->_helperAutoload === null)
     {
       $this->_helperAutoload = $this->get('helper_autoload');
@@ -183,6 +180,7 @@ class sfSympalCache
    */
   protected function _writeHelperAutoloadCache()
   {
+    throw new sfException('@TODO Needs to be reimplemented');
     $cache = array();
     $dirs = $this->_projectConfiguration->getHelperDirs();
     foreach ($dirs as $dir)
@@ -205,78 +203,6 @@ class sfSympalCache
       }
     }
     $this->set('helper_autoload', $cache);
-  }
-
-  /**
-   * Find all modules that exist in this project and application and cache the array
-   *
-   * @return void
-   */
-  protected function _writeModulesCache()
-  {
-    $modules = array();
-    $paths = $this->_sympalConfiguration->getPluginPaths();
-    $paths['sfDoctrineGuardPlugin'] = $this->_projectConfiguration->getPluginConfiguration('sfDoctrineGuardPlugin')->getRootDir();
-    $paths['application'] = sfConfig::get('sf_app_dir');
-
-    foreach ($paths as $path)
-    {
-      $path = $path . '/modules';
-      $find = glob($path . '/*');
-
-      if (is_array($find))
-      {
-        foreach ($find as $module)
-        {
-          if (is_dir($module))
-          {
-            $info = pathinfo($module);
-            $modules[] = $info['basename'];
-          }
-        }
-      }
-    }
-    $this->set('modules', $modules);
-  }
-
-  /**
-   * Find all the layouts that exist for this project and application and cache the array
-   *
-   * @return void
-   */
-  protected function _writeLayoutsCache()
-  {
-    $layouts = array();
-    foreach ($this->_sympalConfiguration->getPluginPaths() as $plugin => $path)
-    {
-      $path = $path.'/templates';
-      $find = glob($path.'/*.php');
-      if (is_array($find))
-      {
-        $layouts = array_merge($layouts, $find);
-      }
-    }
-
-    $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
-    if (is_array($find))
-    {
-      $layouts = array_merge($layouts, $find);
-    }
-
-    $layoutsCache = array();
-    foreach ($layouts as $path)
-    {
-      $info = pathinfo($path);
-      $name = $info['filename'];
-      // skip partial/component templates
-      if ($name[0] == '_')
-      {
-        continue;
-      }
-      $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
-      $layoutsCache[$path] = $name;
-    }
-    $this->set('layouts', $layoutsCache);
   }
 
   /**

@@ -16,6 +16,7 @@ class sfSympalUserPluginConfiguration extends sfPluginConfiguration
   public function initialize()
   {
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
+    $this->dispatcher->connect('context.load_factories', array($this, 'bootstrap'));
   }
 
   public function loadAdminMenu(sfEvent $event)
@@ -33,5 +34,26 @@ class sfSympalUserPluginConfiguration extends sfPluginConfiguration
 
     $security->addChild('Permissions', '@sympal_permissions')
       ->setCredentials(array('ManagePermissions'));
+  }
+
+  /**
+   * Listens on context.load_factories event
+   */
+  public function bootstrap(sfEvent $event)
+  {
+    $this->_initiateUserTable();
+  }
+
+  /**
+   * Initiates the user model and throws the sympal.user.set_table_definition event.
+   * 
+   * Ths idea is that the user model hasn't been loaded yet, so it'll be
+   * loaded here for the first time, and this allows a hook into its
+   * table definition.
+   */
+  protected function _initiateUserTable()
+  {
+    $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
+    $this->dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
   }
 }

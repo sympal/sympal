@@ -3,6 +3,9 @@
 /**
  * Handles all the sympal functionality that needs to fire on the context.load_factories event
  * 
+ * @deprecated
+ * This class has been replaced by sfSympalContext.
+ * 
  * @package     sfSympalPlugin
  * @subpackage  listener
  * @author      Jonathan H. Wage <jonwage@gmail.com>
@@ -11,10 +14,6 @@
  */
 class sfSympalContextLoadFactoriesListener extends sfSympalListener
 {
-  private
-    $_symfonyContext,
-    $_sympalContext;
-
   /**
    * @see sfSympalListener
    */
@@ -30,98 +29,10 @@ class sfSympalContextLoadFactoriesListener extends sfSympalListener
    */
   public function run(sfEvent $event)
   {
-    $this->_initiateUserTable();
-
-    $this->_symfonyContext = $event->getSubject();
-    $this->_invoker->setCache(new sfSympalCache($this->_invoker));
-    $this->_invoker->setSymfonyContext($this->_symfonyContext);
-
-    $this->_sympalContext = sfSympalContext::createInstance($this->_symfonyContext, $this->_invoker);
-    $this->_invoker->setSympalContext($this->_sympalContext);
-
-    $this->_enableModules();
+    /**
+     * @TODO Reimplement in the correct location
     $this->_checkInstalled();
-
-    $this->_invoker->initializeTheme();
-    
-    $this->_loadHelpers();
-
-    $this->_dispatcher->notify(new sfEvent($this, 'sympal.load', array(
-      'sympal_context' => $this->_sympalContext,
-    )));
-
-    new sfSympalComponentMethodNotFoundListener($this->_dispatcher, $this->_invoker);
-    new sfSympalControllerChangeActionListener($this->_dispatcher, $this->_invoker);
-    new sfSympalTemplateFilterParametersListener($this->_dispatcher, $this->_invoker);
-    new sfSympalFormMethodNotFoundListener($this->_dispatcher, $this->_invoker);
-    new sfSympalFormPostConfigureListener($this->_dispatcher, $this->_invoker);
-    new sfSympalFormFilterValuesListener($this->_dispatcher, $this->_invoker);
-  }
-  
-  /**
-   * Initiates the user model and throws the sympal.user.set_table_definition event.
-   * 
-   * Ths idea is that the user model hasn't been loaded yet, so it'll be
-   * loaded here for the first time, and this allows a hook into its
-   * table definition.
-   */
-  protected function _initiateUserTable()
-  {
-    $record = Doctrine_Core::getTable(sfSympalConfig::get('user_model'))->getRecordInstance();
-    $this->_dispatcher->notify(new sfEvent($record, 'sympal.user.set_table_definition', array('object' => $record)));
-  }
-
-  /**
-   * Loads default helpers needed by sympal
-   */
-  protected function _loadHelpers()
-  {
-    $helpers = array(
-      'Sympal',
-      'SympalContentSlot',
-      'SympalMenu',
-      'SympalPager',
-      'I18N',
-      'Asset',
-      'Url',
-      'Partial'
-    );
-
-    if ($this->_invoker->isAdminModule())
-    {
-      sfConfig::set('sf_login_module', 'sympal_admin');
-      $helpers[] = 'Admin';
-    }
-
-    $this->_invoker->getProjectConfiguration()->loadHelpers($helpers);
-  }
-
-  /**
-   * Handle the enabling of modules.
-   * 
-   * Either enables all modules or only modules defined by enabled_modules.
-   * In either case, the modules in disabled_modules are disabled
-   *
-   * @return void
-   */
-  private function _enableModules()
-  {
-    $modules = sfConfig::get('sf_enabled_modules', array());
-    if (sfSympalConfig::get('enable_all_modules'))
-    {
-      $modules = array_merge($modules, $this->_invoker->getCache()->getModules());
-    }
-    else
-    {
-      $modules = array_merge($modules, sfSympalConfig::get('enabled_modules', null, array()));
-    }
-
-    if ($disabledModules = sfSympalConfig::get('disabled_modules', null, array()))
-    {
-      $modules = array_diff($modules, $disabledModules);
-    }
-
-    sfConfig::set('sf_enabled_modules', $modules);
+    */
   }
 
   /**

@@ -18,15 +18,23 @@ class sfSympalConfiguration
     $_sympalContext,
     $_symfonyContext,
     $_bootstrap,
-    $_plugins,
-    $_pluginPaths,
     $_allManageablePlugins,
     $_contentTypePlugins,
-    $_requiredPlugins,
-    $_modules,
-    $_themes,
-    $_availableThemes,
-    $_cache;
+    $_requiredPlugins;
+  
+  protected
+    $_plugins,
+    $_pluginPaths;
+  
+  /**
+   * Information that is generated and cached
+   */
+  protected
+    $_modules = null,
+    $_layouts = null;
+  
+  protected
+    $_cacheManager;
 
   public function __construct(ProjectConfiguration $projectConfiguration)
   {
@@ -40,94 +48,16 @@ class sfSympalConfiguration
     $this->_projectConfiguration = $projectConfiguration;
     $this->_dispatcher = $projectConfiguration->getEventDispatcher();
 
-    $this->_initializeSymfonyConfig();
-    $this->_markClassesAsSafe();
-    $this->_configureSuperCache();
     $this->_configureDoctrine();
+    $this->_loadDefaultHelpers();
+
+    // Listen to the sympal.load event to perform some context-dependent tasks
+    $this->_dispatcher->connect('sympal.load', array($this, 'bootstrapFromContext'));
+    
+    // throw the sympal.load_configuration event to allow others to configure
+    $this->_dispatcher->notify(new sfEvent($this, 'sympal.load_configuration'));
 
     new sfSympalContextLoadFactoriesListener($this->_dispatcher, $this);
-    new sfSympalTaskClearCacheListener($this->_dispatcher, $this);
-  }
-
-  /**
-   * Initialize some sfConfig values for Sympal
-   *
-   * @return void
-   */
-  private function _initializeSymfonyConfig()
-  {
-    sfConfig::set('sf_cache', sfSympalConfig::get('page_cache', 'enabled', false));
-    sfConfig::set('sf_default_culture', sfSympalConfig::get('default_culture', null, 'en'));
-    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalAdminPlugin'));
-
-    sfConfig::set('app_sf_guard_plugin_success_signin_url', sfSympalConfig::get('success_signin_url'));
-
-    if (sfConfig::get('sf_login_module') == 'default')
-    {
-      sfConfig::set('sf_login_module', 'sympal_auth');
-      sfConfig::set('sf_login_action', 'signin');
-    }
-
-    if (sfConfig::get('sf_secure_module') == 'default')
-    {
-      sfConfig::set('sf_secure_module', 'sympal_auth');
-      sfConfig::set('sf_secure_action', 'secure');
-    }
-
-    if (sfConfig::get('sf_error_404_module') == 'default')
-    {
-      sfConfig::set('sf_error_404_module', 'sympal_default');
-      sfConfig::set('sf_error_404_action', 'error404');
-    }
-
-    if (sfConfig::get('sf_module_disabled_module') == 'default')
-    {
-      sfConfig::set('sf_module_disabled_module', 'sympal_default');
-      sfConfig::set('sf_module_disabled_action', 'disabled');
-    }
-
-    sfConfig::set('sf_jquery_path', sfSympalConfig::get('jquery_reloaded', 'path'));
-    sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
-  }
-
-  /**
-   * Mark necessary Sympal classes as safe
-   * 
-   * These classes won't be wrapped with the output escaper
-   *
-   * @return void
-   */
-  private function _markClassesAsSafe()
-  {
-    sfOutputEscaper::markClassesAsSafe(array(
-      'sfSympalContent',
-      'sfSympalContentTranslation',
-      'sfSympalContentSlot',
-      'sfSympalContentSlotTranslation',
-      'sfSympalMenuItem',
-      'sfSympalMenuItemTranslation',
-      'sfSympalContentRenderer',
-      'sfSympalMenu',
-      'sfParameterHolder',
-      'sfSympalDataGrid',
-      'sfSympalUpgradeFromWeb',
-      'sfSympalServerCheckHtmlRenderer',
-      'sfSympalSitemapGenerator'
-    ));
-  }
-
-  /**
-   * Configure super cache if enabled
-   *
-   * @return void
-   */
-  private function _configureSuperCache()
-  {
-    if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
-    {
-      $superCache = new sfSympalSuperCache();
-      $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
-    }
   }
 
   /**
@@ -144,7 +74,7 @@ class sfSympalConfiguration
 
     if (sfSympalConfig::get('orm_cache', 'enabled', true))
     {
-      $driver = sfSympalCache::getOrmCacheDriver();
+      $driver = sfSympalCacheManager::getOrmCacheDriver();
 
       $doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CACHE, $driver);
 
@@ -157,66 +87,35 @@ class sfSympalConfiguration
   }
 
   /**
-   * Set the sfSympalCache instance for this sympal configuration instance
-   *
-   * @param sfSympalCache $cache 
-   * @return void
+   * Loads default helpers needed by Sympal
    */
-  public function setCache(sfSympalCache $cache)
+  protected function _loadDefaultHelpers()
   {
-    $this->_cache = $cache;
-  }
+    /*
+     * @TODO Put these in the proper place (the ones commented out)
+     */
+    $helpers = array(
+      'Sympal',
+      //'SympalContentSlot',
+      //'SympalMenu',
+      //'SympalPager',
+      'I18N',
+      'Asset',
+      'Url',
+      'Partial'
+    );
 
-  /**
-   * Set the symfony context for this sympal configuration instance
-   *
-   * @param sfContext $symfonyContext 
-   * @return void
-   */
-  public function setSymfonyContext(sfContext $symfonyContext)
-  {
-    $this->_symfonyContext = $symfonyContext;
-  }
+    /**
+     * @TODO reimplement this in the proper location
+     *
+    if ($this->_invoker->isAdminModule())
+    {
+      sfConfig::set('sf_login_module', 'sympal_admin');
+      $helpers[] = 'Admin';
+    }
+    */
 
-  /**
-   * Set the sympal context for this sympal configuration instance
-   *
-   * @param sfSympalContext $sympalContext 
-   * @return void
-   */
-  public function setSympalContext(sfSympalContext $sympalContext)
-  {
-    $this->_sympalContext = $sympalContext;
-  }
-
-  /**
-   * Get the current sfContext instance
-   *
-   * @return sfContext $symfonyContext
-   */
-  public function getSymfonyContext()
-  {
-    return $this->_symfonyContext;
-  }
-
-  /**
-   * Get the sfSympalCache instance
-   *
-   * @return sfSympalCache $cache
-   */
-  public function getCache()
-  {
-    return $this->_cache;
-  }
-
-  /**
-   * Get the current sfSympalContext instance
-   *
-   * @return sfSympalContext $sympalContext
-   */
-  public function getSympalContext()
-  {
-    return $this->_sympalContext;
+    $this->getProjectConfiguration()->loadHelpers($helpers);
   }
 
   /**
@@ -237,6 +136,15 @@ class sfSympalConfiguration
   public function getCorePlugins()
   {
     return sfSympalPluginConfiguration::$corePlugins;
+  }
+
+  /**
+   * Listens to the sympal.load event
+   */
+  public function bootstrapFromContext(sfEvent $event)
+  {
+    // give this object access to the cache manager
+    $this->_cacheManager = $event->getSubject()->getService('cache_manager');
   }
 
   /**
@@ -301,7 +209,7 @@ class sfSympalConfiguration
   }
 
   /**
-   * Get array of all installed plugins
+   * Get array of all "Sympal" plugins
    *
    * @return array $plugins
    */
@@ -311,6 +219,7 @@ class sfSympalConfiguration
     {
       $this->_plugins = array_keys($this->getPluginPaths());
     }
+
     return $this->_plugins;
   }
 
@@ -346,7 +255,21 @@ class sfSympalConfiguration
    */
   public function getModules()
   {
-    return $this->getCache()->getModules();
+    if ($this->_modules === null)
+    {
+      // check if it's in the cache
+      if ($this->getCache('configuration.modules'))
+      {
+        $this->_modules = $this->getCache('configuration.modules');
+      }
+      else
+      {
+        $this->_modules = $this->_generateModulesArray();
+        $this->setCache('configuration.modules', $this->_modules);
+      }
+    }
+
+    return $this->_modules;
   }
 
   /**
@@ -356,66 +279,56 @@ class sfSympalConfiguration
    */
   public function getLayouts()
   {
-    return $this->getCache()->getLayouts();
-  }
-
-  /**
-   * Get array of all themes that are not disabled.
-   *
-   * @return array $themes
-   */
-  public function getThemes()
-  {
-    if ($this->_themes === null)
+    if ($this->_layouts === null)
     {
-      $themes = sfSympalConfig::get('themes', null, array());
-      foreach ($themes as $name => $theme)
+      // check if it's in the cache
+      if ($this->getCache('configuration.layouts'))
       {
-        if (isset($theme['disabled']) && $theme['disabled'] === true)
-        {
-          continue;
-        }
-        $this->_themes[$name] = $theme;
+        $this->_layouts = $this->getCache('configuration.layouts');
+      }
+      else
+      {
+        $this->_layouts = $this->_generateLayoutsCache();
+        $this->setCache('configuration.layouts', $this->_layouts);
       }
     }
-    return $this->_themes;
+
+    return $this->_layouts;
   }
 
   /**
-   * Get array of all themes that are not disabled and available for selection
-   *
-   * @return array $availableThemes
+   * Returns a value from the cache object (if there is one)
+   * 
+   * @param string $name The name/key of the cache to return
+   * @param mixed $default The default value to return if the cache isn't found
    */
-  public function getAvailableThemes()
+  public function getCache($name, $default = null)
   {
-    if ($this->_availableThemes === null)
-    {
-      $themes = $this->getThemes();
-      foreach ($themes as $name => $theme)
-      {
-        if (!isset($theme['available']) || (isset($theme['available']) && $theme['available'] === false))
-        {
-          continue;
-        }
-        $this->_availableThemes[$name] = $theme;
-      }
-    }
-    return $this->_availableThemes;
+    return $this->getCacheManager() ? $this->getCacheManager()->get($name, $default) : $default;
   }
 
   /**
-   * Get array of configured content templates for a given moel name
-   *
-   * @param string $model
-   * @return array $contentTemplates
+   * Set a value to the cache (if there is a cache object
+   * 
+   * @param string $name The name/key of the cache to set
+   * @param mixed $value The value to set to the cache
+   * 
+   * @return boolean Whether or not the cache was set
    */
-  public function getContentTemplates($model)
+  public function setCache($name, $value)
   {
-    return sfSympalConfig::get($model, 'content_templates', array());
+    return $this->getCacheManager() ? $this->getCacheManager()->set($name, $value) : false;
+  }
+
+  public function getCacheManager()
+  {
+    return $this->_cacheManager;
   }
 
   /**
    * Check if we are inside an admin module
+   * 
+   * @TODO Reimplement this somewhere that makes sense
    *
    * @return boolean
    */
@@ -427,64 +340,82 @@ class sfSympalConfiguration
     }
     $module = $this->_symfonyContext->getRequest()->getParameter('module');
     $adminModules = sfSympalConfig::get('admin_modules');
+
     return array_key_exists($module, $adminModules);
   }
 
   /**
-   * Get the theme to use for the current request
+   * Find all modules that exist in this project and application
    *
-   * @return string $theme
+   * @return array
    */
-  public function getThemeForRequest()
+  protected function _generateModulesArray()
   {
-    $request = $this->_symfonyContext->getRequest();
-    $module = $request->getParameter('module');
+    $modules = array();
+    $paths = $this->getPluginPaths();
+    $paths['sfDoctrineGuardPlugin'] = $this->getProjectConfiguration()->getPluginConfiguration('sfDoctrineGuardPlugin')->getRootDir();
+    $paths['application'] = sfConfig::get('sf_app_dir');
 
-    if ($this->isAdminModule())
+    foreach ($paths as $path)
     {
-      return sfSympalConfig::get('admin_theme', null, 'admin');
-    }
+      $path = $path . '/modules';
+      $find = glob($path . '/*');
 
-    if (sfSympalConfig::get('allow_changing_theme_by_url'))
-    {
-      $user = $this->_symfonyContext->getUser();
-
-      if ($theme = $request->getParameter(sfSympalConfig::get('theme_request_parameter_name', null, 'sf_sympal_theme')))
+      if (is_array($find))
       {
-        $user->setCurrentTheme($theme);
-        return $theme;
+        foreach ($find as $module)
+        {
+          if (is_dir($module))
+          {
+            $info = pathinfo($module);
+            $modules[] = $info['basename'];
+          }
+        }
       }
-
-      if ($theme = $user->getCurrentTheme())
-      {
-        return $theme;
-      }
     }
 
-    if ($theme = sfSympalConfig::get($module, 'theme'))
-    {
-      return $theme;
-    }
-
-    if ($theme = $theme = sfSympalConfig::get(sfContext::getInstance()->getRouting()->getCurrentRouteName(), 'theme'))
-    {
-      return $theme;
-    }
-
-    return sfSympalConfig::get('default_theme');
+    return $modules;
   }
 
   /**
-   * Initialize the theme for the current request
+   * Find all the layouts that exist for this project and application
    *
-   * @return void
+   * @return array
    */
-  public function initializeTheme()
+  protected function _generateLayoutsCache()
   {
-    if (!$this->_symfonyContext->getRequest()->isXmlHttpRequest())
+    $layouts = array();
+    foreach ($this->getPluginPaths() as $plugin => $path)
     {
-      $this->_sympalContext->loadTheme($this->getThemeForRequest());
+      $path = $path.'/templates';
+      $find = glob($path.'/*.php');
+      if (is_array($find))
+      {
+        $layouts = array_merge($layouts, $find);
+      }
     }
+
+    $find = glob(sfConfig::get('sf_app_dir').'/templates/*.php');
+    if (is_array($find))
+    {
+      $layouts = array_merge($layouts, $find);
+    }
+
+    $layoutsCache = array();
+    foreach ($layouts as $path)
+    {
+      $info = pathinfo($path);
+      $name = $info['filename'];
+      // skip partial/component templates
+      if ($name[0] == '_')
+      {
+        continue;
+      }
+      $path = str_replace(sfConfig::get('sf_root_dir').'/', '', $path);
+      $layoutsCache[$path] = $name;
+    }
+
+    return $layoutsCache;
   }
 
   /**
@@ -496,4 +427,5 @@ class sfSympalConfiguration
   {
     return sfApplicationConfiguration::getActive()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();
   }
+  
 }
