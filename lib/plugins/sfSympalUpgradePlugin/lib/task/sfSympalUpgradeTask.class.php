@@ -59,10 +59,14 @@ EOF;
         }
 
         $upgrade->download();
-      } else {
+      }
+      else
+      {
         throw new sfException('No new version of Sympal was found!');
       }
-    } else {
+    }
+    else
+    {
       $upgrade = new sfSympalProjectUpgrade($this->configuration, $this->dispatcher, $this->formatter);      
     }
 
@@ -95,9 +99,13 @@ EOF;
 
       $this->logSection('sympal', 'Successfully executed upgrade tasks');
       $this->logSection('sympal', 'You have successfully upgraded Sympal');
-    } else if (isset($options['download-new']) && $options['download-new']) {
+    }
+    else if (isset($options['download-new']) && $options['download-new'])
+    {
       $this->logSection('sympal', 'No upgrade tasks required for upgrade');
-    } else { 
+    }
+    else
+    { 
       throw new sfException('Nothing to upgrade.');
     }
   }
