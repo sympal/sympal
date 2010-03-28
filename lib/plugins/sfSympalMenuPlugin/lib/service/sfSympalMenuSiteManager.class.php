@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Service class that manages the sfSympalMenuSite instances
+ * 
+ * @package     sfSympalMenuPlugin
+ * @subpackage  service
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-03-28
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalMenuSiteManager
 {
   protected
