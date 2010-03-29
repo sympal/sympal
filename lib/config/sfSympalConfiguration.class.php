@@ -96,8 +96,6 @@ class sfSympalConfiguration
      */
     $helpers = array(
       'Sympal',
-      //'SympalContentSlot',
-      //'SympalMenu',
       //'SympalPager',
       'I18N',
       'Asset',
