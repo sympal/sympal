@@ -41,7 +41,7 @@ class sfSympalExtendClass implements ArrayAccess
    * Can be used inside a magic __call method to allow for a class to be extended
    * 
    * This method will throw a class_name.method_not_found event,
-   * where class_name is the "tablelized" class name.
+   * where class_name is the "tableized" class name.
    * 
    * @example
    * public function __call($method, $arguments)
