@@ -6,7 +6,7 @@
     <body>
       <trans-unit>
         <source>Your Sympal installation is already up to date at %s!</source>
-        <target>Tu instalación ya está a la versión corriente (%s)!</target>
+        <target>¡Tu instalación de Sympal ya está actualizada (%s)!</target>
       </trans-unit>
     </body>
   </file>
