@@ -47,7 +47,7 @@ class sfSympalExtendClass implements ArrayAccess
    * @example
    * public function __call($method, $arguments)
    * {
-   *   sfSympalExtendClass::extendEvent($this, $method, $arguments);
+   *   return sfSympalExtendClass::extendEvent($this, $method, $arguments);
    * }
    * 
    * @param mixed $subject Instance of the class being extended
