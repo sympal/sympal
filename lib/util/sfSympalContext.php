@@ -190,92 +190,6 @@ class sfSympalContext
   }
 
   /**
-   * Get the current sfSympalMenuItem instance for this sympal context
-   *
-   * @return sfSympalMenuItem
-   */
-  public function getCurrentMenuItem()
-  {
-    if (!$this->_currentMenuItem)
-    {
-      $uri = $this->getService('request')->getUri();
-      $this->_currentMenuItem = $this->getService('menu_manager')->findMenuItemByUri($uri);
-    }
-
-    return $this->_currentMenuItem;
-  }
-
-  /**
-   * Set the current sfSympalMenuItem instance for this sympal context
-   *
-   * @param sfSympalMenuItem $menuItem
-   * @return void
-   */
-  public function setCurrentMenuItem(sfSympalMenuItem $menuItem)
-  {
-    $this->_currentMenuItem = $menuItem;
-  }
-
-  /**
-   * Get the current sfSympalContent instance for this sympal context
-   *
-   * @return sfSympalContent $content
-   */
-  public function getCurrentContent()
-  {
-    return $this->_currentContent;
-  }
-
-  /**
-   * Set the current sfSympalContent instance for this sympal context
-   *
-   * @param sfSympalContent $content 
-   * @return void
-   */
-  public function setCurrentContent(sfSympalContent $content)
-  {
-    $this->_currentContent = $content;
-    if (!$this->_site)
-    {
-      $this->_site = $content->getSite();
-    }
-    if ($menuItem = $content->getMenuItem())
-    {
-      $this->_currentMenuItem = $menuItem;
-    }
-  }
-
-  /**
-   * Set the current sfSympalSite instance for this sympal context
-   *
-   * @param sfSympalSite $site 
-   * @return void
-   */
-  public function setSite(sfSympalSite $site)
-  {
-    $this->_site = $site;
-  }
-
-  /**
-   * Get the current sfSympalSite instance for this sympal context
-   *
-   * @return sfSympalSite $site
-   */
-  public function getSite()
-  {
-    if (!$this->_site)
-    {
-      $this->_site =  Doctrine_Core::getTable('sfSympalSite')
-        ->createQuery('s')
-        ->where('s.slug = ?', $this->_siteSlug)
-        ->enableSympalResultCache('sympal_context_get_site')
-        ->fetchOne();
-    }
-
-    return $this->_site;
-  }
-
-  /**
    * Shortcut to check if we should load the frontend editor
    *
    * @return boolean
@@ -283,16 +197,6 @@ class sfSympalContext
   public function shouldLoadFrontendEditor()
   {
     return $this->_symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalEditorPlugin')->shouldLoadEditor();
-  }
-
-  /**
-   * Get the current site slug
-   *
-   * @return string $siteSlug
-   */
-  public function getSiteSlug()
-  {
-    return $this->_siteSlug;
   }
 
   /**
@@ -431,5 +335,48 @@ class sfSympalContext
     self::$_current = $instance;
 
     return self::$_instances[$name];
+  }
+
+
+  /**
+   * Deprecated Functions
+   */
+  
+  protected function warnDeprecated($method, $service)
+  {
+    throw new Exception();
+    $this->_dispatcher->notify(new sfEvent($this, 'application.log', array(
+      'priority' => sfLogger::WARNING,
+      sprintf('Method sfSympalContent::%s is deprecated. Use sfSympalContext->getService(\'%s\')->%s()', $method, $service, $method),
+    )));
+  }
+  
+  /**
+   * @deprecated
+   */
+  public function getCurrentContent()
+  {
+    $this->warnDeprecated('getCurrentContent', 'site_manager');
+    
+    return $this->getService('site_manager')->getCurrentContent();
+  }
+  /**
+   * @deprecated
+   */
+  public function setCurrentContent(sfSympalContent $content)
+  {
+    $this->warnDeprecated('setCurrentContent', 'site_manager');
+    
+    return $this->getService('site_manager')->setCurrentContent($content);
+  }
+  
+  /**
+   * @deprecated
+   */
+  public function getCurrentMenuItem()
+  {
+    $this->warnDeprecated('getCurrentMenuItem', 'menu_manager');
+    
+    return $this->getService('menu_manager')->getCurrentMenuItem();
   }
 }
