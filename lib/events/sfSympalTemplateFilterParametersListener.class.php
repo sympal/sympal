@@ -29,8 +29,10 @@ class sfSympalTemplateFilterParametersListener extends sfSympalListener
     $sympalContext = $this->_invoker;
 
     $parameters['sf_sympal_context'] = $sympalContext;
+    
+    $parameters['sf_sympal_site'] = $sympalContext->getService('site_manager')->getSite();
 
-    if ($content = $sympalContext->getCurrentContent())
+    if ($content = $sympalContext->getService('site_manager')->getCurrentContent())
     {
       $parameters['sf_sympal_content'] = $content;
     }

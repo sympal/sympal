@@ -45,7 +45,7 @@ function _get_sympal_content_slot($name, $options = array())
   }
   else
   {
-    $content = sfSympalContext::getInstance()->getCurrentContent();
+    $content = sfSympalContext::getInstance()->getService('site_manager')->getCurrentContent();
   }
   
   // mark this content record as having content slots

@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Acts like an extension of sfActions to render sfSympalContent objects
+ * 
+ * @package     sfSympalRenderingPlugin
+ * @subpackage  util
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-03-31
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalContentActionLoader
 {
   protected
@@ -29,7 +39,7 @@ class sfSympalContentActionLoader
       $this->_content = $this->_actions->getRoute()->getObject();
       if ($this->_content)
       {
-        $this->_sympalContext->setSite($this->_content->getSite());
+        $this->_sympalContext->getService('site_manager')->setSite($this->_content->getSite());
         $this->_menuItem = $this->_content->getMenuItem();
       }
     }
@@ -50,7 +60,7 @@ class sfSympalContentActionLoader
       $this->_sympalContext->getService('theme_manager')->setCurrentTheme($content->getThemeToRenderWith());
     }
 
-    $this->_sympalContext->setCurrentContent($content);
+    $this->_sympalContext->getService('site_manager')->setCurrentContent($content);
 
     // Handle custom action
     $customActionName = $content->getCustomActionName();

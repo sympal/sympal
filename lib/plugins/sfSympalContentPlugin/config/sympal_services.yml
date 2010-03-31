@@ -1,0 +1,9 @@
+parameters:
+  site_manager.class:         sfSympalSiteManager                 # Manages the current site object
+  
+services:
+
+  site_manager:
+    class:                    %site_manager.class%
+    shared:                   true
+    arguments:                [@sympal_configuration]

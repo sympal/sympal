@@ -45,7 +45,7 @@ class sfSympalUser extends sfGuardSecurityUser
    */
   public function doIsEditModeCheck()
   {
-    $content = sfSympalContext::getInstance()->getCurrentContent();
+    $content = sfSympalContext::getInstance()->getService('site_manager')->getCurrentContent();
     if (($content && $content->getPubliclyEditable())
       || ($content && $content->getAllEditPermissions() && $this->hasCredential($content->getAllEditPermissions()))
       || ($this->isAuthenticated() && $this->hasCredential('ManageContent'))
