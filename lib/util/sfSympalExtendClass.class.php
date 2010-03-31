@@ -27,7 +27,6 @@ class sfSympalExtendClass implements ArrayAccess
     {
       $result = call_user_func_array(array($this, $method), $arguments);
 
-      $event->setProcessed(true);
       $event->setReturnValue($result);
 
       return true;
@@ -41,8 +40,8 @@ class sfSympalExtendClass implements ArrayAccess
   /**
    * Can be used inside a magic __call method to allow for a class to be extended
    * 
-   * This method will throw a sympal.class_name.method_not_found event,
-   * where class_name is the "tablelized" class name.
+   * This method will throw a class_name.method_not_found event,
+   * where class_name is the "tableized" class name.
    * 
    * @example
    * public function __call($method, $arguments)
@@ -57,7 +56,7 @@ class sfSympalExtendClass implements ArrayAccess
   public static function extendEvent($subject, $method, $arguments)
   {
     $name = sfInflector::tableize(get_class($subject));
-    $event = ProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($subject, 'sympal.'.$name.'.method_not_found', array('method' => $method, 'arguments' => $arguments)));
+    $event = ProjectConfiguration::getActive()->getEventDispatcher()->notifyUntil(new sfEvent($subject, $name.'.method_not_found', array('method' => $method, 'arguments' => $arguments)));
     if (!$event->isProcessed())
     {
       throw new sfException(sprintf('Call to undefined method %s::%s.', get_class($subject), $method));
