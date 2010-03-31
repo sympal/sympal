@@ -293,6 +293,16 @@ class sfSympalConfiguration
   }
 
   /**
+   * Returns the event dispatcher
+   * 
+   * @return sfEventDispatcher
+   */
+  public function getEventDispatcher()
+  {
+    return $this->_dispatcher;
+  }
+
+  /**
    * Check if we are inside an admin module
    * 
    * @TODO Reimplement this somewhere that makes sense
