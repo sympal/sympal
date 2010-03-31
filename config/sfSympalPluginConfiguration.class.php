@@ -74,6 +74,15 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   public function bootstrapContext(sfEvent $event)
   {
     sfSympalContext::createInstance($event->getSubject(), $this->getSympalConfiguration());
+    
+    // @TODO the helper should be broken up and moved, I don't like this call here
+    $this->configuration->loadHelpers(array(
+      'Sympal',
+      'I18N',
+      'Asset',
+      'Url',
+      'Partial',
+    ));
   }
 
   /**

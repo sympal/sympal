@@ -49,7 +49,6 @@ class sfSympalConfiguration
     $this->_dispatcher = $projectConfiguration->getEventDispatcher();
 
     $this->_configureDoctrine();
-    $this->_loadDefaultHelpers();
 
     // Listen to the sympal.load event to perform some context-dependent tasks
     $this->_dispatcher->connect('sympal.load', array($this, 'bootstrapFromContext'));
@@ -84,36 +83,6 @@ class sfSympalConfiguration
         $doctrineManager->setAttribute(Doctrine_Core::ATTR_RESULT_CACHE_LIFESPAN, sfSympalConfig::get('orm_cache', 'lifetime', 86400));
       }
     }
-  }
-
-  /**
-   * Loads default helpers needed by Sympal
-   */
-  protected function _loadDefaultHelpers()
-  {
-    /*
-     * @TODO Put these in the proper place (the ones commented out)
-     */
-    $helpers = array(
-      'Sympal',
-      //'SympalPager',
-      'I18N',
-      'Asset',
-      'Url',
-      'Partial'
-    );
-
-    /**
-     * @TODO reimplement this in the proper location
-     *
-    if ($this->_invoker->isAdminModule())
-    {
-      sfConfig::set('sf_login_module', 'sympal_admin');
-      $helpers[] = 'Admin';
-    }
-    */
-
-    $this->getProjectConfiguration()->loadHelpers($helpers);
   }
 
   /**
