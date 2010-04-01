@@ -25,15 +25,6 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this['assets_list']
     );
 
-    $q = Doctrine_Query::create()
-      ->from('sfSympalMenuItem m')
-      ->orderBy('m.root_id, m.lft ASC');
-
-    if (sfSympalConfig::isI18nEnabled('sfSympalMenuItem'))
-    {
-      $q->leftJoin('m.Translation mt'); 
-    }
-
     if (!$this->object->content_type_id)
     {
       $this->object->Type = Doctrine_Core::getTable('sfSympalContentType')->findOneBySlug('page');
