@@ -1,0 +1,5 @@
+all:
+  sympal_config:
+    search:
+      searchable_models:   []
+        # - mySearchableModel

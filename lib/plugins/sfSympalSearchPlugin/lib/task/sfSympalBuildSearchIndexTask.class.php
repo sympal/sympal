@@ -53,7 +53,7 @@ EOF;
     {
       $this->logSection('sympal', sprintf('Indexing models for site "%s"', sfConfig::get('sf_app')));
       $search = sfSympalSearch::getInstance();
-      $models = sfSympalConfig::getSearchableModels();
+      $models = sfSympalConfig::get('search', 'searchable_models', array());
       foreach ($models as $model)
       {
         $records = Doctrine_Core::getTable($model)->findAll();
