@@ -1,8 +1,7 @@
 <?php
 
 /**
- * Sympal cache helper class which handles caching some common information compiled
- * about this Sympal project.
+ * Sympal cache managing class. All cache operations write through this class:
  *
  *  * Doctrine ORM Cache Driver
  *  * Routes
@@ -13,6 +12,7 @@
  *
  * @package sfSympalPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
+ * @author Ryan Weaver <ryan@thatsquality.com>
  */
 class sfSympalCacheManager
 {
