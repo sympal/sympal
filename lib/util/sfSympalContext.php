@@ -344,7 +344,6 @@ class sfSympalContext
   
   protected function warnDeprecated($method, $service)
   {
-    throw new Exception();
     $this->_dispatcher->notify(new sfEvent($this, 'application.log', array(
       'priority' => sfLogger::WARNING,
       sprintf('Method sfSympalContent::%s is deprecated. Use sfSympalContext->getService(\'%s\')->%s()', $method, $service, $method),
