@@ -99,33 +99,6 @@ class sfSympalSiteManager
       $this->_site = $content->getSite();
     }
 
-    $this->_dispatcher->notify(new sfEvent($this, 'sympal.content.change_content'));
-  }
-
-  /**
-   * Get the current sfSympalMenuItem instance for this sympal context
-   *
-   * @return sfSympalMenuItem
-   */
-  public function getCurrentMenuItem()
-  {
-    if (!$this->_currentMenuItem)
-    {
-      $uri = $this->getService('request')->getUri();
-      $this->_currentMenuItem = $this->getService('menu_manager')->findMenuItemByUri($uri);
-    }
-
-    return $this->_currentMenuItem;
-  }
-
-  /**
-   * Set the current sfSympalMenuItem instance for this sympal context
-   *
-   * @param sfSympalMenuItem $menuItem
-   * @return void
-   */
-  public function setCurrentMenuItem(sfSympalMenuItem $menuItem)
-  {
-    $this->_currentMenuItem = $menuItem;
+    $this->_dispatcher->notify(new sfEvent($this->_currentContent, 'sympal.content.set_content'));
   }
 }
