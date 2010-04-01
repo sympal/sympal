@@ -11,6 +11,12 @@
  *
  */
 
+if (!$this instanceof sfGenerateProjectTask)
+{
+  echo "This script cannot be run outside of generating a new project. See http://sympalphp.org \n";
+  die;
+}
+
 function fileGetContents($url)
 {
   $ch = curl_init();
@@ -54,7 +60,9 @@ try {
   $renderer = new sfSympalServerCheckInstallRenderer($check);
   $renderer->setTask($this);
   $renderer->render();
-} catch (Exception $e) {
+}
+catch (Exception $e)
+{
   $this->logBlock($e->getMessage(), 'ERROR_LARGE');
   $error = true;
 }
