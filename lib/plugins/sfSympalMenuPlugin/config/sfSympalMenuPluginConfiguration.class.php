@@ -24,5 +24,11 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
       'SympalMenu',
     );
     $event->getSubject()->getApplicationConfiguration()->loadHelpers($helpers);
+    
+    // Listen to sfSympalContent's change_content event
+    $this->dispatcher->connect('sympal.content.set_content', array(
+      $event->getSubject()->getService('menu_manager'),
+      'listenContentSetContent'
+    ));
   }
 }

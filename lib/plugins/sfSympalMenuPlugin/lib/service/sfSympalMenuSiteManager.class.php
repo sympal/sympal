@@ -16,6 +16,9 @@ class sfSympalMenuSiteManager
     $_cacheManager;
   
   protected
+    $_currentMenuItem;
+  
+  protected
     $_menus = array(),
     $_menuItems = array(),
     $_rootSlugs = array(),
@@ -23,6 +26,13 @@ class sfSympalMenuSiteManager
     $_hierarchies = array(),
     $_initialized = false;
 
+  /**
+   * Class constructor
+   * 
+   * Takes an optional cache dependency - used to cache the menu
+   * 
+   * @param sfSympalCacheManager $cacheManager The cache manager service
+   */
   public function __construct(sfSympalCacheManager $cacheManager = null)
   {
     $this->_cacheManager = $cacheManager;
@@ -279,6 +289,40 @@ class sfSympalMenuSiteManager
       {
         $this->_buildMenuHierarchy($menuItem['__children'], $new);
       }
+    }
+  }
+
+  /**
+   * Returns the current menu item, if there is one
+   * 
+   * @return sfSympalMenuItem
+   */
+  public function getCurrentMenuItem()
+  {
+    return $this->_currentMenuItem;
+  }
+
+  /**
+   * Sets the current menu item
+   * 
+   * @sfSympalMenuItem $menuItem The menu item that represents this url
+   */
+  public function setCurrentMenuItem(sfSympalMenuItem $menuItem)
+  {
+    $this->_currentMenuItem = $menuItem;
+  }
+
+  /**
+   * Listens to the sympal.content.set_content event
+   * 
+   * This is notified when the current content is set. If the content is
+   * connected to a menu item, it'll be set as current
+   */
+  public function listenContentSetContent(sfEvent $event)
+  {
+    if ($menuItem = $event->getSubject()->getMenuItem())
+    {
+      $this->setCurrentMenuItem($menuItem);
     }
   }
 }
