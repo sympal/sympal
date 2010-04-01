@@ -30,5 +30,9 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
       $event->getSubject()->getService('menu_manager'),
       'listenContentSetContent'
     ));
+    
+    // extend the component/action class
+    $actions = new sfSympalMenuActions();
+    $this->_dispatcher->connect('component.method_not_found', array($actions, 'extend'));
   }
 }
