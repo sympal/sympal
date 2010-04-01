@@ -119,7 +119,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       ->setCredentials(array('ManageRedirects'));
 
     $siteAdministration
-      ->addChild('Edit Site', '@sympal_sites_edit?id='.sfSympalContext::getInstance()->getSite()->getId())
+      ->addChild('Edit Site', '@sympal_sites_edit?id='.sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId())
       ->setCredentials(array('ManageSites'));
 
     $administration = $menu->getChild('Administration');

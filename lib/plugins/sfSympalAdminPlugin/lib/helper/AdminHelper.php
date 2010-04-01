@@ -7,11 +7,12 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
   if (!$menu)
   {
     $sympalContext = sfSympalContext::getInstance();
+    $siteManager = $sympalContext->getService('site_manager');
     $menu = new $class('Sympal Admin', '@sympal_dashboard');
 
     if ($sympalContext->isAdminModule())
     {
-      $menu->addChild(sprintf(__('Go to %s'), $sympalContext->getSite()->getTitle()), '@homepage', 'id=sympal_go_to_switch');
+      $menu->addChild(sprintf(__('Go to %s'), $siteManager->getSite()->getTitle()), '@homepage', 'id=sympal_go_to_switch');
     }
     else if (sfContext::getInstance()->getUser()->hasCredential('ViewDashboard'))
     {
@@ -25,7 +26,7 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
     }
 
     $menu->addChild('Content', '@sympal_content_types_index', array('label' => 'Content'));
-    $menu->addChild('Site Administration', '@sympal_sites_edit?id='.$sympalContext->getSite()->getId(), array('label' => 'Setup'));
+    $menu->addChild('Site Administration', '@sympal_sites_edit?id='.$siteManager->getSite()->getId(), array('label' => 'Setup'));
     $menu->addChild('Security', '@sympal_users', array('label' => 'Security'));
     $menu->addChild('Administration', '@sympal_sites', array('label' => 'Global Setup'));
 
