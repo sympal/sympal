@@ -1,25 +1,6 @@
 <?php
 
 /**
- * Call this method in your layouts before stylesheets and javascripts html
- * are included. It will minify all your files and use them instead in production.
- * Configurable in your config/app.yml
- *
- * @return void
- */
-function sympal_minify()
-{
-  if (sfSympalConfig::get('minifier', 'enabled', true))
-  {
-    $minifier = new sfSympalMinifier(
-      sfContext::getInstance()->getResponse(),
-      sfContext::getInstance()->getRequest()
-    );
-    $minifier->minify();
-  }
-}
-
-/**
  * Shortcut helper method to use jquery in your code
  *
  * @param array $plugins Optional array of jQuery plugins to load
