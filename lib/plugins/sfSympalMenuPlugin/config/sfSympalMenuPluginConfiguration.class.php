@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * Plugin configuration for the menu plugin
+ * 
+ * @package     sfSympalMenuPlugin
+ * @subpackage  config
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-04-01
+ * @version     svn:$Id$ $Author$
+ */
 class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()

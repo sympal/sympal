@@ -11,6 +11,15 @@
  */
 class sfSympalForm extends sfSympalExtendClass
 {
+
+  /**
+   * Returns an array of all of the field names that are required
+   * 
+   * @param sfValidatorSchema $validatorSchema The validator schema to check on
+   * @param string $format The name format - used mostly so this can call itself recursively
+   * 
+   * @return array
+   */
   public function getRequiredFields(sfValidatorSchema $validatorSchema = null, $format = null)
   {
     if ($validatorSchema === null)
@@ -44,6 +53,16 @@ class sfSympalForm extends sfSympalExtendClass
     return $fields;
   }
 
+  /**
+   * Whether or not this form should have a recaptcha field added to it
+   * 
+   * This is called by the following events so that the addition and processing
+   * of this field occurs automatically:
+   *   - form.post_configure Adds the recaptcha field
+   *   - form.filter_values: Processes the submitted value
+   * 
+   * @return boolean
+   */
   public function hasRecaptcha()
   {
     // No recaptcha in test environment
