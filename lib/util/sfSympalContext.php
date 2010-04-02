@@ -147,7 +147,7 @@ class sfSympalContext
 
         file_put_contents($path, $dumper->dump(array(
           'class'       => $name,
-          'base_class'  => sfSympalConfig::get('service_container', 'base_class', 'sf ServiceContainer'),
+          'base_class'  => sfSympalConfig::get('service_container', 'base_class', 'sfServiceContainer'),
         )));
       }
     }
