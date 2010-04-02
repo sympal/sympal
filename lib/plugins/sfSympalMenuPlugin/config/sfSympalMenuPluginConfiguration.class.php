@@ -33,6 +33,6 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
     
     // extend the component/action class
     $actions = new sfSympalMenuActions();
-    $this->_dispatcher->connect('component.method_not_found', array($actions, 'extend'));
+    $this->dispatcher->connect('component.method_not_found', array($actions, 'extend'));
   }
 }
