@@ -10,7 +10,7 @@
  * @since       2010-04-01
  * @version     svn:$Id$ $Author$
  */
-class sfSympalMenuActions extends sfSympalExendClass
+class sfSympalMenuActions extends sfSympalExtendClass
 {
   /**
    * Clear the menu cache from your actions
