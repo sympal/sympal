@@ -1,24 +1,33 @@
 <?php
 
+/**
+ * Default actions class for sympal.
+ * 
+ * Similar to symfony's "default" module, but with additional actions
+ * 
+ * @package     
+ * @subpackage  
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ * @since       2010-04-02
+ * @version     svn:$Id$ $Author$
+ */
 class Basesympal_defaultActions extends sfActions
 {
-  public function executeUnpublished_content(sfWebRequest $request)
-  {
-  }
 
+  /**
+   * Default action called when sympal is in "offline" mode
+   */
   public function executeOffline(sfWebRequest $request)
   {
   }
 
+  /**
+   * Renders the sitemap
+   */
   public function executeSitemap(sfWebRequest $request)
   {
     $this->setLayout(false);
     $this->sitemapGenerator = new sfSympalSitemapGenerator($this->getContext()->getConfiguration()->getApplication());
-  }
-
-  public function executeNew_site(sfWebRequest $request)
-  {
-    $this->loadSiteTheme();
   }
 
   public function executeChange_language(sfWebRequest $request)
@@ -47,7 +56,9 @@ class Basesympal_defaultActions extends sfActions
     if ($this->isAjax())
     {
       $this->setLayout(false);
-    } else {
+    }
+    else
+    {
       $this->loadAdminTheme();
     }
 
