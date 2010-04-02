@@ -6,11 +6,6 @@ all:
       module: sympal_default
       action: offline
 
-    # Configure what to do when you access some content that is not published yet
-    unpublished_content:
-      forward_to: [sympal_default, unpublished_content]
-      forward_404: false
-
     # Configure what forms and date fields should be replaced by jQuery rich date
     rich_date_forms:
       sfSympalContentForm: [date_published]
