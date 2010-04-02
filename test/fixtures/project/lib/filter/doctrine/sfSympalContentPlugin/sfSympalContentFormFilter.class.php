@@ -3,9 +3,9 @@
 /**
  * sfSympalContent filter form.
  *
- * @package    elf-ekb.ru
+ * @package    sympal
  * @subpackage filter
- * @author     Cluster Studio <clusterstudio@gmail.com>
+ * @author     Your name here
  * @version    SVN: $Id: sfDoctrinePluginFormFilterTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
 class sfSympalContentFormFilter extends PluginsfSympalContentFormFilter

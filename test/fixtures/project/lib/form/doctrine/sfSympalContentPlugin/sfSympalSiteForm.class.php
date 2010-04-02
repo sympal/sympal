@@ -1,14 +1,14 @@
 <?php
 
 /**
- * sfSympalContentType form.
+ * sfSympalSite form.
  *
- * @package    elf-ekb.ru
+ * @package    sympal
  * @subpackage form
- * @author     Cluster Studio <clusterstudio@gmail.com>
+ * @author     Your name here
  * @version    SVN: $Id: sfDoctrinePluginFormTemplate.php 23810 2009-11-12 11:07:44Z Kris.Wallsmith $
  */
-class sfSympalContentTypeForm extends PluginsfSympalContentTypeForm
+class sfSympalSiteForm extends PluginsfSympalSiteForm
 {
   public function configure()
   {
