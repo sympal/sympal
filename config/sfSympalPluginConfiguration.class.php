@@ -49,6 +49,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalContentSyntaxPlugin',
       'sfSympalSearchPlugin',
       'sfSympalThemePlugin',
+      'sfSympalMinifyPlugin',
     );
 
   /**
