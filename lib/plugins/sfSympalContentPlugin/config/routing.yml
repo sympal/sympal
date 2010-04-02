@@ -1,6 +1,6 @@
-<?php echo sfSympalToolkit::getContentRoutesYaml() ?>
+<?php echo sfSympalContentToolkit::getContentRoutesYaml() ?>
 
-<?php echo sfSympalToolkit::getRedirectRoutesYaml() ?>
+<?php echo sfSympalContentToolkit::getRedirectRoutesYaml() ?>
 
 homepage:
   url:   /
