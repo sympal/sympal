@@ -21,6 +21,10 @@ class sfSympalMinifier
 
   /**
    * Start the minification process
+   * 
+   * This performs the whole process
+   *  - Files to be minified are combined into a string and removed from the response
+   *  - The combined string is minified, saved to a file, and added to the response
    *
    * @return void
    */
@@ -39,6 +43,7 @@ class sfSympalMinifier
   private function _isMinifiable($file)
   {
     $exclude = sfSympalConfig::get('minifier', 'exclude', array());
+
     return !in_array($file, $exclude);
   }
 
@@ -162,7 +167,7 @@ class sfSympalMinifier
         }
       }
     }
-    
+
     return $content;
   }
 }
