@@ -1,0 +1,4 @@
+all:
+  sympal_config:
+    internationalized_models:
+      sfSympalMenuItem: [label]

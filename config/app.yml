@@ -263,23 +263,11 @@ all:
 
     # Configure what models and fields get internationalized by Sympal
     internationalized_models:
-      sfSympalContent: [i18n_slug, page_title, meta_keywords, meta_description]
-      sfSympalContentSlot: [value]
-      sfSympalMenuItem: [label]
       sfSympalContentList: [title]
       sfSympalPage: [title]
-      sfSympalSite: [page_title, meta_keywords, meta_description]
 
     # Configure what models are sluggable
     sluggable_models:
-      sfSympalContent:
-        builder: [sfSympalContent, slugBuilder]
-      sfSympalSite:
-        fields: [title]
-        indexName: site_sluggable
-      sfSympalContentType:
-        fields: [label]
-        indexName: content_type_sluggable
       sfSympalAsset:
         fields: [path, name]
         indexName: asset_sluggable

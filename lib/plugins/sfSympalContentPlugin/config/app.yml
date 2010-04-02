@@ -8,3 +8,18 @@ all:
     unpublished_content:
       forward_to: [sympal_content_default, unpublished_content]
       forward_404: false
+    
+    internationalized_models:
+      sfSympalSite: [page_title, meta_keywords, meta_description]
+      sfSympalContent: [i18n_slug, page_title, meta_keywords, meta_description]
+      sfSympalContentSlot: [value]
+    
+    sluggable_models:
+      sfSympalContent:
+        builder: [sfSympalContent, slugBuilder]
+      sfSympalSite:
+        fields: [title]
+        indexName: site_sluggable
+      sfSympalContentType:
+        fields: [label]
+        indexName: content_type_sluggable
