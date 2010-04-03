@@ -21,7 +21,7 @@
       <?php echo $sf_content ?>
     </div>
 
-    <?php if ($sf_sympal_context->getSite() && $sf_user->isAuthenticated()): ?>
+    <?php if ($sf_sympal_site && $sf_user->isAuthenticated()): ?>
       <div id="footer">
         <p><?php echo __('Powered by %1% %2%', array('%1%' => link_to('Sympal', 'http://www.sympalphp.org', 'target=_BLANK'), '%2%' => sfSympalConfig::getCurrentVersion())) ?>.</p>
       </div>
