@@ -3,7 +3,7 @@ body {
 }
 
 #content {
-  background: #eee;
+  background: #f1f4f7;
   -khtml-border-radius:0.75em;
 	-moz-border-radius: 0.75em;
   -webkit-border-radius: 0.75em;
@@ -17,7 +17,7 @@ body {
 }
 
 #sympal-dashboard h1 {
-  color: #002970;
+  color: #0098ea;
   font-size: 25px;
 }
 
@@ -34,14 +34,19 @@ body {
 }
 
 #sympal-dashboard .sympal_dashboard_box h2 {
-  background: #1049A9;
-  color: #fff;
+  background: #ececec;
+  color: #0098ea;
   margin: 0;
   padding: 10px;
 }
 
 #sympal-dashboard .sympal_dashboard_box h2 a {
-  color: #fff;
+  color: #0098ea;
+  display: block;
+  text-decoration: none;
+}
+#sympal-dashboard .sympal_dashboard_box h2 a:hover {
+  color: #ff9600;
 }
 
 #sympal-dashboard .sympal_dashboard_box ul {
@@ -50,17 +55,19 @@ body {
 }
 
 #sympal-dashboard .sympal_dashboard_box ul li {
-  padding: 6px;
-  padding-left: 12px;
-  padding-right: 12px;
   border-top: 1px solid #ccc;
 }
 
+#sympal-dashboard .sympal_dashboard_box ul li a {
+  text-decoration: none;
+  display: block;
+  padding: 6px 12px;
+}
 #sympal-dashboard .sympal_dashboard_box ul li a:hover {
-  font-weight: bold;
+  color: #ff9600;
 }
 
-#sympal-dashboard .sympal_dashboard_box ul li:before
+#sympal-dashboard .sympal_dashboard_box ul a:before
 {
   padding-top: 5px;
   content: ' » ';
@@ -88,15 +95,16 @@ body {
 }
 
 #sympal-dashboard-right {
-  background: #ccc;
+  background: #fff;
   -khtml-border-radius:0.75em;
 	-moz-border-radius: 0.75em;
   -webkit-border-radius: 0.75em;
   border-radius: 0.75em;
-  border: 1px solid #aaa;
+  border: 4px solid #ececec;
   width: 300px;
   float: right;
   padding: 8px;
+
 }
 
 #sympal-dashboard-right ul, #sympal-dashboard-right ul li {
@@ -117,7 +125,6 @@ body {
   float: left;
   text-align: left;
   width: 90%;
-  color: #002970;
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;

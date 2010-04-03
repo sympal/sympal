@@ -29,7 +29,10 @@ body {
 }
 
 body a {
-  color: #333;
+  color: #666;
+  text-decoration: none;
+}
+body a:hover {
   text-decoration: underline;
 }
 
