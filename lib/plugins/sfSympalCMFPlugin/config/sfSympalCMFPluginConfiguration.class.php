@@ -50,7 +50,7 @@ class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
 
     if (sfConfig::get('sf_login_module') == 'default')
     {
-      sfConfig::set('sf_login_module', 'sympal_auth');
+      sfConfig::set('sf_login_module', 'sympal_admin');
       sfConfig::set('sf_login_action', 'signin');
     }
 
