@@ -42,11 +42,6 @@ class sfSympalFormPostConfigureListener extends sfSympalListener
       sfSympalFormToolkit::changeTemplateWidget($form);
     }
 
-    if (isset($form['theme']))
-    {
-      sfSympalFormToolkit::changeThemeWidget($form);
-    }
-
     if (isset($form['module']))
     {
       sfSympalFormToolkit::changeModuleWidget($form);

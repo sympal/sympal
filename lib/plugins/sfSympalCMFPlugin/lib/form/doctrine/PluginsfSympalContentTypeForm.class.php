@@ -19,6 +19,10 @@ abstract class PluginsfSympalContentTypeForm extends BasesfSympalContentTypeForm
 
     $this->widgetSchema['plugin_name'] = new sfWidgetFormChoice(array('choices' => $plugins));
     $this->widgetSchema['plugin_name']->setLabel('Plugin');
+    
+    $field = sfSympalContext::getInstance()->getService('theme_form_toolkit')->getThemeWidgetAndValidator();
+    $this->widgetSchema['theme'] = $field['widget'];
+    $this->validatorSchema['theme'] = $field['validator'];
 
     $this->widgetSchema['name']->setLabel('Model name');
 

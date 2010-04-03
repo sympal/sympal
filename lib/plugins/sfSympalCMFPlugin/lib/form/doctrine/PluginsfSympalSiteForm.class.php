@@ -18,5 +18,9 @@ abstract class PluginsfSympalSiteForm extends BasesfSympalSiteForm
     {
       unset($this['slug']);
     }
+    
+    $field = sfSympalContext::getInstance()->getService('theme_form_toolkit')->getThemeWidgetAndValidator();
+    $this->widgetSchema['theme'] = $field['widget'];
+    $this->validatorSchema['theme'] = $field['validator'];
   }
 }
