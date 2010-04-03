@@ -121,6 +121,16 @@ class sfSympalMenuSiteManager
     return sfSympalConfig::get('menu_cache', 'enabled', true) ? $this->_cacheManager : false;
   }
 
+  /**
+   * Removes a menu item from the cache
+   * 
+   * @param string $key The cache key for the menu to remove.
+   */
+  public function clearCache($key)
+  {
+    $this->_getCache()->remove($key);
+  }
+
   protected function _getMenu($name, $showChildren = null, $class = null)
   {
     if ($showChildren === null)

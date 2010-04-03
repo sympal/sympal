@@ -40,10 +40,12 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
 
   public function clearMenuCache()
   {
-    if ($menu = $this->getMenu())
+    if (sfSympalContext::hasInstance() && $menu = $this->getMenu())
     {
-      return $menu->clearCache();
-    } else {
+      return sfSympalContext::getInstance()->getService('menu_manager')->clearCache($menu->getCacheKey());
+    }
+    else
+    {
       return false;
     }
   }

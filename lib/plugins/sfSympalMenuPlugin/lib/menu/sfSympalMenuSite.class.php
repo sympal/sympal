@@ -17,14 +17,6 @@ class sfSympalMenuSite extends sfSympalMenu
     return $this->_cacheKey;
   }
 
-  public function clearCache()
-  {
-    if ($cache = sfSympalConfiguration::getActive()->getCache())
-    {
-      return $cache->remove($this->_cacheKey);
-    }
-  }
-
   public function findMenuItem($menuItem)
   {
     if ($this->_menuItemArray['id'] == $menuItem['id'])
