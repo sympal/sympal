@@ -41,7 +41,7 @@ abstract class Basesympal_themesActions extends sfActions
       $site->save();
     } else {
       $this->askConfirmation(__('Are you sure?'), sprintf(__('This action will change the global default theme to "%s"'), $theme));
-      sfSympalConfig::writeSetting('default_theme', $theme);
+      sfSympalConfig::writeSetting('theme', 'default_theme', $theme);
     }
 
     $this->clearCache();

@@ -25,7 +25,7 @@
                 <?php echo button_to(__('Preview'), '@sympal_themes_preview?preview='.$name) ?>
               </td>
               <td>
-                <?php if ($name != sfSympalConfig::get('default_theme')): ?>
+                <?php if ($name != sfSympalConfig::get('theme', 'default_theme')): ?>
                   <?php echo button_to(__('Make Global Default'), '@sympal_themes_make_default?name='.$name) ?>
                 <?php endif; ?>
               </td>

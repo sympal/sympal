@@ -666,7 +666,7 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     } else if ($theme = $this->getSite()->getTheme()) {
       return $theme;
     } else {
-      return sfSympalConfig::get($this->getType()->getSlug(), 'default_theme', sfSympalConfig::get('default_theme', null, $this->getSite()->getSlug()));
+      return sfSympalConfig::get($this->getType()->getSlug(), 'default_theme', sfSympalConfig::get('theme', 'default_theme', $this->getSite()->getSlug()));
     }
   }
 
