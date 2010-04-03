@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE xliff PUBLIC "-//XLIFF//DTD XLIFF//EN" "http://www.oasis-open.org/committees/xliff/documents/xliff.dtd" >
+<xliff version="1.0">
+  <file original="global" source-language="en" datatype="plaintext">
+    <header/>
+    <body>
+      <trans-unit>
+        <source>Security</source>
+        <target>Seguridad</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Site Setup</source>
+        <target>Administrar sitio</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Change Language</source>
+        <target>Cambiar idioma</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Global Setup</source>
+        <target>Configuración Global</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Signout</source>
+        <target>Cerrar Sesión</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>
