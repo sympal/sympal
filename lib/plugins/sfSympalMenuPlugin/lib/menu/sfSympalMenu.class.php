@@ -106,6 +106,8 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   public function setUlClass($ulClass)
   {
     $this->_ulClass = $ulClass;
+    
+    return $this;
   }
 
   public function getLiClass()
@@ -116,6 +118,8 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   public function setLiClass($liClass)
   {
     $this->_liClass = $liClass;
+    
+    return $this;
   }
 
   public function getRoute()
