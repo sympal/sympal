@@ -19,6 +19,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
     $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
     $this->dispatcher->connect('sympal.load', array($this, 'boostrap'));
+    
+    $this->dispatcher->connect('sympal.theme.set_theme_from_request', array($this, 'setThemeForAdminModule'));
   }
 
   public function shouldLoadAdminMenu()
@@ -284,6 +286,24 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
           ->addChild(__('Publish'), '@sympal_publish_content?id='.$content['id'], 'title='.__('Has not been published yet. '.__('Click to publish content.')));
       }
     } 
-  
+  }
+
+  /**
+   * Listens to the sympal.theme.set_theme_from_request event and sets the
+   * theme to the admin theme if the current module is an admin module
+   */
+  public function setThemeForAdminModule(sfEvent $event)
+  {
+    $module = $event['context']->getRequest()->getParameter('module');
+    $adminModules = sfSympalConfig::get('admin_modules', null, array());
+    
+    if (array_key_exists($module, $adminModules))
+    {
+      $event->setReturnValue(sfSympalConfig::get('admin_theme', null, 'admin'));
+      
+      return true; // Set the event as processed
+    }
+    
+    return false; // Set the event as not processed
   }
 }
