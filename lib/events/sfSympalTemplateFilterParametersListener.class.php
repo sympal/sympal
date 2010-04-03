@@ -39,7 +39,7 @@ class sfSympalTemplateFilterParametersListener extends sfSympalListener
 
     if ($menuItem = $sympalContext->getService('menu_manager'))
     {
-      $parameters['sf_sympal_menu_item'] = $menuItem;
+      $parameters['sf_sympal_menu_manager'] = $menuItem;
     }
 
     return $parameters;
