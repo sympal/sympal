@@ -34,8 +34,8 @@ body a {
 }
 
 html {
-	background-color: #FFFFFF;
-	margin-top: 20px;
+  background-color: #FFFFFF;
+  margin-top: 20px;
 }
 
 ul, ul li {
@@ -144,20 +144,20 @@ ul.error_list li
 }
 
 #content input, #content select, #content textarea {
-	padding: 0.40em;
-	border:1px solid #ddd;
-	background:#fafafa;
-	font:bold 0.95em arial, sans-serif;
-	-khtml-border-radius: 3px;
-	-moz-border-radius: 3px;
+  padding: 0.40em;
+  border:1px solid #ddd;
+  background:#fafafa;
+  font:bold 0.95em arial, sans-serif;
+  -khtml-border-radius: 3px;
+  -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
   color: #333;
 }
 
 #content input:hover, #content input:focus, #content select:hover, #content select:focus, #content textarea:hover, #content textarea:focus {
-	border-color:#c5c5c5;
-	background:#ffffcc;
+  border-color:#c5c5c5;
+  background:#ffffcc;
 }
 
 body {
@@ -187,28 +187,28 @@ p {
 #sympal_filters_button {
   cursor: pointer;
   filter:alpha(opacity=50);
-	-moz-opacity:0.5;
-	-khtml-opacity: 0.5;
-	opacity: 0.5;
-	background: url(../images/search_icon.gif);
-	width: 15px;
-	height: 15px;
-	float: left;
-	margin-left: 10px;
+  -moz-opacity:0.5;
+  -khtml-opacity: 0.5;
+  opacity: 0.5;
+  background: url(../images/search_icon.gif);
+  width: 15px;
+  height: 15px;
+  float: left;
+  margin-left: 10px;
 }
 
 #sympal_filters_button:hover {
   filter:alpha(opacity=100);
-	-moz-opacity: 1;
-	-khtml-opacity: 1;
-	opacity: 1;
+  -moz-opacity: 1;
+  -khtml-opacity: 1;
+  opacity: 1;
 }
 
 .black_bar {
   background: #333;
   padding: 8px;
   -khtml-border-radius:0.4em;
-	-moz-border-radius: 10px;
+  -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
 }
@@ -237,7 +237,7 @@ p {
 #sympal_server_check table {
   background: #375fc2;
   -khtml-border-radius:0.4em;
-	-moz-border-radius: 10px;
+  -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
   width: 550px;
