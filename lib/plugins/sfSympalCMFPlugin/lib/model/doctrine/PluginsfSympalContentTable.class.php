@@ -87,7 +87,9 @@ class PluginsfSympalContentTable extends Doctrine_Table
       if ($contentId)
       {
         $type = $this->getContentRecordsTypeBy('id', $contentId);
-      } else if ($contentSlug) {
+      }
+      else if ($contentSlug)
+      {
         $type = $this->getContentRecordsTypeBy('slug', $contentSlug);
       }
 
@@ -95,7 +97,9 @@ class PluginsfSympalContentTable extends Doctrine_Table
       {
         $contentType = $type->getName();
         $contentTypeId = $type->getId();
-      } else {
+      }
+      else
+      {
         return false;
       }
     }
@@ -113,7 +117,9 @@ class PluginsfSympalContentTable extends Doctrine_Table
       if ($this->hasRelation('Translation') && $this->getRelation('Translation')->getTable()->hasField('slug'))
       {
         $q->andWhere('c.slug = ? OR ct.i18n_slug = ?', array($contentSlug, $contentSlug));
-      } else {
+      }
+      else
+      {
         $q->andWhere('c.slug = ?', $contentSlug);
       }
 
