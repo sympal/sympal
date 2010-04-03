@@ -1,4 +1,4 @@
-# sfSympalPlugin Core Doctrine Schema
+# sfSympalCMFPlugin Core Doctrine Schema
 
 sfSympalSite:
   actAs: [sfSympalRecordTemplate]

@@ -3,7 +3,7 @@
 /**
  * Actions class for sympal_content_default
  * 
- * @package     sfSympalContentPlugin
+ * @package     sfSympalCMFPlugin
  * @subpackage  actions
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  * @author      Ryan Weaver <ryan@thatsquality.com>

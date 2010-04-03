@@ -8,7 +8,7 @@
  * Example: If you had a sfSympalBlogPost content type you would have sfSympalContent
  * hasOne sfSympalBlogPost and sfSympalBlogPost hasOne sfSympalContent
  *
- * @package sfSympalPlugin
+ * @package sfSympalCMFPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
  */
 class sfSympalContentTypeTemplate extends sfSympalRecordTemplate

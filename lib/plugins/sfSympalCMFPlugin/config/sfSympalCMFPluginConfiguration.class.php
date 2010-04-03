@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Configuration class for the core, content plugin for Sympal
+ * Configuration class for the core CMF plugin for Sympal
  * 
- * @package     sfSympalContentPlugin
+ * @package     sfSympalCMFPlugin
  * @subpackage  config
  * @author      Ryan Weaver <ryan@thatsquality.com>
  * @author      Jonathan H. Wage <jonwage@gmail.com>
  * @since       2010-03-28
  * @version     svn:$Id$ $Author$
  */
-class sfSympalContentPluginConfiguration extends sfPluginConfiguration
+class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()
   {

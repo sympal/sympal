@@ -7,7 +7,7 @@
  * methods calls to the content type record as well.
  *
  * @see sfSympalContentFilter
- * @package sfSympalPlugin
+ * @package sfSympalCMFPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
  */
 class sfSympalContentModelTemplate extends Doctrine_Template

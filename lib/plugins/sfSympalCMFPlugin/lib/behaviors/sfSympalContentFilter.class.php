@@ -15,7 +15,7 @@
  *     [php]
  *     echo $content->getRecord()->getTeaser();
  *
- * @package sfSympalPlugin
+ * @package sfSympalCMFPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
  */
 class sfSympalContentFilter extends Doctrine_Record_Filter

@@ -4,7 +4,7 @@ require_once dirname(__FILE__).'/../lib/Basesympal_content_defaultActions.class.
 /**
  * sympal_content_default actions class
  * 
- * @package     sfSympalContentPlugin
+ * @package     sfSympalCMFPlugin
  * @subpackage  actions
  * @author      Ryan Weaver <ryan@thatsquality.com>
  * @since       2010-04-02
