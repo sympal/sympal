@@ -269,8 +269,13 @@ class sfSympalConfiguration
    * @param string $name The name/key of the cache to return
    * @param mixed $default The default value to return if the cache isn't found
    */
-  public function getCache($name, $default = null)
+  public function getCache($name = null, $default = null)
   {
+    if ($name === null)
+    {
+      throw new sfException('getCache() is deprecated, use getCacheManager()');
+    }
+
     return $this->getCacheManager() ? $this->getCacheManager()->get($name, $default) : $default;
   }
 
