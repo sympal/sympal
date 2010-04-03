@@ -165,8 +165,20 @@ class PluginsfSympalContentTable extends Doctrine_Table
 
     $q->orderBy('l.slug ASC, a.slug ASC');
     $q->enableSympalResultCache('sympal_get_content');
-
-    return $q->fetchOne();
+    
+    /*
+     * If this sfSympalContent record has more than one content type (e.g. sfSympalPage)
+     * record and I18N is enabled, a very deep hydration error will be
+     * thrown. This is placed here to help the developer track down the cause.
+     */
+    try
+    {
+      return $q->fetchOne();
+    }
+    catch (Doctrine_Hydrator_Exception $e)
+    {
+      throw new sfException(sprintf('Hydration Error. Check that there is only one %s record related to this sfSympalContent record. Raw error: "%s"', $contentType, $e->getMessage()));
+    }
   }
 
   public function getBaseQuery($alias = 'c')
