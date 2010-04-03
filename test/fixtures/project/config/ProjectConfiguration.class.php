@@ -40,7 +40,7 @@ class ProjectConfiguration extends sfProjectConfiguration
     if (isset($this->pluginConfigurations['sfSympalPlugin']))
     {
       $this->pluginConfigurations['sfSympalPlugin']
-        ->getSympalConfiguration()->getCache()->primeCache(true);
+        ->getSympalConfiguration()->getCacheManager()->primeCache(true);
     }
   }
 }
