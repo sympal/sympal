@@ -18,7 +18,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
     $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
-    $this->dispatcher->connect('context.load_factories', array($this, 'addAdminMenu'));
+    $this->dispatcher->connect('sympal.load', array($this, 'boostrap'));
   }
 
   public function shouldLoadAdminMenu()
@@ -33,8 +33,11 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       && $request->getParameter('module') !== 'sympal_dashboard';
   }
 
-  public function addAdminMenu()
+  public function boostrap()
   {
+    $this->configuration->loadHelpers(array('SympalAdmin'));
+    
+    // load the admin menu
     if ($this->shouldLoadAdminMenu())
     {
       $this->loadAdminMenuAssets();

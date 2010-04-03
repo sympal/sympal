@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Helper for admin-related view tasks
+ * 
+ * @package     sfSympalAdminPlugin
+ * @subpackage  helper
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
 {
   static $menu;
