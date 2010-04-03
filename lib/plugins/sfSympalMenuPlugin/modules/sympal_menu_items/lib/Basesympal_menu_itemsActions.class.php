@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Base actions class for handling menu administration
+ * 
+ * @package     sfSympalMenuPlugin
+ * @subpackage  actions
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ */
 class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 {
   public function preExecute()
