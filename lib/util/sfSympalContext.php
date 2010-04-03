@@ -167,12 +167,16 @@ class sfSympalContext
     $sc->setService('dispatcher',       $context->getEventDispatcher());
     $sc->setService('user',             $context->getUser());
     $sc->setService('response',         $context->getResponse());
-    $sc->setService('i18n',             $context->getI18n());
     $sc->setService('logger',           $context->getLogger());
     $sc->setService('config_cache',     $context->getConfigCache());
     $sc->setService('controller',       $context->getController());
     $sc->setService('request',          $context->getRequest());
     $sc->setService('routing',          $context->getRouting());
+    if (sfConfig::get('sf_i18n'))
+    {
+      $sc->setService('i18n',             $context->getI18n());
+    }
+    
     $sc->setService('context',          $context);
     
     $sc->setService('sympal_configuration', $this->getSympalConfiguration());
