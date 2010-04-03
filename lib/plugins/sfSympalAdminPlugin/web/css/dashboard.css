@@ -2,7 +2,7 @@ body {
   text-align: center;
 }
 
-#content {
+#sympal-dashboard {
   background: #f1f4f7;
   -khtml-border-radius:0.75em;
 	-moz-border-radius: 0.75em;
@@ -14,6 +14,14 @@ body {
   border: 1px solid #aaa;
   text-align: left;
   margin: auto;
+  color: #666;
+}
+#sympal-dashboard a {
+  color: #666;
+}
+
+#sympal-dashboard ul {
+  list-style-type: none;
 }
 
 #sympal-dashboard h1 {
