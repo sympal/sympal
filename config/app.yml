@@ -18,28 +18,6 @@ all:
     # http://trac.symfony-project.org/browser/branches/1.4/lib/i18n/sfDateFormat.class.php
     date_published_format: D
 
-    # Configure the modules which are Sympal admin modules. This allows us to
-    # automatically load the admin theme for these modules.
-    admin_modules:
-      sympal_admin: ~
-      sympal_config: ~
-      sympal_content: ~
-      sympal_content_slots: ~
-      sympal_content_menu_item: ~
-      sympal_content_types: ~
-      sympal_dashboard: ~
-      sympal_redirects: ~
-      sympal_sites: ~
-      sympal_themes: ~
-      sympal_users: ~
-      sympal_groups: ~
-      sympal_permissions: ~
-      sympal_menu_items: ~
-      sympal_plugin_manager: ~
-      sympal_assets: ~
-      sympal_upgrade: ~
-      sympal_search: ~
-
     # Configure some defaults for inline editing
     inline_editing:
       enabled: true
@@ -287,9 +265,6 @@ all:
 
     # Configure the available languages
     language_codes: []
-
-    # Configure the name of the theme to use for Sympal admin areas
-    admin_theme: admin
 
     # Configure the default admin generator theme and class to use if one is 
     # not specified for the loaded theme
