@@ -23,6 +23,9 @@ body {
 #sympal-dashboard ul {
   list-style-type: none;
 }
+#sympal-dashboard ul li {
+  margin-left: 0;
+}
 
 #sympal-dashboard h1 {
   color: #0098ea;
@@ -31,7 +34,7 @@ body {
 
 #sympal-dashboard .sympal_dashboard_box {
   float: left;
-  width: 175px;
+  width: 170px;
   background: #fff;
   margin-right: 10px;
   margin-top: 20px;

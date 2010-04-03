@@ -10,11 +10,6 @@
   <?php include_javascripts() ?>
 </head>
 <body>
-
-  <div id="sympal_ajax_loading">
-    Loading...
-  </div>
-
   <div id="container">
     <div id="content">
       <?php echo get_sympal_flash() ?>

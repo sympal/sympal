@@ -25,3 +25,25 @@ all:
       sympal_assets: ~
       sympal_upgrade: ~
       sympal_search: ~
+    
+    themes:
+      admin:
+        available: false # Don't show in the list of available themes to switch to
+        disabled: false
+        layout: admin
+        admin_generator_class: sfSympalDoctrineGenerator
+        admin_generator_theme: sympal_admin
+        javascripts:
+          - /sfSympalPlugin/js/jQuery.cookie.js
+          - /sfSympalPlugin/fancybox/jquery.fancybox.js
+          - /sfSympalAdminPlugin/js/admin.js
+          - /sfSympalPlugin/js/shortcuts.js
+        stylesheets:
+          - /sfSympalPlugin/fancybox/jquery.fancybox.css
+          - /sfSympalPlugin/css/grid_960/grid_960.css
+          - /sfSympalPlugin/css/grid_960/reset.css
+          - /sfSympalPlugin/css/grid_960/text.css
+          - /sfSympalAdminPlugin/css/default.css
+          - /sfSympalAdminPlugin/css/admin.css
+        callables:
+          - [sfSympalToolkit, useJQuery]
