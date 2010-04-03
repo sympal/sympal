@@ -3,8 +3,9 @@
 /**
  * Listens to template.filter_parameters to add the following variables to the view:
  *   * sf_sympal_context
+ *   * sf_sympal_site
  *   * sf_sympal_content
- *   * sf_sympal_menu_item
+ *   * sf_sympal_menu_manager
  * 
  * @package     
  * @subpackage  
