@@ -56,17 +56,22 @@ body {
 
 #sympal-dashboard .sympal_dashboard_box ul li {
   border-top: 1px solid #ccc;
+  padding: 6px 12px;
 }
 
 #sympal-dashboard .sympal_dashboard_box ul li a {
   text-decoration: none;
   display: block;
-  padding: 6px 12px;
+  padding: 3px 6px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border: 1px solid #fff;
 }
 #sympal-dashboard .sympal_dashboard_box ul li a:hover {
-  color: #ff9600;
+  background: #f1f4f7;
+  border-color: #ececec;
 }
-
 #sympal-dashboard .sympal_dashboard_box ul a:before
 {
   padding-top: 5px;
@@ -104,7 +109,7 @@ body {
   width: 300px;
   float: right;
   padding: 8px;
-
+  margin-top: 40px;
 }
 
 #sympal-dashboard-right ul, #sympal-dashboard-right ul li {
@@ -115,17 +120,33 @@ body {
 }
 
 #sympal-dashboard-right ul li {
-  padding: 6px;
-  border-bottom: 1px solid #ccc;
+  font-size: 14px;
 }
-
+#sympal-dashboard-right ul li.main_section {
+  margin-top: 20px;
+}
+#sympal-dashboard-right ul li a {
+  font-size: 12px;
+  display: block;
+  padding: 6px;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+#sympal-dashboard-right ul li a:hover {
+  background: #f1f4f7;
+  text-decoration: none;
+}
 #sympal-dashboard-right ul li label {
   display: block;
   padding: 0 1em 3px 0;
   float: left;
   text-align: left;
   width: 90%;
-  font-weight: bold;
   font-size: 14px;
   cursor: pointer;
+}
+#sympal-dashboard-right ul li ul li {
+  padding-right: 0;
+  padding-left: 15px;
 }
