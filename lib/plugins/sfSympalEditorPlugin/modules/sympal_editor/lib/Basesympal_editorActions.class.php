@@ -58,7 +58,9 @@ class Basesympal_editorActions extends sfActions
     if (!$contentTypeId = $request->getParameter('content_type_id'))
     {
       $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName('sfSympalPage');
-    } else {
+    }
+    else
+    {
       $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($contentTypeId);
     }
     $contentTypeId = $this->contentType->getId();
