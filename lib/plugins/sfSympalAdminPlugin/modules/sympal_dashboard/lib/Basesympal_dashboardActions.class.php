@@ -40,27 +40,17 @@ abstract class Basesympal_dashboardActions extends sfActions
     $numContentTypes = Doctrine_Core::getTable('sfSympalContentType')->count();
     $this->dashboardRight->addChild(sprintf('<label>Content Types</label> %s', $numContentTypes), '@sympal_content_types');
 
+    $content = $this->dashboardRight->addChild('Site Content')->setliClass('main_section');
     $contentTypes = Doctrine::getTable('sfSympalContentType')->getAllContentTypes();
     foreach ($contentTypes as $contentType)
     {
       $numPublishedContent = Doctrine_Core::getTable('sfSympalContent')
         ->createQuery('c')
-        ->where('c.date_published < NOW()')
         ->andWhere('c.content_type_id = ?', $contentType->getId())
         ->count();
-      $this->dashboardRight->addChild(
-        sprintf('<label>Published %s Content</label> %s', $contentType->getLabel(), $numPublishedContent),
-        '@sympal_content_list_type?type='.$contentType->getId().'&published=1'
-      );
-
-      $numUnPublishedContent = Doctrine_Core::getTable('sfSympalContent')
-        ->createQuery('c')
-        ->where('c.date_published >= NOW() OR c.date_published IS NULL')
-        ->andWhere('c.content_type_id = ?', $contentType->getId())
-        ->count();
-      $this->dashboardRight->addChild(
-        sprintf('<label>Un-Published %s Content</label> %s', $contentType->getLabel(), $numUnPublishedContent),
-        '@sympal_content_list_type?type='.$contentType->getId().'&published=0'
+      $content->addChild(
+        sprintf('<label>%s</label> %s', $contentType->getLabel(), $numPublishedContent),
+        '@sympal_content_list_type?type='.$contentType->getId()
       );
     }
 
