@@ -11,19 +11,13 @@
  */
 
 $app = 'sympal';
-require_once(dirname(__FILE__).'/../bootstrap/unit.php');
+require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 $t = new lime_test(24);
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
 
-$themes = $sympalConfiguration->getThemes(); 
-$t->is(isset($themes['default']), true, '->getThemes() includes default theme'); 
- 
-$availableThemes = $sympalConfiguration->getAvailableThemes(); 
-$t->is(isset($themes['admin']), 'admin', '->getAvailableThemes() does not include admin theme'); 
- 
 $contentTemplates = $sympalConfiguration->getContentTemplates('page'); 
 $t->is(isset($contentTemplates['default_view']), true, '->getContentTemplates() returns default_view for page'); 
 $t->is(isset($contentTemplates['register']), true, '->getContentTemplates() returns register for page'); 
