@@ -63,7 +63,13 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
   public function addEditorHtml(sfEvent $event, $content)
   {
-    $this->configuration->loadHelpers(array('Admin'));
+    $statusCode = $event->getSubject()->getStatusCode();
+    if ($statusCode == 404 || $statusCode == 500)
+    {
+      return $content;
+    }
+    
+    $this->configuration->loadHelpers(array('SympalAdmin'));
 
     $content = str_replace('</body>', get_sympal_admin_menu().'</body>', $content);
     return $content;

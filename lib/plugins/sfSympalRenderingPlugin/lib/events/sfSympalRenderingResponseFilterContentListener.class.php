@@ -9,6 +9,19 @@ class sfSympalRenderingResponseFilterContent extends sfSympalListener
 
   public function run(sfEvent $event, $content)
   {
+    // The following were removed, but should probably be there
+    //$request->isXmlHttpRequest()
+    //$controller->getRenderMode() != sfView::RENDER_CLIENT ||
+
+    $response = $event->getSubject();
+    if (strpos($response->getContentType(), 'html') === false ||
+        $response->getStatusCode() == 304 ||
+        in_array($response->getStatusCode(), array(302, 301)) || 
+        $response->isHeaderOnly())
+    {
+      return $content;
+    }
+    
     if ($code = sfSympalConfig::get('google_analytics_code'))
     {
       $js = <<<EOF
@@ -23,7 +36,9 @@ try {
 } catch(err) {}</script>
 EOF;
       return str_replace('</body>', $js.'</body>', $content);
-    } else {
+    }
+    else
+    {
       return $content;
     }
   }
