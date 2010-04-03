@@ -12,6 +12,6 @@ class sympal_redirectsGeneratorConfiguration extends BaseSympal_redirectsGenerat
 {
   public function getFilterDefaults()
   {
-    return array('site_id' => sfSympalContext::getInstance()->getSite()->getId());
+    return array('site_id' => sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId());
   }
 }

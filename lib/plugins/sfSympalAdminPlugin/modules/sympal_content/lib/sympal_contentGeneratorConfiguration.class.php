@@ -12,6 +12,8 @@ class sympal_contentGeneratorConfiguration extends BaseSympal_contentGeneratorCo
 {
   public function getFilterDefaults()
   {
-    return array('site_id' => sfSympalContext::getInstance()->getSite()->getId());
+    return array(
+      'site_id' => sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId()
+    );
   }
 }

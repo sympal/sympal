@@ -8,19 +8,19 @@ $browser = new sfSympalTestFunctional(new sfBrowser());
 $redirect = new sfSympalRedirect();
 $redirect->source = '/test_redirect1/:parameter1/ok/:parameter2';
 $redirect->destination = '@redirect_route';
-$redirect->site_id = sfSympalContext::getInstance()->getSite()->getId();
+$redirect->site_id = sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId();
 $redirect->save();
 
 $redirect = new sfSympalRedirect();
 $redirect->source = '/test_redirect2';
-$redirect->site_id = sfSympalContext::getInstance()->getSite()->getId();
+$redirect->site_id = sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId();
 $redirect->content_id = 1;
 $redirect->save();
 
 $redirect = new sfSympalRedirect();
 $redirect->source = '/test_redirect3/:parameter1/ok/:parameter2';
 $redirect->destination = '/some/path/ok/:parameter2';
-$redirect->site_id = sfSympalContext::getInstance()->getSite()->getId();
+$redirect->site_id = sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId();
 $redirect->save();
 
 $browser->clearCache();

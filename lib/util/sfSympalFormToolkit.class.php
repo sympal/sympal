@@ -84,7 +84,7 @@ class sfSympalFormToolkit
         ->createQuery('c')
         ->leftJoin('c.Type t')
         ->leftJoin('c.MenuItem m')
-        ->where('c.site_id = ?', sfSympalContext::getInstance()->getSite()->getId())
+        ->where('c.site_id = ?', sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId())
         ->orderBy('m.root_id, m.lft');
 
       if ($add)

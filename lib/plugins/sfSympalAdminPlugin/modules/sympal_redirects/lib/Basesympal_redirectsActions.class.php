@@ -29,7 +29,7 @@ abstract class Basesympal_redirectsActions extends autoSympal_redirectsActions
   {
     $this->form = $this->configuration->getForm();
     $this->sf_sympal_redirect = $this->form->getObject();
-    $this->sf_sympal_redirect->site_id = sfSympalContext::getInstance()->getSite()->getId();
+    $this->sf_sympal_redirect->site_id = sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId();
 
     $this->processForm($request, $this->form);
 

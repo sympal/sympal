@@ -11,7 +11,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function listenToAdminBuildQuery(sfEvent $event, Doctrine_Query $query)
   {
-    $query->andWhere('site_id = ?', sfSympalContext::getInstance()->getSite()->getId());
+    $query->andWhere('site_id = ?', sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId());
     return $query;
   }
 
