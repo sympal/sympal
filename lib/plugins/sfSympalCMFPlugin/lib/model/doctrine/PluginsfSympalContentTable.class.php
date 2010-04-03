@@ -27,7 +27,9 @@ class PluginsfSympalContentTable extends Doctrine_Table
     {
       $table = $type->getTable();
       $typeModelName = $type->getName();
-    } else {
+    }
+    else
+    {
       $table = Doctrine_Core::getTable($type);
       $typeModelName = $type;
     }
@@ -44,7 +46,9 @@ class PluginsfSympalContentTable extends Doctrine_Table
     if ($contentTypeId)
     {
       $q->innerJoin($alias.'.'.$typeModelName.' cr WITH '.$alias.'.content_type_id = '.$contentTypeId);
-    } else {
+    }
+    else
+    {
       $q->innerJoin($alias.'.'.$typeModelName.' cr');
     }
 
@@ -103,7 +107,9 @@ class PluginsfSympalContentTable extends Doctrine_Table
       $q->andWhere('c.id = ?', $contentId);
 
     // If we have an explicit content slug
-    } else if ($contentSlug) {
+    }
+    else if ($contentSlug)
+    {
       if ($this->hasRelation('Translation') && $this->getRelation('Translation')->getTable()->hasField('slug'))
       {
         $q->andWhere('c.slug = ? OR ct.i18n_slug = ?', array($contentSlug, $contentSlug));
@@ -112,7 +118,9 @@ class PluginsfSympalContentTable extends Doctrine_Table
       }
 
     // Try and find the content record based on the params in the route
-    } else {
+    }
+    else
+    {
       // Loop over all other request parameters and see if they can be used to add a where condition
       // to find the content record
       $paramFound = false;
