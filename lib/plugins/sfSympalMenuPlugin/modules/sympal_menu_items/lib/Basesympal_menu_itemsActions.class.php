@@ -12,6 +12,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
   public function listenToAdminBuildQuery(sfEvent $event, Doctrine_Query $query)
   {
     $query->andWhere('site_id = ?', sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId());
+
     return $query;
   }
 
@@ -61,12 +62,14 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
     $menuItem = $q->fetchOne();
     $this->forward404Unless($menuItem);
+
     return $menuItem;
   }
 
   protected function _publishMenuItem(sfSympalMenuItem $menuItem, $publish = true)
   {
     $func = $publish ? 'publish':'unpublish';
+
     return $menuItem->$func();
   }
 
