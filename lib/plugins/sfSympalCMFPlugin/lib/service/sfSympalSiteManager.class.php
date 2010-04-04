@@ -33,6 +33,8 @@ class sfSympalSiteManager
     $this->_dispatcher = $configuration->getEventDispatcher();
     $this->_configuration = $configuration;
     $this->_siteSlug = $configuration->getProjectConfiguration()->getApplication();
+    
+    $this->_dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
   }
 
   /**
@@ -100,5 +102,24 @@ class sfSympalSiteManager
     }
 
     $this->_dispatcher->notify(new sfEvent($this->_currentContent, 'sympal.content.set_content'));
+  }
+
+  /**
+   * Listener on the sympal.context.method_not_found event. 
+   * 
+   * Extends the sfSympalContext class. This handles
+   *   * ->getSite()
+   */
+  public function handleContextMethodNotFound(sfEvent $event)
+  {
+    throw new sfException();
+    if ($event['method'] == 'getSite')
+    {
+      $event->setReturnValue($this->getSite());
+      
+      return true;
+    }
+    
+    return false;
   }
 }

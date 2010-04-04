@@ -12,7 +12,7 @@ abstract class Basesympal_themesActions extends sfActions
 {
   public function executeIndex(sfWebRequest $request)
   {
-    $this->themes = $this->getSympalContext()->getSympalConfiguration()->getAvailableThemes();
+    $this->themes = $this->getSympalContext()->getService('theme_manager')->getAvailableThemes();
 
     if ($preview = $request->getParameter('preview'))
     {
@@ -30,7 +30,7 @@ abstract class Basesympal_themesActions extends sfActions
 
     if ($request->getParameter('site'))
     {
-      $site = $this->getSympalContext()->getSite();
+      $site = $this->getSympalContext()->getService('site_manager')->getSite();
       $this->askConfirmation(__('Are you sure?'), sprintf(__('This action will change the default theme to "%s" for the "%s" site.'), $theme, $site->getTitle()));
       if ($site->getTheme() == $theme)
       {
