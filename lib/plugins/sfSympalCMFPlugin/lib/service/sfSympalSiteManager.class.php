@@ -112,7 +112,6 @@ class sfSympalSiteManager
    */
   public function handleContextMethodNotFound(sfEvent $event)
   {
-    throw new sfException();
     if ($event['method'] == 'getSite')
     {
       $event->setReturnValue($this->getSite());
