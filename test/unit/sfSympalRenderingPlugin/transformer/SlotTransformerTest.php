@@ -108,11 +108,11 @@ sfSympalConfig::set('content_slot_types', 'Markdown', $markdownConfig);
 
 $t->info('  2.2 - First transformer should always return static text "testing"');
 sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform1'));
-test_transformer_return($t, $contentSlot->value, $transformer, 'testing', array(), 'testing');
+test_transformer_return($t, $transformer, 'testing', array(), 'testing');
 
 $t->info('  2.3 - Transformer will change "Markdown" to "Markup"');
 sfSympalConfig::set('slot_transformers', 'unit_test', array('myUnitTestTransformer', 'transform2'));
-test_transformer_return($t, $contentSlot->value, $transformer, '__Some Markup Content__', array(), '__Some Markup Content__');
+test_transformer_return($t, $transformer, '__Some Markup Content__', array(), '__Some Markup Content__');
 
 
 $t->info('  2.4 - Transformer will include a callback wildcard');
@@ -123,13 +123,13 @@ $tokenCallbacks = array(
     'args'      => array('HT', 'ML')
   ),
 );
-test_transformer_return($t, $contentSlot->value, $transformer, '__Some %language% Content__', $tokenCallbacks, '__Some HTML Content__');
+test_transformer_return($t, $transformer, '__Some %language% Content__', $tokenCallbacks, '__Some HTML Content__');
 
 
 // tests the return values of a run in the transformer
-function test_transformer_return(lime_test $t, $rawText, sfSympalContentSlotTransformerTest $transformer, $transformedContent, $tokenCallbacks, $result)
+function test_transformer_return(lime_test $t, sfSympalContentSlotTransformerTest $transformer, $transformedContent, $tokenCallbacks, $result)
 {
-  $transformerResult = $transformer->render($rawText);
+  $transformerResult = $transformer->render();
   $t->is($transformer->getProp('_transformedContent'), $transformedContent, sprintf('->_transformedContent set to "%s"', $transformedContent));
   $t->is($transformer->getProp('_tokenCallbacks'), $tokenCallbacks, '->_tokenCallbacks matches');
   $t->is($transformerResult, $result, sprintf('The end result is "%s"', $result));

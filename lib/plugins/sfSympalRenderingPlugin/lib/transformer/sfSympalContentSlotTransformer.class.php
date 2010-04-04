@@ -57,9 +57,13 @@ class sfSympalContentSlotTransformer
    * @param The value to transform
    * @return string The transformed content
    */
-  public function render($value)
+  public function render($value = null)
   {
-    if ($value !== null)
+    if ($value === null)
+    {
+      $this->setTransformedContent($this->_contentSlot->value);
+    }
+    else
     {
       $this->setTransformedContent($value);
     }
