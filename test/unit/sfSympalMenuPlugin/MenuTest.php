@@ -172,7 +172,7 @@ $t->is($breadcrumbs->getPathAsString(), 'Documentation / 1.0 / The Guide to Doct
 $t->is((string) $breadcrumbs, '<div id="sympal_breadcrumbs"><ul id="doctrine-menu"><li id="doctrine-documentation" class="first"><a href="http://www.doctrine-project.org/documentation">Documentation</a></li><li id="doctrine-1-0"><a href="http://www.doctrine-project.org/documentation/1_0">1.0</a></li><li id="doctrine-the-guide-to-doctrine-orm" class="last"><a href="http://www.doctrine-project.org/documentation/1_0/manual">The Guide to Doctrine ORM</a></li></ul></div>', 'Test get breadcrumbs');
 
 
-$t->info('5 - Test the menu site class');
+$t->info('6 - Test the menu site class');
 
 class sfSympalMenuSiteTest extends sfSympalMenuSite
 {
@@ -185,24 +185,24 @@ class sfSympalMenuSiteTest extends sfSympalMenuSite
 $user = Doctrine_Core::getTable('sfGuardUser')->findOneByIsSuperAdmin(true);
 sfContext::getInstance()->getUser()->signIn($user);
 
-$manager = sfSympalMenuSiteManager::getInstance();
+$menuManager = sfSympalContext::getInstance()->getService('menu_manager');
 
 $t->info('Retrieve the "primary" menu, setup in the fixtures');
 $t->info('blog  signout  home  sample-page  sample-content-list    powered-by         ');
 $t->info('                                                        /     |     \       ');
 $t->info('                                                  symfony  doctrine  sympal ');
 
-$primaryMenu = $manager->getMenu('primary', false, 'sfSympalMenuSiteTest');
+$primaryMenu = $menuManager->getMenu('primary', false, 'sfSympalMenuSiteTest');
 $t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-blog" class="first">Blog</li><li id="primary-signout">Signout</li><li id="primary-home">Home</li><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list">Sample Content List</li><li id="primary-powered-by" class="last">Powered By</li></ul>', 'Test __toString() without showing children');
 
-$split = $manager->split($primaryMenu, 2, true);
+$split = $menuManager->split($primaryMenu, 2, true);
 $total = $primaryMenu->count();
 $t->is($split['primary']->count(), 2, 'Test count() after splitting the menu into 2 pieces');
 $t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-blog" class="first">Blog</li><li id="primary-signout">Signout</li></ul>', 'Test split() primary');
 $t->is((string) $split['secondary'], '<ul id="secondary-menu"><li id="primary-home">Home</li><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list">Sample Content List</li><li id="primary-powered-by" class="last">Powered By</li></ul>', 'Test split() secondary');
 $t->is($split['secondary']->count(), 4, 'Test secondary count()');
 
-$footerMenu = $manager->getMenu('footer', false, 'sfSympalMenuSiteTest');
+$footerMenu = $menuManager->getMenu('footer', false, 'sfSympalMenuSiteTest');
 $t->is((string) $footerMenu, '', 'Test footer menu');
 
 
@@ -231,7 +231,6 @@ $menuItem = $table
 
 $t->is($menuItem->getBreadcrumbs()->getPathAsString(), 'Home / Sample Page', 'Test sfSympalBreadcrumbs::getPathAsString() returns nothing for home');
 
-$menuManager = sfSympalMenuSiteManager::getInstance();
 $menuManager->clear();
 
 $profiler = new Doctrine_Connection_Profiler();
