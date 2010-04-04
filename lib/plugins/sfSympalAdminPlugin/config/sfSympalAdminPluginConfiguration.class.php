@@ -193,7 +193,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       $form->addSetting(null, 'default_culture', 'Default Culture', $widgetSchema['language'], $validatorSchema['language']);
     }
 
-    $array = sfSympalFormToolkit::getThemeWidgetAndValidator();
+    $array = sfSympalContext::getInstance()->getService('theme_form_toolkit')->getThemeWidgetAndValidator();
     $form->addSetting('theme', 'default_theme', 'Default Theme', $array['widget'], $array['validator']);
 
     $form->addSetting(null, 'default_rendering_module', 'Default Rendering Module');
