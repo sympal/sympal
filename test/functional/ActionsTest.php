@@ -70,6 +70,6 @@ $browser->test()->is(isset($stylesheets['test']), true);
 
 $browser->
   with('response')->begin()->
-    matches('/Test Layout/')->
+    checkElement('h1', '/Test Layout/')->
   end()
 ;

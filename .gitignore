@@ -1,4 +1,4 @@
-test/fixtures/project/plugins/*
+test/fixtures/project/plugins/.*
 test/fixtures/project/cache/*
 test/fixtures/project/data/*
 test/fixtures/project/log/*
