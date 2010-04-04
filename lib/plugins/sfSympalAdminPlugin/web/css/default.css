@@ -20,7 +20,7 @@
 
 #sf_admin_container .sf_admin_list table
 {
-  background-color: #375fc2;
+  background-color: #0098ea;
   width: 100%;
 }
 
@@ -42,6 +42,7 @@
 {
   color: #fff;
   text-align: left;
+  padding: 5px;
 }
 
 #sf_admin_container table thead th a
