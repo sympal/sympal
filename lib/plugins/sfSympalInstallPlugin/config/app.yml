@@ -1,0 +1,6 @@
+all:
+  sympal_config:
+    themes:
+      install:
+        available:   false
+        disabled:    false
