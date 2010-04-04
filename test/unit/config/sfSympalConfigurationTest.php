@@ -101,6 +101,9 @@ $allManageablePlugins = $sympalConfiguration->getAllManageablePlugins();
 $t->is(in_array('sfSympalBlogPlugin', $allManageablePlugins), true, '->getAllManageablePlugins() returns the correct array of plugins');
 
 $plugins = $sympalConfiguration->getProjectConfiguration()->getPlugins();
+// The plugins array may have gaps in its indexes. Doing an array_merge on nothing resets the indexes
+$plugins = array_merge($plugins, array());
+
 $t->is($plugins[0], 'sfDoctrinePlugin', 'Test sfDoctrinePlugin is loaded first');
 $t->is($plugins[1], 'sfSympalPlugin', 'Test sfSympalPlugin is loaded second');
 $t->is(in_array('sfSympalBlogPlugin', $plugins), true, 'Test that additional downloaded plugins are loaded');
