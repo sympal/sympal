@@ -17,11 +17,11 @@ class sfSympalAdminConfiguration extends sfSympalExtendClass
    */
   public function isAdminModule()
   {
-    if (!$this->_symfonyContext)
+    if (!$sympalContext = $this->getSympalContext())
     {
       return false;
     }
-    $module = $this->getSympalContext()->getSymfonyContext()->getRequest()->getParameter('module');
+    $module = $sympalContext->getSymfonyContext()->getRequest()->getParameter('module');
     $adminModules = sfSympalConfig::get('admin_modules');
 
     return array_key_exists($module, $adminModules);

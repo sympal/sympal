@@ -108,6 +108,7 @@ class sfSympalConfiguration
    */
   public function bootstrapFromContext(sfEvent $event)
   {
+    $this->_sympalContext = $event->getSubject();
     // give this object access to the cache manager
     $this->_cacheManager = $event->getSubject()->getService('cache_manager');
   }
