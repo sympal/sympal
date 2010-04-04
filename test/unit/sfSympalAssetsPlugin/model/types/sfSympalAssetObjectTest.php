@@ -4,7 +4,7 @@ $app = 'sympal';
 $refresh_assets = true;
 require_once(dirname(__FILE__).'/../../../../bootstrap/unit.php');
 
-$t = new lime_test(30);
+$t = new lime_test(31);
 
 // initialize some asset objects
 $sync = new sfSympalAssetSynchronizer($configuration->getEventDispatcher());
@@ -14,6 +14,7 @@ $asset = Doctrine_Core::getTable('sfSympalAsset')->findOneBySlug('sympal-info')-
 $asset2 = Doctrine_Core::getTable('sfSympalAsset')->findOneBySlug('screens-sympalphp')->getAssetObject();
 
 $t->info('1 - Run some basic functions on the asset');
+$t->isnt($asset, null, 'An asset object for the "sympal info.txt" asset was found');
 $t->is($asset->isImage(), false, '->isImage() returns false');
 $t->is($asset->getType(), 'text', '->getType() returns "text"');
 $t->is($asset->exists(), true, '->exists() returns true as the file does exist');
