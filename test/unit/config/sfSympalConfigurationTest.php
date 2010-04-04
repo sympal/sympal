@@ -13,7 +13,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(24);
+$t = new lime_test(20);
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
@@ -21,12 +21,6 @@ $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
 $contentTemplates = $sympalConfiguration->getContentTemplates('page'); 
 $t->is(isset($contentTemplates['default_view']), true, '->getContentTemplates() returns default_view for page'); 
 $t->is(isset($contentTemplates['register']), true, '->getContentTemplates() returns register for page'); 
- 
-sfContext::getInstance()->getRequest()->setParameter('module', 'sympal_dashboard'); 
-$t->is($sympalConfiguration->isAdminModule(), true, '->isAdminModule() returns true for admin module'); 
- 
-sfContext::getInstance()->getRequest()->setParameter('module', 'sympal_content_renderer'); 
-$t->is($sympalConfiguration->isAdminModule(), false, '->isAdminModule() returns false for non-admin module'); 
  
 $plugins = $sympalConfiguration->getPlugins(); 
 $t->is(is_array($plugins), true, '->getPlugins() returns array'); 
@@ -45,6 +39,7 @@ $corePlugins = array(
   'sfWebBrowserPlugin',
   'sfJqueryReloadedPlugin',
   'sfImageTransformPlugin',
+  'sfSympalCMFPlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
@@ -58,7 +53,9 @@ $corePlugins = array(
   'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin',
   'sfSympalContentSyntaxPlugin',
-  'sfSympalSearchPlugin'
+  'sfSympalSearchPlugin',
+  'sfSympalThemePlugin',
+  'sfSympalMinifyPlugin',
 );
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins, '->getCorePlugins() returns the correct array');
