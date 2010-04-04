@@ -6,15 +6,11 @@ require_once(dirname(__FILE__).'/../bootstrap/unit.php');
 $t = new lime_test(5);
 
 $sympalContext = sfSympalContext::getInstance();
+$t->is($sympalContext->getService('site_manager')->getSite()->getSlug(), $app, '->The current site matches the current app');
 
-$menuItem = Doctrine_Core::getTable('sfSympalMenuItem')->findOneBySlug('home');
-$sympalContext->setCurrentMenuItem($menuItem);
+$t->info('Make a call to the test/test partial. It prints out the value of $var');
+$resource = sfSympalToolkit::getSymfonyResource('test', 'test', array('var' => 'Unit Testing'));
+$t->is($resource, 'Unit Testing', '::getSymfonyResource() called the correct partial, returned the correct value');
 
-$t->is($sympalContext->getCurrentMenuItem(), $menuItem);
-$t->is($sympalContext->getSite()->getSlug(), $app);
-
-$resource = sfSympalToolkit::getSymfonyResource('test', 'test', array('var' => 'Test'));
-$t->is($resource, 'Test');
-
-$t->is(sfSympalToolkit::getDefaultApplication(), 'sympal');
-$t->is(in_array('en', sfSympalToolkit::getAllLanguageCodes()), true);
+$t->is(sfSympalToolkit::getDefaultApplication(), 'sympal', '::getDefaultApplication() return "sympal"');
+$t->is(in_array('en', sfSympalToolkit::getAllLanguageCodes()), true, '::getAllLanguageCodes() contains "en" - a sanity check.');

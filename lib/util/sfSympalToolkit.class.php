@@ -193,7 +193,9 @@ class sfSympalToolkit
     if ($controller->componentExists($module, $action))
     {
       return get_component($module, $action, $variables);
-    } else {
+    }
+    else
+    {
       return get_partial($module.'/'.$action, $variables);
     }
 
@@ -217,7 +219,9 @@ class sfSympalToolkit
     if (isset(self::$_helperAutoloadCache[$functionName]))
     {
       require_once(self::$_helperAutoloadCache[$functionName]);
-    } else {
+    }
+    else
+    {
       throw new sfException('Could not autoload helper for function "'.$functionName.'"');
     }
   }
@@ -236,7 +240,9 @@ class sfSympalToolkit
     if (file_exists($modulePath))
     {
       return strpos(file_get_contents($modulePath), 'public function execute'.ucfirst($actionName)) !== false ? true : false;
-    } else {
+    }
+    else
+    {
       return false;
     }
   }
