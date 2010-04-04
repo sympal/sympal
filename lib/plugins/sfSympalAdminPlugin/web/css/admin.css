@@ -20,7 +20,7 @@ p {
   margin-bottom: 0;
 }
 
-#content h1 {
+h1 {
   color: #11A8FF;
   font-size: 18px;
   padding: 0;
@@ -28,12 +28,12 @@ p {
   margin-bottom: 10px;
 }
 
-#content h2 {
+h2 {
   color: #DA8915;
   font-size: 14px;
 }
 
-#content h3 {
+h3 {
   color: #3278B6;
   font-size: 14px;
 }
