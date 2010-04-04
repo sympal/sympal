@@ -26,6 +26,10 @@
 {
   background-color: #0098ea;
   width: 100%;
+  color: #fff;
+}
+#sf_admin_container .sf_admin_list table tbody {
+  color: #666;
 }
 
 #sf_admin_container table
@@ -46,6 +50,12 @@
 {
   text-align: left;
   padding: 5px;
+  color: #fff;
+}
+
+#sf_admin_container table thead th a
+{
+  color: #fff;
 }
 
 #sf_admin_container table td, #sf_admin_container table th
