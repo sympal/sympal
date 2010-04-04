@@ -99,7 +99,7 @@ class sfSympalContext
     // The controller.change_action event
     new sfSympalControllerChangeActionListener($this->_dispatcher, $this);
 
-    // The form.filter_values event
+    // The template.filter_parameters event
     new sfSympalTemplateFilterParametersListener($this->_dispatcher, $this);
 
     // The form.post_configure event

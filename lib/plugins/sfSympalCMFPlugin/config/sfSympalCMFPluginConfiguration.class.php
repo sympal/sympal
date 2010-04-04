@@ -12,6 +12,9 @@
  */
 class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
 {
+  protected
+    $_sympalContext;
+  
   public function initialize()
   {
     $this->dispatcher->connect('sympal.load', array($this, 'configureSympal'));
@@ -28,11 +31,15 @@ class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
    */
   public function configureSympal(sfEvent $event)
   {
+    $this->_sympalContext = $event->getSubject();
+    
     $this->_initializeSymfonyConfig();
     $this->_markClassesAsSafe();
     $this->_configureSuperCache();
     
-    $event->getSubject()->getApplicationConfiguration()->loadHelpers('SympalContentSlot');
+    $this->_sympalContext->getApplicationConfiguration()->loadHelpers('SympalContentSlot');
+    
+    $this->dispatcher->connect('template.filter_parameters', array($this, 'listenTemplateFilterParameters'));
   }
   
   /**
@@ -114,5 +121,22 @@ class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
       $superCache = new sfSympalSuperCache();
       $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
     }
+  }
+
+  /**
+   * Listens to template.filter_parameters and adds a few variables to the view
+   */
+  public function listenTemplateFilterParameters(sfEvent $event, $parameters)
+  {
+    $siteManager = $this->_sympalContext->getService('site_manager');
+
+    $parameters['sf_sympal_site'] = $siteManager->getSite();
+    
+    if ($content = $siteManager->getCurrentContent())
+    {
+      $parameters['sf_sympal_content'] = $content;
+    }
+    
+    return $parameters;
   }
 }

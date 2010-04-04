@@ -12,6 +12,9 @@
  */
 class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 {
+  protected
+    $_sympalContext;
+
   public function initialize()
   {
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
@@ -30,10 +33,9 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
    */
   public function bootstrap(sfEvent $event)
   {
-    $helpers = array(
-      'SympalMenu',
-    );
-    $event->getSubject()->getApplicationConfiguration()->loadHelpers($helpers);
+    $this->_sympalContext = $event->getSubject();
+    
+    $event->getSubject()->getApplicationConfiguration()->loadHelpers('SympalMenu');
     
     // Listen to sfSympalContent's change_content event
     $this->dispatcher->connect('sympal.content.set_content', array(
@@ -44,5 +46,18 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
     // extend the component/action class
     $actions = new sfSympalMenuActions();
     $this->dispatcher->connect('component.method_not_found', array($actions, 'extend'));
+
+    // Hook into the template.filter_parameters event
+    $this->dispatcher->connect('template.filter_parameters', array($this, 'listenTemplateFilterParameters'));
+  }
+
+  /**
+   * Listens to template.filter_parameters and adds a few variables to the view
+   */
+  public function listenTemplateFilterParameters(sfEvent $event, $parameters)
+  {
+    $parameters['sf_sympal_menu_manager'] = $this->_sympalContext->getService('menu_manager');
+    
+    return $parameters;
   }
 }
