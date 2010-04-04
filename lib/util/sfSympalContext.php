@@ -116,10 +116,24 @@ class sfSympalContext
    */
   protected function loadServiceContainer()
   {
-    require_once $this->getSymfonyContext()
+    $autoloaderPath = $this->getSymfonyContext()
       ->getConfiguration()
       ->getPluginConfiguration('sfSympalPlugin')
       ->getRootDir() . '/lib/vendor/service_container/lib/sfServiceContainerAutoloader.php';
+    
+    if (!file_exists($autoloaderPath))
+    {
+      throw new sfException(sprintf(
+        'Cannot find the service container library at %s.
+        
+        If you are including sfSympalPlugin as a git submodule, be sure to run the following commands from inside the plugins/sfSympalPlugin directory:
+        
+         git submodule init
+         git submodule update',
+        $autoloaderPath
+      ));
+    }
+    
     sfServiceContainerAutoloader::register();
     
     $app = $this->getSymfonyContext()->getConfiguration()->getApplication();
