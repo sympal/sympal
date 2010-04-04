@@ -16,11 +16,9 @@ class sfSympalConfiguration
     $_dispatcher,
     $_projectConfiguration,
     $_sympalContext,
-    $_symfonyContext,
     $_bootstrap,
     $_allManageablePlugins,
-    $_contentTypePlugins,
-    $_requiredPlugins;
+    $_contentTypePlugins;
   
   protected
     $_plugins,
@@ -308,22 +306,16 @@ class sfSympalConfiguration
   }
 
   /**
-   * Check if we are inside an admin module
+   * Returns the current sympal context
    * 
-   * @TODO Reimplement this somewhere that makes sense
-   *
-   * @return boolean
+   * This will not return the context until it has been created - it's not
+   * automatically available.
+   * 
+   * @return sfSympalContext
    */
-  public function isAdminModule()
+  public function getSympalContext()
   {
-    if (!$this->_symfonyContext)
-    {
-      return false;
-    }
-    $module = $this->_symfonyContext->getRequest()->getParameter('module');
-    $adminModules = sfSympalConfig::get('admin_modules');
-
-    return array_key_exists($module, $adminModules);
+    return $this->_sympalContext;
   }
 
   /**

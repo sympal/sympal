@@ -21,6 +21,9 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('sympal.load', array($this, 'boostrap'));
     
     $this->dispatcher->connect('sympal.theme.set_theme_from_request', array($this, 'setThemeForAdminModule'));
+    
+    $configuration = new sfSympalAdminConfiguration();
+    $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
   }
 
   public function shouldLoadAdminMenu()
