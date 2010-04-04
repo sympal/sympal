@@ -118,5 +118,6 @@ abstract class Basesympal_adminActions extends sfActions
   public function executePhpinfo(sfWebRequest $request)
   {
     $this->setLayout(false);
+    $this->enableEditor(false);
   }
 }

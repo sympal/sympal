@@ -24,6 +24,10 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     
     $configuration = new sfSympalAdminConfiguration();
     $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
+    
+    // extend the actions class
+    $actions = new sfSympalAdminActions();
+    $this->dispatcher->connect('component.method_not_found', array($actions, 'extend'));
   }
 
   public function shouldLoadAdminMenu()
@@ -66,8 +70,18 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
   }
 
+  /**
+   * Listens to the response.filter_content event and adds the
+   * editor drop-down menu to the response
+   */
   public function addEditorHtml(sfEvent $event, $content)
   {
+    // See if the editor was disabled
+    if (!sfConfig::get('sympal.editor_menu', true))
+    {
+      return $content;
+    }
+    
     $statusCode = $event->getSubject()->getStatusCode();
     if ($statusCode == 404 || $statusCode == 500)
     {
