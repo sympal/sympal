@@ -8,3 +8,4 @@ test/fixtures/project/web/sfDoctrinePlugin
 test/fixtures/project/web/uploads
 *.swp
 base
+test/fixtures/project/config/app.yml
