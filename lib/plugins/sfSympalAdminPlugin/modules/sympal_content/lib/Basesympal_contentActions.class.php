@@ -179,10 +179,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $user->checkContentSecurity($this->sf_sympal_content);
 
     $this->getSympalContext()->setCurrentContent($this->sf_sympal_content);
-    if ($menuItem = $this->sf_sympal_content->getMenuItem())
-    {
-      $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_content->getMenuItem());
-    }
 
     $this->getResponse()->setTitle('Sympal Admin / Editing '.$this->sf_sympal_content);
 
