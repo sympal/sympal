@@ -1,7 +1,7 @@
 <?php
 
 $app = 'sympal';
-require_once(dirname(__FILE__).'/../bootstrap/unit.php');
+require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 $t = new lime_test(25);
 
@@ -39,9 +39,16 @@ function uninstallPlugin($name, $t, $delete = true)
   $t->is(file_exists(sfConfig::get('sf_web_dir').'/'.$name), !$delete, 'Test plugin assets symlink was removed');
 }
 
+$t->info('1 - Uninstalling sfSympalBlogPlugin...');
 uninstallPlugin('sfSympalBlogPlugin', $t, false);
+$t->info('2 - Installing sfSympalBlogPlugin...');
 installPlugin('sfSympalBlogPlugin', $t);
 
+$t->info('3 - Installing sfSympalEventPlugin');
 installPlugin('sfSympalEventPlugin', $t);
+
+$t->info('4 - Uninstalling sfSympalEventPlugin...');
 uninstallPlugin('sfSympalEventPlugin', $t);
+
+$t->info('5 - Uninstalling sfSympalObjectReplacerPlugin');
 uninstallPlugin('sfSympalObjectReplacerPlugin', $t);

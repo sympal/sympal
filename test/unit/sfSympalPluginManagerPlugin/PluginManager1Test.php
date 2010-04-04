@@ -1,7 +1,7 @@
 <?php
 
 $app = 'sympal';
-require_once(dirname(__FILE__).'/../bootstrap/unit.php');
+require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 $t = new lime_test(2);
 
@@ -28,5 +28,8 @@ function downloadPlugin($name, $t)
   $t->is(file_exists(sfConfig::get('sf_plugins_dir').'/'.$name), true, 'Test that the plugin exists and was downloaded');
 }
 
+$t->info('1 - Download a plugin and see that it exists');
 downloadPlugin('sfSympalObjectReplacerPlugin', $t);
+
+$t->info('2 - Generate a content type plugin, see that it exists');
 generatePlugin('Event', 'Event', $t);
