@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * Test for the class the converts Markdown into HTML
+ * 
+ * @package     sfSympalRenderingPlugin
+ * @subpackage  util
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ */
+
 $app = 'sympal';
-require_once(dirname(__FILE__).'/../bootstrap/unit.php');
+require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 $t = new lime_test(1);
 
@@ -64,4 +72,4 @@ $html = '<div class="sympal_markdown"><blockquote class="tip"><p>
 </code></pre>
 </div>';
 
-$t->is(sfSympalMarkdownRenderer::convertToHtml($markdown), $html);
+$t->is(sfSympalMarkdownRenderer::convertToHtml($markdown), $html, '::convertToHtml() Correctly converted the Markdown to HTML');
