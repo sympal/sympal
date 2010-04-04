@@ -174,9 +174,11 @@ class sfSympalContentActionLoader
 
   private function _createSite()
   {
+    $siteManager = $this->_sympalContext->getService('site_manager');
+    
     chdir(sfConfig::get('sf_root_dir'));
     $task = new sfSympalCreateSiteTask($this->_dispatcher, new sfFormatter());
-    $task->run(array($this->_sympalContext->getSiteSlug()), array('no-confirmation' => true));
+    $task->run(array($siteManager->getSiteSlug()), array('no-confirmation' => true));
   }
 
   private function _handleIsPublished($record)
@@ -198,14 +200,15 @@ class sfSympalContentActionLoader
   {
     if (!$record)
     {
-      $site = $this->_sympalContext->getSite();
+      $siteManager = $this->_sympalContext->getService('site_manager');
+      $site = $siteManager->getSite();
 
       // No site record exception
       if (!$site)
       {
         // Site doesn't exist for this application make sure the user wants to create a site for this application
         $this->_actions->askConfirmation(
-          sprintf('No site found for the application named "%s"', $this->_sympalContext->getSiteSlug()),
+          sprintf('No site found for the application named "%s"', $siteManager->getSiteSlug()),
           sprintf('Do you want to create a site for the application named "%s"? Clicking yes will create a site record in the database and allow you to begin building out the content for your site!', $this->_sympalContext->getSiteSlug())
         );
 
@@ -219,7 +222,7 @@ class sfSympalContentActionLoader
         $count = $q->count();
         if (!$count)
         {
-          $this->_actions->forward('sympal_default', 'new_site');
+          $this->_actions->forward('sympal_content_default', 'new_site');
         }
         
         $parameters = $this->_actions->getRoute()->getParameters();
