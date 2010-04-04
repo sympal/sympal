@@ -204,16 +204,6 @@ class sfSympalContext
   }
 
   /**
-   * Shortcut to check if we are inside an admin module
-   *
-   * @return boolean
-   */
-  public function isAdminModule()
-  {
-    return $this->_sympalConfiguration->isAdminModule();
-  }
-
-  /**
    * Get the current sfSympalConfiguration instance
    *
    * @return sfSympalConfiguration $sympalConfiguration

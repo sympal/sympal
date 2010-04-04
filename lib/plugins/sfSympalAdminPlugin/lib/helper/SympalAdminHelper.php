@@ -18,7 +18,7 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
     $siteManager = $sympalContext->getService('site_manager');
     $menu = new $class('Sympal Admin', '@sympal_dashboard');
 
-    if ($sympalContext->isAdminModule())
+    if ($sympalContext->getSympalConfiguration()->isAdminModule())
     {
       $menu->addChild(sprintf(__('Go to %s'), $siteManager->getSite()->getTitle()), '@homepage', 'id=sympal_go_to_switch');
     }
