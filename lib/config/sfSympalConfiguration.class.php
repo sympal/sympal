@@ -151,6 +151,7 @@ class sfSympalConfiguration
   {
     $downloadedPlugins = array_diff($this->getPlugins(), $this->getCorePlugins());
     unset($downloadedPlugins[array_search('sfSympalPlugin', $downloadedPlugins)]);
+
     return $downloadedPlugins;
   }
 
@@ -217,6 +218,14 @@ class sfSympalConfiguration
     }
 
     return $this->_pluginPaths;
+  }
+
+  /**
+   * Returns whether or not a plugin exists in the project
+   */
+  public function pluginExists($name)
+  {
+    return in_array($name, $this->getPlugins());
   }
 
   /**
@@ -405,7 +414,7 @@ class sfSympalConfiguration
    */
   public static function getActive()
   {
-    return sfApplicationConfiguration::getActive()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();
+    return sfProjectConfiguration::getActive()->getPluginConfiguration('sfSympalPlugin')->getSympalConfiguration();
   }
 
   /**
