@@ -64,6 +64,11 @@ class sfSympalConfiguration
    */
   private function _configureDoctrine()
   {
+    if (!class_exists('Doctrine_Manager'))
+    {
+      return;
+    }
+    
     $doctrineManager = Doctrine_Manager::getInstance();
     $doctrineManager->setAttribute(Doctrine_Core::ATTR_HYDRATE_OVERWRITE, false);
     $doctrineManager->setAttribute(Doctrine_Core::ATTR_QUERY_CLASS, 'sfSympalDoctrineQuery');
