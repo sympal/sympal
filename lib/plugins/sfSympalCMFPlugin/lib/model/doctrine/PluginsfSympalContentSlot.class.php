@@ -141,7 +141,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       $rendererClass = isset($slotTypeConfig['renderer']) ? $slotTypeConfig['renderer'] : 'sfSympalContentSlotTransformer';
       
       $renderer = new $rendererClass($this);
-      $this->_rendered = $renderer->render($this->getRawValue());
+      $this->_rendered = $renderer->render($this->getValueForRendering());
     }
 
     return $this->_rendered;
