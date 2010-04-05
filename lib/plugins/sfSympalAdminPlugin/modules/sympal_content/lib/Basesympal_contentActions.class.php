@@ -189,10 +189,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     $this->sf_sympal_content = $this->_getContent($request);
     $this->getSympalContext()->setCurrentContent($this->sf_sympal_content);
-    if ($menuItem = $this->sf_sympal_content->getMenuItem())
-    {
-      $this->getSympalContext()->setCurrentMenuItem($this->sf_sympal_content->getMenuItem());
-    }
     $this->getSympalContext()->getContentRenderer($this->sf_sympal_content)->render();
 
     $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content', array('content' => $this->sf_sympal_content)));
