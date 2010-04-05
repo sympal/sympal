@@ -51,10 +51,7 @@ class sfSympalConfiguration
     // Listen to the sympal.load event to perform some context-dependent tasks
     $this->_dispatcher->connect('sympal.load', array($this, 'bootstrapFromContext'));
     
-    // throw the sympal.load_configuration event to allow others to configure
-    //$this->_dispatcher->notify(new sfEvent($this, 'sympal.configuration.load'));
-
-    new sfSympalContextLoadFactoriesListener($this->_dispatcher, $this);
+    $this->_dispatcher->connect('sympal.cache.prime', array($this, 'listenSympalCachePrime'));
   }
 
   /**
@@ -405,6 +402,15 @@ class sfSympalConfiguration
     }
 
     return $layoutsCache;
+  }
+
+  /**
+   * Listens to the sympal.cache.prime event.
+   */
+  public function listenSympalCachePrime(sfEvent $event)
+  {
+    $this->_generateLayoutsCache();
+    $this->_generateModulesArray();
   }
 
   /**
