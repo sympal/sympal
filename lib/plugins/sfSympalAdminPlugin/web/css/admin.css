@@ -264,7 +264,7 @@ label span.req
 #sympal_breadcrumbs ul
 {
   font: 11px Arial, Helvetica, sans-serif;
-  background-image: url('../../sfSympalPlugin/images/bc_bg.png');
+  background-image: url('../images/bc_bg.png');
   background-repeat: repeat-x;
   height: 30px;
   line-height: 30px;
@@ -290,7 +290,7 @@ label span.req
 
 #sympal_breadcrumbs li.first
 {
-  background: url('../../sfSympalPlugin/images/home.png') no-repeat;
+  background: url('../images/home.png') no-repeat;
   background-position: center;
   text-indent: -9999;
   font-size: 0;
@@ -308,7 +308,7 @@ label span.req
 {
   height: 30px;
   display: block;
-  background-image: url('../../sfSympalPlugin/images/bc_separator.png');
+  background-image: url('../images/bc_separator.png');
   background-repeat: no-repeat;
   background-position: right;
   padding-right: 15px;

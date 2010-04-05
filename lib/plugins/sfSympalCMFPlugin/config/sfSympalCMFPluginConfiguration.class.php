@@ -37,9 +37,13 @@ class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
     $this->_markClassesAsSafe();
     $this->_configureSuperCache();
     
-    $this->_sympalContext->getApplicationConfiguration()->loadHelpers('SympalContentSlot');
+    $this->_sympalContext->getApplicationConfiguration()->loadHelpers(array(
+      'SympalContentSlot',
+      'SympalPager',
+    ));
     
     $this->dispatcher->connect('template.filter_parameters', array($this, 'listenTemplateFilterParameters'));
+    $this->dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
   }
   
   /**
@@ -138,5 +142,23 @@ class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
     }
     
     return $parameters;
+  }
+
+  /**
+   * Listener on the sympal.context.method_not_found event. 
+   * 
+   * Extends the sfSympalContext class. This handles
+   *   * ->getSite()
+   */
+  public function handleContextMethodNotFound(sfEvent $event)
+  {
+    if ($event['method'] == 'getSite')
+    {
+      $event->setReturnValue($this->_sympalContext->getService('site_manager')->getSite());
+      
+      return true;
+    }
+    
+    return false;
   }
 }

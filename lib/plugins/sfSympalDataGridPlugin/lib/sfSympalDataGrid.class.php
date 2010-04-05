@@ -184,6 +184,8 @@ class sfSympalDataGrid implements Iterator, Countable
 
   public function getPager()
   {
+    $this->_init();
+    
     return $this->_pager;
   }
 
@@ -661,13 +663,20 @@ class sfSympalDataGrid implements Iterator, Countable
       if ($return === $this->_query)
       {
         return $this;
-      } else {
+      }
+      else
+      {
         return $return;
       }
-    } else if (method_exists($this->_pager, $method)) {
+    }
+    else if (method_exists($this->_pager, $method))
+    {
       call_user_func_array(array($this->_pager, $method), $arguments);
+
       return $this;
-    } else {
+    }
+    else
+    {
       throw new Doctrine_Exception(sprintf('Uknown method "%s" called on "%s"', $method, get_class($this)));
     }
   }

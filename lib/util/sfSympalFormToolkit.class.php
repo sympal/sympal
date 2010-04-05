@@ -199,17 +199,11 @@ class sfSympalFormToolkit
      */
     if ($widgetClass && $validatorClass)
     {
-      $widgetSchema['value'] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
-      $validatorSchema['value'] = new $validatorClass($validatorOptions);
-    }
-    elseif ($slot->is_column)
-    {
-      $contentForm = $slot->getContentSlotColumnForm();
-      $contentWidgetSchema = $contentForm->getWidgetSchema();
-      $contentValidatorSchema = $contentForm->getValidatorSchema();
+      // If this is a column slot, then its actual field name is the name of the slot
+      $fieldName = $slot->is_column ? $slot->name : 'value';
       
-      $widgetSchema['value'] = $contentForm->getWidgetSchema()->offsetGet($slot->name);
-      $validatorSchema['value'] = $contentForm->getValidatorSchema()->offsetGet($slot->name);
+      $widgetSchema[$fieldName] = new $widgetClass($widgetOptions, array('class'=> 'slot_'.strtolower($type)));
+      $validatorSchema[$fieldName] = new $validatorClass($validatorOptions);
     }
   }
 

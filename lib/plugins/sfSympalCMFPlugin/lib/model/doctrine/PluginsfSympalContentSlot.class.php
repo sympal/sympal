@@ -53,11 +53,18 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
    */
   public function getEditForm()
   {
-    $contentSlotTypes = sfSympalConfig::get('content_slot_types');
-    $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
-    
-    $form = new $className($this);
-    $form->setDefault('value', $this->getRawValue());
+    if ($this->is_column)
+    {
+      $form = $this->_getContentSlotColumnForm();
+    }
+    else
+    {
+      $contentSlotTypes = sfSympalConfig::get('content_slot_types');
+      $className = isset($contentSlotTypes[$this->type]['form']) ? $contentSlotTypes[$this->type]['form'] : sfSympalConfig::get('inline_editing', 'default_slot_form', 'sfSympalInlineEditContentSlotForm');
+      
+      $form = new $className($this);
+      $form->setDefault('value', $this->getRawValue());
+    }
     $form->getWidgetSchema()->setNameFormat('sf_sympal_content_slot_'.$this->id.'[%s]');
 
     return $form;
@@ -72,7 +79,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
    * 
    * @return sfForm
    */
-  public function getContentSlotColumnForm()
+  protected function _getContentSlotColumnForm()
   {
     $content = $this->getContentRenderedFor();
     $contentTable = $content->getTable();
@@ -82,6 +89,15 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
       $form = new $formClass($content);
       $form->useFields(array($this->name));
+      
+      /*
+       * For "column" slots, the widget and validator of the type are
+       * not set automatically in the form itself (as opposed to true
+       * slots who use sfSympalContentSlotForm, where the widget and
+       * validator are setup automatically. This is a shortcoming. We
+       * manually set the widget and validator here for content slots
+       */
+      sfSympalFormToolkit::changeContentSlotValueWidget($this, $form);
     }
 
     if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
@@ -92,6 +108,12 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
         $formClass = sfSympalConfig::get('inline_editing', 'default_column_form');
         $form = new $formClass($content);
         $form->useFields(array(sfContext::getInstance()->getUser()->getEditCulture()));
+        
+        /*
+         * @TODO There should be a changeContentSlotValueWidget() call here,
+         * but I don't seem to have access to the underlying translation
+         * form, which is what you really want to pass into that function
+         */
       }      
     }
 
@@ -102,6 +124,9 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     {
       $form = new $contentTypeFormClassName($content->getRecord());
       $form->useFields(array($this->name));
+      
+      //See above note about this
+      sfSympalFormToolkit::changeContentSlotValueWidget($this, $form);
     }
 
     if (sfSympalConfig::isI18nEnabled($contentTypeClassName))
@@ -114,7 +139,10 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
         $form = new $contentTypeFormClassName($content->getRecord()); 
         $i18nForm = $form->getEmbeddedForm($language = sfContext::getInstance()->getUser()->getEditCulture()); 
         $i18nForm->useFields(array($this->name)); 
-        unset($form[$language]); 
+        //See above note about this
+        sfSympalFormToolkit::changeContentSlotValueWidget($this, $form);
+        unset($form[$language]);
+
         $form->embedForm($language, $i18nForm); 
         $form->useFields(array($language)); 
       }
@@ -141,7 +169,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       $rendererClass = isset($slotTypeConfig['renderer']) ? $slotTypeConfig['renderer'] : 'sfSympalContentSlotTransformer';
       
       $renderer = new $rendererClass($this);
-      $this->_rendered = $renderer->render($this->getRawValue());
+      $this->_rendered = $renderer->render($this->getValueForRendering());
     }
 
     return $this->_rendered;
