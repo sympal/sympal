@@ -184,6 +184,8 @@ class sfSympalDataGrid implements Iterator, Countable
 
   public function getPager()
   {
+    $this->_init();
+    
     return $this->_pager;
   }
 
