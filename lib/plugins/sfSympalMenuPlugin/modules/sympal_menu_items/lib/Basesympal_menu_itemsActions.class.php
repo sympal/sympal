@@ -135,7 +135,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
     if ($this->sf_sympal_menu_item)
     {
-      $this->getSympalContext()->getService('menu_manaer')->setCurrentMenuItem($this->sf_sympal_menu_item);
+      $this->getSympalContext()->getService('menu_manager')->setCurrentMenuItem($this->sf_sympal_menu_item);
     }
   }
 
