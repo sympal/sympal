@@ -37,7 +37,10 @@ class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
     $this->_markClassesAsSafe();
     $this->_configureSuperCache();
     
-    $this->_sympalContext->getApplicationConfiguration()->loadHelpers('SympalContentSlot');
+    $this->_sympalContext->getApplicationConfiguration()->loadHelpers(array(
+      'SympalContentSlot',
+      'SympalPager',
+    ));
     
     $this->dispatcher->connect('template.filter_parameters', array($this, 'listenTemplateFilterParameters'));
     $this->dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
