@@ -153,13 +153,13 @@ class Basesympal_contentActions extends autoSympal_contentActions
   {
     $contentType = Doctrine_Core::getTable('sfSympalContent')
       ->createQuery('c')
-      ->select('t.name')
+      ->select('t.name, c.id')
       ->leftJoin('c.Type t')
       ->where('c.id = ?', $id)
       ->execute(array(), Doctrine_Core::HYDRATE_NONE);
 
     $this->sf_sympal_content = Doctrine_Core::getTable('sfSympalContent')
-      ->getFullTypeQuery($contentType[0][0])
+      ->getFullTypeQuery($contentType[0][1])
       ->where('c.id = ?', $id)
       ->fetchOne();
 
