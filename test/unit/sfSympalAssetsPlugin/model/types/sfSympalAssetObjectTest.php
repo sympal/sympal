@@ -4,14 +4,14 @@ $app = 'sympal';
 $refresh_assets = true;
 require_once(dirname(__FILE__).'/../../../../bootstrap/unit.php');
 
-$t = new lime_test(31);
+$t = new lime_test(34);
 
 // initialize some asset objects
 $sync = new sfSympalAssetSynchronizer($configuration->getEventDispatcher());
 $sync->run();
 
-$asset = Doctrine_Core::getTable('sfSympalAsset')->findOneBySlug('sympal-info')->getAssetObject();
-$asset2 = Doctrine_Core::getTable('sfSympalAsset')->findOneBySlug('screens-sympalphp')->getAssetObject();
+$asset = get_test_asset_object();
+$asset2 = get_test_asset_object('screens-sympalphp');
 
 $t->info('1 - Run some basic functions on the asset');
 $t->isnt($asset, null, 'An asset object for the "sympal info.txt" asset was found');
@@ -38,11 +38,26 @@ $t->like($asset2->getUrl(), '/http\:\/\//', '->getFilePath() contains http://');
 $t->is($asset->getName(), 'sympal info.txt', '->getName() return "sympal info.txt"');
 $t->is($asset2->getSize(), '275', '->getSize() returns 275 for a 274.7kb file');
 
-$original = $asset->getOriginal();
-$t->is($asset->getOriginal()->getPath(), $asset->getPathDirectory().'/.originals/'.$asset->getName(), 'An original copy of the file exists in the .originals directory');
-
 $doctrineAsset = $asset->getDoctrineAsset();
 $t->is($doctrineAsset->name, $asset->getName(), '->getDoctrineAsset() returns the correct asset');
+
+$t->info('  1.1 - Play with the getOriginal() method');
+$original = $asset->getOriginal();
+$t->is($original->getPath(), $asset->getPathDirectory().'/.originals/'.$asset->getName(), 'An original copy of the file exists in the .originals directory');
+
+$t->info('  1.1.1 Unlink the original asset and see if we can recreate it');
+$asset = get_test_asset_object(); // resets the original
+$original = $asset->getOriginal(false);
+$t->is($original->getPath(), $asset->getPathDirectory().'/.originals/'.$asset->getName(), 'The original copy file exists, so it returns just fine');
+
+unlink($original->getPath());
+$asset = get_test_asset_object(); // resets the original
+$original = $asset->getOriginal(false);
+$t->is($original, null, '->getOriginal() return null if there is no original and you don\'t request to make a new one');
+
+$asset = get_test_asset_object(); // resets the original
+$original = $asset->getOriginal();
+$t->is($original->getPath(), $asset->getPathDirectory().'/.originals/'.$asset->getName(), 'The original exists since we\'ve requested it to get recreated');
 
 
 $t->info('2 - Perform a move operation');
@@ -87,3 +102,13 @@ class testRenderer
 $t->is($asset->render(array('renderer' => 'testRenderer')), 'rendered', 'Passing a "renderer" options uses a different rendering class');
 
 // linked_thumbnail
+
+
+function get_test_asset_object($slug = 'sympal-info')
+{
+  // make sure it's free, so we get a fresh object
+  $record = Doctrine_Core::getTable('sfSympalAsset')->findOneBySlug($slug);
+  $record->free();
+  
+  return Doctrine_Core::getTable('sfSympalAsset')->findOneBySlug($slug)->getAssetObject();
+}

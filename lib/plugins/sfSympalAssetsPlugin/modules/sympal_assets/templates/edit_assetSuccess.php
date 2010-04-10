@@ -54,10 +54,14 @@
         <?php echo image_tag($asset->getUrl()) ?>
 
         <h2><?php echo __('Crop Original Image') ?></h2>
-        <p>
-          <?php echo image_tag($asset->getOriginal()->getUrl(), array('id' => 'jcrop_target')) ?>
-        </p>
-        <input type="button" id="sympal_save_crop" value="<?php echo __('Save Crop') ?>" />
+        <?php if ($asset->getOriginal()): ?>
+          <p>
+            <?php echo image_tag($asset->getOriginal()->getUrl(), array('id' => 'jcrop_target')) ?>
+          </p>
+          <input type="button" id="sympal_save_crop" value="<?php echo __('Save Crop') ?>" />
+        <?php else: ?>
+          Original image not found
+        <?php endif; ?>
 
         <?php sympal_use_jquery() ?>
         <?php sympal_use_javascript('/sfSympalPlugin/js/jquery.Jcrop.js') ?>
