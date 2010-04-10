@@ -22,9 +22,7 @@ class sfSympalCreateSiteTask extends sfSympalBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('layout', null, sfCommandOption::PARAMETER_OPTIONAL, 'The site/application layout', null),
       new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
-      new sfCommandOption('load-dummy-data', null, sfCommandOption::PARAMETER_NONE, 'Load dummy data for the newly created site.'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
@@ -85,11 +83,6 @@ EOF;
       $site->description = 'Description for '.$arguments['site'].' site.';
     }
 
-    if ($options['layout'])
-    {
-      $site->layout = $options['layout'];
-    }
-
     $site->save();
     
     return $site;
@@ -100,7 +93,11 @@ EOF;
     try {
       $task = new sfGenerateAppTask($this->dispatcher, $this->formatter);
       $task->run(array($application), array());
-    } catch (Exception $e) {}
+    }
+    catch (Exception $e)
+    {
+      // In case the app already exists, swallow the error
+    }
   }
 
   protected function _prepareApplication($application)
