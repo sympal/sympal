@@ -43,8 +43,6 @@ function get_sympal_pager_header($pager)
  */
 function get_sympal_pager_navigation($pager, $uri, $requestKey = 'page')
 {
-  sympal_use_stylesheet('/sfSympalPlugin/css/pager.css');
-
   $navigation = '<div class="sympal_pager_navigation">';
  
   if ($pager->haveToPaginate())
