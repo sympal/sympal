@@ -1,6 +1,6 @@
 all:
   sympal_config:
-    page:
+    sfSympalPage:
       default_inline_editing_column_form: sfSympalPageForm
       default_rendering_module: ~
       default_rendering_action: ~
@@ -14,6 +14,7 @@ all:
       content_slots:
         title:
           type:     Text
+          edit_mode: inline
         body:
           type:     Markdown
-          edit_model: inline
+          edit_mode: inline

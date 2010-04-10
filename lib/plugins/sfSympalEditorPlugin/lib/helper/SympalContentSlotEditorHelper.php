@@ -69,7 +69,7 @@ function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot
 function get_sympal_content_slot_editor($content, $slot, $options = array())
 {
   $slot->setContentRenderedFor($content);
-      
+
   // merge in some global default slot options
   $options = array_merge(array(
     'edit_mode' => sfSympalConfig::get('inline_editing', 'default_edit_mode'),
@@ -77,7 +77,7 @@ function get_sympal_content_slot_editor($content, $slot, $options = array())
   ), $options);
   
   // merge the default config for this slot into the given config
-  $slotOptions = sfSympalConfig::get($slot->getContentRenderedFor()->Type->slug, 'content_slots', array());
+  $slotOptions = sfSympalConfig::get($slot->getContentRenderedFor()->Type->name, 'content_slots', array());
   if (isset($slotOptions[$slot->name]))
   {
     $options = array_merge($slotOptions[$slot->name], $options);

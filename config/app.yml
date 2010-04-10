@@ -56,7 +56,7 @@ all:
 
     # Configure the available content templates for the different content types
     # Every content type must have a template named "default_view"
-    content-list:
+    sfSympalContentList:
       default_rendering_module: ~
       default_rendering_action: ~
       content_templates:
