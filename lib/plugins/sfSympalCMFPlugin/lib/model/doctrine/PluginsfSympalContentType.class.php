@@ -59,28 +59,15 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     return $this->_routeObject;
   }
 
-  public function getCustomModuleName()
+  public function getModuleToRenderWith()
   {
     if ($moduleName = $this->_get('module'))
     {
       return $moduleName;
-    } else {
-      return 'sympal_'.str_replace('-', '_', $this->getSlug());
     }
-  }
-
-  public function hasCustomModule()
-  {
-    return $this->_get('module') || sfSympalToolkit::moduleAndActionExists($this->getCustomModuleName(), 'index');
-  }
-
-  public function getModuleToRenderWith()
-  {
-    if ($this->hasCustomModule())
+    else
     {
-      return $this->getCustomModuleName();
-    } else {
-      return sfSympalConfig::get($this->getSlug(), 'default_rendering_module', sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer'));
+      return sfSympalConfig::get($this->getName(), 'default_rendering_module', sfSympalConfig::get('default_rendering_module', null, 'sympal_content_renderer'));
     }
   }
 
@@ -89,8 +76,10 @@ abstract class PluginsfSympalContentType extends BasesfSympalContentType
     if ($actionName = $this->_get('action'))
     {
       return $actionName;
-    } else {
-      return sfSympalConfig::get($this->getSlug(), 'default_rendering_action', sfSympalConfig::get('default_rendering_action', null, 'index'));
+    }
+    else
+    {
+      return sfSympalConfig::get($this->getName(), 'default_rendering_action', sfSympalConfig::get('default_rendering_action', null, 'index'));
     }
   }
 }
