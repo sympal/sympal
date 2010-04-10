@@ -181,9 +181,10 @@ class sfSympalAssetObject
    * Returns an sfSympalAssetObject instance representing an original
    * copy of this asset (if one exists)
    *
+   * @param boolean $create Whether or not to try to create an original if it doesn't exist
    * @return sfSympalAssetObject
    */
-  public function getOriginal()
+  public function getOriginal($create = true)
   {
     if (!$this->_original)
     {
@@ -191,6 +192,13 @@ class sfSympalAssetObject
       if ($original->exists())
       {
         $this->_original = $original;
+      }
+      elseif ($create)
+      {
+        $this->getDoctrineAsset()->copyOriginal();
+        
+        // try to get the original, but don't create on failure
+        $this->_original = $this->getOriginal(false);
       }
     }
 
@@ -203,7 +211,7 @@ class sfSympalAssetObject
     {
       unlink($this->getPath());
     }
-    if ($original = $this->getOriginal())
+    if ($original = $this->getOriginal(false))
     {
       $original->delete();
     }
@@ -254,7 +262,7 @@ class sfSympalAssetObject
    */
   public function move($newPath)
   {
-    $original = $this->getOriginal();
+    $original = $this->getOriginal(false);
 
     mkdir(dirname($newPath), 0777, true);
     rename($this->getPath(), $newPath);
