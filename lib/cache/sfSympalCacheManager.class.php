@@ -139,22 +139,6 @@ class sfSympalCacheManager
   }
 
   /**
-   * Get the cached layouts array
-   *
-   * @return array $layouts
-   */
-  public function getLayouts()
-  {
-    throw new sfException('@TODO - Must be reimplemented');
-    if ($this->_layouts === null)
-    {
-      $this->_layouts = $this->get('layouts');
-    }
-
-    return $this->_layouts;
-  }
-
-  /**
    * Get the cached helper methods and paths
    *
    * @return array $helpers
