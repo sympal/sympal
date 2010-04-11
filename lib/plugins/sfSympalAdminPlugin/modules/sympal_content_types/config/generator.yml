@@ -24,11 +24,9 @@ generator:
         class: false
       form:
         display:
-          "Content Type": [label, name, description, default_path, plugin_name, slug]
+          "Content Type": [label, name, description, default_path, slug]
           "Rendering": [template, theme, module, action]
         fields:
-          plugin_name:
-            help: The name of the plugin that contains the content type.
           name:
             help: The Doctrine model name for the content type.
           label:

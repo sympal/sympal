@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(25);
+$t = new lime_test(24);
 
 $configuration->loadHelpers(array('I18N'));
 
@@ -18,7 +18,6 @@ function installPlugin($name, $t)
   $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentTypeName);
   $t->is($contentType['name'], $contentTypeName, 'Test content type name set');
   $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize(str_replace('sfSympal', null, $contentTypeName))), 'Test content type label set');
-  $t->is($contentType['plugin_name'], $name, 'Test content type plugin name set');
 
   $contentList = Doctrine_Core::getTable('sfSympalContentList')->findOneByContentTypeId($contentType['id']);
   $t->is($contentList instanceof sfSympalContentList, true, 'Test sample content list was created.');

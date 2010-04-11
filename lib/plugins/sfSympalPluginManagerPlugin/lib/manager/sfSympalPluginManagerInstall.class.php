@@ -112,9 +112,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
     $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize(str_replace('sfSympal', null, $this->_contentTypeName)));
     $slug = 'sample_'.$lowerName;
 
-    $properties = array(
-      'plugin_name' => $this->_pluginName,
-    );
+    $properties = array();
 
     $contentType = $this->newContentType($this->_contentTypeName, $properties);
     $installVars['contentType'] = $contentType;

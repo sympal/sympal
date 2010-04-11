@@ -116,30 +116,6 @@ class sfSympalConfiguration
   }
 
   /**
-   * Get array of plugins which contain a content type
-   *
-   * @return array $contentTypePlugins
-   */
-  public function getContentTypePlugins()
-  {
-    if ($this->_contentTypePlugins === null)
-    {
-      $this->_contentTypePlugins = array();
-      $plugins = $this->getPluginPaths();
-
-      foreach ($plugins as $plugin => $path)
-      {
-        $manager = new sfSympalPluginManager($plugin, $this->_projectConfiguration, new sfFormatter());
-        if ($contentType = $manager->getContentTypeForPlugin())
-        {
-          $this->_contentTypePlugins[] = $plugin;
-        }
-      }
-    }
-    return $this->_contentTypePlugins;
-  }
-
-  /**
    * Get array of plugins that are downloaded and installed to your project
    *
    * @return array $installedPlugins

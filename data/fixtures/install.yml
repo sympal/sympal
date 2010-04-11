@@ -6,7 +6,6 @@ sfSympalSite:
 
 sfSympalContentType:
   ContentType_Page:
-    plugin_name: sfSympalPagesPlugin
     name: sfSympalPage
     slug: page
     description: The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.
@@ -19,7 +18,6 @@ sfSympalContentType:
 <?php endif; ?>
 
   ContentType_ContentList:
-    plugin_name: sfSympalContentListPlugin
     name: sfSympalContentList
     slug: content-list
     description: The content list content type is the default Sympal content type for displaying lists of content.

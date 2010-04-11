@@ -42,7 +42,6 @@ $t->is($dataGrid->getRows(), array(
       'c.name' => 'sfSympalPage',
       'c.description' => 'The page content type is the default Sympal content type. It is a simple page that only consists of a title and body. The contents of the body are a sympal content slot that can be filled with your selected type of content.',
       'c.label' => 'Page',
-      'c.plugin_name' => 'sfSympalPagesPlugin',
       'c.default_path' => '/pages/:slug',
       'c.theme' => NULL,
       'c.template' => 'default_view',

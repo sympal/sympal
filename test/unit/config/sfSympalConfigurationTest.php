@@ -13,7 +13,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(20);
+$t = new lime_test(19);
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
@@ -89,13 +89,6 @@ $t->is(in_array('sympal_content_renderer', $modules), true, '->getModules() retu
 
 $layouts = $sympalConfiguration->getLayouts();
 $t->is(in_array('sympal', $layouts), true, '->getLayouts() returns an array with "sympal" as one of its entries');
-
-$contentTypePlugins = $sympalConfiguration->getContentTypePlugins(); 
-$t->is($contentTypePlugins, array( 
-  'sfSympalBlogPlugin', 
-  'sfSympalPagesPlugin', 
-  'sfSympalContentListPlugin' 
-), '->getContentTypePlugins() returns the correct array of plugins with content typed defined'); 
  
 $allManageablePlugins = $sympalConfiguration->getAllManageablePlugins(); 
 $t->is(in_array('sfSympalBlogPlugin', $allManageablePlugins), true, '->getAllManageablePlugins() returns the correct array of plugins');
