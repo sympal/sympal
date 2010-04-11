@@ -63,6 +63,43 @@ all:
         default_view:
           template: sympal_content_list/view
 
+
+    # Configure and customize the available content slot types
+    content_slot_types:
+      #MySlotType:
+      #  label: Label of My Slot Type
+      #  form: MySlotForm                        default: sfSympalInlineEditContentSlotForm
+      #  form_renderer: some_module/form_partial default: sympal_edit_slot/slot_editor_form
+      #  widget_class: MySlotTypeWidget          default: sfWidgetFormSympalXXXXXXType
+      #  widget_options: []
+      #  validator_class: MySlotTypeValidator    default: sfValidatorFormSympalXXXXXXType
+      #  validator_options: []
+      #  transformers:    []
+      Text:
+        label: Single Line of Text
+        transformers:  [replacer]
+      RawHtml:
+        label: Raw HTML
+        transformers:  [replacer]
+      Markdown:
+        label: Markdown Editor
+        transformers:  [replacer, markdown]
+      TinyMCE:
+        label: TinyMCE Rich Text Editor
+        widget_options:
+          config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
+        transformers:  [replacer]
+      
+      # special slot type for "column" slots where the widget/validator from the content or content type form are used instead of those listed here
+      Column:
+        label:  Column Slot Type
+        widget_class:    false
+        validator_class: false
+
+    slot_transformers:
+      replacer:       [sfSympalContentSlotReplacer, transformSlotContent]
+      markdown:       [sfSympalMarkdownRenderer, convertToHtml]
+
     # Automatically set the response meta title based on the current content and menu item
     auto_seo:
       title: true
@@ -115,42 +152,6 @@ all:
     # database queries for menus
     menu_cache:
       enabled: true
-
-    # Configure and customize the available content slot types
-    content_slot_types:
-      #MySlotType:
-      #  label: Label of My Slot Type
-      #  form: MySlotForm                        default: sfSympalInlineEditContentSlotForm
-      #  form_renderer: some_module/form_partial default: sympal_edit_slot/slot_editor_form
-      #  widget_class: MySlotTypeWidget          default: sfWidgetFormSympalXXXXXXType
-      #  widget_options: []
-      #  validator_class: MySlotTypeValidator    default: sfValidatorFormSympalXXXXXXType
-      #  validator_options: []
-      #  transformers:    []
-      Text:
-        label: Single Line of Text
-        transformers:  [replacer]
-      RawHtml:
-        label: Raw HTML
-        transformers:  [replacer]
-      Markdown:
-        label: Markdown Editor
-        transformers:  [replacer, markdown]
-      TinyMCE:
-        label: TinyMCE Rich Text Editor
-        widget_options:
-          config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
-        transformers:  [replacer]
-      
-      # special slot type for "column" slots where the widget/validator from the content or content type form are used instead of those listed here
-      Column:
-        label:  Column Slot Type
-        widget_class:    false
-        validator_class: false
-
-    slot_transformers:
-      replacer:       [sfSympalContentSlotReplacer, transformSlotContent]
-      markdown:       [sfSympalMarkdownRenderer, convertToHtml]
         
 
     # Enable and disable the check for upgrades via the web when on the Sympal dashboard
