@@ -1,12 +1,30 @@
 <?php
 
+/**
+ * General utility class for things relatd to plugins
+ * 
+ * @package     sfSympalPluginManagerPlugin
+ * @subpackage  util
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class sfSympalPluginToolkit
 {
+
+  /**
+   * Returns the absolute path to a plugin or false if the plugin doesn't
+   * exist or isn't enabled
+   * 
+   * @return string or false
+   */
   public static function getPluginPath($pluginName)
   {
-    try {
+    try
+    {
       return ProjectConfiguration::getActive()->getPluginConfiguration($pluginName)->getRootDir();
-    } catch (Exception $e) {
+    }
+    catch (Exception $e)
+    {
       return false;
     }
   }
