@@ -15,7 +15,11 @@ class sfSympalUpgrade1_0_0_ALPHA4__1 extends sfSympalVersionUpgrade
   {
     $this->logSection('sympal', 'Changing base Table class from sfSympalDoctrineTable to Doctrine_Table');
 
-    $files = $this->_getFinder('file')->name('*Table.class.php')->in($this->_getDoctrineModelDirectories());
+    $files = $this->_getFinder('file')
+      ->name('*Table.class.php')
+      ->follow_link()
+      ->in($this->_getDoctrineModelDirectories());
+    
     foreach ($files as $file)
     {
       $contents = file_get_contents($file);

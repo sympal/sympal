@@ -18,7 +18,7 @@ class sfSympalUpgrade1_0_0_ALPHA4__4 extends sfSympalVersionUpgrade
   {
     $this->logSection('sympal', 'Moving some config values');
     
-    $finder = sfFinder::type('file')->name('app.yml');
+    $finder = sfFinder::type('file')->name('app.yml')->follow_link();
     foreach ($finder->in(sfConfig::get('sf_root_dir')) as $file)
     {
       $data = sfYaml::load($file);
