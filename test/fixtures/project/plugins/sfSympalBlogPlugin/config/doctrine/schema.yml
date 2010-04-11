@@ -1,6 +1,0 @@
----
-sfSympalBlogPost:
-  actAs: [sfSympalContentTypeTemplate]
-  columns:
-    title: string(255)
-    teaser: clob

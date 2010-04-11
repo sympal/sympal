@@ -1,5 +1,0 @@
-default:
-  is_secure: true
-
-create:
-  is_secure: false
