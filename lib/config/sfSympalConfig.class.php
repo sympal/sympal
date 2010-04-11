@@ -76,9 +76,9 @@ class sfSympalConfig extends sfConfig
    * @param string $name The name of the config key
    * @param mixed $default The default value to return if the config doesn't exist
    */
-  public static function getDeep($group, $subGroup, $name, $default = null)
+  public static function getDeep($group, $subgroup, $name, $default = null)
   {
-    $data = self::get($group, $subgroup);
+    $data = sfSympalConfig::get($group, $subgroup);
     
     if (!$data || !is_array($data))
     {
