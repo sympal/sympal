@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * Acts as an extension of sfSympalConfiguration
+ * 
+ * @package     sfSympalCMFPlugin
+ * @subpackage  config
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class sfSympalContentConfiguration extends sfSympalExtendClass
 {
 
@@ -11,6 +18,6 @@ class sfSympalContentConfiguration extends sfSympalExtendClass
    */
   public function getContentTemplates($model)
   {
-    return sfSympalConfig::get($model, 'content_templates', array());
+    return sfSympalConfig::getDeep('content_types', $model, 'content_templates', array());
   }
 }
