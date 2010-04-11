@@ -202,30 +202,6 @@ class sfSympalToolkit
     throw new sfException('Could not find component or partial for the module "'.$module.'" and action "'.$action.'"');
   }
 
-  protected static $_helperAutoloadCache = null;
-
-  /**
-   * Autoload the helper file for a helper function
-   *
-   * @param string $functionName
-   * @return void
-   */
-  public static function autoloadHelper($functionName)
-  {
-    if (is_null(self::$_helperAutoloadCache))
-    {
-      self::$_helperAutoloadCache = sfSympalContext::getInstance()->getSympalConfiguration()->getCache()->getHelperAutoload();
-    }
-    if (isset(self::$_helperAutoloadCache[$functionName]))
-    {
-      require_once(self::$_helperAutoloadCache[$functionName]);
-    }
-    else
-    {
-      throw new sfException('Could not autoload helper for function "'.$functionName.'"');
-    }
-  }
-
   /**
    * Check if a module and action exist
    *

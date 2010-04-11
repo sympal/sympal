@@ -139,57 +139,6 @@ class sfSympalCacheManager
   }
 
   /**
-   * Get the cached helper methods and paths
-   *
-   * @return array $helpers
-   */
-  public function getHelperAutoload()
-  {
-    throw new sfException('@TODO Needs to be reimplemented');
-    if ($this->_helperAutoload === null)
-    {
-      $this->_helperAutoload = $this->get('helper_autoload');
-    }
-
-    return $this->_helperAutoload;
-  }
-
-  /**
-   * Write the helper autoload cache
-   * 
-   * This caches an array of function names (e.g. url_for) and the file
-   * that contains that method (e.g. UrlHelper.php)
-   *
-   * @return void
-   */
-  protected function _writeHelperAutoloadCache()
-  {
-    throw new sfException('@TODO Needs to be reimplemented');
-    $cache = array();
-    $dirs = $this->_projectConfiguration->getHelperDirs();
-    foreach ($dirs as $dir)
-    {
-      $helpers = sfFinder::type('file')->name('*Helper.php')->in($dir);
-      foreach ($helpers as $helper)
-      {
-        $lines = file($helper);
-        foreach ($lines as $line)
-        {
-          preg_match("/function (.*)\(/", $line, $matches);
-          if ($matches)
-          {
-            $function = $matches[1];
-            $e = explode('(', $function);
-            $function = $e[0];
-            $cache[$function] = $helper;
-          }
-        }
-      }
-    }
-    $this->set('helper_autoload', $cache);
-  }
-
-  /**
    * @see sfCache::remove()
    */
   public function remove($key)
