@@ -56,12 +56,13 @@ all:
 
     # Configure the available content templates for the different content types
     # Every content type must have a template named "default_view"
-    sfSympalContentList:
-      default_rendering_module: ~
-      default_rendering_action: ~
-      content_templates:
-        default_view:
-          template: sympal_content_list/view
+    content_types:
+      sfSympalContentList:
+        default_rendering_module: ~
+        default_rendering_action: ~
+        content_templates:
+          default_view:
+            template: sympal_content_list/view
 
 
     # Configure and customize the available content slot types

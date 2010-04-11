@@ -653,20 +653,42 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     {
       $template = $templates[$template]['template'];
     }
-    $template = $template ? $template : sfSympalConfig::get($this->getType()->getName(), 'default_content_template', sfSympalConfig::get('default_content_template'));
+    
+    if (!$template)
+    {
+      $template = sfSympalConfig::getDeep(
+        'content_types',
+        $this->getType()->getName(),
+        'default_content_template',
+        sfSympalConfig::get('default_content_template')
+      );
+    }
+
     return $template;
   }
 
   public function getThemeToRenderWith()
   {
-    if ($theme = $this->getTheme()) {
+    if ($theme = $this->getTheme())
+    {
       return $theme;
-    } else if ($theme = $this->getType()->getTheme()) {
+    }
+    else if ($theme = $this->getType()->getTheme())
+    {
       return $theme;
-    } else if ($theme = $this->getSite()->getTheme()) {
+    }
+    else if ($theme = $this->getSite()->getTheme())
+    {
       return $theme;
-    } else {
-      return sfSympalConfig::get($this->getType()->getName(), 'default_theme', sfSympalConfig::get('theme', 'default_theme', $this->getSite()->getSlug()));
+    }
+    else
+    {
+      return sfSympalConfig::getDeep(
+        'content_types',
+        $this->getType()->getName(),
+        'default_theme',
+        sfSympalConfig::get('theme', 'default_theme', $this->getSite()->getSlug())
+      );
     }
   }
 

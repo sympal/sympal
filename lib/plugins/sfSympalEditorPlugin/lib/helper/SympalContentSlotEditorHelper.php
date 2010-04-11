@@ -77,7 +77,8 @@ function get_sympal_content_slot_editor($content, $slot, $options = array())
   ), $options);
   
   // merge the default config for this slot into the given config
-  $slotOptions = sfSympalConfig::get($slot->getContentRenderedFor()->Type->name, 'content_slots', array());
+  $slotOptions = sfSympalConfig::getDeep('content_types', $content->Type->name, 'content_slots', array());
+
   if (isset($slotOptions[$slot->name]))
   {
     $options = array_merge($slotOptions[$slot->name], $options);

@@ -52,7 +52,7 @@ function _get_sympal_content_slot($name, $options = array())
   $content->setEditableSlotsExistOnPage(true);
   
   // merge the default config for this slot into the given config
-  $slotOptions = sfSympalConfig::get($content->Type->name, 'content_slots', array());
+  $slotOptions = sfSympalConfig::getDeep('content_types', $content->Type->name, 'content_slots', array());
   if (isset($slotOptions[$name]))
   {
     $options = array_merge($slotOptions[$name], $options);

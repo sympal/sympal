@@ -1,20 +1,21 @@
 all:
   sympal_config:
-    sfSympalPage:
-      default_inline_editing_column_form: sfSympalPageForm
-      default_rendering_module: ~
-      default_rendering_action: ~
-      default_content_template: ~
-      default_theme: ~
-      content_templates:
-        default_view:
-          template: sympal_page/view
-        register:
-          template: sympal_register/page_template
-      content_slots:
-        title:
-          type:     Text
-          edit_mode: inline
-        body:
-          type:     Markdown
-          edit_mode: inline
+    content_types:
+      sfSympalPage:
+        default_inline_editing_column_form: sfSympalPageForm
+        default_rendering_module: ~
+        default_rendering_action: ~
+        default_content_template: ~
+        default_theme: ~
+        content_templates:
+          default_view:
+            template: sympal_page/view
+          register:
+            template: sympal_register/page_template
+        content_slots:
+          title:
+            type:     Text
+            edit_mode: inline
+          body:
+            type:     Markdown
+            edit_mode: inline
