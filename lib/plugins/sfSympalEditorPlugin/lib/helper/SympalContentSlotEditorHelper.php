@@ -1,6 +1,16 @@
 <?php
 
 /**
+ * Get the floating sympal editor for the given MenuItem and Content instances
+ *
+ * @return string $html
+ */
+function get_sympal_editor()
+{
+  return get_partial('sympal_editor/editor');
+}
+
+/**
  * Renders the inline edit menu, which consists of buttons such as the
  * assets and links buttons
  * 
