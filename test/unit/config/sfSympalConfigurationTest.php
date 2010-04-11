@@ -18,9 +18,9 @@ $t = new lime_test(19);
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
 
-$contentTemplates = $sympalConfiguration->getContentTemplates('page'); 
-$t->is(isset($contentTemplates['default_view']), true, '->getContentTemplates() returns default_view for page'); 
-$t->is(isset($contentTemplates['register']), true, '->getContentTemplates() returns register for page'); 
+$contentTemplates = $sympalConfiguration->getContentTemplates('sfSympalPage');
+$t->is(isset($contentTemplates['default_view']), true, '->getContentTemplates() returns default_view for sfSympalPage'); 
+$t->is(isset($contentTemplates['register']), true, '->getContentTemplates() returns register for sfSympalPage'); 
  
 $plugins = $sympalConfiguration->getPlugins(); 
 $t->is(is_array($plugins), true, '->getPlugins() returns array'); 
