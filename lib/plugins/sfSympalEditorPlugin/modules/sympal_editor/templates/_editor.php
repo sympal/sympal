@@ -1,5 +1,3 @@
-<div class="sympal_inline_edit_bar_bottom_background"></div>
-
 <div class="sympal_inline_edit_bar_container">
   <div class="sympal_inline_edit_bar sympal_form">
     <?php use_helper('SympalContentSlotEditor') ?>
