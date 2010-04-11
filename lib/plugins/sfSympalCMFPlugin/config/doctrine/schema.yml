@@ -147,9 +147,6 @@ sfSympalContentType:
     label:
       type: string(255)
       notnull: true
-    plugin_name:
-      type: string(255)
-      notnull: true
     default_path: string(255)
     theme: string(255)
     template: string(255)
