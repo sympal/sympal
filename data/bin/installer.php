@@ -100,6 +100,9 @@ $this->logSection('sympal', '...downloading sfSympalPlugin');
 
 // Using git for now because PEAR ALWAYS FAILS FOR SOME PEOPLE
 $this->getFilesystem()->execute('git clone git://github.com/sympal/sympal.git plugins/sfSympalPlugin');
+chdir(dirname(__FILE__).'/plugins/sfSympalPlugin');
+$this->getFilesystem()->execute('git submodule init');
+$this->getFilesystem()->execute('git submodule update');
 
 //@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
 //$this->disablePlugin('sfSympalPlugin'); // We don't want the explicit enabling of this plugin
