@@ -3,8 +3,9 @@
 /**
  * Worker class to upgrade to sympal version 1.0.0 ALPHA 4
  * 
- * This changes all of the content type configs (e.g. "page") to
- * their model name (e.g. sfSympalPage)
+ * This changes all of the content type configs (e.g. "sfSympalPage") to
+ * live beneath a "content_types" group, instead of at the root level
+ * of sympal_config
  * 
  * @package     sfSympalUpgradePlugin
  * @subpackage  upgrade
@@ -12,13 +13,14 @@
  * @since       2010-03-26
  * @version     svn:$Id$ $Author$
  */
-class sfSympalUpgrade1_0_0_ALPHA4__4 extends sfSympalVersionUpgrade
+class sfSympalUpgrade1_0_0_ALPHA4__5 extends sfSympalVersionUpgrade
 {
   public function _doUpgrade()
   {
-    $this->logSection('sympal', 'Moving some config values');
+    $this->logSection('sympal', 'Moving content type config to a new group "content_types"');
     
     $finder = sfFinder::type('file')->name('app.yml')->follow_link();
+    $modifiedFiles = 0;
     foreach ($finder->in(sfConfig::get('sf_root_dir')) as $file)
     {
       $data = sfYaml::load($file);
@@ -39,38 +41,37 @@ class sfSympalUpgrade1_0_0_ALPHA4__4 extends sfSympalVersionUpgrade
           continue;
         }
         
+        // each content_type config should have a content_templates key
         if (isset($value['content_templates']))
         {
-          $slug = $key;
+          $this->logSection('update', sprintf('Updating "%s" content type in "%s"', $key, $file));
+          $needsSaving = true;
           
-          $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneBySlug($slug);
-          if (!$contentType)
+          if (!isset($data['all']['sympal_config']['content_types']))
           {
-            // See if it was already upgraded. If it matches the name already, we're good
-            $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($slug);
-            if (!$contentType)
-            {
-              $this->logSection('sympal', sprintf('Attempting to change key app_sympal_config_%s', $slug), null, 'ERROR');
-              $this->logSection('sympal', sprintf('In file "%s"', $file), null, 'ERROR');
-              $this->logSection('sympal', sprintf('The %s slug should be changed to the name of the content type.', $slug), null, 'ERROR');
-              $this->logSection('sympal', sprintf('However, the content type record with slug %s could not be found.', $slug), null, 'ERROR');
-              $this->logSection('sympal', 'Skipping content type');
-            }
-            
-            continue;
+            $data['all']['sympal_config']['content_types'] = array();
           }
           
-          $needsSaving = true;
-          $data['all']['sympal_config'][$contentType->name] = $value;
+          $data['all']['sympal_config']['content_types'][$key] = $value;
           unset($data['all']['sympal_config'][$key]);
         }
       }
       
       if ($needsSaving)
       {
+        $modifiedFiles++;
         $this->logSection('sympal', sprintf('Upgrading "%s"', $file));
-        file_put_contents($file, sfYaml::dump($data, 6));
+        file_put_contents($file, sfYaml::dump($data, 7));
       }
+    }
+    
+    if ($modifiedFiles)
+    {
+      $this->logSection('sympal', sprintf('Updated %s files', $modifiedFiles));
+    }
+    else
+    {
+      $this->logSection('sympal', 'No files updated');
     }
   }
 

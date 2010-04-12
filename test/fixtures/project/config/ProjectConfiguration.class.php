@@ -12,7 +12,12 @@ class ProjectConfiguration extends sfProjectConfiguration
 {
   public function setup()
   {
+    /*
+     * For sympal apps, this is enabled for you. For non-sympal apps, this
+     * needs to be here to enable the plugin
+     */
     $this->enablePlugins(array('sfDoctrinePlugin'));
+    
     require_once(dirname(__FILE__).'/../../../../config/sfSympalPluginConfiguration.class.php');
     sfSympalPluginConfiguration::enableSympalPlugins($this);
   }

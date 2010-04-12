@@ -1,16 +1,39 @@
 <?php
 
+/**
+ * General utility class for things relatd to plugins
+ * 
+ * @package     sfSympalPluginManagerPlugin
+ * @subpackage  util
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class sfSympalPluginToolkit
 {
+
+  /**
+   * Returns the absolute path to a plugin or false if the plugin doesn't
+   * exist or isn't enabled
+   * 
+   * @return string or false
+   */
   public static function getPluginPath($pluginName)
   {
-    try {
+    try
+    {
       return ProjectConfiguration::getActive()->getPluginConfiguration($pluginName)->getRootDir();
-    } catch (Exception $e) {
+    }
+    catch (Exception $e)
+    {
       return false;
     }
   }
 
+  /**
+   * Returns whether or not a plugin has been installed
+   * 
+   * @param string $plugin The short (Blog) or long (sfSympalBlogPlugin) name of the plugin
+   */
   public static function isPluginInstalled($plugin)
   {
     $pluginName = sfSympalPluginToolkit::getLongPluginName($plugin);
@@ -18,11 +41,16 @@ class sfSympalPluginToolkit
     return (self::isPluginDownloaded($plugin) && sfSympalConfig::get($pluginName, 'installed', false));
   }
 
+  /**
+   * Whether or not the plugin has actuall been downloaded
+   * 
+   * @param string $plugin The short (Blog) or long (sfSympalBlogPlugin) name of the plugin
+   */
   public static function isPluginDownloaded($plugin)
   {
     $pluginName = sfSympalPluginToolkit::getLongPluginName($plugin);
 
-    return is_dir(self::getPluginPath($pluginName)) ? true:false;
+    return is_dir(self::getPluginPath($pluginName)) ? true : false;
   }
 
   public static function isPluginDownloadable($name) 
@@ -33,12 +61,22 @@ class sfSympalPluginToolkit
  	  return in_array($availablePlugins, $pluginName); 
  	}
 
+  /**
+   * Translates a short plugin name (Blog) to a long plugin name (sfSympalBlogPlugin).
+   * 
+   * You can also pass in the login plugin name and it'll leave it alone
+   * 
+   * @param string $plugin The short (Blog) or long (sfSympalBlogPlugin) name of the plugin
+   * @return string
+   */
   public static function getLongPluginName($name)
   {
     if (strstr($name, 'sfSympal'))
     {
       return $name;
-    } else {
+    }
+    else
+    {
       return 'sfSympal'.Doctrine_Inflector::classify(Doctrine_Inflector::tableize($name)).'Plugin';
     }
   }

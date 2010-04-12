@@ -44,7 +44,7 @@ class sfSympalPluginManagerInstall extends sfSympalPluginManager
 
       sfSympalConfig::writeSetting($this->_pluginName, 'installed', true);
     } catch (Exception $e) {
-      $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName);
+      $uninstall = new sfSympalPluginManagerUninstall($this->_pluginName, $this->_configuration);
       $uninstall->uninstall();
 
       throw $e;

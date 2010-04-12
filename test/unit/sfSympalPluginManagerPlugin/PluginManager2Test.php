@@ -1,13 +1,22 @@
 <?php
 
+/**
+ * Tests what happens when you install and uninstall plugins
+ * 
+ * @package     sfSympalPlugin
+ * @subpackage  test
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
+
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(24);
+$t = new lime_test(16);
 
 $configuration->loadHelpers(array('I18N'));
 
-function installPlugin($name, $t)
+function installPlugin($name, $t, $contentTypeModelName)
 {
   // Install the plugin
   $manager = sfSympalPluginManager::getActionInstance($name, 'install');
@@ -15,15 +24,25 @@ function installPlugin($name, $t)
 
   // Check that content type was created
   $contentTypeName = $manager->getContentTypeForPlugin($name);
-  $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentTypeName);
-  $t->is($contentType['name'], $contentTypeName, 'Test content type name set');
-  $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize(str_replace('sfSympal', null, $contentTypeName))), 'Test content type label set');
+  
+  if ($contentTypeModelName)
+  {
+    $t->is($contentTypeName, $contentTypeModelName, sprintf('getContentTypeForPlugin() returns the content type "%s"', $contentTypeName));
 
-  $contentList = Doctrine_Core::getTable('sfSympalContentList')->findOneByContentTypeId($contentType['id']);
-  $t->is($contentList instanceof sfSympalContentList, true, 'Test sample content list was created.');
+    $contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByName($contentTypeName);
+    $t->is($contentType['name'], $contentTypeName, 'Test content type name set');
+    $t->is($contentType['label'], sfInflector::humanize(sfInflector::tableize(str_replace('sfSympal', null, $contentTypeName))), 'Test content type label set');
+    
+    $contentList = Doctrine_Core::getTable('sfSympalContentList')->findOneByContentTypeId($contentType['id']);
+    $t->is($contentList instanceof sfSympalContentList, true, 'Test sample content list was created.');
 
-  $menuItem = Doctrine_Core::getTable('sfSympalMenuItem')->findOneByContentId($contentList['content_id']);
-  $t->is($menuItem instanceof sfSympalMenuItem, true, 'Test menu item to sample content list was created.');
+    $menuItem = Doctrine_Core::getTable('sfSympalMenuItem')->findOneByContentId($contentList['content_id']);
+    $t->is($menuItem instanceof sfSympalMenuItem, true, 'Test menu item to sample content list was created.');
+  }
+  else
+  {
+    $t->is($contentTypeName, false, '->getContentTypeForPlugin() return false, there is not content type');
+  }
 }
 
 function uninstallPlugin($name, $t, $delete = true)
@@ -41,13 +60,9 @@ function uninstallPlugin($name, $t, $delete = true)
 $t->info('1 - Uninstalling sfSympalBlogPlugin...');
 uninstallPlugin('sfSympalBlogPlugin', $t, false);
 $t->info('2 - Installing sfSympalBlogPlugin...');
-installPlugin('sfSympalBlogPlugin', $t);
+installPlugin('sfSympalBlogPlugin', $t, 'sfSympalBlogPost');
 
-$t->info('3 - Installing sfSympalEventPlugin');
-installPlugin('sfSympalEventPlugin', $t);
-
-$t->info('4 - Uninstalling sfSympalEventPlugin...');
-uninstallPlugin('sfSympalEventPlugin', $t);
-
-$t->info('5 - Uninstalling sfSympalObjectReplacerPlugin');
-uninstallPlugin('sfSympalObjectReplacerPlugin', $t);
+$t->info('3 - Uninstalling sfSympalCommentsPlugin...');
+uninstallPlugin('sfSympalCommentsPlugin', $t, false);
+$t->info('4 - Installing sfSympalCommentsPlugin');
+installPlugin('sfSympalCommentsPlugin', $t, false);

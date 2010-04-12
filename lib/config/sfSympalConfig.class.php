@@ -63,6 +63,32 @@ class sfSympalConfig extends sfConfig
   }
 
   /**
+   * Helper to return very deep configuration values
+   * 
+   * all:
+   *   sympal_config:
+   *     group:
+   *       subGroup:
+   *         name:      value
+   * 
+   * @param string $group The group name for the config
+   * @param string $subGroup The sub group name for the config
+   * @param string $name The name of the config key
+   * @param mixed $default The default value to return if the config doesn't exist
+   */
+  public static function getDeep($group, $subgroup, $name, $default = null)
+  {
+    $data = sfSympalConfig::get($group, $subgroup);
+    
+    if (!$data || !is_array($data))
+    {
+      return $default;
+    }
+    
+    return isset($data[$name]) ? $data[$name] : $default;
+  }
+
+  /**
    * Set a setting value
    *
    * @param string $group The group name to put the value on 

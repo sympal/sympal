@@ -40,9 +40,20 @@ class sfSympalUpgrade1_0_0_ALPHA4__2 extends sfSympalVersionUpgrade
       {
         $filesystem->remove(sfConfig::get('sf_root_dir').'/'.$origin.'/'.$file);
       }
+      
       // remove the dirs
-      $filesystem->remove(sfConfig::get('sf_root_dir').'/'.$origin.'/base');
-      $filesystem->remove(sfConfig::get('sf_root_dir').'/'.$origin);
+      $dirs = array(
+        sfConfig::get('sf_root_dir').'/'.$origin.'/base',
+        sfConfig::get('sf_root_dir').'/'.$origin,
+      );
+      
+      foreach ($dirs as $dir)
+      {
+        if (file_exists($dir))
+        {
+          $filesystem->remove($dir);
+        }
+      }
     }
   }
 }

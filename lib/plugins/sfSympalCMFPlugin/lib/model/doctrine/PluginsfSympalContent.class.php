@@ -642,31 +642,69 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     }
   }
 
+  /**
+   * This gets the correct template to render with
+   * 
+   * The process is this:
+   *   1) Look first on the content record itself for a template "name"
+   *   2) Look next on the type record for a template "name"
+   * 
+   * We then retrieve the actual template (module/template) by looking
+   * under the "content_templates" key of the current content template's
+   * configuration for the template "name".
+   * 
+   * If all else fails, the "default_view" template name of the current
+   * content type config will be used
+   */
   public function getTemplateToRenderWith()
   {
-    if (!$template = $this->getTemplate())
+    if (!$templateName = $this->getTemplate())
     {
-      $template = $this->getType()->getTemplate();
+      $templateName = $this->getType()->getTemplate();
     }
+
     $templates = sfSympalConfiguration::getActive()->getContentTemplates($this->getType()->getName());
-    if (isset($templates[$template]))
+    if (isset($templates[$templateName]))
     {
-      $template = $templates[$template]['template'];
+      $template = $templates[$templateName]['template'];
     }
-    $template = $template ? $template : sfSympalConfig::get($this->getType()->getName(), 'default_content_template', sfSympalConfig::get('default_content_template'));
+    else
+    {
+      if (isset($templates['default_view']))
+      {
+        $template = $templates['default_view']['template'];
+      }
+      else
+      {
+        throw new sfException(sprintf('No "default_view" template specified for "%s" content type', $this->getType()->getName()));
+      }
+    }
+
     return $template;
   }
 
   public function getThemeToRenderWith()
   {
-    if ($theme = $this->getTheme()) {
+    if ($theme = $this->getTheme())
+    {
       return $theme;
-    } else if ($theme = $this->getType()->getTheme()) {
+    }
+    else if ($theme = $this->getType()->getTheme())
+    {
       return $theme;
-    } else if ($theme = $this->getSite()->getTheme()) {
+    }
+    else if ($theme = $this->getSite()->getTheme())
+    {
       return $theme;
-    } else {
-      return sfSympalConfig::get($this->getType()->getName(), 'default_theme', sfSympalConfig::get('theme', 'default_theme', $this->getSite()->getSlug()));
+    }
+    else
+    {
+      return sfSympalConfig::getDeep(
+        'content_types',
+        $this->getType()->getName(),
+        'default_theme',
+        sfSympalConfig::get('theme', 'default_theme', $this->getSite()->getSlug())
+      );
     }
   }
 

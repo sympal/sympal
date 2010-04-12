@@ -93,6 +93,10 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       // Load in the UI blocker
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.blockUI.js'));
 
+      // Load the core javascript
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/chooser.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/core.js'));
+
       // Load the sympal editor js and css
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/editor.js'));
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/css/editor.css'));
@@ -116,10 +120,6 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       // @todo The slot type javascript needs to be brought in dynamically
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/slots/markdown.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/slots/tinymce.js'));
-      
-      // Load the core javascript
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/chooser.js'));
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/core.js'));
 
       $this->_editorAssetsLoaded = true;
     }
