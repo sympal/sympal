@@ -36,7 +36,7 @@ $classes = array(
 );
 foreach ($classes as $file)
 {
-  $code = fileGetContents('http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk/lib/check/'.$file.'.class.php');
+  $code = fileGetContents('http://github.com/sympal/sympal/raw/master/lib/check/'.$file.'.class.php');
   file_put_contents(sys_get_temp_dir().'/'.$file.'.class.php', $code);
   require sys_get_temp_dir().'/'.$file.'.class.php';
 }
@@ -98,8 +98,8 @@ $manipulator->save();
 
 $this->logSection('sympal', '...downloading sfSympalPlugin');
 
-// Using SVN for now because PEAR ALWAYS FAILS FOR SOME PEOPLE
-$this->getFilesystem()->execute('svn co http://svn.symfony-project.org/plugins/sfSympalPlugin/trunk plugins/sfSympalPlugin');
+// Using git for now because PEAR ALWAYS FAILS FOR SOME PEOPLE
+$this->getFilesystem()->execute('git clone git://github.com/sympal/sympal.git plugins/sfSympalPlugin');
 
 //@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
 //$this->disablePlugin('sfSympalPlugin'); // We don't want the explicit enabling of this plugin
