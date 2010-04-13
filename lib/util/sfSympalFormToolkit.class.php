@@ -248,11 +248,11 @@ class sfSympalFormToolkit
   {
     if ($form instanceof sfSympalContentForm)
     {
-      $type = $form->getObject()->getType()->getSlug();
+      $type = $form->getObject()->getType()->getName();
     }
     else if ($form instanceof sfSympalContentTypeForm)
     {
-      $type = $form->getObject()->getSlug();
+      $type = $form->getObject()->getName();
     }
     else
     {
