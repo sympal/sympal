@@ -53,10 +53,11 @@ $newPath = sfConfig::get('sf_upload_dir').'/moved/sympalphp.png';
 $asset->move($newPath);
 
 $allThumbnails = $asset->getAllThumbnails();
+
 $t->is(count($allThumbnails), 2, 'There are still two thumbnails');
 $t->is($allThumbnails[0]->exists(), true, 'The thumbnail exists');
-$t->is(file_exists(dirname($newPath).'/.thumbnails/300/200/center/sympalphp.png'), true, 'The new file does indeed exist');
-$t->is(file_exists(dirname($oldPath).'/.thumbnails/300/200/center/sympalphp.png'), false, 'The old file does not exist');
+$t->is(file_exists(dirname($newPath).'/.thumbnails/'.$defaultThumbWidth.'/'.$defaultThumbHeight.'/fit/sympalphp.png'), true, 'The new file does indeed exist');
+$t->is(file_exists(dirname($oldPath).'/.thumbnails/'.$defaultThumbWidth.'/'.$defaultThumbHeight.'/fit/sympalphp.png'), false, 'The old file does not exist');
 
 
 $t->info('5 - Perform a delete');
