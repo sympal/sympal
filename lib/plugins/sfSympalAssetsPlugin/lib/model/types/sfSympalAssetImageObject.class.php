@@ -165,8 +165,8 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
 
     foreach ($thumbnails as $thumbnail)
     {
-      $newPath = str_replace($originalPathDirectory, dirname($newPath), $thumbnail->getPath());
-      $thumbnail->move($newPath);
+      $newThumbPath = str_replace($originalPathDirectory, dirname($newPath), $thumbnail->getPath());
+      $thumbnail->move($newThumbPath);
     }
   }
 
