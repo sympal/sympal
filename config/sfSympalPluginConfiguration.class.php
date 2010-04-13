@@ -16,7 +16,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   /**
    * sfSympalPlugin version number
    */
-  const VERSION = '1.0.0-ALPHA3';
+  const VERSION = '1.0.0-ALPHA4';
 
   /**
    * Array of all the core Sympal plugins
