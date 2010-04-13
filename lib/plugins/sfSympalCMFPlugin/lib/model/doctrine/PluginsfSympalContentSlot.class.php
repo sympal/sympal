@@ -168,17 +168,7 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
       // Get the raw value and then run it through the replacer system
       $value = $this->getValueForRendering();
       $replacer = new sfSympalContentReplacer($this->getContentRenderedFor());
-      $value = $replacer->replace($value);
-      
-      $template = sfSympalConfig::getDeep('content_slot_types', $this->type, 'template', false);      
-      if ($template)
-      {
-        $this->_rendered = get_partial($template, array('value' => $value, 'content' => $this->getContentRenderedFor()));
-      }
-      else
-      {
-        $this->_rendered = $value;
-      }
+      $this->_rendered = $replacer->replace($value);
     }
 
     return $this->_rendered;
