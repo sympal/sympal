@@ -13,8 +13,12 @@
 
 class sfSympalContentReplacer
 {
-  public function __construct()
+  protected
+    $_content;
+  
+  public function __construct(sfSympalContent $content)
   {
+    $this->_content = $content;
   }
   
   /**
@@ -107,8 +111,18 @@ class sfSympalContentReplacer
       }
       
       return $replacements;
-    } else {
+    }
+    else
+    {
       return false;
     }
+  }
+
+  /**
+   * @return sfSympalContent
+   */
+  public function getContent()
+  {
+    return $this->_content;
   }
 }

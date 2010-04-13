@@ -75,28 +75,21 @@ all:
       #  transformers:    []
       Text:
         label: Single Line of Text
-        transformers:  [replacer]
       RawHtml:
         label: Raw HTML
-        transformers:  [replacer]
       Markdown:
         label: Markdown Editor
-        transformers:  [replacer, markdown]
+        template: sympal_slot/markdown
       TinyMCE:
         label: TinyMCE Rich Text Editor
         widget_options:
           config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
-        transformers:  [replacer]
       
       # special slot type for "column" slots where the widget/validator from the content or content type form are used instead of those listed here
       Column:
         label:  Column Slot Type
         widget_class:    false
         validator_class: false
-
-    slot_transformers:
-      replacer:       [sfSympalContentSlotReplacer, transformSlotContent]
-      markdown:       [sfSympalMarkdownRenderer, convertToHtml]
 
     # Automatically set the response meta title based on the current content and menu item
     auto_seo:
