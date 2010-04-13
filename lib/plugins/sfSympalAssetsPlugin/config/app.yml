@@ -31,7 +31,7 @@ all:
         text:
           extensions: [txt]
         tarball:
-          extensions: [tar, gz, zip, bzip, gzip, rar, 7z]
+          extensions: [tar, gz, zip, bzip, gzip, rar, 7z, tgz]
     
     content_syntax_types:
       asset:
