@@ -1,25 +1,25 @@
 parameters:
-  
-  cache_manager.class:        sfSympalCacheManager        # Responsible for managing cache
-  
-  cache_driver.class:         sfFileCache                 # Used as the cache driver by cache_manager
-  cache_driver.options:
-    cache_dir:                <?php echo sprintf("%s/%s/%s\n", sfConfig::get('sf_cache_dir'), sfConfig::get('sf_app'), sfConfig::get('sf_environment')) ?>
-  
+
   actions_extended.class:     sfSympalActions             # Acts as an extension of sfComponent
+
+  site_manager.class:         sfSympalSiteManager                 # Manages the current site object
   
+  slot_renderer.class:        sfSympalSlotRenderer                # Helps to render a slot
+
 services:
 
-  cache_manager:
-    class:                    %cache_manager.class%
-    shared:                   true
-    arguments:                [@dispatcher, @cache_driver]
-  
-  cache_driver:
-    class:                    %cache_driver.class%
-    shared:                   false
-    arguments:                [%cache_driver.options%]
-  
   actions_extended:
     class:                    %actions_extended.class%
     shared:                   true
+
+  site_manager:
+    class:                    %site_manager.class%
+    shared:                   true
+    arguments:                [@sympal_configuration]
+  
+  slot_renderer:
+    class:                    %slot_renderer.class%
+    shared:                   false
+    arguments:                [@sympal_configuration]
+
+
