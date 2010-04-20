@@ -8,8 +8,6 @@ parameters:
   
   actions_extended.class:     sfSympalActions             # Acts as an extension of sfComponent
   
-  form_extended.class:        sfSympalForm                # Acts as an extension of sfForm
-  
 services:
 
   cache_manager:
@@ -24,8 +22,4 @@ services:
   
   actions_extended:
     class:                    %actions_extended.class%
-    shared:                   true
-  
-  form_extended:
-    class:                    %form_extended.class%
     shared:                   true

@@ -1,15 +1,11 @@
 all:
   sympal_config:
+
     # Configure whether or not the Sympal system is online
     offline:
       enabled: false
       module: sympal_default
       action: offline
-
-    # Configure what forms and date fields should be replaced by jQuery rich date
-    rich_date_forms:
-      sfSympalContentForm: [date_published]
-      sfSympalMenuItemForm: [date_published]
 
     # Configure the default culture
     default_culture: en
