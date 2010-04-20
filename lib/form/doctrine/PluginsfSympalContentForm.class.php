@@ -28,11 +28,19 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     $field = sfSympalContext::getInstance()->getService('theme_form_toolkit')->getThemeWidgetAndValidator();
     $this->widgetSchema['theme'] = $field['widget'];
     $this->validatorSchema['theme'] = $field['validator'];
+    
+    // Sets up the template widget
+    sfSympalFormToolkit::changeTemplateWidget($this);
+    
+    // Sets up the module widget
+    sfSympalFormToolkit::changeModuleWidget($form);
 
     if (!$this->object->content_type_id)
     {
       $this->object->Type = Doctrine_Core::getTable('sfSympalContentType')->findOneBySlug('page');
-    } else {
+    }
+    else
+    {
       $this->object->Type;
     }
 

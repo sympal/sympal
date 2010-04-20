@@ -14,5 +14,8 @@ abstract class PluginsfSympalRedirectForm extends BasesfSympalRedirectForm
   {
     parent::setup();
     $this->useFields(array('source', 'destination', 'content_id'));
+    
+    // Setup the content_id widget
+    sfSympalFormToolkit::changeContentWidget($this);
   }
 }

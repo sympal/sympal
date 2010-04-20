@@ -21,6 +21,12 @@ abstract class PluginsfSympalContentTypeForm extends BasesfSympalContentTypeForm
 
     $models = Doctrine_Core::loadModels(sfConfig::get('sf_lib_dir').'/model/doctrine');
 
+    // Sets up the template widget
+    sfSympalFormToolkit::changeTemplateWidget($this);
+
+    // Sets up the module widget
+    sfSympalFormToolkit::changeModuleWidget($form);
+
     foreach ($models as $model)
     {
       $table = Doctrine_Core::getTable($model);
