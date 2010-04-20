@@ -11,7 +11,7 @@
  * @since       2010-03-26
  * @version     svn:$Id$ $Author$
  */
-class sfSympalUpgrade1_0_0_ALPHA4__5 extends sfSympalVersionUpgrade
+class sfSympalUpgrade1_0_0_ALPHA5__1 extends sfSympalVersionUpgrade
 {
   protected $_dirs = array(
     'lib/model/doctrine/sfSympalCMFPlugin' => 'lib/model/doctrine/sfSympalPlugin',
