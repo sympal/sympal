@@ -33,6 +33,8 @@ class sfSympalSiteManager
     $this->_dispatcher = $configuration->getEventDispatcher();
     $this->_configuration = $configuration;
     $this->_siteSlug = $configuration->getProjectConfiguration()->getApplication();
+    
+    $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
   }
 
   /**
@@ -100,5 +102,24 @@ class sfSympalSiteManager
     }
 
     $this->_dispatcher->notify(new sfEvent($this->_currentContent, 'sympal.content.set_content'));
+  }
+
+  /**
+   * Listens to the template.filter_parameters event
+   * 
+   * Adds a few variables to the view
+   *   * sf_sympal_site
+   *   * sf_sympal_content
+   */
+  public function filterTemplateParameters(sfEvent $event, $parameters)
+  {
+    $parameters['sf_sympal_site'] = $this->getSite();
+
+    if ($sympalContext = $this->getCurrentContent())
+    {
+      $parameters['sf_sympal_content'] = $sympalContext;
+    }
+
+    return $parameters;
   }
 }

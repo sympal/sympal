@@ -19,6 +19,15 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   const VERSION = '1.0.0-ALPHA4';
 
   /**
+   * Public reference to instanceof sfSympalConfiguration
+   */
+  public
+    $sympalConfiguration;
+  
+  protected
+    $_sympalContext;
+
+  /**
    * Array of all the core Sympal plugins
    * 
    * A core plugin is one that lives in the lib/plugins directory of sfSympalPlugin.
@@ -50,41 +59,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalSearchPlugin',
       'sfSympalThemePlugin',
       'sfSympalMinifyPlugin',
+      'sfSympalFormPlugin',
     );
-
-  /**
-   * Public reference to instanceof sfSympalConfiguration
-   */
-  public
-    $sympalConfiguration;
-
-  /**
-   * sfSympalPluginConfiguration initialize() method instantiates the sfSympalConfiguration instance
-   * for the current symfony dispatcher and configuration
-   */
-  public function initialize()
-  {
-    $this->sympalConfiguration = new sfSympalConfiguration($this->configuration);
-    
-    $this->configuration->getEventDispatcher()->connect('context.load_factories', array($this, 'bootstrapContext'));
-  }
-
-  /**
-   * Listens to the context.load_factories event and creates the sympal context
-   */
-  public function bootstrapContext(sfEvent $event)
-  {
-    sfSympalContext::createInstance($event->getSubject(), $this->getSympalConfiguration());
-    
-    // @TODO the helper should be broken up and moved, I don't like this call here
-    $this->configuration->loadHelpers(array(
-      'Sympal',
-      'I18N',
-      'Asset',
-      'Url',
-      'Partial',
-    ));
-  }
 
   /**
    * Shortcut method to enable all Sympal plugins for the given ProjectConfiguration
@@ -103,6 +79,145 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $enabler->enableSympalPlugins();
 
     return $enabler;
+  }
+
+  /**
+   * sfSympalPluginConfiguration initialize() method instantiates the
+   * sfSympalConfiguration instance for the current symfony dispatcher
+   * and configuration
+   */
+  public function initialize()
+  {
+    // extend sfSympalConfiguration via sfSympalContentConfiguration
+    $configuration = new sfSympalContentConfiguration();
+    $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
+
+    // Listen to the sympal post-load event
+    $this->dispatcher->connect('sympal.load', array($this, 'configureSympal'));
+  }
+
+  /**
+   * Listens to the sympal.load event
+   */
+  public function configureSympal(sfEvent $event)
+  {
+    $this->_sympalContext = $event->getSubject();
+    
+    // @todo this should be broken up, possibly moved, removed
+    $this->configuration->loadHelpers(array(
+      'Sympal',
+      'I18N',
+      'Asset',
+      'Url',
+      'Partial',
+      'SympalContentSlot',
+      'SympalPager',
+    ));
+    
+    $this->_initializeSymfonyConfig();
+    $this->_markClassesAsSafe();
+    $this->_configureSuperCache();
+    
+    $this->dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
+  }
+
+  /**
+   * Listener on the sympal.context.method_not_found event. 
+   * 
+   * Extends the sfSympalContext class. This handles
+   *   * ->getSite()
+   */
+  public function handleContextMethodNotFound(sfEvent $event)
+  {
+    if ($event['method'] == 'getSite')
+    {
+      $event->setReturnValue($this->_sympalContext->getService('site_manager')->getSite());
+      
+      return true;
+    }
+    
+    return false;
+  }
+
+  /**
+   * Initialize some sfConfig values for Sympal
+   *
+   * @return void
+   */
+  private function _initializeSymfonyConfig()
+  {
+    sfConfig::set('sf_cache', sfSympalConfig::get('page_cache', 'enabled', false));
+    sfConfig::set('sf_default_culture', sfSympalConfig::get('default_culture', null, 'en'));
+    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalAdminPlugin'));
+
+    sfConfig::set('app_sf_guard_plugin_success_signin_url', sfSympalConfig::get('success_signin_url'));
+
+    if (sfConfig::get('sf_login_module') == 'default')
+    {
+      sfConfig::set('sf_login_module', 'sympal_admin');
+      sfConfig::set('sf_login_action', 'signin');
+    }
+
+    if (sfConfig::get('sf_secure_module') == 'default')
+    {
+      sfConfig::set('sf_secure_module', 'sympal_auth');
+      sfConfig::set('sf_secure_action', 'secure');
+    }
+
+    if (sfConfig::get('sf_error_404_module') == 'default')
+    {
+      sfConfig::set('sf_error_404_module', 'sympal_default');
+      sfConfig::set('sf_error_404_action', 'error404');
+    }
+
+    if (sfConfig::get('sf_module_disabled_module') == 'default')
+    {
+      sfConfig::set('sf_module_disabled_module', 'sympal_default');
+      sfConfig::set('sf_module_disabled_action', 'disabled');
+    }
+
+    sfConfig::set('sf_jquery_path', sfSympalConfig::get('jquery_reloaded', 'path'));
+    sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
+  }
+
+  /**
+   * Mark necessary Sympal classes as safe
+   * 
+   * These classes won't be wrapped with the output escaper
+   *
+   * @return void
+   */
+  private function _markClassesAsSafe()
+  {
+    sfOutputEscaper::markClassesAsSafe(array(
+      'sfSympalContent',
+      'sfSympalContentTranslation',
+      'sfSympalContentSlot',
+      'sfSympalContentSlotTranslation',
+      'sfSympalMenuItem',
+      'sfSympalMenuItemTranslation',
+      'sfSympalContentRenderer',
+      'sfSympalMenu',
+      'sfParameterHolder',
+      'sfSympalDataGrid',
+      'sfSympalUpgradeFromWeb',
+      'sfSympalServerCheckHtmlRenderer',
+      'sfSympalSitemapGenerator'
+    ));
+  }
+
+  /**
+   * Configure super cache if enabled
+   *
+   * @return void
+   */
+  private function _configureSuperCache()
+  {
+    if (sfSympalConfig::get('page_cache', 'super') && sfConfig::get('sf_cache'))
+    {
+      $superCache = new sfSympalSuperCache();
+      $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
+    }
   }
 
   /**
