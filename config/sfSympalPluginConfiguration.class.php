@@ -88,6 +88,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
+    self::_markClassesAsSafe();
+    
     // extend sfSympalConfiguration via sfSympalContentConfiguration
     $configuration = new sfSympalContentConfiguration();
     $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
@@ -115,7 +117,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     ));
     
     $this->_initializeSymfonyConfig();
-    $this->_markClassesAsSafe();
     $this->_configureSuperCache();
     
     $this->dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
@@ -184,20 +185,19 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
    * Mark necessary Sympal classes as safe
    * 
    * These classes won't be wrapped with the output escaper
+   * 
+   * @todo Put the rest of these in the correct plugin
    *
    * @return void
    */
-  private function _markClassesAsSafe()
+  private static function _markClassesAsSafe()
   {
     sfOutputEscaper::markClassesAsSafe(array(
       'sfSympalContent',
       'sfSympalContentTranslation',
       'sfSympalContentSlot',
       'sfSympalContentSlotTranslation',
-      'sfSympalMenuItem',
-      'sfSympalMenuItemTranslation',
       'sfSympalContentRenderer',
-      'sfSympalMenu',
       'sfParameterHolder',
       'sfSympalDataGrid',
       'sfSympalUpgradeFromWeb',

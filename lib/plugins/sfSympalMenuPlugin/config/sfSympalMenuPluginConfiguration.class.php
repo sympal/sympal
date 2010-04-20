@@ -17,6 +17,8 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
 
   public function initialize()
   {
+    self::_markClassesAsSafe();
+    
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
     $this->dispatcher->connect('sympal.load', array($this, 'bootstrap'));
   }
@@ -59,5 +61,21 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
     $parameters['sf_sympal_menu_manager'] = $this->_sympalContext->getService('menu_manager');
     
     return $parameters;
+  }
+
+  /**
+   * Mark necessary Sympal classes as safe
+   * 
+   * These classes won't be wrapped with the output escaper
+   *
+   * @return void
+   */
+  private static function _markClassesAsSafe()
+  {
+    sfOutputEscaper::markClassesAsSafe(array(
+      'sfSympalMenuItem',
+      'sfSympalMenuItemTranslation',
+      'sfSympalMenu',
+    ));
   }
 }
