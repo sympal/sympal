@@ -58,7 +58,7 @@ class sfSympalContentSyntaxLinkReplacer extends sfSympalContentSyntaxReplacer
     if ($this->_replacer instanceof sfSympalContentSlotReplacer)
     {
       $sympalContent = $this->_replacer->getContent();
-      $currentSlugs = $sympalContent->Links->getSlugs();
+      $currentSlugs = $this->getSlugsFromCollection($sympalContent->Links);
       asort($slugs);
 
       if (array_diff($slugs, $currentSlugs) || array_diff($currentSlugs, $slugs))
@@ -103,5 +103,22 @@ class sfSympalContentSyntaxLinkReplacer extends sfSympalContentSyntaxReplacer
     }
     
     return $q;
+  }
+
+  /**
+   * Helper to retrieve an array of slugs from a doctrine collection
+   * 
+   * @param Doctrine_Collection $collection
+   * @return array
+   */
+  protected function getSlugsFromCollection(Doctrine_Collection $collection)
+  {
+    $slugs = array();
+    foreach ($collection as $object)
+    {
+      $slugs[] = $value->get($slug);
+    }
+
+    return $slugs;
   }
 }
