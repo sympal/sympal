@@ -3,6 +3,18 @@
 /**
  * Doctrine template for all models in Sympal to act as. Allows Sympal to add
  * things to all models easily.
+ * 
+ * By acting as this template, the model will:
+ * 
+ *   1) "Slugs" any field defined under the "sluggable_models" config
+ * 
+ *   2) "I18N's" any field defined under the "internationalized_models" config
+ * 
+ *   3) Use the sfSympalRecordEventFilter (allows for extension of getters
+ *      and setters)
+ * 
+ *   4) Throws a sympal.table_name.set_table_definition symfony event so
+ *      that the table definition can be modified in real time
  *
  * @package sfSympalPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
@@ -130,6 +142,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
   public function isI18ned()
   {
     $i18nedModels = sfSympalConfig::get('internationalized_models', null, array());
+
     return sfSympalConfig::get('i18n') && isset($i18nedModels[$this->getModelName()]);
   }
 
@@ -144,7 +157,9 @@ class sfSympalRecordTemplate extends Doctrine_Template
     {
       $i18nedModels = sfSympalConfig::get('internationalized_models', null, array());
       return $i18nedModels[$this->getModelName()];
-    } else {
+    }
+    else
+    {
       return array();
     }
   }
@@ -157,6 +172,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
   public function isSluggable()
   {
     $sluggableModels = sfSympalConfig::get('sluggable_models', null, array());
+
     return array_key_exists($this->getModelName(), $sluggableModels);
   }
 
@@ -171,7 +187,9 @@ class sfSympalRecordTemplate extends Doctrine_Template
     {
       $sluggableModels = sfSympalConfig::get('sluggable_models', null, array());
       return $sluggableModels[$this->getModelName()] ? $sluggableModels[$this->getModelName()]:array();
-    } else {
+    }
+    else
+    {
       return array();
     }
   }
@@ -198,6 +216,7 @@ class sfSympalRecordTemplate extends Doctrine_Template
       $this->_modelName = str_replace('ToPrfx', '', $this->_table->getOption('name'));
       $this->_modelName = str_replace('FromPrfx' ,'', $this->_modelName);
     }
+
     return $this->_modelName;
   }
 }
