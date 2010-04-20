@@ -32,9 +32,12 @@ class sfSympalContentModelTemplate extends Doctrine_Template
    */
   public function __call($method, $arguments)
   {
-    try {
+    try
+    {
       return call_user_func_array(array($this->getInvoker()->getRecord(), $method), $arguments);
-    } catch (Exception $e) {
+    }
+    catch (Exception $e)
+    {
       return null;
     }
   }
