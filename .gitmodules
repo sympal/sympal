@@ -16,3 +16,6 @@
 [submodule "lib/plugins/sfSympalCorePlugin"]
 	path = lib/plugins/sfSympalCorePlugin
 	url = git://github.com/sympal/sfSympalCorePlugin.git
+[submodule "lib/plugins/sfSympalFormPlugin"]
+	path = lib/plugins/sfSympalFormPlugin
+	url = git://github.com/sympal/sfSympalFormPlugin.git
