@@ -107,14 +107,6 @@ abstract class Basesympal_adminActions extends sfActions
     }
   }
 
-  public function executeCheck_server(sfWebRequest $request)
-  {
-    $this->getResponse()->setTitle(__('Sympal Admin / Check Server'));
-
-    $check = new sfSympalServerCheck();
-    $this->renderer = new sfSympalServerCheckHtmlRenderer($check);
-  }
-
   public function executePhpinfo(sfWebRequest $request)
   {
     $this->setLayout(false);
