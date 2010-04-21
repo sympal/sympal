@@ -48,7 +48,9 @@ class sfSympalContentRouteObject
     if (!empty($values))
     {
       return $this->_routeName.'?'.http_build_query($values);
-    } else {
+    }
+    else
+    {
       return $this->_routeName;
     }
   }
@@ -106,6 +108,7 @@ class sfSympalContentRouteObject
     {
       $culture = $this->getCurrentCulture();
     }
+
     return $culture && isset($this->_routeValues[$culture]) ? $this->_routeValues[$culture] : current($this->_routeValues);
   }
 
@@ -119,7 +122,9 @@ class sfSympalContentRouteObject
     if ($user = sfContext::getInstance()->getUser())
     {
       return $user->getCulture();
-    } else {
+    }
+    else
+    {
       return sfConfig::get('sf_default_culture');
     }
   }
@@ -134,6 +139,7 @@ class sfSympalContentRouteObject
   {
     $values = $this->getCultureRouteValues();
     $values['sf_culture'] = $this->getCurrentCulture();
+
     return $this->getRouteObject()->generate($values);
   }
 
@@ -162,14 +168,18 @@ class sfSympalContentRouteObject
         if ($isI18nEnabled && $name == 'slug' && $i18nSlug = $content->Translation[$code]->i18n_slug)
         {
           $values[$code][$name] = $i18nSlug;
-        } else if ($content->hasField($name)) {
+        }
+        else if ($content->hasField($name))
+        {
           if ($isI18nEnabled && isset($content->Translation[$code]->$name))
           {
             $values[$code][$name] = $content->Translation[$code]->$name;
           } else {
             $values[$code][$name] = $content->$name;
           }
-        } else if (method_exists($content, $method = 'get'.sfInflector::camelize($name))) {
+        }
+        else if (method_exists($content, $method = 'get'.sfInflector::camelize($name)))
+        {
           $values[$code][$name] = $content->$method();
         }
       }
@@ -215,7 +225,9 @@ class sfSympalContentRouteObject
         'sf_culture' => sfConfig::get('default_culture')
       ));
     // Otherwise get it from the content type
-    } else {
+    }
+    else
+    {
       return $content->getType()->getRouteObject();
     }
   }
