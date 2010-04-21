@@ -20,7 +20,6 @@ all:
       sympal_users: ~
       sympal_groups: ~
       sympal_permissions: ~
-      sympal_menu_items: ~
       sympal_plugin_manager: ~
       sympal_assets: ~
       sympal_upgrade: ~

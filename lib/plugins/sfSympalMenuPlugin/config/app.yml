@@ -2,3 +2,6 @@ all:
   sympal_config:
     internationalized_models:
       sfSympalMenuItem: [label]
+    
+    admin_modules:
+      sympal_menu_items: ~
