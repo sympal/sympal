@@ -16,7 +16,6 @@ all:
       sympal_dashboard: ~
       sympal_redirects: ~
       sympal_sites: ~
-      sympal_themes: ~
       sympal_users: ~
       sympal_groups: ~
       sympal_permissions: ~
