@@ -19,15 +19,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   const VERSION = '1.0.0-ALPHA4';
 
   /**
-   * Public reference to instanceof sfSympalConfiguration
-   */
-  public
-    $sympalConfiguration;
-  
-  protected
-    $_sympalContext;
-
-  /**
    * Array of all the core Sympal plugins
    * 
    * A core plugin is one that lives in the lib/plugins directory of sfSympalPlugin.
@@ -43,6 +34,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfJqueryReloadedPlugin',
       'sfImageTransformPlugin',
       'sfSympalCMFPlugin',
+      'sfSympalCorePlugin',
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
       'sfSympalPagesPlugin',
@@ -218,15 +210,5 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $superCache = new sfSympalSuperCache();
       $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
     }
-  }
-
-  /**
-   * Shortcut convenience method to get the current instance of sfSympalConfiguration
-   *
-   * @return sfSympalConfiguration $configuration
-   */
-  public function getSympalConfiguration()
-  {
-    return $this->sympalConfiguration;
   }
 }
