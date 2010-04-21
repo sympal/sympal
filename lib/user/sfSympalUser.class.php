@@ -22,7 +22,9 @@ class sfSympalUser extends sfGuardSecurityUser
     if ($editCulture = $this->getAttribute('sympal_edit_culture'))
     {
       return $editCulture;
-    } else {
+    }
+    else
+    {
       return $this->getCulture();
     }
   }
@@ -52,7 +54,9 @@ class sfSympalUser extends sfGuardSecurityUser
     )
     {
       $this->_isEditMode = true;
-    } else {
+    }
+    else
+    {
       $this->_isEditMode = false;
     }
     $this->_isEditMode = sfApplicationConfiguration::getActive()->getEventDispatcher()->filter(new sfEvent($this, 'sympal.filter_is_edit_mode'), $this->_isEditMode)->getReturnValue();
@@ -77,12 +81,14 @@ class sfSympalUser extends sfGuardSecurityUser
   public function signIn($user, $remember = false, $con = null)
   {
     $this->_isEditMode = null;
+
     return parent::signIn($user, $remember, $con);
   }
 
   public function signOut()
   {
     $this->_isEditMode = null;
+
     return parent::signOut();
   }
 
@@ -126,6 +132,7 @@ class sfSympalUser extends sfGuardSecurityUser
       sfContext::getInstance()->getController()->forward(sfConfig::get('sf_secure_module'), sfConfig::get('sf_secure_action'));
       throw new sfStopException();
     }
+
     return $access;
   }
 
