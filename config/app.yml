@@ -184,9 +184,6 @@ all:
     # Customize the menu class used to render site breadcrumbs
     breadcrumbs_class: sfSympalMenuBreadcrumbs
 
-    # Customize the admin module web directory
-    admin_module_web_dir: "/sfSympalAdminPlugin"
-
     # Configure the Symfony Plugin API username and password
     # Required for the php symfony sympal:report-statistics task
     plugin_api:
@@ -209,6 +206,9 @@ all:
 
     # Configure the string used to separate breadcrumb strings
     breadcrumbs_separator: ' / '
+
+    admin_modules:
+      sympal_cms_admin: ~
 
     # Configure internationalization
     i18n: false

@@ -23,7 +23,10 @@ all:
       sympal_assets: ~
       sympal_upgrade: ~
       sympal_search: ~
-    
+
+    # Customize the admin module web directory
+    admin_module_web_dir: "/sfSympalAdminPlugin"
+
     themes:
       admin:
         available: false # Don't show in the list of available themes to switch to
