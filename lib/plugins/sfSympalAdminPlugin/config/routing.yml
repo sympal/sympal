@@ -62,16 +62,6 @@ sympal_redirects:
     prefix_path:          admin/redirects
     with_wildcard_routes: true
 
-sympal_content_menu_item:
-  url:    /admin/content/manage/:id/menu
-  param: { module: sympal_content_menu_item, action: index }
-  class: sfDoctrineRoute
-  options:
-    model:  sfSympalContent
-    type:   object
-  requirements:
-    sf_method: [get, post]
-
 sympal_content:
   class:                  sfDoctrineRouteCollection
   options:
@@ -99,10 +89,6 @@ sympal_content_list_type:
 sympal_admin_save_nested_set:
   url:    /admin/save_nested_set/:model
   param: { module: sympal_admin, action: save_nested_set }
-
-sympal_check_server:
-  url:    /admin/check_server
-  param: { module: sympal_admin, action: check_server }
 
 sympal_phpinfo:
   url:    /admin/phpinfo

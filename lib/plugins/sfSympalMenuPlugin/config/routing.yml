@@ -21,3 +21,13 @@ sympal_menu_items:
     module:               sympal_menu_items
     prefix_path:          admin/menus
     with_wildcard_routes: true
+
+sympal_content_menu_item:
+  url:    /admin/content/manage/:id/menu
+  param: { module: sympal_content_menu_item, action: index }
+  class: sfDoctrineRoute
+  options:
+    model:  sfSympalContent
+    type:   object
+  requirements:
+    sf_method: [get, post]
