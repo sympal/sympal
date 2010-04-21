@@ -80,7 +80,7 @@ class sfSympalLorem
   {
     if (null === self::$_loremText)
     {
-      self::$_loremText = file(dirname(__FILE__).'/../../data/lorem/big');
+      self::$_loremText = file(dirname(__FILE__).'/data/big');
     }
 
     return self::$_loremText;
@@ -95,7 +95,7 @@ class sfSympalLorem
   {
     if (null === self::$_markdownLoremText)
     {
-      self::$_markdownLoremText = implode('', file(dirname(__FILE__).'/../../data/lorem/markdown'));
+      self::$_markdownLoremText = implode('', file(dirname(__FILE__).'/data/markdown'));
     }
 
     return self::$_markdownLoremText;
