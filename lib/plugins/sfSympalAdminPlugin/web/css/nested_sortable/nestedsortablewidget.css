@@ -102,7 +102,7 @@ float: none;
 }
 
 .nsw-progress {
-	background: center url(../images/progress_indicator.gif) no-repeat;
+	background: center url(../images/nested_sortable/progress_indicator.gif) no-repeat;
 	width:16px;
 	height:16px;
 	left: 50%;
