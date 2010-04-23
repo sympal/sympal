@@ -13,6 +13,9 @@
  */
 class sfSympalPluginConfiguration extends sfPluginConfiguration
 {
+  protected
+    $_sympalContext;
+
   /**
    * sfSympalPlugin version number
    */
@@ -130,6 +133,81 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     $administration->addChild('Sites', '@sympal_sites')
       ->setCredentials(array('ManageSites'));
+
+
+    // Add a Content menu if applicable
+    $contentRecord = $this->_sympalContext->getService('site_manager')->getCurrentContent();
+    
+    if ($contentRecord)
+    {
+      $contentEditor = $menu->getChild($content->getType()->slug);
+      $contentEditor->setLabel($content->getType()->getLabel() . ' Actions');
+
+      // If in the admin, put a link to view the content
+      if (sfSympalConfiguration::getActive()->isAdminModule())
+      {
+        $contentEditor->addChild(__('View ').$content->getType()->getLabel(), $content->getRoute());    
+      }
+      
+      $contentEditor
+        ->addChild(__('Create New ').$content->getType()->getLabel(), '@sympal_content_create_type?type='.$content['Type']['slug'])
+        ->setCredentials('ManageContent');
+
+      $contentEditor
+        ->addChild(__('Edit ').$content->getType()->getLabel(), $content->getEditRoute())
+        ->setCredentials('ManageContent');
+
+      $contentEditor
+        ->addChild(__('Edit Content Type'), '@sympal_content_types_edit?id='.$content->getType()->getId())
+        ->setCredentials('ManageMenus');
+
+      // Add a menu item entry
+      $menuItem = $this->_sympalContext->getService('menu_manager')->getCurrentMenuItem();
+      if ($menuItem && $menuItem->exists())
+      {
+        $contentEditor
+          ->addChild(__('Edit Menu Item'), '@sympal_content_menu_item?id='.$content->getId())
+          ->setCredentials('ManageMenus');  
+      }
+      else
+      {
+        $contentEditor
+          ->addChild(__('Add to Menu'), '@sympal_content_menu_item?id='.$content->getId())
+          ->setCredentials('ManageMenus');
+      }
+    }
+
+    if (sfSympalConfig::isI18nEnabled())
+    {
+      foreach (sfSympalConfig::getLanguageCodes() as $code)
+      {
+        if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
+        {
+          $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title='.__('Switch to ').''.format_language($code));
+        }
+      }
+    }
+
+    // Add publish/unpublish icons
+    $user = sfContext::getInstance()->getUser();
+    if($user->hasCredential('PublishContent'))
+    {
+      if($content->getIsPublished())
+      {
+        $contentEditor
+          ->addChild(__('Unpublish'), '@sympal_unpublish_content?id='.$content->id, 'title='.__('Published on %date%', array('%date%' => format_date($content->getDatePublished(), 'g'))).'. '.__('Click to unpublish content.'));
+      }
+      elseif($content->getIsPublishInTheFuture())
+      {
+        $contentEditor
+          ->addChild(__('Unpublish'), '@sympal_unpublish_content?id='.$content->id, 'title='.__('Will publish on %date%', array('%date%' => format_date($content->getDatePublished(), 'g'))).'. '.__('Click to unpublish content.'));
+      }
+      else
+      {
+        $contentEditor
+          ->addChild(__('Publish'), '@sympal_publish_content?id='.$content->id, 'title='.__('Has not been published yet. '.__('Click to publish content.')));
+      }
+    }
   }
 
   /**

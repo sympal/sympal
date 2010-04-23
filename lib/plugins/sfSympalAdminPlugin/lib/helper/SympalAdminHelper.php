@@ -40,20 +40,6 @@ function get_sympal_admin_menu_object($class = 'sfSympalMenuAdminMenu')
 
     sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($menu, 'sympal.load_admin_menu'));
 
-    $sympalContext = sfSympalContext::getInstance();
-    $contentRecord = $sympalContext->getCurrentContent();
-    $menuItem = $sympalContext->getCurrentMenuItem();
-
-    if ($contentRecord)
-    {
-      sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(
-        new sfEvent($menu, 'sympal.load_editor', array(
-          'content' => $contentRecord,
-          'menuItem' => $menuItem
-        )
-      ));
-    }
-
     $menu->
       addChild('Signout', '@sympal_signout', array('title' => 'Ctrl+Q', 'confirm' => ''.__('Are you sure you want to signout?').'','label' => 'Signout'));
   }
