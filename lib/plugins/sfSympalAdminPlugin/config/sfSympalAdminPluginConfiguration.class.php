@@ -13,6 +13,11 @@
  */
 class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 {
+
+  protected $_dependencies = array(
+    'sfSympalCorePlugin',
+  );
+
   public function initialize()
   {
     // Connect to the sympal.load_admin_menu event
