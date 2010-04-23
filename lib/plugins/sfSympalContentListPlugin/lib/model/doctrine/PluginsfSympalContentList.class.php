@@ -41,7 +41,7 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       $dataGrid->setDefaultSort($this->sort_column, $this->sort_order);
     }
 
-    $dataGrid->setMaxPerPage(($this->rows_per_page > 0 ? $this->rows_per_page : sfSympalConfig::get('rows_per_page', null, 10)));
+    $dataGrid->setMaxPerPage(($this->rows_per_page > 0 ? $this->rows_per_page : sfSympalConfig::get('rows_per_page', 'content_list', 10)));
 
     $dataGridRequestInfo = $request->getParameter($dataGrid->getId());
 

@@ -126,7 +126,6 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   public function loadConfigForm(sfEvent $event)
   {
     $form = $event->getSubject();
-    $form->addSetting(null, 'rows_per_page', 'Rows Per Page');
 
     if (sfSympalConfig::isI18nEnabled())
     {
