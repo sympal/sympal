@@ -77,7 +77,7 @@ ul.error_list li
   padding-left: 25px;
   list-style: none;
   color: #e32529;
-  background: url(../images/error.png) no-repeat 4px 4px;
+  background: url(../images/admin/error.png) no-repeat 4px 4px;
 }
 
 #sympal_ask_confirmation {
@@ -153,7 +153,7 @@ p {
   -moz-opacity:0.5;
   -khtml-opacity: 0.5;
   opacity: 0.5;
-  background: url(../images/search_icon.gif);
+  background: url(../images/admin/search_icon.gif);
   width: 15px;
   height: 15px;
   float: left;
@@ -179,13 +179,13 @@ p {
 .sympal_notice {
   margin: 4px 0;
   padding: 4px 4px 4px 30px;
-  background: url(../images/tick.png) no-repeat 10px 4px;
+  background: url(../images/admin/tick.png) no-repeat 10px 4px;
 }
 
 .sympal_error {
   margin: 4px 0;
   padding: 4px 4px 4px 30px;
-  background: url(../images/error.png) no-repeat 10px 4px;
+  background: url(../images/admin/error.png) no-repeat 10px 4px;
   background-color: #f33;
   color: red;
 }
@@ -264,7 +264,7 @@ label span.req
 #sympal_breadcrumbs ul
 {
   font: 11px Arial, Helvetica, sans-serif;
-  background-image: url('../images/bc_bg.png');
+  background-image: url('../images/admin/bc_bg.png');
   background-repeat: repeat-x;
   height: 30px;
   line-height: 30px;
@@ -290,7 +290,7 @@ label span.req
 
 #sympal_breadcrumbs li.first
 {
-  background: url('../images/home.png') no-repeat;
+  background: url('../images/admin/home.png') no-repeat;
   background-position: center;
   text-indent: -9999;
   font-size: 0;
@@ -308,7 +308,7 @@ label span.req
 {
   height: 30px;
   display: block;
-  background-image: url('../images/bc_separator.png');
+  background-image: url('../images/admin/bc_separator.png');
   background-repeat: no-repeat;
   background-position: right;
   padding-right: 15px;
