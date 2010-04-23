@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Form that allows you to edit app.yml values and then writes them out
+ * to the application's app.yml
+ * 
+ * @package     sfSympalAdminPlugin
+ * @subpackage  form
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ */
 class sfSympalConfigForm extends BaseForm
 {
   protected

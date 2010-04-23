@@ -120,6 +120,9 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       ->setCredentials(array('ViewServerCheck'));
   }
 
+  /**
+   * Listens to sympal.load_config_form to load the configuration form
+   */
   public function loadConfigForm(sfEvent $event)
   {
     $form = $event->getSubject();
