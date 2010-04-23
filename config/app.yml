@@ -7,6 +7,9 @@ all:
       module: sympal_default
       action: offline
 
+    # Configure internationalization
+    i18n: false
+
     # Configure the default culture
     default_culture: en
 
@@ -208,9 +211,6 @@ all:
       sympal_redirects: ~
       sympal_sites: ~
       sympal_content_types: ~
-
-    # Configure internationalization
-    i18n: false
 
     # Configure what models and fields get internationalized by Sympal
     internationalized_models:
