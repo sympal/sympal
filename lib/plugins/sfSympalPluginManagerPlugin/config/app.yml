@@ -3,6 +3,5 @@ all:
     plugin_manager:
       # Configure the Symfony Plugin API username and password
       # Required for the php symfony sympal:report-statistics task
-      plugin_api:
-        username:
-        password:
+      plugin_api_username:
+      plugin_api_password:

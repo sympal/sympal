@@ -165,9 +165,6 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $form->addSetting(null, 'elastic_textareas', 'Elastic Textareas', 'InputCheckbox', 'Boolean');
     $form->addSetting(null, 'check_for_upgrades_on_dashboard', 'Check for Upgrades', 'InputCheckbox', 'Boolean');
 
-    $form->addSetting('plugin_api', 'username', 'Username or API Key');
-    $form->addSetting('plugin_api', 'password');
-
     $form->addSetting('page_cache', 'enabled', 'Enabled?', 'InputCheckbox', 'Boolean');
 
     $form->addSetting('page_cache', 'super', 'Enable Super Cache?', 'InputCheckbox', 'Boolean');

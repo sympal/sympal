@@ -6,12 +6,12 @@ class sfSympalPluginApi extends sfPluginApi
   {
     if (!$username)
     {
-      $username = sfSympalConfig::getDeep('plugin_manager', 'plugin_api', 'username');
+      $username = sfSympalConfig::get('plugin_manager', 'plugin_api_username');
     }
 
     if (!$password)
     {
-      $password = sfSympalConfig::get('plugin_manager', 'plugin_api', 'password');
+      $password = sfSympalConfig::get('plugin_manager', 'plugin_api_password');
     }
 
     if (!$cacheDir)
