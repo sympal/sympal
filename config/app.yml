@@ -230,13 +230,6 @@ all:
 
     # Configure e-mail settings
     default_from_email_address: noreply@sympalphp.org
-
-    # Configure form class used for editing the Sympal configuration from the web
-    config_form_class: sfSympalConfigForm
-
-    # Configure recaptcha from sfFormExtraPlugin
-    recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX
-    recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb
     
     gravatar_default_image: "/sfSympalPlugin/images/symfony_button.gif"
 

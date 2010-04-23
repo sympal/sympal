@@ -1,6 +1,9 @@
 all:
   sympal_config:
 
+    # Configure form class used for editing the Sympal configuration from the web
+    config_form_class: sfSympalConfigForm
+
     # Configure the name of the theme to use for Sympal admin areas
     admin_theme: admin
 

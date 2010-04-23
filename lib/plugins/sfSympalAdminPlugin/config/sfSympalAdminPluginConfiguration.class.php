@@ -158,9 +158,6 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       $form->addSetting(null, 'default_culture', 'Default Culture', $widgetSchema['language'], $validatorSchema['language']);
     }
 
-    $array = sfSympalContext::getInstance()->getService('theme_form_toolkit')->getThemeWidgetAndValidator();
-    $form->addSetting('theme', 'default_theme', 'Default Theme', $array['widget'], $array['validator']);
-
     $form->addSetting(null, 'default_rendering_module', 'Default Rendering Module');
     $form->addSetting(null, 'default_rendering_action', 'Default Rendering Action');
     $form->addSetting(null, 'recaptcha_public_key', 'Recaptcha Public Key');
