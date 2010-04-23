@@ -3,11 +3,10 @@
 [?php sympal_use_jquery() ?]
 [?php jq_add_plugins_by_name(array('ui')) ?]
 
-[?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/nestedsortablewidget.css') ?]
-[?php sympal_use_javascript('/sfSympalAdminPlugin/js/interface.js') ?]
-[?php sympal_use_javascript('/sfSympalAdminPlugin/js/inestedsortable.pack.js') ?]
-[?php sympal_use_javascript('/sfSympalAdminPlugin/js/jquery.nestedsortablewidget.pack.js') ?]
-[?php sympal_use_javascript('/sfSympalAdminPlugin/js/jquery.nested_set.js') ?]
+[?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/nested_sortable/nestedsortablewidget.css') ?]
+[?php sympal_use_javascript('/sfSympalAdminPlugin/js/nested_sortable/interface.js') ?]
+[?php sympal_use_javascript('/sfSympalAdminPlugin/js/nested_sortable/inestedsortable.pack.js') ?]
+[?php sympal_use_javascript('/sfSympalAdminPlugin/js/nested_sortable/jquery.nestedsortablewidget.pack.js') ?]
 
 [?php echo button_to(__('Back to list', array(), 'sf_admin'), '@'.$sf_context->getRouting()->getCurrentRouteName()) ?]
 
