@@ -50,8 +50,11 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $configuration = new sfSympalContentConfiguration();
     $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
 
-    // Listen to the sympal post-load event
+    // Connect to the sympal post-load event
     $this->dispatcher->connect('sympal.load', array($this, 'configureSympal'));
+
+    // Connect to the sympal.load_admin_menu event
+    $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'setupAdminMenu'));
   }
 
   /**
@@ -76,6 +79,57 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $this->_configureSuperCache();
     
     $this->dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
+  }
+
+  /**
+   * Listens to the sympal.load_admin_menu to configure the admin menu
+   */
+  public function setupAdminMenu(sfEvent $event)
+  {
+    // Setup the Content menu
+    $manageContent = $menu->getChild('content');
+    $manageContent->setLabel('Content');
+
+    $manageContent->addChild('Search', '@sympal_admin_search');
+
+    $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
+    foreach ($contentTypes as $contentType)
+    {
+      $manageContent
+        ->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId())
+        ->setCredentials(array('ManageContent'));
+    }
+
+    $manageContent
+      ->addChild('Slots', '@sympal_content_slots')
+      ->setCredentials(array('ManageSlots'));
+
+    $manageContent
+      ->addChild('XML Sitemap', '@sympal_sitemap')
+      ->setCredentials(array('ViewXmlSitemap'));
+
+
+    // Setup the Site Administration menu
+    $siteAdministration = $menu->getChild('site_administration');
+    $siteAdministration->setLabel('Site Administration');
+
+    $siteAdministration
+      ->addChild('404 Redirects', '@sympal_redirects')
+      ->setCredentials(array('ManageRedirects'));
+
+    $siteAdministration
+      ->addChild('Edit Site', '@sympal_sites_edit?id='.sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId())
+      ->setCredentials(array('ManageSites'));
+
+
+    // Add to the Administration menu
+    $administration = $menu->getChild('administration');
+
+    $administration->addChild('Content Types', '@sympal_content_types')
+      ->setCredentials(array('ManageContentTypes'));
+
+    $administration->addChild('Sites', '@sympal_sites')
+      ->setCredentials(array('ManageSites'));
   }
 
   /**

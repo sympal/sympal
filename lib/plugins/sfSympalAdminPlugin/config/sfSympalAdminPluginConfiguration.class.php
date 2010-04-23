@@ -16,7 +16,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   public function initialize()
   {
     // Connect to the sympal.load_admin_menu event
-    $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
+    $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'setupAdminMenu'));
     
     // Connect to the sympal.load_config_form evnet
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
@@ -79,15 +79,21 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     return $content;
   }
 
-  public function loadAdminMenu(sfEvent $event)
+  /**
+   * Listens to sympal.load_admin_menu and configures the admin menu
+   */
+  public function setupAdminMenu(sfEvent $event)
   {
     $menu = $event->getSubject();
+    $user = sfContext::getInstance()->getUser();
 
+    // Setup Change language menu
     if (sfSympalConfig::isI18nEnabled())
     {
       $this->configuration->loadHelpers(array('Partial', 'I18N'));
-      $changeLanguage = $menu->getChild('Change Language');
-      $currentCulture = strtolower(sfContext::getInstance()->getUser()->getCulture());
+      $changeLanguage = $menu->getChild('change_language');
+      $changeLanguage->setLabel('Change Language');
+      $currentCulture = strtolower($user->getCulture());
       $codes = sfSympalConfig::getLanguageCodes();
       foreach ($codes as $code)
       {
@@ -104,56 +110,14 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       }
     }
 
-    $manageContent = $menu->getChild('Content');
-    $manageContent->addChild('Search', '@sympal_admin_search');
-
-    $user = sfContext::getInstance()->getUser();
-
-    $contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
-    foreach ($contentTypes as $contentType)
-    {
-      $manageContent
-        ->addChild($contentType->getLabel(), '@sympal_content_list_type?type='.$contentType->getId())
-        ->setCredentials(array('ManageContent'));
-    }
-
-    $manageContent
-      ->addChild('Slots', '@sympal_content_slots')
-      ->setCredentials(array('ManageSlots'));
-
-    $manageContent
-      ->addChild('XML Sitemap', '@sympal_sitemap')
-      ->setCredentials(array('ViewXmlSitemap'));
-
-    $siteAdministration = $menu->getChild('Site Administration');
-
-    $siteAdministration
-      ->addChild('404 Redirects', '@sympal_redirects')
-      ->setCredentials(array('ManageRedirects'));
-
-    $siteAdministration
-      ->addChild('Edit Site', '@sympal_sites_edit?id='.sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId())
-      ->setCredentials(array('ManageSites'));
-
-    $administration = $menu->getChild('Administration');
-
-    $administration->addChild('Content Types', '@sympal_content_types')
-      ->setCredentials(array('ManageContentTypes'));
-
-    $administration->addChild('Themes', '@sympal_themes')
-      ->setCredentials(array('ManageThemes'));
-
-    $administration->addChild('Sites', '@sympal_sites')
-      ->setCredentials(array('ManageSites'));
+    $administration = $menu->getChild('administration');
+    $administration->setLabel('Administration');
 
     $administration->addChild('System Settings', '@sympal_config')
       ->setCredentials(array('ManageSystemSettings'));
 
     $administration->addChild('Check Server', '@sympal_check_server')
       ->setCredentials(array('ViewServerCheck'));
-
-    $administration->addChild('Check for Updates', '@sympal_check_for_updates')
-      ->setCredentials(array('UpdateManager'));
   }
 
   public function loadConfigForm(sfEvent $event)
