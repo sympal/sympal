@@ -9,6 +9,9 @@ all:
 
     # Configure the default culture
     default_culture: en
+
+    # Configure the available languages
+    language_codes: []
     
     # used for outputting date published slot. See sfDateFormat::getPattern()
     # http://trac.symfony-project.org/browser/branches/1.4/lib/i18n/sfDateFormat.class.php
@@ -236,9 +239,6 @@ all:
     recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb
     
     gravatar_default_image: "/sfSympalPlugin/images/symfony_button.gif"
-
-    # Configure the available languages
-    language_codes: []
 
     # Configure the sources to find Sympal plugins to download and install
     # This can be a SVN repository or a local directory.
