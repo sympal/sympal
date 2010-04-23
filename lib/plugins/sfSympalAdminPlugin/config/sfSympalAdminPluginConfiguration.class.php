@@ -56,26 +56,6 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   }
 
   /**
-   * Called when the admin menu is loaded.
-   * 
-   * Supplies all of the css and js needed for the admin menu
-   */
-  protected function _loadAdminMenuAssets()
-  {
-    sfSympalToolkit::useJQuery();
-
-    $response = sfContext::getInstance()->getResponse();
-    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
-
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
-
-    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
-  }
-
-  /**
    * Listens to the response.filter_content event and adds the
    * editor drop-down menu to the response
    */
@@ -345,5 +325,25 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     return $context->getUser()->hasCredential('ViewAdminBar')
       && $format == 'html'
       && $request->getParameter('module') !== 'sympal_dashboard';
+  }
+
+  /**
+   * Called when the admin menu is loaded.
+   * 
+   * Supplies all of the css and js needed for the admin menu
+   */
+  protected function _loadAdminMenuAssets()
+  {
+    sfSympalToolkit::useJQuery();
+
+    $response = sfContext::getInstance()->getResponse();
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
+
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/menu.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
+
+    $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
   }
 }
