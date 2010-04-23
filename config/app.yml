@@ -227,9 +227,6 @@ all:
         fields: [path, name]
         indexName: asset_sluggable
         builder: [sfSympalAsset, slugBuilder]
-
-    # Configure e-mail settings
-    default_from_email_address: noreply@sympalphp.org
     
     gravatar_default_image: "/sfSympalPlugin/images/symfony_button.gif"
 
