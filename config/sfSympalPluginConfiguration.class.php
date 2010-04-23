@@ -19,42 +19,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   const VERSION = '1.0.0-ALPHA4';
 
   /**
-   * Array of all the core Sympal plugins
-   * 
-   * A core plugin is one that lives in the lib/plugins directory of sfSympalPlugin.
-   * A core plugin will be enabled automatically
-   */
-  public static
-    $corePlugins = array(
-      'sfDoctrineGuardPlugin',
-      'sfFormExtraPlugin',
-      'sfTaskExtraPlugin',
-      'sfFeed2Plugin',
-      'sfWebBrowserPlugin',
-      'sfJqueryReloadedPlugin',
-      'sfImageTransformPlugin',
-      'sfSympalCMFPlugin',
-      'sfSympalCorePlugin',
-      'sfSympalMenuPlugin',
-      'sfSympalPluginManagerPlugin',
-      'sfSympalPagesPlugin',
-      'sfSympalContentListPlugin',
-      'sfSympalDataGridPlugin',
-      'sfSympalUserPlugin',
-      'sfSympalInstallPlugin',
-      'sfSympalUpgradePlugin',
-      'sfSympalRenderingPlugin',
-      'sfSympalAdminPlugin',
-      'sfSympalEditorPlugin',
-      'sfSympalAssetsPlugin',
-      'sfSympalContentSyntaxPlugin',
-      'sfSympalSearchPlugin',
-      'sfSympalThemePlugin',
-      'sfSympalMinifyPlugin',
-      'sfSympalFormPlugin',
-    );
-
-  /**
    * Shortcut method to enable all Sympal plugins for the given ProjectConfiguration
    *
    * Returns an instance of sfSympalPluginEnabler which allows you to enable
@@ -211,4 +175,41 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       $this->_dispatcher->connect('response.filter_content', array($superCache, 'listenToResponseFilterContent'));
     }
   }
+
+
+  /**
+   * Array of all the core Sympal plugins
+   * 
+   * A core plugin is one that lives in the lib/plugins directory of sfSympalPlugin.
+   * A core plugin will be enabled automatically
+   */
+  public static
+    $corePlugins = array(
+      'sfDoctrineGuardPlugin',
+      'sfFormExtraPlugin',
+      'sfTaskExtraPlugin',
+      'sfFeed2Plugin',
+      'sfWebBrowserPlugin',
+      'sfJqueryReloadedPlugin',
+      'sfImageTransformPlugin',
+      'sfSympalCMFPlugin',
+      'sfSympalCorePlugin',
+      'sfSympalMenuPlugin',
+      'sfSympalPluginManagerPlugin',
+      'sfSympalPagesPlugin',
+      'sfSympalContentListPlugin',
+      'sfSympalDataGridPlugin',
+      'sfSympalUserPlugin',
+      'sfSympalInstallPlugin',
+      'sfSympalUpgradePlugin',
+      'sfSympalRenderingPlugin',
+      'sfSympalAdminPlugin',
+      'sfSympalEditorPlugin',
+      'sfSympalAssetsPlugin',
+      'sfSympalContentSyntaxPlugin',
+      'sfSympalSearchPlugin',
+      'sfSympalThemePlugin',
+      'sfSympalMinifyPlugin',
+      'sfSympalFormPlugin',
+    );
 }
