@@ -49,13 +49,18 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     // load the admin menu
     if ($this->_shouldLoadAdminMenu())
     {
-      $this->loadAdminMenuAssets();
+      $this->_loadAdminMenuAssets();
 
       $this->dispatcher->connect('response.filter_content', array($this, 'addAdminMenuHtml'));
     }
   }
 
-  public function loadAdminMenuAssets()
+  /**
+   * Called when the admin menu is loaded.
+   * 
+   * Supplies all of the css and js needed for the admin menu
+   */
+  protected function _loadAdminMenuAssets()
   {
     sfSympalToolkit::useJQuery();
 
