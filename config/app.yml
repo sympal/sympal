@@ -187,12 +187,6 @@ all:
     # Customize the menu class used to render site breadcrumbs
     breadcrumbs_class: sfSympalMenuBreadcrumbs
 
-    # Configure the Symfony Plugin API username and password
-    # Required for the php symfony sympal:report-statistics task
-    plugin_api:
-      username:
-      password:
-
     # Configure the available formats to render content in
     content_formats:
       - html
