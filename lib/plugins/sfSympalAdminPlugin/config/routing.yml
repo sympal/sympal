@@ -18,62 +18,6 @@ sympal_config_save:
   url:   /admin/configuration/save
   param: { module: sympal_config, action: save }
 
-sympal_content_types:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalContentType
-    module:               sympal_content_types
-    prefix_path:          admin/content/types
-    with_wildcard_routes: true
-
-sympal_content_slots:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalContentSlot
-    module:               sympal_content_slots
-    prefix_path:          admin/content/slots
-    with_wildcard_routes: true
-
-sympal_sites:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalSite
-    module:               sympal_sites
-    prefix_path:          admin/sites
-    with_wildcard_routes: true
-
-sympal_redirects:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalRedirect
-    module:               sympal_redirects
-    prefix_path:          admin/redirects
-    with_wildcard_routes: true
-
-sympal_content:
-  class:                  sfDoctrineRouteCollection
-  options:
-    model:                sfSympalContent
-    module:               sympal_content
-    prefix_path:          admin/content/manage
-    with_wildcard_routes: true
-
-sympal_content_types_index:
-  url:  /admin/content
-  param: { module: sympal_content, action: content_types_index }
-
-sympal_content_edit_slots:
-  url:  /admin/content/:id/edit_slots
-  param: { module: sympal_content, action: edit_slots }
-
-sympal_content_create_type:
-  url:    /admin/content/manage/create/:type
-  param:  { module: sympal_content, action: create_type }
-
-sympal_content_list_type:
-  url:    /admin/content/manage/type/:type
-  param: { module: sympal_content, action: list_type }
-
 sympal_admin_save_nested_set:
   url:    /admin/save_nested_set/:model
   param: { module: sympal_admin, action: save_nested_set }
