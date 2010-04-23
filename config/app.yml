@@ -130,9 +130,6 @@ all:
       path: ~
       plugin_paths: ~
 
-    # Enable and disable the markdown editor. When disabled a normal textarea is used
-    enable_markdown_editor: true
-
     # Enable and disable the elastic textareas
     elastic_textareas: true
 
