@@ -10,6 +10,17 @@ sympal_editor_links:
   url:   /editor/links
   param: { module: sympal_editor, action: links }
 
+sympal_publish_content:
+  url:   /admin/content/:id/publish
+  param: { module: sympal_editor, action: publish_content }
+  class: sfDoctrineRoute
+  options: { model: sfSympalContent, type: object }
+
+sympal_unpublish_content:
+  url:   /admin/content/:id/unpublish
+  param: { module: sympal_editor, action: unpublish_content }
+  class: sfDoctrineRoute
+  options: { model: sfSympalContent, type: object }
 
 sympal_content_slot_form:
   url:   /content_slot_form/:id/:content_id
