@@ -237,7 +237,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   {
     sfConfig::set('sf_cache', sfSympalConfig::get('page_cache', 'enabled', false));
     sfConfig::set('sf_default_culture', sfSympalConfig::get('default_culture', null, 'en'));
-    sfConfig::set('sf_admin_module_web_dir', sfSympalConfig::get('admin_module_web_dir', null, '/sfSympalAdminPlugin'));
 
     sfConfig::set('app_sf_guard_plugin_success_signin_url', sfSympalConfig::get('success_signin_url'));
 

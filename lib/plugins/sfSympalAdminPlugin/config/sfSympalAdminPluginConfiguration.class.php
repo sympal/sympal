@@ -37,6 +37,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     // Connect to the component.method_not_found event to extend the actions class
     $actions = new sfSympalAdminActions();
     $this->dispatcher->connect('component.method_not_found', array($actions, 'extend'));
+    
+    $this->_initializeSymfonyConfig();
   }
 
   /**
@@ -226,5 +228,13 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
+  }
+
+  protected function _initializeSymfonyConfig()
+  {
+    if ($adminDir = sfSympalConfig::get('admin_module_web_dir'))
+    {
+      sfConfig::set('sf_admin_module_web_dir', $adminDir);
+    }
   }
 }
