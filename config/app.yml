@@ -220,13 +220,6 @@ all:
     internationalized_models:
       sfSympalContentList: [title]
       sfSympalPage: [title]
-
-    # Configure what models are sluggable
-    sluggable_models:
-      sfSympalAsset:
-        fields: [path, name]
-        indexName: asset_sluggable
-        builder: [sfSympalAsset, slugBuilder]
     
     gravatar_default_image: "/sfSympalPlugin/images/symfony_button.gif"
 

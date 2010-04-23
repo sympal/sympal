@@ -36,6 +36,13 @@ all:
     content_syntax_types:
       asset:
         replacer_class:    sfSympalContentSyntaxAssetReplacer
+
+    # Configure what models are sluggable
+    sluggable_models:
+      sfSympalAsset:
+        fields: [path, name]
+        indexName: asset_sluggable
+        builder: [sfSympalAsset, slugBuilder]
     
   sfImageTransformPlugin:
     mime_type:
