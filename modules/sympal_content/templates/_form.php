@@ -1,7 +1,7 @@
 <?php use_stylesheets_for_form($form) ?>
 <?php use_javascripts_for_form($form) ?>
 
-<?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/content_admin.css', 'last') ?>
+<?php sympal_use_stylesheet('/sfSympalPlugin/css/admin/sympal_content.css', 'last') ?>
 
 <div class="sf_admin_form">
   <?php echo form_tag_for($form, '@sympal_content') ?>
