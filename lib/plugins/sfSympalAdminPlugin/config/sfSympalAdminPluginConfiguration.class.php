@@ -191,7 +191,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   }
 
   /**
-   * Determins whether the admin menu should be loaded based on credentials
+   * Determines whether the admin menu should be loaded based on credentials
    * and the type of request
    * 
    * @return boolean
