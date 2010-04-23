@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This class should be used for all generated modules using the sympal_admin theme
+ * 
+ * This adds nested set functionality, for example
+ * 
+ * @package     sfSympalAdminPlugin
+ * @subpackage  generator
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class sfSympalDoctrineGenerator extends sfDoctrineGenerator
 {
   public function isNestedSet()
