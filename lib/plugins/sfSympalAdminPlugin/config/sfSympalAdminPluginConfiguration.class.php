@@ -15,31 +15,28 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 {
   public function initialize()
   {
+    // Connect to the sympal.load_admin_menu event
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'loadAdminMenu'));
+    
+    // Connect to the sympal.load_config_form evnet
     $this->dispatcher->connect('sympal.load_config_form', array($this, 'loadConfigForm'));
+    
+    // Connect to the sympal.load_editor event
     $this->dispatcher->connect('sympal.load_editor', array($this, 'loadEditor'));
+    
+    // Connect to the sympal.load event
     $this->dispatcher->connect('sympal.load', array($this, 'boostrap'));
     
+    // Connect to the sympal.theme.set_theme_from_request to load the admin theme for admin modules
     $this->dispatcher->connect('sympal.theme.set_theme_from_request', array($this, 'setThemeForAdminModule'));
     
+    // Connect to the sympal.configuration.method_not_found to extend sfSympalConfiguration
     $configuration = new sfSympalAdminConfiguration();
     $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
     
-    // extend the actions class
+    // Connect to the component.method_not_found event to extend the actions class
     $actions = new sfSympalAdminActions();
     $this->dispatcher->connect('component.method_not_found', array($actions, 'extend'));
-  }
-
-  public function shouldLoadAdminMenu()
-  {
-    $context = sfContext::getInstance();
-    $request = $context->getRequest();
-    $format = $request->getRequestFormat();
-    $format = $format ? $format : 'html';
-
-    return $context->getUser()->hasCredential('ViewAdminBar')
-      && $format == 'html'
-      && $request->getParameter('module') !== 'sympal_dashboard';
   }
 
   public function boostrap()
@@ -47,7 +44,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->configuration->loadHelpers(array('SympalAdmin'));
     
     // load the admin menu
-    if ($this->shouldLoadAdminMenu())
+    if ($this->_shouldLoadAdminMenu())
     {
       $this->loadAdminMenuAssets();
 
@@ -322,5 +319,23 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     }
     
     return false; // Set the event as not processed
+  }
+
+  /**
+   * Determins whether the admin menu should be loaded based on credentials
+   * and the type of request
+   * 
+   * @return boolean
+   */
+  protected function _shouldLoadAdminMenu()
+  {
+    $context = sfContext::getInstance();
+    $request = $context->getRequest();
+    $format = $request->getRequestFormat();
+    $format = $format ? $format : 'html';
+
+    return $context->getUser()->hasCredential('ViewAdminBar')
+      && $format == 'html'
+      && $request->getParameter('module') !== 'sympal_dashboard';
   }
 }
