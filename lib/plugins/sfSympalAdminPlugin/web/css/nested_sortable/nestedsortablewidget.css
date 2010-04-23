@@ -78,7 +78,7 @@ float: none;
 .nsw-disabled-save-button:focus, 
 .nsw-disabled-save-button:active, 
 .nsw-save-button:focus {
-	background: url( ../images/fade-butt.png );
+	background: url( ../images/nested_sortable/fade-butt.png );
 	background-color: #F2F2F2;
 	border-color:#CCCCCC rgb(153, 153, 153) rgb(153, 153, 153) rgb(204, 204, 204);
 	border-style:double;
