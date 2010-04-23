@@ -25,7 +25,7 @@ all:
       sympal_search: ~
 
     # Customize the admin module web directory
-    admin_module_web_dir: "/sfSympalAdminPlugin"
+    admin_module_web_dir: "/sfSympalAdminPlugin/admin"
 
     # Configure the default admin generator theme and class to use if one is 
     # not specified for the loaded theme
