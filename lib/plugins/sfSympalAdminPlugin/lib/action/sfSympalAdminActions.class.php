@@ -9,7 +9,6 @@
  */
 class sfSympalAdminActions extends sfSympalExtendClass
 {
-
   /**
    * Enable or disable the admin editor
    */
