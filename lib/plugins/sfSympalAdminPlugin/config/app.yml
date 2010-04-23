@@ -36,9 +36,6 @@ all:
           - /sfSympalPlugin/js/shortcuts.js
         stylesheets:
           - /sfSympalPlugin/fancybox/jquery.fancybox.css
-          - /sfSympalPlugin/css/grid_960/grid_960.css
-          - /sfSympalPlugin/css/grid_960/reset.css
-          - /sfSympalPlugin/css/grid_960/text.css
           - /sfSympalAdminPlugin/css/admin.css
         callables:
           - [sfSympalToolkit, useJQuery]
