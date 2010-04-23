@@ -39,6 +39,9 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $this->dispatcher->connect('component.method_not_found', array($actions, 'extend'));
   }
 
+  /**
+   * Listens to the sympal.load event
+   */
   public function boostrap()
   {
     $this->configuration->loadHelpers(array('SympalAdmin'));
@@ -48,7 +51,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     {
       $this->loadAdminMenuAssets();
 
-      $this->dispatcher->connect('response.filter_content', array($this, 'addEditorHtml'));
+      $this->dispatcher->connect('response.filter_content', array($this, 'addAdminMenuHtml'));
     }
   }
 
@@ -71,7 +74,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
    * Listens to the response.filter_content event and adds the
    * editor drop-down menu to the response
    */
-  public function addEditorHtml(sfEvent $event, $content)
+  public function addAdminMenuHtml(sfEvent $event, $content)
   {
     // See if the editor was disabled
     if (!sfConfig::get('sympal.editor_menu', true))
@@ -86,8 +89,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     }
     
     $this->configuration->loadHelpers(array('SympalAdmin'));
-
     $content = str_replace('</body>', get_sympal_admin_menu().'</body>', $content);
+
     return $content;
   }
 
