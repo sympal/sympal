@@ -3,3 +3,6 @@ all:
     search:
       searchable_models:   []
         # - mySearchableModel
+
+    admin_modules:
+      sympal_search: ~

@@ -32,6 +32,9 @@ all:
           extensions: [txt]
         tarball:
           extensions: [tar, gz, zip, bzip, gzip, rar, 7z, tgz]
+
+    admin_modules:
+      sympal_assets: ~
     
     content_syntax_types:
       asset:

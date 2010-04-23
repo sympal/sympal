@@ -5,3 +5,4 @@ all:
     
     admin_modules:
       sympal_menu_items: ~
+      sympal_content_menu_item: ~

@@ -1,0 +1,6 @@
+all:
+  sympal_config:
+    admin_modules:
+      sympal_users: ~
+      sympal_groups: ~
+      sympal_permissions: ~

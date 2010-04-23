@@ -5,3 +5,6 @@ all:
       # Required for the php symfony sympal:report-statistics task
       plugin_api_username:
       plugin_api_password:
+
+    admin_modules:
+      sympal_plugin_manager: ~

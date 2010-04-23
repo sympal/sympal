@@ -12,20 +12,7 @@ all:
     admin_modules:
       sympal_admin: ~
       sympal_config: ~
-      sympal_content: ~
-      sympal_content_slots: ~
-      sympal_content_menu_item: ~
-      sympal_content_types: ~
       sympal_dashboard: ~
-      sympal_redirects: ~
-      sympal_sites: ~
-      sympal_users: ~
-      sympal_groups: ~
-      sympal_permissions: ~
-      sympal_plugin_manager: ~
-      sympal_assets: ~
-      sympal_upgrade: ~
-      sympal_search: ~
 
     # Customize the admin module web directory
     admin_module_web_dir: "/sfSympalAdminPlugin/admin"

@@ -203,6 +203,11 @@ all:
 
     admin_modules:
       sympal_cms_admin: ~
+      sympal_content: ~
+      sympal_content_slots: ~
+      sympal_redirects: ~
+      sympal_sites: ~
+      sympal_content_types: ~
 
     # Configure internationalization
     i18n: false

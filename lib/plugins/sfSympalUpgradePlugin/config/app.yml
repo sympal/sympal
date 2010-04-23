@@ -1,0 +1,4 @@
+all:
+  sympal_config:
+    admin_modules:
+      sympal_upgrade: ~
