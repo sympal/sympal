@@ -594,40 +594,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $contentAsset;
   }
 
-  public function deleteLinkAndAssetReferences()
-  {
-    $this->deleteAssetReferences();
-    $this->deleteLinkReferences();
-  }
-
-  public function deleteAssetReferences()
-  {
-    $count = Doctrine_Query::create()
-      ->delete('sfSympalContentLink')
-      ->where('content_id = ?', $this->getId())
-      ->execute();
-    return $count;
-  }
-
-  public function deleteLinkReferences()
-  {
-    $count = Doctrine_Query::create()
-      ->delete('sfSympalContentAsset')
-      ->where('content_id = ?', $this->getId())
-      ->execute();
-    return $count;
-  }
-
-  public function postInsert($event)
-  {
-    $event->getInvoker()->deleteLinkAndAssetReferences();
-  }
-
-  public function postUpdate($event)
-  {
-    $event->getInvoker()->deleteLinkAndAssetReferences();
-  }
-
   public static function slugBuilder($text, $content)
   {
     if ($record = $content->getRecord())

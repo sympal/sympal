@@ -38,7 +38,11 @@ sfSympalRedirect:
       foreignAlias: Redirects
 
 sfSympalContent:
-  actAs: [Timestampable, sfSympalRecordTemplate]
+  actAs:
+    Timestampable:
+    sfSympalRecordTemplate:
+    sfInlineObjectContainerTemplate:
+      relations:    Assets
   columns:
     site_id:
       type: integer
