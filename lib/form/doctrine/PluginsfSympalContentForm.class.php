@@ -33,7 +33,7 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     sfSympalFormToolkit::changeTemplateWidget($this);
     
     // Sets up the module widget
-    sfSympalFormToolkit::changeModuleWidget($form);
+    sfSympalFormToolkit::changeModuleWidget($this);
 
     if (!$this->object->content_type_id)
     {
