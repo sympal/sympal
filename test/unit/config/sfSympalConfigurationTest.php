@@ -16,7 +16,7 @@ require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 $t = new lime_test(19);
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
-$sympalConfiguration = $sympalPluginConfiguration->getSympalConfiguration();
+$sympalConfiguration = sfSympalConfiguration::getActive();
 
 $contentTemplates = $sympalConfiguration->getContentTemplates('sfSympalPage');
 $t->is(isset($contentTemplates['default_view']), true, '->getContentTemplates() returns default_view for sfSympalPage'); 
@@ -39,7 +39,8 @@ $corePlugins = array(
   'sfWebBrowserPlugin',
   'sfJqueryReloadedPlugin',
   'sfImageTransformPlugin',
-  'sfSympalCMFPlugin',
+  'sfInlineObjectPlugin',
+  'sfSympalCorePlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
@@ -52,10 +53,10 @@ $corePlugins = array(
   'sfSympalAdminPlugin',
   'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin',
-  'sfSympalContentSyntaxPlugin',
   'sfSympalSearchPlugin',
   'sfSympalThemePlugin',
   'sfSympalMinifyPlugin',
+  'sfSympalFormPlugin',
 );
 
 $t->is($sympalConfiguration->getCorePlugins(), $corePlugins, '->getCorePlugins() returns the correct array');
