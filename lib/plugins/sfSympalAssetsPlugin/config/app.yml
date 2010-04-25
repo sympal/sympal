@@ -9,13 +9,15 @@ all:
       thumbnails_default_width:   64         # Width to make thumbnails if not specified
       thumbnails_default_height:  64         # Height to make thumbnails if not specified
       thumbnails_method:      fit            # Method used for thumbnailing [fit, scale, inflate, deflate, left, right, top, bottom, center]
-      default_render_options:
-        embed: true
 
-      file_types:                           # define file_types is usefull for displaying icons in browser
-        document:                           # type of file (also used as default icon name)
-          extensions: [doc, xls, xcf, ai]   # extensions associated to this type
-          icon:       doc                   # optional icon file name, without extension
+      default_render_options:                # Default options to apply when rendering assets
+        # option_name:    value
+
+      file_types:                             # defining file_types is useful for displaying icons in browser
+        document:                             # type of file (also used as default icon name)
+          extensions: [doc, xls, xcf, ai]     # extensions associated to this type
+          icon:       doc                     # optional icon file name, without extension
+          class:      sfSympalAssetFileObject # (optional) The class used to render the asset. Default: sfSympalAssetFileObject
         image:                              
           extensions: [png, jpg, jpeg, gif]
           class:      sfSympalAssetImageObject
@@ -43,10 +45,12 @@ all:
         indexName: asset_sluggable
         builder: [sfSympalAsset, slugBuilder]
 
+  # Register the "asset" inline object type if sfInlineObjectPlugin is available
   inline_object:
     types:
       asset:   sfSympalInlineObjectAsset
 
+  # Setup sfImageTransformPlugin
   sfImageTransformPlugin:
     mime_type:
       auto_detect: true
