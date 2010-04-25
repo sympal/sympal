@@ -19,3 +19,6 @@
 [submodule "lib/plugins/sfSympalFormPlugin"]
 	path = lib/plugins/sfSympalFormPlugin
 	url = git://github.com/sympal/sfSympalFormPlugin.git
+[submodule "lib/plugins/sfInlineObjectPlugin"]
+	path = lib/plugins/sfInlineObjectPlugin
+	url = git://github.com/weaverryan/sfInlineObjectPlugin.git
