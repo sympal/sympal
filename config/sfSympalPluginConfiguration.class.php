@@ -82,6 +82,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $this->_configureSuperCache();
     
     $this->dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
+
+    $site = $this->_sympalContext->getService('site_manager');
+    $this->dispatcher->connect('template.filter_parameters', array($site, 'filterTemplateParameters'));
   }
 
   /**
@@ -197,15 +200,15 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
             ->addChild(__('Publish'), '@sympal_publish_content?id='.$content->id, 'title='.__('Has not been published yet. '.__('Click to publish content.')));
         }
       }
-    }
 
-    if (sfSympalConfig::isI18nEnabled())
-    {
-      foreach (sfSympalConfig::getLanguageCodes() as $code)
+      if (sfSympalConfig::isI18nEnabled())
       {
-        if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
+        foreach (sfSympalConfig::getLanguageCodes() as $code)
         {
-          $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title='.__('Switch to ').''.format_language($code));
+          if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
+          {
+            $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title='.__('Switch to ').''.format_language($code));
+          }
         }
       }
     }

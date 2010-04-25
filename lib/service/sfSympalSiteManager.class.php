@@ -33,8 +33,6 @@ class sfSympalSiteManager
     $this->_dispatcher = $configuration->getEventDispatcher();
     $this->_configuration = $configuration;
     $this->_siteSlug = $configuration->getProjectConfiguration()->getApplication();
-    
-    $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
   }
 
   /**
