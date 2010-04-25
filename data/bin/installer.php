@@ -132,8 +132,11 @@ function setupDatabase($task)
 
   if ($db['driver'] == 'sqlite')
   {
-    $db['path'] = $task->askAndValidate('Enter the path to your sqlite database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-    $db['dsn']  = 'sqlite:///'.$db['path'];
+    $db['path'] = $task->askAndValidate('Enter the filename of your sqlite database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+    if (!strpos($db['path'], '.')) {
+      $db['path'] .= '.sqlite';
+    }
+    $db['dsn']  = 'sqlite:'.sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.$db['path'];
   } else {
     $db['host']      = $task->askAndValidate('Enter the host of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
     $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
