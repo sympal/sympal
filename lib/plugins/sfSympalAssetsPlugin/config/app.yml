@@ -1,14 +1,14 @@
 all:
   sympal_config:
     assets:
-      web_path:               ~              # The web path to use to link to the assets
+      web_path:               ~              # The web path to use to link to the assets. Usually doesn't need to be specified.
       root_dir:               /uploads       # The path to the directory where the assets are located
       thumbnails_enabled:     true           # Enable thumbnail creation on upload
       thumbnails_dir:         .thumbnails    # Directory name for storing thumbnails
-      originals_dir:          .originals
-      thumbnails_max_width:   64
-      thumbnails_max_height:  64
-      thumbnails_method:      fit
+      originals_dir:          .originals     # Directory name for storing original copies of the asset
+      thumbnails_default_width:   64         # Width to make thumbnails if not specified
+      thumbnails_default_height:  64         # Height to make thumbnails if not specified
+      thumbnails_method:      fit            # Method used for thumbnailing [fit, scale, inflate, deflate, left, right, top, bottom, center]
       default_render_options:
         embed: true
 

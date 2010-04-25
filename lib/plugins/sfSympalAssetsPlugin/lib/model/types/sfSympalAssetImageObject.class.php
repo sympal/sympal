@@ -97,8 +97,8 @@ class sfSympalAssetImageObject extends sfSympalAssetFileObject
    */
   public function getThumbnail($width = null, $height = null, $method = null)
   {
-    $width = ($width === null) ? sfSympalConfig::get('assets', 'thumbnails_max_width', 64) : $width;
-    $height = ($height === null) ? sfSympalConfig::get('assets', 'thumbnails_max_height', 64) : $height;
+    $width = ($width === null) ? sfSympalConfig::get('assets', 'thumbnails_default_width', 64) : $width;
+    $height = ($height === null) ? sfSympalConfig::get('assets', 'thumbnails_default_height', 64) : $height;
     $method = ($method === null) ? sfSympalConfig::get('assets', 'thumbnails_method', 'fit') : $method;
 
     $thumbnailKey = $width.'_'.$height.'_'.$method;
