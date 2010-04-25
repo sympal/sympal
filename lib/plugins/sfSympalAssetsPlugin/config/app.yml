@@ -35,10 +35,6 @@ all:
 
     admin_modules:
       sympal_assets: ~
-    
-    content_syntax_types:
-      asset:
-        replacer_class:    sfSympalContentSyntaxAssetReplacer
 
     # Configure what models are sluggable
     sluggable_models:
@@ -46,7 +42,11 @@ all:
         fields: [path, name]
         indexName: asset_sluggable
         builder: [sfSympalAsset, slugBuilder]
-    
+
+  inline_object:
+    types:
+      asset:   sfSympalInlineObjectAsset
+
   sfImageTransformPlugin:
     mime_type:
       auto_detect: true

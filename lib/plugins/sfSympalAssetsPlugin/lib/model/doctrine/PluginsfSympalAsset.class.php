@@ -24,11 +24,6 @@ abstract class PluginsfSympalAsset extends BasesfSympalAsset
 {
   private $_assetObject;
 
-  public function filterContent($content, $replace, $options = array())
-  {
-    return str_replace($replace, $this->render($options), $content);
-  }
-
   public function setNewPath($path)
   {
     $assetObject = $this->getAssetObject();
