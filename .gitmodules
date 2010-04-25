@@ -22,3 +22,6 @@
 [submodule "lib/plugins/sfInlineObjectPlugin"]
 	path = lib/plugins/sfInlineObjectPlugin
 	url = git://github.com/weaverryan/sfInlineObjectPlugin.git
+[submodule "lib/plugins/sfImageTransformPlugin"]
+	path = lib/plugins/sfImageTransformPlugin
+	url = git://github.com/diem-project/sfImageTransformPlugin.git
