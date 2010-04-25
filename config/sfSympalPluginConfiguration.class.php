@@ -89,6 +89,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
    */
   public function setupAdminMenu(sfEvent $event)
   {
+    $menu = $event->getSubject();
+    
     // Setup the Content menu
     $manageContent = $menu->getChild('content');
     $manageContent->setLabel('Content');
@@ -136,9 +138,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
 
     // Add a Content menu if applicable
-    $contentRecord = $this->_sympalContext->getService('site_manager')->getCurrentContent();
-    
-    if ($contentRecord)
+    $content = $this->_sympalContext->getService('site_manager')->getCurrentContent();
+    if ($content)
     {
       $contentEditor = $menu->getChild($content->getType()->slug);
       $contentEditor->setLabel($content->getType()->getLabel() . ' Actions');

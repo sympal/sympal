@@ -25,6 +25,7 @@ class sfSympalUpgradePluginConfiguration extends sfPluginConfiguration
    */
   public function setupAdminMenu(sfEvent $event)
   {
+    $menu = $event->getSubject();
     $administration = $menu->getChild('administration');
     
     $administration->addChild('Check for Updates', '@sympal_check_for_updates')
