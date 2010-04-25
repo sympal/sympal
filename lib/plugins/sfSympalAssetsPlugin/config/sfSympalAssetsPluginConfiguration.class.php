@@ -45,7 +45,7 @@ class sfSympalAssetsPluginConfiguration extends sfPluginConfiguration
   public function loadAdminMenu(sfEvent $event)
   {
     $menu = $event->getSubject();
-    $menu->getChild('Content')
+    $menu->getChild('content')
       ->addChild('Assets', '@sympal_assets');
   }
 
