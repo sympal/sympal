@@ -116,6 +116,11 @@ all:
         label:  Column Slot Type
         widget_class:    false
         validator_class: false
+    
+    slot_filters:
+      markdown:
+        callback:  [sfSympalMarkdownSlotFilter, convertToHtml]
+        cache:     true
 
     # Automatically set the response meta title based on the current content and menu item
     auto_seo:

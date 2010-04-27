@@ -2,7 +2,14 @@
 
 require_once('Markdown.php');
 
-class sfSympalMarkdownRenderer
+/**
+ * Slot filter class for "markdown".
+ * 
+ * @package     sfSympalRenderingPlugin
+ * @subpackage  slot_filter
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
+class sfSympalMarkdownSlotFilter
 {
   public static function convertToHtml($markdown)
   {
