@@ -99,10 +99,10 @@ $manipulator->save();
 $this->logSection('sympal', '...downloading sfSympalPlugin');
 
 // Using git for now because PEAR ALWAYS FAILS FOR SOME PEOPLE
-$this->getFilesystem()->execute('git clone git://github.com/sympal/sympal.git plugins/sfSympalPlugin');
+exec('git clone git://github.com/sympal/sympal.git plugins/sfSympalPlugin');
 chdir(dirname(__FILE__).'/plugins/sfSympalPlugin');
-$this->getFilesystem()->execute('git submodule init');
-$this->getFilesystem()->execute('git submodule update');
+exec('git submodule init');
+exec('git submodule update');
 chdir(dirname(__FILE__));
 
 //@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
@@ -132,14 +132,17 @@ function setupDatabase($task)
 
   if ($db['driver'] == 'sqlite')
   {
-    $db['path'] = $task->askAndValidate('Enter the path to your sqlite database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-    $db['dsn']  = 'sqlite:///'.$db['path'];
+    $db['path'] = $task->askAndValidate('Enter the filename of your sqlite database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+    if (!strpos($db['path'], '.')) {
+      $db['path'] .= '.sqlite';
+    }
+    $db['dsn']  = 'sqlite:'.sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.$db['path'];
   } else {
     $db['host']      = $task->askAndValidate('Enter the host of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
     $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
     $db['username']  = $task->askAndValidate('Enter your database username:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
     $db['password']  = $task->askAndValidate('Enter your database password:', new sfValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
-    $db['dsn'] = $db['driver'].'://'.$db['username'].':'.$db['password'].'@'.$db['host'].'/'.$db['name'];
+    $db['dsn'] = $db['driver'].'://'.$db['username'].($db['password'] ? ':'.$db['password'] : '' ).'@'.$db['host'].'/'.$db['name'];
   }
 
   $task->logSection('sympal', sprintf('...testing connection dsn "%s"', $db['dsn']));
@@ -237,7 +240,7 @@ if (count($cultures) > 0)
     'sympal:configure '.sprintf('i18n=true language_codes="[%s]"', implode(',', $cultures))
   );
   $this->logBlock($command, 'INFO');
-  $this->getFilesystem()->execute($command, $out, $err);
+  exec($command);
 
   $this->logSection('i18n', sprintf('enabling i18n in application "%s"', $application));
 
@@ -259,8 +262,10 @@ $command = sprintf(
   sfConfig::get('sf_root_dir').'/symfony',
   'sympal:install '.$application.' --force-reinstall --email-address="'.$emailAddress.'" --username="'.$username.'" --password="'.$password.'" --no-confirmation --db-dsn="'.$db['dsn'].'" --db-username="'.$db['username'].'" --db-password="'.$db['password'].'" --first-name="'.$firstName.'" --last-name="'.$lastName.'"'
 );
-$this->logBlock($command, 'INFO');
-$this->getFilesystem()->execute($command);
+
+$this->logSection('sympal', 'Sympal is now installing itself into the symfony application.
+This will take a while, please be patient...');
+exec($command);
 
 // fix permission for common directories
 $fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
