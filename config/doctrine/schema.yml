@@ -163,9 +163,6 @@ sfSympalContentType:
 sfSympalContentSlot:
   actAs: [sfSympalRecordTemplate]
   columns:
-    is_column:
-      type: boolean
-      default: false
     name:
       type: string(255)
       notnull: true
@@ -173,6 +170,9 @@ sfSympalContentSlot:
       type: string(255)
       notnull: true
     value: clob
+    is_column:
+      type: boolean
+      default: false
   indexes:
     name:
       fields: [name]
