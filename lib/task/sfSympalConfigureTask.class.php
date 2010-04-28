@@ -58,7 +58,7 @@ EOF;
       } else {
         $this->logSection('sympal', sprintf('Writing setting "%s" with a value of "%s".', $key, $infoValue, $group));
 
-        sfSympalConfig::writeSetting(null, $key, $value, $writeToApp);
+        sfSympalConfig::writeSetting($key, $value, null, $writeToApp);
       }
     }
   }
