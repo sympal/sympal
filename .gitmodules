@@ -25,3 +25,6 @@
 [submodule "lib/plugins/sfImageTransformPlugin"]
 	path = lib/plugins/sfImageTransformPlugin
 	url = git://github.com/diem-project/sfImageTransformPlugin.git
+[submodule "lib/plugins/sfContentFilterPlugin"]
+	path = lib/plugins/sfContentFilterPlugin
+	url = git://github.com/weaverryan/sfContentFilterPlugin.git
