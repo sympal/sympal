@@ -107,7 +107,6 @@ all:
         filters: []
       Markdown:
         label: Markdown Editor
-        template: sympal_slot/markdown
         filters: [markdown]
       TinyMCE:
         label: TinyMCE Rich Text Editor
