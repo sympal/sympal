@@ -229,3 +229,27 @@ all:
 
     # Allowed markdown styled boxes
     markdown_styled_boxes: [quote, tip, caution, note]
+
+  # Define the themes
+  theme:
+    themes:
+      default:
+        available: true
+        disabled: false
+        layout: default
+        stylesheets:
+          - /sfSympalThemePlugin/css/default.css
+
+      wordpress_default:
+        available: true
+        disabled: false
+        layout: wordpress
+        stylesheets:
+          - /sfSympalThemePlugin/css/wordpress.css
+
+      sympal:
+        available: true
+        disabled: false
+        layout: sympal
+        stylesheets:
+          - /sfSympalThemePlugin/css/sympal.css
