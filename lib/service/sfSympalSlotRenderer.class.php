@@ -20,7 +20,6 @@ class sfSympalSlotRenderer
   protected
     $_slot,
     $_content,
-    $_template = false,
     $_options = array();
 
   public function __construct(sfSympalConfiguration $configuration)
@@ -45,7 +44,7 @@ class sfSympalSlotRenderer
    */
   public function renderSlotByName($name, $content, $options)
   {
-    // Sets up the options, content, slot, and template
+    // Sets up the options, content, slot
     $this->_configure($name, $content, $options);
     
     /**
@@ -75,18 +74,26 @@ class sfSympalSlotRenderer
     $this->_content = $content;
     $this->_options = $options;
     
+    /*
+     * Priority of options is as follows (most important to least important)
+     *   1) Any option passed in from the template
+     *   2) Any option defined on the content type
+     *   3) Any option defined on the slot type
+     */
+    
     // merge in options for this slot that may appear under this content type
-    $slotOptions = sfSympalConfig::getDeep('content_types', $this->_content->Type->name, 'content_slots', array());
-    if (isset($slotOptions[$name]))
+    $contentTypeSlotOptions = sfSympalConfig::getDeep('content_types', $this->_content->Type->name, 'content_slots', array());
+    if (isset($contentTypeSlotOptions[$name]))
     {
-      $this->_options = array_merge($slotOptions[$name], $this->_options);
+      $this->_options = array_merge($contentTypeSlotOptions[$name], $this->_options);
     }
     
     // Gets or creates the slot
     $this->_configureSlot($name);
     
-    // Determines the template (if any) based on the options
-    $this->_configureTemplate();
+    // Merge in the #3 from the above priority list
+    $slotOptions = sfSympalConfig::get('content_slot_types', $this->_slot->type, array());
+    $this->_options = array_merge($slotOptions, $this->_options);
   }
 
   /**
@@ -102,13 +109,15 @@ class sfSympalSlotRenderer
      * doctrine objects try to retrieve those objects off of relationships
      */
     $inlineObjectParser = $this->_configuration
-      ->getPluginConfiguration('sfSympalInlineObjectPlugin')
+      ->getProjectConfiguration()
+      ->getPluginConfiguration('sfInlineObjectPlugin')
       ->getParser();
-    $inlineObjectParser->setDoctrineRecord($this->getContentRenderedFor());
+    $inlineObjectParser->setDoctrineRecord($this->_content);
     
     // Run the slot through its filters
     $value = $this->_configuration
-      ->getPluginConfiguration('sfSympalContentFilterPlugin')
+      ->getProjectConfiguration()
+      ->getPluginConfiguration('sfContentFilterPlugin')
       ->getParser()
       ->filter($value, $this->getOption('filters', array()));
     
@@ -116,9 +125,9 @@ class sfSympalSlotRenderer
     $inlineObjectParser->setDoctrineRecord(false);
     
     // If applicable, run the slot through a partial
-    if ($this->_template)
+    if ($this->getOption('template'))
     {
-      $value = get_partial($this->_template, array('value' => $value, 'content' => $this->_content));
+      $value = get_partial($this->getOption('template'), array('value' => $value, 'content' => $this->_content));
     }
     
     return $value;
@@ -138,22 +147,6 @@ class sfSympalSlotRenderer
       unset($this->_options['default_value']);
     }
     $this->_slot->setContentRenderedFor($this->_content);
-  }
-
-  /**
-   * Determines the template based on the options
-   */
-  protected function _configureTemplate()
-  {
-    if (isset($this->_options['template']))
-    {
-      $this->_template = $this->_options['template'];
-      unset($this->_options['template']);
-    }
-    elseif ($template = sfSympalConfig::getDeep('content_slot_types', $this->_slot->type, 'template', false))
-    {
-      $this->_template = $template;
-    }
   }
 
   /**

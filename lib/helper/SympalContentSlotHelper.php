@@ -28,7 +28,9 @@ function get_sympal_content_slot()
  */
 function _get_sympal_content_slot($name, $options = array())
 {
-  return sfSympalContext::getInstance()->getService('slot_renderer')->renderSlotByName($name, $options);
+  $content = isset($options['content']) ? $options['content'] : sfSympalContext::getInstance()->getService('site_manager')->getCurrentContent();
+  
+  return sfSympalContext::getInstance()->getService('slot_renderer')->renderSlotByName($name, $content, $options);
 }
 
 /**
