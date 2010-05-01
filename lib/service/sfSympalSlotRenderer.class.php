@@ -9,8 +9,13 @@
 
 class sfSympalSlotRenderer
 {
+  /**
+   * @var sfSympalConfiguration
+   * @var boolean
+   */
   protected
-    $_configuration;
+    $_configuration,
+    $_shouldLoadEditor;
 
   protected
     $_slot,
@@ -30,46 +35,29 @@ class sfSympalSlotRenderer
    * to use. This also taps into the app.yml config for its options
    * 
    * @param string $name The name of the slot
+   * @param sfSympalContent $content The content record to get the slot from
    * @param array  $options An array of options for this slot
    * 
    * Available options include
-   *  * content         An sfSympalContent instance to render the slot for
    *  * type            The rendering type to use for this slot (e.g. Markdown)
    *  * default_value   A default value to give this slot the first time it's created
    *  * edit_mode       How to edit this slot (popup (default), inline)
    */
-  public function renderSlotByName($name, $options)
+  public function renderSlotByName($name, $content, $options)
   {
     // Sets up the options, content, slot, and template
-    $this->_configure($name, $options);
+    $this->_configure($name, $content, $options);
     
     /**
      * Either render the raw value or the editor for the slot
      */
     if ($this->_configuration->getProjectConfiguration()->getPluginConfiguration('sfSympalEditorPlugin')->shouldLoadEditor())
     {
-      use_helper('SympalContentSlotEditor');
-
       return $this->_getSlotEditor();
     }
     else
     {
       return $this->_getRenderedSlot();
-    }
-    
-    return $value;
-  }
-
-  /**
-   * Returns the slot in its rendered form, which takes into consideration
-   * a possible template for rendering
-   */
-  protected function _getRenderedSlot()
-  {
-    $value = $this->_slot->render();
-    if ($this->_template)
-    {
-      $value = get_partial($this->_template, array('value' => $value, 'content' => $this->_content));
     }
     
     return $value;
@@ -82,12 +70,10 @@ class sfSympalSlotRenderer
    * @param string $name The name of the slot
    * @param array $options 
    */
-  protected function _configure($name, $options)
+  protected function _configure($name, $content, $options)
   {
+    $this->_content = $content;
     $this->_options = $options;
-
-    // Determines the correct sfSympalContent object
-    $this->_configureContent();
     
     // merge in options for this slot that may appear under this content type
     $slotOptions = sfSympalConfig::getDeep('content_types', $this->_content->Type->name, 'content_slots', array());
@@ -103,17 +89,39 @@ class sfSympalSlotRenderer
     $this->_configureTemplate();
   }
 
-  protected function _configureContent()
+  /**
+   * Returns the slot in its rendered form, which takes into consideration
+   * a possible template for rendering
+   */
+  protected function _getRenderedSlot()
   {
-    if (isset($this->_options['content']))
+    $value = $this->_slot->render();
+    
+    /*
+     * Set the Content record on the inline object parser so that any inline
+     * doctrine objects try to retrieve those objects off of relationships
+     */
+    $inlineObjectParser = $this->_configuration
+      ->getPluginConfiguration('sfSympalInlineObjectPlugin')
+      ->getParser();
+    $inlineObjectParser->setDoctrineRecord($this->getContentRenderedFor());
+    
+    // Run the slot through its filters
+    $value = $this->_configuration
+      ->getPluginConfiguration('sfSympalContentFilterPlugin')
+      ->getParser()
+      ->filter($value, $this->getOption('filters', array()));
+    
+    // Remove the Content record from the parser
+    $inlineObjectParser->setDoctrineRecord(false);
+    
+    // If applicable, run the slot through a partial
+    if ($this->_template)
     {
-      $this->_content = $this->_options['content'];
-      unset($this->_options['content']);
+      $value = get_partial($this->_template, array('value' => $value, 'content' => $this->_content));
     }
-    else
-    {
-      $this->setContent(sfSympalContext::getInstance()->getService('site_manager')->getCurrentContent());
-    }
+    
+    return $value;
   }
 
   protected function _configureSlot($name)

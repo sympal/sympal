@@ -101,26 +101,26 @@ all:
       #  transformers:    []
       Text:
         label: Single Line of Text
+        filters: []
       RawHtml:
         label: Raw HTML
+        filters: []
       Markdown:
         label: Markdown Editor
         template: sympal_slot/markdown
+        filters: [markdown]
       TinyMCE:
         label: TinyMCE Rich Text Editor
         widget_options:
           config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
+        filters: []
       
-      # special slot type for "column" slots where the widget/validator from the content or content type form are used instead of those listed here
+      # special slot type for "column" slots where the widget/validator
+      # from the content or content type form are used instead of those listed here
       Column:
         label:  Column Slot Type
         widget_class:    false
         validator_class: false
-    
-    slot_filters:
-      markdown:
-        callback:  [sfSympalMarkdownSlotFilter, convertToHtml]
-        cache:     true
 
     # Automatically set the response meta title based on the current content and menu item
     auto_seo:
@@ -167,8 +167,8 @@ all:
       with_layout: false
       lifetime: 3600
 
-    # Configure Sympal menu caching. Enabling this feature will cache the built menu objects avoiding
-    # database queries for menus
+    # Configure Sympal menu caching. Enabling this feature will cache the
+    # built menu objects avoiding database queries for menus
     menu_cache:
       enabled: true
         

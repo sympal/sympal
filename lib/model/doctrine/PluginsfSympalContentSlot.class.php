@@ -6,8 +6,7 @@
 abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 {
   protected
-    $_contentRenderedFor,
-    $_rendered;
+    $_contentRenderedFor;
 
   public function setContentRenderedFor(sfSympalContent $content)
   {
@@ -156,21 +155,13 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     return $form;
   }
   /**
-   * Renders this slot, which uses the slot's renderer class and runs
-   * it through the transformers
+   * Renders this slot
    * 
    * @return string
    */
   public function render()
   {
-    if (!$this->_rendered)
-    {
-      $parser = new sfInlineObjectParser();
-      $parser->setDoctrineRecord($this->getContentRenderedFor());
-      $this->_rendered = $parser->parse($this->getValueForRendering());
-    }
-
-    return $this->_rendered;
+    return $this->getValueForRendering();
   }
   
   /**
