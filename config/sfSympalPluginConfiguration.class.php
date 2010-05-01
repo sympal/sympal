@@ -345,5 +345,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalThemePlugin',
       'sfSympalMinifyPlugin',
       'sfSympalFormPlugin',
+      'sfInlineObjectPlugin',
+      'sfContentFilterPlugin',
     );
 }
