@@ -125,12 +125,16 @@ all:
     auto_seo:
       title: true
       title_format: %site_title% %separator% %ancestors%
-
-    # Override the path of any bundled asset (js or css)
-    # Used with the sfSympalConfig::getAssetPath() helper method
-    # echo sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/editor.js); // /js/my_editor.js
+    
+    # A map of named assets (js or css) and their paths. This allows for
+    # the paths to these assets to be overridden. Instead of spelling out
+    # the specific path to a file, simply name the file and configure its
+    # path here
     asset_paths:
-      #"/sfSympalEditorPlugin/js/editor.js": "/js/my_editor.js"
+      grid_960_reset.css:   /sfSympalPlugin/css/grid_960/reset.css
+      grid_960_text.css:    /sfSympalPlugin/css/grid_960/text.css
+      grid_960.css:         /sfSympalPlugin/css/grid_960/grid_960.css
+        
 
     # Customize the path to the loaded jQuery instance and any plugins
     jquery_reloaded:
@@ -231,26 +235,29 @@ all:
     # Allowed markdown styled boxes
     markdown_styled_boxes: [quote, tip, caution, note]
 
-  # Define the themes
+  # Define the themes [see sfThemePlugin]
   theme:
     themes:
       default:
-        available: true
-        disabled: false
         layout: default
         stylesheets:
-          - /sfSympalThemePlugin/css/default.css
+          - grid_960_reset.css
+          - grid_960_text.css
+          - /sfSympalPlugin/themes/default/css/main.css
 
       wordpress_default:
-        available: true
-        disabled: false
         layout: wordpress
         stylesheets:
-          - /sfSympalThemePlugin/css/wordpress.css
+          - grid_960_reset.css
+          - grid_960_text.css
+          - /sfSympalPlugin/themes/wordpress/css/main.css
 
       sympal:
-        available: true
-        disabled: false
         layout: sympal
         stylesheets:
-          - /sfSympalThemePlugin/css/sympal.css
+          - grid_960_reset.css
+          - grid_960_text.css
+          - /sfSympalPlugin/themes/sympal/css/main.css
+
+          
+          
