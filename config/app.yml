@@ -232,9 +232,6 @@ all:
     # This can be a SVN repository or a local directory.
     plugin_sources: ["http://svn.symfony-project.com/plugins"]
 
-    # Allowed markdown styled boxes
-    markdown_styled_boxes: [quote, tip, caution, note]
-
   # Define the themes [see sfThemePlugin]
   theme:
     themes:
