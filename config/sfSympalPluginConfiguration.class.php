@@ -328,6 +328,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfJqueryReloadedPlugin',
       'sfImageTransformPlugin',
       'sfInlineObjectPlugin',
+      'sfThemePlugin',
+      'sfContentFilterPlugin',
+
       'sfSympalCorePlugin',
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
@@ -342,10 +345,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfSympalEditorPlugin',
       'sfSympalAssetsPlugin',
       'sfSympalSearchPlugin',
-      'sfSympalThemePlugin',
       'sfSympalMinifyPlugin',
       'sfSympalFormPlugin',
       'sfInlineObjectPlugin',
-      'sfContentFilterPlugin',
     );
 }
