@@ -325,7 +325,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfTaskExtraPlugin',
       'sfFeed2Plugin',
       'sfWebBrowserPlugin',
-      'sfJqueryReloadedPlugin',
       'sfImageTransformPlugin',
       'sfInlineObjectPlugin',
       'sfThemePlugin',
