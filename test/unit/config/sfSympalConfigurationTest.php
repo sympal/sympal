@@ -13,7 +13,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(19);
+$t = new lime_test(18);
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = sfSympalConfiguration::getActive();
@@ -37,9 +37,10 @@ $corePlugins = array(
   'sfTaskExtraPlugin',
   'sfFeed2Plugin',
   'sfWebBrowserPlugin',
-  'sfJqueryReloadedPlugin',
   'sfImageTransformPlugin',
   'sfInlineObjectPlugin',
+  'sfThemePlugin',
+  'sfContentFilterPlugin',
   'sfSympalCorePlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
@@ -54,7 +55,6 @@ $corePlugins = array(
   'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin',
   'sfSympalSearchPlugin',
-  'sfSympalThemePlugin',
   'sfSympalMinifyPlugin',
   'sfSympalFormPlugin',
 );
@@ -87,9 +87,6 @@ $t->is($pluginPaths['sfSympalPlugin'], $sympalPluginConfiguration->getRootDir(),
 
 $modules = $sympalConfiguration->getModules();
 $t->is(in_array('sympal_content_renderer', $modules), true, '->getModules() returns an array with sympal_content_renderer as an entry');
-
-$layouts = $sympalConfiguration->getLayouts();
-$t->is(in_array('sympal', $layouts), true, '->getLayouts() returns an array with "sympal" as one of its entries');
  
 $allManageablePlugins = $sympalConfiguration->getAllManageablePlugins(); 
 $t->is(in_array('sfSympalBlogPlugin', $allManageablePlugins), true, '->getAllManageablePlugins() returns the correct array of plugins');
