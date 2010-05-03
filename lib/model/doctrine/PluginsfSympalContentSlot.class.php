@@ -18,11 +18,6 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
     return $this->_contentRenderedFor;
   }
 
-  public function resetRenderCache()
-  {
-    $this->_rendered = null;
-  }
-
   public function postUpdate($event)
   {
     if ($this->_contentRenderedFor)
@@ -209,8 +204,6 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
 
   public function setValue($value)
   {
-    $this->_rendered = null;
-    
     if ($this->is_column)
     {
       $name = $this->name;
