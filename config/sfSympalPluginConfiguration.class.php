@@ -58,6 +58,9 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     // Connect to the sympal.load_admin_menu event
     $this->dispatcher->connect('sympal.load_admin_menu', array($this, 'setupAdminMenu'));
+
+    // Connect with theme.filter_asset_paths to rewrite asset paths from theme
+    $this->dispatcher->connect('theme.filter_asset_paths', array($this, 'filterThemeAssetPaths'));
   }
 
   /**
@@ -80,9 +83,11 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     
     $this->_initializeSymfonyConfig();
     $this->_configureSuperCache();
-    
+
+    // For BC with context->getSite();
     $this->dispatcher->connect('sympal.context.method_not_found', array($this, 'handleContextMethodNotFound'));
 
+    // Add listener on template.filter_parameters to add sf_sympal_site var to view
     $site = $this->_sympalContext->getService('site_manager');
     $this->dispatcher->connect('template.filter_parameters', array($site, 'filterTemplateParameters'));
   }
@@ -230,6 +235,20 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     }
     
     return false;
+  }
+
+  /**
+   * Listens to the theme.filter_asset_paths event and rewrites all of
+   * the assets from themes before outputting them
+   */
+  public function filterThemeAssetPaths(sfEvent $event, $assets)
+  {
+    foreach ($assets as $key => $asset)
+    {
+      $assets[$key]['file'] = sfSympalConfig::getAssetPath($asset['file']);
+    }
+    
+    return $assets;
   }
 
   /**
