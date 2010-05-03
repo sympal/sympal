@@ -111,7 +111,11 @@ class sfSympalSiteManager
    */
   public function filterTemplateParameters(sfEvent $event, $parameters)
   {
-    $parameters['sf_sympal_site'] = $this->getSite();
+    // Don't override the variable if it's not set
+    if (!isset($parameters['sf_sympal_site']))
+    {
+      $parameters['sf_sympal_site'] = $this->getSite();
+    }
 
     if ($sympalContext = $this->getCurrentContent())
     {
