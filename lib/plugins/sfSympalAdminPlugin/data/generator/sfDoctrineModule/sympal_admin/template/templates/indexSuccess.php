@@ -1,8 +1,7 @@
 [?php if ($helper->isNestedSet() && $sf_request->getParameter('order')): ?]
 
-[?php sympal_use_jquery() ?]
-[?php jq_add_plugins_by_name(array('ui')) ?]
-
+[?php sympal_use_javascript('jquery.js') ?]
+[?php sympal_use_javascript('jquery.ui.js') ?]
 [?php sympal_use_stylesheet('/sfSympalAdminPlugin/css/nested_sortable/nestedsortablewidget.css') ?]
 [?php sympal_use_javascript('/sfSympalAdminPlugin/js/nested_sortable/interface.js') ?]
 [?php sympal_use_javascript('/sfSympalAdminPlugin/js/nested_sortable/inestedsortable.pack.js') ?]

@@ -75,23 +75,25 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
     {
       $this->configuration->loadHelpers('SympalContentSlotEditor');
 
-      sfSympalToolkit::useJQuery(array('ui'));
-
       $response = sfContext::getInstance()->getResponse();
+      
+      // Make sure jQuery and jQuery ui are loaded
+      $response->addJavascript(sfSympalConfig::getAssetPath('jquery.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('jquery.ui.js'));
 
       // Load jquery tools/plugins that the inline editor requires
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.cookie.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('jquery.cookie.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.elastic.js'));
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.Jcrop.min.js'));
       
       // Load in the metadata plugin
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.metadata.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('jquery.metadata.js'));
 
       // Load tinymce
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/tiny_mce/tiny_mce.js'));
       
       // Load in the UI blocker
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jquery.blockUI.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('jquery.blockUI.js'));
 
       // Load the core javascript
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/chooser.js'));
@@ -107,11 +109,11 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/css/slots.css'));
 
       // Fancybox
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.js'));
-      $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalPlugin/fancybox/jquery.fancybox.css'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('jquery.fancybox.js'));
+      $response->addStylesheet(sfSympalConfig::getAssetPath('jquery.fancybox.css'));
       
       // Ajax form submission
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/jQuery.form.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('jquery.form.js'));
       
       // Shortcuts
       $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));

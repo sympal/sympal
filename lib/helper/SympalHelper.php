@@ -8,15 +8,8 @@
  */
 function sympal_use_jquery($plugins = array())
 {
-  sfSympalToolkit::useJQuery($plugins);
+  sympal_use_javascript('jquery.js');
 }
-
-function sympal_use_jquery_tools()
-{
-  sympal_use_jquery();
-  sympal_use_javascript('/sfSympalPlugin/js/jquery.tools.min.js');
-}
-
 /**
  * Helper method for using a Sympal javascript file.
  *

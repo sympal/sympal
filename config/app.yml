@@ -131,6 +131,21 @@ all:
     # the specific path to a file, simply name the file and configure its
     # path here
     asset_paths:
+      jquery:               /sfSympalPlugin/lib/jquery/jquery-1.4.2.min.js
+      
+      jquery.ui.js:         /sfSympalPlugin/lib/jquery-ui/jquery-ui-1.8.1.custom.min.js
+      jquery.ui.css:        /sfSympalPlugin/lib/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css
+      
+      jquery.fancybox.css:  /sfSympalPlugin/lib/fancybox/jquery.fancybox.css
+      jquery.fancybox.js:   /sfSympalPlugin/lib/fancybox/jquery.fancybox.js
+
+      jquery.cookie.js:     /sfSympalPlugin/lib/cookie/jquery.cookie.js
+
+      jquery.form.js:       /sfSympalPlugin/lib/form/jquery.form.js
+      jquery.metadata.js:   /sfSympalPlugin/lib/metadata/jquery.metadata.js
+      
+      jquery.blockUI.js:    /sfSympalPlugin/lib/blockUI/jquery.blockUI.js
+
       grid_960_reset.css:   /sfSympalPlugin/css/grid_960/reset.css
       grid_960_text.css:    /sfSympalPlugin/css/grid_960/text.css
       grid_960.css:         /sfSympalPlugin/css/grid_960/grid_960.css
@@ -255,6 +270,3 @@ all:
           - grid_960_reset.css
           - grid_960_text.css
           - /sfSympalPlugin/themes/sympal/css/main.css
-
-          
-          
