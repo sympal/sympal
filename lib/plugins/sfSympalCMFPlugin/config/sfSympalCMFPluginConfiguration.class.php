@@ -134,7 +134,12 @@ class sfSympalCMFPluginConfiguration extends sfPluginConfiguration
   {
     $siteManager = $this->_sympalContext->getService('site_manager');
 
-    $parameters['sf_sympal_site'] = $siteManager->getSite();
+    // we don't want to overwrite it if it was already set (from db for example)
+    // anyway it is bad idea to silently rewrite user's data
+    if (!isset($parameters['sf_sympal_site']))
+    {
+        $parameters['sf_sympal_site'] = $siteManager->getSite();
+    }
     
     if ($content = $siteManager->getCurrentContent())
     {
