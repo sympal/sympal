@@ -131,7 +131,7 @@ all:
     # the specific path to a file, simply name the file and configure its
     # path here
     asset_paths:
-      jquery:               /sfSympalPlugin/lib/jquery/jquery-1.4.2.min.js
+      jquery.js:            /sfSympalPlugin/lib/jquery/jquery-1.4.2.min.js
       
       jquery.ui.js:         /sfSympalPlugin/lib/jquery-ui/jquery-ui-1.8.1.custom.min.js
       jquery.ui.css:        /sfSympalPlugin/lib/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css
