@@ -4,9 +4,6 @@ all:
     # Configure form class used for editing the Sympal configuration from the web
     config_form_class: sfSympalConfigForm
 
-    # Configure the name of the theme to use for Sympal admin areas
-    admin_theme: admin
-
     # Configure the modules which are Sympal admin modules. This allows us to
     # automatically load the admin theme for these modules.
     admin_modules:
@@ -23,6 +20,12 @@ all:
     admin_generator_class: sfSympalDoctrineGenerator
 
   theme:
+    
+    # Configure the name of the theme to use for admin areas
+    controller_options:
+      admin_theme: admin
+    
+    # Add themes
     themes:
       admin:
         available: false       # Don't show in the list of available themes to switch to

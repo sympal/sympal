@@ -189,7 +189,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     
     if (array_key_exists($module, $adminModules))
     {
-      $event->setReturnValue(sfSympalConfig::get('admin_theme', null, 'admin'));
+      $event->setReturnValue($event->getSubject()->getOption('admin_theme'));
       
       return true; // Set the event as processed
     }
