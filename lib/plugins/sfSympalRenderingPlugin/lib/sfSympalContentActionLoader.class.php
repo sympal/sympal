@@ -55,11 +55,6 @@ class sfSympalContentActionLoader
 
     $this->_loadMetaData($this->_response);
 
-    if (!$this->_user->getCurrentTheme() || !sfSympalConfig::get('theme', 'allow_changing_theme_by_url'))
-    {
-      $this->_sympalContext->getService('theme_manager')->setCurrentTheme($content->getThemeToRenderWith());
-    }
-
     $this->_sympalContext->getService('site_manager')->setCurrentContent($content);
 
     // Handle custom action
