@@ -25,7 +25,10 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this['assets_list']
     );
     
-    $field = sfSympalContext::getInstance()->getService('theme_form_toolkit')->getThemeWidgetAndValidator();
+    $field = sfApplicationConfiguration::getActive()
+      ->getPluginConfiguration('sfThemePlugin')
+      ->getThemeToolkit()
+      ->getThemeWidgetAndValidator();
     $this->widgetSchema['theme'] = $field['widget'];
     $this->validatorSchema['theme'] = $field['validator'];
     

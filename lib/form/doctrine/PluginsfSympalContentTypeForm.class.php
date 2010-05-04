@@ -13,7 +13,10 @@ abstract class PluginsfSympalContentTypeForm extends BasesfSympalContentTypeForm
   {
     parent::setup();
     
-    $field = sfSympalContext::getInstance()->getService('theme_form_toolkit')->getThemeWidgetAndValidator();
+    $field = sfApplicationConfiguration::getActive()
+      ->getPluginConfiguration('sfThemePlugin')
+      ->getThemeToolkit()
+      ->getThemeWidgetAndValidator();
     $this->widgetSchema['theme'] = $field['widget'];
     $this->validatorSchema['theme'] = $field['validator'];
 
