@@ -120,7 +120,7 @@ EOF;
     if (isset($options['theme']))
     {
       $itemsToCreate['config/app.yml'] = sprintf('all:
-  sympal_config:
+  theme:
     themes:
       %s:
         layout: %s
