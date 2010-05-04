@@ -249,6 +249,8 @@ all:
 
   # Define the themes [see sfThemePlugin]
   theme:
+    controller_options:
+      default_theme: default
     themes:
       default:
         layout: default
