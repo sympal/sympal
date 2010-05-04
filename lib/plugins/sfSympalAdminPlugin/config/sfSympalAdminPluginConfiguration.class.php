@@ -117,8 +117,8 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
       }
     }
 
-    $administration = $menu->getChild('administration');
-    $administration->setLabel('Administration');
+    $administration = $menu->getChild('administration', '@sympal_sites');
+    $administration->setLabel('Global Setup');
 
     $administration->addChild('System Settings', '@sympal_config')
       ->setCredentials(array('ManageSystemSettings'));
@@ -223,7 +223,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   protected function _loadAdminMenuAssets()
   {
     $response = sfContext::getInstance()->getResponse();
-    $response->addStylesheet(sfSympalConfig::getAssetPath('jquery.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('jquery.js'));
     
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/menu.css'));
 
