@@ -5,9 +5,9 @@ require_once(dirname(__FILE__).'/../bootstrap/functional.php');
 $browser = new sfSympalTestFunctional(new sfBrowser());
 $browser->signInAsAdmin();
 
-$browser->
-  get('/admin/configuration')->
-  click('Save', array('settings' => array('breadcrumbs_separator' => ' / ', 'plugin_api' => array('username' => 'test', 'password' => 'test'))))
+$browser
+  ->get('/admin/configuration')
+  ->click('Save', array('settings' => array('breadcrumbs_separator' => ' / ', 'plugin_api' => array('username' => 'test', 'password' => 'test'))))
 ;
 
 $after = sfYaml::load(sfConfig::get('sf_app_dir').'/config/app.yml');

@@ -30,18 +30,18 @@ $install = array(
   )
 );
 
-$browser->
-  click('Install Now', $install)->
-  with('response')->begin()->
-    isRedirected()->
-    followRedirect()->
-  end()->
-  with('request')->begin()->
-    isParameter('module', 'sympal_dashboard')->
-  end()->
-  with('user')->begin()->
-    isAuthenticated()->
-  end()
+$browser
+  ->click('Install Now', $install)
+  ->with('response')->begin()
+    ->isRedirected()
+    ->followRedirect()
+  ->end()
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_dashboard')
+  ->end()
+  ->with('user')->begin()
+    ->isAuthenticated()
+  ->end()
 ;
 
 sfSympalConfig::writeSetting('installed', true);

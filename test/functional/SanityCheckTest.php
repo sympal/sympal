@@ -15,54 +15,54 @@ foreach ($menuItems as $menuItem)
     continue;
   }
 
-  $browser->
-    click($menuItem->getLabel())->
-    with('response')->begin()->
-      isStatusCode('200')->
-    end()->
-    with('request')->begin()->
-      isParameter('module', 'sympal_content_renderer')->
-      isParameter('action', 'index')->
-    end()
+  $browser
+    ->click($menuItem->getLabel())
+    ->with('response')->begin()
+    ->  isStatusCode('200')
+    ->end()
+    ->with('request')->begin()
+    ->  isParameter('module', 'sympal_content_renderer')
+    ->  isParameter('action', 'index')
+    ->end()
   ;
 }
 
-$browser->
-  get('/security/signin')->
-  click('input[type="submit"]', array('signin' => array('username' => 'admin', 'password' => 'admin')), array('method' => 'post', '_with_csrf' => true))->
-  with('response')->begin()->
-    isRedirected()->
-    followRedirect()->
-  end()->
-  with('user')->begin()->
-    isAuthenticated()->
-  end()->
-  get('/admin/dashboard')->
-  with('request')->begin()->
-    isParameter('module', 'sympal_dashboard')->
-    isParameter('action', 'index')->
-  end()
+$browser
+  ->get('/security/signin')
+  ->click('input[type="submit"]', array('signin' => array('username' => 'admin', 'password' => 'admin')), array('method' => 'post', '_with_csrf' => true))
+  ->with('response')->begin()
+    ->isRedirected()
+    ->followRedirect()
+  ->end()
+  ->with('user')->begin()
+    ->isAuthenticated()
+  ->end()
+  ->get('/admin/dashboard')
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_dashboard')
+    ->isParameter('action', 'index')
+  ->end()
 ;
 
 $browser->signOut();
 
-$browser->
-  get('/register')->
-  click('input[type="submit"]', array('sf_guard_user' => array('first_name' => 'Jonathan', 'last_name' => 'Wage', 'email_address' => 'jonathan.wage@sensio.com', 'username' => 'test', 'password' => 'test', 'password_again' => 'test')), array('method' => 'post', '_with_csrf' => true))->
-  with('response')->begin()->
-    isRedirected()->
-    followRedirect()->
-  end()
+$browser
+  ->get('/register')
+  ->click('input[type="submit"]', array('sf_guard_user' => array('first_name' => 'Jonathan', 'last_name' => 'Wage', 'email_address' => 'jonathan.wage@sensio.com', 'username' => 'test', 'password' => 'test', 'password_again' => 'test')), array('method' => 'post', '_with_csrf' => true))
+  ->with('response')->begin()
+    ->isRedirected()
+    ->followRedirect()
+  ->end()
 ;
 
-$browser->
-  signOut()->
-  click('Signin')->
-  click('input[type="submit"]', array('signin' => array('username' => 'test', 'password' => 'test')), array('method' => 'post', '_with_csrf' => true))->
-  with('user')->begin()->
-    isAuthenticated()->
-  end()->
-  signOut()
+$browser
+  ->signOut()
+  ->click('Signin')
+  ->click('input[type="submit"]', array('signin' => array('username' => 'test', 'password' => 'test')), array('method' => 'post', '_with_csrf' => true))
+  ->with('user')->begin()
+    ->isAuthenticated()
+  ->end()
+  ->signOut()
 ;
 
 $profiler = new Doctrine_Connection_Profiler();

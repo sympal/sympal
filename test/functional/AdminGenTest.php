@@ -17,24 +17,29 @@ $adminGenModules = array(
 
 foreach ($adminGenModules as $adminGenModule => $url)
 {
-  $browser->
-    get($url)->
-    with('response')->begin()->
-      isStatusCode('200')->
-    end()->
-    with('request')->begin()->
-      isParameter('module', $adminGenModule)->
-    end()->
-    click('Edit')->
-    with('request')->begin()->
-      isParameter('module', $adminGenModule)->
-      isParameter('action', 'edit')->
-    end()->    
-    click('Save', array(), array('_with_csrf' => true))->
-    with('response')->begin()->
-      isStatusCode('302')->
-      isRedirected()->
-      followRedirect()->
-    end()
+  $browser
+    ->get($url)
+    ->with('response')->begin()
+      ->isStatusCode('200')
+    ->end()
+
+    ->with('request')->begin()
+      ->isParameter('module', $adminGenModule)
+    ->end()
+
+    ->click('Edit')
+
+    ->with('request')->begin()
+      ->isParameter('module', $adminGenModule)
+      ->isParameter('action', 'edit')
+    ->end()
+
+    ->click('Save', array(), array('_with_csrf' => true))
+
+    ->with('response')->begin()
+      ->isStatusCode('302')
+      ->isRedirected()
+      ->followRedirect()
+    ->end()
   ;
 }
