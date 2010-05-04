@@ -63,6 +63,18 @@ class sfSympalSlotRenderer
   }
 
   /**
+   * Renders a content slot
+   * 
+   * This class could be structured better so I don't have to go backwards
+   * to render a slot (starting from an object, then breaking into pieces
+   * so it can be put back together again
+   */
+  public function renderSlot(sfSympalContentSlot $slot)
+  {
+    return $this->renderSlotByName($slot->name, $slot->getContentRenderedFor(), array());
+  }
+
+  /**
    * Takes in the raw array of options, parses those options, and combines
    * them with global options
    * 

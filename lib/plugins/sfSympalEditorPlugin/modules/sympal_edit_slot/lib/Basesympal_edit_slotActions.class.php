@@ -84,7 +84,10 @@ abstract class Basesympal_edit_slotActions extends sfActions
   {
     $this->contentSlot = $this->setupContentSlot($request);
     
-    $this->renderText($this->contentSlot->render());
+    $rendered = $this->getSympalContext()
+      ->getService('slot_renderer')
+      ->renderSlot($this->contentSlot);
+    $this->renderText($rendered);
     
     return sfView::NONE;
   }
