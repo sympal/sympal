@@ -128,7 +128,7 @@ EOF;
           - %s', $options['theme'], $options['theme'], '/'.$pluginName.'/css/'.$options['theme'].'.css');
 
       $itemsToCreate['templates/'.$options['theme'].'.php'] = file_get_contents($this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/templates/default.php');
-      $itemsToCreate['web/css/'.$options['theme'].'.css'] = file_get_contents($this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/web/css/default.css');
+      $itemsToCreate['web/css/'.$options['theme'].'.css'] = file_get_contents($this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/web/themes/default/css/main.css');
     }
 
     foreach ($itemsToCreate as $item => $value)
