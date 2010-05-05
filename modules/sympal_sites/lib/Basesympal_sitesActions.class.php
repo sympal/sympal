@@ -20,11 +20,11 @@ class Basesympal_sitesActions extends autosympal_sitesActions
 
         chdir(sfConfig::get('sf_root_dir'));
         $task = new sfGenerateAppTask($dispatcher, $formatter);
-        $task->run(array($name));
+        $task->run(array($site->slug));
         $task = new sfSympalEnableForAppTask($dispatcher, $formatter);
-        $task->run(array($name));
+        $task->run(array($site->slug));
         $task = new sfSympalCreateSiteTask($dispatcher, $formatter);
-        $task->run(array($name));
+        $task->run(array($site->slug));
 
         $site = Doctrine_Core::getTable('sfSympalSite')->findOneByTitle($site->title);
       }
