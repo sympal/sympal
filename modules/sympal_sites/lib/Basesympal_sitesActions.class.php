@@ -15,7 +15,6 @@ class Basesympal_sitesActions extends autosympal_sitesActions
 
       if ($new)
       {
-        $name = str_replace('-', '_', $site->slug);
         $dispatcher = $this->getContext()->getEventDispatcher();
         $formatter = new sfFormatter();
 
