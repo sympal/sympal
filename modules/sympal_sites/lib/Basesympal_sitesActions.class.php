@@ -71,7 +71,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
       ->whereIn('id', $ids)
       ->execute();
 
-    if ($sites >= count($ids))
+    if (count($sites) >= count($ids))
     {
       foreach ($sites as $site)
       {
