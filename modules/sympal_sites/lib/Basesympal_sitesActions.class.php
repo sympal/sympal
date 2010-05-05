@@ -24,7 +24,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
         $task = new sfSympalEnableForAppTask($dispatcher, $formatter);
         $task->run(array($site->slug));
         $task = new sfSympalCreateSiteTask($dispatcher, $formatter);
-        $task->run(array($site->slug));
+        $task->run(array($site->slug), array('no-confirmation'));
 
         $site = Doctrine_Core::getTable('sfSympalSite')->findOneByTitle($site->title);
       }
