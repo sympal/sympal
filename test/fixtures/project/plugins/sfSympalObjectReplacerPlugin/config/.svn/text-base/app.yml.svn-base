@@ -1,0 +1,23 @@
+# an example of how some content replacer objects would be defined
+
+#all:
+#  sympal_config:
+#    content_syntax_types:
+#      my_object_type:
+#        replacer_class:    sfSympalContentSyntaxObjectReplacer
+#        replacer_options:
+#          class:           myObjectClass
+#          template:        myModule/view
+#      my_other_object_type:
+#        replacer_class:    sfSympalContentSyntaxObjectReplacer
+#        replacer_options:
+#          class:           myOtherObjectClass
+#          template:        myOtherModule/view
+#
+#    object_browser_classes:
+#      my_object_type:
+#        label:    My Object Type
+#        class:    myObjectClass
+#      my_other_object_type:
+#        label:    My Other Object Type
+#        class:    myOtherObjectClass

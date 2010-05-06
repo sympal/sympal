@@ -1,0 +1,3 @@
+sympal_objects_select:
+  url:   /editor/objects
+  param: { module: sympal_object_replacer, action: objectBrowser }

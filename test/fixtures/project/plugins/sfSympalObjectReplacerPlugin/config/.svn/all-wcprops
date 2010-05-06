@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/!svn/ver/27347/plugins/sfSympalObjectReplacerPlugin/branches/1.4/config
+END
+app.yml
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/!svn/ver/27347/plugins/sfSympalObjectReplacerPlugin/branches/1.4/config/app.yml
+END
+sfSympalObjectReplacerPluginConfiguration.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/!svn/ver/27347/plugins/sfSympalObjectReplacerPlugin/branches/1.4/config/sfSympalObjectReplacerPluginConfiguration.class.php
+END
+routing.yml
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/!svn/ver/27347/plugins/sfSympalObjectReplacerPlugin/branches/1.4/config/routing.yml
+END
