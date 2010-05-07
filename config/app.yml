@@ -60,6 +60,8 @@ all:
       sfSympalSite: [page_title, meta_keywords, meta_description]
       sfSympalContent: [i18n_slug, page_title, meta_keywords, meta_description]
       sfSympalContentSlot: [value]
+      sfSympalContentList: [title]
+      sfSympalPage: [title]
     
     sluggable_models:
       sfSympalContent:
@@ -235,11 +237,6 @@ all:
       sympal_sites: ~
       sympal_content_types: ~
       sympal_themes: ~
-
-    # Configure what models and fields get internationalized by Sympal
-    internationalized_models:
-      sfSympalContentList: [title]
-      sfSympalPage: [title]
     
     gravatar_default_image: "/sfSympalPlugin/images/symfony_button.gif"
 
