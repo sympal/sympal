@@ -36,7 +36,7 @@ $classes = array(
 );
 foreach ($classes as $file)
 {
-  $code = fileGetContents('http://github.com/sympal/sympal/raw/master/lib/check/'.$file.'.class.php');
+  $code = fileGetContents('http://github.com/sympal/sympal/raw/master/lib/server_check/'.$file.'.class.php');
   file_put_contents(sys_get_temp_dir().'/'.$file.'.class.php', $code);
   require sys_get_temp_dir().'/'.$file.'.class.php';
 }
@@ -103,6 +103,9 @@ exec('git clone git://github.com/sympal/sympal.git plugins/sfSympalPlugin');
 chdir(dirname(__FILE__).'/plugins/sfSympalPlugin');
 exec('git submodule init');
 exec('git submodule update');
+
+exec('git submodule foreach --recursive "git submodule init"');
+exec('git submodule foreach --recursive "git submodule update"');
 chdir(dirname(__FILE__));
 
 //@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
