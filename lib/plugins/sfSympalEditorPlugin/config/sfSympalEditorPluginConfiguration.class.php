@@ -57,6 +57,9 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       || (sfSympalConfiguration::getActive()->isAdminModule() && sfSympalContext::getInstance()->getCurrentContent());
   }
 
+  /**
+   * Listens on sympal.load_content to add in the editor
+   */
   public function loadEditor(sfEvent $event)
   {
     if ($this->shouldLoadEditor())
@@ -127,6 +130,10 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
     }
   }
 
+  /**
+   * Listens on response.filter_content to add in the html necessary
+   * for the inline editor
+   */
   public function addEditorHtml(sfEvent $event, $content)
   {
     $statusCode = $event->getSubject()->getStatusCode();
