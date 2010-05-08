@@ -148,9 +148,9 @@ all:
       
       jquery.blockUI.js:    /sfSympalPlugin/lib/blockUI/jquery.blockUI.js
 
-      grid_960_reset.css:   /sfSympalPlugin/css/grid_960/reset.css
-      grid_960_text.css:    /sfSympalPlugin/css/grid_960/text.css
-      grid_960.css:         /sfSympalPlugin/css/grid_960/grid_960.css
+      grid_960_reset.css:   /sfSympalPlugin/lib/grid_960/reset.css
+      grid_960_text.css:    /sfSympalPlugin/lib/grid_960/text.css
+      grid_960.css:         /sfSympalPlugin/lib/grid_960/grid_960.css
         
 
     # Customize the path to the loaded jQuery instance and any plugins
