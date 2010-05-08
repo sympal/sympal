@@ -8,9 +8,11 @@ require_once(dirname(__FILE__).'/cleanup.php');
 if (!isset($app))
 {
   $configuration = new ProjectConfiguration($projectPath);
-} else {
+}
+else
+{
   $configuration = ProjectConfiguration::getApplicationConfiguration($app, 'test', isset($debug) ? $debug : true);
-  sfContext::createInstance($configuration);
+  $context = sfContext::createInstance($configuration);
 }
 
 if (isset($app))
@@ -21,11 +23,17 @@ if (isset($app))
 if (isset($database) && $database)
 {
   $configuration->initializeSympal();
-
   $database = new sfDatabaseManager($configuration);
 }
 
 require_once $configuration->getSymfonyLibDir().'/vendor/lime/lime.php';
 
-require_once dirname(__FILE__).'/../../config/sfSympalPluginConfiguration.class.php';
-$plugin_configuration = new sfSympalPluginConfiguration($configuration, dirname(__FILE__).'/../..');
+if (!isset($context))
+{
+  require_once dirname(__FILE__).'/../../config/sfSympalPluginConfiguration.class.php';
+  $plugin_configuration = new sfSympalPluginConfiguration($configuration, dirname(__FILE__).'/../..');
+}
+else
+{
+  $plugin_configuration = $context->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
+}
