@@ -1,0 +1,9 @@
+parameters:
+  
+  form_extended.class:        sfSympalForm                # Acts as an extension of sfForm
+  
+services:
+  
+  form_extended:
+    class:                    %form_extended.class%
+    shared:                   true
