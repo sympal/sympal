@@ -41,7 +41,6 @@ $corePlugins = array(
   'sfInlineObjectPlugin',
   'sfThemePlugin',
   'sfContentFilterPlugin',
-  'sfSympalCorePlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
