@@ -244,4 +244,17 @@ class sfSympalActions extends sfSympalExtendClass
   {
     return sfSympalContext::getInstance();
   }
+
+  /**
+   * Loads the theme connected with whatever the current site is
+   */
+  public function loadSiteTheme()
+  {
+    $theme = $this->getSympalContext()
+      ->getService('site_manager')
+      ->getSite()
+      ->getTheme();
+    
+    $this->loadThemeOrDefault($theme);
+  }
 }
