@@ -117,7 +117,7 @@ class sfSympalSiteManager
       $parameters['sf_sympal_site'] = $this->getSite();
     }
 
-    if ($sympalContext = $this->getCurrentContent())
+    if ($sympalContext = $this->getCurrentContent() && !isset($parameters['sf_sympal_content']))
     {
       $parameters['sf_sympal_content'] = $sympalContext;
     }
