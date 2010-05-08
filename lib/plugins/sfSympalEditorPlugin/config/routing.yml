@@ -6,10 +6,6 @@ sympal_change_content_slot_type:
   url:   /change_content_slot_type/:content_id/:id/:type
   param: { module: sympal_edit_slot, action: change_content_slot_type }
 
-sympal_editor_links:
-  url:   /editor/links
-  param: { module: sympal_editor, action: links }
-
 sympal_publish_content:
   url:   /admin/content/:id/publish
   param: { module: sympal_editor, action: publish_content }
@@ -59,3 +55,8 @@ sympal_save_content_slot:
     action: slot_save
   requirements:
     sf_method: [post]
+
+# Link chooser
+sympal_editor_links:
+  url:   /editor/links
+  param: { module: sympal_editor, action: links }
