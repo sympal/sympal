@@ -15,17 +15,16 @@ class Basesympal_sitesActions extends autosympal_sitesActions
 
       if ($new)
       {
-        $name = str_replace('-', '_', $site->slug);
         $dispatcher = $this->getContext()->getEventDispatcher();
         $formatter = new sfFormatter();
 
         chdir(sfConfig::get('sf_root_dir'));
         $task = new sfGenerateAppTask($dispatcher, $formatter);
-        $task->run(array($name));
+        $task->run(array($site->slug));
         $task = new sfSympalEnableForAppTask($dispatcher, $formatter);
-        $task->run(array($name));
+        $task->run(array($site->slug));
         $task = new sfSympalCreateSiteTask($dispatcher, $formatter);
-        $task->run(array($name));
+        $task->run(array($site->slug), array('no-confirmation'));
 
         $site = Doctrine_Core::getTable('sfSympalSite')->findOneByTitle($site->title);
       }
@@ -72,7 +71,7 @@ class Basesympal_sitesActions extends autosympal_sitesActions
       ->whereIn('id', $ids)
       ->execute();
 
-    if ($sites >= count($ids))
+    if (count($sites) >= count($ids))
     {
       foreach ($sites as $site)
       {
