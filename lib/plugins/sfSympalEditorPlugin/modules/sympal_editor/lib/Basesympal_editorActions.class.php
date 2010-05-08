@@ -68,5 +68,7 @@ class Basesympal_editorActions extends sfActions
       ->getFullTypeQuery($this->contentType->getName(), 'c', $contentTypeId)
       ->orderBy('m.root_id, m.lft ASC')
       ->execute();
+    
+    $this->setLayout(false);
   }
 }

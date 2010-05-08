@@ -1,6 +1,5 @@
-<?php sympal_use_jquery() ?>
-<script type="text/javascript" src="<?php echo javascript_path('/sfSympalEditorPlugin/js/links.js') ?>"></script>
-<link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalEditorPlugin/css/links.css') ?>" />
+<script type="text/javascript" src="<?php echo javascript_path(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/js/links.js')) ?>"></script>
+<link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path(sfSympalConfig::getAssetPath('/sfSympalEditorPlugin/css/links.css')) ?>" />
 
 <div id="sympal_links_container">
   <h1><?php echo __('Link Browser') ?></h1>
@@ -14,16 +13,15 @@
 
   <div id="content_types">
     <h2><?php echo __('Content Types') ?></h2>
-    <ul id="content_types">
+    <ul>
       <?php foreach ($contentTypes as $type): ?>
         <li>
           <?php if ($type === $contentType): ?>
             <strong><?php echo $type->getLabel() ?></strong>
           <?php else: ?>
-            <?php echo jq_link_to_remote($type->getLabel(), array(
-              'url' => url_for('@sympal_editor_links?content_type_id='.$type->getId()),
-              'update' => 'sympal_links_container'
-            )) ?>
+            <a href="<?php echo url_for('@sympal_editor_links?content_type_id='.$type->getId()) ?>">
+              <?php echo $type->getLabel() ?>
+            </a>
           <?php endif; ?>
         </li>
       <?php endforeach; ?>
@@ -67,3 +65,9 @@
 
   <a class="sympal_close_menu"><?php echo __('Close') ?></a>
 </div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $.sympalInitLinksAjax();
+  });
+</script>
