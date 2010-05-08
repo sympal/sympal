@@ -42,7 +42,7 @@ sfSympalContent:
     Timestampable:
     sfSympalRecordTemplate:
     sfInlineObjectContainerTemplate:
-      relations:    [Assets]
+      relations:    [Assets, Links]
   columns:
     site_id:
       type: integer

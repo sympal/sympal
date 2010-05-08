@@ -103,18 +103,18 @@ all:
       #  transformers:    []
       Text:
         label: Single Line of Text
-        filters: []
+        filters: [inline_object]
       RawHtml:
         label: Raw HTML
-        filters: []
+        filters: [inline_object]
       Markdown:
         label: Markdown Editor
-        filters: [markdown]
+        filters: [inline_object, markdown]
       TinyMCE:
         label: TinyMCE Rich Text Editor
         widget_options:
           config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
-        filters: []
+        filters: [inline_object]
       
       # special slot type for "column" slots where the widget/validator
       # from the content or content type form are used instead of those listed here
@@ -122,6 +122,7 @@ all:
         label:  Column Slot Type
         widget_class:    false
         validator_class: false
+        filters:   [inline_object]
 
     # Automatically set the response meta title based on the current content and menu item
     auto_seo:
@@ -272,3 +273,8 @@ all:
           - grid_960_reset.css
           - grid_960_text.css
           - /sfSympalPlugin/themes/sympal/css/main.css
+
+  # Register the "asset" inline object type if sfInlineObjectPlugin is available
+  inline_object:
+    types:
+      link:   sfSympalInlineObjectLink

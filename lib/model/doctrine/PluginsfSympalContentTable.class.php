@@ -239,4 +239,28 @@ class PluginsfSympalContentTable extends Doctrine_Table
     
     return $q;
   }
+
+  /**
+   * Called by sfInlineObjectDoctrineResource to create a query that
+   * will return a collection of objects given the array of keys and
+   * key column
+   */
+  public function getQueryForInlineObjects($keys, $keyColumn)
+  {
+    $q = $this->createQuery('c')
+      ->whereIn('c.'.$keyColumn, $keys)
+      ->orderBy('c.'.$keyColumn.' ASC')
+      ->select('c.*, t.*')
+      ->from('sfSympalContent c')
+      ->innerJoin('c.Type t')
+      ->innerJoin('c.Site s')
+      ->andWhere('s.slug = ?', sfConfig::get('sf_app'));
+
+    if (sfSympalConfig::isI18nEnabled('sfSympalContent'))
+    {
+      $q->leftJoin('c.Translation ct');
+    }
+    
+    return $q;
+  }
 }
