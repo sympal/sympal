@@ -33,7 +33,7 @@ class sfSympalSlotRenderer
    * This replaces get_sympal_content_slot() and is intended to be easier
    * to use. This also taps into the app.yml config for its options
    * 
-   * @param string $name The name of the slot
+   * @param mixed $slot The name of the slot or the slot itself
    * @param sfSympalContent $content The content record to get the slot from
    * @param array  $options An array of options for this slot
    * 
@@ -42,11 +42,11 @@ class sfSympalSlotRenderer
    *  * default_value   A default value to give this slot the first time it's created
    *  * edit_mode       How to edit this slot (popup (default), inline)
    */
-  public function renderSlotByName($name, $content, $options)
+  public function renderSlotByName($slot, $content, $options)
   {
     // Sets up the options, content, slot
-    $this->_configure($name, $content, $options);
-    
+    $this->_configure($slot, $content, $options);
+
     /**
      * Either render the raw value or the editor for the slot
      */
@@ -71,20 +71,23 @@ class sfSympalSlotRenderer
    */
   public function renderSlot(sfSympalContentSlot $slot)
   {
-    return $this->renderSlotByName($slot->name, $slot->getContentRenderedFor(), array());
+    return $this->renderSlotByName($slot, $slot->getContentRenderedFor(), array());
   }
 
   /**
    * Takes in the raw array of options, parses those options, and combines
    * them with global options
    * 
-   * @param string $name The name of the slot
+   * @param mixed $slot The name of the slot or the slot itself
    * @param array $options 
    */
-  protected function _configure($name, $content, $options)
+  protected function _configure($slot, $content, $options)
   {
-    $this->_content = $content;
+    $this->setContent($content);
     $this->_options = $options;
+    
+    // determine the name of the slot
+    $name = ($slot instanceof sfSympalContentSlot) ? $slot->name : $slot;
     
     /*
      * Priority of options is as follows (most important to least important)
@@ -101,7 +104,7 @@ class sfSympalSlotRenderer
     }
     
     // Gets or creates the slot
-    $this->_configureSlot($name);
+    $this->_configureSlot($slot);
     
     // Merge in the #3 from the above priority list
     $slotOptions = sfSympalConfig::get('content_slot_types', $this->_slot->type, array());
@@ -145,20 +148,24 @@ class sfSympalSlotRenderer
     return $value;
   }
 
-  protected function _configureSlot($name)
+  /**
+   * Configures the given slot
+   * 
+   * @param mixed $slot The name of the slot or the slot itself
+   */
+  protected function _configureSlot($slot)
   {
     // retrieve the slot
-    if ($name instanceof sfSympalContentSlot)
+    if ($slot instanceof sfSympalContentSlot)
     {
-      $this->_slot = $name;
-      $name = $name->getName();
+      $this->_slot = $slot;
     }
     else
     {
-      $this->_slot = $this->_content->getOrCreateSlot($name, $this->_options);
-      unset($this->_options['default_value']);
+      $this->_slot = $this->_content->getOrCreateSlot($slot, $this->_options);
     }
     $this->_slot->setContentRenderedFor($this->_content);
+    unset($this->_options['default_value']);
   }
 
   /**
