@@ -61,6 +61,14 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     // Connect with theme.filter_asset_paths to rewrite asset paths from theme
     $this->dispatcher->connect('theme.filter_asset_paths', array($this, 'filterThemeAssetPaths'));
+    
+    /*
+     * Initialize some symfony config.
+     * 
+     * Must be here (and not as a listener to sympal.load) so that it acts
+     * before the theme manager has a chance to set any themes
+     */
+    $this->_initializeSymfonyConfig();
   }
 
   /**
@@ -81,7 +89,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'SympalPager',
     ));
     
-    $this->_initializeSymfonyConfig();
     $this->_configureSuperCache();
 
     // For BC with context->getSite();
@@ -263,12 +270,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
 
     sfConfig::set('app_sf_guard_plugin_success_signin_url', sfSympalConfig::get('success_signin_url'));
 
-    if (sfConfig::get('sf_login_module') == 'default')
-    {
-      sfConfig::set('sf_login_module', 'sympal_admin');
-      sfConfig::set('sf_login_action', 'signin');
-    }
-
     if (sfConfig::get('sf_secure_module') == 'default')
     {
       sfConfig::set('sf_secure_module', 'sympal_auth');
@@ -286,9 +287,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       sfConfig::set('sf_module_disabled_module', 'sympal_default');
       sfConfig::set('sf_module_disabled_action', 'disabled');
     }
-
-    sfConfig::set('sf_jquery_path', sfSympalConfig::get('jquery_reloaded', 'path'));
-    sfConfig::set('sf_jquery_plugin_paths', sfSympalConfig::get('jquery_reloaded', 'plugin_paths'));
   }
 
   /**

@@ -1,26 +1,11 @@
+# General utility admin actions
 sympal_admin:
   url:  /admin
   param: { module: sympal_admin, action: signin }
 
-sympal_dashboard:
-  url:  /admin/dashboard
-  param: { module: sympal_dashboard, action: index }
-
 sympal_clear_cache:
   url:  /admin/clear_cache
   param: { module: sympal_admin, action: clear_cache }
-
-sympal_config:
-  url:   /admin/configuration
-  param: { module: sympal_config, action: index }
-
-sympal_config_save:
-  url:   /admin/configuration/save
-  param: { module: sympal_config, action: save }
-
-sympal_admin_save_nested_set:
-  url:    /admin/save_nested_set/:model
-  param: { module: sympal_admin, action: save_nested_set }
 
 sympal_check_server:
   url:    /admin/check_server
@@ -29,3 +14,83 @@ sympal_check_server:
 sympal_phpinfo:
   url:    /admin/phpinfo
   param: { module: sympal_admin, action: phpinfo }
+
+sympal_admin_save_nested_set:
+  url:    /admin/save_nested_set/:model
+  param: { module: sympal_admin, action: save_nested_set }
+
+
+# Admin dashboard
+sympal_dashboard:
+  url:  /admin/dashboard
+  param: { module: sympal_dashboard, action: index }
+
+
+# Configuration admin
+sympal_config:
+  url:   /admin/configuration
+  param: { module: sympal_config, action: index }
+
+sympal_config_save:
+  url:   /admin/configuration/save
+  param: { module: sympal_config, action: save }
+
+
+# Admin-generated content-related modules
+sympal_content_types:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalContentType
+    module:               sympal_content_types
+    prefix_path:          admin/content/types
+    with_wildcard_routes: true
+
+sympal_content_slots:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalContentSlot
+    module:               sympal_content_slots
+    prefix_path:          admin/content/slots
+    with_wildcard_routes: true
+
+sympal_sites:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalSite
+    module:               sympal_sites
+    prefix_path:          admin/sites
+    with_wildcard_routes: true
+
+sympal_redirects:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalRedirect
+    module:               sympal_redirects
+    prefix_path:          admin/redirects
+    with_wildcard_routes: true
+
+
+# The slightly more complex content admin module
+sympal_content:
+  class:                  sfDoctrineRouteCollection
+  options:
+    model:                sfSympalContent
+    module:               sympal_content
+    prefix_path:          admin/content/manage
+    with_wildcard_routes: true
+
+sympal_content_types_index:
+  url:  /admin/content
+  param: { module: sympal_content, action: content_types_index }
+
+sympal_content_edit_slots:
+  url:  /admin/content/:id/edit_slots
+  param: { module: sympal_content, action: edit_slots }
+
+sympal_content_create_type:
+  url:    /admin/content/manage/create/:type
+  param:  { module: sympal_content, action: create_type }
+
+sympal_content_list_type:
+  url:    /admin/content/manage/type/:type
+  param: { module: sympal_content, action: list_type }

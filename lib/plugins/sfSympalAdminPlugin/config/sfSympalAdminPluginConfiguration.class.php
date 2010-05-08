@@ -235,11 +235,20 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $response->addJavascript(sfSympalConfig::getAssetPath('jquery.fancybox.js'));
   }
 
+  /**
+   * Initializes some basic symfony config values
+   */
   protected function _initializeSymfonyConfig()
   {
     if ($adminDir = sfSympalConfig::get('admin_module_web_dir'))
     {
       sfConfig::set('sf_admin_module_web_dir', $adminDir);
+    }
+
+    if (sfConfig::get('sf_login_module') == 'default')
+    {
+      sfConfig::set('sf_login_module', 'sympal_admin');
+      sfConfig::set('sf_login_action', 'signin');
     }
   }
 }
