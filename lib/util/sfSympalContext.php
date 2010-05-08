@@ -205,7 +205,10 @@ class sfSympalContext
    */
   public function shouldLoadFrontendEditor()
   {
-    return $this->_symfonyContext->getConfiguration()->getPluginConfiguration('sfSympalEditorPlugin')->shouldLoadEditor();
+    return $this->_symfonyContext
+      ->getConfiguration()
+      ->getPluginConfiguration('sfSympalEditorPlugin')
+      ->shouldLoadEditor();
   }
 
   /**
