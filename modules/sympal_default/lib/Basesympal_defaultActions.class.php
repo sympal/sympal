@@ -36,6 +36,9 @@ class Basesympal_defaultActions extends sfActions
     $this->sitemapGenerator = new sfSympalSitemapGenerator($this->getContext()->getConfiguration()->getApplication());
   }
 
+  /**
+   * Changes the user's culture
+   */
   public function executeChange_language(sfWebRequest $request)
   {
     $oldCulture = $this->getUser()->getCulture();
@@ -51,6 +54,9 @@ class Basesympal_defaultActions extends sfActions
     return $this->redirect(str_replace('/'.$oldCulture.'/', '/'.$newCulture.'/', $this->getRequest()->getReferer($this->getUser()->getReferer('@homepage'))));
   }
 
+  /**
+   * Changes the user's edit culture
+   */
   public function executeChange_edit_language(sfWebRequest $request)
   {
     $this->getUser()->setEditCulture($request->getParameter('language'));
