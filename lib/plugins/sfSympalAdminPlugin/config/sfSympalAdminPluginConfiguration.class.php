@@ -227,7 +227,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/floating_menu.css'));
 
-    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/floating/menu.js'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/floating_menu.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
 
