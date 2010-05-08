@@ -53,7 +53,7 @@ all:
 
     # Configure what to do when you access some content that is not published yet
     unpublished_content:
-      forward_to: [sympal_content_default, unpublished_content]
+      forward_to: [sympal_default, unpublished_content]
       forward_404: false
     
     internationalized_models:

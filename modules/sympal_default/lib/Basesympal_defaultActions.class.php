@@ -13,6 +13,12 @@
  */
 class Basesympal_defaultActions extends sfActions
 {
+  /**
+   * The default action for handling unpublished content
+   */
+  public function executeUnpublished_content(sfWebRequest $request)
+  {
+  }
 
   /**
    * Default action called when sympal is in "offline" mode
@@ -76,5 +82,34 @@ class Basesympal_defaultActions extends sfActions
   public function executeDisabled()
   {
     $this->loadSiteTheme();
+  }
+
+  /**
+   * User is forwarded to this action when a site record exists but not
+   * content for that site exists yet
+   */
+  public function executeNew_site(sfWebRequest $request)
+  {
+    $currentTheme = $this->getSympalContext()
+                  ->getService('site_manager')
+                  ->getSite()
+                  ->getTheme();
+
+    if (null !== $currentTheme)
+    {
+      $this->loadTheme($currentTheme);
+    }
+    // try to load default theme otherwise
+    else
+    {
+      $options = sfConfig::get('app_theme_controller_options');
+      if (is_array($options))
+      {
+        if (is_string($options['default_theme']))
+        {
+          $this->loadTheme($options['default_theme']);
+        }
+      }
+    }
   }
 }

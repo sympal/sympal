@@ -217,7 +217,7 @@ class sfSympalContentActionLoader
         $count = $q->count();
         if (!$count)
         {
-          $this->_actions->forward('sympal_content_default', 'new_site');
+          $this->_actions->forward('sympal_default', 'new_site');
         }
         
         $parameters = $this->_actions->getRoute()->getParameters();
