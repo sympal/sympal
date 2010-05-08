@@ -29,22 +29,6 @@
   cursor: pointer;
 }
 
-
-.sympal_top_bar_background {
-  border-bottom: 1px solid #000;
-  filter:alpha(opacity=80);
-	-moz-opacity: 0.80;
-	-khtml-opacity: 0.80;
-	opacity: 0.80;
-  background: #333;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 30px;
-  width: 100%;
-  z-index: 100;
-}
-
 .sympal_inline_edit_bar_container {
   font-weight: bold;
   position: fixed;
@@ -247,24 +231,11 @@
   border-radius: 20px;
 }
 
-#sympal_ask_confirmation {
-  padding: 12px;
-  background: #ffc;
-  border: 1px solid #ddd;
-  color: #000;
+#sympal_flash_container {
+
 }
 
-#sympal_ask_confirmation h2 {
-  padding: 0;
-  margin: 0;
-  margin-bottom: 10px;
-}
-
-#sympal_ask_confirmation p {
-  margin-bottom: 10px;
-}
-
-
+/* Styling for blockUI */
 .blockUI.blockMsg.blockElement {
   width:          42px;
   height:         42px;

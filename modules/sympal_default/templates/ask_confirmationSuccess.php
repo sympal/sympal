@@ -1,5 +1,6 @@
-<?php sympal_use_jquery() ?>
-<?php sympal_use_javascript('/sfSympalPlugin/js/jQuery.form.js') ?>
+<?php sympal_use_javascript('jquery.js') ?>
+<?php sympal_use_javascript('jquery.form.js') ?>
+<?php sympal_use_stylesheet('ask_confirmation.css') ?>
 
 <?php if ($isAjax): ?>
   <script type="text/javascript">

@@ -63,6 +63,10 @@ class Basesympal_defaultActions extends sfActions
     return $this->redirect($this->getRequest()->getReferer($this->getUser()->getReferer('@homepage')));
   }
 
+  /**
+   * Requests are forwarded here when using the ->askConfirmation()
+   * method on the actions class
+   */
   public function executeAsk_confirmation(sfWebRequest $request)
   {
     if ($this->isAjax())
