@@ -12,7 +12,7 @@ copy(dirname(__FILE__).'/../fixtures/project/data/fresh_test_db.sqlite', dirname
 copy(dirname(__FILE__).'/../fixtures/project/config/fresh_app.yml', dirname(__FILE__).'/../fixtures/project/config/app.yml');
 register_shutdown_function('sympal_cleanup');
 
-if (isset($refresh_assets) && ($refresh_assets))
+function refresh_assets()
 {
   $uploadDir = dirname(__FILE__).'/../fixtures/project/web/uploads';
   sfToolkit::clearDirectory($uploadDir);

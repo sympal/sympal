@@ -1,12 +1,12 @@
 <?php
 
 $app = 'sympal';
-$refresh_assets = true;
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
 $t = new lime_test(6);
 $assetNum = 3; // the number of test assets
 
+refresh_assets();
 $sync = new sfSympalAssetSynchronizer($configuration->getEventDispatcher());
 
 $t->info('1 - Test that the synchronizer loads in the assets');

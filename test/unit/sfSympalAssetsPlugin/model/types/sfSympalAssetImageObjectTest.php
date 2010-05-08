@@ -1,7 +1,6 @@
 <?php
 
 $app = 'sympal';
-$refresh_assets = true;
 require_once(dirname(__FILE__).'/../../../../bootstrap/unit.php');
 
 $t = new lime_test(21);
@@ -10,6 +9,7 @@ $defaultThumbWidth = 64;
 $defaultThumbHeight = 64;
 
 // initialize some asset objects
+refresh_assets();
 $sync = new sfSympalAssetSynchronizer($configuration->getEventDispatcher());
 $sync->run();
 
