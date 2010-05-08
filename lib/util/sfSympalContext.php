@@ -84,6 +84,8 @@ class sfSympalContext
   {
     // extend the component/action class
     $actions = $this->getServiceContainer()->getService('actions_extended');
+    $actions->setSympalContext($this);
+    
     $this->_dispatcher->connect('component.method_not_found', array($actions, 'extend'));
   }
 
