@@ -115,6 +115,13 @@ class sfSympalExtendClass implements ArrayAccess
    */
   public function __call($method, $arguments)
   {
-    return call_user_func_array(array($this->_subject, $method), $arguments);
+    if (method_exists($this->_subject, $method))
+    {
+      return call_user_func_array(array($this->_subject, $method), $arguments);
+    }
+    else
+    {
+      throw new sfException(sprintf('Call to undefined function "%s()" on "%s"', $method, get_class($this)));
+    }
   }
 }
