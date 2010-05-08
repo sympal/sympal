@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(2);
+$t = new lime_test(10);
 
 chdir(sfConfig::get('sf_root_dir'));
 
@@ -28,8 +28,24 @@ function downloadPlugin($name, $t)
   $t->is(file_exists(sfConfig::get('sf_plugins_dir').'/'.$name), true, 'Test that the plugin exists and was downloaded');
 }
 
+function deletePlugin($name, $t)
+{
+  $t->info('Deleting plugin ' . $name);
+  $manager = sfSympalPluginManager::getActionInstance($name, 'delete');
+  $manager->delete();
+  
+  $t->is(file_exists(sfConfig::get('sf_plugins_dir').'/'.$name), false, 'The plugin was deleted entirely');
+  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/model/doctrine/'.$name), false, 'The model files were deleted');
+  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/form/doctrine/'.$name), false, 'The form files were deleted');
+  $t->is(file_exists(sfConfig::get('sf_lib_dir').'/filter/doctrine/'.$name), false, 'The filter files were deleted');
+}
+
 $t->info('1 - Download a plugin and see that it exists');
 downloadPlugin('sfSympalObjectReplacerPlugin', $t);
 
 $t->info('2 - Generate a content type plugin, see that it exists');
 generatePlugin('Event', 'Event', $t);
+
+$t->info('3 - Delete both plugins');
+deletePlugin('sfSympalObjectReplacerPlugin', $t);
+deletePlugin('sfSympalEventPlugin', $t);
