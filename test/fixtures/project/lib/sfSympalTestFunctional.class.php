@@ -2,6 +2,17 @@
 
 class sfSympalTestFunctional extends sfTestFunctional
 {
+  /**
+   * Override to load in some testers
+   */
+  public function __construct($hostname = null, $remote = null, $options = array())
+  {    
+    parent::__construct($hostname, $remote, $options);
+    
+    $this->setTester('doctrine', 'sfTesterDoctrine');
+    $this->setTester('theme', 'sfTesterTheme');
+  }
+
   public function signInAsAdmin()
   {
     return $this->

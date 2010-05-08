@@ -82,18 +82,32 @@ $browser->info('3 - Test the ->goBack() method')
   ->end()
 ;
 
+$site = Doctrine_Core::getTable('sfSympalSite')->createQuery('s')->fetchOne();
+$site->theme = 'wordpress_default';
+$site->save();
 
-$browser->info('4 - Set the layout in an action')
-  ->get('/test/change_layout')
-;
+$browser->info('4 - Test theme-related operations')
+  ->info('  4.1 - Goto a theme that sets nothing, see default theme')
+  
+  ->get('/theme/default')
+  ->with('theme')->begin()
+    ->isCurrentTheme('default')
+  ->end()
 
-$response = $browser->getResponse();
-$stylesheets = $response->getStylesheets();
-$browser->test()->is(isset($stylesheets['test']), true, 'The response contains the "test" stylesheet');
+  ->info('  4.2 - Goto an action and explicitly set the test theme')
 
-$browser
-  ->with('response')->begin()
-    ->info('  4.1 - The correct layout is rendered')
-    ->checkElement('h1', '/Test Layout/')
+  ->get('/theme/set_test_theme')
+  ->with('theme')->begin()
+    ->isCurrentTheme('test')
+  ->end()
+  
+  ->info('  4.3 - Goto an action that uses the site\'s theme, which is set to wordpress')
+
+  ->get('/theme/set_site_theme')
+  ->with('theme')->begin()
+    ->isCurrentTheme('wordpress_default')
   ->end()
 ;
+
+
+

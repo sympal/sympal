@@ -27,3 +27,15 @@ redirect_route:
 redirect_route2:
   url: '/some/path/ok/:parameter2'
   param: { module: test, action: redirect }
+
+
+# Theme-related routes
+theme_default:
+  url: /theme/default
+  param: { module: theme, action: default }
+theme_set_test_theme:
+  url: /theme/set_test_theme
+  param: { module: theme, action: setTestTheme }
+theme_set_site_theme:
+  url: /theme/set_site_theme
+  param: { module: theme, action: setSiteTheme }

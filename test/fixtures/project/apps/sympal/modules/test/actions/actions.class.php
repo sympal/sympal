@@ -43,11 +43,6 @@ class testActions extends sfActions
     $this->goBack();
   }
 
-  public function executeChange_layout()
-  {
-    $this->loadTheme('test');
-  }
-
   public function executeRedirect()
   {
     return sfView::NONE;
