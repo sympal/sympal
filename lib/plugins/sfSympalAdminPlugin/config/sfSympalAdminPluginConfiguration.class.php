@@ -15,7 +15,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
 {
 
   protected $_dependencies = array(
-    'sfSympalCorePlugin',
+    'sfSympalPlugin',
   );
 
   public function initialize()

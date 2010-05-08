@@ -43,7 +43,7 @@ class ProjectConfiguration extends sfProjectConfiguration
   {
     copy(sfConfig::get('sf_data_dir').'/fresh_test_db.sqlite', sfConfig::get('sf_data_dir').'/test.sqlite');
 
-    if (isset($this->pluginConfigurations['sfSympalCorePlugin']))
+    if (isset($this->pluginConfigurations['sfSympalPlugin']))
     {
       sfSympalConfiguration::getActive()->getCacheManager()->primeCache(true);
     }

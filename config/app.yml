@@ -161,6 +161,9 @@ all:
     # Enable and disable the elastic textareas
     elastic_textareas: true
 
+    # The base query class to use - sfSympalDoctrineQuery adds easy query caching
+    query_class:      sfSympalDoctrineQuery
+
     # Enable and disable the orm cache globally or control individual queries
     orm_cache:
       enabled: true

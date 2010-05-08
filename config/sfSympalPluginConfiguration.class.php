@@ -47,11 +47,12 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
+    $this->_sympalConfiguration = new sfSympalConfiguration($this->configuration);
+
+    // Actually bootstrap sympal
+    $this->dispatcher->connect('context.load_factories', array($this, 'bootstrapContext'));
+
     self::_markClassesAsSafe();
-    
-    // extend sfSympalConfiguration via sfSympalContentConfiguration
-    $configuration = new sfSympalContentConfiguration();
-    $this->dispatcher->connect('sympal.configuration.method_not_found', array($configuration, 'extend'));
 
     // Connect to the sympal post-load event
     $this->dispatcher->connect('sympal.load', array($this, 'configureSympal'));
@@ -69,6 +70,25 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
      * before the theme manager has a chance to set any themes
      */
     $this->_initializeSymfonyConfig();
+  }
+
+
+  /**
+   * Returns the sfSympalConfiguration object
+   * 
+   * @return sfSympalConfiguration
+   */
+  public function getSympalConfiguration()
+  {
+    return $this->_sympalConfiguration;
+  }
+
+  /**
+   * Listens to the context.load_factories event and creates the sympal context
+   */
+  public function bootstrapContext(sfEvent $event)
+  {
+    $this->_sympalContext = sfSympalContext::createInstance($event->getSubject(), $this->getSympalConfiguration());
   }
 
   /**
@@ -347,7 +367,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       'sfThemePlugin',
       'sfContentFilterPlugin',
 
-      'sfSympalCorePlugin',
       'sfSympalMenuPlugin',
       'sfSympalPluginManagerPlugin',
       'sfSympalPagesPlugin',
