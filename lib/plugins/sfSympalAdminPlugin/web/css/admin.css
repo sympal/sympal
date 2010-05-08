@@ -80,22 +80,6 @@ ul.error_list li
   background: url(../images/admin/error.png) no-repeat 4px 4px;
 }
 
-#sympal_ask_confirmation {
-  padding: 12px;
-  background: #ffc;
-  border: 1px solid #ddd;
-}
-
-#sympal_ask_confirmation h2 {
-  padding: 0;
-  margin: 0;
-  margin-bottom: 10px;
-}
-
-#sympal_ask_confirmation p {
-  margin-bottom: 10px;
-}
-
 #sympal_signin_form {
   padding: 20px;
   padding-left: 80px;
