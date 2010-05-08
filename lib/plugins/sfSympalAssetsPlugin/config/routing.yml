@@ -12,7 +12,8 @@ sympal_assets_delete_directory:
   url:    /admin/assets/delete/directory
   class:  sfRequestRoute
   params: { module: sympal_assets, action: delete_directory }
-  requirements: { sf_method: get }
+  requirements:
+    sf_method: post
 
 sympal_assets_create_asset:
   url:    /admin/assets/create/asset
@@ -38,6 +39,8 @@ sympal_assets_delete_asset:
   options:
     type: object
     model: sfSympalAsset
+  requirements:
+    sf_method: post
 
 sympal_assets_select:
   url:    /assets/select

@@ -70,3 +70,19 @@ $browser->info('1 - Browse around the assets library')
     ->isStatusCode(200)
   ->end()
 ;
+
+$browser->info('2 - Test the asset selector')
+  ->get('/assets/select')
+  
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_assets')
+    ->isParameter('action', 'select')
+  ->end()
+  
+  ->with('response')->begin()
+    ->isStatusCode(200)
+    ->checkElement('h1', '/Asset Browser/')
+  ->end()
+  
+  // todo, click all the links
+;

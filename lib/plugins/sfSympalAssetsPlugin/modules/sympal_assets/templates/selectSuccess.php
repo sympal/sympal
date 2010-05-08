@@ -1,6 +1,5 @@
 <link rel="stylesheet" type="text/css" media="screen" href="<?php echo stylesheet_path('/sfSympalAssetsPlugin/css/select.css') ?>" />
 <script type="text/javascript" src="<?php echo javascript_path('/sfSympalAssetsPlugin/js/select.js') ?>"></script>
-<?php use_helper('jQuery') ?>
 
 <div id="sympal_assets_container" class="sympal_form">
   <h1><?php echo __('Asset Browser') ?></h1>
@@ -32,13 +31,9 @@ and create directories below.') ?>
 
     <?php foreach($directories as $dir): ?>
       <li class="folder">
-        <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/delete.png'), array(
-            'url' => url_for('@sympal_assets_delete_directory?directory='.urlencode($directory.'/'.pathinfo($dir, PATHINFO_BASENAME))),
-            'update' => 'sympal_assets_container',
-            'title' => __('Delete directory "%dir%"', array('%dir%' => $dir)),
-            'method' => 'get'
-          )
-        ) ?>
+        <a class="delete" href="<?php echo url_for('@sympal_assets_delete_directory?directory='.urlencode($directory.'/'.pathinfo($dir, PATHINFO_BASENAME))) ?>" title="<?php echo __('Delete directory "%dir%"', array('%dir%' => $dir)) ?>">
+          <?php echo image_tag('/sfSympalPlugin/images/delete.png', array('alt' => 'delete')) ?>
+        </a>
 
         <?php echo image_tag('/sfSympalAssetsPlugin/images/icons/folder.png', 'width=25') ?>
         <?php echo link_to($dir, $currentRoute, array_merge($sf_data->getRaw('currentParams'), array('dir' => urlencode($directory.'/'.pathinfo($dir, PATHINFO_BASENAME)))), array('class' => 'go')) ?>
@@ -47,21 +42,13 @@ and create directories below.') ?>
 
     <?php foreach($assets as $asset): ?>
       <li id="sympal_asset_<?php echo $asset->getSlug() ?>" title="<?php echo $asset->getName() ?>" class="asset">
-        <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/edit.png'), array(
-            'url' => url_for('sympal_assets_edit_asset', $asset),
-            'update' => 'sympal_assets_container',
-            'title' => __('Edit file "%file%"', array('%file%' => $asset->getName())),
-            'method' => 'get'
-          )
-        ) ?>
+        <a class="edit" href="<?php echo url_for('sympal_assets_edit_asset', $asset) ?>" title="<?php echo __('Edit file "%file%"', array('%file%' => $asset->getName())) ?>">
+          <?php echo image_tag('/sfSympalPlugin/images/edit.png') ?>
+        </a>
 
-        <?php echo jq_link_to_remote(image_tag('/sfSympalPlugin/images/delete.png'), array(
-            'url' => url_for('sympal_assets_delete_asset', $asset),
-            'update' => 'sympal_assets_container',
-            'title' => __('Delete file "%file%"', array('%file%' => $asset->getName())),
-            'method' => 'get'
-          )
-        ) ?>
+        <a class="delete" href="<?php echo url_for('sympal_assets_delete_asset', $asset) ?>" title="<?php echo __('Delete file "%file%"', array('%file%' => $asset->getName())) ?>">
+          <?php echo image_tag('/sfSympalPlugin/images/delete.png') ?>
+        </a>
 
         <?php echo link_to($asset->getName(), $asset->getUrl(), array(
           'class' => sprintf('insert %s', $asset->getEmbedOptions(true)),
@@ -77,3 +64,33 @@ and create directories below.') ?>
 
   <a class="sympal_close_menu"><?php echo __('Close') ?></a>
 </div>
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    // ajax for the delete folder link
+    $('#sympal_assets_list .folder .delete').click(function() {
+      $.post($(this).attr('href'), {}, function(data) {
+        $('#sympal_assets_container').html(data);
+      });
+      
+      return false;
+    });
+
+    // ajax for the edit asset link
+    $('#sympal_assets_list .asset .edit').click(function() {
+      $('#sympal_assets_container').load($(this).attr('href'));
+      
+      return false;
+    });
+
+    // ajax for the delete asset link
+    $('#sympal_assets_list .asset .delete').click(function() {
+      $.post($(this).attr('href'), {}, function(data) {
+        $('#sympal_assets_container').html(data);
+      });
+      
+      return false;
+    });
+  });
+</script>
