@@ -112,16 +112,15 @@ class sfSympalExtendClass implements ArrayAccess
   /**
    * Allows methods to be called directly onto this object and have them
    * be passed back to the original subject
+   * 
+   * While I'd like to wrap this function so that it more clearly throws
+   * errors, you can't. First, if you do a method_exists(), it prevents
+   * an "extended" function being called, since it really doesn't exist.
+   * If you wrap in a try-catch block, you improperly catch the sfStopException
+   * thrown by ->forward().
    */
   public function __call($method, $arguments)
   {
-    if (method_exists($this->_subject, $method))
-    {
-      return call_user_func_array(array($this->_subject, $method), $arguments);
-    }
-    else
-    {
-      throw new sfException(sprintf('Call to undefined function "%s()" on "%s"', $method, get_class($this)));
-    }
+    return call_user_func_array(array($this->_subject, $method), $arguments);
   }
 }
