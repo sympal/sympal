@@ -31,6 +31,10 @@ class Basesympal_assetsActions extends sfActions
     $this->currentParams = $request->getGetParameters();
   }
 
+  /**
+   * The main admin area, lists the assets with options to upload a new
+   * asset or create a new directory
+   */
   public function executeIndex(sfWebRequest $request)
   {
     $this->directories = $this->_getDirectories($this->fullPath);

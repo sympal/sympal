@@ -1,17 +1,21 @@
-<?php use_helper('jQuery') ?>
 <div id="sf_admin_container">
   <div>
+    <a href="<?php echo url_for('@sympal_assets_select') ?>" class="go_back_link" title="<?php echo __('Back to list', array(), 'sf_admin') ?>">
+      <?php echo __('Back to list', array(), 'sf_admin') ?>
+    </a>
     <?php if ($sf_request->isXmlHttpRequest()): ?>
-    <?php echo jq_link_to_remote(__('Back to list', array(), 'sf_admin'), array(
-      'url' => url_for('@sympal_assets_select'),
-      'update' => 'sympal_assets_container',
-      'title' => __('Back to list', array(), 'sf_admin'),
-      'method' => 'get'
-    )) ?>
-    <?php else: ?>
-    <?php echo link_to(__('Back to list', array(), 'sf_admin'), '@sympal_assets') ?>
+      <script type="text/javascript">
+        $(document).ready(function(){
+          $('#sf_admin_container .go_back_link').click(function() {
+            $('#sympal_assets_container').load($(this).attr('href'));
+            
+            return false;
+          });
+        });
+      </script>
     <?php endif ?>
   </div>
+
   <h1><?php echo __('Editing Asset "%asset%"', array('%asset%' => $asset->getName())) ?></h1>
 
   <div id="sympal_edit_asset">
