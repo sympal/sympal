@@ -63,9 +63,9 @@
           Original image not found
         <?php endif; ?>
 
-        <?php sympal_use_jquery() ?>
-        <?php sympal_use_javascript('/sfSympalPlugin/js/jquery.Jcrop.js') ?>
-        <?php sympal_use_stylesheet('/sfSympalPlugin/css/jquery.Jcrop.css') ?>
+        <?php sympal_use_javascript('jquery.js') ?>
+        <?php sympal_use_javascript('jquery.Jcrop.js') ?>
+        <?php sympal_use_stylesheet('jquery.Jcrop.css') ?>
 
         <script type="text/javascript">
         $(function() {
