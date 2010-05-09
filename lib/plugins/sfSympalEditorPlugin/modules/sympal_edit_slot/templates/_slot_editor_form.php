@@ -1,4 +1,5 @@
-<?php include_partial('sympal_edit_slot/slot_messages'); ?>
+<?php use_helper('SympalContentSlotEditor') ?>
+<?php echo trigger_flash_from_user($sf_user) ?>
 
 <?php if ($contentSlot->getIsColumn()): ?>
   <?php if (sfSympalConfig::isI18nEnabled('sfSympalContentSlot') && !isset($form[$contentSlot->getName()])): ?>

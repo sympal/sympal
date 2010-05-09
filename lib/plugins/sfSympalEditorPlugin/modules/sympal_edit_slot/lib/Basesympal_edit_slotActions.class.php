@@ -106,7 +106,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
     {
       $this->form->save();
       
-      $this->getUser()->setFlash('notice', __('Slot saved'), false);
+      $this->getUser()->setFlash('saved', __('Slot saved'), false);
     }
     else
     {

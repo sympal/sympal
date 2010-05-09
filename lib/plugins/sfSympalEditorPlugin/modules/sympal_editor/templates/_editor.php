@@ -6,3 +6,4 @@
 </div>
 
 <div id="sympal_chooser_container" class="sympal_inline_edit_bar_area"></div>
+<div id="sympal_flash_container"><div id="sympal_flash_internal"></div></div>

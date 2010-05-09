@@ -66,3 +66,27 @@ function get_sympal_slot_form_tag(sfForm $form, sfSympalContentSlot $contentSlot
   
   return $form->renderFormTag($url, $options);
 }
+
+/**
+ * Triggers a flash drop-down based on the flashes in the user
+ * 
+ * @param sfUser $user 
+ */
+function trigger_flash_from_user($user)
+{
+  $validTypes = array('info', 'saved', 'error');
+  
+  foreach ($validTypes as $validType)
+  {
+    if ($user->hasFlash($validType))
+    {
+      return sprintf('
+        <script type="text/javascript">
+          $(document).ready(function(){
+            $.showFlashMessage("%s", "%s");
+          });
+        </script>', $validType, addslashes($user->getFlash($validType))
+      );
+    }
+  }
+}

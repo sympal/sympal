@@ -89,7 +89,44 @@
 }
 
 #sympal_flash_container {
-
+  position: fixed;
+  top: 30px;
+  width: 100%;
+  display: none;
+}
+#sympal_flash_container #sympal_flash_internal {
+  width: 800px;
+  margin: auto;
+  background: #000;
+  color: #fff;
+  -moz-border-radius-bottomleft: 3px;
+  -moz-border-radius-bottomright: 3px;
+  -webkit-border-bottom-left-radius: 3px;
+  -webkit-border-bottom-right-radius: 3px;
+  border: 1px solid #000;
+  padding: 20px;
+  position: relative;
+  filter:alpha(opacity=95);
+  -moz-opacity:0.95;
+  opacity:0.95;
+}
+#sympal_flash_internal div.message {
+  font-size: 28px;
+  padding-left: 58px;
+  background: url(../../sfSympalPlugin/images/milky/info.png) top left no-repeat;
+  height: 42px;
+  padding-top: 6px;
+}
+#sympal_flash_internal a.hide {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+#sympal_flash_internal div.saved {
+  background-image: url(../../sfSympalPlugin/images/milky/save.png)
+}
+#sympal_flash_internal div.error {
+  background-image: url(../../sfSympalPlugin/images/milky/exclamation.png)
 }
 
 /* Styling for blockUI */
