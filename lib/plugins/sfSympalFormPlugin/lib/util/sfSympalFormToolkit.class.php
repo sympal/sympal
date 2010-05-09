@@ -53,6 +53,12 @@ class sfSympalFormToolkit
     {
       $choices[$key] = $value['label'];
     }
+
+    // unset the Column type for non-column slots
+    if ($form instanceof sfSympalContentSlotForm)
+    {
+      unset($choices['Column']);
+    }
     
     $widgetSchema['type'] = new sfWidgetFormChoice(array('choices' => $choices));
     $validatorSchema['type'] = new sfValidatorChoice(array('required' => false, 'choices' => array_keys($choices)));

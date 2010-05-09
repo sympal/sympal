@@ -119,7 +119,7 @@ all:
       # special slot type for "column" slots where the widget/validator
       # from the content or content type form are used instead of those listed here
       Column:
-        label:  Column Slot Type
+        label:  Field Default
         widget_class:    false
         validator_class: false
         filters:   [inline_object]
