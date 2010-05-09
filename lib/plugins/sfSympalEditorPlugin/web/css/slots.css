@@ -67,24 +67,14 @@ a.sympal_slot_button:hover {
   color: #000;
 }
 
+/* hide the type switcher by default */
+.sympal_slot_form .sympal_change_slot_type_dropdown {
+  display: none;
+}
+
 /**
  * Messages
  */
-#sympal_slot_flash {
-  position: absolute;
-  z-index: 100;
-  right: 10px;
-}
-.sympal_notice, .sympal_error {
-  background: #c5c5c5;
-  width: 100%;
-  padding: 5px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: bold;
-  color: #000;
-}
-
 .droppable_active {
   background: #ccc !important;
 }
