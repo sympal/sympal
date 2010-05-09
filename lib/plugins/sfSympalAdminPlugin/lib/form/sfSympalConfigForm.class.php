@@ -14,8 +14,13 @@ class sfSympalConfigForm extends BaseForm
     $_settings = array(),
     $_path;
 
+  /**
+   * Overridden to allow the app to add to the form and then to process
+   * those additions and turn them into one giant, embedded form
+   */
   public function setup()
   {
+    // allow the application to add fields to the form
     self::$dispatcher->notify(new sfEvent($this, 'sympal.load_config_form'));
 
     $otherSettings = array();
@@ -26,13 +31,15 @@ class sfSympalConfigForm extends BaseForm
         $form = new BaseForm();
         foreach ($settings as $setting)
         {
-          $setting['widget']->setLabel($setting['label']);
-
           $form->setWidget($setting['name'], $setting['widget']);
+          $form->getWidgetSchema()->setLabel($setting['name'], $setting['label']);
+          
           $form->setValidator($setting['name'], $setting['validator']);
         }
         $this->embedForm($group, $form);
-      } else {
+      }
+      else
+      {
         $otherSettings[] = $settings;
       }
     }
@@ -40,7 +47,8 @@ class sfSympalConfigForm extends BaseForm
     foreach ($otherSettings as $setting)
     {
       $this->setWidget($setting['name'], $setting['widget']);
-      $setting['widget']->setLabel($setting['label']);
+      $this->getWidgetSchema()->setLabel($setting['name'], $setting['label']);
+
       $this->setValidator($setting['name'], $setting['validator']);
     }
 
@@ -67,9 +75,19 @@ class sfSympalConfigForm extends BaseForm
     parent::setup();
   }
 
+  /**
+   * Adds a setting to the form. This is the main interface for adding
+   * to the config form
+   * 
+   * @param string $group  The config group (can be null of at root of sympal_config)
+   * @param string $name   The name of the config
+   * @param string $label  The label to use in the form
+   * @param string $widget The sfWidgetForm%%% class to use for the widget
+   * @param string $validator The sfValidator%%% class to use as the validator
+   */
   public function addSetting($group, $name, $label = null, $widget = 'Input', $validator = 'String')
   {
-    if (is_null($label))
+    if ($label === null)
     {
       $label = sfInflector::humanize($name);
     }
@@ -174,6 +192,9 @@ class sfSympalConfigForm extends BaseForm
     return $settings;
   }
 
+  /**
+   * Called by the view to render an entire config group form
+   */
   public function renderGroup($name)
   {
     if ($name == 'General')
