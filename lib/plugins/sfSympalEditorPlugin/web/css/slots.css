@@ -68,8 +68,12 @@ a.sympal_slot_button:hover {
 }
 
 /* hide the type switcher by default */
-.sympal_slot_form .sympal_change_slot_type_dropdown {
+.sympal_slot_wrapper .sympal_change_slot_type_dropdown {
   display: none;
+}
+.sympal_slot_wrapper .sympal_change_slot_type_dropdown select {
+  font-size: 14px;
+  padding: 5px;
 }
 
 /**
@@ -84,4 +88,8 @@ a.sympal_slot_button:hover {
 
 #sympal_assets_list li {
   z-index: 10000 !important;
+}
+
+#fancybox-outer a {
+  color: #000;
 }

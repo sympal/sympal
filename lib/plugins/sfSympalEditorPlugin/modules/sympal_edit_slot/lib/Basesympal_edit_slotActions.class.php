@@ -33,8 +33,21 @@ abstract class Basesympal_edit_slotActions extends sfActions
     $this->contentSlot->setType($type);
     $this->contentSlot->save();
 
-    $this->form = $this->contentSlot->getEditForm();
-    $this->renderPartial('sympal_edit_slot/slot_editor_form');
+    // render the slot editor
+    $slotEditor = $this->getSympalContext()
+      ->getService('slot_renderer')
+      ->renderSlot($this->contentSlot, sfSympalSlotRenderer::SLOT_EDITOR);
+    $this->renderText($slotEditor);
+
+    // refresh the slot editors
+    $this->renderText(sprintf('
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $.bindAllSlotEditors();
+          $("#sympal_slot_wrapper_%s").sympalSlot("openEditor");
+        });
+      </script>
+    ', $this->contentSlot->id));
 
     return sfView::NONE;
   }
@@ -58,10 +71,11 @@ abstract class Basesympal_edit_slotActions extends sfActions
   public function executeSlot_view(sfWebRequest $request)
   {
     $this->contentSlot = $this->setupContentSlot($request);
-    
+
+    // render the slot in view mode
     $rendered = $this->getSympalContext()
       ->getService('slot_renderer')
-      ->renderSlot($this->contentSlot);
+      ->renderSlot($this->contentSlot, sfSympalSlotRenderer::SLOT_VIEW);
     $this->renderText($rendered);
     
     return sfView::NONE;
