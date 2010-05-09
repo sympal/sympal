@@ -51,6 +51,11 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $content;
   }
 
+  /**
+   * Called when a Doctrine_Record finishes construction
+   * 
+   * Overridden to prepare the _slotsByName property
+   */
   public function construct()
   {
     $this->populateSlotsByName();
@@ -61,6 +66,10 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->date_published && strtotime($this->date_published) <= time() ? true : false;
   }
 
+  /**
+   * Iterates through the slots for this Content record and populates
+   * the _slotsByName property
+   */
   public function populateSlotsByName()
   {
     $this->_slotsByName = array();
