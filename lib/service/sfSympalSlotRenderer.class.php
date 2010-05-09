@@ -9,6 +9,16 @@
 
 class sfSympalSlotRenderer
 {
+  /*
+   * Render with the markup needed for the edit button
+   */
+  const SLOT_EDITOR = 1;
+
+  /*
+   * Render just the raw slot
+   */
+  const SLOT_VIEW = 2;
+  
   /**
    * @var sfSympalConfiguration
    * @var boolean
@@ -36,21 +46,31 @@ class sfSympalSlotRenderer
    * @param mixed $slot The name of the slot or the slot itself
    * @param sfSympalContent $content The content record to get the slot from
    * @param array  $options An array of options for this slot
+   * @param integer $renderMode Optionally force to render in edit mode or view mode
    * 
    * Available options include
    *  * type            The rendering type to use for this slot (e.g. Markdown)
    *  * default_value   A default value to give this slot the first time it's created
    *  * edit_mode       How to edit this slot (popup (default), inline)
    */
-  public function renderSlotByName($slot, $content, $options)
+  public function renderSlotByName($slot, $content, $options, $renderMode = null)
   {
     // Sets up the options, content, slot
     $this->_configure($slot, $content, $options);
 
+    if ($renderMode === null)
+    {
+      $shouldLoadEditor = $this->_configuration
+        ->getProjectConfiguration()
+        ->getPluginConfiguration('sfSympalEditorPlugin')
+        ->shouldLoadEditor();
+      $renderMode = $shouldLoadEditor ? self::SLOT_EDITOR : self::SLOT_VIEW;
+    }
+
     /**
      * Either render the raw value or the editor for the slot
      */
-    if ($this->_configuration->getProjectConfiguration()->getPluginConfiguration('sfSympalEditorPlugin')->shouldLoadEditor())
+    if ($renderMode == self::SLOT_EDITOR)
     {
       return $this->_getSlotEditor();
     }
@@ -69,9 +89,9 @@ class sfSympalSlotRenderer
    * to render a slot (starting from an object, then breaking into pieces
    * so it can be put back together again
    */
-  public function renderSlot(sfSympalContentSlot $slot)
+  public function renderSlot(sfSympalContentSlot $slot, $renderMode = null)
   {
-    return $this->renderSlotByName($slot, $slot->getContentRenderedFor(), array());
+    return $this->renderSlotByName($slot, $slot->getContentRenderedFor(), array(), $renderMode);
   }
 
   /**

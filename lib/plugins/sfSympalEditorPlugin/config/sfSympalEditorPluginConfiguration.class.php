@@ -52,9 +52,8 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
 
     return sfContext::getInstance()->getUser()->isEditMode() 
       && $format == 'html' && (!sfSympalConfig::get('page_cache', 'enabled')
-      && sfSympalConfig::get('inline_editing', 'enabled')
-      && sfSympalContext::getInstance()->getCurrentContent())
-      || (sfSympalConfiguration::getActive()->isAdminModule() && sfSympalContext::getInstance()->getCurrentContent());
+      && sfSympalConfig::get('inline_editing', 'enabled'))
+      || (sfSympalConfiguration::getActive()->isAdminModule());
   }
 
   /**

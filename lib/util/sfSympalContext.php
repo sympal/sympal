@@ -199,19 +199,6 @@ class sfSympalContext
   }
 
   /**
-   * Shortcut to check if we should load the frontend editor
-   *
-   * @return boolean
-   */
-  public function shouldLoadFrontendEditor()
-  {
-    return $this->_symfonyContext
-      ->getConfiguration()
-      ->getPluginConfiguration('sfSympalEditorPlugin')
-      ->shouldLoadEditor();
-  }
-
-  /**
    * Get the current sfSympalConfiguration instance
    *
    * @return sfSympalConfiguration $sympalConfiguration
