@@ -94,8 +94,23 @@ abstract class Basesympal_edit_slotActions extends sfActions
     if ($this->form->isValid())
     {
       $this->form->save();
-      
       $this->getUser()->setFlash('saved', __('Slot saved'), false);
+      
+      // if we close editor on save, just return the flash js and the editor close js
+      if (sfSympalConfig::get('inline_editing', 'close_editor_on_save', false))
+      {
+        $this->getContext()->getConfiguration()->loadHelpers('SympalContentSlotEditor');
+        $this->renderText(trigger_flash_from_user($this->getUser()));
+        $this->renderText(sprintf('
+        <script type="text/javascript">
+          $(document).ready(function() {
+            $("#sympal_slot_wrapper_%s").sympalSlot("closeEditor");
+          });
+        </script>
+        ', $this->contentSlot->id));
+        
+        return sfView::NONE;
+      }
     }
     else
     {
