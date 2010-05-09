@@ -72,8 +72,6 @@ class sfSympalActions extends sfSympalExtendClass
       $items[] = sfConfig::get('sf_config_dir');
       $items[] = sfConfig::get('sf_data_dir').'/sql';
       $items[] = sfConfig::get('sf_log_dir');
-      $items[] = sfConfig::get('sf_lib_dir');
-      $items[] = sfConfig::get('sf_plugins_dir');
       $items[] = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'symfony';
       $apps = glob(sfConfig::get('sf_apps_dir').'/*/config/app.yml');
       foreach ($apps as $app)
