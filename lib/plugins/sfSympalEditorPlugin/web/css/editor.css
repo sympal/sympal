@@ -40,81 +40,52 @@
   cursor: pointer;
 }
 
+/* Styling for the inline edit buttons themselves  */
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons {
   float: left;
   margin: 0;
   padding: 0;
 }
-
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li {
   float: left;
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a {
   margin-right: 5px;
   padding: 6px 12px !important;
   cursor: pointer;
-  -khtml-border-radius: 3px;
-	-moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
-  border-radius: 3px;
   border: 1px solid #666;
   font-size: 16px;
   font-weight: normal;
   display: block;
-  background-color: #ececec;
   color: #000;
+  text-decoration: none;
+  background-color: #ececec;
+  background-position: 5px 8px;
+  background-repeat: no-repeat;
+  -khtml-border-radius: 3px;
+	-moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
   filter:alpha(opacity=80);
   -moz-opacity:0.8;
   opacity:0.8;
-  text-decoration: none;
-  background-position: 5px 8px;
-  background-repeat: no-repeat;
 }
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons li a:hover {
   background-color: #666 !important;
   color: #ececec;
 }
 
+/* Button-specific styling */
 .sympal_inline_edit_bar a.toggle_sympal_assets {
   background-image: url(../../sfSympalPlugin/images/insert_asset.gif);
   text-indent: 15px;  
 }
-
 .sympal_inline_edit_bar a.toggle_sympal_links {
   background-image: url(../../sfSympalPlugin/images/links_icon.gif);
   text-indent: 15px;  
-}
-
-.sympal_inline_edit_bar a, .sympal_inline_edit_bar select {
-  margin-right: 5px;
-}
-
-.sympal_inline_edit_bar a:hover {
-  background-color: #f1f4f7 !important;
-  color: #333;
-}
-
-.sympal_inline_edit_bar a:hover {
-  text-decoration: underline;
-}
-
-.sympal_edit_content_container {
-  display: none;
-  background-color: #fff;
-  top: 20px;
-  left: 100px;
-  width: 800px;
-  height: 500px;
-  overflow: auto;
-  padding: 14px;
-  -khtml-border-radius: 20px;
-	-moz-border-radius: 20px;
-  -webkit-border-radius: 20px;
-  border-radius: 20px;
 }
 
 #sympal_flash_container {
