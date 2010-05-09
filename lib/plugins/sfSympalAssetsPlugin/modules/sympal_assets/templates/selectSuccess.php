@@ -64,33 +64,3 @@ and create directories below.') ?>
 
   <a class="sympal_close_menu"><?php echo __('Close') ?></a>
 </div>
-
-
-<script type="text/javascript">
-  $(document).ready(function(){
-    // ajax for the delete folder link
-    $('#sympal_assets_list .folder .delete').click(function() {
-      $.post($(this).attr('href'), {}, function(data) {
-        $('#sympal_assets_container').html(data);
-      });
-      
-      return false;
-    });
-
-    // ajax for the edit asset link
-    $('#sympal_assets_list .asset .edit').click(function() {
-      $('#sympal_assets_container').load($(this).attr('href'));
-      
-      return false;
-    });
-
-    // ajax for the delete asset link
-    $('#sympal_assets_list .asset .delete').click(function() {
-      $.post($(this).attr('href'), {}, function(data) {
-        $('#sympal_assets_container').html(data);
-      });
-      
-      return false;
-    });
-  });
-</script>

@@ -7,7 +7,10 @@
       <script type="text/javascript">
         $(document).ready(function(){
           $('#sf_admin_container .go_back_link').click(function() {
-            $('#sympal_assets_container').load($(this).attr('href'));
+            $('#sympal_assets_container').load($(this).attr('href'), {}, function() {
+              // if ajax, we're in the chooser drawer, so refresh it
+              $.reloadChooserDrawer();
+            });
             
             return false;
           });
