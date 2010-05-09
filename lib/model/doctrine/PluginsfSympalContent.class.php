@@ -51,36 +51,30 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $content;
   }
 
-  /**
-   * Called when a Doctrine_Record finishes construction
-   * 
-   * Overridden to prepare the _slotsByName property
-   */
-  public function construct()
-  {
-    $this->populateSlotsByName();
-  }
-
   public function isPublished()
   {
     return $this->date_published && strtotime($this->date_published) <= time() ? true : false;
   }
 
   /**
-   * Iterates through the slots for this Content record and populates
-   * the _slotsByName property
+   * Retrieves an array of the slots where the key is the slot name.
+   * 
+   * This caches the result as a property
+   * 
+   * @param boolean $force To force a refresh of the slots or not
+   * @return array
    */
-  public function populateSlotsByName()
+  public function getSlotsByName($force = false)
   {
-    $this->_slotsByName = array();
-    foreach ($this->Slots as $slot)
+    if ($this->_slotsByName === null || $force)
     {
-      $this->_slotsByName[$slot->name] = $slot;
+      $this->_slotsByName = array();
+      foreach ($this->Slots as $slot)
+      {
+        $this->_slotsByName[$slot->name] = $slot;
+      }
     }
-  }
-
-  public function getSlotsByName()
-  {
+    
     return $this->_slotsByName;
   }
 
@@ -136,19 +130,25 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
 
   public function hasSlot($name)
   {
-    return isset($this->_slotsByName[$name]) ? true : false;
+    $slotsByName = $this->getSlotsByName();
+    
+    return isset($slotsByName[$name]) ? true : false;
   }
 
   public function hasSlots()
   {
-    return count($this->_slotsByName) > 0 ? true : false;
+    return count($this->getSlotsByName()) > 0 ? true : false;
   }
 
   public function getSlot($name)
   {
     if ($this->hasSlot($name))
     {
-      return $this->_slotsByName[$name];
+      $slotsByName = $this->getSlotsByName();
+      
+      $slot = $slotsByName[$name];
+      
+      return $slotsByName[$name];
     }
     return null;
   }
@@ -172,6 +172,8 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $contentSlotRef->content_id = $this->id;
     $contentSlotRef->save();
 
+    // make sure the slots are initialized
+    $this->getSlotsByName();
     $this->_slotsByName[$slot->name] = $slot;
 
     return $contentSlotRef;
