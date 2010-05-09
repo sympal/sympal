@@ -1,3 +1,12 @@
+/* wrapper around the inline edit bar */
+.sympal_inline_edit_bar_container {
+  font-weight: bold;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 9999999;
+}
+
 /*
  * inline edit bar menu items and corresponding content areas
  */
@@ -19,6 +28,8 @@
 {
   color: #000;
 }
+
+/* The close button inside an inline_edit_bar_area*/
 .sympal_close_menu {
   float: right;
   clear: both;
@@ -27,131 +38,6 @@
   padding: 3px 3px 3px 23px;
   background: 3px 3px url(../../sfSympalPlugin/images/cancel.png) no-repeat;
   cursor: pointer;
-}
-
-.sympal_inline_edit_bar_container {
-  font-weight: bold;
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  z-index: 9999999;
-}
-
-.sympal_inline_edit_bar_publish {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 40px;
-  height: 30px;
-}
-
-.sympal_inline_edit_bar_publish img {
-  margin-top: 8px;
-  margin-left: 10px;
-  border: none;
-}
-
-.sympal_inline_edit_signout {
-  position: fixed;
-  top: 8px;
-  right: 10px;
-}
-
-.sympal_inline_edit_signout img {
-  border: none;
-}
-
-.sympal_admin_menu
-{
-  height: 30px;
-  position: fixed;
-  top: 0;
-  right: 30px;
-  margin: 0;
-  padding: 0;
-  z-index: 999999999;
-}
-
-.sympal_admin_menu ul
-{
-  z-index: 999999999 !important;
-  padding: 0;
-  margin: 0;
-}
-
-.sympal_admin_menu ul li
-{
-  cursor: pointer;
-  float: left;
-  list-style: none;
-  color: #fff;
-  margin: 0;
-  padding: 8px;
-  font-weight: normal;
-  font-size: 12px;
-}
-
-.sympal_admin_menu ul li:hover
-{
-  background: #fff;
-  color: #333;
-}
-
-.sympal_admin_menu ul li:hover a
-{
-  color: #333;
-}
-
-.sympal_admin_menu ul li a
-{
-  display: block;
-  text-decoration: none;
-  white-space: nowrap;
-  color: #fff;
-  font-weight: normal;
-}
-
-.sympal_admin_menu ul li a:hover
-{
-  text-decoration: none;
-  color: #333;
-}
-
-.sympal_admin_menu ul li ul
-{
-  margin: 0;
-  padding: 0;
-  position: absolute;
-  display: none;
-  background: #fff;
-  border-left: 1px solid #333;
-  border-bottom: 1px solid #333;
-  border-right: 1px solid #333;
-  margin-left: -9px;
-  margin-top: 7px;
-  width: 200px;
-}
-
-.sympal_admin_menu ul li ul li
-{
-  float: none;
-  display: inline;
-  padding: 0;
-  margin: 0;
-}
-
-.sympal_admin_menu ul li ul li a
-{
-  width: auto;
-  color: #333;
-  padding: 6px;
-}
-
-.sympal_admin_menu ul li ul li a:hover
-{
-  text-decoration: none;
-  background: #000;
-  color: #fff;
 }
 
 .sympal_inline_edit_bar ul.sympal_inline_edit_bar_buttons {
