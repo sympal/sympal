@@ -73,11 +73,6 @@ class sfSympalActions extends sfSympalExtendClass
       $items[] = sfConfig::get('sf_data_dir').'/sql';
       $items[] = sfConfig::get('sf_log_dir');
       $items[] = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'symfony';
-      $apps = glob(sfConfig::get('sf_apps_dir').'/*/config');
-      foreach ($apps as $app)
-      {
-        $items[] = $app;
-      }
     }
     else
     {
@@ -87,6 +82,12 @@ class sfSympalActions extends sfSympalExtendClass
     $dirs = sfFinder::type('dir')->in($items);
     $files = sfFinder::type('file')->in($items);
     $checks = array_merge($dirs, $files);
+    
+    $apps = glob(sfConfig::get('sf_apps_dir').'/*/config/app.yml');
+    foreach ($apps as $app)
+    {
+      $checks[] = $app;
+    }
 
     $error = false;
     foreach ($checks as $check)
