@@ -121,6 +121,9 @@ class sfSympalConfigForm extends BaseForm
     }
   }
 
+  /**
+   * Actually builds an array of yaml and writes to the appropriate yaml file
+   */
   public function save()
   {
     $array = $this->_buildArrayToWrite();
@@ -134,6 +137,10 @@ class sfSympalConfigForm extends BaseForm
     $task->run(array(), array('type' => 'config'));
   }
 
+  /**
+   * Builds the array of config values from the cleaned values that will
+   * be used to dump to yaml.
+   */
   protected function _buildArrayToWrite()
   {
     $old = $this->getDefaults();
@@ -169,6 +176,12 @@ class sfSympalConfigForm extends BaseForm
     return $array;
   }
 
+  /**
+   * Returns an array of the named groups in this form, including "General",
+   * which is a pseudo-group containing all non-embedded fields
+   * 
+   * @return array
+   */
   public function getGroups()
   {
     $groups = array('General');
@@ -182,6 +195,12 @@ class sfSympalConfigForm extends BaseForm
     return $groups;
   }
 
+  /**
+   * Returns an array of the field names that live beneath the given group
+   * 
+   * @param string $name The name of the group to get the fields/settings for
+   * @return array An array of the field names in the given group (which is an embedded form)
+   */
   public function getGroupSettings($name)
   {
     $settings = array();
@@ -189,11 +208,14 @@ class sfSympalConfigForm extends BaseForm
     {
       $settings[] = $key;
     }
+    
     return $settings;
   }
 
   /**
    * Called by the view to render an entire config group form
+   * 
+   * @param string $name The name of the group to render
    */
   public function renderGroup($name)
   {
@@ -207,15 +229,27 @@ class sfSympalConfigForm extends BaseForm
           $settings[] = $key;
         }
       }
-      $html = $this->renderFieldSet($name, $this, $settings);
-    } else {
+      $html = $this->renderFieldSet($this, $settings);
+    }
+    else
+    {
       $settings = $this->getGroupSettings($name);
-      $html = $this->renderFieldSet($name, $this[$name], $settings);
+      $html = $this->renderFieldSet($this[$name], $settings);
     }
     return $html;
   }
 
-  public function renderFieldSet($name, $form, $fields)
+  /**
+   * Renders a particular fieldset.
+   * 
+   * Just dumps out an array of fields with the needed markup
+   * 
+   * @param mixed $form   Either an sfForm or sfFormFieldSchema (embedded form) object
+   * @param array $fields The array of fields to render on the above
+   * 
+   * @return string The rendered html
+   */
+  public function renderFieldSet($form, $fields)
   {
     $html = '';
     foreach ($fields as $field)
@@ -229,6 +263,7 @@ class sfSympalConfigForm extends BaseForm
         $html .= '</div>';
       }
     }
+    
     return $html;
   }
 }

@@ -19,11 +19,17 @@ abstract class Basesympal_configActions extends sfActions
     return $this->form;
   }
 
+  /**
+   * Actually display the config form
+   */
   public function executeIndex(sfWebRequest $request)
   {
     $this->form = $this->_getForm();
   }
 
+  /**
+   * Processes and saves the config form
+   */
   public function executeSave(sfWebRequest $request)
   {
     $this->form = $this->_getForm();
