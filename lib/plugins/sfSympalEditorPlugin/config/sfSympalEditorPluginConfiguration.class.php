@@ -92,7 +92,7 @@ class sfSympalEditorPluginConfiguration extends sfPluginConfiguration
       $response->addJavascript(sfSympalConfig::getAssetPath('jquery.metadata.js'));
 
       // Load tinymce
-      $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/tiny_mce/tiny_mce.js'));
+      $response->addJavascript(sfSympalConfig::getAssetPath('tiny_mce.js'));
       
       // Load in the UI blocker
       $response->addJavascript(sfSympalConfig::getAssetPath('jquery.blockUI.js'));

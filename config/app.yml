@@ -113,8 +113,6 @@ all:
         filters: [inline_object, markdown]
       TinyMCE:
         label: TinyMCE Rich Text Editor
-        widget_options:
-          config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
         filters: [inline_object]
       
       # special slot type for "column" slots where the widget/validator
@@ -158,7 +156,8 @@ all:
       jquery.Jcrop.css:     /sfSympalPlugin/lib/jquery/Jcrop/css/jquery.Jcrop.css
       
       jquery.elastic.js:    /sfSympalPlugin/lib/jquery/elastic/jquery.elastic.source.js
-        
+      
+      tiny_mce.js:          /sfSympalPlugin/lib/tiny_mce/tiny_mce.js
 
     # Customize the path to the loaded jQuery instance and any plugins
     jquery_reloaded:
