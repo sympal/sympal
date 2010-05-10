@@ -10,12 +10,19 @@
  */
 abstract class Basesympal_configActions extends sfActions
 {
+
+  /**
+   * Returns the config form and checks the file permissions
+   * 
+   * @return sfSympalConfigForm
+   */
   protected function _getForm()
   {
     $this->checkFilePermissions();
 
     $class = sfSympalConfig::get('config_form_class', null, 'sfSympalConfigForm');
     $this->form = new $class();
+
     return $this->form;
   }
 
@@ -43,6 +50,9 @@ abstract class Basesympal_configActions extends sfActions
 
       $this->dispatcher->notify(new sfEvent($this, 'sympal.post_save_config_form', array('form' => $this->form)));
 
+      // reset the cache
+      $this->clearCache();
+      
       $this->getUser()->setFlash('notice', 'Settings updated successfully!');
       $this->redirect('@sympal_config');
     }
