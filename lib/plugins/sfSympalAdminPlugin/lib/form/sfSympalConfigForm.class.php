@@ -150,11 +150,28 @@ class sfSympalConfigForm extends BaseForm
     $array['all']['sympal_config'] = array();
 
     // Add only the values that have changed from the old default values
+    // This will traverse 2 levels deep to make sure we ONLY add new values
+    // @todo make this not suck (true recursion) and test this
     foreach ($new as $key => $value)
     {
       if ($value != $old[$key])
       {
-        $array['all']['sympal_config'][$key] = $value;
+        if (is_array($value))
+        {
+          $array['all']['sympal_config'][$key] = array();
+          
+          foreach ($value as $subKey => $subValue)
+          {
+            if ($subValue != $old[$key][$subKey])
+            {
+              $array['all']['sympal_config'][$key][$subKey] = $subValue;
+            }
+          }
+        }
+        else
+        {
+          $array['all']['sympal_config'][$key] = $value;
+        }
       }
     }
 
