@@ -11,6 +11,9 @@ abstract class Basesympal_adminActions extends sfActions
 {
   public function executeClear_cache(sfWebRequest $request)
   {
+    $this->enableEditor(false);
+    $this->setLayout(false);
+    
     $this->types = array(
       'config',
       'i18n',
@@ -36,8 +39,11 @@ abstract class Basesympal_adminActions extends sfActions
           $this->clearMenuCache();
         break;
       }
+
       $msg = sprintf(__('Clearing %s cache...'), $type);
-      return $this->renderText($msg);
+      $this->renderText($msg);
+      
+      return sfView::NONE;
     }
   }
 
