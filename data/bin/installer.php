@@ -104,8 +104,8 @@ chdir(dirname(__FILE__).'/plugins/sfSympalPlugin');
 exec('git submodule init');
 exec('git submodule update');
 
-exec('git submodule foreach --recursive "git submodule init"');
-exec('git submodule foreach --recursive "git submodule update"');
+exec('git submodule foreach "git submodule init"');
+exec('git submodule foreach "git submodule update"');
 chdir(dirname(__FILE__));
 
 //@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
