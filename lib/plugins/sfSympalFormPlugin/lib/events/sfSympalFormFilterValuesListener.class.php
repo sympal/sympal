@@ -23,7 +23,10 @@ class sfSympalFormFilterValuesListener extends sfSympalListener
     $form = $event->getSubject();
     if ($form->hasRecaptcha())
     {
-      $request = $this->_invoker->getSymfonyContext()->getRequest();
+      $request = $this->_invoker
+        ->getSympalContext()
+        ->getSymfonyContext()
+        ->getRequest();
       $captcha = array(
         'recaptcha_challenge_field' => $request->getParameter('recaptcha_challenge_field'),
         'recaptcha_response_field'  => $request->getParameter('recaptcha_response_field'),
