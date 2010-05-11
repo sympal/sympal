@@ -211,8 +211,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
     $format = $format ? $format : 'html';
 
     return $context->getUser()->hasCredential('ViewAdminBar')
-      && $format == 'html'
-      && $request->getParameter('module') !== 'sympal_dashboard';
+      && $format == 'html';
   }
 
   /**

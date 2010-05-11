@@ -123,10 +123,34 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->redirect($this->sf_sympal_content->getRoute());
   }
 
+  /**
+   * The "new" action. If a content_type_id is passed, this redirects to
+   * the new action of the content_type.
+   * 
+   * If no content_type_id is passed, forwards to an action that presents
+   * with options for a new content object
+   */
   public function executeNew(sfWebRequest $request)
   {
     $contentTypeId = $this->getUser()->getAttribute('content_type_id');
-    $this->redirect('@sympal_content_create_type?type='.$contentTypeId);
+    if ($contentTypeId)
+    {
+      $this->redirect('@sympal_content_create_type?type='.$contentTypeId);
+    }
+    else
+    {
+      $this->forward('sympal_content', 'chooseNewType');
+    }
+  }
+
+  /**
+   * Forwarded from new action
+   * 
+   * Presents a selection of content types to choose for new content
+   */
+  public function executeChooseNewType(sfWebRequest $request)
+  {
+    $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
   }
 
   public function executeCreate_type(sfWebRequest $request)

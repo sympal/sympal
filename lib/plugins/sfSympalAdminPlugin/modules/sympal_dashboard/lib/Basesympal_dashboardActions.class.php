@@ -24,35 +24,10 @@ abstract class Basesympal_dashboardActions extends sfActions
       );
 
       $this->hasNewVersion = $this->upgrade->hasNewVersion();
-    } else {
+    }
+    else
+    {
       $this->hasNewVersion = false;
     }
-
-    $this->dashboardRight = new sfSympalMenu('Sympal Dashboard Right');
-
-    $numUsers = Doctrine_Core::getTable('sfGuardUser')->count();
-    $this->dashboardRight->addChild(sprintf('<label>Users</label> %s', $numUsers), '@sympal_users');
-
-    $numSites = Doctrine_Core::getTable('sfSympalSite')->count();
-    $this->dashboardRight->addChild(sprintf('<label>Sites</label> %s', $numSites), '@sympal_sites');
-
-    $numContentTypes = Doctrine_Core::getTable('sfSympalContentType')->count();
-    $this->dashboardRight->addChild(sprintf('<label>Content Types</label> %s', $numContentTypes), '@sympal_content_types');
-
-    $content = $this->dashboardRight->addChild('Site Content')->setliClass('main_section');
-    $contentTypes = Doctrine::getTable('sfSympalContentType')->getAllContentTypes();
-    foreach ($contentTypes as $contentType)
-    {
-      $numPublishedContent = Doctrine_Core::getTable('sfSympalContent')
-        ->createQuery('c')
-        ->andWhere('c.content_type_id = ?', $contentType->getId())
-        ->count();
-      $content->addChild(
-        sprintf('<label>%s</label> %s', $contentType->getLabel(), $numPublishedContent),
-        '@sympal_content_list_type?type='.$contentType->getId()
-      );
-    }
-
-    sfApplicationConfiguration::getActive()->getEventDispatcher()->notify(new sfEvent($this->dashboardRight, 'sympal.load_dashboard_right'));
   }
 }

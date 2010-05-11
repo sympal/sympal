@@ -65,7 +65,6 @@ Events
 
  * sympal.load_admin_menu
  * sympal.load_config_form
- * sympal.load_dashboard_right
  * sympal.pre_save_config_form
  * sympal.post_save_config_form
  * admin.pre_execute

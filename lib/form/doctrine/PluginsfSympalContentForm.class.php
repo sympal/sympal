@@ -22,7 +22,8 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this['last_updated_by_id'],
       $this['slots_list'],
       $this['links_list'],
-      $this['assets_list']
+      $this['assets_list'],
+      $this['comments_list']  // this should actually not be here - think of something better later
     );
     
     $field = sfApplicationConfiguration::getActive()
