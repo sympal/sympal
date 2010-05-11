@@ -19,7 +19,7 @@
     <div class="action_buttons">
       <a href="<?php echo url_for('@homepage') ?>" class="button edit_site">Edit Site<br/><br/></a>
       <a href="<?php echo url_for('@sympal_content_new') ?>" class="button create_page">Create page</a>
-      <a href="#" class="button manage_assets">Manage Assets</a>
+      <a href="<?php echo url_for('@sympal_assets') ?>" class="button manage_assets">Manage Assets</a>
     </div>
   </div>
 
