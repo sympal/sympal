@@ -111,6 +111,8 @@ all:
       Markdown:
         label: Markdown Editor
         filters: [inline_object, markdown]
+        view_stylesheets:  [markdown.css]
+
       TinyMCE:
         label: TinyMCE Rich Text Editor
         filters: [inline_object]
@@ -158,6 +160,8 @@ all:
       jquery.elastic.js:    /sfSympalPlugin/lib/jquery/elastic/jquery.elastic.source.js
       
       tiny_mce.js:          /sfSympalPlugin/lib/tiny_mce/tiny_mce.js
+      
+      markdown.css:         /sfSympalRenderingPlugin/css/markdown.css
 
     # Customize the path to the loaded jQuery instance and any plugins
     jquery_reloaded:

@@ -138,6 +138,16 @@ class sfSympalSlotRenderer
   protected function _getRenderedSlot()
   {
     $value = $this->_slot->render();
+
+    // render any "view" stylesheets
+    $stylesheets = $this->getOption('view_stylesheets');
+    if ($stylesheets)
+    {
+      foreach ($stylesheets as $stylesheet)
+      {
+        sympal_use_stylesheet($stylesheet);
+      }
+    }
     
     /*
      * Set the Content record on the inline object parser so that any inline
