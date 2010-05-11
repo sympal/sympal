@@ -75,11 +75,11 @@ class sfSympalToolkit
   /**
    * Use the given javascript
    *
-   * @param string $stylesheet 
+   * @param string $javascript 
    * @param string $position 
    * @return void
    */
-  public static function useJavascript($stylesheet, $position = 'last')
+  public static function useJavascript($javascript, $position = 'last')
   {
     return sfContext::getInstance()->getResponse()->addJavascript(sfSympalConfig::getAssetPath($javascript), $position);
   }
