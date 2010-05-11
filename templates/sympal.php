@@ -2,7 +2,7 @@
  "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <?php $menus = get_sympal_split_menus('primary', false, 6, true) ?>
+  <?php $menus = get_sympal_split_menus('primary', false, 5, true) ?>
   <?php $primaryMenu = (string) $menus['primary'] ?>
   
   <?php if (isset($menus['secondary'])): ?>
