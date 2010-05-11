@@ -19,7 +19,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
   /**
    * sfSympalPlugin version number
    */
-  const VERSION = '1.0.0-ALPHA4';
+  const VERSION = '1.0.0-ALPHA5';
 
   /**
    * Shortcut method to enable all Sympal plugins for the given ProjectConfiguration
