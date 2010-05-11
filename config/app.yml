@@ -111,7 +111,7 @@ all:
       Markdown:
         label: Markdown Editor
         filters: [inline_object, markdown]
-        view_stylesheets:  [markdown.css]
+        stylesheets:  [markdown.css]
 
       TinyMCE:
         label: TinyMCE Rich Text Editor

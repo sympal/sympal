@@ -140,7 +140,7 @@ class sfSympalSlotRenderer
     $value = $this->_slot->render();
 
     // render any "view" stylesheets
-    $stylesheets = $this->getOption('view_stylesheets');
+    $stylesheets = $this->getOption('stylesheets');
     if ($stylesheets)
     {
       foreach ($stylesheets as $stylesheet)
