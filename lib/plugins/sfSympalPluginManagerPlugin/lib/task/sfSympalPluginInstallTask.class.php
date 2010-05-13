@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Sympal installation task:
+ * 
+ * @package     sfSympalPluginManagerPlugin
+ * @subpackage  task
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class sfSympalPluginInstallTask extends sfSympalBaseTask
 {
   protected function configure()

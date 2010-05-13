@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Sympal Symfony installer script.
+ * Sympal symfony installer script.
  *
- * Run the following command to generate a new project with the Sympal installer.
+ * Run the following command to generate a new project with the sympal installer.
  *
  *     $ php /path/to/symfony generate:project sympal --installer=/path/to/installer.php
  *
- * It will setup a base Sympal project for you to start working with.
+ * It will setup a base sympal project for you to start working with.
  *
  */
 
 if (!$this instanceof sfGenerateProjectTask)
 {
-  echo "This script cannot be run outside of generating a new project. See http://sympalphp.org \n";
+  echo "This script cannot be run outside of generating a new project. See http://www.sympalphp.org \n";
   die;
 }
 

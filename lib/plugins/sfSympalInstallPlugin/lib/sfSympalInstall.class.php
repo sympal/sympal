@@ -120,9 +120,10 @@ class sfSympalInstall
       $this->_publishAssets();
       $this->_clearCache();
       $this->_primeCache();
-
-    // Delete site and recreate it
-    } else {
+    }
+    else
+    {
+      // Delete site and recreate it
       Doctrine_Manager::connection()->execute('delete from sf_sympal_site where slug = ?', array($this->_application));
       $this->_createSite();
       $this->_clearCache();
@@ -173,13 +174,21 @@ class sfSympalInstall
     return $return;
   }
 
+  /**
+   * Checks to see if a sympal site record exists for the given application
+   * 
+   * @return boolean
+   */
   public function checkSympalDatabaseExists()
   {
-    try {
+    try
+    {
       $conn = Doctrine_Manager::connection();
       $conn->fetchColumn('select slug from sf_sympal_site where slug = ?', array($this->_application));
       $return = true;
-    } catch (Exception $e) {
+    }
+    catch (Exception $e)
+    {
       $return = false;
     }
     $conn->close();
@@ -209,7 +218,7 @@ class sfSympalInstall
    * This method performs the following tasks:
    *   * Writes the database dsn to databases.yml
    *   * Creates the database
-   *   * Loads the install fixtures
+   *   * Builds the tables
    */
   protected function _setupDatabase()
   {
@@ -222,17 +231,22 @@ class sfSympalInstall
         'password' => $this->_params['db_password']
       ));
 
-      try {
+      try
+      {
         $conn = Doctrine_Manager::getInstance()->openConnection($this->_params['db_dsn'], 'test', false);
         $conn->setOption('username', $this->_params['db_username']);
         $conn->setOption('password', $this->_params['db_password']);
 
-        try {
+        // try to create the database, it may already exist, so eat that error
+        try
+        {
           $conn->createDatabase();
         } catch (Exception $e) {}
 
         $conn->connect();
-      } catch (Exception $e) {
+      }
+      catch (Exception $e)
+      {
         throw new InvalidArgumentException('Database credentials are not valid!');
       }
     }
@@ -300,6 +314,13 @@ class sfSympalInstall
     }
   }
 
+  /**
+   * Executes raw sql at the end of the installation process:
+   * 
+   *   * Executes all *.sql files in the data/sql/sympal_install dir
+   *   * Executes all *.sql files for each individual database connection
+   *     in the data/sql/sympal_install/##CONN_NAME## di r
+   */
   protected function _executePostInstallSql()
   {
     $this->logSection('sympal', '...executing post install sql', null, 'COMMENT');
@@ -321,6 +342,13 @@ class sfSympalInstall
     }
   }
 
+  /**
+   * Execute all *.sql files inside the given directory
+   * 
+   * @param string $dir The absolute path to the dir with the *.sql files
+   * @param integer $maxDepth The depth to look for files, defaults to only the immediate dir
+   * @param Doctrine_Connection $conn The connection no which to execute
+   */
   protected function _executeSqlFiles($dir, $maxDepth = 0, $conn = null)
   {
     if (is_null($conn))
@@ -344,6 +372,12 @@ class sfSympalInstall
     }
   }
 
+  /**
+   * Calls sfApplicationConfiguration->install() at the end of the install process.
+   * 
+   * In other words, if you create an install() task in
+   * apps/MY_APP/config/MY_APPConfiguration.class.php then it will be called here.
+   */
   protected function _executePostInstallHooks()
   {
     if (method_exists($this->_configuration, 'install'))
