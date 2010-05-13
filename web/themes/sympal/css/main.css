@@ -495,3 +495,20 @@ label.required:after
   margin-left: 20px;
   font-weight: bold;
 }
+
+a.button {
+  background: #11A8FF;
+  padding: 5px 10px;
+  color: #fff !important;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  
+	-khtml-border-radius: 5px;
+	-moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+a.button:hover {
+  background: #0f98e6;
+}

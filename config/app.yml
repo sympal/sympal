@@ -75,7 +75,8 @@ all:
         indexName: content_type_sluggable
 
     # Configure forms that should have recaptcha enabled
-    recaptcha_forms: [sfGuardRegisterForm]
+    recaptcha_forms: 
+     sfGuardRegisterForm:   true
 
     # The displayed name. You can change this to the project name you build on top of Sympal for example.
     sympal_name: Sympal
