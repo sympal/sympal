@@ -142,4 +142,14 @@ class sfSympalServerCheckCliRenderer extends sfSympalServerCheckRenderer
 
     return $text;
   }
+
+  public function hasErrors()
+  {
+    return !empty($this->_errors) ? true : false;
+  }
+
+  public function hasWarnings()
+  {
+    return !empty($this->_warnings) ? true : false;
+  }
 }
