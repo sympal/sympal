@@ -17,16 +17,9 @@ if (!$this instanceof sfGenerateProjectTask)
   die;
 }
 
-function fileGetContents($url)
-{
-  $ch = curl_init();
-	curl_setopt($ch, CURLOPT_HEADER, 0);
-	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	curl_setopt($ch, CURLOPT_URL, $url);
-	$data = curl_exec($ch);
-	curl_close($ch);
-	return $data;
-}
+/*
+ * ****** Step1: Server checks ***************
+ */
 
 $classes = array(
   'sfSympalServerCheck',
@@ -41,23 +34,10 @@ foreach ($classes as $file)
   require sys_get_temp_dir().'/'.$file.'.class.php';
 }
 
-class sfSympalServerCheckInstallRenderer extends sfSympalServerCheckCliRenderer
-{
-  public function hasErrors()
-  {
-    return !empty($this->_errors) ? true : false;
-  }
-
-  public function hasWarnings()
-  {
-    return !empty($this->_warnings) ? true : false;
-  }
-}
-
 $error = false;
 try {
   $check = new sfSympalServerCheck();
-  $renderer = new sfSympalServerCheckInstallRenderer($check);
+  $renderer = new sfSympalServerCheckCliRenderer($check);
   $renderer->setTask($this);
   $renderer->render();
 }
@@ -89,6 +69,10 @@ if ($error)
   }
 }
 
+/*
+ * ****** Step2: Preparing the project ***************
+ */
+
 $this->logSection('sympal', '...adding Sympal code to ProjectConfiguration');
 
 $manipulator = sfClassManipulator::fromFile(sfConfig::get('sf_config_dir').'/ProjectConfiguration.class.php');
@@ -96,36 +80,111 @@ $manipulator->wrapMethod('setup', '', 'require_once(dirname(__FILE__).\'/../plug
 $manipulator->wrapMethod('setup', '', 'sfSympalPluginConfiguration::enableSympalPlugins($this);');
 $manipulator->save();
 
+/*
+ * ****** Step3: Downloading sympal ***************
+ */
+
 $this->logSection('sympal', '...downloading sfSympalPlugin');
 
 // Using git for now because PEAR ALWAYS FAILS FOR SOME PEOPLE
 exec('git clone git://github.com/sympal/sympal.git plugins/sfSympalPlugin');
-chdir(dirname(__FILE__).'/plugins/sfSympalPlugin');
+
+$rootdir = getcwd();
+$this->logSection('sympal', 'Updating sympal submodules');
+chdir($rootdir.'/plugins/sfSympalPlugin');
 exec('git submodule init');
 exec('git submodule update');
 
+$this->logSection('sympal', 'Updating sympal deeper submodules');
 exec('git submodule foreach "git submodule init"');
 exec('git submodule foreach "git submodule update"');
-chdir(dirname(__FILE__));
+chdir($rootdir);
 
-//@$this->runTask('plugin:install', 'sfSympalPlugin --stability=alpha');
-//$this->disablePlugin('sfSympalPlugin'); // We don't want the explicit enabling of this plugin
+// reload the tasks so we have the symfony tasks
 $this->reloadTasks();
 
-$this->logSection('sympal', '...setup initial data');
+/*
+ * ****** Step4: Collecting Information & Configuring sympal ***************
+ */
 
-$application = $this->askAndValidate('What would you like your first application to be called?', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-$firstName   = $this->askAndValidate('What is your first name?', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-$lastName    = $this->askAndValidate('What is your last name?', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+$application = $this->askAndValidate(
+  'What would you like your first application to be called? An application with this name will be generated for you.',
+  new sfValidatorString(),
+  array('style' => 'QUESTION_LARGE')
+);
 
-$validator = new sfValidatorEmail(array(), array('invalid' => 'Invalid e-mail address!'));
-$emailAddress = $this->askAndValidate('What is your e-mail address?', $validator, array('style' => 'QUESTION_LARGE'));
+$validator = new sfValidatorEmail();
+$emailAddress = $this->askAndValidate('What is your e-mail address? (will used as author in config/properties.ini)', $validator, array('style' => 'QUESTION_LARGE'));
 
+$this->logSection('sympal', '...setup database');
+$db = setupDatabase($this);
+ 
+$this->runTask('configure:database', array(
+  'dsn' => $db['dsn'],
+  'username' => $db['username'],
+  'password' => $db['password']
+));
+
+$this->logSection('sympal', 'Configuring author');
 $this->runTask('configure:author', sprintf("'%s'", $emailAddress));
 
-$username = $this->askAndValidate('Enter the username for the first user to create:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
-$password = $this->askAndValidate('Enter the password for the first user to create:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+$this->logSection('sympal', sprintf('Generating app %s', $application));
+$this->runTask('generate:app', $application);
 
+// install sympal
+$this->logSection('sympal',
+  'Sympal is now installing itself into the symfony application.
+  This will take a while, please be patient...'
+);
+
+$command = sprintf(
+  '%s "%s" %s',
+  sfToolkit::getPhpCli(),
+  sfConfig::get('sf_root_dir').'/symfony',
+  'sympal:install '.$application
+);
+passthru($command);
+
+
+/*
+ * Fix permission for common directories
+ * 
+ * Must be done because we exist from the project generate task prematurely
+ * so that we can show the pretty message about how to get to your site
+ */
+$fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
+$fixPerms->setCommandApplication($this->commandApplication);
+$fixPerms->setConfiguration($this->configuration);
+$fixPerms->run();
+
+// replace tokens, do this since we exit the project install below
+$this->replaceTokens();
+
+
+/*
+ * ****** Step5: Give a friendly message ***************
+ */
+$this->log(null);
+$this->logSection('sympal', sprintf('Sympal was installed successfully...', $application));
+
+$url = 'http://localhost/'.$application.'_dev.php/security/signin';
+$this->logSection('sympal', sprintf('Open your browser to "%s"', $url));
+$this->logSection('sympal', sprintf('You can signin with the username "admin" and password "admin"'));
+
+
+exit;
+
+
+
+/*
+ * ********** Functions used by this process ***************
+ */
+
+
+/*
+ * Recursively asks for db information and tests the db connection until
+ * something works
+ */
 function setupDatabase($task)
 {
   $db = array();
@@ -140,8 +199,10 @@ function setupDatabase($task)
       $db['path'] .= '.sqlite';
     }
     $db['dsn']  = 'sqlite:'.sfConfig::get('sf_data_dir').DIRECTORY_SEPARATOR.$db['path'];
-  } else {
-    $db['host']      = $task->askAndValidate('Enter the host of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
+  }
+  else
+  {
+    $db['host']      = $task->askAndValidate('Enter the host of your database (e.g. localhost):', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
     $db['name']      = $task->askAndValidate('Enter the name of your database:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
     $db['username']  = $task->askAndValidate('Enter your database username:', new sfValidatorString(), array('style' => 'QUESTION_LARGE'));
     $db['password']  = $task->askAndValidate('Enter your database password:', new sfValidatorString(array('required' => false)), array('style' => 'QUESTION_LARGE'));
@@ -170,119 +231,14 @@ function setupDatabase($task)
   return $db;
 }
 
-$this->logSection('sympal', '...setup database');
-
-$db = setupDatabase($this);
-
-$this->runTask('configure:database', array(
-  'dsn' => $db['dsn'],
-  'username' => $db['username'],
-  'password' => $db['password']
-));
-
-$this->logSection('install', 'create an application');
-$this->runTask('generate:app', $application);
-
-// i18n
-class sfValidatorSympalCultures extends sfValidatorString
+// curls out to retrieve the contents of a file
+function fileGetContents($url)
 {
-  protected function configure($options = array(), $messages = array())
-  {
-    parent::configure($options, $messages);
-
-    $this->setOption('empty_value', array());
-    $this->setOption('required', false);
-    $this->setOption('trim', true);
-
-    $this->addMessage('invalid', 'Please enter a comma separated list of cultures.');
-  }
-
-  public function doClean($value)
-  {
-    $parts = explode(',', $value);
-
-    $cultures = array();
-
-    foreach ($parts as $culture)
-    {
-      $culture = trim($culture);
-
-      if (!empty($culture))
-      {
-        $cultures[] = $culture;
-      }  
-    }
-
-    if (empty($cultures))
-    {
-      throw new sfValidatorError($this, 'invalid');
-    }
-
-    return $cultures;
-  }
+  $ch = curl_init();
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_URL, $url);
+	$data = curl_exec($ch);
+	curl_close($ch);
+	return $data;
 }
-
-$this->logBlock("
-The next input allows you to turn on internationalisation for your Sympal project.
-If you don't need internationalisation simply leave it blank.
-But if you want internationalisation enter a comma separated list of cultures,
-example: en,de,fr
-The first one will be configured as default culture.
-", 'COMMENT');
-
-$cultures = $this->askAndValidate("Enter a comma separated list of cultures or leave blank if you don't need i18n:", new sfValidatorSympalCultures(), array('style' => 'QUESTION_LARGE'));
-
-if (count($cultures) > 0)
-{
-  $this->logSection('i18n', 'enabling i18n in Sympal with cultures: '.implode(', ', $cultures));
-
-  $command = sprintf(
-    '%s "%s" %s',
-    sfToolkit::getPhpCli(),
-    sfConfig::get('sf_root_dir').'/symfony',
-    'sympal:configure '.sprintf('i18n=true language_codes="[%s]"', implode(',', $cultures))
-  );
-  $this->logBlock($command, 'INFO');
-  exec($command);
-
-  $this->logSection('i18n', sprintf('enabling i18n in application "%s"', $application));
-
-  $settingsFilename = sfConfig::get('sf_apps_dir').'/'.$application.'/config/settings.yml';
-  $settings = file_get_contents($settingsFilename);
-  $settings .= <<<EOF
-
-    i18n: true
-    default_culture: {$cultures[0]}
-EOF;
-
-  file_put_contents($settingsFilename, $settings);
-}
-
-// execute sympal installation
-$command = sprintf(
-  '%s "%s" %s',
-  sfToolkit::getPhpCli(),
-  sfConfig::get('sf_root_dir').'/symfony',
-  'sympal:install '.$application.' --force-reinstall --email-address="'.$emailAddress.'" --username="'.$username.'" --password="'.$password.'" --no-confirmation --db-dsn="'.$db['dsn'].'" --db-username="'.$db['username'].'" --db-password="'.$db['password'].'" --first-name="'.$firstName.'" --last-name="'.$lastName.'"'
-);
-
-$this->logSection('sympal', 'Sympal is now installing itself into the symfony application.
-This will take a while, please be patient...');
-exec($command);
-
-// fix permission for common directories
-$fixPerms = new sfProjectPermissionsTask($this->dispatcher, $this->formatter);
-$fixPerms->setCommandApplication($this->commandApplication);
-$fixPerms->setConfiguration($this->configuration);
-$fixPerms->run();
-
-$this->replaceTokens();
-
-$this->log(null);
-$this->logSection('sympal', sprintf('Sympal was installed successfully...', $application));
-
-$url = 'http://localhost/'.$application.'_dev.php/security/signin';
-$this->logSection('sympal', sprintf('Open your browser to "%s"', $url));
-$this->logSection('sympal', sprintf('You can signin with the username "%s" and password "%s"', $username, $password));
-
-exit;
