@@ -55,6 +55,15 @@ class sfSympalContentActionLoader
 
     $this->_loadMetaData($this->_response);
 
+    // Unless overridden by the theme, set the content
+    if (!$this->_user->getCurrentTheme() || !sfSympalConfig::get('theme', 'allow_changing_theme_by_url'))
+    {
+      if ($theme = $content->getThemeToRenderWith())
+      {
+        $this->_actions->loadTheme($theme);
+      }
+    }
+
     $this->_sympalContext->getService('site_manager')->setCurrentContent($content);
 
     // Handle custom action
