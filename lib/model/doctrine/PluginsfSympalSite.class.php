@@ -32,16 +32,16 @@ abstract class PluginsfSympalSite extends BasesfSympalSite
     // application itself (apps/$app)
     $appsDir = sfConfig::get('sf_apps_dir') . DIRECTORY_SEPARATOR . $this->slug;
     sfToolkit::clearDirectory($appsDir);
-    rmdir($appsDir);
+    if (is_writable($appsDir)) rmdir($appsDir);
 
     // public files (web/$app_*.php)
     $pubPref = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . $this->slug;
-    unlink($pubPref . '_dev.php');
-    unlink($pubPref . '.php');
+    if (is_writeable($pubPref . '_dev.php')) unlink($pubPref . '_dev.php');
+    if (is_writeable($pubPref . '.php'))     unlink($pubPref . '.php');
 
-    // fixtures (data/fixtures/$app)
+    // fixtures (data/fixtures/sympal/$app)
     $fixtDir = implode(DIRECTORY_SEPARATOR, array(sfConfig::get('sf_data_dir'), 'fixtures', 'sympal', $this->slug));
     sfToolkit::clearDirectory($fixtDir);
-    rmdir($fixtDir);
+    if (is_writable($fixtDir)) rmdir($fixtDir);
   }
 }
