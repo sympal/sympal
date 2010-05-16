@@ -251,6 +251,27 @@ class sfSympalContentRouteObject
       }
       return $path;
     }
+    /*
+     * If content has a custom module or action then we need a sympal_content_*
+     * route for it.
+     * 
+     * This means that we need to determine its final url as if it had
+     * a custom_path url. Specifically, instead of reporting back
+     * "/blog/:slug" we need to report back the exact "/blog/my-post".
+     * 
+     * Unfortunately, the only way I can really see to do this is by
+     * cloning the Content record and creating a whole other content route
+     * object where we ask it to determine what its real url would have been
+     * had there been more custom module and action.
+     */
+    else if ($content->get('module', false) || $content->get('action', false))
+    {
+      $cloned = $content->copy(false);
+      $cloned->module = null;
+      $cloned->action = null;
+      
+      return $cloned->getContentRouteObject()->getEvaluatedRoutePath();
+    }
     // Otherwise fallback and get route path from the content type
     else if ($path = $content->getType()->getRoutePath())
     {
