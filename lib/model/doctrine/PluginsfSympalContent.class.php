@@ -660,6 +660,18 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $template;
   }
 
+  /**
+   * Renders the theme name with which this Content should be rendered.
+   * Priority is in this order
+   * 
+   *   * Content->theme
+   *   * ContentType->theme
+   *   * Site->theme
+   * 
+   * If none of the above are found, this Content record has no theme preference
+   * 
+   * @return string
+   */
   public function getThemeToRenderWith()
   {
     if ($theme = $this->getTheme())
@@ -673,15 +685,6 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     else if ($theme = $this->getSite()->getTheme())
     {
       return $theme;
-    }
-    else
-    {
-      return sfSympalConfig::getDeep(
-        'content_types',
-        $this->getType()->getName(),
-        'default_theme',
-        sfSympalConfig::get('theme', 'default_theme', $this->getSite()->getSlug())
-      );
     }
   }
 

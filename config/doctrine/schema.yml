@@ -9,7 +9,7 @@ sfSympalSite:
       notnull: true
     description:
       type: clob
-      notnull: true
+      notnull: false
     page_title: string(255)
     meta_keywords: string(500)
     meta_description: string(500)

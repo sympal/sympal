@@ -31,7 +31,16 @@ class sfSympalSearch
       $index = sfConfig::get('sf_data_dir').'/sympal_'.sfConfig::get('sf_environment').'_search.index';
       if (file_exists($index))
       {
-        $this->_index = Zend_Search_Lucene::open($index);
+        try {
+          $this->_index = Zend_Search_Lucene::open($index);
+        } catch (Zend_Search_Lucene_Exception $e) {
+          throw new RuntimeException(sprintf(
+            'Search index directory "%s" seems to be corrupted.' . PHP_EOL .
+            'Zend_Search_Lucene said "%s".' . PHP_EOL .
+            'Try to remove the index directory to rebuild.',
+            $index, $e->getMessage()
+          ));
+        }
       }
       else
       {
