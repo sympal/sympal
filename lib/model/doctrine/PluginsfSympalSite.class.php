@@ -40,7 +40,7 @@ abstract class PluginsfSympalSite extends BasesfSympalSite
     unlink($pubPref . '.php');
 
     // fixtures (data/fixtures/$app)
-    $fixtDir = implode(DIRECTORY_SEPARATOR, array(sfConfig::get('sf_data_dir'), 'fixtures', $this->slug));
+    $fixtDir = implode(DIRECTORY_SEPARATOR, array(sfConfig::get('sf_data_dir'), 'fixtures', 'sympal', $this->slug));
     sfToolkit::clearDirectory($fixtDir);
     rmdir($fixtDir);
   }
