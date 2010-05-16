@@ -56,10 +56,7 @@ EOF;
     {
       $this->logSection('sympal', sprintf('Deleting Symfony application named "%s"...', $arguments['application']));
 
-      sfToolkit::clearDirectory(sfConfig::get('sf_apps_dir').'/'.$arguments['application']);
-      rmdir(sfConfig::get('sf_apps_dir').'/'.$arguments['application']);
-      @unlink(sfConfig::get('sf_web_dir').'/'.$arguments['application'].'_dev.php');
-      @unlink(sfConfig::get('sf_web_dir').'/'.$arguments['application'].'.php');
+      $site->deleteApplication();
     }
   }
 }
