@@ -113,6 +113,46 @@ class sfSympalInstall
     return $return;
   }
 
+  /**
+   * This copies all of the absolute base fixtures to the data/fixture/sympal directory
+   */
+  protected function _copyFixtures()
+  {
+    $this->logSection('fixtures', 'Coping base fixtures into data/fixture/sympal directory');
+
+    $sympalFixturesPath = sfConfig::get('sf_data_dir').'/fixtures/sympal';
+    if (!file_exists($sympalFixturesPath))
+    {
+      $this->logSection('fixtures', sprintf('Creating fixtures directory %s', $sympalFixturesPath));
+      mkdir($sympalFixturesPath, 0777, true);
+    }
+    
+    $yamls = sfFinder::type('file')
+      ->name('*.yml.sample')
+      ->in(sfConfig::get('sf_plugins_dir').'/sfSympalPlugin/data/fixtures/install');
+    
+    foreach ($yamls as $yaml)
+    {
+      // save it without the .sample
+      $newFile = $sympalFixturesPath.'/'.str_replace('.sample', '', basename($yaml));
+
+      if (file_exists($newFile))
+      {
+        $this->logSection('fixtures', 'Skipping file because it already exists '.$newFile);
+      }
+      else
+      {
+        // execute the yaml file into a variable
+        ob_start();
+        $retval = include($yaml);
+        $content = ob_get_clean();
+
+        $this->logSection('fixtures', 'Created file '.$newFile);
+        file_put_contents($newFile, $content);
+      }
+    }
+  }
+
   protected function _createSite()
   {
     chdir(sfConfig::get('sf_root_dir'));
