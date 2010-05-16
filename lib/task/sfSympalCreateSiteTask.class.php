@@ -22,7 +22,6 @@ class sfSympalCreateSiteTask extends sfSympalBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
@@ -48,15 +47,6 @@ EOF;
       return 1;
     }
 
-    if (isset($options['interactive']) && $options['interactive'])
-    {
-      sfSympalConfig::set('sympal_install_admin_email_address', $this->askAndValidate('Enter E-Mail Address:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_first_name', $this->askAndValidate('Enter First Name:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_last_name', $this->askAndValidate('Enter Last Name:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Username:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Password:', new sfValidatorString()));
-    }
-
     $this->_generateApplication($arguments['site']);
     $this->_prepareApplication($arguments['site']);
 
@@ -64,6 +54,9 @@ EOF;
     $site = $this->_getOrCreateSite($arguments, $options);
   }
 
+  /**
+   * Ensures that the site record has been created
+   */
   protected function _getOrCreateSite($arguments, $options)
   {
     $site = Doctrine_Core::getTable('sfSympalSite')
@@ -88,9 +81,13 @@ EOF;
     return $site;
   }
 
+  /**
+   * Generates an application by the given name if one doesn't exist
+   */
   protected function _generateApplication($application)
   {
-    try {
+    try
+    {
       $task = new sfGenerateAppTask($this->dispatcher, $this->formatter);
       $task->run(array($application), array());
     }
