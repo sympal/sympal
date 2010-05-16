@@ -78,11 +78,6 @@ EOF;
       $site->slug = $arguments['site'];
     }
 
-    if (!$site->description)
-    {
-      $site->description = 'Description for '.$arguments['site'].' site.';
-    }
-
     $site->save();
     
     return $site;
