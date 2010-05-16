@@ -753,6 +753,10 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     return $this->_get('Site');
   }
 
+  /**
+   *
+   * @return sfSympalContentType
+   */
   public function getType()
   {
     return $this->_get('Type');
@@ -812,6 +816,13 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
         $index->delete($hit->id);
       }
     }
+
+    // delete content from accociated content type table
+    Doctrine_Core::getTable($this->getType()->getName())
+      ->findOneByContentId($this->getId())
+      ->delete()
+    ;
+    
     return parent::delete($conn);
   }
 

@@ -71,7 +71,8 @@ class Basesympal_sitesActions extends autosympal_sitesActions
     }
     else
     {
-      $site->deleteSiteAndApplication();
+      $site->delete();
+      $site->deleteApplication();
       
       $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
     }

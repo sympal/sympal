@@ -5,10 +5,21 @@
  */
 abstract class PluginsfSympalSite extends BasesfSympalSite
 {
-  public function deleteSiteAndApplication()
+  /**
+   * Delete site record and all associated content.
+   *
+   * @return boolean
+   */
+  public function delete(Doctrine_Connection $conn = null)
   {
-    $this->delete();
-    $this->deleteApplication();
+    // we *need* to call sfSympalContent::delete() for each record
+    $contentTable = Doctrine_Core::getTable('sfSympalContent');
+    foreach($contentTable->findBySiteId($this->getId()) as $record)
+    {
+      $record->delete();
+    }
+
+    return parent::delete();
   }
 
   /**
