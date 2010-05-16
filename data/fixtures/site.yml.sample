@@ -1,5 +1,0 @@
-sfSympalSite:
-  Site_<?php echo sfConfig::get('sf_app') ?>:
-    slug:    <?php echo sfConfig::get('sf_app')."\n" ?>
-    title:   <?php echo sfConfig::get('sf_app')."\n" ?>
-    description: Flexible content management framework built on top of symfony.

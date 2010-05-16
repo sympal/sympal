@@ -123,42 +123,72 @@ class sfSympalInstall
   }
 
   /**
-   * This copies all of the absolute base fixtures to the data/fixture/sympal directory
+   * This copies all fixtures named *.yml.sample in the data/fixtures/project
+   * directory of each plugin
    */
   protected function _copyFixtures()
   {
-    $this->logSection('fixtures', 'Coping base fixtures into data/fixture/sympal directory');
+    $this->logSection('fixtures', 'Coping "project" fixtures into data/fixture/sympal directory');
 
-    $sympalFixturesPath = sfConfig::get('sf_data_dir').'/fixtures/sympal';
-    if (!file_exists($sympalFixturesPath))
+    // find the path to all sfSympal* plugins
+    $plugins = $this->_configuration->getPlugins();
+    $paths = array();
+    foreach ($plugins as $plugin)
     {
-      $this->logSection('fixtures', sprintf('Creating fixtures directory %s', $sympalFixturesPath));
-      mkdir($sympalFixturesPath, 0777, true);
+      if (strpos($plugin, 'sfSympal') === 0)
+      {
+        $paths[] = $this->_configuration->getPluginConfiguration($plugin)->getRootDir();
+      }
+    }
+
+    // process the yaml files in /data/fixtures/project/*.sample.yml of each plugin
+    foreach ($paths as $path)
+    {
+      $yamls = sfFinder::type('file')
+        ->name('*.yml.sample')
+        ->in($path.'/data/fixtures/project');
+      
+      foreach ($yamls as $yaml)
+      {
+        $this->processSampleYamlFile(
+          $yaml,
+          sfConfig::get('sf_data_dir').'/fixtures/sympal'
+        );
+      }
+    }
+  }
+
+  /**
+   * Copies the given *.yml.sample from the given path into the given
+   * destination directory
+   * 
+   * @param string $source The fill path to the .yml.sample file
+   * @param string $destinationDir The full path to the dir into which to copy it
+   */
+  protected function processSampleYamlFile($source, $destinationDir)
+  {
+    if (!file_exists($destinationDir))
+    {
+      $this->logSection('fixtures', sprintf('Creating fixtures directory %s', $destinationDir));
+      mkdir($destinationDir, 0777, true);
     }
     
-    $yamls = sfFinder::type('file')
-      ->name('*.yml.sample')
-      ->in(sfConfig::get('sf_plugins_dir').'/sfSympalPlugin/data/fixtures/install');
-    
-    foreach ($yamls as $yaml)
+    // save it without the .sample
+    $newFile = $destinationDir.'/'.str_replace('.sample', '', basename($source));
+
+    if (file_exists($newFile))
     {
-      // save it without the .sample
-      $newFile = $sympalFixturesPath.'/'.str_replace('.sample', '', basename($yaml));
+      $this->logSection('fixtures', 'Skipping file because it already exists '.$newFile);
+    }
+    else
+    {
+      // execute the yaml file into a variable
+      ob_start();
+      include($source);
+      $content = ob_get_clean();
 
-      if (file_exists($newFile))
-      {
-        $this->logSection('fixtures', 'Skipping file because it already exists '.$newFile);
-      }
-      else
-      {
-        // execute the yaml file into a variable
-        ob_start();
-        $retval = include($yaml);
-        $content = ob_get_clean();
-
-        $this->logSection('fixtures', 'Created file '.$newFile);
-        file_put_contents($newFile, $content);
-      }
+      $this->logSection('fixtures', 'Created file '.$newFile);
+      file_put_contents($newFile, $content);
     }
   }
 
