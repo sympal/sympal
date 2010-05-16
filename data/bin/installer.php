@@ -141,7 +141,7 @@ $command = sprintf(
   '%s "%s" %s',
   sfToolkit::getPhpCli(),
   sfConfig::get('sf_root_dir').'/symfony',
-  'sympal:install '.$application
+  'sympal:install '.$application .' --no-confirmation'
 );
 passthru($command);
 
