@@ -250,15 +250,6 @@ class sfSympalContentRouteObject
       }
       return $path;
     }
-    // If content has a custom module or action then we need a route for it
-    // so generate a path for this content to use in the route
-    else if ($content->get('module', false) || $content->get('action', false))
-    {
-      $values = $this->getCultureRouteValues();
-      $values['sf_culture'] = ':sf_culture';
-      $values['sf_format'] = ':sf_format';
-      return $this->getRouteObject()->generate($values);
-    }
     // Otherwise fallback and get route path from the content type
     else if ($path = $content->getType()->getRoutePath())
     {
