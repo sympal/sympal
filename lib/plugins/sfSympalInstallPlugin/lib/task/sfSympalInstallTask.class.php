@@ -96,7 +96,8 @@ EOF;
     }
     
     // run the install
-    $this->logSection('sympal', 'Installation starting. run "sympal:install -t" to see debug output');
+    $cmdFormatted = $this->formatter->format('sympal:install -t', 'COMMENT');
+    $this->logSection('sympal', sprintf('Installation starting. Run "%s" to see debug output', $cmdFormatted));
     $this->log(null);
     $install->install();
 

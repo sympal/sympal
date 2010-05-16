@@ -65,16 +65,25 @@ class sfSympalInstall
     )));
 
     // The main installation stream
-    $this->_setupDatabase();
-    $this->_buildAllClasses();
-    $this->_loadData();
-    $this->_createSite();
-    $this->_installAddonPlugins();
-    $this->_executePostInstallSql();
-    $this->_executePostInstallHooks();
-    $this->_publishAssets();
-    $this->_clearCache();
-    $this->_primeCache();
+    $tasks = array(
+      '_setupDatabase',
+      '_buildAllClasses',
+      '_copyFixtures',
+      '_createSite',
+      '_loadData',
+      '_installAddonPlugins',
+      '_executePostInstallSql',
+      '_executePostInstallHooks',
+      '_publishAssets',
+      '_clearCache',
+      '_primeCache',
+    );
+
+    foreach ($tasks as $task)
+    {
+      $this->logBlank();
+      $this->$task();
+    }
 
     sfSympalConfig::writeSetting('installed', true);
     sfSympalConfig::writeSetting('current_version', sfSympalPluginConfiguration::VERSION);
@@ -380,9 +389,16 @@ class sfSympalInstall
   {
     if (method_exists($this->_configuration, 'install'))
     {
-      $this->logSection('sympal', sprintf('...calling post install hook "%s::install()"', get_class($this->_configuration)), null, 'COMMENT');
+      $this->logSection('post-install', sprintf('...calling post install hook "%s::install()"', get_class($this->_configuration)), null, 'COMMENT');
 
       $this->_configuration->install();
+    }
+    else
+    {
+      $this->logSection('post-install', sprintf(
+        'Post install hook skipped, no %s->install() defined',
+        get_class($this->_configuration)
+      ));
     }
   }
 
@@ -454,6 +470,11 @@ class sfSympalInstall
     $message = sprintf('%s (%s)...', $comment, $this->_formatter->format($taskCall, 'COMMENT'));
     
     $this->logSection($section, $message);
+  }
+
+  public function logBlank()
+  {
+    $this->_configuration->getEventDispatcher()->notify(new sfEvent($this, 'command.log', array('')));
   }
 
   /**
