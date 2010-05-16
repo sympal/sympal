@@ -29,9 +29,19 @@ abstract class PluginsfSympalSite extends BasesfSympalSite
    */
   public function deleteApplication()
   {
-    sfToolkit::clearDirectory(sfConfig::get('sf_apps_dir').'/'.$this->slug);
-    rmdir(sfConfig::get('sf_apps_dir').'/'.$this->slug);
-    unlink(sfConfig::get('sf_web_dir').'/'.$this->slug.'_dev.php');
-    unlink(sfConfig::get('sf_web_dir').'/'.$this->slug.'.php');
+    // application itself (apps/$app)
+    $appsDir = sfConfig::get('sf_apps_dir') . DIRECTORY_SEPARATOR . $this->slug;
+    sfToolkit::clearDirectory($appsDir);
+    rmdir($appsDir);
+
+    // public files (web/$app_*.php)
+    $pubPref = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . $this->slug;
+    unlink($pubPref . '_dev.php');
+    unlink($pubPref . '.php');
+
+    // fixtures (data/fixtures/$app)
+    $fixtDir = implode(DIRECTORY_SEPARATOR, array(sfConfig::get('sf_data_dir'), 'fixtures', $this->slug));
+    sfToolkit::clearDirectory($fixtDir);
+    rmdir($fixtDir);
   }
 }
