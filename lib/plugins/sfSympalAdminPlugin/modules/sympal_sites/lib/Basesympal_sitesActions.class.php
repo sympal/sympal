@@ -48,16 +48,33 @@ class Basesympal_sitesActions extends autosympal_sitesActions
     }
   }
 
+  /**
+   * Delete site, all content within it and associated application.
+   *
+   * @param sfWebRequest $request
+   */
   public function executeDelete(sfWebRequest $request)
   {
     $request->checkCSRFProtection();
 
-    $this->dispatcher->notify(new sfEvent($this, 'admin.delete_object', array('object' => $this->getRoute()->getObject())));
-
     $site = $this->getRoute()->getObject();
-    $this->_deleteSite($site);
 
-    $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
+    $this->dispatcher->notify(new sfEvent(
+      $this,
+      'admin.delete_object',
+      array('object' => $site)
+    ));
+
+    if ($site === $this->getSympalContext()->getSite())
+    {
+      $this->getUser()->setFlash('error', 'You cannot delete the site you are currently in!');
+    }
+    else
+    {
+      $site->deleteSiteAndApplication();
+      
+      $this->getUser()->setFlash('notice', 'The item was deleted successfully.');
+    }
 
     $this->redirect('@sympal_sites');
   }
@@ -87,13 +104,4 @@ class Basesympal_sitesActions extends autosympal_sitesActions
     $this->redirect('@sympal_sites');
   }
 
-  protected function _deleteSite(sfSympalSite $site)
-  {
-    if ($site === $this->getSympalContext()->getSite())
-    {
-      $this->getUser()->setFlash('error', 'You cannot delete the site you are currently in!');
-      $this->redirect('@sympal_sites');
-    }
-    $site->deleteSiteAndApplication();
-  }
 }
