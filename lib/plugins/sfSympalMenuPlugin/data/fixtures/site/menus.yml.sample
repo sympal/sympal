@@ -1,0 +1,90 @@
+# Default menu install data fixtures
+
+sfSympalMenuItem:
+  MenuItem_primary:
+    name: primary
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+    Translation:
+      en:
+        label: Home
+      fr:
+        label: Accueil
+      de:
+        label: Startseite
+<?php else: ?>
+    label: Home
+<?php endif; ?>
+    Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+    custom_path: @homepage
+    children:
+      MenuItem_primary_signin:
+        name: Signin
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Signin
+          fr:
+            label: Se connecter
+          de:
+            label: Einloggen
+<?php else: ?>
+        label: Signin
+<?php endif; ?>          
+        Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+        route: @sympal_signin
+        requires_no_auth: true
+
+      MenuItem_primary_signout:
+        name: Signout
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Signout
+          fr:
+            label: Se déconnecter
+          de:
+            label: Ausloggen
+<?php else: ?>
+        label: Signout
+<?php endif; ?>         
+        route: @sympal_signout
+        Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+        requires_auth: true
+
+      MenuItem_primary_powered_by:
+        name: Powered By
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Powered By
+          fr:
+            label: Propulsé par
+          de:
+            label: Powered By
+<?php else: ?>
+        label: Powered By
+<?php endif; ?>          
+        Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+        children:
+          MenuItem_primary_symfony:
+            name: Symfony
+            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+            label: Symfony
+            custom_path: http://www.symfony-project.org
+            Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+          MenuItem_primary_doctrine:
+            name: Doctrine
+            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+            label: Doctrine
+            custom_path: http://www.doctrine-project.org
+            Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+          MenuItem_primary_sympal:
+            name: Sympal
+            date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+            label: Sympal
+            custom_path: http://www.sympalphp.org
+            Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>

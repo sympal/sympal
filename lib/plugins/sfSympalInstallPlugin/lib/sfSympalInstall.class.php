@@ -130,16 +130,11 @@ class sfSympalInstall
   {
     $this->logSection('fixtures', 'Coping "project" fixtures into data/fixture/sympal directory');
 
-    // find the path to all sfSympal* plugins
-    $plugins = $this->_configuration->getPlugins();
-    $paths = array();
-    foreach ($plugins as $plugin)
-    {
-      if (strpos($plugin, 'sfSympal') === 0)
-      {
-        $paths[] = $this->_configuration->getPluginConfiguration($plugin)->getRootDir();
-      }
-    }
+    // get all the "sympal" plugins
+    $paths = $this->_configuration
+      ->getPluginConfiguration('sfSympalPlugin')
+      ->getSympalConfiguration()
+      ->getPluginPaths();
 
     // process the yaml files in /data/fixtures/project/*.sample.yml of each plugin
     foreach ($paths as $path)
@@ -150,45 +145,12 @@ class sfSympalInstall
       
       foreach ($yamls as $yaml)
       {
-        $this->processSampleYamlFile(
+        sfSympalInstallToolkit::processSampleYamlFile(
           $yaml,
-          sfConfig::get('sf_data_dir').'/fixtures/sympal'
+          sfConfig::get('sf_data_dir').'/fixtures/sympal',
+          $this
         );
       }
-    }
-  }
-
-  /**
-   * Copies the given *.yml.sample from the given path into the given
-   * destination directory
-   * 
-   * @param string $source The fill path to the .yml.sample file
-   * @param string $destinationDir The full path to the dir into which to copy it
-   */
-  protected function processSampleYamlFile($source, $destinationDir)
-  {
-    if (!file_exists($destinationDir))
-    {
-      $this->logSection('fixtures', sprintf('Creating fixtures directory %s', $destinationDir));
-      mkdir($destinationDir, 0777, true);
-    }
-    
-    // save it without the .sample
-    $newFile = $destinationDir.'/'.str_replace('.sample', '', basename($source));
-
-    if (file_exists($newFile))
-    {
-      $this->logSection('fixtures', 'Skipping file because it already exists '.$newFile);
-    }
-    else
-    {
-      // execute the yaml file into a variable
-      ob_start();
-      include($source);
-      $content = ob_get_clean();
-
-      $this->logSection('fixtures', 'Created file '.$newFile);
-      file_put_contents($newFile, $content);
     }
   }
 
@@ -300,7 +262,7 @@ class sfSympalInstall
   /**
    * Loads the project data
    */
-  protected function _loadData($append = true)
+  protected function _loadData($append = false)
   {
     sfConfig::set('sf_app', $this->_application);
     $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);

@@ -47,11 +47,17 @@ EOF;
       return 1;
     }
 
+    // Generate the application if it doesn't exist
     $this->_generateApplication($arguments['site']);
+    
+    // Prepare the application
     $this->_prepareApplication($arguments['site']);
 
     $databaseManager = new sfDatabaseManager($this->configuration);
     $site = $this->_getOrCreateSite($arguments, $options);
+
+    // Copy site fixtures
+    $this->_copyFixtures($arguments['site']);
   }
 
   /**
@@ -101,5 +107,39 @@ EOF;
   {
     $task = new sfSympalEnableForAppTask($this->dispatcher, $this->formatter);
     $task->run(array($application), array());
+  }
+
+  /**
+   * Copies the site fixtures from the plugin directories to the
+   * data/fixtures/app_name directory
+   * 
+   * @param string $application
+   */
+  protected function _copyFixtures($application)
+  {
+    $this->logSection('fixtures', sprintf('Coping "site" fixtures into data/fixture/sympal/%s directory', $application));
+
+    // get all the "sympal" plugins
+    $paths = $this->configuration
+      ->getPluginConfiguration('sfSympalPlugin')
+      ->getSympalConfiguration()
+      ->getPluginPaths();
+
+    // process the yaml files in /data/fixtures/project/*.sample.yml of each plugin
+    foreach ($paths as $path)
+    {
+      $yamls = sfFinder::type('file')
+        ->name('*.yml.sample')
+        ->in($path.'/data/fixtures/site');
+      
+      foreach ($yamls as $yaml)
+      {
+        sfSympalInstallToolkit::processSampleYamlFile(
+          $yaml,
+          sfConfig::get('sf_data_dir').'/fixtures/sympal/'.$application,
+          $this
+        );
+      }
+    }
   }
 }

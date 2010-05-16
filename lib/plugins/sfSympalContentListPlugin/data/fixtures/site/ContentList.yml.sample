@@ -1,0 +1,50 @@
+# sfSympalPagesPlugin install data fixtures
+
+sfSympalMenuItem:
+  MenuItem_primary:
+    children:
+      MenuItem_primary_sample_content_list:
+        name: Sample Content List
+        date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+        Translation:
+          en:
+            label: Sample Content List
+          fr:
+            label: Liste de contenu exemple
+          de:
+            label: Beispiel-Contentliste
+<?php else: ?>
+        label: Sample Content List
+<?php endif; ?>        
+        Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+        RelatedContent: Content_ContentList_sample_content_list
+
+sfSympalContent:
+  Content_ContentList_sample_content_list:
+    Type: ContentType_ContentList
+    slug: sample-content-list
+    Site: Site_<?php echo sfConfig::get('sf_app')."\n" ?>
+    date_published: '<?php echo date("Y-m-d H:i:s") ?>'
+    Slots: [Sample_ContentList_slot_header]
+    CreatedBy: admin
+    sfSympalContentList:
+      title: Sample Content List
+      ContentType: ContentType_Page
+      table_method: getDefaultPagesDataGrid
+
+sfSympalContentSlot:
+  Sample_ContentList_slot_header:
+    name: header
+    type: Text
+<?php if (sfSympalConfig::isI18nEnabled('sfSympalContent')): ?> 
+    Translation:
+      en:
+        value: This is a sample content list.
+      fr:
+        value: Ceci est un exemple de liste de contenu.
+      de:
+        value: Das ist eine Beispiel-Contentliste.
+<?php else: ?>
+    value: This is a sample content list.
+<?php endif; ?>
