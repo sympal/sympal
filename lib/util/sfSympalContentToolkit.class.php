@@ -96,6 +96,10 @@ class sfSympalContentToolkit
         sfContext::createInstance($configuration);
       }
 
+      /*
+       * Step 1) Process all sfSympalContent records with a custom_path
+       *         (includes custom module and/or action)
+       */
       $contents = Doctrine::getTable('sfSympalContent')
         ->createQuery('c')
         ->leftJoin('c.Type t')
@@ -103,7 +107,6 @@ class sfSympalContentToolkit
         ->where("c.custom_path IS NOT NULL AND c.custom_path != ''")
         ->andWhere('s.slug = ?', $siteSlug)
         ->execute();
-
       foreach ($contents as $content)
       {
         $routes['content_'.$content->getId()] = sprintf($routeTemplate,
@@ -119,15 +122,18 @@ class sfSympalContentToolkit
         );
       }
 
+      /*
+       * Step 2) Process all sfSympalContent records with custom module
+       *         and action and no custom_path
+       */
       $contents = Doctrine::getTable('sfSympalContent')
         ->createQuery('c')
         ->leftJoin('c.Type t')
         ->innerJoin('c.Site s')
-        ->where("c.module IS NOT NULL AND c.module != ''")
-        ->orWhere("c.action IS NOT NULL AND c.action != ''")
+        ->where("(c.module IS NOT NULL AND c.module != '') OR (c.action IS NOT NULL AND c.action != '')")
+        ->andWhere("c.custom_path IS NOT NULL AND c.custom_path != ''")
         ->andWhere('s.slug = ?', $siteSlug)
         ->execute();
-
       foreach ($contents as $content)
       {
         $routes['content_'.$content->getId()] = sprintf($routeTemplate,
@@ -143,10 +149,13 @@ class sfSympalContentToolkit
         );
       }
 
+
+      /*
+       * Step 3) Create a route for each sfSympalContentType record
+       */
       $contentTypes = Doctrine::getTable('sfSympalContentType')
         ->createQuery('t')
         ->execute();
-
       foreach ($contentTypes as $contentType)
       {
         $routes['content_type_'.$contentType->getId()] = sprintf($routeTemplate,
