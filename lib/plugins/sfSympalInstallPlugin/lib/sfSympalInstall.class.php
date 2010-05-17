@@ -148,7 +148,8 @@ class sfSympalInstall
         sfSympalInstallToolkit::processSampleYamlFile(
           $yaml,
           sfConfig::get('sf_data_dir').'/fixtures/sympal',
-          $this
+          $this,
+          true
         );
       }
     }
@@ -164,9 +165,7 @@ class sfSympalInstall
       'Configuring app for sympal',
       sprintf('sympal:create-site %s', $this->_application));
     
-    $this->_disableOutput();
     $task->run(array($this->_application), array('no-confirmation' => true));
-    $this->_enableOutput();
     
     $this->logSection('configure', '...finished configuration application');
   }
@@ -566,6 +565,11 @@ class sfSympalInstall
   public function setParam($key, $value)
   {
     $this->_params[$key] = $value;
+  }
+
+  public function setParams($params)
+  {
+    $this->_params = $params;
   }
 
   public function setApplication($application)

@@ -1,0 +1,107 @@
+sfGuardUser:
+  admin:
+    first_name: Sympal 
+    last_name: Admin 
+    is_active: true
+    email_address: admin@sympalphp.org 
+    username: admin 
+    password: admin 
+    is_super_admin: true
+
+sfGuardGroup:
+  AdministratorGroup:
+    name: Administrator
+    description: Administrator group has access to all permissions but is not a super admin.
+    Permissions: [CreateAssetDirectories, UploadAssets, ClearCache, ViewDashboard, ViewAdminBar, ViewServerCheck, UpdateManager, PublishContent, ManageSlots, ManageRedirects, InsertAssets, InsertLinks, ManageAssets, InlineEditing, ManageContentTypes, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, ManageSites, ManageThemes, ManageSystemSettings]
+  ContentEditorGroup:
+    name: ContentEditor
+    description: Content editor only has permission to manage and publish content.
+    Permissions: [CreateAssetDirectories, UploadAssets, ViewAdminBar, ViewDashboard, ManageContent, ManageSlots, PublishContent, InsertAssets, InsertLinks, ManageAssets, InlineEditing, ManageMenus]
+  SecurityManagerGroup:
+    name: SecurityManager
+    description: "Security manager only has permission to manage users, groups and permissions."
+    Permissions: [ViewDashboard, ManageUsers, ManageGroups, ManagePermissions]
+  DeveloperGroup:
+    name: Developer
+    description: Developer group has the same permissions as the Administrator group with some additional developer functionality.
+    Permissions: [CreateAssetDirectories, UploadAssets, Developer, ClearCache, ViewDashboard, ViewAdminBar, ViewServerCheck, UpdateManager, PublishContent, ManageSlots, ManageRedirects, InsertAssets, InsertLinks, ManageAssets, InlineEditing, ManageContentTypes, ManageSites, ManageContent, ManagePlugins, ManageMenus, ManageUsers, ManageGroups, ManagePermissions, ManageSites, ManageThemes, ManageSystemSettings]
+
+sfGuardPermission:
+  CreateAssetDirectories:
+    name: CreateAssetDirectories
+    description: Access to create directories in the Asset manager.
+  UploadAssets:
+    name: UploadAssets
+    description: Access to upload new assets in the Asset manager.
+  Developer:
+    name: Developer
+    description: Access to functionality only for developers.
+  ClearCache:
+    name: ClearCache
+    description: Access to clear all the cache.
+  ViewDashboard:
+    name: ViewDashboard
+    description: Access to view the admin dashboard.
+  ViewAdminBar:
+    name: ViewAdminBar
+    description: Access to view the top admin bar.
+  ViewServerCheck:
+    name: ViewServerCheck
+    description: Access to view the server check information from the web.
+  UpdateManager:
+    name: UpdateManager
+    description: Access to update manager.
+  ManageContent:
+    name: ManageContent
+    description: Access to manage content.
+  PublishContent:
+    name: PublishContent
+    description: Access to publish and un-publish content.
+  ManageSlots:
+    name: ManageSlots
+    description: Access to manage content slots.
+  ManageRedirects:
+    name: ManageRedirects
+    description: Access to manage 404 Redirects.
+  InsertAssets:
+    name: InsertAssets
+    description: Access to insert assets when editing content.
+  InsertLinks:
+    name: InsertLinks
+    description: Access to insert links when editing content.
+  ManageAssets:
+    name: ManageAssets
+    description: Access to the assets manager.
+  InlineEditing:
+    name: InlineEditing
+    description: Access to inline editing.
+  ManagePlugins:
+    name: ManagePlugins
+    description: Access to the plugin manager.
+  ManageMenus:
+    name: ManageMenus
+    description: Access to manage menus.
+  ManageUsers:
+    name: ManageUsers
+    description: Access to manage users.
+  ManageGroups:
+    name: ManageGroups
+    description: Access to manage groups.
+  ManagePermissions:
+    name: ManagePermissions
+    description: Access to manage permissions
+  ManageSites:
+    name: ManageSites
+    description: Access to manage sites.
+  ManageContentTypes:
+    name: ManageContentTypes
+    description: Access to manage content types.
+  ManageThemes:
+    name: ManageThemes
+    description: Access to manage and preview themes.
+  ManageSystemSettings:
+    name: ManageSystemSettings
+    description: Access to change system settings.
+  ViewXmlSitemap:
+    name: ViewXmlSitemap
+    description: Show link to view XML Sitemap in admin menu.

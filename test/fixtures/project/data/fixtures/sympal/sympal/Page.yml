@@ -1,0 +1,108 @@
+# sfSympalPagesPlugin install data fixtures
+
+sfSympalContent:
+  Content_Page_home:
+    Type: ContentType_Page
+    slug: home
+    Site: Site_sympal
+    date_published: '2010-05-16 19:43:13'
+    custom_path: "/"
+    Slots: [Home_slot_body]
+    CreatedBy: admin
+    sfSympalPage:
+      title: Home
+
+  Content_Page_sample_page:
+    Type: ContentType_Page
+    slug: sample-page
+    Site: Site_sympal
+    date_published: '2010-05-16 19:43:13'
+    custom_path: "/sample-page"
+    Slots: [Sample_page_slot_body]
+    CreatedBy: admin
+    sfSympalPage:
+      title: Sample Page
+  
+
+  Content_Page_register:
+    Type: ContentType_Page
+    slug: register
+    Site: Site_sympal
+    date_published: '2010-05-16 19:43:13'
+    Slots: [Register_slot_body]
+    template: register
+    CreatedBy: admin
+    sfSympalPage:
+      title: Register
+     
+
+sfSympalContentSlot:
+  Home_slot_body:
+    name: body
+    type: Markdown
+    value: |
+      Welcome
+      -------
+      
+      Welcome to your new installation of the Sympal 1.0.0-ALPHA5 content management system. You can signin with the username **admin** and password **admin** to begin playing with Sympal!
+      
+      Lorem Text
+      ----------
+      
+      Morbi fringilla commodo ipsum. **Suspendisse volutpat** congue massa. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies euismod nisi. Gravida mollis, metus *lacus consequat* es.Vestibulum varius accumsan leo. Pellentesque rhoncus mauris a sapien. Proin tincidunt velit sit amet est. Nulla tempor ligula porttitor sapien.
+      Donec lorem mi fermentum at:
+
+      * Ut semsddper elisat sed nullateli
+      * Us ac nisi interdum fau
+      * Erdum fau utilotieu
+      * Betagor chaligonatu
+
+      Donec lorem mi
+      --------------
+      
+      luctus sympal
+      -------------
+      
+      Suspendisse pellentesque luctus sympal. [Sympal](http://www.sympalphp.org "Sympal") fusce sem lorem, convallis ut, dictum at, blandit eu, erat; Etiam et **nulla convallis** risus adipiscing consectetur. *Morbi velit massa*, dapibus at, pharetra at, auctor ornare, risus.
+
+      enim nisl
+      ---------
+      
+      Nunc lobortis, nulla et auctor ultricies, enim nisl *venenatis turpis*, quis pharetra lectus sapien fermentum mauris. Aliquam erat volutpat. Quisque laoreet nibh et magna. Praesent eros. Proin nec risus ac nisi interdum faucibus. **Maecenas fringilla**.
+       
+  Sample_page_slot_body:
+    name: body
+    type: Markdown
+    value: This is a sample Sympal page.
+    
+  Register_slot_body:
+    name: body
+    type: Markdown
+    value: Register a new user below.
+
+# Sample menu items
+sfSympalMenuItem:
+  MenuItem_primary:
+    children:
+      MenuItem_primary_home:
+        name: Home
+        date_published: '2010-05-16 19:43:13'
+        label: Home
+          
+        Site: Site_sympal
+        RelatedContent: Content_Page_home
+      MenuItem_primary_register:
+        name: Register
+        date_published: '2010-05-16 19:43:13'
+        label: Register
+        
+        Site: Site_sympal
+        RelatedContent: Content_Page_register
+        requires_no_auth: true
+      MenuItem_primary_sample_page:
+        name: Sample Page
+        date_published: '2010-05-16 19:43:13'
+        label: Sample Page
+         
+        Site: Site_sympal
+        RelatedContent: Content_Page_sample_page

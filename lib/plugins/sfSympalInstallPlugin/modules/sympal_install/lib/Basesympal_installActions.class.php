@@ -12,16 +12,20 @@ abstract class Basesympal_installActions extends sfActions
 {
   public function preExecute()
   {
+    $this->enableEditor(false);
     $this->_check();
     $this->loadTheme('install');
   }
 
-  public function _check()
+  protected function _check()
   {
-    try {
+    try
+    {
       $this->checkFilePermissions();
       sfSympalToolkit::checkRequirements();
-    } catch (Exception $e) {
+    }
+    catch (Exception $e)
+    {
       $this->getUser()->setFlash('error', $e->getMessage());
     }
   }
@@ -73,13 +77,16 @@ abstract class Basesympal_installActions extends sfActions
       }
 
       $formatter = new sfFormatter();
-      try {
+      try
+      {
+        set_time_limit(600);
         chdir(sfConfig::get('sf_root_dir'));
         $install = new sfSympalInstall($this->getContext()->getConfiguration(), $this->getContext()->getEventDispatcher(), $formatter);
         $install->setParams($params);
-        $install->setOption('force_reinstall', true);
         $install->install();
-      } catch (Exception $e) {
+      }
+      catch (Exception $e)
+      {
         $this->getUser()->setFlash('error', $e->getMessage());
 
         return sfView::SUCCESS;

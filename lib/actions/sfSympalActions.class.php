@@ -82,11 +82,18 @@ class sfSympalActions extends sfSympalExtendClass
     $dirs = sfFinder::type('dir')->in($items);
     $files = sfFinder::type('file')->in($items);
     $checks = array_merge($dirs, $files);
-    
-    $apps = glob(sfConfig::get('sf_apps_dir').'/*/config/app.yml');
+
+    // add the application config directories
+    $apps = glob(sfConfig::get('sf_apps_dir').'/*/config');
     foreach ($apps as $app)
     {
       $checks[] = $app;
+    }
+    
+    $appUsers = glob(sfConfig::get('sf_apps_dir').'/*/lib/myUser.class.php');
+    foreach ($appUsers as $appUser)
+    {
+      $checks[] = $appUser;
     }
 
     $error = false;

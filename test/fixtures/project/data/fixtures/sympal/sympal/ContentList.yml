@@ -1,0 +1,31 @@
+# sfSympalPagesPlugin install data fixtures
+
+sfSympalMenuItem:
+  MenuItem_primary:
+    children:
+      MenuItem_primary_sample_content_list:
+        name: Sample Content List
+        date_published: '2010-05-16 19:43:13'
+        label: Sample Content List
+        
+        Site: Site_sympal
+        RelatedContent: Content_ContentList_sample_content_list
+
+sfSympalContent:
+  Content_ContentList_sample_content_list:
+    Type: ContentType_ContentList
+    slug: sample-content-list
+    Site: Site_sympal
+    date_published: '2010-05-16 19:43:13'
+    Slots: [Sample_ContentList_slot_header]
+    CreatedBy: admin
+    sfSympalContentList:
+      title: Sample Content List
+      ContentType: ContentType_Page
+      table_method: getDefaultPagesDataGrid
+
+sfSympalContentSlot:
+  Sample_ContentList_slot_header:
+    name: header
+    type: Text
+    value: This is a sample content list.
