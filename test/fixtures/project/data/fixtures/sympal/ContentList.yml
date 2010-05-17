@@ -1,0 +1,8 @@
+sfSympalContentType:
+  ContentType_ContentList:
+    name: sfSympalContentList
+    slug: content-list
+    description: The content list content type is the default Sympal content type for displaying lists of content.
+    label: Content List
+    template: default_view
+    default_path: /lists/:slug

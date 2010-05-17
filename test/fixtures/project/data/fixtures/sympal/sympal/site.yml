@@ -1,0 +1,5 @@
+sfSympalSite:
+  Site_sympal:
+    slug:    sympal
+    title:   sympal
+    description: Flexible content management framework built on top of symfony.

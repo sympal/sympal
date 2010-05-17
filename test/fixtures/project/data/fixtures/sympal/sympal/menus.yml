@@ -1,0 +1,53 @@
+# Default menu install data fixtures
+
+sfSympalMenuItem:
+  MenuItem_primary:
+    name: primary
+    date_published: '2010-05-16 19:43:13'
+    label: Home
+    Site: Site_sympal
+    custom_path: @homepage
+    children:
+      MenuItem_primary_signin:
+        name: Signin
+        date_published: '2010-05-16 19:43:13'
+        label: Signin
+          
+        Site: Site_sympal
+        route: @sympal_signin
+        requires_no_auth: true
+
+      MenuItem_primary_signout:
+        name: Signout
+        date_published: '2010-05-16 19:43:13'
+        label: Signout
+         
+        route: @sympal_signout
+        Site: Site_sympal
+        requires_auth: true
+
+      MenuItem_primary_powered_by:
+        name: Powered By
+        date_published: '2010-05-16 19:43:13'
+        label: Powered By
+          
+        Site: Site_sympal
+        children:
+          MenuItem_primary_symfony:
+            name: Symfony
+            date_published: '2010-05-16 19:43:13'
+            label: Symfony
+            custom_path: http://www.symfony-project.org
+            Site: Site_sympal
+          MenuItem_primary_doctrine:
+            name: Doctrine
+            date_published: '2010-05-16 19:43:13'
+            label: Doctrine
+            custom_path: http://www.doctrine-project.org
+            Site: Site_sympal
+          MenuItem_primary_sympal:
+            name: Sympal
+            date_published: '2010-05-16 19:43:13'
+            label: Sympal
+            custom_path: http://www.sympalphp.org
+            Site: Site_sympal
