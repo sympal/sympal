@@ -117,6 +117,14 @@ EOF;
    */
   protected function _copyFixtures($application)
   {
+    $targetDir = sfConfig::get('sf_data_dir').'/fixtures/sympal/'.$application;
+    
+    if (file_exists($targetDir))
+    {
+      $this->logSection('fixtures', sprintf('Not copying site fixtures, data/fixture/sympal/%s already exists', $application));
+      return;
+    }
+    
     $this->logSection('fixtures', sprintf('Coping "site" fixtures into data/fixture/sympal/%s directory', $application));
 
     // get all the "sympal" plugins
@@ -136,7 +144,7 @@ EOF;
       {
         sfSympalInstallToolkit::processSampleYamlFile(
           $yaml,
-          sfConfig::get('sf_data_dir').'/fixtures/sympal/'.$application,
+          $targetDir,
           $this
         );
       }
