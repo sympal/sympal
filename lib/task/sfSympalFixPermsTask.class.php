@@ -38,10 +38,17 @@ EOF;
     $items[] = sfConfig::get('sf_log_dir');
     $items[] = sfConfig::get('sf_root_dir').DIRECTORY_SEPARATOR.'symfony';
 
-    $apps = glob(sfConfig::get('sf_apps_dir').'/*/config/app.yml');
+    // add the application 
+    $apps = glob(sfConfig::get('sf_apps_dir').'/*/config');
     foreach ($apps as $app)
     {
       $items[] = $app;
+    }
+
+    $appUsers = glob(sfConfig::get('sf_apps_dir').'/*/lib/myUser.class.php');
+    foreach ($appUsers as $appUser)
+    {
+      $items[] = $appUser;
     }
 
     $dirFinder = sfFinder::type('dir');
