@@ -223,15 +223,15 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
   {
     $response = sfContext::getInstance()->getResponse();
     $response->addJavascript(sfSympalConfig::getAssetPath('jquery.js'));
-    
+
+    $response->addStylesheet(sfSympalConfig::getAssetPath('jquery.fancybox.css'));
+    $response->addJavascript(sfSympalConfig::getAssetPath('jquery.fancybox.js'));
+
     $response->addStylesheet(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/css/floating_menu.css'));
 
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/floating_menu.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalPlugin/js/shortcuts.js'));
     $response->addJavascript(sfSympalConfig::getAssetPath('/sfSympalAdminPlugin/js/shortcuts.js'));
-
-    $response->addStylesheet(sfSympalConfig::getAssetPath('jquery.fancybox.css'));
-    $response->addJavascript(sfSympalConfig::getAssetPath('jquery.fancybox.js'));
   }
 
   /**
