@@ -1,6 +1,4 @@
-<?php sympal_use_stylesheet('/sfSympalPlugin/css/sympal', 'first') ?>
-
-<?php echo image_tag('/sfSympalPlugin/images/header_logo.gif') ?>
+<?php echo image_tag('/sfSympalPlugin/themes/sympal/images/header_logo.gif') ?>
 
 <h1>Install Sympal Now!</h1>
 
