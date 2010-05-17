@@ -16,8 +16,9 @@ class sfSympalInstallToolkit
    * @param string $source The fill path to the .yml.sample file
    * @param string $destinationDir The full path to the dir into which to copy it
    * @param object Anything we can call ->logSection() on (usually sfTask)
+   * @param boolean $force Whether to overwrite files or not
    */
-  public static function processSampleYamlFile($source, $destinationDir, $task = null)
+  public static function processSampleYamlFile($source, $destinationDir, $task = null, $force = false)
   {
     if (!file_exists($destinationDir))
     {
@@ -31,7 +32,7 @@ class sfSympalInstallToolkit
     // save it without the .sample
     $newFile = $destinationDir.'/'.str_replace('.sample', '', basename($source));
 
-    if (file_exists($newFile))
+    if (!$force && file_exists($newFile))
     {
       if ($task)
       {

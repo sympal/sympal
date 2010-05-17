@@ -148,7 +148,8 @@ class sfSympalInstall
         sfSympalInstallToolkit::processSampleYamlFile(
           $yaml,
           sfConfig::get('sf_data_dir').'/fixtures/sympal',
-          $this
+          $this,
+          true
         );
       }
     }
