@@ -17,7 +17,7 @@ class sfSympalDeleteSiteTask extends sfSympalBaseTask
     $this->aliases = array();
     $this->namespace = 'sympal';
     $this->name = 'delete-site';
-    $this->briefDescription = 'Delete a Sympal site';
+    $this->briefDescription = 'Delete a sympal site';
 
     $this->detailedDescription = <<<EOF
 The [sympal:delete-site|INFO] task will delete a Sympal site from the database
@@ -25,7 +25,7 @@ and remove the Symfony application as well
 
   [./symfony sympal:delete-site my_site|INFO]
 
-You can delete the associated Symfony application as well:
+You can delete the associated symfony application as well:
 
   [./symfony sympal:delete-site my_site --and-app|INFO]
 EOF;

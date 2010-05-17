@@ -22,7 +22,6 @@ class sfSympalCreateSiteTask extends sfSympalBaseTask
     ));
 
     $this->addOptions(array(
-      new sfCommandOption('interactive', null, sfCommandOption::PARAMETER_NONE, 'Interactive installation option'),
       new sfCommandOption('no-confirmation', null, sfCommandOption::PARAMETER_NONE, 'Do not ask for confirmation'),
     ));
 
@@ -48,22 +47,22 @@ EOF;
       return 1;
     }
 
-    if (isset($options['interactive']) && $options['interactive'])
-    {
-      sfSympalConfig::set('sympal_install_admin_email_address', $this->askAndValidate('Enter E-Mail Address:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_first_name', $this->askAndValidate('Enter First Name:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_last_name', $this->askAndValidate('Enter Last Name:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_username', $this->askAndValidate('Enter Username:', new sfValidatorString()));
-      sfSympalConfig::set('sympal_install_admin_password', $this->askAndValidate('Enter Password:', new sfValidatorString()));
-    }
-
+    // Generate the application if it doesn't exist
     $this->_generateApplication($arguments['site']);
+    
+    // Prepare the application
     $this->_prepareApplication($arguments['site']);
 
     $databaseManager = new sfDatabaseManager($this->configuration);
     $site = $this->_getOrCreateSite($arguments, $options);
+
+    // Copy site fixtures
+    $this->_copyFixtures($arguments['site']);
   }
 
+  /**
+   * Ensures that the site record has been created
+   */
   protected function _getOrCreateSite($arguments, $options)
   {
     $site = Doctrine_Core::getTable('sfSympalSite')
@@ -83,9 +82,13 @@ EOF;
     return $site;
   }
 
+  /**
+   * Generates an application by the given name if one doesn't exist
+   */
   protected function _generateApplication($application)
   {
-    try {
+    try
+    {
       $task = new sfGenerateAppTask($this->dispatcher, $this->formatter);
       $task->run(array($application), array());
     }
@@ -99,5 +102,47 @@ EOF;
   {
     $task = new sfSympalEnableForAppTask($this->dispatcher, $this->formatter);
     $task->run(array($application), array());
+  }
+
+  /**
+   * Copies the site fixtures from the plugin directories to the
+   * data/fixtures/app_name directory
+   * 
+   * @param string $application
+   */
+  protected function _copyFixtures($application)
+  {
+    $targetDir = sfConfig::get('sf_data_dir').'/fixtures/sympal/'.$application;
+    
+    if (file_exists($targetDir))
+    {
+      $this->logSection('fixtures', sprintf('Not copying site fixtures, data/fixture/sympal/%s already exists', $application));
+      return;
+    }
+    
+    $this->logSection('fixtures', sprintf('Coping "site" fixtures into data/fixture/sympal/%s directory', $application));
+
+    // get all the "sympal" plugins
+    $paths = $this->configuration
+      ->getPluginConfiguration('sfSympalPlugin')
+      ->getSympalConfiguration()
+      ->getPluginPaths();
+
+    // process the yaml files in /data/fixtures/project/*.sample.yml of each plugin
+    foreach ($paths as $path)
+    {
+      $yamls = sfFinder::type('file')
+        ->name('*.yml.sample')
+        ->in($path.'/data/fixtures/site');
+      
+      foreach ($yamls as $yaml)
+      {
+        sfSympalInstallToolkit::processSampleYamlFile(
+          $yaml,
+          $targetDir,
+          $this
+        );
+      }
+    }
   }
 }

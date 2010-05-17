@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Actions class for handling sites
+ * 
+ * @package     sfSympalAdminPlugin
+ * @subpackage  actions
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class Basesympal_sitesActions extends autosympal_sitesActions
 {
   protected function processForm(sfWebRequest $request, sfForm $form)

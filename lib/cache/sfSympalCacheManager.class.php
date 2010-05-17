@@ -63,7 +63,10 @@ class sfSympalCacheManager
   {
     if (extension_loaded('apc'))
     {
-      return new Doctrine_Cache_Apc(array('prefix' => 'doctrine'));
+      // set the prefix to something that will be different between projects
+      $prefix = 'doctrine_'.md5(sfConfig::get('sf_root_dir'));
+      
+      return new Doctrine_Cache_Apc(array('prefix' => $prefix));
     }
     else
     {

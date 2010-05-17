@@ -96,14 +96,17 @@ class sfSympalContentToolkit
         sfContext::createInstance($configuration);
       }
 
+      /*
+       * Step 1) Process all sfSympalContent records with a custom_path,
+       *         module, or action. These have sympal_content_* routes
+       */
       $contents = Doctrine::getTable('sfSympalContent')
         ->createQuery('c')
         ->leftJoin('c.Type t')
         ->innerJoin('c.Site s')
-        ->where("c.custom_path IS NOT NULL AND c.custom_path != ''")
+        ->where("(c.custom_path IS NOT NULL AND c.custom_path != '') OR (c.module IS NOT NULL AND c.module != '') OR (c.action IS NOT NULL AND c.action != '')")
         ->andWhere('s.slug = ?', $siteSlug)
         ->execute();
-
       foreach ($contents as $content)
       {
         $routes['content_'.$content->getId()] = sprintf($routeTemplate,
@@ -119,34 +122,12 @@ class sfSympalContentToolkit
         );
       }
 
-      $contents = Doctrine::getTable('sfSympalContent')
-        ->createQuery('c')
-        ->leftJoin('c.Type t')
-        ->innerJoin('c.Site s')
-        ->where("c.module IS NOT NULL AND c.module != ''")
-        ->orWhere("c.action IS NOT NULL AND c.action != ''")
-        ->andWhere('s.slug = ?', $siteSlug)
-        ->execute();
-
-      foreach ($contents as $content)
-      {
-        $routes['content_'.$content->getId()] = sprintf($routeTemplate,
-          substr($content->getRouteName(), 1),
-          $content->getRoutePath(),
-          $content->getModuleToRenderWith(),
-          $content->getActionToRenderWith(),
-          $content->Type->name,
-          $content->Type->id,
-          $content->id,
-          implode('|', sfSympalConfig::getLanguageCodes()),
-          implode('|', sfSympalConfig::get('content_formats'))
-        );
-      }
-
+      /*
+       * Step 2) Create a route for each sfSympalContentType record
+       */
       $contentTypes = Doctrine::getTable('sfSympalContentType')
         ->createQuery('t')
         ->execute();
-
       foreach ($contentTypes as $contentType)
       {
         $routes['content_type_'.$contentType->getId()] = sprintf($routeTemplate,

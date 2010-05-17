@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Child sfUser class for handling session related functionality for Sympal
+ * Child sfUser class for handling session related functionality for sympal
  *
  * @package sfSympalPlugin
  * @author Jonathan H. Wage <jonwage@gmail.com>
