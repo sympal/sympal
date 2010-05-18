@@ -41,6 +41,7 @@ class sfSympalContentRenderer
       $this->_renderVariables = array(
         'sf_format'   => $this->_format,
         'content'  => $this->_content,
+        'sf_sympal_content' => $this->_content,  // duplicated because I can't decide on one
         'menuItem' => $this->_menuItem,
       );
 
