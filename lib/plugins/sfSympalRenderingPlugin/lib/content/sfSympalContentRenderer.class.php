@@ -41,7 +41,6 @@ class sfSympalContentRenderer
       $this->_renderVariables = array(
         'format'   => $this->_format,
         'content'  => $this->_content,
-        'menuItem' => $this->_menuItem,
       );
 
       $this->_renderVariables = $this->_dispatcher->filter(new sfEvent($this, 'sympal.content_renderer.filter_variables'), $this->_renderVariables)->getReturnValue();
