@@ -1,0 +1,1 @@
+./symfony doctrine:build --all --and-load --no-confirmation --application=sympal --env=test
