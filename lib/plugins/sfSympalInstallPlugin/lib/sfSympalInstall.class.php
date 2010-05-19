@@ -277,7 +277,11 @@ class sfSympalInstall
     
     $this->logSection('data', '...finished loading fixture data');
   }
-  
+
+  /**
+   * In the process of being reworked - basically does nothing currently,
+   * calls install, but with pretty much everything turned off.
+   */
   protected function _installAddonPlugins()
   {
     $this->logSection('plugins', '...installing addon plugins');
@@ -304,6 +308,9 @@ class sfSympalInstall
 
       // Don't need to create tables as the sympal install already did this
       $manager->setOption('create_tables', false);
+      
+      // Don't need to clear cache, sympal install does this at the end
+      $manager->setOption('load_data', false);
 
       $manager->install();
     }
