@@ -266,8 +266,7 @@ class sfSympalInstall
     sfConfig::set('sf_app', $this->_application);
     $task = new sfDoctrineDataLoadTask($this->_dispatcher, $this->_formatter);
     $this->logTaskCall('data', 'Loading fixture data', sprintf(
-      'doctrine:data-load --append=%s --application=%s)',
-      ($append) ? 'true' : 'false',
+      'doctrine:data-load --append --application=%s)',
       $this->_application
     ));
     
