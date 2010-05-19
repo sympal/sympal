@@ -1,0 +1,37 @@
+# Blog install data fixtures
+
+sfSympalMenuItem:
+  MenuItem_primary:
+    children:
+      MenuItem_primary_blog_list:
+        name: Blog list
+        date_published: '2010-05-18 22:14:20'
+        label: Blog List
+        Site: Site_sympal
+        RelatedContent: Content_ContentList_blog
+
+sfSympalContent:
+  Content_Blog_Post_sample:
+    Type: ContentType_Blog_Post
+    slug: sample_blogpost
+    Site: Site_sympal
+    date_published: '2010-05-18 22:14:20'
+    Slots: [Sample_Blog_body]
+    CreatedBy: admin
+    sfSympalBlogPost:
+      title: Sample Blog Post
+  Content_ContentList_blog:
+    Type: ContentType_ContentList
+    slug: blog-list
+    Site: Site_sympal
+    date_published: '2010-05-18 22:14:20'
+    CreatedBy: admin
+    sfSympalContentList:
+      title: Blog Content List
+      ContentType: ContentType_Blog_Post
+
+sfSympalContentSlot:
+  Sample_Blog_body:
+    name: body
+    type: MarkDown
+    value: This is a sample blog.

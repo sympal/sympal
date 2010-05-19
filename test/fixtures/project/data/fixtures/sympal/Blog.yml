@@ -1,0 +1,8 @@
+sfSympalContentType:
+  ContentType_Blog_Post:
+    name: sfSympalBlogPost
+    slug: blog-post
+    description: A content type for posting blogs, articles, or other similar content
+    label: Blog Post
+    template: default_view
+    default_path: /blog-post/:slug
