@@ -193,13 +193,13 @@ $t->info('                                                        /     |     \ 
 $t->info('                                                  symfony  doctrine  sympal ');
 
 $primaryMenu = $menuManager->getMenu('primary', false, 'sfSympalMenuSiteTest');
-$t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-blog" class="first">Blog</li><li id="primary-signout">Signout</li><li id="primary-home">Home</li><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list">Sample Content List</li><li id="primary-powered-by" class="last">Powered By</li></ul>', 'Test __toString() without showing children');
+$t->is((string) $primaryMenu, '<ul id="primary-menu"><li id="primary-blog-list" class="first">Blog List</li><li id="primary-sample-content-list">Sample Content List</li><li id="primary-signout">Signout</li><li id="primary-powered-by">Powered By</li><li id="primary-home">Home</li><li id="primary-sample-page" class="last">Sample Page</li></ul>', 'Test __toString() without showing children');
 
 $split = $menuManager->split($primaryMenu, 2, true);
 $total = $primaryMenu->count();
 $t->is($split['primary']->count(), 2, 'Test count() after splitting the menu into 2 pieces');
-$t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-blog" class="first">Blog</li><li id="primary-signout">Signout</li></ul>', 'Test split() primary');
-$t->is((string) $split['secondary'], '<ul id="secondary-menu"><li id="primary-home">Home</li><li id="primary-sample-page">Sample Page</li><li id="primary-sample-content-list">Sample Content List</li><li id="primary-powered-by" class="last">Powered By</li></ul>', 'Test split() secondary');
+$t->is((string) $split['primary'], '<ul id="primary-menu"><li id="primary-blog-list" class="first">Blog List</li><li id="primary-sample-content-list">Sample Content List</li></ul>', 'Test split() primary');
+$t->is((string) $split['secondary'], '<ul id="secondary-menu"><li id="primary-signout">Signout</li><li id="primary-powered-by">Powered By</li><li id="primary-home">Home</li><li id="primary-sample-page" class="last">Sample Page</li></ul>', 'Test split() secondary');
 $t->is($split['secondary']->count(), 4, 'Test secondary count()');
 
 $footerMenu = $menuManager->getMenu('footer', false, 'sfSympalMenuSiteTest');
