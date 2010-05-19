@@ -78,7 +78,7 @@ class sfSympalContentRenderer
 
         if ($event->isProcessed())
         {
-          $this->setFormat($event['format']);
+          $this->setFormat($event['sf_format']);
           $return = $event->getReturnValue();
         }
     }

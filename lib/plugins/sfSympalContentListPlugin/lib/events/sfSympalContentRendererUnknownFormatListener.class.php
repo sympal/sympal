@@ -16,13 +16,13 @@ class sfSympalContentRendererUnknownFormatListener extends sfSympalListener
       $response = $context->getResponse();
       $request = $context->getRequest();
 
-      $className = 'sf'.ucfirst($event['format']).'Feed';
+      $className = 'sf'.ucfirst($event['sf_format']).'Feed';
       if (!class_exists($className))
       {
         return false;
       }
 
-      $feed = sfFeedPeer::newInstance($event['format']);
+      $feed = sfFeedPeer::newInstance($event['sf_format']);
 
       $feed->initialize(array(
         'title'       => $response->getTitle(),
@@ -34,7 +34,7 @@ class sfSympalContentRendererUnknownFormatListener extends sfSympalListener
 
       $event->setProcessed(true);
       $event->setReturnValue($feed->asXml());
-      $request->setRequestFormat($event['format']);
+      $request->setRequestFormat($event['sf_format']);
 
       return true;
     } else {
