@@ -21,13 +21,6 @@ class Basesympal_defaultActions extends sfActions
   }
 
   /**
-   * Default action called when sympal is in "offline" mode
-   */
-  public function executeOffline(sfWebRequest $request)
-  {
-  }
-
-  /**
    * Renders the sitemap
    */
   public function executeSitemap(sfWebRequest $request)
