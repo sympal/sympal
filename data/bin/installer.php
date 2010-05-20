@@ -95,9 +95,10 @@ chdir($rootdir.'/plugins/sfSympalPlugin');
 exec('git submodule init');
 exec('git submodule update');
 
-$this->logSection('sympal', 'Updating sympal deeper submodules');
-exec('git submodule foreach "git submodule init"');
-exec('git submodule foreach "git submodule update"');
+$this->logSection('sympal', 'Updating sfInlineObjectPlugin submodules');
+chdir($rootdir.'/plugins/sfSympalPlugin/lib/plugins/sfInlineObjectPlugin');
+exec('git submodule init');
+exec('git submodule update');
 chdir($rootdir);
 
 // reload the tasks so we have the symfony tasks

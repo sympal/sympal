@@ -229,4 +229,28 @@ class sfSympalToolkit
     }
     return $codes;
   }
+
+  /**
+   * Deletes a symfony application and all files associated with it
+   * 
+   * @param string $app The name of the application
+   * @return null
+   */
+  public static function deleteApplication($app)
+  {
+    // application itself (apps/$app)
+    $appsDir = sfConfig::get('sf_apps_dir') . DIRECTORY_SEPARATOR . $app;
+    sfToolkit::clearDirectory($appsDir);
+    if (is_writable($appsDir)) rmdir($appsDir);
+
+    // public files (web/$app_*.php)
+    $pubPref = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . $app;
+    if (is_writeable($pubPref . '_dev.php')) unlink($pubPref . '_dev.php');
+    if (is_writeable($pubPref . '.php'))     unlink($pubPref . '.php');
+
+    // fixtures (data/fixtures/sympal/$app)
+    $fixtDir = implode(DIRECTORY_SEPARATOR, array(sfConfig::get('sf_data_dir'), 'fixtures', 'sympal', $app));
+    sfToolkit::clearDirectory($fixtDir);
+    if (is_writable($fixtDir)) rmdir($fixtDir);
+  }
 }

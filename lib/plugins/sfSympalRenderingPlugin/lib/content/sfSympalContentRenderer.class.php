@@ -39,8 +39,9 @@ class sfSympalContentRenderer
     if (!$this->_renderVariables)
     {
       $this->_renderVariables = array(
-        'format'   => $this->_format,
+        'sf_format'   => $this->_format,
         'content'  => $this->_content,
+        'sf_sympal_content' => $this->_content,  // duplicated because I can't decide on one
         'menuItem' => $this->_menuItem,
       );
 
@@ -77,7 +78,7 @@ class sfSympalContentRenderer
 
         if ($event->isProcessed())
         {
-          $this->setFormat($event['format']);
+          $this->setFormat($event['sf_format']);
           $return = $event->getReturnValue();
         }
     }

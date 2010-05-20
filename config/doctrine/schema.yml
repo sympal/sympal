@@ -144,6 +144,8 @@ sfSympalContentLink:
 sfSympalContentType:
   actAs: [sfSympalRecordTemplate]
   columns:
+    # The name of the model to use as the data source (e.g. sfSympalPage).
+    # Must act as sfSympalContentTypeTemplate
     name:
       type: string(255)
       notnull: true

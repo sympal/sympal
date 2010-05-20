@@ -94,9 +94,6 @@ class sfSympalContext
    */
   protected function _registerListeners()
   {
-    // The controller.change_action event
-    new sfSympalControllerChangeActionListener($this->_dispatcher, $this);
-
     $this->_dispatcher->connect('template.filter_parameters', array($this, 'filterTemplateParameters'));
   }
 

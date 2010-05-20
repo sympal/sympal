@@ -48,19 +48,6 @@ class sfSympalMenuPluginConfiguration extends sfPluginConfiguration
     // extend the component/action class
     $actions = new sfSympalMenuActions();
     $this->dispatcher->connect('component.method_not_found', array($actions, 'extend'));
-
-    // Hook into the template.filter_parameters event
-    $this->dispatcher->connect('template.filter_parameters', array($this, 'listenTemplateFilterParameters'));
-  }
-
-  /**
-   * Listens to template.filter_parameters and adds a few variables to the view
-   */
-  public function listenTemplateFilterParameters(sfEvent $event, $parameters)
-  {
-    $parameters['sf_sympal_menu_manager'] = $this->_sympalContext->getService('menu_manager');
-    
-    return $parameters;
   }
 
   /**
