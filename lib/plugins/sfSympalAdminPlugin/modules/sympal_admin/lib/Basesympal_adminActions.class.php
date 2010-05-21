@@ -9,6 +9,10 @@
  */
 abstract class Basesympal_adminActions extends sfActions
 {
+  /**
+   * Clears different types of symfony cache based on the
+   * given "type" parameter
+   */
   public function executeClear_cache(sfWebRequest $request)
   {
     $this->enableEditor(false);
@@ -47,6 +51,9 @@ abstract class Basesympal_adminActions extends sfActions
     }
   }
 
+  /**
+   * Signin action for the admin. Will redirect to the dashboard if authenticated
+   */
   public function executeSignin($request)
   {
     $user = $this->getUser();
