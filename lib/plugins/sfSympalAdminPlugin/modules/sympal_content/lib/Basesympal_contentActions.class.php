@@ -1,18 +1,19 @@
 <?php
 
+/**
+ * Main admin actions for editing content
+ * 
+ * @package     sfSympalAdminPlugin
+ * @subpackage  actions
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class Basesympal_contentActions extends autoSympal_contentActions
 {
-  protected function _publishContent(sfSympalContent $content, $publish = true)
-  {
-    $func = $publish ? 'publish':'unpublish';
-    return $content->$func();
-  }
 
-  protected function addSortQuery($query)
-  {
-    $query->addOrderBy('m.root_id ASC, m.lft ASC');
-  }
-
+  /**
+   * Publishes an array of given content ids
+   */
   public function executeBatchPublish(sfWebRequest $request)
   {
     $ids = $request->getParameter('ids');
@@ -43,28 +44,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
   }
 
-  protected function _getContentType($type, sfWebRequest $request)
-  {
-    if (!$this->contentType)
-    {
-      if ($type)
-      {
-        if (is_numeric($type))
-        {
-          $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($type);
-        } else {
-          $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByNameOrSlug($type, $type);
-        }
-        $this->getUser()->setAttribute('content_type_id', $this->contentType->id);
-        $this->getRequest()->setAttribute('content_type', $this->contentType);
-      } else {
-        $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($this->getUser()->getAttribute('content_type_id'));
-      }
-    }
-
-    return $this->contentType;
-  }
-
   public function executeFilter(sfWebRequest $request)
   {
     $this->contentType = $this->_getContentType($request->getParameter('type'), $request);
@@ -85,6 +64,11 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
   }
 
+  /**
+   * The main index, list action, which adds the following:
+   *   * Adds a is_published filter based on a "published" parameter
+   *   * Specifies the content type based off of a user attribute or request parameter
+   */
   public function executeIndex(sfWebRequest $request)
   {
     if ($request->hasParameter('published'))
@@ -285,5 +269,57 @@ class Basesympal_contentActions extends autoSympal_contentActions
     {
       $this->getUser()->setFlash('error', 'The item has not been saved due to some errors.', false);
     }
+  }
+
+  /**
+   * Returns and sets up the sfSympalContentType record based on the given
+   * $type variable
+   * 
+   * @param string $type The id, name, or slug of the type
+   * @param sfWebRequest $request The request object
+   * 
+   * @return sfSympalContentType
+   */
+  protected function _getContentType($type, sfWebRequest $request)
+  {
+    if (!$this->contentType)
+    {
+      if ($type)
+      {
+        if (is_numeric($type))
+        {
+          $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($type);
+        }
+        else
+        {
+          $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->findOneByNameOrSlug($type, $type);
+        }
+        $this->getUser()->setAttribute('content_type_id', $this->contentType->id);
+        $this->getRequest()->setAttribute('content_type', $this->contentType);
+      }
+      else
+      {
+        $this->contentType = Doctrine_Core::getTable('sfSympalContentType')->find($this->getUser()->getAttribute('content_type_id'));
+      }
+    }
+
+    return $this->contentType;
+  }
+
+  /**
+   * Publishes or unpublish the givent content record
+   */
+  protected function _publishContent(sfSympalContent $content, $publish = true)
+  {
+    $func = $publish ? 'publish':'unpublish';
+    return $content->$func();
+  }
+
+  /**
+   * Adds the default sorting query
+   */
+  protected function addSortQuery($query)
+  {
+    $query->addOrderBy('m.root_id ASC, m.lft ASC');
   }
 }
