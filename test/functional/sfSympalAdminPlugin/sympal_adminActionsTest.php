@@ -61,8 +61,22 @@ $browser->info('2 - Test the signin action')
   ->end()
 ;
 
+$browser->info('2 - Test the phpinfo page')
+  ->get('/admin/phpinfo')
+  
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_admin')
+    ->isParameter('action', 'phpinfo')
+  ->end()
+  
+  ->with('response')->begin()
+    ->isStatusCode(200)
+    ->matches('/PHP Version/')
+  ->end()
+;
+
 $browser->signinAsAdmin();
-$browser->info('2 - Test the clear_cache action')
+$browser->info('3 - Test the clear_cache action')
   ->get('/admin/clear_cache')
   
   ->with('request')->begin()
@@ -88,7 +102,7 @@ $caches = array(
 $i = 1;
 foreach ($caches as $cache)
 {
-  $browser->info(sprintf('  2.%d - Clearing %s cache', $i++, $cache))
+  $browser->info(sprintf('  3.%d - Clearing %s cache', $i++, $cache))
     ->get('/admin/clear_cache?type='.$cache)
     
     ->with('response')->begin()
