@@ -48,13 +48,17 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
     return $dataGrid;
   }
 
+  /**
+   *
+   * @return Doctrine_Query
+   */
   private function _buildQuery()
   {
     $table = Doctrine_Core::getTable('sfSympalContent');
 
     if ($this->dql_query)
     {
-      $q = $table->createQuery()->query($this->dql_query);
+      $q = $table->createQuery()->parseDqlQuery($this->dql_query);
     }
     else
     {
