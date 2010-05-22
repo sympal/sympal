@@ -102,18 +102,18 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
   }
 
+  /**
+   * The actual action that handles creating a new piece of content
+   * 
+   * Uses the new template
+   */
   public function executeCreate_type(sfWebRequest $request)
   {
     $type = $request->getParameter('type');
-    if (is_numeric($type))
-    {
-      $type = Doctrine_Core::getTable('sfSympalContentType')->find($type);      
-    } else {
-      $type = Doctrine_Core::getTable('sfSympalContentType')->findOneBySlug($type);
-    }
+    $this->_getContentType($type, $request);
 
     $this->sf_sympal_content = new sfSympalContent();
-    $this->sf_sympal_content->setType($type);
+    $this->sf_sympal_content->setType($this->contentType);
     $this->sf_sympal_content->CreatedBy = $this->getUser()->getGuardUser();
 
     Doctrine_Core::initializeModels(array($type['name']));
@@ -122,29 +122,9 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->setTemplate('new');
   }
 
-  protected function _getContentById($id)
-  {
-    $contentType = Doctrine_Core::getTable('sfSympalContent')
-      ->createQuery('c')
-      ->select('t.name, c.id')
-      ->leftJoin('c.Type t')
-      ->where('c.id = ?', $id)
-      ->execute(array(), Doctrine_Core::HYDRATE_NONE);
-
-    $this->sf_sympal_content = Doctrine_Core::getTable('sfSympalContent')
-      ->getFullTypeQuery($contentType[0][1])
-      ->where('c.id = ?', $id)
-      ->fetchOne();
-
-    $this->forward404Unless($this->sf_sympal_content);
-    return $this->sf_sympal_content;
-  }
-
-  protected function _getContent(sfWebRequest $request)
-  {
-    return $this->_getContentById($request->getParameter('id'));
-  }
-
+  /**
+   * The normal edit action
+   */
   public function executeEdit(sfWebRequest $request)
   {
     $this->sf_sympal_content = $this->_getContent($request);
@@ -319,6 +299,37 @@ class Basesympal_contentActions extends autoSympal_contentActions
     }
 
     return $this->contentType;
+  }
+
+  /**
+   * Retrieves and initializes the sfSympalContent record defined by
+   * the id parameter.
+   * 
+   * This will also forward 404 if no content is matched
+   * 
+   * @return sfSympalContent
+   */
+  protected function _getContent(sfWebRequest $request)
+  {
+    $id = $request->getParameter('id');
+
+    // find the content type
+    $contentType = Doctrine_Core::getTable('sfSympalContent')
+      ->createQuery('c')
+      ->select('t.name, c.id')
+      ->leftJoin('c.Type t')
+      ->where('c.id = ?', $id)
+      ->execute(array(), Doctrine_Core::HYDRATE_NONE);
+
+    // return the full query by using that content type
+    $this->sf_sympal_content = Doctrine_Core::getTable('sfSympalContent')
+      ->getFullTypeQuery($contentType[0][1])
+      ->where('c.id = ?', $id)
+      ->fetchOne();
+
+    $this->forward404Unless($this->sf_sympal_content);
+    
+    return $this->sf_sympal_content;
   }
 
   /**
