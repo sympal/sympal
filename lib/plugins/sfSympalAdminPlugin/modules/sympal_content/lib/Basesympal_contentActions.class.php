@@ -10,13 +10,26 @@
  */
 class Basesympal_contentActions extends autoSympal_contentActions
 {
-
+  /**
+   * Executes the filtering - adds the contentType variable
+   */
   public function executeFilter(sfWebRequest $request)
   {
     $this->contentType = $this->_getContentType($request->getParameter('type'), $request);
     parent::executeFilter($request);
   }
 
+  /**
+   * Displays a list of the content types, like an index page for all content
+   */
+  public function executeContent_types_index(sfWebRequest $request)
+  {
+    $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
+  }
+
+  /**
+   * Displays the index list for a given content type
+   */
   public function executeList_type(sfWebRequest $request)
   {
     $type = $request->getParameter('type');
@@ -24,11 +37,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
 
     $this->setTemplate('index');
     $this->executeIndex($request);
-  }
-
-  public function executeContent_types_index(sfWebRequest $request)
-  {
-    $this->contentTypes = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
   }
 
   /**

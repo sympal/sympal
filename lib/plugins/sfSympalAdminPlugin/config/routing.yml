@@ -79,6 +79,7 @@ sympal_content:
     prefix_path:          admin/content/manage
     with_wildcard_routes: true
 
+# Displays a list of the content types, like an index page for all content
 sympal_content_types_index:
   url:  /admin/content
   param: { module: sympal_content, action: content_types_index }
