@@ -84,16 +84,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->getResponse()->setTitle('Sympal Admin / '.$this->contentType->getLabel());
 
     parent::executeIndex($request);
-    
-  }
-
-  public function executeDelete_route(sfWebRequest $request)
-  {
-    $this->askConfirmation('Are you sure?', 'Are you sure you wish to delete this route?');
-    $this->getRoute()->getObject()->delete();
-
-    $this->getUser()->setFlash('notice', 'Route was deleted successfully!');
-    $this->redirect($request->getParameter('redirect_url'));
   }
 
   /**
