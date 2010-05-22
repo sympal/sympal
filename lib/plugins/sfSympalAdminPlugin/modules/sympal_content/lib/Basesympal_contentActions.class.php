@@ -11,39 +11,6 @@
 class Basesympal_contentActions extends autoSympal_contentActions
 {
 
-  /**
-   * Publishes an array of given content ids
-   */
-  public function executeBatchPublish(sfWebRequest $request)
-  {
-    $ids = $request->getParameter('ids');
-
-    $content = Doctrine_Core::getTable('sfSympalContent')
-      ->createQuery('c')
-      ->whereIn('c.id', $ids)
-      ->execute();
-
-    foreach ($content as $content)
-    {
-      $this->_publishContent($content, true);
-    }
-  }
-
-  public function executeBatchUnpublish(sfWebRequest $request)
-  {
-    $ids = $request->getParameter('ids');
-
-    $content = Doctrine_Core::getTable('sfSympalContent')
-      ->createQuery('c')
-      ->whereIn('c.id', $ids)
-      ->execute();
-
-    foreach ($content as $content)
-    {
-      $this->_publishContent($content, false);
-    }
-  }
-
   public function executeFilter(sfWebRequest $request)
   {
     $this->contentType = $this->_getContentType($request->getParameter('type'), $request);
@@ -213,6 +180,56 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->setTemplate('new');
   }
 
+  /*
+   * *************  Batch functions
+   */
+
+
+  /**
+   * Publishes an array of given content ids
+   * 
+   * Used by the bulk actions
+   */
+  public function executeBatchPublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $content = Doctrine_Core::getTable('sfSympalContent')
+      ->createQuery('c')
+      ->whereIn('c.id', $ids)
+      ->execute();
+
+    foreach ($content as $content)
+    {
+      $this->_publishContent($content, true);
+    }
+  }
+
+  /**
+   * Unpublishes an array of given content ids
+   * 
+   * Used by the bulk actions
+   */
+  public function executeBatchUnpublish(sfWebRequest $request)
+  {
+    $ids = $request->getParameter('ids');
+
+    $content = Doctrine_Core::getTable('sfSympalContent')
+      ->createQuery('c')
+      ->whereIn('c.id', $ids)
+      ->execute();
+
+    foreach ($content as $content)
+    {
+      $this->_publishContent($content, false);
+    }
+  }
+
+  /**
+   * ************* Protected functions
+   */
+
+  
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
