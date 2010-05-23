@@ -15,7 +15,7 @@
             <?php echo $contentType->description ?>
           </div>
           
-          <a href="<?php echo url_for('@sympal_content_create_type?type='.$contentType->id) ?>" class="create">Create</a>
+          <a href="<?php echo url_for('@sympal_content_create_type?type='.$contentType->id) ?>" class="create">Create <?php echo $contentType->label ?></a>
         </li>
       <?php endforeach; ?>
     </ul>

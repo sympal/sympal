@@ -11,9 +11,11 @@ $browser = new sfSympalTestFunctional(new sfBrowser());
 $browser->signinAsAdmin();
 
 $types = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
-$type = $types[0];
+$pageType = Doctrine_Core::getTable('sfSympalContentType')->findOneBySlug('page');
+$admin = Doctrine_Core::getTable('sfGuardUser')->findOneByUsername('admin');
+
 $content = new sfSympalContent();
-$content->setType($type);
+$content->setType($pageType);
 $contentForm = new sfSympalContentForm($content);
 
 $browser->info('1 - Test the new action')
@@ -34,23 +36,55 @@ $browser->info('1 - Test the new action')
     ->checkElement('ul.new-content-type li', 3)
   ->end()
   
-  ->info(sprintf('  1.2 - Click on the %s new content', $type->name))
-  ->click('Create')
+  ->info(sprintf('  1.2 - Click on the %s new content', $pageType->name))
+  ->click('Create '.$pageType->label)
   
   ->with('request')->begin()
     ->isParameter('module', 'sympal_content')
     ->isParameter('action', 'create_type')
-    ->isParameter('type', $type->id)
+    ->isParameter('type', $pageType->id)
   ->end()
   
   ->with('response')->begin()
     ->isStatusCode(200)
-    ->checkElement('h1', 'Create New '.$type->label)
+    ->checkElement('h1', 'Create New '.$pageType->label)
     ->checkForm($contentForm)
   ->end()
+  
+  ->info('  1.3 - Create a new piece of content')
+  ->click('Save')
+  
+  ->with('form')->begin()
+    ->hasErrors(1)
+    ->isError('TypeForm[title]')
+  ->end()
+  
+  ->click('Save', array('sf_sympal_content' => array(
+    'page_title' => 'test page title',
+    'TypeForm' => array(
+      'title' => 'New page title',
+    )
+  )))
 ;
+$createdContent = Doctrine_Core::getTable('sfSympalContent')->findOneByPageTitle('test page title');
 
-$contentTypeCount = Doctrine_Core::getTable('sfSympalContentType')->createQuery()->count();
+$browser
+  ->info('  1.4 - See that the sfSympalContent and sfSympalPage entries were created')
+  ->with('doctrine')->begin()
+    ->check('sfSympalContent', array(
+      'content_type_id' => $pageType->id,
+      'created_by_id'   => $admin->id,
+      'page_title'      => 'test page title',
+    ))
+    ->check('sfSympalPage', array(
+      'content_id'  => $createdContent->id,
+      'title'       => 'New page title',
+    ))
+  ->end()
+;
+$createdContent->delete(); // refresh
+
+$contentTypeCount = count($types);
 $home = Doctrine_Core::getTable('sfSympalContent')->findOneBySlug('home');
 $browser->info('2 - Test the content type index, click through the types and edit')
   ->info('  2.1 - Start at the content types index page')
@@ -114,4 +148,26 @@ $browser->info('2 - Test the content type index, click through the types and edi
     ->isStatusCode(200)
     ->checkElement('h1', '/Manage Page Content/')
   ->end()
+  
+  ->info('  2.8 - goto the "view" action of a page, redirects you to the frontend')
+  ->get('/admin/content/manage/'.$home->id.'/view')
+  
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_content')
+    ->isParameter('action', 'view')
+  ->end()
+  
+  ->with('response')->begin()
+    ->isRedirected(true)
+  ->end()
+  
+  ->followRedirect()
+  
+  ->with('request')->begin()
+    ->isParameter('action', 'index')
+    ->isParameter('sympal_content_type', 'sfSympalPage')
+    ->isParameter('sympal_content_id', $home->id)
+  ->end()
 ;
+
+$browser->info('3 - ');
