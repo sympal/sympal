@@ -4,6 +4,7 @@
 
   <?php sympal_use_stylesheet('/sfSympalMenuPlugin/css/jQuery.treeTable.css', 'first') ?> 
   <?php sympal_use_stylesheet('/sfSympalMenuPlugin/css/table.css', 'first') ?> 
+  <?php sympal_use_javascript('/sfSympalMenuPlugin/js/jquery.min-1.2.6.js', 'last') ?> 
   <?php sympal_use_javascript('/sfSympalMenuPlugin/js/jquery-ui.min-1.5.3.js', 'last') ?> 
   <?php sympal_use_javascript('/sfSympalMenuPlugin/js/jquery.treeTable.min.js', 'last') ?> 
 
@@ -28,6 +29,12 @@
     <div id="sf_admin_content">
 
       <form action="<?php echo url_for('sympal_menu_items_collection', array('action' => 'batch')) ?>" method="post">
+
+        <ul class="sf_admin_actions">
+          <?php include_partial('sympal_menu_items/list_batch_actions', array('helper' => $helper)) ?>
+          <?php include_partial('sympal_menu_items/list_actions', array('helper' => $helper)) ?>
+        </ul>
+
 
         <?php include_partial('sympal_menu_items/list', array('pager' => $pager, 'sort' => $sort, 'helper' => $helper)) ?>
 

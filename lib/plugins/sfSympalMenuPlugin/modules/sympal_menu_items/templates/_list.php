@@ -1,8 +1,8 @@
-<div class="sf_admin_list">
+<div class="sf_admin_list" style="width: 100%;">
   <?php if (!$pager->getNbResults()): ?>
     <p class="sf_admin_no_result"><?php echo __('No results found', array(), 'sf_admin') ?></p>
   <?php else: ?>
-    <table cellspacing="0" id="main_list" style="width: 100%;">
+    <table cellspacing="0" id="main_list">
       <thead>
         <tr>
           <th id="sf_admin_list_batch_actions"><input id="sf_admin_list_batch_checkbox" type="checkbox" onclick="checkAll();" /></th>

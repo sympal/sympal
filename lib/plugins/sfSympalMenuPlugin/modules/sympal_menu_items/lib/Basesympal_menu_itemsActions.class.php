@@ -16,80 +16,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->getContext()->getEventDispatcher()->connect('admin.build_query', array($this, 'listenToAdminBuildQuery'));
   }
 
-  protected function addSortQuery($query)
-  {
-    //don't allow sorting; always sort by tree and lft
-    $query->addOrderBy('root_id, lft', 'asc');
-  }
-
-  public function executeListLeft(sfWebRequest $request)
-  {
-    $id = $this->getRequestParameter('id');
-    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
-    $parent = $record->getNode()->getParent();
-    if ($parent != '')
-    {
-      $record->getNode()->moveAsNextSiblingOf($parent);
-      $this->redirect('@sympal_menu_items');
-    }
-    else
-    {
-      $this->getUser()->setFlash('error', 'There is no parent for the entry '.$record);
-      $this->redirect('@sympal_menu_items');
-    }
-  }
-  
-  public function executeListRight(sfWebRequest $request)
-  {
-    $id = $this->getRequestParameter('id');
-    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
-    $prev = $record->getNode()->getPrevSibling();
-    if ($prev != '')
-    {
-      $record->getNode()->moveAsFirstChildOf($prev);
-      $this->redirect('@sympal_menu_items');
-    }
-    else
-    {
-      $this->getUser()->setFlash('error', 'There is no previous sibling for the entry '.$record);
-      $this->redirect('@sympal_menu_items');
-    }
-  }
-  
-  public function executeListDown(sfWebRequest $request)
-  {
-    $id = $this->getRequestParameter('id');
-    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
-    $next = $record->getNode()->getNextSibling();
-    if ($next != '')
-    {
-      $record->getNode()->moveAsNextSiblingOf($next);
-      $this->redirect('@sympal_menu_items');
-    }
-    else
-    {
-      $this->getUser()->setFlash('error', 'There is no next sibling for the entry '.$record);
-      $this->redirect('@sympal_menu_items');
-    }
-  }
-  
-  public function executeListUp(sfWebRequest $request)
-  {
-    $id = $this->getRequestParameter('id');
-    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
-    $prev = $record->getNode()->getPrevSibling();
-    if($prev != '')
-    { 
-      $record->getNode()->moveAsPrevSiblingOf($prev);
-      $this->redirect('@sympal_menu_items');
-    }
-    else
-    {
-      $this->getUser()->setFlash('error', 'There is no previous sibling for the entry '.$record);
-      $this->redirect('@sympal_menu_items');
-    }
-  }
-  
   public function listenToAdminBuildQuery(sfEvent $event, Doctrine_Query $query)
   {
     $query->andWhere('site_id = ?', sfSympalContext::getInstance()->getService('site_manager')->getSite()->getId());
@@ -263,13 +189,94 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
     $this->redirect('@sympal_menu_items');
   }
 
-  /**
-   * This function is not yet usefull
-   */
+  protected function addSortQuery($query)
+  {
+    //don't allow sorting; always sort by tree and lft
+    $query->addOrderBy('root_id, lft', 'asc');
+  }
+
+  public function executeBatch(sfWebRequest $request)
+  {
+    if ($request->hasParameter('batch_action'))
+    {
+      return $this->executeBatchOrder($request);
+    }
+    
+    parent::executeBatch($request);
+  }
+
+  public function executeListLeft(sfWebRequest $request)
+  {
+    $id = $this->getRequestParameter('id');
+    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
+    $parent = $record->getNode()->getParent();
+    if ($parent != '')
+    {
+      $record->getNode()->moveAsNextSiblingOf($parent);
+      $this->redirect('@sympal_menu_items');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'There is no parent for the entry '.$record);
+      $this->redirect('@sympal_menu_items');
+    }
+  }
+  
+  public function executeListRight(sfWebRequest $request)
+  {
+    $id = $this->getRequestParameter('id');
+    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
+    $prev = $record->getNode()->getPrevSibling();
+    if ($prev != '')
+    {
+      $record->getNode()->moveAsFirstChildOf($prev);
+      $this->redirect('@sympal_menu_items');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'There is no previous sibling for the entry '.$record);
+      $this->redirect('@sympal_menu_items');
+    }
+  }
+  
+  public function executeListDown(sfWebRequest $request)
+  {
+    $id = $this->getRequestParameter('id');
+    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
+    $next = $record->getNode()->getNextSibling();
+    if ($next != '')
+    {
+      $record->getNode()->moveAsNextSiblingOf($next);
+      $this->redirect('@sympal_menu_items');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'There is no next sibling for the entry '.$record);
+      $this->redirect('@sympal_menu_items');
+    }
+  }
+  
+  public function executeListUp(sfWebRequest $request)
+  {
+    $id = $this->getRequestParameter('id');
+    $record = Doctrine::getTable('sfSympalMenuItem')->find($id);
+    $prev = $record->getNode()->getPrevSibling();
+    if($prev != '')
+    { 
+      $record->getNode()->moveAsPrevSiblingOf($prev);
+      $this->redirect('@sympal_menu_items');
+    }
+    else
+    {
+      $this->getUser()->setFlash('error', 'There is no previous sibling for the entry '.$record);
+      $this->redirect('@sympal_menu_items');
+    }
+  }
+
   public function executeBatchOrder(sfWebRequest $request)
   {
     $newparent = $request->getParameter('newparent');
-    
+
     //manually validate newparent parameter
     
     //make list of all ids
@@ -326,6 +333,6 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
       $this->getUser()->setFlash('error', 'Cannot update the tree order, maybe some item are deleted, try again');
     }
      
-    $this->redirect('@sf_sympal_menu_item');
+    $this->redirect('@sympal_menu_items');
   }
 }
