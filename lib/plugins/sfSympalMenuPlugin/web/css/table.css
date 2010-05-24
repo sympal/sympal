@@ -1,0 +1,21 @@
+table span {
+	background-position: center left;
+	background-repeat: no-repeat;
+	padding: .2em 0 .2em 1.5em;
+}
+
+table span.file {
+	background-image: url(../images/page_white_text.png);
+}
+
+table span.folder {
+	background-image: url(../images/folder.png);
+}
+
+#sf_admin_container table tbody tr td {
+  background: none !important;
+}
+
+#sf_admin_container .sf_admin_list table tbody {
+  background: #fff !important;
+}
