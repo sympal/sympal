@@ -14,6 +14,8 @@ $types = Doctrine_Core::getTable('sfSympalContentType')->getAllContentTypes();
 $pageType = Doctrine_Core::getTable('sfSympalContentType')->findOneBySlug('page');
 $admin = Doctrine_Core::getTable('sfGuardUser')->findOneByUsername('admin');
 
+$contents = Doctrine_Core::getTable('sfSympalContent')->createQuery()->execute();
+
 $content = new sfSympalContent();
 $content->setType($pageType);
 $contentForm = new sfSympalContentForm($content);
@@ -54,6 +56,11 @@ $browser->info('1 - Test the new action')
   ->info('  1.3 - Create a new piece of content')
   ->click('Save')
   
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_content')
+    ->isParameter('action', 'create')
+  ->end()
+  
   ->with('form')->begin()
     ->hasErrors(1)
     ->isError('TypeForm[title]')
@@ -71,6 +78,7 @@ $createdContent = Doctrine_Core::getTable('sfSympalContent')->findOneByPageTitle
 $browser
   ->info('  1.4 - See that the sfSympalContent and sfSympalPage entries were created')
   ->with('doctrine')->begin()
+    ->check('sfSympalContent', array(), count($contents) + 1)
     ->check('sfSympalContent', array(
       'content_type_id' => $pageType->id,
       'created_by_id'   => $admin->id,
@@ -81,8 +89,24 @@ $browser
       'title'       => 'New page title',
     ))
   ->end()
+
+  ->with('response')->begin()
+    ->isRedirected()
+  ->end()
+  ->followRedirect()
+
+  ->info('  1.5 - Edit the form and save again')
+  ->click('Save', array('sf_sympal_content' => array(
+    'TypeForm' => array('title' => 'new test title'),
+  )))
+  
+  ->with('doctrine')->begin()
+    ->check('sfSympalPage', array('title' => 'new test title'))
+    ->check('sfSympalContent', array(), count($contents) + 1)
+  ->end()
 ;
 $createdContent->delete(); // refresh
+
 
 $contentTypeCount = count($types);
 $home = Doctrine_Core::getTable('sfSympalContent')->findOneBySlug('home');
