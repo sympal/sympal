@@ -115,6 +115,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->sf_sympal_content = new sfSympalContent();
     $this->sf_sympal_content->setType($this->contentType);
     $this->sf_sympal_content->CreatedBy = $this->getUser()->getGuardUser();
+    $this->sf_sympal_content->date_published = date('Y-m-d h:i:s');
 
     Doctrine_Core::initializeModels(array($type['name']));
 
