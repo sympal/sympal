@@ -369,6 +369,21 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return $child;
   }
 
+  /**
+   * Removes a child from this menu item
+   * 
+   * @param mixed $name The name of sfSympalMenu instance to remove
+   */
+  public function removeChild($name)
+  {
+    $name = ($name instanceof sfSympalMenu) ? $name->getName() : $name;
+    
+    if (isset($this->_children[$name]))
+    {
+      unset($this->_children[$name]);
+    }
+  }
+
   public function getFirstChild()
   {
     return current($this->_children);

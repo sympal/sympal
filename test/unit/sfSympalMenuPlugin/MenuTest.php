@@ -3,7 +3,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(55);
+$t = new lime_test(62);
 
 $configuration->loadHelpers(array('Tag'));
 
@@ -40,6 +40,25 @@ $t->is(get_class($root1), 'sfSympalMenuTest', 'Test children are created as same
 
 // array access
 $t->is($menu['Root 1']['Child 1']->getName(), 'Child 1', 'Test getName()');
+
+// getChildren(), removeChildren()
+$children = $child3->getChildren();
+$t->is(count($children), 1, '->getChildren() returns 1 menu item correctly');
+$t->is($children[0]->name, $grandchild1->name, '->getChildren() returns the correct menu item');
+
+$child3->addChild('temporary');
+$t->is(count($child3->getChildren()), 2, '->getChildren() reflects the newly added child');
+$child3->removeChild('temporary');
+$t->is(count($child3->getChildren()), 1, '->removeChildren() removes the child when calling it by its name');
+
+$tempChild = $child3->addChild('temporary');
+$t->is(count($child3->getChildren()), 2, '->getChildren() reflects the newly added child');
+$child3->removeChild($tempChild);
+$t->is(count($child3->getChildren()), 1, '->removeChildren() removes the child when referencing it via the menu object');
+
+$child3->removeChild('fake');
+$t->is(count($child3->getChildren()), 1, '->removeChildren() with a non-existent child does nothing');
+
 
 // countable
 $t->is(count($menu), $menu->count(), 'Test sfSympalMenu Countable interface');
