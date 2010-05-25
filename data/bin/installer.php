@@ -161,6 +161,9 @@ $fixPerms->run();
 // replace tokens, do this since we exit the project install below
 $this->replaceTokens();
 
+// symlink the sf directory
+$rootdir = getcwd();
+$this->getFilesystem()->relativeSymlink(sfConfig::get('sf_symfony_lib_dir').'/../data/web/sf', sfConfig::get('sf_web_dir').'/sf', true);
 
 /*
  * ****** Step5: Give a friendly message ***************
