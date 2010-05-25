@@ -6,8 +6,9 @@
     <h1>Add new content</h1>
     
     <ul class="new-content-type">
+      <?php $i = 0; ?>
       <?php foreach ($contentTypes as $contentType): ?>
-        <li>
+        <li<?php echo (fmod($i++, 3) == 0) ? ' style="clear: left;"' : '' ?>>
           <a href="<?php echo url_for('@sympal_content_create_type?type='.$contentType->id) ?>" title="Create new <?php echo $contentType->label ?>">
             <?php echo $contentType->label ?>
           </a>
