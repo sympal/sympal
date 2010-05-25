@@ -84,6 +84,7 @@ sympal_content_types_index:
   url:  /admin/content
   param: { module: sympal_content, action: content_types_index }
 
+# Displays and allows for editing of a content record's slot
 sympal_content_edit_slots:
   url:  /admin/content/:id/edit_slots
   param: { module: sympal_content, action: edit_slots }

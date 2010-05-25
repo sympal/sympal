@@ -82,7 +82,9 @@ abstract class Basesympal_edit_slotActions extends sfActions
   }
   
   /**
-   * Handles the form submit for a given slot
+   * Handles the form submit for a given slot. This could come from two sources:
+   *   1) Inline, frontend editing. (ajax request)
+   *   2) Admin, non-inline editing (non-ajax request)
    */
   public function executeSlot_save(sfWebRequest $request)
   {
@@ -97,7 +99,7 @@ abstract class Basesympal_edit_slotActions extends sfActions
       $this->getUser()->setFlash('saved', __('Slot saved'), false);
       
       // if we close editor on save, just return the flash js and the editor close js
-      if (sfSympalConfig::get('inline_editing', 'close_editor_on_save', false))
+      if ($request->isXmlHttpRequest() && sfSympalConfig::get('inline_editing', 'close_editor_on_save', false))
       {
         $this->getContext()->getConfiguration()->loadHelpers('SympalContentSlotEditor');
         $this->renderText(trigger_flash_from_user($this->getUser()));
@@ -116,8 +118,19 @@ abstract class Basesympal_edit_slotActions extends sfActions
     {
       $this->getUser()->setFlash('error', __('There was an error saving your slot'), false);
     }
-    
-    $this->renderPartial('sympal_edit_slot/slot_editor_form');
+
+    // we need to route the response appropriately based on ajax/non-ajax
+    if ($request->isXmlHttpRequest())
+    {
+      // ajax, just re-show the form
+      $this->renderPartial('sympal_edit_slot/slot_editor_form');
+    }
+    else
+    {
+      // handle non-ajax, which come from sympal_content/edit_slots
+      // this is a bit of a hack, we redirect even on errors, which is technically a fail
+      $this->redirect('@sympal_content_edit_slots?id='.$this->contentSlot->getContentRenderedFor()->id);
+    }
     
     return sfView::NONE;
   }

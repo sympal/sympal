@@ -90,3 +90,19 @@ function trigger_flash_from_user($user)
     }
   }
 }
+
+/**
+ * Renders the actual form that edits a content slot
+ * 
+ * @param sfSympalContent $content The content record being modified
+ * @param sfSympalContentSlot $slot The content slot to edit
+ * 
+ * @return string
+ */
+function get_sympal_content_slot_form($content, $slot)
+{
+  $slot->setContentRenderedFor($content);
+  $form = $slot->getEditForm();
+  
+  return get_partial('sympal_edit_slot/slot_editor', array('form' => $form, 'contentSlot' => $slot));
+}

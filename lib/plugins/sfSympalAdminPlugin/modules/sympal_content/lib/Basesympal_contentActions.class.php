@@ -123,6 +123,24 @@ class Basesympal_contentActions extends autoSympal_contentActions
   }
 
   /**
+   * Handles the create processing, which submits from create_type
+   */
+  public function executeCreate(sfWebRequest $request)
+  {
+    $content = $request->getParameter('sf_sympal_content');
+    $contentTypeId = $content['content_type_id'];
+    $type = Doctrine_Core::getTable('sfSympalContentType')->find($contentTypeId);
+    $this->sf_sympal_content = sfSympalContent::createNew($type);
+    $this->sf_sympal_content->Site = $this->getSympalContext()->getSite();
+
+    $this->form = new sfSympalContentForm($this->sf_sympal_content);
+
+    $this->processForm($request, $this->form);
+
+    $this->setTemplate('new');
+  }
+
+  /**
    * The normal edit action
    */
   public function executeEdit(sfWebRequest $request)
@@ -138,12 +156,16 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->form = $this->configuration->getForm($this->sf_sympal_content);
   }
 
+  /**
+   * Displays and allows for editing of a content record's slot
+   */
   public function executeEdit_slots(sfWebRequest $request)
   {
     $this->sf_sympal_content = $this->_getContent($request);
     $this->getSympalContext()->setCurrentContent($this->sf_sympal_content);
     $this->getSympalContext()->getContentRenderer($this->sf_sympal_content)->render();
 
+    // throw the sympal.load_content event
     $this->dispatcher->notify(new sfEvent($this, 'sympal.load_content', array('content' => $this->sf_sympal_content)));
 
     // refresh the content record and refresh its internal slots list
@@ -153,20 +175,6 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $this->getContext()->getConfiguration()->getPluginConfiguration('sfSympalEditorPlugin')->loadEditorAssets();
   }
 
-  public function executeCreate(sfWebRequest $request)
-  {
-    $content = $request->getParameter('sf_sympal_content');
-    $contentTypeId = $content['content_type_id'];
-    $type = Doctrine_Core::getTable('sfSympalContentType')->find($contentTypeId);
-    $this->sf_sympal_content = sfSympalContent::createNew($type);
-    $this->sf_sympal_content->Site = $this->getSympalContext()->getSite();
-
-    $this->form = new sfSympalContentForm($this->sf_sympal_content);
-
-    $this->processForm($request, $this->form);
-
-    $this->setTemplate('new');
-  }
 
   /*
    * *************  Batch functions
@@ -320,6 +328,8 @@ class Basesympal_contentActions extends autoSympal_contentActions
       ->leftJoin('c.Type t')
       ->where('c.id = ?', $id)
       ->execute(array(), Doctrine_Core::HYDRATE_NONE);
+
+    $this->forward404Unless($contentType, sprintf('Cannot find content type with id "%s"', $id));
 
     // return the full query by using that content type
     $this->sf_sympal_content = Doctrine_Core::getTable('sfSympalContent')

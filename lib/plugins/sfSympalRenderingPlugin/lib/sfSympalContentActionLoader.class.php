@@ -82,6 +82,7 @@ class sfSympalContentActionLoader
       }
     }
 
+    // throw the sympal.load_content event
     $this->_dispatcher->notify(new sfEvent($this, 'sympal.load_content', array('content' => $content)));
 
     return $content;    

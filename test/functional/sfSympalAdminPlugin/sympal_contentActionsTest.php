@@ -100,6 +100,11 @@ $browser
     'TypeForm' => array('title' => 'new test title'),
   )))
   
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_content')
+    ->isParameter('action', 'update')
+  ->end()
+  
   ->with('doctrine')->begin()
     ->check('sfSympalPage', array('title' => 'new test title'))
     ->check('sfSympalContent', array(), count($contents) + 1)
@@ -194,4 +199,58 @@ $browser->info('2 - Test the content type index, click through the types and edi
   ->end()
 ;
 
-$browser->info('3 - ');
+// count the number of true (non-column) slots
+$trueSlots = 0;
+$trueSlot = null;
+foreach ($home->Slots as $slot)
+{
+  if (!$slot->is_column)
+  {
+    $trueSlot = $slot; // just retrieve one of the true slots for use
+    $trueSlots++;
+  }
+}
+$browser->info('3 - Edit the slots of a content record')
+  ->get('/admin/content/'.$home->id.'/edit_slots')
+  
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_content')
+    ->isParameter('action', 'edit_slots')
+  ->end()
+  
+  ->with('response')->begin()
+    ->isStatusCode(200)
+    ->checkElement('.sf_admin_form fieldset', $trueSlots)
+  ->end()
+  
+  ->info('  3.1 - Fill in a form and save')
+  ->click('form[id=sympal_slot_form_'.$trueSlot->id.'] input[type=submit]', array('sf_sympal_content_slot_'.$trueSlot->id => array(
+    'type' => 'RawHtml',
+    'value' => 'new test value',
+  )))
+  
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_edit_slot')
+    ->isParameter('action', 'slot_save')
+  ->end()
+  
+  ->with('doctrine')->begin()
+    ->check('sfSympalContentSlot', array('id' => $trueSlot->id, 'type' => 'RawHtml', 'value' => 'new test value'))
+  ->end()
+  
+  ->with('response')->begin()
+    ->info('  3.2 - It should detect the non-ajax and redirect to the admin slots page')
+    ->isRedirected()
+  ->end()
+  
+  ->followRedirect()
+  
+  ->with('request')->begin()
+    ->isParameter('module', 'sympal_content')
+    ->isParameter('action', 'edit_slots')
+  ->end()
+  
+  ->with('response')->begin()
+    ->isStatusCode(200)
+  ->end()
+;
