@@ -11,20 +11,27 @@
  */
 class sfSympalMenuAdminMenu extends sfSympalMenu
 {
-  public function getCredentials()
+  /**
+   * Overridden to be displayed if at least one of the children menus
+   * should be displayed
+   * 
+   * @see sfSympalMenu
+   */
+  public function checkUserAccess(sfUser $user = null)
   {
-    $credentials = $this->_credentials;
+    if (parent::checkUserAccess())
+    {
+      return true;
+    }
+
     foreach ($this->getChildren() as $child)
     {
-      $credentials = array_merge($credentials, $child->getCredentials());
+      if ($child->checkUserAccess($user))
+      {
+        return true;
+      }
     }
-    if ($credentials)
-    {
-      return array($credentials);
-    }
-    else
-    {
-      return array();
-    }
+    
+    return false;
   }
 }
