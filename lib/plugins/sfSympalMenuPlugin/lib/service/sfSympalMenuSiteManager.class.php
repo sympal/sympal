@@ -108,6 +108,10 @@ class sfSympalMenuSiteManager
     $this->initialize();
   }
 
+  /**
+   *
+   * @return sfSympalMenu
+   */
   public static function getMenu($name, $showChildren = null, $class = null)
   {
     return sfSympalContext::getInstance()->getService('menu_manager')->_getMenu($name, $showChildren, $class);

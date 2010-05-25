@@ -6,6 +6,7 @@
  * @param string $name  The slug of the root menu item you wish to retrieve
  * @param bool $showChildren Whether or not it should show the children when rendering
  * @param string $class The menu class to return an instance of
+ * @return sfSympalMenu
  */
 function get_sympal_menu($name, $showChildren = null, $class = null)
 {
