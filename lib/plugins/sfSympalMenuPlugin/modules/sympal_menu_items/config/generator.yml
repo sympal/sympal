@@ -15,10 +15,21 @@ generator:
       fields: ~
       list:
         title: Menu items list
-        sort: ['root_id, lft', 'asc']
         max_per_page: 9999999999999999999
         display: [=name, _is_published]
+        object_actions:
+          up:
+            label: Up
+          right:
+            label: Right
+          left:
+            label: Left
+          down:
+            label: Down
+          _delete: ~
         batch_actions:
+          order:
+            label: Update
           _delete: ~
           publish:
             action: publish
