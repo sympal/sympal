@@ -28,10 +28,13 @@ sfSympalContent:
     date_published: '<?php echo date("Y-m-d H:i:s") ?>'
     Slots: [Sample_ContentList_slot_header]
     CreatedBy: admin
-    sfSympalContentList:
-      title: Sample Content List
-      ContentType: ContentType_Page
-      table_method: getDefaultPagesDataGrid
+
+sfSympalContentList:
+  page_content_list:
+    Content: Content_ContentList_sample_content_list
+    title: Sample Content List
+    ContentType: ContentType_Page
+    table_method: getDefaultPagesDataGrid
 
 sfSympalContentSlot:
   Sample_ContentList_slot_header:
