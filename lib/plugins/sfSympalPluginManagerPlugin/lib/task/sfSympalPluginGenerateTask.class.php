@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * Generates a new sympal plugin of a variety of types
+ * 
+ * @package     sfSympalPluginManager
+ * @subpackage  task
+ * @author      Jonathan H. Wage <jonwage@gmail.com>
+ * @author      Ryan Weaver <ryan@thatsquality.com>
+ */
 class sfSympalPluginGenerateTask extends sfBaseTask
 {
   protected function configure()
@@ -81,7 +89,8 @@ EOF;
     $generatePlugin->run(array($pluginName), $generatePluginOptions);
 
     $contentType = isset($options['content-type']) ? $options['content-type']:null;
-    $lowerName = str_replace('-', '_', Doctrine_Inflector::urlize($name));
+    $slug = str_replace('-', '_', Doctrine_Inflector::urlize($name));
+    $lowerName = str_replace('-', '_', $slug);
 
     if ($contentType)
     {
@@ -96,6 +105,13 @@ EOF;
 
       $pluginInstallDataFixtures = <<<EOF
 # $pluginName install data fixtures
+sfSympalContentType:
+  content_type_$lowerName:
+    name: $contentType
+    slug: $slug
+    description: $lowerName content type
+    label: $lowerName content type
+    default_path: /$lowerName/:slug
 EOF;
     }
 
@@ -109,17 +125,19 @@ EOF;
     if (isset($pluginInstallDataFixtures))
     {
       $itemsToCreate['data/fixtures'] = null;
-      $itemsToCreate['data/fixtures/install.yml'] = $pluginInstallDataFixtures;
+      $itemsToCreate['data/fixtures/'.$contentType.'.yml'] = $pluginInstallDataFixtures;
     }
 
     if (isset($pluginYamlSchema))
     {
       $itemsToCreate['config/doctrine/schema.yml'] = $pluginYamlSchema;
     }
+    
+    $appYaml = '';
 
     if (isset($options['theme']))
     {
-      $itemsToCreate['config/app.yml'] = sprintf('all:
+      $appYaml .= sprintf('all:
   theme:
     themes:
       %s:
@@ -129,6 +147,27 @@ EOF;
 
       $itemsToCreate['templates/'.$options['theme'].'.php'] = file_get_contents($this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/templates/default.php');
       $itemsToCreate['web/css/'.$options['theme'].'.css'] = file_get_contents($this->configuration->getPluginConfiguration('sfSympalPlugin')->getRootDir().'/web/themes/default/css/main.css');
+    }
+
+    if ($contentType)
+    {
+      $appYaml .= sprintf('all:
+  sympal_config:
+    content_types:
+      %s:
+        content_templates:
+          default_view:
+            template:     %s/view', $contentType, $contentType);
+      
+      $itemsToCreate['modules'] = null;
+      $itemsToCreate['modules/'.$contentType] = null;
+      $itemsToCreate['modules/'.$contentType.'/templates'] = null;
+      $itemsToCreate['modules/'.$contentType.'/templates/_view.php'] = "<?php echo get_sympal_content_slot(\$content, 'title') ?>";
+    }
+
+    if ($appYaml)
+    {
+      $itemsToCreate['config/app.yml'] = $appYaml;
     }
 
     foreach ($itemsToCreate as $item => $value)
@@ -156,6 +195,9 @@ EOF;
       }
       $ret = $install->run(array($name), $installOptions);
     }
+
+    $pluginAssets = new sfPluginPublishAssetsTask($this->dispatcher, $this->formatter);
+    $pluginAssets->run(array(), array());
 
     $cc = new sfCacheClearTask($this->dispatcher, $this->formatter);
     $ret = $cc->run(array(), array());
