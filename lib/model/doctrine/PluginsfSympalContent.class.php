@@ -643,12 +643,20 @@ abstract class PluginsfSympalContent extends BasesfSympalContent
     $templates = sfSympalConfiguration::getActive()->getContentTemplates($this->getType()->getName());
     if (isset($templates[$templateName]))
     {
+      if (!is_array($templates[$templateName]) || !isset($templates[$templateName]['template']))
+      {
+        throw new sfException(sprintf('Key "template" must be set under content_template "%s" in app.yml', $templateName));
+      }
       $template = $templates[$templateName]['template'];
     }
     else
     {
       if (isset($templates['default_view']))
       {
+        if (!is_array($templates['default_view']) || !isset($templates['default_view']['template']))
+        {
+          throw new sfException('Key "template" must be set under content_template "default_view" in app.yml');
+        }
         $template = $templates['default_view']['template'];
       }
       else
