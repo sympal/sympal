@@ -150,7 +150,7 @@ class Basesympal_contentActions extends autoSympal_contentActions
     $user = $this->getUser();
     $user->checkContentSecurity($this->sf_sympal_content);
 
-    $this->getSympalContext()->setCurrentContent($this->sf_sympal_content);
+    $this->getSympalContext()->getService('site_manager')->setCurrentContent($this->sf_sympal_content);
 
     $this->getResponse()->setTitle('Sympal Admin / Editing '.$this->sf_sympal_content);
 
