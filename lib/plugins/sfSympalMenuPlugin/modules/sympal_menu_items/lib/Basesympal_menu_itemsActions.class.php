@@ -197,7 +197,7 @@ class Basesympal_menu_itemsActions extends autoSympal_menu_itemsActions
 
   public function executeBatch(sfWebRequest $request)
   {
-    if ($request->hasParameter('batch_action'))
+    if ('batchOrder' == $request->getParameter('batch_action'))
     {
       return $this->executeBatchOrder($request);
     }
