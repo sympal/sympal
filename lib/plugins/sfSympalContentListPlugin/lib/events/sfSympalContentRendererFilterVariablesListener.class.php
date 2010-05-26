@@ -9,7 +9,7 @@ class sfSympalContentRendererFilterVariablesListener extends sfSympalListener
 
   public function run(sfEvent $event, $variables)
   {
-    $content = $variables['content'];
+    $content = $variables['sf_sympal_content'];
     if ($content->getType()->getName() == 'sfSympalContentList')
     {
       $contentList = $content->getRecord();
