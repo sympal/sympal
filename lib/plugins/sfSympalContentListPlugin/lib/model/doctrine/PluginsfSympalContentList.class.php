@@ -30,10 +30,13 @@ abstract class PluginsfSympalContentList extends BasesfSympalContentList
       $pager = new sfDoctrinePager('sfSympalContent');
       $pager->setQuery($this->_buildQuery());
 
-      $dataGrid = sfSympalDataGrid::create($pager)
-        ->addColumn('c.title', 'renderer=sympal_data_grid/default_title')
-        ->addColumn('c.date_published')
-        ->addColumn('u.username', 'label=Created By');
+      $dataGrid = sfSympalDataGrid::create($pager);
+      if (!$this->dql_query)
+      {
+        $dataGrid->addColumn('c.title', 'renderer=sympal_data_grid/default_title')
+                 ->addColumn('c.date_published')
+                 ->addColumn('u.username', 'label=Created By');
+      }
     }
 
     if ($this->sort_column) 

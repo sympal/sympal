@@ -54,12 +54,23 @@ abstract class Basesympal_adminActions extends sfActions
   /**
    * Signin action for the admin. Will redirect to the dashboard if authenticated
    */
-  public function executeSignin($request)
+  public function executeSignin(sfWebRequest $request)
   {
     $user = $this->getUser();
+
+    // if it is true, then we has been forwarded to signin.
+    // Save it to redirect user back after successful signin.
+    if ($this->getController()->getActionStack()->getFirstEntry()->getModuleName() !== $this->getModuleName()
+    &&  $this->getController()->getActionStack()->getFirstEntry()->getActionName() !== $this->getActionName())
+    {
+      $user->setAttribute('signin.redirectTo', $request->getUri());
+    }
+
     if ($user->isAuthenticated())
     {
-      return $this->redirect('@sympal_dashboard');
+      $redirectTo = $user->getAttribute('signin.redirectTo', '@sympal_dashboard');
+      $user->getAttributeHolder()->remove('signin.redirectTo');
+      return $this->redirect($redirectTo);
     }
 
     $this->getResponse()->setTitle('Sympal Admin / Signin');
@@ -75,7 +86,9 @@ abstract class Basesympal_adminActions extends sfActions
         $values = $this->form->getValues(); 
         $this->getUser()->signin($values['user'], array_key_exists('remember', $values) ? $values['remember'] : false);
 
-        return $this->redirect('@sympal_dashboard');
+        $redirectTo = $user->getAttribute('signin.redirectTo', '@sympal_dashboard');
+        $user->getAttributeHolder()->remove('signin.redirectTo');
+        return $this->redirect($redirectTo);
       }
     }
   }
