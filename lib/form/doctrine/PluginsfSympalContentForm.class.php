@@ -25,17 +25,17 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this['assets_list'],
       $this['comments_list']  // this should actually not be here - think of something better later
     );
-    
+
     $field = sfApplicationConfiguration::getActive()
       ->getPluginConfiguration('sfThemePlugin')
       ->getThemeToolkit()
       ->getThemeWidgetAndValidator();
     $this->widgetSchema['theme'] = $field['widget'];
     $this->validatorSchema['theme'] = $field['validator'];
-    
+
     // Sets up the template widget
     sfSympalFormToolkit::changeTemplateWidget($this);
-    
+
     // Sets up the module widget
     sfSympalFormToolkit::changeModuleWidget($this);
 

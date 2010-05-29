@@ -67,7 +67,7 @@ generator:
       filter:
         class: sfSympalAdminGenContentSearchForm
       edit:
-        title: "Editing Content titled %%title%%"
+        title: "Editing %%type%% titled %%title%%"
         actions:
           _delete:
           _list:
