@@ -95,19 +95,19 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     $content = parent::save($con);
 
     // then menu creation has been requested
-    if (array_key_exists('menu_create', $this->getTaintedValues()))
+    if ($this->getValue('menu_create'))
     {
       $menuItem = $content->getMenuItem();
       $menuItem->bindSympalContent($content);
 
-      if (array_key_exists('menu_publish', $this->getTaintedValues())) {
+      if ($this->getValue('menu_publish')) {
         $menuItem->setDatePublished(date('Y-m-d H:i:s'));
       }
 
-      if (strlen($this['menu_parent_id']->getValue()) > 0)
+      if (strlen($this->getValue('menu_parent_id')) > 0)
       {
         $menuItem->getNode()->insertAsLastChildOf(
-          Doctrine_Core::getTable('sfSympalMenuItem')->find($this['menu_parent_id']->getValue())
+          Doctrine_Core::getTable('sfSympalMenuItem')->find($this->getValue('menu_parent_id'))
         );
       }
       else
