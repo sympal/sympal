@@ -2,7 +2,7 @@
 
 /**
  * Base menu item in sympal
- * 
+ *
  * @package     sfSympalMenuPlugin
  * @subpackage  menu
  * @author      Jonathan H. Wage <jonwage@gmail.com>
@@ -106,7 +106,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   public function setUlClass($ulClass)
   {
     $this->_ulClass = $ulClass;
-    
+
     return $this;
   }
 
@@ -118,7 +118,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
   public function setLiClass($liClass)
   {
     $this->_liClass = $liClass;
-    
+
     return $this;
   }
 
@@ -129,12 +129,12 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   /**
    * Generates the url to this menu item based on the route
-   * 
+   *
    * In case the route is totally invalid, this catches the exception
    * and sends to the raw string
-   * 
+   *
    * @TODO Find a more explicit way to log if the route is invalid
-   * 
+   *
    * @param array $options Options to pass to the url_for method
    */
   public function getUrl(array $options = array())
@@ -150,7 +150,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
           sprintf('Cannot generate a menu url for "%s"', $this->getRoute())
         ))
       );
-      
+
       return $this->getRoute();
     }
   }
@@ -228,12 +228,12 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     $credentials = $this->getCredentials();
     return !empty($credentials);
   }
-  
+
   /**
    * Returns and optionally sets whether or not this menu item should
    * show its children. If the $bool argument is passed, the _showChildren
    * property will be set
-   * 
+   *
    * @param boolean $bool Whether to show children or not
    */
   public function showChildren($bool = null)
@@ -371,13 +371,13 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
   /**
    * Removes a child from this menu item
-   * 
+   *
    * @param mixed $name The name of sfSympalMenu instance to remove
    */
   public function removeChild($name)
   {
     $name = ($name instanceof sfSympalMenu) ? $name->getName() : $name;
-    
+
     if (isset($this->_children[$name]))
     {
       unset($this->_children[$name]);
@@ -403,13 +403,13 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
 
     return $this->_children[$name];
   }
-  
+
   /**
    * Returns whether or not this menu items has viewable children
-   * 
+   *
    * This menu MAY have children, but this will return false if the current
    * user does not have access to vew any of those items
-   * 
+   *
    * @return boolean;
    */
   public function hasChildren()
@@ -421,7 +421,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
         return true;
       }
     }
-    
+
     return false;
   }
 
@@ -526,7 +526,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
         }
         $options['class'] = $class;
       }
-      
+
       // proteted against an invalid url (e.g. myModule/myAction, which doesnt exist)
       try
       {
@@ -539,7 +539,7 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
             sprintf('Cannot generate a menu url for "%s"', $this->getRoute())
           ))
         );
-        
+
         $html = $this->renderLabel();
       }
     }
@@ -763,5 +763,16 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     }
 
     return $event->getReturnValue();
+  }
+
+  /**
+   * Creates a menu item for given $content and returns not saved sfSympalMenuItem object.
+   *
+   * @param sfSympalContent $content content record to create a menu item for
+   * @return sfSympalMenuItem not saved menu item object
+   */
+  public static function fromContent(sfSympalContent $content)
+  {
+
   }
 }

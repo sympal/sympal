@@ -2,7 +2,7 @@
 
 /**
  * Base actions for the sfSympalPlugin sympal_content_menu_item module.
- * 
+ *
  * @package     sfSympalPlugin
  * @subpackage  sympal_content_menu_item
  * @author      Your name here
@@ -26,7 +26,7 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
   {
     $this->content = $this->getRoute()->getObject();
     $this->menuItem = $this->content->getMenuItem();
-    $this->menuItem->Site = $this->content->Site;
+    $this->menuItem->bindSympalContent($this->content);
 
     $this->getResponse()->setTitle(sprintf('Sympal Admin / Editing the "%s" Page Menu Item', (string) $this->content));
 
@@ -57,7 +57,7 @@ abstract class Basesympal_content_menu_itemActions extends sfActions
       {
         $this->form->save();
 
-        // TODO redirect to the frontend when coming from there 
+        // TODO redirect to the frontend when coming from there
         $this->getUser()->setFlash('notice', 'Menu saved successfully!');
         $this->redirect('@sympal_content_edit?id='.$this->content->id);
       }

@@ -48,6 +48,8 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this->object->Type;
     }
 
+    $this->configureMenuSection();
+
     $this->_embedTypeForm();
   }
 
@@ -68,4 +70,53 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       $this->widgetSchema['TypeForm']->setLabel($this->object->Type->label);
     }
   }
+
+  protected function configureMenuSection()
+  {
+    if (!$this->isNew()) return false;
+
+    $this->widgetSchema['menu_create'] = new sfWidgetFormInputCheckbox();
+    $this->widgetSchema['menu_publish'] = new sfWidgetFormInputCheckbox();
+
+    $this->widgetSchema['menu_parent_id'] = new sfWidgetFormDoctrineChoice(array(
+      'model' => 'sfSympalMenuItem',
+      'add_empty' => true
+    ));
+    $this->validatorSchema['menu_parent_id'] = new sfValidatorDoctrineChoice(array(
+      'model' => 'sfSympalMenuItem',
+      'required' => false
+    ));
+
+    return $this;
+  }
+
+  public function save($con = null)
+  {
+    $content = parent::save($con);
+
+    // then menu creation has been requested
+    if (array_key_exists('menu_create', $this->getTaintedValues()))
+    {
+      $menuItem = $content->getMenuItem();
+      $menuItem->bindSympalContent($content);
+
+      if (array_key_exists('menu_publish', $this->getTaintedValues())) {
+        $menuItem->setDatePublished(date('Y-m-d H:i:s'));
+      }
+
+      if (strlen($this['menu_parent_id']->getValue()) > 0)
+      {
+        $menuItem->getNode()->insertAsLastChildOf(
+          Doctrine_Core::getTable('sfSympalMenuItem')->find($this['menu_parent_id']->getValue())
+        );
+      }
+      else
+      {
+        $menuItem->save();
+      }
+    }
+
+    return $content;
+  }
+
 }

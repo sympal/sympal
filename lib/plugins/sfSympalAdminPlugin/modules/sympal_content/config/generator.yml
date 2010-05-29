@@ -82,6 +82,53 @@ generator:
           _save_and_add:
       new:
         title: "Create New %%type%%"
+        display:
+          "Content": [TypeForm, custom_path, date_published, slug, i18n_slug]
+          "Settings": [content_type_id, created_by_id, groups_list, edit_groups_list, publicly_editable]
+          "Rendering Options": [template, theme, module, action]
+          "Search Engine Optimization": [page_title, meta_keywords, meta_description]
+          "Menu": [menu_create, menu_parent_id, menu_publish]
+        fields:
+          content_type_id:
+            label: Content Type
+          menu_item_id:
+            label: Under Menu Item
+          groups_list:
+            label: Groups
+            help: The groups that have access to view this content record.
+          custom_path:
+            help: The custom path to use to generate routes for this content record. Example: /my_pages/my_page_name
+          slug:
+            help: The text slug identifier that represents this content record.
+          date_published:
+            help: The date to publish and make this content record public.
+          content_type_id:
+            help: Change the content type of this content record.
+          created_by_id:
+            help: Choose the user who created this content record.
+          theme:
+            help: The theme to render this content record with.
+          template:
+            help: The content template to render this content record with.
+          module:
+            help: The Symfony module to render this content record with.
+          action:
+            help: The Symfony module to render this content record with.
+          page_title:
+            help: The meta page title to use for this content record.
+          meta_keywords:
+            help: The meta keywords to use for this content record.
+          meta_description:
+            help: The meta description to use for this content record.
+          menu_create:
+            label: Create menu item
+            help: If this is checked Sympal will also create a menu item pointing to this content record
+          menu_parent_id:
+            label: "As child of"
+            help: The new menu item will be created as child of selected item. Menu will be on top if left this field blank.
+          menu_publish:
+            label: Publish
+            help: If checked menu item will be instantly published
         actions:
           _list:
           _save:

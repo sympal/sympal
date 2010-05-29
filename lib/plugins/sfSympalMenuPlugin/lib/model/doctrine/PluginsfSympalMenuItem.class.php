@@ -9,6 +9,29 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
     $_label = null,
     $_allPermissions;
 
+  /**
+   * "Attach" sympal content record to current menu item.
+   * It actually does:
+   *  - point menu item to $content
+   *  - set menu site the same as $content site
+   *  - set menu name the same as $content name
+   *
+   * @param sfSympalContent $content
+   * @return sfSympalMenuItem
+   */
+  public function bindSympalContent(sfSympalContent $content)
+  {
+    $this->setContent($content);
+
+    $this->setName($content->getTitle());
+    $this->setSite($content->getSite());
+
+    // TODO auto-detect security settings (requires auth, requires_no_auth etc...)
+    // depends on security settings of the $content
+
+    return $this;
+  }
+
   public function isPublished()
   {
     return $this->date_published && strtotime($this->date_published) <= time() ? true : false;
@@ -63,7 +86,7 @@ abstract class PluginsfSympalMenuItem extends BasesfSympalMenuItem
 
     return $parent['id'];
   }
-  
+
   public function getIndentedName()
   {
     return str_repeat('-', $this->getLevel()) . ' ' . $this->getLabel().($this->getLevel() == 0 ? ' ('.$this->getSlug().')':null);
