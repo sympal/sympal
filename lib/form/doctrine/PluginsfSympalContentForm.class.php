@@ -80,11 +80,11 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
 
     $this->widgetSchema['menu_parent_id'] = new sfWidgetFormDoctrineChoice(array(
       'model' => 'sfSympalMenuItem',
-      'add_empty' => true
+      'add_empty' => false
     ));
     $this->validatorSchema['menu_parent_id'] = new sfValidatorDoctrineChoice(array(
       'model' => 'sfSympalMenuItem',
-      'required' => false
+      'required' => true
     ));
 
     return $this;
