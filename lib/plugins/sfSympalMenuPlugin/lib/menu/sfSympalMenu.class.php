@@ -765,14 +765,5 @@ class sfSympalMenu implements ArrayAccess, Countable, IteratorAggregate
     return $event->getReturnValue();
   }
 
-  /**
-   * Creates a menu item for given $content and returns not saved sfSympalMenuItem object.
-   *
-   * @param sfSympalContent $content content record to create a menu item for
-   * @return sfSympalMenuItem not saved menu item object
-   */
-  public static function fromContent(sfSympalContent $content)
-  {
 
-  }
 }
