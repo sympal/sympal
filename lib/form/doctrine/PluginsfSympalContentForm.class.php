@@ -82,10 +82,13 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
       'model' => 'sfSympalMenuItem',
       'add_empty' => false
     ));
-    $this->validatorSchema['menu_parent_id'] = new sfValidatorDoctrineChoice(array(
-      'model' => 'sfSympalMenuItem',
-      'required' => true
-    ));
+    $this->validatorSchema['menu_parent_id'] = new sfValidatorIf(array(
+      'form' => $this,
+      'fieldname' => 'menu_create',
+      'validator' => new sfValidatorDoctrineChoice(array(
+        'model' => 'sfSympalMenuItem',
+        'required' => true
+    ))));
 
     return $this;
   }
