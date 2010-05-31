@@ -15,8 +15,8 @@ class sfValidatorSchemaIf extends sfValidatorSchema
    * with value of $conditionalField returns true.
    *
    * @param string $conditionalField The field that must be present to force validation
-   * @param string $callable Function which must return true to launch $validators
    * @param array|sfValidatorSchema $validators The validators to run
+   * @param string $callable Function which must return true to launch $validators
    * @param array $options
    * @param array $messages
    */
