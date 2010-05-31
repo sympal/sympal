@@ -87,7 +87,7 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
     )));
     $this->setValidator('menu_parent_id', new sfValidatorPass(array('required' => false)));
 
-    $this->mergePostValidator(new sfValidatorSchemaIf('menu_create', 'strlen', array(
+    $this->mergePostValidator(new sfValidatorSchemaIf('menu_create', array(
       'menu_parent_id' => new sfValidatorDoctrineChoice(array('model' => 'sfSympalMenuItem', 'required' => true))
     )));
 

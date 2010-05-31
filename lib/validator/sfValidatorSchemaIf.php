@@ -20,7 +20,7 @@ class sfValidatorSchemaIf extends sfValidatorSchema
    * @param array $options
    * @param array $messages
    */
-  public function __construct($conditionalField, $callable, $validators, $options = array(), $messages = array())
+  public function __construct($conditionalField, $validators, $callable = 'strlen', $options = array(), $messages = array())
   {
     if (!is_string($conditionalField))
     {
