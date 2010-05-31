@@ -75,20 +75,21 @@ abstract class PluginsfSympalContentForm extends BasesfSympalContentForm
   {
     if (!$this->isNew()) return false;
 
-    $this->widgetSchema['menu_create'] = new sfWidgetFormInputCheckbox();
-    $this->widgetSchema['menu_publish'] = new sfWidgetFormInputCheckbox();
+    $this->setWidget('menu_create', new sfWidgetFormInputCheckbox());
+    $this->setValidator('menu_create', new sfValidatorPass());
 
-    $this->widgetSchema['menu_parent_id'] = new sfWidgetFormDoctrineChoice(array(
+    $this->setWidget('menu_publish', new sfWidgetFormInputCheckbox());
+    $this->setValidator('menu_publish', new sfValidatorPass());
+
+    $this->setWidget('menu_parent_id', new sfWidgetFormDoctrineChoice(array(
       'model' => 'sfSympalMenuItem',
       'add_empty' => false
-    ));
-    $this->validatorSchema['menu_parent_id'] = new sfValidatorIf(array(
-      'form' => $this,
-      'fieldname' => 'menu_create',
-      'validator' => new sfValidatorDoctrineChoice(array(
-        'model' => 'sfSympalMenuItem',
-        'required' => true
-    ))));
+    )));
+    $this->setValidator('menu_parent_id', new sfValidatorPass(array('required' => false)));
+
+    $this->mergePostValidator(new sfValidatorSchemaIf('menu_create', 'strlen', array(
+      'menu_parent_id' => new sfValidatorDoctrineChoice(array('model' => 'sfSympalMenuItem', 'required' => true))
+    )));
 
     return $this;
   }
