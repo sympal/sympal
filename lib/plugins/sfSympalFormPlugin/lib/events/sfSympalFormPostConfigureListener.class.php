@@ -49,9 +49,18 @@ class sfSympalFormPostConfigureListener extends sfSympalListener
     $widgetSchema->addOption('required_fields', $requiredFields);
     
     $formFormatters = sfSympalConfig::get('form', 'form_formatters', array());
+    $catalogue = $widgetSchema->getFormFormatter()->getTranslationCatalogue();
     foreach ($formFormatters as $name => $class)
     {
-      $widgetSchema->addFormFormatter($name, new $class($widgetSchema));
+      $formFormatter = new $class($widgetSchema);
+
+      // persist the translation catalogue
+      if ($catalogue)
+      {
+        $formFormatter->setTranslationCatalogue($catalogue);
+      }
+
+      $widgetSchema->addFormFormatter($name, $formFormatter);
     }
   }
 
