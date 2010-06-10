@@ -1,24 +1,9 @@
 [submodule "lib/vendor/service_container"]
 	path = lib/vendor/service_container
 	url = git://github.com/fabpot/dependency-injection.git
-[submodule "lib/plugins/sfSympalMinifyPlugin"]
-	path = lib/plugins/sfSympalMinifyPlugin
-	url = git://github.com/weaverryan/sfSympalMinifyPlugin.git
 [submodule "test/fixtures/project/plugins/sfSympalBlogPlugin"]
 	path = test/fixtures/project/plugins/sfSympalBlogPlugin
 	url = git://github.com/weaverryan/sfSympalBlogPlugin.git
 [submodule "test/fixtures/project/plugins/sfSympalCommentsPlugin"]
 	path = test/fixtures/project/plugins/sfSympalCommentsPlugin
 	url = git://github.com/weaverryan/sfSympalCommentsPlugin.git
-[submodule "lib/plugins/sfInlineObjectPlugin"]
-	path = lib/plugins/sfInlineObjectPlugin
-	url = git://github.com/weaverryan/sfInlineObjectPlugin.git
-[submodule "lib/plugins/sfImageTransformPlugin"]
-	path = lib/plugins/sfImageTransformPlugin
-	url = git://github.com/diem-project/sfImageTransformPlugin.git
-[submodule "lib/plugins/sfContentFilterPlugin"]
-	path = lib/plugins/sfContentFilterPlugin
-	url = git://github.com/weaverryan/sfContentFilterPlugin.git
-[submodule "lib/plugins/sfThemePlugin"]
-	path = lib/plugins/sfThemePlugin
-	url = git://github.com/weaverryan/sfThemePlugin.git

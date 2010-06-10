@@ -17,6 +17,22 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     $_sympalContext;
 
   /**
+   * Externals plugins that are dependencies
+   */
+  public static $dependencies = array(
+    'sfDoctrineGuardPlugin',
+    'sfFormExtraPlugin',
+    'sfTaskExtraPlugin',
+    'sfFeed2Plugin',
+    'sfWebBrowserPlugin',
+    'sfImageTransformPlugin',
+    'sfInlineObjectPlugin',
+    'sfThemePlugin',
+    'sfContentFilterPlugin',
+    'sfSympalFormPlugin',
+  );
+
+  /**
    * sfSympalPlugin version number
    */
   const VERSION = '1.0.0-ALPHA5';
@@ -47,6 +63,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
    */
   public function initialize()
   {
+    $this->_checkDependencies();
+    
     $this->_sympalConfiguration = new sfSympalConfiguration($this->configuration);
 
     // Actually bootstrap sympal
@@ -348,6 +366,23 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     }
   }
 
+  /**
+   * Checks to see if all of sympal's plugin dependencies are met
+   *
+   * @return void
+   * @throws sfException
+   */
+  protected function _checkDependencies()
+  {
+    $unmet = array_diff(self::$dependencies, $this->configuration->getPlugins());
+
+    if (count($unmet) > 0)
+    {
+      throw new sfException(
+        'The following plugins must be installed and enabled for sympal to function: '. implode(', ', $unmet)
+      );
+    }
+  }
 
   /**
    * Array of all the core Sympal plugins
@@ -355,32 +390,19 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
    * A core plugin is one that lives in the lib/plugins directory of sfSympalPlugin.
    * A core plugin will be enabled automatically
    */
-  public static
-    $corePlugins = array(
-      'sfDoctrineGuardPlugin',
-      'sfFormExtraPlugin',
-      'sfTaskExtraPlugin',
-      'sfFeed2Plugin',
-      'sfWebBrowserPlugin',
-      'sfImageTransformPlugin',
-      'sfInlineObjectPlugin',
-      'sfThemePlugin',
-      'sfContentFilterPlugin',
-
-      'sfSympalMenuPlugin',
-      'sfSympalPluginManagerPlugin',
-      'sfSympalPagesPlugin',
-      'sfSympalContentListPlugin',
-      'sfSympalDataGridPlugin',
-      'sfSympalUserPlugin',
-      'sfSympalInstallPlugin',
-      'sfSympalUpgradePlugin',
-      'sfSympalRenderingPlugin',
-      'sfSympalAdminPlugin',
-      'sfSympalEditorPlugin',
-      'sfSympalAssetsPlugin',
-      'sfSympalSearchPlugin',
-      'sfSympalMinifyPlugin',
-      'sfSympalFormPlugin',
-    );
+  public static $corePlugins = array(
+    'sfSympalMenuPlugin',
+    'sfSympalPluginManagerPlugin',
+    'sfSympalPagesPlugin',
+    'sfSympalContentListPlugin',
+    'sfSympalDataGridPlugin',
+    'sfSympalUserPlugin',
+    'sfSympalInstallPlugin',
+    'sfSympalUpgradePlugin',
+    'sfSympalRenderingPlugin',
+    'sfSympalAdminPlugin',
+    'sfSympalEditorPlugin',
+    'sfSympalAssetsPlugin',
+    'sfSympalSearchPlugin',
+  );
 }
