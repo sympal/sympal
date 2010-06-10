@@ -132,7 +132,10 @@ class sfSympalMenuSiteManager
    */
   public function clearCache($key)
   {
-    $this->_getCache()->remove($key);
+    if ($cache = $this->_getCache())
+    {
+      $cache->remove($key);
+    }
   }
 
   protected function _getMenu($name, $showChildren = null, $class = null)
