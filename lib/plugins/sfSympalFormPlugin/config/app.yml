@@ -12,7 +12,3 @@ all:
       
       form_formatters:
         table:     sfSympalWidgetFormSchemaFormatterTable
-
-      # Configure recaptcha from sfFormExtraPlugin
-      recaptcha_public_key: 6Ld2DgQAAAAAAApXLteupHPcbSxbSHkhNTuYLChX
-      recaptcha_private_key: 6Ld2DgQAAAAAANIbaXJsFEBOyg56CL_ljy3APlPb

@@ -199,14 +199,6 @@ theme name below to see what it looks like!</source>
         <target>Action de rendu par défaut</target>
       </trans-unit>
       <trans-unit>
-        <source>Recaptcha public key</source>
-        <target>Clé publique pour le ReCaptcha</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Recaptcha private key</source>
-        <target>Clé privée pour le ReCaptcha</target>
-      </trans-unit>
-      <trans-unit>
         <source>Breadcrumbs separator</source>
         <target>Séparateur de menus (breadcrumbs)</target>
       </trans-unit>

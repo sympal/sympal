@@ -28,11 +28,6 @@ class sfSympalFormPostConfigureListener extends sfSympalListener
       }
     }
 
-    if ($form->hasRecaptcha())
-    {
-      sfSympalFormToolkit::embedRecaptcha($form);
-    }
-
     $this->configureWidgetSchema($form);
 
     // Converts date fields to rich date fields

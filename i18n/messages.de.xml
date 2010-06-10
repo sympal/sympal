@@ -160,14 +160,6 @@ neue Plugins einfach herunterladen und installieren.</target>
         <source>Default rendering action</source>
         <target>Action für die Standarddarstellung</target>
       </trans-unit>
-      <trans-unit id="390">
-        <source>Recaptcha public key</source>
-        <target>Öffentlicher Schlüssel für ReCaptcha</target>
-      </trans-unit>
-      <trans-unit id="400">
-        <source>Recaptcha private key</source>
-        <target>Privater Schlüssel für ReCaptcha</target>
-      </trans-unit>
       <trans-unit id="410">
         <source>Breadcrumbs separator</source>
         <target>Trennungszeichen für das Brotkrumenmenü (Breadcrumbs)</target>

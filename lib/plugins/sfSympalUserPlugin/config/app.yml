@@ -4,3 +4,8 @@ all:
       sympal_users: ~
       sympal_groups: ~
       sympal_permissions: ~
+
+  # if sfReCaptchaFormPlugin is present, recaptcha will be added to it
+  recaptcha:
+    forms:
+      sfGuardRegisterForm:   true

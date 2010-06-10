@@ -143,33 +143,6 @@ class sfSympalFormToolkit
   }
 
   /**
-   * Embed recaptcha to a form
-   *
-   * @param sfForm $form 
-   * @return void
-   */
-  public static function embedRecaptcha(sfForm $form)
-  {
-    $publicKey = sfSympalConfig::get('form', 'recaptcha_public_key');
-    $privateKey = sfSympalConfig::get('form', 'recaptcha_private_key');
-
-    if (!$publicKey || !$privateKey) {
-      throw new sfException('You must specify the recaptcha public and private key in your sympal configuration');
-    }
-
-    $widgetSchema = $form->getWidgetSchema();
-    $validatorSchema = $form->getValidatorSchema();
-
-    $widgetSchema['captcha'] = new sfWidgetFormReCaptcha(array(
-      'public_key' => $publicKey
-    ));
-
-    $validatorSchema['captcha'] = new sfValidatorReCaptcha(array(
-      'private_key' => $privateKey
-    ));
-  }
-
-  /**
    * Change the content slot form value widget
    *
    * @param string $type The type of the widget

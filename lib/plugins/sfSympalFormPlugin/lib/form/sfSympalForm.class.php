@@ -52,27 +52,4 @@ class sfSympalForm extends sfSympalExtendClass
 
     return $fields;
   }
-
-  /**
-   * Whether or not this form should have a recaptcha field added to it
-   * 
-   * This is called by the following events so that the addition and processing
-   * of this field occurs automatically:
-   *   - form.post_configure Adds the recaptcha field
-   *   - form.filter_values: Processes the submitted value
-   * 
-   * @return boolean
-   */
-  public function hasRecaptcha()
-  {
-    // No recaptcha in test environment
-    if (sfConfig::get('sf_environment') === 'test')
-    {
-      return false;
-    }
-    $forms = sfSympalConfig::get('recaptcha_forms', null, array());
-    $class = get_class($this->getSubject());
-
-    return (array_key_exists($class, $forms) && $forms[$class]) ? true : false;
-  }
 }
