@@ -13,7 +13,7 @@
 $app = 'sympal';
 require_once(dirname(__FILE__).'/../../bootstrap/unit.php');
 
-$t = new lime_test(18);
+$t = new lime_test(17);
 
 $sympalPluginConfiguration = sfContext::getInstance()->getConfiguration()->getPluginConfiguration('sfSympalPlugin');
 $sympalConfiguration = sfSympalConfiguration::getActive();
@@ -32,15 +32,6 @@ $t->is(isset($pluginPaths['sfSympalBlogPlugin']), true, '->getPluginPaths() incl
 $t->is($pluginPaths['sfSympalBlogPlugin'], sfConfig::get('sf_plugins_dir').'/sfSympalBlogPlugin', '->getPluginPaths() returns correct path as value of array');
 
 $corePlugins = array(
-  'sfDoctrineGuardPlugin',
-  'sfFormExtraPlugin',
-  'sfTaskExtraPlugin',
-  'sfFeed2Plugin',
-  'sfWebBrowserPlugin',
-  'sfImageTransformPlugin',
-  'sfInlineObjectPlugin',
-  'sfThemePlugin',
-  'sfContentFilterPlugin',
   'sfSympalMenuPlugin',
   'sfSympalPluginManagerPlugin',
   'sfSympalPagesPlugin',
@@ -54,7 +45,6 @@ $corePlugins = array(
   'sfSympalEditorPlugin',
   'sfSympalAssetsPlugin',
   'sfSympalSearchPlugin',
-  'sfSympalMinifyPlugin',
   'sfSympalFormPlugin',
 );
 
@@ -95,5 +85,4 @@ $plugins = $sympalConfiguration->getProjectConfiguration()->getPlugins();
 $plugins = array_merge($plugins, array());
 
 $t->is($plugins[0], 'sfDoctrinePlugin', 'Test sfDoctrinePlugin is loaded first');
-$t->is($plugins[1], 'sfSympalPlugin', 'Test sfSympalPlugin is loaded second');
 $t->is(in_array('sfSympalBlogPlugin', $plugins), true, 'Test that additional downloaded plugins are loaded');
