@@ -13,3 +13,27 @@
 [submodule "test/fixtures/project/plugins/sfFormExtraPlugin"]
 	path = test/fixtures/project/plugins/sfFormExtraPlugin
 	url = git://github.com/diem-project/sfFormExtraPlugin.git
+[submodule "test/fixtures/project/plugins/sfTaskExtraPlugin"]
+	path = test/fixtures/project/plugins/sfTaskExtraPlugin
+	url = git://github.com/weaverryan/sfTaskExtraPlugin.git
+[submodule "test/fixtures/project/plugins/sfFeed2Plugin"]
+	path = test/fixtures/project/plugins/sfFeed2Plugin
+	url = git://github.com/diem-project/sfFeed2Plugin.git
+[submodule "test/fixtures/project/plugins/sfWebBrowserPlugin"]
+	path = test/fixtures/project/plugins/sfWebBrowserPlugin
+	url = git://github.com/diem-project/sfWebBrowserPlugin.git
+[submodule "test/fixtures/project/plugins/sfImageTransformPlugin"]
+	path = test/fixtures/project/plugins/sfImageTransformPlugin
+	url = git://github.com/diem-project/sfImageTransformPlugin.git
+[submodule "test/fixtures/project/plugins/sfInlineObjectPlugin"]
+	path = test/fixtures/project/plugins/sfInlineObjectPlugin
+	url = git://github.com/weaverryan/sfInlineObjectPlugin.git
+[submodule "test/fixtures/project/plugins/sfThemePlugin"]
+	path = test/fixtures/project/plugins/sfThemePlugin
+	url = git://github.com/weaverryan/sfThemePlugin.git
+[submodule "sfContentFilterPlugin"]
+	path = sfContentFilterPlugin
+	url = git://github.com/weaverryan/sfContentFilterPlugin.git
+[submodule "test/fixtures/project/plugins/sfContentFilterPlugin"]
+	path = test/fixtures/project/plugins/sfContentFilterPlugin
+	url = git://github.com/weaverryan/sfContentFilterPlugin.git

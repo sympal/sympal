@@ -27,9 +27,8 @@ class ProjectConfiguration extends sfProjectConfiguration
       'sfInlineObjectPlugin',
       'sfThemePlugin',
       'sfContentFilterPlugin',
-      'sfSympalFormPlugin',
     ));
-    
+
     require_once(dirname(__FILE__).'/../../../../config/sfSympalPluginConfiguration.class.php');
     sfSympalPluginConfiguration::enableSympalPlugins($this);
   }
