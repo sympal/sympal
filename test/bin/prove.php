@@ -3,7 +3,7 @@
 include dirname(__FILE__).'/../bootstrap/unit.php';
 
 $h = new lime_harness();
-$h->register(sfFinder::type('file')->name('*Test.php')->in(dirname(__FILE__).'/..'));
+$h->register(sfFinder::type('file')->name('*Test.php')->maxDepth(5)->in(dirname(__FILE__).'/..'));
 
 $ret = $h->run() ? 0 : 1;
 
