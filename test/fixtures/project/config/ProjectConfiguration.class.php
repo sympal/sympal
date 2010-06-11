@@ -16,7 +16,19 @@ class ProjectConfiguration extends sfProjectConfiguration
      * For sympal apps, this is enabled for you. For non-sympal apps, this
      * needs to be here to enable the plugin
      */
-    $this->enablePlugins(array('sfDoctrinePlugin'));
+    $this->enablePlugins(array(
+      'sfDoctrinePlugin',
+      'sfDoctrineGuardPlugin',
+      'sfFormExtraPlugin',
+      'sfTaskExtraPlugin',
+      'sfFeed2Plugin',
+      'sfWebBrowserPlugin',
+      'sfImageTransformPlugin',
+      'sfInlineObjectPlugin',
+      'sfThemePlugin',
+      'sfContentFilterPlugin',
+      'sfSympalFormPlugin',
+    ));
     
     require_once(dirname(__FILE__).'/../../../../config/sfSympalPluginConfiguration.class.php');
     sfSympalPluginConfiguration::enableSympalPlugins($this);

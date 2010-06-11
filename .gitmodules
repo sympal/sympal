@@ -7,3 +7,9 @@
 [submodule "test/fixtures/project/plugins/sfSympalCommentsPlugin"]
 	path = test/fixtures/project/plugins/sfSympalCommentsPlugin
 	url = git://github.com/weaverryan/sfSympalCommentsPlugin.git
+[submodule "test/fixtures/project/plugins/sfDoctrineGuardPlugin"]
+	path = test/fixtures/project/plugins/sfDoctrineGuardPlugin
+	url = git://github.com/annismckenzie/sfDoctrineGuardPlugin.git
+[submodule "test/fixtures/project/plugins/sfFormExtraPlugin"]
+	path = test/fixtures/project/plugins/sfFormExtraPlugin
+	url = git://github.com/diem-project/sfFormExtraPlugin.git
