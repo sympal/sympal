@@ -68,6 +68,12 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
    */
   public function addAdminMenuHtml(sfEvent $event, $content)
   {
+    // See if admin_menu_html should be autoinsert in content
+    if(!sfSympalConfig::get('add_admin_menu_html'))
+    {
+      return $content;
+    }
+
     // See if the editor was disabled
     if (!sfConfig::get('sympal.editor_menu', true))
     {

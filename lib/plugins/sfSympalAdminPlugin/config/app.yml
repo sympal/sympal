@@ -19,8 +19,10 @@ all:
     default_admin_generator_theme: sympal_admin
     admin_generator_class: sfSympalDoctrineGenerator
 
+    add_admin_menu_html: true # If set to false, get_sympal_admin_menu() helper won't be loaded automatically
+
   theme:
-    
+
     # Configure the name of the theme to use for admin areas
     controller_options:
       admin_theme: admin
