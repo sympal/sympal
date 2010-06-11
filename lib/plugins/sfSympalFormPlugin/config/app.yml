@@ -1,0 +1,14 @@
+all:
+  sympal_config:
+    
+    form:
+      # Configure what forms and date fields should be replaced by jQuery rich date
+      rich_date_forms:
+        sfSympalContentForm:  [date_published]
+        sfSympalMenuItemForm: [date_published]
+      
+      # This will automatically unset created_at and updated_at fields on a form
+      remove_timestampable_from_forms: true
+      
+      form_formatters:
+        table:     sfSympalWidgetFormSchemaFormatterTable

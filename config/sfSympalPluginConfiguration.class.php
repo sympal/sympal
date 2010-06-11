@@ -29,7 +29,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     'sfInlineObjectPlugin',
     'sfThemePlugin',
     'sfContentFilterPlugin',
-    'sfSympalFormPlugin',
   );
 
   /**
@@ -404,5 +403,6 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     'sfSympalEditorPlugin',
     'sfSympalAssetsPlugin',
     'sfSympalSearchPlugin',
+    'sfSympalFormPlugin',
   );
 }
