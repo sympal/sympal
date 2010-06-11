@@ -105,3 +105,23 @@ function get_gravatar_url($emailAddress, $size = 40)
   
   return $url;
 }
+
+/**
+ * Returns whether or not a plugin exists and is enabled  
+ *
+ * @param  string $pluginName The plugin name
+ * @return bool
+ */
+function plugin_exists($pluginName)
+{
+  try
+  {
+    sfProjectConfiguration::getActive()->getPluginConfiguration($pluginName);
+
+    return true;
+  }
+  catch (InvalidArgumentException $e)
+  {
+    return false;
+  }
+}

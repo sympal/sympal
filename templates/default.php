@@ -5,7 +5,9 @@
   <?php include_http_metas() ?>
   <?php include_metas() ?>
   <?php include_title() ?>
-  <?php sympal_minify() ?>
+  <?php if (plugin_exists('sfSympalMinifyPlugin')): ?> 
+    <?php sympal_minify() ?>
+  <?php endif; ?>
   <?php include_stylesheets() ?>
   <?php include_javascripts() ?>
 </head>
