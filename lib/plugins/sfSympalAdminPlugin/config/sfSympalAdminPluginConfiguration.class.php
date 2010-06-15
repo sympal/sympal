@@ -118,7 +118,7 @@ class sfSympalAdminPluginConfiguration extends sfPluginConfiguration
         }
         if ($formatted)
         {
-          $changeLanguage->addChild(ucwords($formatted), '@sympal_change_language?language='.$code, 'title='.__('Switch to ').''.$formatted);
+          $changeLanguage->addChild(ucwords($formatted), '@sympal_change_language?language='.$code, 'title='.sprintf(__('Switch to %s'), $formatted));
         }
       }
     }

@@ -17,6 +17,11 @@
         <source>Edit content type</source>
         <target>Éditer le type de contenu</target>
       </trans-unit>
+      <!-- admin_menu -->  
+      <trans-unit>
+        <source>Site Administration</source>
+        <target>Administration du site</target>
+      </trans-unit>
       <!-- others translation -->  
       <trans-unit>
         <source>Image</source>

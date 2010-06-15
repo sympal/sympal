@@ -344,8 +344,8 @@ theme name below to see what it looks like!</source>
         <target>Quitter</target>
       </trans-unit>
       <trans-unit>
-        <source>Switch to </source>
-        <target>Changer pour </target>
+        <source>Switch to %s</source>
+        <target>Passer en %s</target>
       </trans-unit>
       <trans-unit>
         <source>Go to %s</source>
