@@ -14,11 +14,11 @@
       </trans-unit>
       <trans-unit>
         <source>Slot saved</source>
-        <target>Slot enregistré</target>
+        <target>Slot enregistré.</target>
       </trans-unit>
       <trans-unit>
         <source>There was an error saving your slot</source>
-        <target>Il y a eu une erreur pendant l'enregistrement</target>
+        <target>Il y a eu une erreur pendant l'enregistrement.</target>
       </trans-unit>
       <trans-unit>
         <source>[Hover over and click edit to change.]</source>
@@ -26,7 +26,7 @@
       </trans-unit>
       <trans-unit>
         <source>Edit</source>
-        <target>Editer</target>
+        <target>Éditer</target>
       </trans-unit>
       <trans-unit>
         <source>Double click to enable inline edit mode.</source>
@@ -34,7 +34,7 @@
       </trans-unit>
       <trans-unit>
         <source>Change Slot Type</source>
-        <target>Changer le type de slot</target>
+        <target>Changer le type de slot.</target>
       </trans-unit>
       <trans-unit>
         <source>Single Line of Text</source>
@@ -60,7 +60,10 @@
         <source>Save</source>
         <target>Sauvegarder</target>
       </trans-unit>
-
+      <trans-unit>
+        <source>Cancel</source>
+        <target>Quitter</target>
+      </trans-unit>
       <trans-unit>
         <source></source>
         <target></target>
