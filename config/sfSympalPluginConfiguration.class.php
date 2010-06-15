@@ -177,7 +177,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
     if ($content)
     {
       $contentEditor = $menu->getChild($content->getType()->slug);
-      $contentEditor->setLabel($content->getType()->getLabel() . ' Actions');
+      $contentEditor->setLabel(sprintf(__('%s Actions'), $content->getType()->getLabel()));
 
       // If in the admin, put a link to view the content
       if (sfSympalConfiguration::getActive()->isAdminModule())
@@ -187,11 +187,11 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       }
       
       $contentEditor
-        ->addChild(__('Create New ').$content->getType()->getLabel(), '@sympal_content_create_type?type='.$content['Type']['slug'])
+        ->addChild(sprintf(__('Create New %s'), $content->getType()->getLabel()), '@sympal_content_create_type?type='.$content['Type']['slug'])
         ->setCredentials('ManageContent');
 
       $contentEditor
-        ->addChild(__('Edit ').$content->getType()->getLabel(), $content->getEditRoute())
+        ->addChild(sprintf(__('Edit %s'), $content->getType()->getLabel()), $content->getEditRoute())
         ->setCredentials('ManageContent');
 
       $contentEditor
@@ -240,7 +240,7 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
         {
           if (sfContext::getInstance()->getUser()->getEditCulture() != $code)
           {
-            $contentEditor->addChild(__('Edit ').format_language($code), '@sympal_change_edit_language?language='.$code, 'title='.__('Switch to ').''.format_language($code));
+            $contentEditor->addChild(sprintf(__('Edit in %s'), format_language($code)), '@sympal_change_edit_language?language='.$code, 'title='.sprintf(__('Edit %s version'), format_language($code)));
           }
         }
       }

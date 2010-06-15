@@ -117,6 +117,15 @@ et créer des répertoires.</target>
         <target>Sauvegarder le recadrage</target>
       </trans-unit>
       <trans-unit>
+        <source>Delete folder "%s"</source>
+        <target>Supprimer le répertoire "%s"</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Directory created successfully.</source>
+        <target>Répertoire créé avec succès.</target>
+      </trans-unit>
+
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>

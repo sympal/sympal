@@ -4,6 +4,20 @@
   <file original="global" source-language="en" datatype="plaintext">
     <header/>
     <body>
+      <!-- content_editor_menu -->
+      <trans-unit>
+        <source>Edit %s version</source>
+        <target>Éditer la version en %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit in %s</source>
+        <target>Éditer en %s</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit content type</source>
+        <target>Éditer le type de contenu</target>
+      </trans-unit>
+      <!-- others translation -->  
       <trans-unit>
         <source>Image</source>
         <target>Image</target>
@@ -23,10 +37,6 @@
       <trans-unit>
         <source>Enabled</source>
         <target>Activer</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Commenting Requires Authentication</source>
-        <target>Vous devez être authentifié pour pouvoir commenter</target>
       </trans-unit>
       <trans-unit>
         <source>The title of the Sympal site.</source>
@@ -60,10 +70,9 @@
         <source>Meta keywords</source>
         <target>Mots clés (dans les méta-tags)</target>
       </trans-unit>
-      <!-- FIXME -->
       <trans-unit>
         <source>English Meta keywords</source>
-        <target>Méta-mots clés anglais</target>
+        <target>Mot-clés anglais</target>
       </trans-unit>
       <trans-unit>
         <source>The meta keywords to use for pages in this site.</source>
@@ -73,10 +82,9 @@
         <source>Meta description</source>
         <target>Méta description</target>
       </trans-unit>
-      <!-- FIXME -->
       <trans-unit>
         <source>English Meta description</source>
-        <target>Méta description anglaise</target>
+        <target>Description anglaise</target>
       </trans-unit>
       <trans-unit>
         <source>The meta description to use for pages in this site.</source>
@@ -137,10 +145,6 @@ already available in Sympal.</source>
         <target>Rendu</target>
       </trans-unit>
       <trans-unit>
-        <source>Template</source>
-        <target>Template</target>
-      </trans-unit>
-      <trans-unit>
         <source>The content template to render this content type with.</source>
         <target>Le template de contenu avec lequel restituer ce type de contenu.</target>
       </trans-unit>
@@ -149,16 +153,8 @@ already available in Sympal.</source>
         <target>Le thème avec lequel restituer ce type de contenu.</target>
       </trans-unit>
       <trans-unit>
-        <source>Module</source>
-        <target>Module</target>
-      </trans-unit>
-      <trans-unit>
         <source>The Symfony module to render this content type with.</source>
         <target>Le module Symfony avec lequel restituer ce type de contenu.</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Action</source>
-        <target>Action</target>
       </trans-unit>
       <trans-unit>
         <source>Required.</source>
@@ -167,14 +163,6 @@ already available in Sympal.</source>
       <trans-unit>
         <source>The item has not been saved due to some errors.</source>
         <target>Des erreurs sont survenues, l'objet n'a pu être sauvegardé.</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Source</source>
-        <target>Source</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Destination</source>
-        <target>Destination</target>
       </trans-unit>
       <trans-unit>
         <source>is empty</source>
@@ -303,10 +291,6 @@ the button above.</source>
         <target>La description à utiliser dans les meta-tags pour ce contenu.</target>
       </trans-unit>
       <trans-unit>
-        <source>Create New Content List</source>
-        <target>Nouvelle liste de contenu</target>
-      </trans-unit>
-      <trans-unit>
         <source>Showing %first% to %last% of %count% total results.</source>
         <target>Affichage des résulats %first% à %last% sur un total de %count%.</target>
       </trans-unit>
@@ -319,24 +303,8 @@ the button above.</source>
         <target>Aller</target>
       </trans-unit>
       <trans-unit>
-        <source>Content List Actions</source>
-        <target>Actions pour la liste de contenu</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Edit Content List</source>
-        <target>Éditer la liste de contenu</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Edit Content Type</source>
-        <target>Éditer un type de contenu</target>
-      </trans-unit>
-      <trans-unit>
         <source>Publish</source>
         <target>Publier</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Create New Content List</source>
-        <target>Créer une nouvelle liste de contenu</target>
       </trans-unit>
       <trans-unit>
         <source>Change Language</source>
@@ -363,20 +331,12 @@ the button above.</source>
         <target>Gérer le contenu</target>
       </trans-unit>
       <trans-unit>
-        <source>Create Content List</source>
-        <target>Créer une liste de contenu</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Create Page</source>
-        <target>Créer une page</target>
+        <source>Edit Content Type</source>
+        <target>Éditer le type de contenu</target>
       </trans-unit>
       <trans-unit>
         <source>Menu Manager</source>
         <target>Gestionnaire de menu</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Configuration</source>
-        <target>Configuration</target>
       </trans-unit>
       <trans-unit>
         <source>Sitemap</source>
@@ -399,36 +359,16 @@ the button above.</source>
         <target>S'inscrire</target>
       </trans-unit>
       <trans-unit>
-        <source>Create New Page</source>
-        <target>Créer une nouvelle page</target>
-      </trans-unit>
-      <trans-unit>
         <source>Create</source>
         <target>Créer</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Delete folder "%s"</source>
-        <target>Supprimer le répertoire "%s"</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Directory created successfully.</source>
-        <target>Répertoire créé avec succès.</target>
       </trans-unit>
       <trans-unit>
         <source>Are you sure?</source>
         <target>Êtes vous sur ?</target>
       </trans-unit>
       <trans-unit>
-        <source>Page Actions</source>
-        <target>Actions de la page</target>
-      </trans-unit>
-      <trans-unit>
         <source>Un-Publish</source>
         <target>Dé-publier</target>
-      </trans-unit>
-      <trans-unit>
-        <source>Create New Page</source>
-        <target>Créer une nouvelle page</target>
       </trans-unit>
       <trans-unit>
         <source>Un-Publish Menu Item</source>
@@ -544,11 +484,11 @@ the button above.</source>
       </trans-unit>       
       <trans-unit>
         <source>Remember</source>
-        <target>Se rappeler</target>
+        <target>Retenir</target>
       </trans-unit>    
       <trans-unit>
         <source>Signin</source>
-        <target>Se connecter</target>
+        <target>Connexion</target>
       </trans-unit>    
       <trans-unit>
         <source>The username and/or password is invalid.</source>
@@ -558,10 +498,6 @@ the button above.</source>
         <source>The item was deleted successfully.</source>
         <target>L'objet a été supprimé avec succès.</target>
       </trans-unit>            
-      <trans-unit>
-        <source>Edit </source>
-        <target>Éditer </target>
-      </trans-unit>
       <trans-unit>
         <source>Are you sure you want to delete this directory?</source>
         <target>Êtes-vous sûr de vouloir supprimer ce dossier ?</target>

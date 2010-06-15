@@ -9,6 +9,22 @@
         <target>Voir la page</target>
       </trans-unit>
       <trans-unit>
+        <source>Page Actions</source>
+        <target>Actions de la page</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create New Page</source>
+        <target>Créer une nouvelle page</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create New Page</source>
+        <target>Créer une nouvelle page</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit Page</source>
+        <target>Éditer la page</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>

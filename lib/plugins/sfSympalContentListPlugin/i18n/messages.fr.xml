@@ -17,6 +17,26 @@
         <target>Créé par</target>
       </trans-unit>
       <trans-unit>
+        <source>Create New Content List</source>
+        <target>Nouvelle liste de contenu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create Content List</source>
+        <target>Créer une liste de contenu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Create New Content List</source>
+        <target>Créer une nouvelle liste de contenu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Edit Content List</source>
+        <target>Éditer la liste de contenu</target>
+      </trans-unit>
+      <trans-unit>
+        <source>Content List Actions</source>
+        <target>Actions pour la liste de contenu</target>
+      </trans-unit>
+      <trans-unit>
         <source></source>
         <target></target>
       </trans-unit>
