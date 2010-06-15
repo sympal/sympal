@@ -8,6 +8,10 @@
         <source>View Page</source>
         <target>Voir la page</target>
       </trans-unit>
+      <trans-unit>
+        <source></source>
+        <target></target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

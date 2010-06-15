@@ -182,7 +182,8 @@ class sfSympalPluginConfiguration extends sfPluginConfiguration
       // If in the admin, put a link to view the content
       if (sfSympalConfiguration::getActive()->isAdminModule())
       {
-        $contentEditor->addChild(__('View ').$content->getType()->getLabel(), $content->getRoute());    
+        $contentEditor
+          ->addChild(sprintf(__('View %s'), $content->getType()->getLabel()), $content->getRoute());
       }
       
       $contentEditor
