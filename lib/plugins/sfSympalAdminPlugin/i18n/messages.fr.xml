@@ -261,7 +261,7 @@ theme name below to see what it looks like!</source>
       <!-- admin menu -->
       <trans-unit>
         <source>Signout</source>
-        <target>Se déconnecter</target>
+        <target>Déconnexion</target>
       </trans-unit>
       <trans-unit>
         <source>Dashboard</source>
