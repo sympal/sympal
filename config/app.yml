@@ -106,6 +106,9 @@ all:
 
       TinyMCE:
         label: TinyMCE Rich Text Editor
+        widget_options:
+          # allows tinymce to be seen as the current editor for inline object insertion
+          config: 'handle_event_callback : "sympalHandleTinyMCEEvent"'
         filters: [inline_object]
       
       # special slot type for "column" slots where the widget/validator
