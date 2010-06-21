@@ -35,7 +35,7 @@
 
         <?php $menuItem = $content[0]->getMenuItem() ?>
         <?php $parentMenuNode = false; ?>
-        <?php if ($menuItem && $parentMenuNode = sfSympalMenuSiteManager::getMenu('primary')->findMenuItem($menuItem)->getParent()): ?>
+        <?php if ($menuItem && $parentMenuNode = sfSympalMenuSiteManager::getMenu(sfSympalConfig::get('default_install_content_type_menu', null, 'primary'))->findMenuItem($menuItem)->getParent()): ?>
           <li>
             <?php echo image_tag('/sfSympalPlugin/images/folder.png') ?>
             <?php echo link_to($parentMenuNode->getLabel(), $parentMenuNode->getRoute()) ?>

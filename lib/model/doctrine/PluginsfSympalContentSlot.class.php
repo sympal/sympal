@@ -176,8 +176,9 @@ abstract class PluginsfSympalContentSlot extends BasesfSympalContentSlot
   public function getValueForRendering()
   {
     $method = sprintf('get%sSlotValue', sfInflector::camelize($this->name));
-    
-    if (method_exists($this->getContentRenderedFor()->getRecord(), $method))
+    //
+    // @todo: getRecord() is sometimes called on a non-object
+    if (is_object($this->getContentRenderedFor()) && method_exists($this->getContentRenderedFor()->getRecord(), $method))
     {
       return $this->getContentRenderedFor()->getRecord()->$method($this);
     }
