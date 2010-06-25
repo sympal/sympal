@@ -258,7 +258,12 @@ theme name below to see what it looks like!</source>
         <source>Un-Published: %s Content %s</source>
         <target>Non-publié : %s -> %s</target>
       </trans-unit>
+
       <!-- admin menu -->
+      <trans-unit>
+        <source>Add to menu</source>
+        <target>Ajouter au menu</target>
+      </trans-unit>
       <trans-unit>
         <source>Signout</source>
         <target>Déconnexion</target>
