@@ -9,4 +9,4 @@ test/fixtures/project/web/uploads
 *.swp
 base
 test/fixtures/project/config/app.yml
-lib/plugins/sfDoctrineGuardPlugin/*
+
